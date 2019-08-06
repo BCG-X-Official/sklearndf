@@ -131,7 +131,7 @@ setup(
         "scikit-learn>=0.21,<0.22",
         "boruta>=0.3,<0.4",
         # todo: add tag for version control in there
-        "gamma-common @ git+ssh://git@git.sourceai.io/schneider-joerg/gamma-common.git#egg=gamma.common",
+        "gamma-common @ git+ssh://git@git.sourceai.io/alpha/gamma-common.git#egg=gamma.common",
     ],
     dependency_links=[],
     # Optional
