@@ -9,6 +9,7 @@ from typing import *
 
 import joblib
 import numpy as np
+import pandas as pd
 from sklearn import clone
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.feature_selection import f_classif
@@ -19,7 +20,6 @@ from sklearn.utils.testing import (
     assert_raises_regex,
 )
 
-from gamma import Sample
 from gamma.sklearndf import TransformerDF
 from gamma.sklearndf._wrapper import df_estimator
 from gamma.sklearndf.classification import LogisticRegressionDF, SVCDF
@@ -109,7 +109,9 @@ class NoTransDF(NoTrans, TransformerDF):
     pass
 
 
-def test_pipelinedf_memory(iris_sample: Sample) -> None:
+def test_pipelinedf_memory(
+    iris_features: pd.DataFrame, iris_target_sr: pd.Series
+) -> None:
     """ Test memory caching in PipelineDF - taken almost 1:1 from
     sklearn.tests.test_pipeline """
 
@@ -124,26 +126,24 @@ def test_pipelinedf_memory(iris_sample: Sample) -> None:
         cached_pipe = PipelineDF([("transf", transf), ("svc", clf)], memory=memory)
 
         # Memoize the transformer at the first fit
-        cached_pipe.fit(iris_sample.features, iris_sample.target)
-        pipe.fit(iris_sample.features, iris_sample.target)
+        cached_pipe.fit(iris_features, iris_target_sr)
+        pipe.fit(iris_features, iris_target_sr)
         # Get the time stamp of the transformer in the cached pipeline
         ts = cached_pipe.named_steps["transf"].timestamp_
         # Check that cached_pipe and pipe yield identical results
         assert_array_equal(
-            pipe.predict(iris_sample.features),
-            cached_pipe.predict(iris_sample.features),
+            pipe.predict(iris_features), cached_pipe.predict(iris_features)
         )
         assert_array_equal(
-            pipe.predict_proba(iris_sample.features),
-            cached_pipe.predict_proba(iris_sample.features),
+            pipe.predict_proba(iris_features), cached_pipe.predict_proba(iris_features)
         )
         assert_array_equal(
-            pipe.predict_log_proba(iris_sample.features),
-            cached_pipe.predict_log_proba(iris_sample.features),
+            pipe.predict_log_proba(iris_features),
+            cached_pipe.predict_log_proba(iris_features),
         )
         assert_array_equal(
-            pipe.score(iris_sample.features, iris_sample.target),
-            cached_pipe.score(iris_sample.features, iris_sample.target),
+            pipe.score(iris_features, iris_target_sr),
+            cached_pipe.score(iris_features, iris_target_sr),
         )
         assert_array_equal(
             pipe.named_steps["transf"].means_, cached_pipe.named_steps["transf"].means_
@@ -151,23 +151,21 @@ def test_pipelinedf_memory(iris_sample: Sample) -> None:
         assert not hasattr(transf, "means_")
         # Check that we are reading the cache while fitting
         # a second time
-        cached_pipe.fit(iris_sample.features, iris_sample.target)
+        cached_pipe.fit(iris_features, iris_target_sr)
         # Check that cached_pipe and pipe yield identical results
         assert_array_equal(
-            pipe.predict(iris_sample.features),
-            cached_pipe.predict(iris_sample.features),
+            pipe.predict(iris_features), cached_pipe.predict(iris_features)
         )
         assert_array_equal(
-            pipe.predict_proba(iris_sample.features),
-            cached_pipe.predict_proba(iris_sample.features),
+            pipe.predict_proba(iris_features), cached_pipe.predict_proba(iris_features)
         )
         assert_array_equal(
-            pipe.predict_log_proba(iris_sample.features),
-            cached_pipe.predict_log_proba(iris_sample.features),
+            pipe.predict_log_proba(iris_features),
+            cached_pipe.predict_log_proba(iris_features),
         )
         assert_array_equal(
-            pipe.score(iris_sample.features, iris_sample.target),
-            cached_pipe.score(iris_sample.features, iris_sample.target),
+            pipe.score(iris_features, iris_target_sr),
+            cached_pipe.score(iris_features, iris_target_sr),
         )
         assert_array_equal(
             pipe.named_steps["transf"].means_, cached_pipe.named_steps["transf"].means_
@@ -180,24 +178,23 @@ def test_pipelinedf_memory(iris_sample: Sample) -> None:
         cached_pipe_2 = PipelineDF(
             [("transf_2", transf_2), ("svc", clf_2)], memory=memory
         )
-        cached_pipe_2.fit(iris_sample.features, iris_sample.target)
+        cached_pipe_2.fit(iris_features, iris_target_sr)
 
         # Check that cached_pipe and pipe yield identical results
         assert_array_equal(
-            pipe.predict(iris_sample.features),
-            cached_pipe_2.predict(iris_sample.features),
+            pipe.predict(iris_features), cached_pipe_2.predict(iris_features)
         )
         assert_array_equal(
-            pipe.predict_proba(iris_sample.features),
-            cached_pipe_2.predict_proba(iris_sample.features),
+            pipe.predict_proba(iris_features),
+            cached_pipe_2.predict_proba(iris_features),
         )
         assert_array_equal(
-            pipe.predict_log_proba(iris_sample.features),
-            cached_pipe_2.predict_log_proba(iris_sample.features),
+            pipe.predict_log_proba(iris_features),
+            cached_pipe_2.predict_log_proba(iris_features),
         )
         assert_array_equal(
-            pipe.score(iris_sample.features, iris_sample.target),
-            cached_pipe_2.score(iris_sample.features, iris_sample.target),
+            pipe.score(iris_features, iris_target_sr),
+            cached_pipe_2.score(iris_features, iris_target_sr),
         )
         assert_array_equal(
             pipe.named_steps["transf"].means_,

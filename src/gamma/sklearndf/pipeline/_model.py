@@ -19,9 +19,9 @@ from abc import ABC, abstractmethod
 from typing import *
 
 import pandas as pd
+from gamma.common import ListLike
 from sklearn.base import BaseEstimator
 
-from gamma import ListLike
 from gamma.sklearndf import (
     BaseEstimatorDF,
     BasePredictorDF,

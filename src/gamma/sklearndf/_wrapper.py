@@ -29,6 +29,7 @@ from typing import *
 
 import numpy as np
 import pandas as pd
+from gamma.common import ListLike, MatrixLike
 from sklearn.base import (
     BaseEstimator,
     ClassifierMixin,
@@ -36,7 +37,6 @@ from sklearn.base import (
     TransformerMixin,
 )
 
-from gamma import ListLike, MatrixLike
 from gamma.sklearndf import (
     BaseEstimatorDF,
     BasePredictorDF,

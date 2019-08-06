@@ -26,6 +26,7 @@ from abc import ABC, abstractmethod
 from typing import *
 
 import pandas as pd
+from gamma.common import ListLike
 from sklearn.base import (
     BaseEstimator,
     ClassifierMixin,
@@ -33,8 +34,6 @@ from sklearn.base import (
     RegressorMixin,
     TransformerMixin,
 )
-
-from gamma import ListLike, Sample
 
 log = logging.getLogger(__name__)
 
@@ -182,20 +181,6 @@ class TransformerDF(
     @abstractmethod
     def inverse_transform(self, X: pd.DataFrame) -> pd.DataFrame:
         pass
-
-    def fit_transform_sample(self, sample: Sample) -> Sample:
-        """
-        Fit and transform with input/output as a :class:`~yieldengine.Sample` object.
-
-        :param sample: sample used as input
-        :return: transformed sample
-        """
-        return Sample(
-            observations=pd.concat(
-                objs=[self.fit_transform(sample.features), sample.target], axis=1
-            ),
-            target_name=sample.target_name,
-        )
 
     @property
     def columns_original(self) -> pd.Series:
