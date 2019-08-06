@@ -126,6 +126,7 @@ setup(
         "lightgbm>=2.2,<2.3",
         "scikit-learn>=0.21,<0.22",
         "boruta>=0.3,<0.4",
+        "gamma-common>=1.0.0,<1.1.0",
     ],
     # add dependeny to gamma-common using git-URL:
     # todo: add tag for version control in there
