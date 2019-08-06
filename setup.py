@@ -105,7 +105,11 @@ setup(
     #   py_modules=["my_module"],
     #
     # packages=find_packages(exclude=['contrib', 'docs', 'tests']),  # Required
-    packages=["gamma.sklearndf"],
+    packages=[
+        "gamma.sklearndf",
+        "gamma.sklearndf.pipeline",
+        "gamma.sklearndf.transformation",
+    ],
     package_dir={"": "src"},
     namespace_packages=["gamma"],
     # Specify which Python versions you support. In contrast to the
