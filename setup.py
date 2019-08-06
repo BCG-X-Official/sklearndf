@@ -126,13 +126,10 @@ setup(
         "lightgbm>=2.2,<2.3",
         "scikit-learn>=0.21,<0.22",
         "boruta>=0.3,<0.4",
-        "gamma-common>=1.0.0,<1.1.0",
+        # todo: add tag for version control in there
+        "gamma-common @ git+ssh://git@git.sourceai.io/schneider-joerg/gamma-common.git#egg=gamma.common",
     ],
-    # add dependeny to gamma-common using git-URL:
-    # todo: add tag for version control in there
-    dependency_links=[
-        "git+ssh://git@git.sourceai.io/schneider-joerg/gamma-common.git#egg=gamma.common"
-    ],
+    dependency_links=[],
     # Optional
     # List additional groups of dependencies here (e.g. development
     # dependencies). Users will be able to install these using the "extras"
