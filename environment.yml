@@ -1,11 +1,9 @@
-name: yield-engine
+name: gamma-sklearndf
 channels:
   - conda-forge
 dependencies:
   - black = 19.3
-  - joblib = 0.13.*
   - lightgbm = 2.2.*
-  - matplotlib = 3.0.*
   - nbsphinx=0.4.*
   - numpy = 1.16.*
   - pandas = 0.24.*
@@ -17,7 +15,6 @@ dependencies:
   - pyyaml = 5.1.*
   - scikit-learn = 0.21.*
   - scipy = 1.2.*
-  - shap = 0.28.*
   - sphinx-autodoc-typehints=1.6.*
   - sphinx=2.0.*
   - sphinx_rtd_theme=0.4.*
@@ -26,3 +23,4 @@ dependencies:
   - pip:
       - pre_commit == 1.16.*
       - boruta == 0.3
+      - git+ssh://git@git.sourceai.io/schneider-joerg/gamma-common.git#egg=gamma.common
