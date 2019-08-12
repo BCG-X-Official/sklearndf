@@ -5,18 +5,25 @@ import pytest
 
 import gamma.sklearndf.regression
 from gamma.sklearndf import RegressorDF
-from gamma.sklearndf.regression import RandomForestRegressorDF, SVRDF
+from gamma.sklearndf.regression import (
+    _RegressorTransformerWrapperDF,
+    ColumnPreservingTransformerWrapperDF,
+    RandomForestRegressorDF,
+    RegressorWrapperDF,
+    SVRDF,
+    TransformerDF,
+)
 from test.gamma.sklearndf import get_classes, get_missing_init_parameter
 
 REGRESSORS_TO_TEST: List[Type] = get_classes(
     from_module=gamma.sklearndf.regression,
     regex=r".*DF",
     ignore=[
-        "RegressorDF",
-        "RegressorWrapperDF",
-        "ColumnPreservingTransformerWrapperDF",
-        "_RegressorTransformerWrapperDF",
-        "TransformerDF",
+        RegressorWrapperDF.__name__,
+        RegressorDF.__name__,
+        ColumnPreservingTransformerWrapperDF.__name__,
+        _RegressorTransformerWrapperDF.__name__,
+        TransformerDF.__name__,
     ],
 )
 
