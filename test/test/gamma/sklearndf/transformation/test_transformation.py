@@ -1,29 +1,18 @@
+from typing import *
+
 import numpy as np
 import pandas as pd
 import pytest
+import sklearn
 from pandas.util.testing import assert_frame_equal
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import (
-    MaxAbsScaler,
-    MinMaxScaler,
-    Normalizer,
-    PowerTransformer,
-    QuantileTransformer,
-    RobustScaler,
-    StandardScaler,
-)
+from sklearn.preprocessing import Normalizer
 
-from gamma.sklearndf.transformation import (
-    ColumnTransformerDF,
-    MaxAbsScalerDF,
-    MinMaxScalerDF,
-    NormalizerDF,
-    PowerTransformerDF,
-    QuantileTransformerDF,
-    RobustScalerDF,
-    StandardScalerDF,
-)
+import gamma.sklearndf
+import gamma.sklearndf.transformation
+from gamma.sklearndf.transformation import ColumnTransformerDF, NormalizerDF
 from gamma.sklearndf.transformation.extra import OutlierRemoverDF
+from test.gamma.sklearndf import get_classes, get_wrapped_counterpart
 
 
 @pytest.fixture
@@ -36,39 +25,46 @@ def test_data() -> pd.DataFrame:
     )
 
 
-def test_various(test_data: pd.DataFrame) -> None:
+@pytest.mark.parametrize(
+    argnames="sklearndf_cls",
+    argvalues=get_classes(from_module=gamma.sklearndf.transformation, regex=r".*DF"),
+)
+def test_wrapped_constructor(sklearndf_cls: Type) -> None:
+    sklearndf_cls()
 
-    to_test = [
-        (StandardScalerDF, StandardScaler),
-        (MinMaxScalerDF, MinMaxScaler),
-        (MaxAbsScalerDF, MaxAbsScaler),
-        (RobustScalerDF, RobustScaler),
-        (PowerTransformerDF, PowerTransformer),
-        (QuantileTransformerDF, QuantileTransformer),
-    ]
 
-    for df_transf, src_transf in to_test:
-        # initalize both kind of transformers
-        df_t = df_transf()
-        non_df_t = src_transf()
+@pytest.mark.parametrize(
+    argnames="sklearn_cls",
+    argvalues=get_classes(
+        from_module=sklearn.preprocessing,
+        regex=r".*PowerTransformer|QuantileTransformer|.*Scaler",
+    ),
+)
+def test_various_transformers(sklearn_cls: Type, test_data: pd.DataFrame) -> None:
+    # get the wrapped counterpart for sklearn:
+    df_transf_cls = get_wrapped_counterpart(
+        to_wrap=sklearn_cls, from_package=gamma.sklearndf.transformation
+    )
 
-        # test fit-transform on both in conjecture with ColumnTransformer(DF)
-        df_col_t = ColumnTransformerDF(
-            transformers=[("t", df_t, ["c0"])], remainder="drop"
-        )
-        transformed_df = df_col_t.fit_transform(X=test_data)
+    # initalize both kind of transformers
+    df_t = df_transf_cls()
+    non_df_t = sklearn_cls()
 
-        assert isinstance(transformed_df, pd.DataFrame)
+    # test fit-transform on both in conjecture with ColumnTransformer(DF)
+    df_col_t = ColumnTransformerDF(transformers=[("t", df_t, ["c0"])], remainder="drop")
+    transformed_df = df_col_t.fit_transform(X=test_data)
 
-        non_df_col_t = ColumnTransformer(transformers=[("t", non_df_t, ["c0"])])
+    assert isinstance(transformed_df, pd.DataFrame)
 
-        transformed_non_df = non_df_col_t.fit_transform(X=test_data)
+    non_df_col_t = ColumnTransformer(transformers=[("t", non_df_t, ["c0"])])
 
-        assert "c0" in transformed_df.columns
-        assert np.all(
-            np.round(transformed_df["c0"].values, 1)
-            == np.round(transformed_non_df.reshape(10), 1)
-        )
+    transformed_non_df = non_df_col_t.fit_transform(X=test_data)
+
+    assert "c0" in transformed_df.columns
+    assert np.all(
+        np.round(transformed_df["c0"].values, 1)
+        == np.round(transformed_non_df.reshape(10), 1)
+    )
 
 
 def test_normalizer_df() -> None:
