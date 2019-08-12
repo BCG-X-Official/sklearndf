@@ -10,9 +10,20 @@ from sklearn.preprocessing import Normalizer
 
 import gamma.sklearndf
 import gamma.sklearndf.transformation
-from gamma.sklearndf.transformation import ColumnTransformerDF, NormalizerDF
+from gamma.sklearndf.transformation import (
+    ColumnTransformerDF,
+    NormalizerDF,
+    TransformerDF,
+    TransformerWrapperDF,
+)
 from gamma.sklearndf.transformation.extra import OutlierRemoverDF
 from test.gamma.sklearndf import get_classes, get_wrapped_counterpart
+
+TRANSFORMERS_TO_TEST = get_classes(
+    from_module=gamma.sklearndf.transformation,
+    regex=r".*DF",
+    ignore=[TransformerDF.__name__, TransformerWrapperDF.__name__],
+)
 
 
 @pytest.fixture
@@ -25,10 +36,7 @@ def test_data() -> pd.DataFrame:
     )
 
 
-@pytest.mark.parametrize(
-    argnames="sklearndf_cls",
-    argvalues=get_classes(from_module=gamma.sklearndf.transformation, regex=r".*DF"),
-)
+@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=TRANSFORMERS_TO_TEST)
 def test_wrapped_constructor(sklearndf_cls: Type) -> None:
     sklearndf_cls()
 
