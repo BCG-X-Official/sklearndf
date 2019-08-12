@@ -5,7 +5,11 @@ from typing import Type
 
 
 def get_classes(from_module, regex) -> List[Type]:
-    return [m[1] for m in inspect.getmembers(from_module) if re.match(regex, m[0])]
+    return [
+        m[1]
+        for m in inspect.getmembers(from_module)
+        if re.match(regex, m[0]) and isinstance(m[1], type)
+    ]
 
 
 def get_wrapped_counterpart(to_wrap: Type, from_package=None) -> Type:
