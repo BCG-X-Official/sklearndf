@@ -8,8 +8,6 @@ from gamma.sklearndf.regression import RandomForestRegressorDF
 def test_dataframe_predictor_classifier(
     iris_df: pd.DataFrame, iris_target: str
 ) -> None:
-    # implement a lightweight BasePredictorWrapperDF for RandomForestClassifier...
-
     classifier_df = RandomForestClassifierDF()
 
     x = iris_df.drop(columns=iris_target)
