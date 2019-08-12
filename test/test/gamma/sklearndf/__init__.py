@@ -4,12 +4,15 @@ from typing import *
 from typing import Type
 
 
-def get_classes(from_module, regex) -> List[Type]:
+def get_classes(from_module, regex: str, ignore: Iterable[str] = None) -> List[Type]:
     """ Helper to return all classes with matching name from a Python module """
+    if ignore is None:
+        ignore = []
+
     return [
         m[1]
         for m in inspect.getmembers(from_module)
-        if re.match(regex, m[0]) and isinstance(m[1], type)
+        if re.match(regex, m[0]) and isinstance(m[1], type) and not m[0] in ignore
     ]
 
 
