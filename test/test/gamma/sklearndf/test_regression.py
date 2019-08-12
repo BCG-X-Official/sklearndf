@@ -47,7 +47,7 @@ def test_wrapped_constructor(sklearndf_cls: Type) -> None:
 def test_wrapped_fit_predict(
     sklearndf_cls: Type, boston_features: pd.DataFrame, boston_target_sr: pd.DataFrame
 ) -> None:
-    """ Test standard constructor of wrapped sklearn regressors """
+    """ Test fit & predict of wrapped sklearn regressors """
     try:
         rgr: RegressorDF = sklearndf_cls()
     except TypeError as te:
