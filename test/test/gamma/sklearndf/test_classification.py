@@ -6,64 +6,77 @@ import pytest
 
 import gamma.sklearndf.classification
 from gamma.sklearndf import ClassifierDF
-from gamma.sklearndf.classification import RandomForestClassifierDF
-from test.gamma.sklearndf import get_classes
+from gamma.sklearndf.classification import RandomForestClassifierDF, SVCDF
+from test.gamma.sklearndf import get_classes, get_missing_init_parameter
 
-
-@pytest.mark.parametrize(
-    argnames="sklearndf_cls",
-    argvalues=get_classes(
-        from_module=gamma.sklearndf.classification,
-        regex=r".*DF",
-        ignore=["ClassifierDF", "ClassifierWrapperDF"],
-    ),
+CLASSIFIERS_TO_TEST = get_classes(
+    from_module=gamma.sklearndf.classification,
+    regex=r".*DF",
+    ignore=["ClassifierDF", "ClassifierWrapperDF"],
 )
+
+DEFAULT_INIT_PARAMETERS = {
+    "estimator": {"estimator": RandomForestClassifierDF()},
+    "base_estimator": {"base_estimator": RandomForestClassifierDF()},
+    "estimators": {
+        "estimators": [("rfc", RandomForestClassifierDF()), ("svmc", SVCDF())]
+    },
+}
+
+
+@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST)
 def test_wrapped_constructor(sklearndf_cls: Type) -> None:
     try:
         cls: ClassifierDF = sklearndf_cls()
     except TypeError as te:
-        # some Classifiers need special kwargs in __init__ we can't easily infer:
-        if "missing 1 required positional argument" in str(te):
-            # parameter 'base_estimator' is expected:
-            if "'base_estimator'" in str(te):
-                cls = sklearndf_cls(base_estimator=RandomForestClassifierDF())
-            # parameter 'estimator' is expected:
-            elif "'estimator'" in str(te):
-                cls = sklearndf_cls(estimator=RandomForestClassifierDF())
-            # parameter 'estimators' is expected:
-            elif "'estimators'" in str(te):
-                cls = sklearndf_cls(estimators=[RandomForestClassifierDF()])
-            # unknown Exception, raise it:
-            else:
-                raise te
-        # unknown Exception, raise it:
-        else:
+        # some classifiers need additional parameters, look up their key and add
+        # default:
+        missing_init_parameter = get_missing_init_parameter(te=te)
+        if missing_init_parameter not in DEFAULT_INIT_PARAMETERS:
             raise te
+        else:
+            cls = sklearndf_cls(**DEFAULT_INIT_PARAMETERS[missing_init_parameter])
 
 
-def test_classifier_df(iris_df: pd.DataFrame, iris_target: str) -> None:
-    classifier_df = RandomForestClassifierDF()
+@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST)
+def test_wrapped_fit_predict(
+    sklearndf_cls: Type, iris_features: pd.DataFrame, iris_target_sr: pd.Series
+) -> None:
+    try:
+        cls: ClassifierDF = sklearndf_cls()
+    except TypeError as te:
+        # some classifiers need additional parameters, look up their key and add
+        # default:
+        missing_init_parameter = get_missing_init_parameter(te=te)
+        if missing_init_parameter not in DEFAULT_INIT_PARAMETERS:
+            raise te
+        else:
+            cls = sklearndf_cls(**DEFAULT_INIT_PARAMETERS[missing_init_parameter])
 
-    x = iris_df.drop(columns=iris_target)
-    y = iris_df.loc[:, iris_target]
-
-    classifier_df.fit(X=x, y=y)
-
-    predictions = classifier_df.predict(X=x)
+    cls.fit(X=iris_features, y=iris_target_sr)
+    predictions = cls.predict(X=iris_features)
 
     # test predictions data-type, length and values
     assert isinstance(predictions, pd.Series)
-    assert len(predictions) == len(y)
-    assert np.all(predictions.isin(y.unique()))
+    assert len(predictions) == len(iris_target_sr)
+    assert np.all(predictions.isin(iris_target_sr.unique()))
 
-    # test predict_proba & predict_log_proba
-    for func in (classifier_df.predict_proba, classifier_df.predict_log_proba):
-        predicted_probas = func(X=x)
+    # test predict_proba & predict_log_proba if delegate-classifier has them:
+    test_funcs = [
+        getattr(cls, attr)
+        for attr in ["predict_proba", "predict_log_proba"]
+        if hasattr(cls.delegate_estimator, attr)
+    ]
+    for func in test_funcs:
+        predicted_probas = func(X=iris_features)
 
         # test data-type and shape
         assert isinstance(predicted_probas, pd.DataFrame)
-        assert len(predicted_probas) == len(y)
-        assert predicted_probas.shape == (len(y), len(y.unique()))
+        assert len(predicted_probas) == len(iris_target_sr)
+        assert predicted_probas.shape == (
+            len(iris_target_sr),
+            len(iris_target_sr.unique()),
+        )
 
         # check correct labels are set as columns
-        assert list(y.unique()) == list(predicted_probas.columns)
+        assert list(iris_target_sr.unique()) == list(predicted_probas.columns)
