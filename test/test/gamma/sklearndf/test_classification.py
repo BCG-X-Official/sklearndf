@@ -1,7 +1,44 @@
+from typing import *
+
 import numpy as np
 import pandas as pd
+import pytest
 
+import gamma.sklearndf.classification
+from gamma.sklearndf import ClassifierDF
 from gamma.sklearndf.classification import RandomForestClassifierDF
+from test.gamma.sklearndf import get_classes
+
+
+@pytest.mark.parametrize(
+    argnames="sklearndf_cls",
+    argvalues=get_classes(
+        from_module=gamma.sklearndf.classification,
+        regex=r".*DF",
+        ignore=["ClassifierDF", "ClassifierWrapperDF"],
+    ),
+)
+def test_wrapped_constructor(sklearndf_cls: Type) -> None:
+    try:
+        cls: ClassifierDF = sklearndf_cls()
+    except TypeError as te:
+        # some Classifiers need special kwargs in __init__ we can't easily infer:
+        if "missing 1 required positional argument" in str(te):
+            # parameter 'base_estimator' is expected:
+            if "'base_estimator'" in str(te):
+                cls = sklearndf_cls(base_estimator=RandomForestClassifierDF())
+            # parameter 'estimator' is expected:
+            elif "'estimator'" in str(te):
+                cls = sklearndf_cls(estimator=RandomForestClassifierDF())
+            # parameter 'estimators' is expected:
+            elif "'estimators'" in str(te):
+                cls = sklearndf_cls(estimators=[RandomForestClassifierDF()])
+            # unknown Exception, raise it:
+            else:
+                raise te
+        # unknown Exception, raise it:
+        else:
+            raise te
 
 
 def test_classifier_df(iris_df: pd.DataFrame, iris_target: str) -> None:
