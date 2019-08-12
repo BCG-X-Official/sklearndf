@@ -22,7 +22,7 @@ import pandas as pd
 from boruta import BorutaPy
 from sklearn.base import BaseEstimator
 
-from gamma.sklearndf import TransformerDF
+from gamma.sklearndf import BasePredictorDF, T_Predictor, TransformerDF
 from gamma.sklearndf.transformation import ColumnSubsetTransformerWrapperDF
 from gamma.sklearndf.transformation._wrapper import NDArrayTransformerWrapperDF
 
@@ -151,7 +151,7 @@ class BorutaDF(
 
     def __init__(
         self,
-        estimator,
+        estimator: Union[T_Predictor, BasePredictorDF],
         n_estimators=1000,
         perc=100,
         alpha=0.05,
@@ -162,7 +162,11 @@ class BorutaDF(
         **kwargs,
     ) -> None:
         super().__init__(
-            estimator=estimator,
+            estimator=(
+                estimator.delegate_estimator
+                if hasattr(estimator, "delegate_estimator")
+                else estimator
+            ),
             n_estimators=n_estimators,
             perc=perc,
             alpha=alpha,
