@@ -46,11 +46,20 @@ def boston_df(boston_target: str) -> pd.DataFrame:
     #  load sklearn test-data and convert to pd
     boston: Bunch = datasets.load_boston()
 
-    # use first 100 rows only, since KernelExplainer is very slow...
     return pd.DataFrame(
         data=np.c_[boston.data, boston.target],
         columns=[*boston.feature_names, boston_target],
     )
+
+
+@pytest.fixture
+def boston_features(boston_df: pd.DataFrame, boston_target: str) -> pd.DataFrame:
+    return boston_df.drop(labels=[boston_target], axis=1)
+
+
+@pytest.fixture
+def boston_target_sr(boston_df: pd.DataFrame, boston_target: str) -> pd.Series:
+    return boston_df.loc[:, boston_target]
 
 
 @pytest.fixture

@@ -243,18 +243,6 @@ def test_pipelinedf__init() -> None:
     assert pipe.named_steps["anova"] is filter1
     assert pipe.named_steps["svc"] is clf
 
-    # todo: decide if this assertion is needed - currently can't be tested since
-    #  functions such as fit, transform, etc. are provided by sklearndf, even though
-    #  delegate_estimator is not guaranteed to have them!
-    # Check that we can't instantiate with non-transformers on the way
-    # Note that NoTrans implements fit, but not transform
-    # assert_raises_regex(
-    #    TypeError,
-    #    "All intermediate steps should be transformers" ".*\\bNoTrans\\b.*",
-    #    PipelineDF,
-    #    [("t", NoTransDF()), ("svc", clf)],
-    # )
-
     # Check that params are set
     pipe.set_params(svc__C=0.1)
     assert clf.C == 0.1
