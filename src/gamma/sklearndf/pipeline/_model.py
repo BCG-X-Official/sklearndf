@@ -34,7 +34,7 @@ log = logging.getLogger(__name__)
 
 __all__ = [
     "EstimatorPipelineDF",
-    "PredictivePipelineDF",
+    "PredictorPipelineDF",
     "RegressorPipelineDF",
     "ClassifierPipelineDF",
 ]
@@ -125,7 +125,7 @@ class EstimatorPipelineDF(
             return X
 
 
-class PredictivePipelineDF(
+class PredictorPipelineDF(
     EstimatorPipelineDF[T_PredictorDF], Generic[T_PredictorDF], ABC
 ):
 
@@ -161,7 +161,7 @@ class PredictivePipelineDF(
 
 
 class RegressorPipelineDF(
-    PredictivePipelineDF[T_RegressorDF], RegressorDF, Generic[T_RegressorDF]
+    PredictorPipelineDF[T_RegressorDF], RegressorDF, Generic[T_RegressorDF]
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
@@ -195,7 +195,7 @@ class RegressorPipelineDF(
 
 
 class ClassifierPipelineDF(
-    PredictivePipelineDF[T_ClassifierDF], ClassifierDF, Generic[T_ClassifierDF]
+    PredictorPipelineDF[T_ClassifierDF], ClassifierDF, Generic[T_ClassifierDF]
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
