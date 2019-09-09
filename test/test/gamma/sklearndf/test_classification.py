@@ -45,11 +45,13 @@ def test_wrapped_constructor(sklearndf_cls: Type) -> None:
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST)
 def test_wrapped_fit_predict(
-    sklearndf_cls: Type, iris_features: pd.DataFrame, iris_target_sr: pd.Series
+    sklearndf_cls: Type[ClassifierDF],
+    iris_features: pd.DataFrame,
+    iris_target_sr: pd.Series,
 ) -> None:
     """ Test fit & predict & predict[_log]_proba of wrapped sklearn classifiers """
     try:
-        cls: ClassifierDF = sklearndf_cls()
+        cls = sklearndf_cls()
     except TypeError as te:
         # some classifiers need additional parameters, look up their key and add
         # default:

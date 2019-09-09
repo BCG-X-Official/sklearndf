@@ -3,7 +3,7 @@ import pytest
 from lightgbm import LGBMRegressor
 from sklearn.preprocessing import OneHotEncoder
 
-from gamma.sklearndf.pipeline import RegressionPipelineDF
+from gamma.sklearndf.pipeline import RegressorPipelineDF
 from gamma.sklearndf.regression import LGBMRegressorDF
 from test.gamma.sklearndf.pipeline import make_simple_transformer
 
@@ -12,7 +12,7 @@ def test_regression_pipeline_df(
     boston_features: pd.DataFrame, boston_target_sr: pd.Series
 ) -> None:
 
-    rpdf = RegressionPipelineDF(
+    rpdf = RegressorPipelineDF(
         regressor=LGBMRegressorDF(),
         preprocessing=make_simple_transformer(
             impute_median_columns=boston_features.select_dtypes(
@@ -30,4 +30,4 @@ def test_regression_pipeline_df(
     # test-type check within constructor:
     with pytest.raises(TypeError):
         # noinspection PyTypeChecker
-        RegressionPipelineDF(regressor=LGBMRegressor(), preprocessing=OneHotEncoder())
+        RegressorPipelineDF(regressor=LGBMRegressor(), preprocessing=OneHotEncoder())
