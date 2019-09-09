@@ -35,8 +35,8 @@ log = logging.getLogger(__name__)
 __all__ = [
     "EstimatorPipelineDF",
     "PredictivePipelineDF",
-    "RegressionPipelineDF",
-    "ClassificationPipelineDF",
+    "RegressorPipelineDF",
+    "ClassifierPipelineDF",
 ]
 
 T_EstimatorDF = TypeVar("T_EstimatorDF", bound=BaseEstimatorDF)
@@ -160,7 +160,7 @@ class PredictivePipelineDF(
         return self.final_estimator_.n_outputs
 
 
-class RegressionPipelineDF(
+class RegressorPipelineDF(
     PredictivePipelineDF[T_RegressorDF], RegressorDF, Generic[T_RegressorDF]
 ):
     """
@@ -194,7 +194,7 @@ class RegressionPipelineDF(
         return "regressor"
 
 
-class ClassificationPipelineDF(
+class ClassifierPipelineDF(
     PredictivePipelineDF[T_ClassifierDF], ClassifierDF, Generic[T_ClassifierDF]
 ):
     """

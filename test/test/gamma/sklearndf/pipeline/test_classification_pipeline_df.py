@@ -4,7 +4,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import OneHotEncoder
 
 from gamma.sklearndf.classification import RandomForestClassifierDF
-from gamma.sklearndf.pipeline import ClassificationPipelineDF
+from gamma.sklearndf.pipeline import ClassifierPipelineDF
 from test.gamma.sklearndf.pipeline import make_simple_transformer
 
 
@@ -12,7 +12,7 @@ def test_classification_pipeline_df(
     iris_features: pd.DataFrame, iris_target_sr: pd.DataFrame
 ) -> None:
 
-    cls_p_df = ClassificationPipelineDF(
+    cls_p_df = ClassifierPipelineDF(
         classifier=RandomForestClassifierDF(),
         preprocessing=make_simple_transformer(
             impute_median_columns=iris_features.select_dtypes(
@@ -28,6 +28,6 @@ def test_classification_pipeline_df(
     # test-type check within constructor:
     with pytest.raises(TypeError):
         # noinspection PyTypeChecker
-        ClassificationPipelineDF(
+        ClassifierPipelineDF(
             classifier=RandomForestClassifier(), preprocessing=OneHotEncoder()
         )
