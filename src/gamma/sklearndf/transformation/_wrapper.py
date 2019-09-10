@@ -185,6 +185,14 @@ class ComponentsDimensionalityReductionWrapperDF(
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
+
+    # noinspection PyPep8Naming
+    def _post_fit(
+        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params
+    ) -> None:
+        # noinspection PyProtectedMember
+        super()._post_fit(X, y, **fit_params)
+        raise RuntimeError("TEST")
         self._validate_delegate_attribute(attribute_name=self._ATTR_COMPONENTS)
 
     @property
