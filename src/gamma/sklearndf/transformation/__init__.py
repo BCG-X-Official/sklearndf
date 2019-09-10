@@ -114,7 +114,7 @@ from gamma.sklearndf.transformation._wrapper import (
 
 log = logging.getLogger(__name__)
 
-__all__ = [sym for sym in dir() if sym.endswith("DF")]
+__all__ = [sym for sym in dir() if sym.endswith("DF") and not sym.endswith("WrapperDF")]
 
 #
 # cluster
@@ -136,7 +136,7 @@ class FeatureAgglomerationDF(FeatureAgglomeration, TransformerDF):
 #
 
 
-class ColumnTransformerDF(TransformerWrapperDF[ColumnTransformer]):
+class ColumnTransformerWrapperDF(TransformerWrapperDF[ColumnTransformer]):
     """
     Wrap :class:`sklearn.compose.ColumnTransformer` and return a DataFrame.
 
@@ -174,10 +174,6 @@ class ColumnTransformerDF(TransformerWrapperDF[ColumnTransformer]):
 
         self._columnTransformer = column_transformer
 
-    @classmethod
-    def _make_delegate_estimator(cls, *args, **kwargs) -> ColumnTransformer:
-        return ColumnTransformer(*args, **kwargs)
-
     def _get_columns_original(self) -> pd.Series:
         """
         Return the series mapping output column names to original columns names.
@@ -200,6 +196,16 @@ class ColumnTransformerDF(TransformerWrapperDF[ColumnTransformer]):
             if len(columns) > 0
             if df_transformer != "drop"
         )
+
+
+@df_estimator(df_wrapper_type=ColumnTransformerWrapperDF)
+class ColumnTransformerDF(ColumnTransformer, TransformerDF):
+    """
+    Wraps :class:`sklearn.compose.ColumnTransformer`;
+    accepts and returns data frames.
+    """
+
+    pass
 
 
 #
