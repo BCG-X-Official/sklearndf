@@ -355,6 +355,21 @@ class IsomapDF(BaseDimensionalityReductionWrapperDF[Isomap]):
         return Isomap(*args, **kwargs)
 
 
+class AdditiveChi2SamplerDF(BaseDimensionalityReductionWrapperDF[AdditiveChi2Sampler]):
+    """
+    Wraps :class:`sklearn.kernel_approximation.AdditiveChi2Sampler`;
+    accepts and returns data frames.
+    """
+
+    @property
+    def _n_components(self) -> int:
+        return len(self._columns_in) * (2 * self.delegate_estimator.sample_steps + 1)
+
+    @classmethod
+    def _make_delegate_estimator(cls, *args, **kwargs) -> AdditiveChi2Sampler:
+        return AdditiveChi2Sampler(*args, **kwargs)
+
+
 #
 # neighbors
 #
@@ -541,7 +556,7 @@ class OneHotEncoderDF(TransformerWrapperDF[OneHotEncoder]):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
         if self.delegate_estimator.sparse:
-            raise ValueError(
+            raise NotImplementedError(
                 "sparse matrices not supported; set OneHotEncoder.sparse to False"
             )
 
@@ -785,16 +800,6 @@ class TruncatedSVDDF(TruncatedSVD, TransformerDF):
 # Transformer which have an n_components attribute
 # Implemented through NComponentsDimensionalityReductionWrapperDF
 #
-
-
-@df_estimator(df_wrapper_type=NComponentsDimensionalityReductionWrapperDF)
-class AdditiveChi2SamplerDF(AdditiveChi2Sampler, TransformerDF):
-    """
-    Wraps :class:`sklearn.kernel_approximation.AdditiveChi2Sampler`;
-    accepts and returns data frames.
-    """
-
-    pass
 
 
 @df_estimator(df_wrapper_type=NComponentsDimensionalityReductionWrapperDF)

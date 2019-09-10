@@ -10,19 +10,36 @@ from sklearn.preprocessing import Normalizer
 
 import gamma.sklearndf
 import gamma.sklearndf.transformation
+from gamma.sklearndf.classification import RandomForestClassifierDF
 from gamma.sklearndf.transformation import (
     ColumnTransformerDF,
     NormalizerDF,
     TransformerDF,
-    TransformerWrapperDF,
+    OneHotEncoderDF,
+    SelectFromModelDF,
+    SparseCoderDF,
+    ColumnTransformerDF,
+    KBinsDiscretizerDF,
+    RFECVDF,
+    RFEDF,
 )
 from gamma.sklearndf.transformation.extra import OutlierRemoverDF
 from test.gamma.sklearndf import get_classes, get_wrapped_counterpart
 
 TRANSFORMERS_TO_TEST = get_classes(
     from_module=gamma.sklearndf.transformation,
-    regex=r".*DF",
-    ignore=[TransformerDF.__name__, TransformerWrapperDF.__name__],
+    matching=r".*DF",
+    excluding=[
+        TransformerDF.__name__,
+        OneHotEncoderDF.__name__,
+        SelectFromModelDF.__name__,
+        SparseCoderDF.__name__,
+        ColumnTransformerDF.__name__,
+        KBinsDiscretizerDF.__name__,
+        RFECVDF.__name__,
+        RFEDF.__name__,
+        r".*WrapperDF",
+    ],
 )
 
 
@@ -37,15 +54,37 @@ def test_data() -> pd.DataFrame:
 
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=TRANSFORMERS_TO_TEST)
-def test_wrapped_constructor(sklearndf_cls: Type) -> None:
+def test_wrapped_constructor(sklearndf_cls: Type[TransformerDF]) -> None:
     sklearndf_cls()
+
+
+def test_special_wrapped_constructors() -> None:
+    rf = RandomForestClassifierDF()
+
+    with pytest.raises(NotImplementedError):
+        OneHotEncoderDF()
+    OneHotEncoderDF(sparse=False)
+
+    SelectFromModelDF(estimator=rf)
+
+    SparseCoderDF(dictionary=np.array([]))
+
+    ColumnTransformerDF(transformers=[])
+
+    with pytest.raises(NotImplementedError):
+        KBinsDiscretizerDF()
+    KBinsDiscretizerDF(encode="onehot-dense")
+
+    RFECVDF(estimator=rf)
+
+    RFEDF(estimator=rf)
 
 
 @pytest.mark.parametrize(
     argnames="sklearn_cls",
     argvalues=get_classes(
         from_module=sklearn.preprocessing,
-        regex=r".*PowerTransformer|QuantileTransformer|.*Scaler",
+        matching=r".*PowerTransformer|QuantileTransformer|.*Scaler",
     ),
 )
 def test_various_transformers(sklearn_cls: Type, test_data: pd.DataFrame) -> None:

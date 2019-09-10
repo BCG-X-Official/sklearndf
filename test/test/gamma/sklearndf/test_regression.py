@@ -17,14 +17,8 @@ from test.gamma.sklearndf import get_classes, get_missing_init_parameter
 
 REGRESSORS_TO_TEST: List[Type] = get_classes(
     from_module=gamma.sklearndf.regression,
-    regex=r".*DF",
-    ignore=[
-        RegressorWrapperDF.__name__,
-        RegressorDF.__name__,
-        ColumnPreservingTransformerWrapperDF.__name__,
-        _RegressorTransformerWrapperDF.__name__,
-        TransformerDF.__name__,
-    ],
+    matching=r".*DF",
+    excluding=[RegressorDF.__name__, TransformerDF.__name__, r".*WrapperDF"],
 )
 
 DEFAULT_INIT_PARAMETERS = {

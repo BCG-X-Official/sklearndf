@@ -15,8 +15,8 @@ from test.gamma.sklearndf import get_classes, get_missing_init_parameter
 
 CLASSIFIERS_TO_TEST = get_classes(
     from_module=gamma.sklearndf.classification,
-    regex=r".*DF",
-    ignore=[ClassifierDF.__name__, ClassifierWrapperDF.__name__],
+    matching=r".*DF",
+    excluding=[ClassifierDF.__name__, r".*WrapperDF"],
 )
 
 DEFAULT_INIT_PARAMETERS = {
