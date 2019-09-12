@@ -60,24 +60,48 @@ __all__ = [
 # type variables
 #
 
-T_Estimator = TypeVar("T_Estimator", bound=BaseEstimator)
-T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
-T_Predictor = TypeVar("T_Predictor", bound=Union[RegressorMixin, ClassifierMixin])
-T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
-T_Classifier = TypeVar("T_Classifier", bound=ClassifierMixin)
+T_DelegateEstimator = TypeVar("T_Estimator", bound=BaseEstimator)
+T_DelegateTransformer = TypeVar("T_Transformer", bound=TransformerMixin)
+T_DelegatePredictor = TypeVar(
+    "T_Predictor", bound=Union[RegressorMixin, ClassifierMixin]
+)
+T_DelegateRegressor = TypeVar("T_Regressor", bound=RegressorMixin)
+T_DelegateClassifier = TypeVar("T_Classifier", bound=ClassifierMixin)
 
 #
 # base wrapper classes
 #
 
 
+class BaseEstimatorWrapper(BaseEstimator, Generic[T_DelegateEstimator], ABC):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__()
+        self._delegate_estimator = type(self)._make_delegate_estimator(*args, **kwargs)
+
+    @property
+    def delegate_estimator(self) -> T_DelegateEstimator:
+        """
+        Return the original estimator which this wrapper delegates to.
+
+        :return: the original estimator which this estimator delegates to
+        """
+        return self._delegate_estimator
+
+    @classmethod
+    @abstractmethod
+    def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
+        pass
+
+
 class BaseEstimatorWrapperDF(
-    BaseEstimatorDF[T_Estimator], BaseEstimator, Generic[T_Estimator]
+    BaseEstimatorWrapper[T_DelegateEstimator],
+    BaseEstimatorDF,
+    Generic[T_DelegateEstimator],
+    ABC,
 ):
+    # todo explain what is the benefit compared to the class BaseEstimatorDF
     """
     Abstract base class that is a wrapper around :class:`sklearn.base.BaseEstimator`.
-
-    #todo explain what is the benefit compared to the class BaseEstimatorDF
 
     Implementations must define a method ``_make_delegate_estimator``.
 
@@ -85,23 +109,8 @@ class BaseEstimatorWrapperDF(
     """
 
     def __init__(self, *args, **kwargs) -> None:
-        super().__init__()
+        super().__init__(*args, **kwargs)
         self._columns_in = None
-        self._delegate_estimator = type(self)._make_delegate_estimator(*args, **kwargs)
-
-    @classmethod
-    @abstractmethod
-    def _make_delegate_estimator(cls, *args, **kwargs) -> T_Estimator:
-        pass
-
-    @property
-    def delegate_estimator(self) -> T_Estimator:
-        """
-        Return the original estimator which this wrapper delegates to.
-
-        :return: the original estimator which this estimator delegates to
-        """
-        return self._delegate_estimator
 
     def get_params(self, deep=True) -> Dict[str, Any]:
         """
@@ -115,7 +124,7 @@ class BaseEstimatorWrapperDF(
         # noinspection PyUnresolvedReferences
         return self._delegate_estimator.get_params(deep=deep)
 
-    def set_params(self, **kwargs) -> "BaseEstimatorWrapperDF[T_Estimator]":
+    def set_params(self, **kwargs) -> "BaseEstimatorWrapperDF[T_DelegateEstimator]":
         """
         Set the parameters of this estimator.
 
@@ -130,7 +139,7 @@ class BaseEstimatorWrapperDF(
     # noinspection PyPep8Naming
     def fit(
         self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params
-    ) -> "BaseEstimatorWrapperDF[T_Estimator]":
+    ) -> "BaseEstimatorWrapperDF[T_DelegateEstimator]":
         """
         Fit the delegate estimator.
 
@@ -161,7 +170,7 @@ class BaseEstimatorWrapperDF(
     # noinspection PyPep8Naming
     def _fit(
         self, X: pd.DataFrame, y: Optional[pd.Series], **fit_params
-    ) -> T_Estimator:
+    ) -> T_DelegateEstimator:
         # noinspection PyUnresolvedReferences
         return self._delegate_estimator.fit(X, y, **fit_params)
 
@@ -252,9 +261,9 @@ class BaseEstimatorWrapperDF(
 
 
 class TransformerWrapperDF(
-    TransformerDF[T_Transformer],
-    BaseEstimatorWrapperDF[T_Transformer],
-    Generic[T_Transformer],
+    TransformerDF,
+    BaseEstimatorWrapperDF[T_DelegateTransformer],
+    Generic[T_DelegateTransformer],
     ABC,
 ):
     """
@@ -366,9 +375,9 @@ class TransformerWrapperDF(
 
 
 class BasePredictorWrapperDF(
-    BasePredictorDF[T_Predictor],
-    BaseEstimatorWrapperDF[T_Predictor],
-    Generic[T_Predictor],
+    BasePredictorDF,
+    BaseEstimatorWrapperDF[T_DelegatePredictor],
+    Generic[T_DelegatePredictor],
     ABC,
 ):
     """
@@ -381,17 +390,17 @@ class BasePredictorWrapperDF(
 
     @classmethod
     def from_fitted(
-        cls: "Type[BasePredictorWrapperDF[T_Predictor]]",
-        predictor: T_Predictor,
+        cls: "Type[BasePredictorWrapperDF[T_DelegatePredictor]]",
+        predictor: T_DelegatePredictor,
         columns_in: pd.Index,
-    ) -> "BasePredictorWrapperDF[T_Predictor]":
+    ) -> "BasePredictorWrapperDF[T_DelegatePredictor]":
         class _FittedPredictor(cls):
             def __init__(self) -> None:
                 super().__init__()
                 self._columns_in = columns_in
 
             @classmethod
-            def _make_delegate_estimator(cls, *args, **kwargs) -> T_Predictor:
+            def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegatePredictor:
                 return predictor
 
         return _FittedPredictor()
@@ -498,9 +507,9 @@ class BasePredictorWrapperDF(
 
 
 class RegressorWrapperDF(
-    RegressorDF[T_Regressor],
-    BasePredictorWrapperDF[T_Regressor],
-    Generic[T_Regressor],
+    RegressorDF,
+    BasePredictorWrapperDF[T_DelegateRegressor],
+    Generic[T_DelegateRegressor],
     ABC,
 ):
     """
@@ -509,9 +518,9 @@ class RegressorWrapperDF(
 
 
 class ClassifierWrapperDF(
-    ClassifierDF[T_Classifier],
-    BasePredictorWrapperDF[T_Classifier],
-    Generic[T_Classifier],
+    ClassifierDF,
+    BasePredictorWrapperDF[T_DelegateClassifier],
+    Generic[T_DelegateClassifier],
     ABC,
 ):
     """
@@ -612,14 +621,16 @@ class ClassifierWrapperDF(
 
 
 def df_estimator(
-    delegate_estimator: Type[T_Estimator] = None,
+    delegate_estimator: Type[T_DelegateEstimator] = None,
     *,
-    df_wrapper_type: Type[BaseEstimatorWrapperDF[T_Estimator]] = BaseEstimatorWrapperDF[
-        T_Estimator
-    ],
+    df_wrapper_type: Type[
+        BaseEstimatorWrapperDF[T_DelegateEstimator]
+    ] = BaseEstimatorWrapperDF[T_DelegateEstimator],
 ) -> Union[
-    Callable[[Type[T_Estimator]], Type[BaseEstimatorWrapperDF[T_Estimator]]],
-    Type[BaseEstimatorWrapperDF[T_Estimator]],
+    Callable[
+        [Type[T_DelegateEstimator]], Type[BaseEstimatorWrapperDF[T_DelegateEstimator]]
+    ],
+    Type[BaseEstimatorWrapperDF[T_DelegateEstimator]],
 ]:
     """
     Class decorator wrapping a :class:`sklearn.base.BaseEstimator` in a
@@ -633,8 +644,8 @@ def df_estimator(
     """
 
     def _decorate(
-        decoratee: Type[T_Estimator]
-    ) -> Type[BaseEstimatorWrapperDF[T_Estimator]]:
+        decoratee: Type[T_DelegateEstimator]
+    ) -> Type[BaseEstimatorWrapperDF[T_DelegateEstimator]]:
 
         # determine the sklearn estimator we are wrapping
 
@@ -655,7 +666,7 @@ def df_estimator(
         @wraps(decoratee, updated=())
         class _DataFrameEstimator(df_wrapper_type):
             @classmethod
-            def _make_delegate_estimator(cls, *args, **kwargs) -> T_Estimator:
+            def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
                 # noinspection PyArgumentList
                 return sklearn_base_estimator(**kwargs)
 

@@ -20,9 +20,9 @@ from typing import *
 
 import pandas as pd
 from boruta import BorutaPy
-from sklearn.base import BaseEstimator
+from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 
-from gamma.sklearndf import BasePredictorDF, T_Predictor, TransformerDF
+from gamma.sklearndf import BasePredictorDF, TransformerDF
 from gamma.sklearndf.transformation import ColumnSubsetTransformerWrapperDF
 from gamma.sklearndf.transformation._wrapper import NDArrayTransformerWrapperDF
 
@@ -31,7 +31,7 @@ log = logging.getLogger(__name__)
 __all__ = ["OutlierRemoverDF", "BorutaDF"]
 
 
-class OutlierRemoverDF(TransformerDF["OutlierRemoverDF"], BaseEstimator):
+class OutlierRemoverDF(TransformerDF, BaseEstimator):
     """
     Remove outliers according to Tukey's method.
 
@@ -151,7 +151,7 @@ class BorutaDF(
 
     def __init__(
         self,
-        estimator: Union[T_Predictor, BasePredictorDF],
+        estimator: Union[RegressorMixin, ClassifierMixin, BasePredictorDF],
         n_estimators=1000,
         perc=100,
         alpha=0.05,
