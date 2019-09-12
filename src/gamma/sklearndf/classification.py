@@ -58,7 +58,11 @@ from sklearn.svm import LinearSVC, NuSVC, SVC
 from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
 
 from gamma.sklearndf import ClassifierDF
-from gamma.sklearndf._wrapper import ClassifierWrapperDF, df_estimator
+from gamma.sklearndf._wrapper import (
+    ClassifierWrapperDF,
+    df_estimator,
+    MetaClassifierWrapperDF,
+)
 
 log = logging.getLogger(__name__)
 
@@ -109,7 +113,7 @@ class RadiusNeighborsClassifierDF(RadiusNeighborsClassifier, ClassifierDF):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ClassifierWrapperDF)
+@df_estimator(df_wrapper_type=MetaClassifierWrapperDF)
 class VotingClassifierDF(VotingClassifier, ClassifierDF):
     """
     Wraps :class:`sklearn.ensemble.voting.VotingClassifier`; accepts and returns data
@@ -282,20 +286,15 @@ class BernoulliNBDF(BernoulliNB, ClassifierDF):
 # calibration
 #
 
-
-class CalibratedClassifierCVDF(ClassifierWrapperDF[CalibratedClassifierCV]):
+# noinspection PyAbstractClass
+@df_estimator(df_wrapper_type=MetaClassifierWrapperDF)
+class CalibratedClassifierCVDF(CalibratedClassifierCV, ClassifierDF):
     """
     Wraps :class:`sklearn.calibration.CalibratedClassifierCV`; accepts and returns data
     frames.
     """
 
-    def __init__(self, base_estimator: ClassifierDF, **kwargs):
-        super().__init__(base_estimator=base_estimator.delegate_estimator, **kwargs)
-        self.base_estimator_df = base_estimator
-
-    @classmethod
-    def _make_delegate_estimator(cls, *args, **kwargs) -> CalibratedClassifierCV:
-        return CalibratedClassifierCV(*args, **kwargs)
+    pass
 
 
 #
@@ -490,7 +489,7 @@ class LabelSpreadingDF(LabelSpreading, ClassifierDF):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ClassifierWrapperDF)
+@df_estimator(df_wrapper_type=MetaClassifierWrapperDF)
 class OneVsRestClassifierDF(OneVsRestClassifier, ClassifierDF):
     """
     Wraps :class:`sklearn.multiclass.OneVsRestClassifier`; accepts and returns data
@@ -501,7 +500,7 @@ class OneVsRestClassifierDF(OneVsRestClassifier, ClassifierDF):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ClassifierWrapperDF)
+@df_estimator(df_wrapper_type=MetaClassifierWrapperDF)
 class OneVsOneClassifierDF(OneVsOneClassifier, ClassifierDF):
     """
     Wraps :class:`sklearn.multiclass.OneVsOneClassifier`; accepts and returns data
@@ -512,7 +511,7 @@ class OneVsOneClassifierDF(OneVsOneClassifier, ClassifierDF):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ClassifierWrapperDF)
+@df_estimator(df_wrapper_type=MetaClassifierWrapperDF)
 class OutputCodeClassifierDF(OutputCodeClassifier, ClassifierDF):
     """
     Wraps :class:`sklearn.multiclass.OutputCodeClassifier`; accepts and returns data
@@ -528,7 +527,7 @@ class OutputCodeClassifierDF(OutputCodeClassifier, ClassifierDF):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ClassifierWrapperDF)
+@df_estimator(df_wrapper_type=MetaClassifierWrapperDF)
 class MultiOutputClassifierDF(MultiOutputClassifier, ClassifierDF):
     """
     Wraps :class:`sklearn.multioutput.MultiOutputClassifier`; accepts and returns data
