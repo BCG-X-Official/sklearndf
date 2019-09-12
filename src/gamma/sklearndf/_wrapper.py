@@ -29,14 +29,15 @@ from typing import *
 
 import numpy as np
 import pandas as pd
-from gamma.common import ListLike, MatrixLike
 from sklearn.base import (
     BaseEstimator,
     ClassifierMixin,
+    MetaEstimatorMixin,
     RegressorMixin,
     TransformerMixin,
 )
 
+from gamma.common import ListLike, MatrixLike
 from gamma.sklearndf import (
     BaseEstimatorDF,
     BasePredictorDF,
@@ -125,6 +126,7 @@ class BaseEstimatorWrapperDF(
         :param columns_in: the column names of X used for fitting the estimator
         :return: the wrapped data frame estimator
         """
+
         class _FittedPredictor(cls):
             def __init__(self) -> None:
                 super().__init__()
@@ -470,10 +472,7 @@ class BasePredictorWrapperDF(
 
     # noinspection PyPep8Naming
     def score(
-        self,
-        X: pd.DataFrame,
-        y: Optional[pd.Series] = None,
-        sample_weight: Optional[Any] = None,
+        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
     ) -> float:
         """
         Return the score of the delegate estimator.
