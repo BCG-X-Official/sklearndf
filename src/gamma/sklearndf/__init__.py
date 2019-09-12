@@ -26,7 +26,6 @@ from abc import ABC, abstractmethod
 from typing import *
 
 import pandas as pd
-from gamma.common import ListLike
 from sklearn.base import (
     BaseEstimator,
     ClassifierMixin,
@@ -34,6 +33,8 @@ from sklearn.base import (
     RegressorMixin,
     TransformerMixin,
 )
+
+from gamma.common import ListLike
 
 log = logging.getLogger(__name__)
 
@@ -149,10 +150,7 @@ class BasePredictorDF(BaseEstimatorDF, ABC):
     # noinspection PyPep8Naming
     @abstractmethod
     def score(
-        self,
-        X: pd.DataFrame,
-        y: Optional[pd.Series] = None,
-        sample_weight: Optional[Any] = None,
+        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
     ) -> float:
         pass
 
