@@ -25,7 +25,6 @@ class MyEstimatorDF(BaseEstimatorWrapperDF[MyEstimator]):
     def _make_delegate_estimator(cls, *args, **kwargs) -> MyEstimator:
         return MyEstimator(*args, **kwargs)
 
-
 class K(BaseEstimator):
     def __init__(self, c=None, d=None) -> None:
         self.c = c
