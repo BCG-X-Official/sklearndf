@@ -6,14 +6,11 @@ import pytest
 import gamma.sklearndf.regression
 from gamma.sklearndf import RegressorDF
 from gamma.sklearndf.regression import (
-    _RegressorTransformerWrapperDF,
-    ColumnPreservingTransformerWrapperDF,
     RandomForestRegressorDF,
-    RegressorWrapperDF,
     SVRDF,
     TransformerDF,
 )
-from test.gamma.sklearndf import get_classes, get_missing_init_parameter
+from test.gamma.sklearndf import get_classes
 
 REGRESSORS_TO_TEST: List[Type] = get_classes(
     from_module=gamma.sklearndf.regression,
@@ -21,10 +18,10 @@ REGRESSORS_TO_TEST: List[Type] = get_classes(
     excluding=[RegressorDF.__name__, TransformerDF.__name__, r".*WrapperDF"],
 )
 
-DEFAULT_INIT_PARAMETERS = {
-    "estimator": {"estimator": RandomForestRegressorDF()},
-    "base_estimator": {"base_estimator": RandomForestRegressorDF()},
-    "estimators": {
+DEFAULT_REGRESSOR_PARAMETERS = {
+    "MultiOutputRegressorDF": {"estimator": RandomForestRegressorDF()},
+    "RegressorChainDF": {"base_estimator": RandomForestRegressorDF()},
+    "VotingRegressorDF": {
         "estimators": [("rfr", RandomForestRegressorDF()), ("svmr", SVRDF())]
     },
 }
@@ -33,34 +30,20 @@ DEFAULT_INIT_PARAMETERS = {
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST)
 def test_wrapped_constructor(sklearndf_cls: Type) -> None:
     """ Test standard constructor of wrapped sklearn regressors """
-    try:
-        rgr: RegressorDF = sklearndf_cls()
-    except TypeError as te:
-        # some regressors need additional parameters, look up their key and add default:
-        missing_init_parameter = get_missing_init_parameter(te=te)
-        if missing_init_parameter not in DEFAULT_INIT_PARAMETERS:
-            raise te
-        else:
-            rgr = sklearndf_cls(**DEFAULT_INIT_PARAMETERS[missing_init_parameter])
+    _: RegressorDF = sklearndf_cls(**DEFAULT_REGRESSOR_PARAMETERS.get(
+        sklearndf_cls.__name__, {}))
 
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST)
 def test_wrapped_fit_predict(
-    sklearndf_cls: Type, boston_features: pd.DataFrame, boston_target_sr: pd.DataFrame
+    sklearndf_cls: Type, boston_features: pd.DataFrame, boston_target_sr: pd.Series
 ) -> None:
     """ Test fit & predict of wrapped sklearn regressors """
-    try:
-        rgr: RegressorDF = sklearndf_cls()
-    except TypeError as te:
-        # some regressors need additional parameters, look up their key and add default:
-        missing_init_parameter = get_missing_init_parameter(te=te)
-        if missing_init_parameter not in DEFAULT_INIT_PARAMETERS:
-            raise te
-        else:
-            rgr = sklearndf_cls(**DEFAULT_INIT_PARAMETERS[missing_init_parameter])
+    regressor: RegressorDF = sklearndf_cls(**DEFAULT_REGRESSOR_PARAMETERS.get(
+        sklearndf_cls.__name__, {}))
 
-    rgr.fit(X=boston_features, y=boston_target_sr)
-    predictions = rgr.predict(X=boston_features)
+    regressor.fit(X=boston_features, y=boston_target_sr)
+    predictions = regressor.predict(X=boston_features)
 
     # test predictions data-type, length and values
     assert isinstance(predictions, (pd.Series, pd.DataFrame))

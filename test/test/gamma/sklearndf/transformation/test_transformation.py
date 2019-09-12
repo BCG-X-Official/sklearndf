@@ -13,15 +13,14 @@ import gamma.sklearndf.transformation
 from gamma.sklearndf.classification import RandomForestClassifierDF
 from gamma.sklearndf.transformation import (
     ColumnTransformerDF,
-    NormalizerDF,
-    TransformerDF,
-    OneHotEncoderDF,
-    SelectFromModelDF,
-    SparseCoderDF,
-    ColumnTransformerDF,
     KBinsDiscretizerDF,
+    NormalizerDF,
+    OneHotEncoderDF,
     RFECVDF,
     RFEDF,
+    SelectFromModelDF,
+    SparseCoderDF,
+    TransformerDF,
 )
 from gamma.sklearndf.transformation.extra import OutlierRemoverDF
 from test.gamma.sklearndf import get_classes, get_wrapped_counterpart

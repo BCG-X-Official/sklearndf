@@ -192,7 +192,6 @@ class ComponentsDimensionalityReductionWrapperDF(
     ) -> None:
         # noinspection PyProtectedMember
         super()._post_fit(X, y, **fit_params)
-        raise RuntimeError("TEST")
         self._validate_delegate_attribute(attribute_name=self._ATTR_COMPONENTS)
 
     @property

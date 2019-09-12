@@ -67,7 +67,11 @@ from sklearn.svm import LinearSVR, NuSVR, SVR
 from sklearn.tree import DecisionTreeRegressor, ExtraTreeRegressor
 
 from gamma.sklearndf import RegressorDF, TransformerDF
-from gamma.sklearndf._wrapper import df_estimator, RegressorWrapperDF
+from gamma.sklearndf._wrapper import (
+    df_estimator,
+    MetaRegressorWrapperDF,
+    RegressorWrapperDF,
+)
 
 # noinspection PyProtectedMember
 from gamma.sklearndf.transformation import ColumnPreservingTransformerWrapperDF
@@ -159,7 +163,7 @@ class DummyRegressorDF(DummyRegressor, RegressorDF):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=RegressorWrapperDF)
+@df_estimator(df_wrapper_type=MetaRegressorWrapperDF)
 class MultiOutputRegressorDF(MultiOutputRegressor, RegressorDF):
     """
     Wraps :class:`sklearn.multioutput.MultiOutputRegressor`; accepts and returns data
@@ -170,7 +174,7 @@ class MultiOutputRegressorDF(MultiOutputRegressor, RegressorDF):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=RegressorWrapperDF)
+@df_estimator(df_wrapper_type=MetaRegressorWrapperDF)
 class RegressorChainDF(RegressorChain, RegressorDF):
     """
     Wraps :class:`sklearn.multioutput.RegressorChain`; accepts and returns data frames.
@@ -517,7 +521,7 @@ class BaggingRegressorDF(BaggingRegressor, RegressorDF):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=RegressorWrapperDF)
+@df_estimator(df_wrapper_type=MetaRegressorWrapperDF)
 class VotingRegressorDF(VotingRegressor, RegressorDF):
     """
     Wraps :class:`sklearn.ensemble.voting.VotingRegressor`; accepts and returns data
