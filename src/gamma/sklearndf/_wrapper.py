@@ -172,13 +172,20 @@ class BaseEstimatorWrapperDF(
         :param X: data frame to fit the estimator
         :param y: pandas series
         """
+
         self._reset_fit()
 
-        self._check_parameter_types(X, y)
+        success = False
 
-        self._fit(X, y, **fit_params)
+        try:
+            self._check_parameter_types(X, y)
+            self._fit(X, y, **fit_params)
+            self._post_fit(X, y, **fit_params)
+            success = True
 
-        self._post_fit(X, y, **fit_params)
+        finally:
+            if not success:
+                self._reset_fit()
 
         return self
 
