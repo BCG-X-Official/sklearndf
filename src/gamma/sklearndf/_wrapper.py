@@ -490,7 +490,12 @@ class BasePredictorWrapperDF(
         :param sample_weight:  array-like, sample weights, shape = (n_sample)
         :return: the score of the model
         """
-        self._check_parameter_types(X, None)
+        self._check_parameter_types(X, y)
+        if y is None:
+            raise ValueError("arg y must not be None")
+        if sample_weight is not None and not isinstance(sample_weight, pd.Series):
+            raise TypeError("arg sample_weight must be None or a Series")
+
         return self.delegate_estimator.score(X, y, sample_weight)
 
     # noinspection PyPep8Naming
