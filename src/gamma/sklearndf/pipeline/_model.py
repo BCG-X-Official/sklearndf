@@ -39,14 +39,14 @@ __all__ = [
     "ClassifierPipelineDF",
 ]
 
-T_EstimatorDF = TypeVar("T_EstimatorDF", bound=BaseEstimatorDF)
-T_PredictorDF = TypeVar("T_PredictorDF", bound=BasePredictorDF)
-T_RegressorDF = TypeVar("T_RegressorDF", bound=RegressorDF)
-T_ClassifierDF = TypeVar("T_ClassifierDF", bound=ClassifierDF)
+T_FinalEstimatorDF = TypeVar("T_EstimatorDF", bound=BaseEstimatorDF)
+T_FinalPredictorDF = TypeVar("T_PredictorDF", bound=BasePredictorDF)
+T_FinalRegressorDF = TypeVar("T_RegressorDF", bound=RegressorDF)
+T_FinalClassifierDF = TypeVar("T_ClassifierDF", bound=ClassifierDF)
 
 
 class EstimatorPipelineDF(
-    BaseEstimatorDF["EstimatorPipelineDF"], BaseEstimator, Generic[T_EstimatorDF], ABC
+    BaseEstimatorDF, BaseEstimator, Generic[T_FinalEstimatorDF], ABC
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
@@ -68,7 +68,7 @@ class EstimatorPipelineDF(
 
     @property
     @abstractmethod
-    def final_estimator_(self) -> T_EstimatorDF:
+    def final_estimator_(self) -> T_FinalEstimatorDF:
         """
         The final estimator following the preprocessing step.
         """
@@ -92,7 +92,7 @@ class EstimatorPipelineDF(
     # noinspection PyPep8Naming
     def fit(
         self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params
-    ) -> "EstimatorPipelineDF[T_PredictorDF]":
+    ) -> "EstimatorPipelineDF[T_FinalEstimatorDF]":
         self.final_estimator_.fit(
             self._pre_fit_transform(X, y, **fit_params), y, **fit_params
         )
@@ -126,7 +126,7 @@ class EstimatorPipelineDF(
 
 
 class PredictorPipelineDF(
-    EstimatorPipelineDF[T_PredictorDF], Generic[T_PredictorDF], ABC
+    EstimatorPipelineDF[T_FinalPredictorDF], Generic[T_FinalPredictorDF], ABC
 ):
 
     # noinspection PyPep8Naming
@@ -161,7 +161,7 @@ class PredictorPipelineDF(
 
 
 class RegressorPipelineDF(
-    PredictorPipelineDF[T_RegressorDF], RegressorDF, Generic[T_RegressorDF]
+    PredictorPipelineDF[T_FinalRegressorDF], RegressorDF, Generic[T_FinalRegressorDF]
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
@@ -173,7 +173,9 @@ class RegressorPipelineDF(
     """
 
     def __init__(
-        self, regressor: T_RegressorDF, preprocessing: Optional[TransformerDF] = None
+        self,
+        regressor: T_FinalRegressorDF,
+        preprocessing: Optional[TransformerDF] = None,
     ) -> None:
         super().__init__(preprocessing=preprocessing)
 
@@ -186,7 +188,7 @@ class RegressorPipelineDF(
         self.regressor = regressor
 
     @property
-    def final_estimator_(self) -> T_RegressorDF:
+    def final_estimator_(self) -> T_FinalRegressorDF:
         return self.regressor
 
     @property
@@ -195,7 +197,7 @@ class RegressorPipelineDF(
 
 
 class ClassifierPipelineDF(
-    PredictorPipelineDF[T_ClassifierDF], ClassifierDF, Generic[T_ClassifierDF]
+    PredictorPipelineDF[T_FinalClassifierDF], ClassifierDF, Generic[T_FinalClassifierDF]
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
@@ -207,7 +209,9 @@ class ClassifierPipelineDF(
     """
 
     def __init__(
-        self, classifier: T_ClassifierDF, preprocessing: Optional[TransformerDF] = None
+        self,
+        classifier: T_FinalClassifierDF,
+        preprocessing: Optional[TransformerDF] = None,
     ) -> None:
         super().__init__(preprocessing=preprocessing)
 
@@ -219,7 +223,7 @@ class ClassifierPipelineDF(
         self.classifier = classifier
 
     @property
-    def final_estimator_(self) -> T_ClassifierDF:
+    def final_estimator_(self) -> T_FinalClassifierDF:
         return self.classifier
 
     @property

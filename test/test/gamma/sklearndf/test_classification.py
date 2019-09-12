@@ -51,7 +51,7 @@ def test_wrapped_fit_predict(
 ) -> None:
     """ Test fit & predict & predict[_log]_proba of wrapped sklearn classifiers """
     try:
-        cls = sklearndf_cls()
+        classifier = sklearndf_cls()
     except TypeError as te:
         # some classifiers need additional parameters, look up their key and add
         # default:
@@ -59,10 +59,12 @@ def test_wrapped_fit_predict(
         if missing_init_parameter not in DEFAULT_INIT_PARAMETERS:
             raise te
         else:
-            cls = sklearndf_cls(**DEFAULT_INIT_PARAMETERS[missing_init_parameter])
+            classifier = sklearndf_cls(
+                **DEFAULT_INIT_PARAMETERS[missing_init_parameter]
+            )
 
-    cls.fit(X=iris_features, y=iris_target_sr)
-    predictions = cls.predict(X=iris_features)
+    classifier.fit(X=iris_features, y=iris_target_sr)
+    predictions = classifier.predict(X=iris_features)
 
     # test predictions data-type, length and values
     assert isinstance(predictions, pd.Series)
@@ -71,9 +73,9 @@ def test_wrapped_fit_predict(
 
     # test predict_proba & predict_log_proba if delegate-classifier has them:
     test_funcs = [
-        getattr(cls, attr)
+        getattr(classifier, attr)
         for attr in ["predict_proba", "predict_log_proba"]
-        if hasattr(cls.delegate_estimator, attr)
+        if hasattr(classifier.delegate_estimator, attr)
     ]
     for func in test_funcs:
         predicted_probas = func(X=iris_features)

@@ -52,21 +52,15 @@ __all__ = [
 # noinspection PyShadowingBuiltins
 _T = TypeVar("_T")
 
-T_Estimator = TypeVar("T_Estimator", bound=BaseEstimator)
-T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
-T_Predictor = TypeVar("T_Predictor", bound=Union[RegressorMixin, ClassifierMixin])
-T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
-T_Classifier = TypeVar("T_Classifier", bound=ClassifierMixin)
-
 #
 # class definitions
 #
 
 
-class BaseEstimatorDF(ABC, Generic[T_Estimator]):
-    """
-    #todo find a good description
+class BaseEstimatorDF(ABC):
+    # todo find a good description
 
+    """
     Implementations must define a ``fit`` method and an ``is_fitted`` property.
     """
 
@@ -81,15 +75,24 @@ class BaseEstimatorDF(ABC, Generic[T_Estimator]):
             )
         self._columns_in = None
 
-    @property
-    def delegate_estimator(self) -> T_Estimator:
+    def root_estimator(self) -> BaseEstimator:
         """
-        If this estimator is derived from a non-data frame estimator, return the
-        original estimator; otherwise, return ``self``.
+        If this estimator delegates to another estimator in one or more layers,
+        return the innermost wrapped estimator; otherwise, return ``self``.
 
         :return: the original estimator that this estimator delegates to
         """
-        return cast(T_Estimator, self)
+
+        def _root(estimator: BaseEstimator) -> BaseEstimator:
+            while True:
+                if hasattr(estimator, "estimator"):
+                    estimator: BaseEstimator = estimator.estimator
+                elif hasattr(estimator, "delegate_estimator"):
+                    estimator: BaseEstimator = estimator.delegate_estimator
+                else:
+                    return estimator
+
+        return _root(cast(BaseEstimator, self))
 
     # noinspection PyPep8Naming
     @abstractmethod
@@ -128,7 +131,7 @@ class BaseEstimatorDF(ABC, Generic[T_Estimator]):
         pass
 
 
-class BasePredictorDF(BaseEstimatorDF[T_Predictor], Generic[T_Predictor], ABC):
+class BasePredictorDF(BaseEstimatorDF, ABC):
     @property
     @abstractmethod
     def n_outputs(self) -> int:
@@ -157,9 +160,7 @@ class BasePredictorDF(BaseEstimatorDF[T_Predictor], Generic[T_Predictor], ABC):
         pass
 
 
-class TransformerDF(
-    BaseEstimatorDF[T_Transformer], TransformerMixin, Generic[T_Transformer], ABC
-):
+class TransformerDF(BaseEstimatorDF, TransformerMixin, ABC):
     F_COLUMN_OUT = "column_out"
 
     def __init__(self, *args, **kwargs) -> None:
@@ -216,17 +217,13 @@ class TransformerDF(
         return self.columns_original.index
 
 
-class RegressorDF(
-    BasePredictorDF[T_Regressor], RegressorMixin, Generic[T_Regressor], ABC
-):
+class RegressorDF(BasePredictorDF, RegressorMixin, ABC):
     """
     Sklearn regressor that preserves data frames.
     """
 
 
-class ClassifierDF(
-    BasePredictorDF[T_Classifier], ClassifierMixin, Generic[T_Classifier], ABC
-):
+class ClassifierDF(BasePredictorDF, ClassifierMixin, ABC):
     """
     Sklearn classifier that preserves data frames.
     """
