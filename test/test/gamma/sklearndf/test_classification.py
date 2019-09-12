@@ -19,28 +19,31 @@ CLASSIFIERS_TO_TEST = get_classes(
     excluding=[ClassifierDF.__name__, r".*WrapperDF"],
 )
 
-DEFAULT_INIT_PARAMETERS = {
-    "estimator": {"estimator": RandomForestClassifierDF()},
-    "base_estimator": {"base_estimator": RandomForestClassifierDF()},
-    "estimators": {
-        "estimators": [("rfc", RandomForestClassifierDF()), ("svmc", SVCDF())]
+
+CLASSIFIER_INIT_PARAMETERS = {
+    "CalibratedClassifierCVDF": {"base_estimator": RandomForestClassifierDF()},
+    "ClassifierChainDF": {"base_estimator": RandomForestClassifierDF()},
+    "MultiOutputClassifierDF": {"estimator": RandomForestClassifierDF()},
+    "OneVsOneClassifierDF": {"estimator": RandomForestClassifierDF()},
+    "OneVsRestClassifierDF": {"estimator": RandomForestClassifierDF()},
+    "OutputCodeClassifierDF": {"estimator": RandomForestClassifierDF()},
+    "VotingClassifierDF": {
+        "estimators": [
+            ("rfc", RandomForestClassifierDF()),
+            ("svmc", SVCDF(probability=True)),
+        ],
+        "voting": "soft",
     },
 }
 
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST)
-def test_wrapped_constructor(sklearndf_cls: Type) -> None:
+def test_wrapped_constructor(sklearndf_cls: Type[ClassifierDF]) -> None:
     """ Test standard constructor of wrapped sklearn classifiers """
-    try:
-        cls: ClassifierDF = sklearndf_cls()
-    except TypeError as te:
-        # some classifiers need additional parameters, look up their key and add
-        # default:
-        missing_init_parameter = get_missing_init_parameter(te=te)
-        if missing_init_parameter not in DEFAULT_INIT_PARAMETERS:
-            raise te
-        else:
-            cls = sklearndf_cls(**DEFAULT_INIT_PARAMETERS[missing_init_parameter])
+    # noinspection PyArgumentList
+    _: ClassifierDF = sklearndf_cls(
+        **CLASSIFIER_INIT_PARAMETERS.get(sklearndf_cls.__name__, {})
+    )
 
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST)
@@ -50,18 +53,10 @@ def test_wrapped_fit_predict(
     iris_target_sr: pd.Series,
 ) -> None:
     """ Test fit & predict & predict[_log]_proba of wrapped sklearn classifiers """
-    try:
-        classifier = sklearndf_cls()
-    except TypeError as te:
-        # some classifiers need additional parameters, look up their key and add
-        # default:
-        missing_init_parameter = get_missing_init_parameter(te=te)
-        if missing_init_parameter not in DEFAULT_INIT_PARAMETERS:
-            raise te
-        else:
-            classifier = sklearndf_cls(
-                **DEFAULT_INIT_PARAMETERS[missing_init_parameter]
-            )
+    # noinspection PyArgumentList
+    classifier: ClassifierDF = sklearndf_cls(
+        **CLASSIFIER_INIT_PARAMETERS.get(sklearndf_cls.__name__, {})
+    )
 
     classifier.fit(X=iris_features, y=iris_target_sr)
     predictions = classifier.predict(X=iris_features)
