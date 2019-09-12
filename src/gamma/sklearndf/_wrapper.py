@@ -569,6 +569,9 @@ class ClassifierWrapperDF(
         :param X: data frame of features
         :return: the series of probability estimates
         """
+
+        self._ensure_delegate_method("predict_proba")
+
         self._check_parameter_types(X, None)
 
         # noinspection PyUnresolvedReferences
@@ -586,6 +589,9 @@ class ClassifierWrapperDF(
         :param X: data frame of features
         :return: series of log-probabilities
         """
+
+        self._ensure_delegate_method("predict_log_proba")
+
         self._check_parameter_types(X, None)
 
         # noinspection PyUnresolvedReferences
@@ -607,6 +613,13 @@ class ClassifierWrapperDF(
         return self._prediction_with_class_labels(
             X, self.delegate_estimator.decision_function(X)
         )
+
+    def _ensure_delegate_method(self, method: str) -> None:
+        if not hasattr(self.delegate_estimator, method):
+            raise NotImplementedError(
+                f"{type(self.delegate_estimator).__name__} does not implement method "
+                f"{method}"
+            )
 
     # noinspection PyPep8Naming
     def _prediction_with_class_labels(

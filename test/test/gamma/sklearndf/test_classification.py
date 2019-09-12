@@ -5,11 +5,7 @@ import pandas as pd
 import pytest
 
 import gamma.sklearndf.classification
-from gamma.sklearndf.classification import (
-    ClassifierDF,
-    RandomForestClassifierDF,
-    SVCDF,
-)
+from gamma.sklearndf.classification import ClassifierDF, RandomForestClassifierDF, SVCDF
 from test.gamma.sklearndf import get_classes
 
 CLASSIFIERS_TO_TEST = get_classes(
@@ -71,16 +67,22 @@ def test_wrapped_fit_predict(
         for attr in ["predict_proba", "predict_log_proba"]
         if hasattr(classifier.root_estimator, attr)
     ]
-    for func in test_funcs:
-        predicted_probas = func(X=iris_features)
+    for method_name in ["predict_proba", "predict_log_proba"]:
+        method = getattr(classifier, method_name, None)
 
-        # test data-type and shape
-        assert isinstance(predicted_probas, pd.DataFrame)
-        assert len(predicted_probas) == len(iris_target_sr)
-        assert predicted_probas.shape == (
-            len(iris_target_sr),
-            len(iris_target_sr.unique()),
-        )
+        if hasattr(classifier.root_estimator, method_name):
+            predictions = method(X=iris_features)
 
-        # check correct labels are set as columns
-        assert list(iris_target_sr.unique()) == list(predicted_probas.columns)
+            # test data-type and shape
+            assert isinstance(predictions, pd.DataFrame)
+            assert len(predictions) == len(iris_target_sr)
+            assert predictions.shape == (
+                len(iris_target_sr),
+                len(iris_target_sr.unique()),
+            )
+
+            # check correct labels are set as columns
+            assert list(iris_target_sr.unique()) == list(predictions.columns)
+        else:
+            with pytest.raises(NotImplementedError):
+                method(X=iris_features)
