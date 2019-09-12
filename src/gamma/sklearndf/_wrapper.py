@@ -686,7 +686,7 @@ def df_estimator(
             @classmethod
             def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
                 # noinspection PyArgumentList
-                return sklearn_base_estimator(**kwargs)
+                return sklearn_base_estimator(*args, **kwargs)
 
         return _DataFrameEstimator
 
