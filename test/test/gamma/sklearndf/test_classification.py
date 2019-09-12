@@ -7,11 +7,10 @@ import pytest
 import gamma.sklearndf.classification
 from gamma.sklearndf.classification import (
     ClassifierDF,
-    ClassifierWrapperDF,
     RandomForestClassifierDF,
     SVCDF,
 )
-from test.gamma.sklearndf import get_classes, get_missing_init_parameter
+from test.gamma.sklearndf import get_classes
 
 CLASSIFIERS_TO_TEST = get_classes(
     from_module=gamma.sklearndf.classification,
