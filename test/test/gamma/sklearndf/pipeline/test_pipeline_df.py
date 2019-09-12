@@ -54,7 +54,7 @@ class NoFit(BaseEstimator, TransformerMixin):
 
 
 class NoTrans(NoFit):
-    def fit(self, X, y) -> "NoTrans":
+    def fit(self, X, y=None, **fit_params) -> "NoTrans":
         return self
 
     def get_params(self, deep: bool = False) -> Dict[str, Any]:
@@ -81,7 +81,7 @@ class Transf(NoInvTransf):
 class DummyTransf(Transf):
     """Transformer which store the column means"""
 
-    def fit(self, X: np.ndarray, y: np.ndarray) -> "DummyTransf":
+    def fit(self, X, y=None, **fit_params) -> "DummyTransf":
         self.means_ = np.mean(X, axis=0)
         # store timestamp to figure out whether the result of 'fit' has been
         # cached or not
@@ -90,7 +90,7 @@ class DummyTransf(Transf):
 
 
 class TransfFitParams(Transf):
-    def fit(self, X: np.ndarray, y: np.ndarray, **fit_params) -> "TransfFitParams":
+    def fit(self, X, y=None, **fit_params) -> "TransfFitParams":
         self.fit_params = fit_params
         return self
 
