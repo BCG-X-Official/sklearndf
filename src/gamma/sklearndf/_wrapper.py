@@ -112,6 +112,30 @@ class BaseEstimatorWrapperDF(
         super().__init__(*args, **kwargs)
         self._columns_in = None
 
+    @classmethod
+    def from_fitted(
+        cls: "Type[BaseEstimatorWrapperDF[T_DelegateEstimator]]",
+        estimator: T_DelegateEstimator,
+        columns_in: pd.Index,
+    ) -> "BaseEstimatorWrapperDF[T_DelegateEstimator]":
+        """
+        Make a new wrapped data frame estimator whose delegate is an estimator which
+        has already been fitted
+        :param estimator: the fitted estimator
+        :param columns_in: the column names of X used for fitting the estimator
+        :return: the wrapped data frame estimator
+        """
+        class _FittedPredictor(cls):
+            def __init__(self) -> None:
+                super().__init__()
+                self._columns_in = columns_in
+
+            @classmethod
+            def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegatePredictor:
+                return estimator
+
+        return _FittedPredictor()
+
     def get_params(self, deep=True) -> Dict[str, Any]:
         """
         Get parameters for this estimator.
@@ -387,23 +411,6 @@ class BasePredictorWrapperDF(
     """
 
     F_PREDICTION = "prediction"
-
-    @classmethod
-    def from_fitted(
-        cls: "Type[BasePredictorWrapperDF[T_DelegatePredictor]]",
-        predictor: T_DelegatePredictor,
-        columns_in: pd.Index,
-    ) -> "BasePredictorWrapperDF[T_DelegatePredictor]":
-        class _FittedPredictor(cls):
-            def __init__(self) -> None:
-                super().__init__()
-                self._columns_in = columns_in
-
-            @classmethod
-            def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegatePredictor:
-                return predictor
-
-        return _FittedPredictor()
 
     @property
     def n_outputs(self) -> int:
