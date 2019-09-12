@@ -75,6 +75,7 @@ class BaseEstimatorDF(ABC):
             )
         self._columns_in = None
 
+    @property
     def root_estimator(self) -> BaseEstimator:
         """
         If this estimator delegates to another estimator in one or more layers,
@@ -83,16 +84,12 @@ class BaseEstimatorDF(ABC):
         :return: the original estimator that this estimator delegates to
         """
 
-        def _root(estimator: BaseEstimator) -> BaseEstimator:
-            while True:
-                if hasattr(estimator, "estimator"):
-                    estimator: BaseEstimator = estimator.estimator
-                elif hasattr(estimator, "delegate_estimator"):
-                    estimator: BaseEstimator = estimator.delegate_estimator
-                else:
-                    return estimator
+        estimator = cast(BaseEstimator, self)
 
-        return _root(cast(BaseEstimator, self))
+        while hasattr(estimator, "delegate_estimator"):
+            estimator: BaseEstimator = estimator.delegate_estimator
+
+        return estimator
 
     # noinspection PyPep8Naming
     @abstractmethod

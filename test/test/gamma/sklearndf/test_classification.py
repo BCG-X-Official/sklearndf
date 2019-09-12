@@ -66,11 +66,11 @@ def test_wrapped_fit_predict(
     assert len(predictions) == len(iris_target_sr)
     assert np.all(predictions.isin(iris_target_sr.unique()))
 
-    # test predict_proba & predict_log_proba if delegate-classifier has them:
+    # test predict_proba & predict_log_proba only if the root classifier has them:
     test_funcs = [
         getattr(classifier, attr)
         for attr in ["predict_proba", "predict_log_proba"]
-        if hasattr(classifier.delegate_estimator, attr)
+        if hasattr(classifier.root_estimator, attr)
     ]
     for func in test_funcs:
         predicted_probas = func(X=iris_features)
