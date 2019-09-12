@@ -69,6 +69,10 @@ T_DelegatePredictor = TypeVar(
 T_DelegateRegressor = TypeVar("T_Regressor", bound=RegressorMixin)
 T_DelegateClassifier = TypeVar("T_Classifier", bound=ClassifierMixin)
 
+T_InnerEstimator = TypeVar("T_InnerEstimator", bound=BaseEstimator)
+T_InnerRegressor = TypeVar("T_InnerRegressor", bound=RegressorMixin)
+T_InnerClassifier = TypeVar("T_InnerClassifier", bound=ClassifierMixin)
+
 #
 # base wrapper classes
 #
@@ -699,3 +703,80 @@ def df_estimator(
         return _decorate
     else:
         return _decorate(delegate_estimator)
+
+
+#
+# Meta estimator wrappers
+#
+
+
+class MetaEstimatorWrapperDF(
+    BaseEstimatorWrapperDF[T_DelegateEstimator],
+    Generic[T_DelegateEstimator, T_InnerEstimator],
+    MetaEstimatorMixin,
+    ABC,
+):
+    """
+    Abstract base class wrapping around estimators implementing
+    :class:`sklearn.base.MetaEstimatorMixin`. A meta-estimator will call the methods
+    of the embedded estimator using a modified copy of the `X` and `y` parameters,
+    so we need to make sure that these are converted back to data frames.
+
+    This class covers three cases used in sklearn:
+    - one inner estimator in attribute `estimator` or `base_estimator`
+    - multiple inner estimators in attribute `estimators`
+    """
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+
+        def _unwrap_estimator(estimator: BaseEstimator) -> BaseEstimator:
+            return (
+                estimator.root_estimator
+                if isinstance(estimator, BaseEstimatorDF)
+                else estimator
+            )
+
+        delegate_estimator = self.delegate_estimator
+
+        if hasattr(delegate_estimator, "estimator"):
+            delegate_estimator.estimator = _unwrap_estimator(
+                delegate_estimator.estimator
+            )
+        elif hasattr(delegate_estimator, "base_estimator"):
+            delegate_estimator.base_estimator = _unwrap_estimator(
+                delegate_estimator.base_estimator
+            )
+        elif hasattr(delegate_estimator, "estimators"):
+            delegate_estimator.estimators = [
+                (name, _unwrap_estimator(estimator))
+                for name, estimator in delegate_estimator.estimators
+            ]
+
+
+class MetaClassifierWrapperDF(
+    MetaEstimatorWrapperDF[T_DelegateClassifier, T_InnerClassifier],
+    ClassifierWrapperDF,
+    Generic[T_DelegateClassifier, T_InnerClassifier],
+    ABC,
+):
+    """
+    Abstract base class wrapping around classifiers implementing
+    :class:`sklearn.base.MetaEstimatorMixin`.
+    """
+
+    pass
+
+
+class MetaRegressorWrapperDF(
+    MetaEstimatorWrapperDF[T_DelegateRegressor, T_InnerRegressor],
+    RegressorWrapperDF,
+    Generic[T_DelegateRegressor, T_InnerRegressor],
+    ABC,
+):
+    """
+    Abstract base class wrapping around regressors implementing
+    :class:`sklearn.base.MetaEstimatorMixin`.
+    """
+
+    pass
