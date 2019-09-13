@@ -37,7 +37,7 @@ from sklearn.base import (
     TransformerMixin,
 )
 
-from gamma.common import ListLike, MatrixLike
+from gamma.common import ListLike
 from gamma.sklearndf import (
     BaseEstimatorDF,
     BasePredictorDF,
@@ -504,7 +504,7 @@ class BasePredictorWrapperDF(
 
     # noinspection PyPep8Naming
     def _prediction_to_series_or_frame(
-        self, X: pd.DataFrame, y: MatrixLike[Any]
+        self, X: pd.DataFrame, y: Union[np.ndarray, pd.Series, pd.DataFrame]
     ) -> Union[pd.Series, pd.DataFrame]:
         if isinstance(y, pd.Series) or isinstance(y, pd.DataFrame):
             # if we already have a series or data frame, check it and return it
@@ -513,10 +513,10 @@ class BasePredictorWrapperDF(
         elif isinstance(y, np.ndarray):
             if len(y) == len(X):
                 # predictions are usually provided as an ndarray of the same length as X
-                if len(y.shape) == 1:
+                if y.ndim == 1:
                     # single-output predictions yield an ndarray of shape (n_samples)
                     return pd.Series(data=y, name=self.F_PREDICTION, index=X.index)
-                if len(y.shape) == 2:
+                if y.ndim == 2:
                     # multi-output predictions yield an ndarray of shape (n_samples,
                     # n_outputs)
                     return pd.DataFrame(data=y, index=X.index)
@@ -623,26 +623,26 @@ class ClassifierWrapperDF(
 
     # noinspection PyPep8Naming
     def _prediction_with_class_labels(
-        self, X: pd.DataFrame, y: MatrixLike[Any]
+        self, X: pd.DataFrame, y: Union[pd.Series, pd.DataFrame, list, np.ndarray]
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
         if isinstance(y, pd.DataFrame) or isinstance(y, pd.Series):
             # if we already have a series or data frame, return it unchanged
             return y
         elif isinstance(y, list) and self.n_outputs > 1:
             # if we have a multi-output classifier, prediction of probabilities
-            # yields a list of ndarrays
+            # yields a list of NumPy arrays
             return [self._prediction_with_class_labels(X, output) for output in y]
         elif isinstance(y, np.ndarray):
             if len(y) == len(X):
-                # predictions of probabilities are usually provided as an ndarray the
+                # predictions of probabilities are usually provided as a NumPy array the
                 # same length as X
-                if len(y.shape) == 1:
+                if y.ndim == 1:
                     # for a binary classifier, we get a series with probabilities for
                     # the second class
                     return pd.Series(data=y, index=X.index, name=self.classes[1])
-                elif len(y.shape) == 2:
-                    # for a multi-class classifiers, we get a two-dimensional ndarray
-                    # with probabilities for each class
+                elif y.ndim == 2:
+                    # for a multi-class classifiers, we get a two-dimensional NumPy
+                    # array with probabilities for each class
                     return pd.DataFrame(data=y, index=X.index, columns=self.classes)
             raise TypeError(
                 f"Unexpected shape of ndarray returned as prediction: {y.shape}"
