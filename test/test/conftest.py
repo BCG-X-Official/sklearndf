@@ -63,6 +63,13 @@ def boston_target_sr(boston_df: pd.DataFrame, boston_target: str) -> pd.Series:
 
 
 @pytest.fixture
+def boston_target_df(boston_df: pd.DataFrame, boston_target: str) -> pd.DataFrame:
+    target = boston_df.loc[:, [boston_target]]
+    target.loc[:, f"{boston_target}_2"] = target.loc[:, boston_target] * 2
+    return target
+
+
+@pytest.fixture
 def iris_df(iris_target: str) -> pd.DataFrame:
     #  load sklearn test-data and convert to pd
     iris: Bunch = datasets.load_iris()

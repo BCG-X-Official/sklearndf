@@ -168,13 +168,16 @@ class BaseEstimatorWrapperDF(
 
     # noinspection PyPep8Naming
     def fit(
-        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params
+        self,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        **fit_params,
     ) -> "BaseEstimatorWrapperDF[T_DelegateEstimator]":
         """
         Fit the delegate estimator.
 
-        :param X: data frame to fit the estimator
-        :param y: pandas series
+        :param X: feature matrix
+        :param y: target as a pandas series or data frame (if multi-output)
         """
 
         self._reset_fit()
@@ -206,7 +209,7 @@ class BaseEstimatorWrapperDF(
 
     # noinspection PyPep8Naming
     def _fit(
-        self, X: pd.DataFrame, y: Optional[pd.Series], **fit_params
+        self, X: pd.DataFrame, y: Optional[Union[pd.Series, pd.DataFrame]], **fit_params
     ) -> T_DelegateEstimator:
         # noinspection PyUnresolvedReferences
         return self._delegate_estimator.fit(X, y, **fit_params)
@@ -223,8 +226,8 @@ class BaseEstimatorWrapperDF(
             raise TypeError("arg X must be a DataFrame")
         if self.is_fitted:
             BaseEstimatorWrapperDF._verify_df(df=X, expected_columns=self.columns_in)
-        if y is not None and not isinstance(y, pd.Series):
-            raise TypeError("arg y must be None or a Series")
+        if y is not None and not isinstance(y, (pd.Series, pd.DataFrame)):
+            raise TypeError("arg y must be None, or a pandas Series or DataFrame")
 
     @staticmethod
     def _verify_df(
