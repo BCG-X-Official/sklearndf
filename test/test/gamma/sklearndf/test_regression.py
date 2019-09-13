@@ -2,14 +2,12 @@ from typing import *
 
 import pandas as pd
 import pytest
+from sklearn.base import MultiOutputMixin
+from sklearn.multioutput import MultiOutputEstimator
 
 import gamma.sklearndf.regression
 from gamma.sklearndf import RegressorDF
-from gamma.sklearndf.regression import (
-    RandomForestRegressorDF,
-    SVRDF,
-    TransformerDF,
-)
+from gamma.sklearndf.regression import RandomForestRegressorDF, SVRDF, TransformerDF
 from test.gamma.sklearndf import get_classes
 
 REGRESSORS_TO_TEST: List[Type] = get_classes(
@@ -30,19 +28,28 @@ DEFAULT_REGRESSOR_PARAMETERS = {
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST)
 def test_wrapped_constructor(sklearndf_cls: Type) -> None:
     """ Test standard constructor of wrapped sklearn regressors """
-    _: RegressorDF = sklearndf_cls(**DEFAULT_REGRESSOR_PARAMETERS.get(
-        sklearndf_cls.__name__, {}))
+    _: RegressorDF = sklearndf_cls(
+        **DEFAULT_REGRESSOR_PARAMETERS.get(sklearndf_cls.__name__, {})
+    )
 
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST)
 def test_wrapped_fit_predict(
-    sklearndf_cls: Type, boston_features: pd.DataFrame, boston_target_sr: pd.Series
+    sklearndf_cls: Type,
+    boston_features: pd.DataFrame,
+    boston_target_sr: pd.Series,
+    boston_target_df: pd.DataFrame,
 ) -> None:
     """ Test fit & predict of wrapped sklearn regressors """
-    regressor: RegressorDF = sklearndf_cls(**DEFAULT_REGRESSOR_PARAMETERS.get(
-        sklearndf_cls.__name__, {}))
+    regressor: RegressorDF = sklearndf_cls(
+        **DEFAULT_REGRESSOR_PARAMETERS.get(sklearndf_cls.__name__, {})
+    )
 
-    regressor.fit(X=boston_features, y=boston_target_sr)
+    if isinstance(regressor.root_estimator, (MultiOutputMixin, MultiOutputEstimator)):
+        regressor.fit(X=boston_features, y=boston_target_df)
+    else:
+        regressor.fit(X=boston_features, y=boston_target_sr)
+
     predictions = regressor.predict(X=boston_features)
 
     # test predictions data-type, length and values

@@ -19,9 +19,9 @@ from abc import ABC, abstractmethod
 from typing import *
 
 import pandas as pd
-from gamma.common import ListLike
 from sklearn.base import BaseEstimator
 
+from gamma.common import ListLike
 from gamma.sklearndf import (
     BaseEstimatorDF,
     BasePredictorDF,
@@ -91,7 +91,10 @@ class EstimatorPipelineDF(
 
     # noinspection PyPep8Naming
     def fit(
-        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params
+        self,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        **fit_params,
     ) -> "EstimatorPipelineDF[T_FinalEstimatorDF]":
         self.final_estimator_.fit(
             self._pre_fit_transform(X, y, **fit_params), y, **fit_params

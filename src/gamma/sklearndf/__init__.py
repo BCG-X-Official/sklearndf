@@ -95,7 +95,10 @@ class BaseEstimatorDF(ABC):
     # noinspection PyPep8Naming
     @abstractmethod
     def fit(
-        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params
+        self,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        **fit_params,
     ) -> "BaseEstimatorDF":
         pass
 
