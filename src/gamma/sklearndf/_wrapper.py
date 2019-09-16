@@ -46,15 +46,21 @@ from gamma.sklearndf import (
     TransformerDF,
 )
 
+# estimators attribute of abstract class MultiOutputEstimator
+ATTR_MULTI_OUTPUT_ESTIMATORS = "estimators_"
+
 log = logging.getLogger(__name__)
 
 __all__ = [
     "BaseEstimatorWrapperDF",
     "BasePredictorWrapperDF",
-    "RegressorWrapperDF",
     "ClassifierWrapperDF",
-    "TransformerWrapperDF",
     "df_estimator",
+    "MetaClassifierWrapperDF",
+    "MetaEstimatorWrapperDF",
+    "MetaRegressorWrapperDF",
+    "RegressorWrapperDF",
+    "TransformerWrapperDF",
 ]
 
 #
@@ -78,31 +84,8 @@ T_InnerClassifier = TypeVar("T_InnerClassifier", bound=ClassifierMixin)
 #
 
 
-class BaseEstimatorWrapper(BaseEstimator, Generic[T_DelegateEstimator], ABC):
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__()
-        self._delegate_estimator = type(self)._make_delegate_estimator(*args, **kwargs)
-
-    @property
-    def delegate_estimator(self) -> T_DelegateEstimator:
-        """
-        Return the original estimator which this wrapper delegates to.
-
-        :return: the original estimator which this estimator delegates to
-        """
-        return self._delegate_estimator
-
-    @classmethod
-    @abstractmethod
-    def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
-        pass
-
-
 class BaseEstimatorWrapperDF(
-    BaseEstimatorWrapper[T_DelegateEstimator],
-    BaseEstimatorDF,
-    Generic[T_DelegateEstimator],
-    ABC,
+    BaseEstimator, BaseEstimatorDF, Generic[T_DelegateEstimator], ABC
 ):
     # todo explain what is the benefit compared to the class BaseEstimatorDF
     """
@@ -114,8 +97,18 @@ class BaseEstimatorWrapperDF(
     """
 
     def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-        self._columns_in = None
+        super().__init__()
+        self._delegate_estimator = type(self)._make_delegate_estimator(*args, **kwargs)
+        self._reset_fit()
+
+    @property
+    def delegate_estimator(self) -> T_DelegateEstimator:
+        """
+        Return the original estimator which this wrapper delegates to.
+
+        :return: the original estimator which this estimator delegates to
+        """
+        return self._delegate_estimator
 
     @classmethod
     def from_fitted(
@@ -197,6 +190,19 @@ class BaseEstimatorWrapperDF(
         return self
 
     @property
+    def n_outputs(self) -> int:
+        """
+        The number of outputs this estimator has been fitted on; `None` if the
+        estimator is not fitted
+        """
+        return self._n_outputs
+
+    @classmethod
+    @abstractmethod
+    def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
+        pass
+
+    @property
     def is_fitted(self) -> bool:
         """``True`` if this estimator is fitted, else ``False``."""
         return self._columns_in is not None
@@ -206,6 +212,7 @@ class BaseEstimatorWrapperDF(
 
     def _reset_fit(self) -> None:
         self._columns_in = None
+        self._n_outputs = None
 
     # noinspection PyPep8Naming
     def _fit(
@@ -220,12 +227,20 @@ class BaseEstimatorWrapperDF(
 
     # noinspection PyPep8Naming,PyUnusedLocal
     def _post_fit(
-        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params
+        self,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        **fit_params,
     ) -> None:
         self._columns_in = X.columns.rename(self.F_COLUMN_IN)
+        self._n_outputs = (
+            0 if y is None else 1 if isinstance(y, pd.Series) else y.shape[1]
+        )
 
     # noinspection PyPep8Naming
-    def _check_parameter_types(self, X: pd.DataFrame, y: Optional[pd.Series]) -> None:
+    def _check_parameter_types(
+        self, X: pd.DataFrame, y: Optional[Union[pd.Series, pd.DataFrame]]
+    ) -> None:
         if not isinstance(X, pd.DataFrame):
             raise TypeError("arg X must be a DataFrame")
         if self.is_fitted:
@@ -244,7 +259,7 @@ class BaseEstimatorWrapperDF(
             error_detail = []
             if len(actual) != len(expected):
                 error_detail.append(
-                    f"expected {len(expected)} items but got {len(actual)}"
+                    f"expected {len(expected)} columns but got {len(actual)}"
                 )
             if len(missing_columns) > 0:
                 error_detail.append(
@@ -447,18 +462,6 @@ class BasePredictorWrapperDF(
 
     F_PREDICTION = "prediction"
 
-    @property
-    def n_outputs(self) -> int:
-        """
-        Number of outputs predicted by this predictor.
-
-        Defaults to 1 if base predictor does not define property ``n_outputs_``.
-        """
-        if self.is_fitted:
-            return getattr(self.delegate_estimator, "n_outputs_", 1)
-        else:
-            raise AttributeError("n_outputs not defined for unfitted predictor")
-
     # noinspection PyPep8Naming
     def predict(
         self, X: pd.DataFrame, **predict_params
@@ -583,18 +586,6 @@ class ClassifierWrapperDF(
     Wrapper around sklearn classifiers that preserves data frames.
     """
 
-    @property
-    def classes(self) -> Optional[ListLike[Any]]:
-        """
-        Classes of this classifier after fitting.
-
-        ``None`` if the delegate estimator has no `classes_` property.
-        """
-        if self.is_fitted:
-            return getattr(self.delegate_estimator, "classes_", None)
-        else:
-            raise AttributeError("classes not defined for unfitted classifier")
-
     # noinspection PyPep8Naming
     def predict_proba(self, X: pd.DataFrame) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """
@@ -664,29 +655,61 @@ class ClassifierWrapperDF(
     def _prediction_with_class_labels(
         self, X: pd.DataFrame, y: Union[pd.Series, pd.DataFrame, list, np.ndarray]
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
-        if isinstance(y, pd.DataFrame) or isinstance(y, pd.Series):
-            # if we already have a series or data frame, return it unchanged
-            return y
-        elif isinstance(y, list) and self.n_outputs > 1:
+        def _classes(estimator: ClassifierMixin) -> Optional[ListLike[Any]]:
+            return getattr(estimator, "classes_", None)
+
+        def _single_prediction(
+            y_single: Union[pd.Series, pd.DataFrame, list, np.ndarray],
+            classes: Optional[ListLike[Any]],
+        ):
+            if isinstance(y_single, pd.DataFrame) or isinstance(y_single, pd.Series):
+                # if we already have a series or data frame, return it unchanged
+                return y_single
+            elif isinstance(y_single, np.ndarray):
+                if len(y_single) == len(X):
+                    # predictions of probabilities are usually provided as a NumPy array
+                    # the same length as X
+                    if y_single.ndim == 1:
+                        # for a binary classifier, we get a series with probabilities
+                        # for the second class
+                        return pd.Series(data=y_single, index=X.index, name=classes[1])
+                    elif y_single.ndim == 2:
+                        # for a multi-class classifiers, we get a two-dimensional NumPy
+                        # array with probabilities for each class
+                        return pd.DataFrame(
+                            data=y_single, index=X.index, columns=classes
+                        )
+                raise TypeError(
+                    f"ndarray with unexpected shape returned as prediction: "
+                    f"{y_single.shape}"
+                )
+            else:
+                raise TypeError(
+                    f"unexpected type or prediction result: {type(y_single).__name__}"
+                )
+
+        delegate_estimator = self.delegate_estimator
+
+        if isinstance(y, list) and self.n_outputs > 1:
             # if we have a multi-output classifier, prediction of probabilities
             # yields a list of NumPy arrays
-            return [self._prediction_with_class_labels(X, output) for output in y]
-        elif isinstance(y, np.ndarray):
-            if len(y) == len(X):
-                # predictions of probabilities are usually provided as a NumPy array the
-                # same length as X
-                if y.ndim == 1:
-                    # for a binary classifier, we get a series with probabilities for
-                    # the second class
-                    return pd.Series(data=y, index=X.index, name=self.classes[1])
-                elif y.ndim == 2:
-                    # for a multi-class classifiers, we get a two-dimensional NumPy
-                    # array with probabilities for each class
-                    return pd.DataFrame(data=y, index=X.index, columns=self.classes)
-            raise TypeError(
-                f"Unexpected shape of ndarray returned as prediction: {y.shape}"
-            )
-        raise TypeError(f"unexpected type or prediction result: {type(y).__name__}")
+
+            # usually the delegate estimator will provide a list of estimators used
+            # to predict each output. If present, use them to get individual class
+            # labels for each output; otherwise we cannot assign class labels
+            if hasattr(delegate_estimator, ATTR_MULTI_OUTPUT_ESTIMATORS):
+                return [
+                    _single_prediction(y_single=output, classes=_classes(estimator))
+                    for estimator, output in zip(
+                        getattr(delegate_estimator, ATTR_MULTI_OUTPUT_ESTIMATORS), y
+                    )
+                ]
+            else:
+                return [
+                    _single_prediction(y_single=output, classes=None) for output in y
+                ]
+        else:
+            return _single_prediction(y_single=y, classes=_classes(delegate_estimator))
 
 
 #

@@ -90,6 +90,10 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
     def is_fitted(self) -> bool:
         return self.threshold_low_ is not None
 
+    @property
+    def n_outputs(self) -> int:
+        return 0 if self.is_fitted else None
+
     def _get_columns_original(self) -> pd.Series:
         return self.columns_original_
 

@@ -94,3 +94,8 @@ def iris_features(iris_df: pd.DataFrame, iris_target: str) -> pd.DataFrame:
 @pytest.fixture
 def iris_target_sr(iris_df: pd.DataFrame, iris_target: str) -> pd.Series:
     return iris_df.loc[:, iris_target]
+
+
+@pytest.fixture
+def iris_target_df(iris_df: pd.DataFrame, iris_target: str) -> pd.DataFrame:
+    return iris_df.loc[:, [iris_target, iris_target]]
