@@ -1,9 +1,10 @@
+from itertools import chain
 from typing import *
 
 import numpy as np
 import pandas as pd
 import pytest
-from sklearn.multioutput import MultiOutputEstimator
+from sklearn.multioutput import ClassifierChain, MultiOutputEstimator
 
 import gamma.sklearndf.classification
 from gamma.sklearndf.classification import ClassifierDF, RandomForestClassifierDF, SVCDF
@@ -47,7 +48,8 @@ def test_wrapped_fit_predict(
     sklearndf_cls: Type[ClassifierDF],
     iris_features: pd.DataFrame,
     iris_target_sr: pd.Series,
-    iris_target_df: pd.DataFrame,
+    iris_targets_df: pd.DataFrame,
+    iris_targets_binary_df: pd.DataFrame,
 ) -> None:
     """ Test fit & predict & predict[_log]_proba of wrapped sklearn classifiers """
     # noinspection PyArgumentList
@@ -55,19 +57,37 @@ def test_wrapped_fit_predict(
         **CLASSIFIER_INIT_PARAMETERS.get(sklearndf_cls.__name__, {})
     )
 
+    is_chain = isinstance(classifier.root_estimator, ClassifierChain)
+
     is_multi_output = isinstance(classifier.root_estimator, MultiOutputEstimator)
 
-    if is_multi_output:
-        classifier.fit(X=iris_features, y=iris_target_df)
+    if is_chain:
+        # for chain classifiers, classes must be numerical so the preceding
+        # classification can act as input to the next classification
+        classes = set(range(iris_targets_binary_df.shape[1]))
+        classifier.fit(X=iris_features, y=iris_targets_binary_df)
+    elif is_multi_output:
+        classes = set(
+            chain(
+                *(
+                    list(iris_targets_df.iloc[:, col].unique())
+                    for col in range(iris_targets_df.shape[1])
+                )
+            )
+        )
+        classifier.fit(X=iris_features, y=iris_targets_df)
     else:
+        classes = set(iris_target_sr.unique())
         classifier.fit(X=iris_features, y=iris_target_sr)
 
     predictions = classifier.predict(X=iris_features)
 
     # test predictions data-type, length and values
-    assert isinstance(predictions, pd.DataFrame if is_multi_output else pd.Series)
+    assert isinstance(
+        predictions, pd.DataFrame if is_multi_output or is_chain else pd.Series
+    )
     assert len(predictions) == len(iris_target_sr)
-    assert np.all(predictions.isin(iris_target_sr.unique()))
+    assert np.all(predictions.isin(classes))
 
     # test predict_proba & predict_log_proba only if the root classifier has them:
     test_funcs = [
@@ -85,19 +105,16 @@ def test_wrapped_fit_predict(
                 assert isinstance(predictions, list)
                 assert classifier.n_outputs == len(predictions)
             else:
-                assert classifier.n_outputs == 1
+                assert classifier.n_outputs == predictions.shape[1] if is_chain else 1
                 predictions = [predictions]
 
             for prediction in predictions:
                 # test type and shape of predictions
                 assert isinstance(prediction, pd.DataFrame)
                 assert len(prediction) == len(iris_target_sr)
-                assert prediction.shape == (
-                    len(iris_target_sr),
-                    len(iris_target_sr.unique()),
-                )
+                assert prediction.shape == (len(iris_target_sr), len(classes))
                 # check correct labels are set as columns
-                assert list(iris_target_sr.unique()) == list(prediction.columns)
+                assert classes == set(prediction.columns)
         else:
             with pytest.raises(NotImplementedError):
                 method(X=iris_features)

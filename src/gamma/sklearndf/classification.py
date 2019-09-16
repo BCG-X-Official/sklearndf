@@ -15,7 +15,11 @@
 Data frame versions of all sklearn regressors
 """
 import logging
+from abc import ABC
+from typing import *
 
+import numpy as np
+import pandas as pd
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.discriminant_analysis import (
     LinearDiscriminantAnalysis,
@@ -57,11 +61,13 @@ from sklearn.semi_supervised import LabelPropagation, LabelSpreading
 from sklearn.svm import LinearSVC, NuSVC, SVC
 from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
 
+from gamma.common import ListLike
 from gamma.sklearndf import ClassifierDF
 from gamma.sklearndf._wrapper import (
     ClassifierWrapperDF,
     df_estimator,
     MetaClassifierWrapperDF,
+    T_InnerClassifier,
 )
 
 log = logging.getLogger(__name__)
@@ -525,9 +531,58 @@ class OutputCodeClassifierDF(OutputCodeClassifier, ClassifierDF):
 # multi-output
 #
 
+# estimators attribute of abstract class MultiOutputEstimator
+ATTR_MULTI_OUTPUT_ESTIMATORS = "estimators_"
+
+
+class _MultiOutputClassifierWrapperDF(
+    MetaClassifierWrapperDF[MultiOutputClassifier, T_InnerClassifier],
+    Generic[T_InnerClassifier],
+    ABC,
+):
+    # noinspection PyPep8Naming
+    def _prediction_with_class_labels(
+        self,
+        X: pd.DataFrame,
+        y: Union[pd.Series, pd.DataFrame, list, np.ndarray],
+        classes: Optional[ListLike[Any]] = None,
+    ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
+
+        # if we have a multi-output classifier, prediction of probabilities
+        # yields a list of NumPy arrays
+        if not isinstance(y, list):
+            raise ValueError(
+                "prediction of multi-output classifier expected to be a list of NumPy "
+                f"arrays, but got type {type(y)}"
+            )
+
+        delegate_estimator = self.delegate_estimator
+
+        # store the super() object as this is not available within a generator
+        sup = super()
+
+        # usually the delegate estimator will provide a list of estimators used
+        # to predict each output. If present, use these estimators to get
+        # individual class labels for each output; otherwise we cannot assign class
+        # labels
+        if hasattr(delegate_estimator, ATTR_MULTI_OUTPUT_ESTIMATORS):
+            return [
+                sup._prediction_with_class_labels(
+                    X=X, y=output, classes=getattr(estimator, "classes_", None)
+                )
+                for estimator, output in zip(
+                    getattr(delegate_estimator, ATTR_MULTI_OUTPUT_ESTIMATORS), y
+                )
+            ]
+        else:
+            return [
+                sup._prediction_with_class_labels(X=X, y=output, classes=None)
+                for output in y
+            ]
+
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=MetaClassifierWrapperDF)
+@df_estimator(df_wrapper_type=_MultiOutputClassifierWrapperDF)
 class MultiOutputClassifierDF(MultiOutputClassifier, ClassifierDF):
     """
     Wraps :class:`sklearn.multioutput.MultiOutputClassifier`; accepts and returns data
@@ -537,8 +592,30 @@ class MultiOutputClassifierDF(MultiOutputClassifier, ClassifierDF):
     pass
 
 
+#
+# chaining
+#
+
+
+class _ClassifierChainWrapperDF(
+    MetaClassifierWrapperDF[ClassifierChain, T_InnerClassifier],
+    Generic[T_InnerClassifier],
+    ABC,
+):
+    # noinspection PyPep8Naming
+    def _prediction_with_class_labels(
+        self,
+        X: pd.DataFrame,
+        y: Union[pd.Series, pd.DataFrame, list, np.ndarray],
+        classes: Optional[ListLike[Any]] = None,
+    ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
+        return super()._prediction_with_class_labels(
+            X=X, y=y, classes=range(self.n_outputs)
+        )
+
+
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ClassifierWrapperDF)
+@df_estimator(df_wrapper_type=_ClassifierChainWrapperDF)
 class ClassifierChainDF(ClassifierChain, ClassifierDF):
     """
     Wraps :class:`sklearn.multioutput.ClassifierChain`; accepts and returns data frames.

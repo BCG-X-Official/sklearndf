@@ -520,7 +520,7 @@ class FunctionTransformerDF(FunctionTransformer, TransformerDF):
 
 
 @df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
-class LabelEncoderDF(LabelEncoder, TransformerDF):
+class LabelEncoderDF(TransformerDF, LabelEncoder):
     """
     Wraps :class:`sklearn.preprocessing.LabelEncoder`;
     accepts and returns data frames.
@@ -562,9 +562,7 @@ class OneHotEncoderDF(TransformerWrapperDF[OneHotEncoder]):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
         if self.delegate_estimator.sparse:
-            raise NotImplementedError(
-                "sparse matrices not supported; set OneHotEncoder.sparse to False"
-            )
+            raise NotImplementedError("sparse matrices not supported; use sparse=False")
 
     @classmethod
     def _make_delegate_estimator(cls, *args, **kwargs) -> OneHotEncoder:

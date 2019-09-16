@@ -46,9 +46,6 @@ from gamma.sklearndf import (
     TransformerDF,
 )
 
-# estimators attribute of abstract class MultiOutputEstimator
-ATTR_MULTI_OUTPUT_ESTIMATORS = "estimators_"
-
 log = logging.getLogger(__name__)
 
 __all__ = [
@@ -653,63 +650,35 @@ class ClassifierWrapperDF(
 
     # noinspection PyPep8Naming
     def _prediction_with_class_labels(
-        self, X: pd.DataFrame, y: Union[pd.Series, pd.DataFrame, list, np.ndarray]
+        self,
+        X: pd.DataFrame,
+        y: Union[pd.Series, pd.DataFrame, list, np.ndarray],
+        classes: Optional[ListLike[Any]] = None,
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
-        def _classes(estimator: ClassifierMixin) -> Optional[ListLike[Any]]:
-            return getattr(estimator, "classes_", None)
 
-        def _single_prediction(
-            y_single: Union[pd.Series, pd.DataFrame, list, np.ndarray],
-            classes: Optional[ListLike[Any]],
-        ):
-            if isinstance(y_single, pd.DataFrame) or isinstance(y_single, pd.Series):
-                # if we already have a series or data frame, return it unchanged
-                return y_single
-            elif isinstance(y_single, np.ndarray):
-                if len(y_single) == len(X):
-                    # predictions of probabilities are usually provided as a NumPy array
-                    # the same length as X
-                    if y_single.ndim == 1:
-                        # for a binary classifier, we get a series with probabilities
-                        # for the second class
-                        return pd.Series(data=y_single, index=X.index, name=classes[1])
-                    elif y_single.ndim == 2:
-                        # for a multi-class classifiers, we get a two-dimensional NumPy
-                        # array with probabilities for each class
-                        return pd.DataFrame(
-                            data=y_single, index=X.index, columns=classes
-                        )
-                raise TypeError(
-                    f"ndarray with unexpected shape returned as prediction: "
-                    f"{y_single.shape}"
-                )
-            else:
-                raise TypeError(
-                    f"unexpected type or prediction result: {type(y_single).__name__}"
-                )
+        if classes is None:
+            classes = getattr(self.delegate_estimator, "classes_", None)
 
-        delegate_estimator = self.delegate_estimator
-
-        if isinstance(y, list) and self.n_outputs > 1:
-            # if we have a multi-output classifier, prediction of probabilities
-            # yields a list of NumPy arrays
-
-            # usually the delegate estimator will provide a list of estimators used
-            # to predict each output. If present, use them to get individual class
-            # labels for each output; otherwise we cannot assign class labels
-            if hasattr(delegate_estimator, ATTR_MULTI_OUTPUT_ESTIMATORS):
-                return [
-                    _single_prediction(y_single=output, classes=_classes(estimator))
-                    for estimator, output in zip(
-                        getattr(delegate_estimator, ATTR_MULTI_OUTPUT_ESTIMATORS), y
-                    )
-                ]
-            else:
-                return [
-                    _single_prediction(y_single=output, classes=None) for output in y
-                ]
+        if isinstance(y, pd.DataFrame) or isinstance(y, pd.Series):
+            # if we already have a series or data frame, return it unchanged
+            return y
+        elif isinstance(y, np.ndarray):
+            if len(y) == len(X):
+                # predictions of probabilities are usually provided as a NumPy array
+                # the same length as X
+                if y.ndim == 1:
+                    # for a binary classifier, we get a series with probabilities
+                    # for the second class
+                    return pd.Series(data=y, index=X.index, name=classes[1])
+                elif y.ndim == 2:
+                    # for a multi-class classifiers, we get a two-dimensional NumPy
+                    # array with probabilities for each class
+                    return pd.DataFrame(data=y, index=X.index, columns=classes)
+            raise TypeError(
+                f"ndarray with unexpected shape returned as prediction: " f"{y.shape}"
+            )
         else:
-            return _single_prediction(y_single=y, classes=_classes(delegate_estimator))
+            raise TypeError(f"unexpected type or prediction result: {type(y).__name__}")
 
 
 #
