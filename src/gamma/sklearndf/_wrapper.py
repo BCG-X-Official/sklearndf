@@ -72,10 +72,6 @@ T_DelegatePredictor = TypeVar(
 T_DelegateRegressor = TypeVar("T_Regressor", bound=RegressorMixin)
 T_DelegateClassifier = TypeVar("T_Classifier", bound=ClassifierMixin)
 
-T_InnerEstimator = TypeVar("T_InnerEstimator", bound=BaseEstimator)
-T_InnerRegressor = TypeVar("T_InnerRegressor", bound=RegressorMixin)
-T_InnerClassifier = TypeVar("T_InnerClassifier", bound=ClassifierMixin)
-
 #
 # base wrapper classes
 #
@@ -756,7 +752,7 @@ def df_estimator(
 
 class MetaEstimatorWrapperDF(
     BaseEstimatorWrapperDF[T_DelegateEstimator],
-    Generic[T_DelegateEstimator, T_InnerEstimator],
+    Generic[T_DelegateEstimator],
     MetaEstimatorMixin,
     ABC,
 ):
@@ -799,9 +795,9 @@ class MetaEstimatorWrapperDF(
 
 
 class MetaClassifierWrapperDF(
-    MetaEstimatorWrapperDF[T_DelegateClassifier, T_InnerClassifier],
+    MetaEstimatorWrapperDF[T_DelegateClassifier],
     ClassifierWrapperDF,
-    Generic[T_DelegateClassifier, T_InnerClassifier],
+    Generic[T_DelegateClassifier],
     ABC,
 ):
     """
@@ -813,9 +809,9 @@ class MetaClassifierWrapperDF(
 
 
 class MetaRegressorWrapperDF(
-    MetaEstimatorWrapperDF[T_DelegateRegressor, T_InnerRegressor],
+    MetaEstimatorWrapperDF[T_DelegateRegressor],
     RegressorWrapperDF,
-    Generic[T_DelegateRegressor, T_InnerRegressor],
+    Generic[T_DelegateRegressor],
     ABC,
 ):
     """
