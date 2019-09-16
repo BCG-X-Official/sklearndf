@@ -212,7 +212,11 @@ class BaseEstimatorWrapperDF(
         self, X: pd.DataFrame, y: Optional[Union[pd.Series, pd.DataFrame]], **fit_params
     ) -> T_DelegateEstimator:
         # noinspection PyUnresolvedReferences
-        return self._delegate_estimator.fit(X, y, **fit_params)
+        return self._delegate_estimator.fit(
+            self._convert_X_for_delegate(X),
+            self._convert_y_for_delegate(y),
+            **fit_params,
+        )
 
     # noinspection PyPep8Naming,PyUnusedLocal
     def _post_fit(
@@ -273,6 +277,15 @@ class BaseEstimatorWrapperDF(
                 f"delegate estimator of type {type(self.delegate_estimator).__name__} "
                 f"does not have attribute {attribute_name}"
             )
+
+    # noinspection PyPep8Naming
+    @staticmethod
+    def _convert_X_for_delegate(X: pd.DataFrame) -> Any:
+        return X
+
+    @staticmethod
+    def _convert_y_for_delegate(y: Optional[Union[pd.Series, pd.DataFrame]]) -> Any:
+        return y
 
     def __dir__(self) -> Iterable[str]:
         # include non-private attributes of delegate estimator in directory
@@ -400,18 +413,24 @@ class TransformerWrapperDF(
     # noinspection PyPep8Naming
     def _transform(self, X: pd.DataFrame) -> np.ndarray:
         # noinspection PyUnresolvedReferences
-        return self.delegate_estimator.transform(X)
+        return self.delegate_estimator.transform(self._convert_X_for_delegate(X))
 
     # noinspection PyPep8Naming
     def _fit_transform(
         self, X: pd.DataFrame, y: Optional[pd.Series], **fit_params
     ) -> np.ndarray:
-        return self.delegate_estimator.fit_transform(X, y, **fit_params)
+        return self.delegate_estimator.fit_transform(
+            self._convert_X_for_delegate(X),
+            self._convert_y_for_delegate(y),
+            **fit_params,
+        )
 
     # noinspection PyPep8Naming
     def _inverse_transform(self, X: pd.DataFrame) -> np.ndarray:
         # noinspection PyUnresolvedReferences
-        return self.delegate_estimator.inverse_transform(X)
+        return self.delegate_estimator.inverse_transform(
+            self._convert_X_for_delegate(X)
+        )
 
 
 class BasePredictorWrapperDF(
@@ -459,7 +478,10 @@ class BasePredictorWrapperDF(
 
         # noinspection PyUnresolvedReferences
         return self._prediction_to_series_or_frame(
-            X, self.delegate_estimator.predict(X, **predict_params)
+            X,
+            self.delegate_estimator.predict(
+                self._convert_X_for_delegate(X), **predict_params
+            ),
         )
 
     # noinspection PyPep8Naming
@@ -477,7 +499,12 @@ class BasePredictorWrapperDF(
 
         # noinspection PyUnresolvedReferences
         result = self._prediction_to_series_or_frame(
-            X, self.delegate_estimator.fit_predict(X, y, **fit_params)
+            X,
+            self.delegate_estimator.fit_predict(
+                self._convert_X_for_delegate(X),
+                self._convert_y_for_delegate(y),
+                **fit_params,
+            ),
         )
 
         self._post_fit(X, y, **fit_params)
@@ -503,7 +530,11 @@ class BasePredictorWrapperDF(
         if sample_weight is not None and not isinstance(sample_weight, pd.Series):
             raise TypeError("arg sample_weight must be None or a Series")
 
-        return self.delegate_estimator.score(X, y, sample_weight)
+        return self.delegate_estimator.score(
+            self._convert_X_for_delegate(X),
+            self._convert_y_for_delegate(y),
+            sample_weight,
+        )
 
     # noinspection PyPep8Naming
     def _prediction_to_series_or_frame(
@@ -579,7 +610,7 @@ class ClassifierWrapperDF(
 
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
-            X, self.delegate_estimator.predict_proba(X)
+            X, self.delegate_estimator.predict_proba(self._convert_X_for_delegate(X))
         )
 
     # noinspection PyPep8Naming
@@ -599,7 +630,8 @@ class ClassifierWrapperDF(
 
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
-            X, self.delegate_estimator.predict_log_proba(X)
+            X,
+            self.delegate_estimator.predict_log_proba(self._convert_X_for_delegate(X)),
         )
 
     # noinspection PyPep8Naming
@@ -610,11 +642,15 @@ class ClassifierWrapperDF(
         :param X: data frame of features
         :return: data frame of the decision functions of the sample for each class
         """
+
+        self._ensure_delegate_method("decision_function")
+
         self._check_parameter_types(X, None)
 
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
-            X, self.delegate_estimator.decision_function(X)
+            X,
+            self.delegate_estimator.decision_function(self._convert_X_for_delegate(X)),
         )
 
     def _ensure_delegate_method(self, method: str) -> None:

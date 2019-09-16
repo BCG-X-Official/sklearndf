@@ -19,7 +19,6 @@ import logging
 from abc import ABC, abstractmethod
 from typing import *
 
-import numpy as np
 import pandas as pd
 from sklearn.base import TransformerMixin
 
@@ -51,27 +50,13 @@ class NDArrayTransformerWrapperDF(
     """
 
     # noinspection PyPep8Naming
-    def _fit(
-        self, X: pd.DataFrame, y: Optional[pd.Series], **fit_params
-    ) -> T_Transformer:
-        # noinspection PyUnresolvedReferences
-        return self.delegate_estimator.fit(X.values, y.values, **fit_params)
+    @staticmethod
+    def _convert_X_for_delegate(X: pd.DataFrame) -> Any:
+        return X.values
 
-    # noinspection PyPep8Naming
-    def _transform(self, X: pd.DataFrame) -> np.ndarray:
-        # noinspection PyUnresolvedReferences
-        return self.delegate_estimator.transform(X.values)
-
-    # noinspection PyPep8Naming
-    def _fit_transform(
-        self, X: pd.DataFrame, y: Optional[pd.Series], **fit_params
-    ) -> np.ndarray:
-        return self.delegate_estimator.fit_transform(X.values, y.values, **fit_params)
-
-    # noinspection PyPep8Naming
-    def _inverse_transform(self, X: pd.DataFrame) -> np.ndarray:
-        # noinspection PyUnresolvedReferences
-        return self.delegate_estimator.inverse_transform(X.values)
+    @staticmethod
+    def _convert_y_for_delegate(y: Optional[Union[pd.Series, pd.DataFrame]]) -> Any:
+        return None if y is None else y.values
 
 
 class ColumnSubsetTransformerWrapperDF(
