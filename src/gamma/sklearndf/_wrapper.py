@@ -131,16 +131,16 @@ class BaseEstimatorWrapperDF(
         :return: the wrapped data frame estimator
         """
 
-        class _FittedPredictor(cls):
+        class _FittedEstimator(cls):
             def __init__(self) -> None:
                 super().__init__()
                 self._columns_in = columns_in
 
             @classmethod
-            def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegatePredictor:
+            def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
                 return estimator
 
-        return _FittedPredictor()
+        return _FittedEstimator()
 
     def get_params(self, deep=True) -> Dict[str, Any]:
         """
