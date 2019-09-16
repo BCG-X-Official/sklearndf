@@ -2,12 +2,16 @@ from typing import *
 
 import pandas as pd
 import pytest
-from sklearn.base import MultiOutputMixin
 from sklearn.multioutput import MultiOutputEstimator
 
 import gamma.sklearndf.regression
 from gamma.sklearndf import RegressorDF
-from gamma.sklearndf.regression import RandomForestRegressorDF, SVRDF, TransformerDF
+from gamma.sklearndf.regression import (
+    IsotonicRegressionDF,
+    RandomForestRegressorDF,
+    SVRDF,
+    TransformerDF,
+)
 from test.gamma.sklearndf import get_classes
 
 REGRESSORS_TO_TEST: List[Type] = get_classes(
@@ -45,9 +49,19 @@ def test_wrapped_fit_predict(
         **DEFAULT_REGRESSOR_PARAMETERS.get(sklearndf_cls.__name__, {})
     )
 
-    if isinstance(regressor.root_estimator, (MultiOutputMixin, MultiOutputEstimator)):
+    if type(regressor).__name__.startswith("Multi") or isinstance(
+        regressor.root_estimator, MultiOutputEstimator
+    ):
         regressor.fit(X=boston_features, y=boston_target_df)
+
     else:
+        if isinstance(regressor, IsotonicRegressionDF):
+            # fit will fail when we have more than one feature
+            with pytest.raises(ValueError):
+                regressor.fit(X=boston_features, y=boston_target_sr)
+            # eliminate all features except one then continue testing
+            boston_features = boston_features.loc[:, ["LSTAT"]]
+
         regressor.fit(X=boston_features, y=boston_target_sr)
 
     predictions = regressor.predict(X=boston_features)

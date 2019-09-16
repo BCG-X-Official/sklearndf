@@ -15,8 +15,10 @@
 Data frame versions of all sklearn regressors
 """
 import logging
+from abc import ABC
 from typing import *
 
+import pandas as pd
 from lightgbm.sklearn import LGBMRegressor
 from sklearn.base import RegressorMixin
 from sklearn.compose import TransformedTargetRegressor
@@ -97,6 +99,7 @@ class _RegressorTransformerWrapperDF(
     RegressorWrapperDF[T_Regressor],
     ColumnPreservingTransformerWrapperDF[T_Regressor],
     Generic[T_Regressor],
+    ABC,
 ):
     """
     Wraps a combined regressor and constant column transformer
@@ -595,8 +598,29 @@ class GaussianProcessRegressorDF(GaussianProcessRegressor, RegressorDF):
 #
 
 
+class _IsotonicRegressionWrapperDF(
+    _RegressorTransformerWrapperDF[IsotonicRegression], ABC
+):
+    # noinspection PyPep8Naming
+    def _check_parameter_types(self, X: pd.DataFrame, y: Optional[pd.Series]) -> None:
+        super()._check_parameter_types(X=X, y=y)
+        if X.shape[1] != 1:
+            raise ValueError(
+                f"arg X expected to have exactly 1 column but has {X.shape[1]} columns"
+            )
+
+    # noinspection PyPep8Naming
+    @staticmethod
+    def _convert_X_for_delegate(X: pd.DataFrame) -> Any:
+        return X.iloc[:, 0].values
+
+    @staticmethod
+    def _convert_y_for_delegate(y: Optional[Union[pd.Series, pd.DataFrame]]) -> Any:
+        return None if y is None else y.values
+
+
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_RegressorTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_IsotonicRegressionWrapperDF)
 class IsotonicRegressionDF(IsotonicRegression, RegressorDF, TransformerDF):
     """
     Wraps :class:`sklearn.isotonic.IsotonicRegression`; accepts and returns data frames.
