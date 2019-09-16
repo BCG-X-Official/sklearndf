@@ -67,7 +67,6 @@ from gamma.sklearndf._wrapper import (
     ClassifierWrapperDF,
     df_estimator,
     MetaClassifierWrapperDF,
-    T_InnerClassifier,
 )
 
 log = logging.getLogger(__name__)
@@ -536,9 +535,7 @@ ATTR_MULTI_OUTPUT_ESTIMATORS = "estimators_"
 
 
 class _MultiOutputClassifierWrapperDF(
-    MetaClassifierWrapperDF[MultiOutputClassifier, T_InnerClassifier],
-    Generic[T_InnerClassifier],
-    ABC,
+    MetaClassifierWrapperDF[MultiOutputClassifier], ABC
 ):
     # noinspection PyPep8Naming
     def _prediction_with_class_labels(
@@ -597,11 +594,7 @@ class MultiOutputClassifierDF(MultiOutputClassifier, ClassifierDF):
 #
 
 
-class _ClassifierChainWrapperDF(
-    MetaClassifierWrapperDF[ClassifierChain, T_InnerClassifier],
-    Generic[T_InnerClassifier],
-    ABC,
-):
+class _ClassifierChainWrapperDF(MetaClassifierWrapperDF[ClassifierChain], ABC):
     # noinspection PyPep8Naming
     def _prediction_with_class_labels(
         self,
