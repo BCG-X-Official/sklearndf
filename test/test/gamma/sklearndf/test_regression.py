@@ -2,7 +2,7 @@ from typing import *
 
 import pandas as pd
 import pytest
-from sklearn.multioutput import MultiOutputEstimator
+from sklearn.multioutput import MultiOutputEstimator, RegressorChain
 
 import gamma.sklearndf.regression
 from gamma.sklearndf import RegressorDF
@@ -49,8 +49,10 @@ def test_wrapped_fit_predict(
         **DEFAULT_REGRESSOR_PARAMETERS.get(sklearndf_cls.__name__, {})
     )
 
-    if type(regressor).__name__.startswith("Multi") or isinstance(
-        regressor.root_estimator, MultiOutputEstimator
+    if (
+        type(regressor).__name__.startswith("Multi")
+        or isinstance(regressor.root_estimator, MultiOutputEstimator)
+        or isinstance(regressor.root_estimator, RegressorChain)
     ):
         regressor.fit(X=boston_features, y=boston_target_df)
 

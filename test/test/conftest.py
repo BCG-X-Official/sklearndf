@@ -6,6 +6,7 @@ import pytest
 from sklearn import datasets
 from sklearn.utils import Bunch
 
+from gamma.sklearndf.transformation import OneHotEncoderDF
 from test import read_test_config
 from test.paths import TEST_DATA_CSV
 
@@ -70,20 +71,17 @@ def boston_target_df(boston_df: pd.DataFrame, boston_target: str) -> pd.DataFram
 
 
 @pytest.fixture
-def iris_df(iris_target: str) -> pd.DataFrame:
-    #  load sklearn test-data and convert to pd
-    iris: Bunch = datasets.load_iris()
+def iris_dataset() -> Bunch:
+    return datasets.load_iris()
 
-    iris_df = pd.DataFrame(
-        data=np.c_[iris.data, iris.target], columns=[*iris.feature_names, iris_target]
+
+@pytest.fixture
+def iris_df(iris_dataset: Bunch, iris_target: str) -> pd.DataFrame:
+    #  convert sklearn iris data set to data frame
+    return pd.DataFrame(
+        data=np.c_[iris_dataset.data, iris_dataset.target],
+        columns=[*iris_dataset.feature_names, iris_target],
     )
-
-    # replace target numericals with actual class labels
-    iris_df.loc[:, iris_target] = iris_df.loc[:, iris_target].apply(
-        lambda x: iris.target_names[int(x)]
-    )
-
-    return iris_df
 
 
 @pytest.fixture
@@ -92,10 +90,20 @@ def iris_features(iris_df: pd.DataFrame, iris_target: str) -> pd.DataFrame:
 
 
 @pytest.fixture
-def iris_target_sr(iris_df: pd.DataFrame, iris_target: str) -> pd.Series:
-    return iris_df.loc[:, iris_target]
+def iris_target_sr(
+    iris_dataset: Bunch, iris_df: pd.DataFrame, iris_target: str
+) -> pd.Series:
+    # replace numerical targets with actual class labels
+    return iris_df.loc[:, iris_target].apply(
+        lambda x: iris_dataset.target_names[int(x)]
+    )
 
 
 @pytest.fixture
-def iris_target_df(iris_df: pd.DataFrame, iris_target: str) -> pd.DataFrame:
+def iris_targets_df(iris_df: pd.DataFrame, iris_target: str) -> pd.DataFrame:
     return iris_df.loc[:, [iris_target, iris_target]]
+
+
+@pytest.fixture
+def iris_targets_binary_df(iris_target_sr: pd.Series) -> pd.DataFrame:
+    return OneHotEncoderDF(sparse=False).fit_transform(X=iris_target_sr.to_frame())
