@@ -34,8 +34,6 @@ from sklearn.base import (
     TransformerMixin,
 )
 
-from gamma.common import ListLike
-
 log = logging.getLogger(__name__)
 
 __all__ = [
@@ -110,9 +108,18 @@ class BaseEstimatorDF(ABC):
 
     @property
     def columns_in(self) -> pd.Index:
-        """The names of the input columns this estimator was fitted on"""
+        """The names of the input columns this estimator has been fitted on"""
         self._ensure_fitted()
         return self._get_columns_in().rename(self.F_COLUMN_IN)
+
+    @property
+    @abstractmethod
+    def n_outputs(self) -> int:
+        """
+        The number of outputs this estimator has been fitted on; `None` if the
+        estimator is not fitted
+        """
+        pass
 
     def clone(self: _T) -> _T:
         """
@@ -133,10 +140,6 @@ class BaseEstimatorDF(ABC):
 
 
 class BasePredictorDF(BaseEstimatorDF, ABC):
-    @property
-    @abstractmethod
-    def n_outputs(self) -> int:
-        pass
 
     # noinspection PyPep8Naming
     @abstractmethod
@@ -225,11 +228,6 @@ class ClassifierDF(BasePredictorDF, ClassifierMixin, ABC):
     """
     Sklearn classifier that preserves data frames.
     """
-
-    @property
-    @abstractmethod
-    def classes(self) -> Optional[ListLike[Any]]:
-        pass
 
     # noinspection PyPep8Naming
     @abstractmethod

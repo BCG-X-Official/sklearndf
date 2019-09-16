@@ -21,7 +21,6 @@ from typing import *
 import pandas as pd
 from sklearn.base import BaseEstimator
 
-from gamma.common import ListLike
 from gamma.sklearndf import (
     BaseEstimatorDF,
     BasePredictorDF,
@@ -246,7 +245,3 @@ class ClassifierPipelineDF(
     # noinspection PyPep8Naming
     def decision_function(self, X: pd.DataFrame) -> Union[pd.Series, pd.DataFrame]:
         return self.classifier.decision_function(self._pre_transform(X))
-
-    @property
-    def classes(self) -> Optional[ListLike[Any]]:
-        return self.classifier.classes
