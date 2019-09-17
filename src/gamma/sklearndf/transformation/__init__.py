@@ -284,6 +284,7 @@ class SimpleImputerDF(ColumnSubsetTransformerWrapperDF[SimpleImputer]):
         return SimpleImputer(*args, **kwargs)
 
     def _get_columns_out(self) -> pd.Index:
+        # get the columns that were dropped during imputation
         stats = self.delegate_estimator.statistics_
         if issubclass(stats.dtype.type, float):
             nan_mask = np.isnan(stats)
@@ -291,7 +292,18 @@ class SimpleImputerDF(ColumnSubsetTransformerWrapperDF[SimpleImputer]):
             nan_mask = [
                 x is None or (isinstance(x, float) and np.isnan(x)) for x in stats
             ]
-        return self.columns_in.delete(np.argwhere(nan_mask))
+
+        # the imputed columns are all ingoing columns, except the ones that were dropped
+        imputed_columns = self.columns_in.delete(np.argwhere(nan_mask))
+
+        # if the add_indicator flag is set, we will get additional "missing" columns
+        if self.delegate_estimator.add_indicator:
+            missing_indicator = MissingIndicatorDF.from_fitted(
+                estimator=self.delegate_estimator.indicator_, columns_in=self.columns_in
+            )
+            return imputed_columns.append(missing_indicator.columns_out)
+
+        return imputed_columns
 
 
 class MissingIndicatorDF(TransformerWrapperDF[MissingIndicator]):
