@@ -17,15 +17,17 @@ and ClassifierDF interfaces.
 """
 
 import logging
+from abc import ABC
 from typing import *
 
 import pandas as pd
 from pandas.core.arrays import ExtensionArray
 from sklearn.pipeline import FeatureUnion, Pipeline
 
-from gamma.sklearndf import BaseEstimatorDF, TransformerDF
+from gamma.sklearndf import BaseEstimatorDF, ClassifierDF, RegressorDF, TransformerDF
 from gamma.sklearndf._wrapper import (
     ClassifierWrapperDF,
+    df_estimator,
     RegressorWrapperDF,
     TransformerWrapperDF,
 )
@@ -36,10 +38,11 @@ log = logging.getLogger(__name__)
 __all__ = [sym for sym in dir() if sym.endswith("DF")]
 
 
-class PipelineDF(
+class _PipelineWrapperDF(
     ClassifierWrapperDF[Pipeline],
     RegressorWrapperDF[Pipeline],
     TransformerWrapperDF[Pipeline],
+    ABC,
 ):
     """
     Wrapper around :class:`sklearn.pipeline.Pipeline` with data frames in input and
@@ -85,10 +88,6 @@ class PipelineDF(
                 f"{type(final_estimator).__name__}"
             )
 
-    @classmethod
-    def _make_delegate_estimator(cls, *args, **kwargs) -> Pipeline:
-        return Pipeline(*args, **kwargs)
-
     @property
     def steps(self) -> List[Tuple[str, BaseEstimatorDF]]:
         """
@@ -118,10 +117,13 @@ class PipelineDF(
             if ind.step not in (1, None):
                 raise ValueError("Pipeline slicing only supports a step of 1")
 
-            return self.__class__(
-                steps=base_pipeline.steps[ind],
-                memory=base_pipeline.memory,
-                verbose=base_pipeline.verbose,
+            return cast(
+                BaseEstimatorDF,
+                self.__class__(
+                    steps=base_pipeline.steps[ind],
+                    memory=base_pipeline.memory,
+                    verbose=base_pipeline.verbose,
+                ),
             )
         else:
             return self.delegate_estimator[ind]
@@ -130,7 +132,7 @@ class PipelineDF(
     def _is_passthrough(estimator: Union[BaseEstimatorDF, str, None]) -> bool:
         # return True if the estimator is a "passthrough" (i.e. identity) transformer
         # in the pipeline
-        return estimator is None or estimator == PipelineDF.PASSTHROUGH
+        return estimator is None or estimator == _PipelineWrapperDF.PASSTHROUGH
 
     def _transformer_steps(self) -> Iterator[Tuple[str, TransformerDF]]:
         # make an iterator of all transform steps, i.e. excluding the final step
@@ -193,16 +195,18 @@ class PipelineDF(
         return self.columns_in
 
 
-class FeatureUnionDF(TransformerWrapperDF[FeatureUnion]):
+# noinspection PyAbstractClass
+@df_estimator(df_wrapper_type=_PipelineWrapperDF)
+class PipelineDF(TransformerDF, RegressorDF, ClassifierDF, Pipeline):
     """
-    Wraps :class:`sklearn.pipeline.FeatureUnion`;
-    accepts and returns data frames.
+    Wraps :class:`sklearn.pipeline.Pipeline`; accepts and returns data
+    frames.
     """
 
-    @classmethod
-    def _make_delegate_estimator(cls, *args, **kwargs) -> FeatureUnion:
-        return FeatureUnion(*args, **kwargs)
+    pass
 
+
+class _FeatureUnionWrapperDF(TransformerWrapperDF[FeatureUnion], ABC):
     @staticmethod
     def _prepend_columns_out(columns_out: pd.Index, name_prefix: str) -> pd.Index:
         return pd.Index(data=f"{name_prefix}__" + columns_out.astype(str))
@@ -253,3 +257,14 @@ class FeatureUnionDF(TransformerWrapperDF[FeatureUnion]):
             return pd.Index()
         else:
             return indices[0].append(other=indices[1:])
+
+
+# noinspection PyAbstractClass
+@df_estimator(df_wrapper_type=_FeatureUnionWrapperDF)
+class FeatureUnionDF(TransformerDF, FeatureUnion):
+    """
+    Wraps :class:`sklearn.pipeline.FeatureUnion`;
+    accepts and returns data frames.
+    """
+
+    pass

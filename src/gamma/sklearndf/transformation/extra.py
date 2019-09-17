@@ -16,13 +16,15 @@ Additional transformers outside of the sckit-learn canon, created by Gamma
 """
 
 import logging
+from abc import ABC
 from typing import *
 
 import pandas as pd
 from boruta import BorutaPy
-from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
+from sklearn.base import BaseEstimator
 
-from gamma.sklearndf import BasePredictorDF, TransformerDF
+from gamma.sklearndf import TransformerDF
+from gamma.sklearndf._wrapper import df_estimator, MetaEstimatorWrapperDF
 from gamma.sklearndf.transformation import ColumnSubsetTransformerWrapperDF
 from gamma.sklearndf.transformation._wrapper import NDArrayTransformerWrapperDF
 
@@ -101,9 +103,19 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
         return self.columns_original.index
 
 
-class BorutaDF(
-    NDArrayTransformerWrapperDF[BorutaPy], ColumnSubsetTransformerWrapperDF[BorutaPy]
+class _BorutaPyWrapperDF(
+    MetaEstimatorWrapperDF[BorutaPy],
+    NDArrayTransformerWrapperDF[BorutaPy],
+    ColumnSubsetTransformerWrapperDF[BorutaPy],
+    ABC,
 ):
+    def _get_columns_out(self) -> pd.Index:
+        return self.columns_in[self.delegate_estimator.support_]
+
+
+# noinspection PyAbstractClass,PyUnresolvedReferences
+@df_estimator(df_wrapper_type=_BorutaPyWrapperDF)
+class BorutaDF(TransformerDF, BorutaPy):
     """
     Feature Selection with the Boruta method with dataframes as input and output.
 
@@ -156,37 +168,4 @@ class BorutaDF(
         - 2: which features have been selected already
     """
 
-    def __init__(
-        self,
-        estimator: Union[RegressorMixin, ClassifierMixin, BasePredictorDF],
-        n_estimators=1000,
-        perc=100,
-        alpha=0.05,
-        two_step=True,
-        max_iter=100,
-        random_state=None,
-        verbose=0,
-        **kwargs,
-    ) -> None:
-        super().__init__(
-            estimator=(
-                estimator.delegate_estimator
-                if hasattr(estimator, "delegate_estimator")
-                else estimator
-            ),
-            n_estimators=n_estimators,
-            perc=perc,
-            alpha=alpha,
-            two_step=two_step,
-            max_iter=max_iter,
-            random_state=random_state,
-            verbose=verbose,
-            **kwargs,
-        )
-
-    @classmethod
-    def _make_delegate_estimator(cls, *args, **kwargs) -> BorutaPy:
-        return BorutaPy(*args, **kwargs)
-
-    def _get_columns_out(self) -> pd.Index:
-        return self.columns_in[self.delegate_estimator.support_]
+    pass
