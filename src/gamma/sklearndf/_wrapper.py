@@ -26,6 +26,7 @@ import logging
 from abc import ABC, abstractmethod
 from functools import wraps
 from typing import *
+from typing import Type
 
 import numpy as np
 import pandas as pd
@@ -71,6 +72,7 @@ T_DelegatePredictor = TypeVar(
 )
 T_DelegateRegressor = TypeVar("T_Regressor", bound=RegressorMixin)
 T_DelegateClassifier = TypeVar("T_Classifier", bound=ClassifierMixin)
+T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="BaseEstimatorWrapperDF")
 
 #
 # base wrapper classes
@@ -105,10 +107,10 @@ class BaseEstimatorWrapperDF(
 
     @classmethod
     def from_fitted(
-        cls: "Type[BaseEstimatorWrapperDF[T_DelegateEstimator]]",
+        cls: Type[T_EstimatorWrapperDF],
         estimator: T_DelegateEstimator,
         columns_in: pd.Index,
-    ) -> "BaseEstimatorWrapperDF[T_DelegateEstimator]":
+    ) -> T_EstimatorWrapperDF:
         """
         Make a new wrapped data frame estimator whose delegate is an estimator which
         has already been fitted
