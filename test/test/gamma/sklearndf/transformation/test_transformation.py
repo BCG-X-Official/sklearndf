@@ -2,6 +2,8 @@ from typing import *
 
 import numpy as np
 import pandas as pd
+
+# noinspection PyPackageRequirements
 import pytest
 import sklearn
 from pandas.util.testing import assert_frame_equal

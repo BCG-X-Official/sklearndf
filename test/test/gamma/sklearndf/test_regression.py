@@ -1,6 +1,8 @@
 from typing import *
 
 import pandas as pd
+
+# noinspection PyPackageRequirements
 import pytest
 from sklearn.multioutput import MultiOutputEstimator, RegressorChain
 
