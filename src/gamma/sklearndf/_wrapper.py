@@ -680,7 +680,7 @@ class ClassifierWrapperDF(
 
 
 #
-# decorator for easier wrapping of scikit-learn estimators
+# decorator for wrapping scikit-learn estimators
 #
 
 
@@ -738,8 +738,8 @@ def df_estimator(
 
     if not issubclass(df_wrapper_type, BaseEstimatorWrapperDF):
         raise ValueError(
-            f"arg df_transformer_type not a "
-            f"{BaseEstimatorWrapperDF.__name__} class: {df_wrapper_type}"
+            f"arg df_transformer_type is not a subclass of "
+            f"{BaseEstimatorWrapperDF.__name__}: {df_wrapper_type}"
         )
     if delegate_estimator is None:
         return _decorate
