@@ -1,4 +1,6 @@
 import pandas as pd
+
+# noinspection PyPackageRequirements
 import pytest
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import OneHotEncoder
