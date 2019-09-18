@@ -96,14 +96,14 @@ class TransfFitParams(Transf):
 
 
 @df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
-class DummyTransfDF(DummyTransf, TransformerDF):
+class DummyTransfDF(TransformerDF, DummyTransf):
     """ Wraps a  DummyTransf; accepts and returns data frames """
 
     pass
 
 
 @df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
-class NoTransDF(NoTrans, TransformerDF):
+class NoTransDF(TransformerDF, NoTrans):
     """ Wraps a  DummyTransf; accepts and returns data frames """
 
     pass

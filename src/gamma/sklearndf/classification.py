@@ -81,7 +81,7 @@ __all__ = [sym for sym in dir() if sym.endswith("DF")]
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class NearestCentroidDF(NearestCentroid, ClassifierDF):
+class NearestCentroidDF(ClassifierDF, NearestCentroid):
     """
     Wraps :class:`sklearn.neighbors.nearest_centroid.NearestCentroid`; accepts and
     returns data frames.
@@ -92,7 +92,7 @@ class NearestCentroidDF(NearestCentroid, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class KNeighborsClassifierDF(KNeighborsClassifier, ClassifierDF):
+class KNeighborsClassifierDF(ClassifierDF, KNeighborsClassifier):
     """
     Wraps :class:`sklearn.neighbors.classification.KNeighborsClassifier`; accepts and
     returns data frames.
@@ -103,7 +103,7 @@ class KNeighborsClassifierDF(KNeighborsClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class RadiusNeighborsClassifierDF(RadiusNeighborsClassifier, ClassifierDF):
+class RadiusNeighborsClassifierDF(ClassifierDF, RadiusNeighborsClassifier):
     """
     Wraps :class:`sklearn.neighbors.classification.RadiusNeighborsClassifier`; accepts
     and returns data frames.
@@ -119,7 +119,7 @@ class RadiusNeighborsClassifierDF(RadiusNeighborsClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=MetaClassifierWrapperDF)
-class VotingClassifierDF(VotingClassifier, ClassifierDF):
+class VotingClassifierDF(ClassifierDF, VotingClassifier):
     """
     Wraps :class:`sklearn.ensemble.voting.VotingClassifier`; accepts and returns data
     frames.
@@ -135,7 +135,7 @@ class VotingClassifierDF(VotingClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class RandomForestClassifierDF(RandomForestClassifier, ClassifierDF):
+class RandomForestClassifierDF(ClassifierDF, RandomForestClassifier):
     """
     Wraps :class:`sklearn.ensemble.forest.RandomForestClassifier`; accepts and returns
     data frames.
@@ -146,7 +146,7 @@ class RandomForestClassifierDF(RandomForestClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class ExtraTreesClassifierDF(ExtraTreesClassifier, ClassifierDF):
+class ExtraTreesClassifierDF(ClassifierDF, ExtraTreesClassifier):
     """
     Wraps :class:`sklearn.ensemble.forest.ExtraTreesClassifier`; accepts and returns
     data frames.
@@ -157,7 +157,7 @@ class ExtraTreesClassifierDF(ExtraTreesClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class GradientBoostingClassifierDF(GradientBoostingClassifier, ClassifierDF):
+class GradientBoostingClassifierDF(ClassifierDF, GradientBoostingClassifier):
     """
     Wraps :class:`sklearn.ensemble.gradient_boosting.GradientBoostingClassifier`;
     accepts and returns data frames.
@@ -168,7 +168,7 @@ class GradientBoostingClassifierDF(GradientBoostingClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class AdaBoostClassifierDF(AdaBoostClassifier, ClassifierDF):
+class AdaBoostClassifierDF(ClassifierDF, AdaBoostClassifier):
     """
     Wraps :class:`sklearn.ensemble.weight_boosting.AdaBoostClassifier`; accepts and
     returns data frames.
@@ -179,7 +179,7 @@ class AdaBoostClassifierDF(AdaBoostClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class BaggingClassifierDF(BaggingClassifier, ClassifierDF):
+class BaggingClassifierDF(ClassifierDF, BaggingClassifier):
     """
     Wraps :class:`sklearn.ensemble.bagging.BaggingClassifier`; accepts and returns data
     frames.
@@ -195,7 +195,7 @@ class BaggingClassifierDF(BaggingClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class DecisionTreeClassifierDF(DecisionTreeClassifier, ClassifierDF):
+class DecisionTreeClassifierDF(ClassifierDF, DecisionTreeClassifier):
     """
     Wraps :class:`sklearn.tree.tree.DecisionTreeClassifier`; accepts and returns data
     frames.
@@ -206,7 +206,7 @@ class DecisionTreeClassifierDF(DecisionTreeClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class ExtraTreeClassifierDF(ExtraTreeClassifier, ClassifierDF):
+class ExtraTreeClassifierDF(ClassifierDF, ExtraTreeClassifier):
     """
     Wraps :class:`sklearn.tree.tree.ExtraTreeClassifier`; accepts and returns data
     frames.
@@ -222,7 +222,7 @@ class ExtraTreeClassifierDF(ExtraTreeClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class QuadraticDiscriminantAnalysisDF(QuadraticDiscriminantAnalysis, ClassifierDF):
+class QuadraticDiscriminantAnalysisDF(ClassifierDF, QuadraticDiscriminantAnalysis):
     """
     Wraps :class:`sklearn.discriminant_analysis.QuadraticDiscriminantAnalysis`; accepts
     and returns data frames.
@@ -233,7 +233,7 @@ class QuadraticDiscriminantAnalysisDF(QuadraticDiscriminantAnalysis, ClassifierD
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class LinearDiscriminantAnalysisDF(LinearDiscriminantAnalysis, ClassifierDF):
+class LinearDiscriminantAnalysisDF(ClassifierDF, LinearDiscriminantAnalysis):
     """
     Wraps :class:`sklearn.discriminant_analysis.LinearDiscriminantAnalysis`; accepts and
     returns data frames.
@@ -249,7 +249,7 @@ class LinearDiscriminantAnalysisDF(LinearDiscriminantAnalysis, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class GaussianNBDF(GaussianNB, ClassifierDF):
+class GaussianNBDF(ClassifierDF, GaussianNB):
     """
     Wraps :class:`sklearn.naive_bayes.GaussianNB`; accepts and returns data frames.
     """
@@ -259,7 +259,7 @@ class GaussianNBDF(GaussianNB, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class MultinomialNBDF(MultinomialNB, ClassifierDF):
+class MultinomialNBDF(ClassifierDF, MultinomialNB):
     """
     Wraps :class:`sklearn.naive_bayes.MultinomialNB`; accepts and returns data frames.
     """
@@ -269,7 +269,7 @@ class MultinomialNBDF(MultinomialNB, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class ComplementNBDF(ComplementNB, ClassifierDF):
+class ComplementNBDF(ClassifierDF, ComplementNB):
     """
     Wraps :class:`sklearn.naive_bayes.ComplementNB`; accepts and returns data frames.
     """
@@ -279,7 +279,7 @@ class ComplementNBDF(ComplementNB, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class BernoulliNBDF(BernoulliNB, ClassifierDF):
+class BernoulliNBDF(ClassifierDF, BernoulliNB):
     """
     Wraps :class:`sklearn.naive_bayes.BernoulliNB`; accepts and returns data frames.
     """
@@ -293,7 +293,7 @@ class BernoulliNBDF(BernoulliNB, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=MetaClassifierWrapperDF)
-class CalibratedClassifierCVDF(CalibratedClassifierCV, ClassifierDF):
+class CalibratedClassifierCVDF(ClassifierDF, CalibratedClassifierCV):
     """
     Wraps :class:`sklearn.calibration.CalibratedClassifierCV`; accepts and returns data
     frames.
@@ -309,7 +309,7 @@ class CalibratedClassifierCVDF(CalibratedClassifierCV, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class SVCDF(SVC, ClassifierDF):
+class SVCDF(ClassifierDF, SVC):
     """
     Wraps :class:`sklearn.svm.classes.SVC`; accepts and returns data frames.
     """
@@ -319,7 +319,7 @@ class SVCDF(SVC, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class NuSVCDF(NuSVC, ClassifierDF):
+class NuSVCDF(ClassifierDF, NuSVC):
     """
     Wraps :class:`sklearn.svm.classes.NuSVC`; accepts and returns data frames.
     """
@@ -329,7 +329,7 @@ class NuSVCDF(NuSVC, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class LinearSVCDF(LinearSVC, ClassifierDF):
+class LinearSVCDF(ClassifierDF, LinearSVC):
     """
     Wraps :class:`sklearn.svm.classes.LinearSVC`; accepts and returns data frames.
     """
@@ -344,7 +344,7 @@ class LinearSVCDF(LinearSVC, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class DummyClassifierDF(DummyClassifier, ClassifierDF):
+class DummyClassifierDF(ClassifierDF, DummyClassifier):
     """
     Wraps :class:`sklearn.dummy.DummyClassifier`; accepts and returns data frames.
     """
@@ -359,7 +359,7 @@ class DummyClassifierDF(DummyClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class GaussianProcessClassifierDF(GaussianProcessClassifier, ClassifierDF):
+class GaussianProcessClassifierDF(ClassifierDF, GaussianProcessClassifier):
     """
     Wraps :class:`sklearn.gaussian_process.gpc.GaussianProcessClassifier`; accepts and
     returns data frames.
@@ -375,7 +375,7 @@ class GaussianProcessClassifierDF(GaussianProcessClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class LogisticRegressionDF(LogisticRegression, ClassifierDF):
+class LogisticRegressionDF(ClassifierDF, LogisticRegression):
     """
     Wraps :class:`sklearn.linear_model.logistic.LogisticRegression`; accepts and returns
     data frames.
@@ -386,7 +386,7 @@ class LogisticRegressionDF(LogisticRegression, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class LogisticRegressionCVDF(LogisticRegressionCV, ClassifierDF):
+class LogisticRegressionCVDF(ClassifierDF, LogisticRegressionCV):
     """
     Wraps :class:`sklearn.linear_model.logistic.LogisticRegressionCV`; accepts and
     returns data frames.
@@ -397,7 +397,7 @@ class LogisticRegressionCVDF(LogisticRegressionCV, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class LogisticRegressionCVDF(LogisticRegressionCV, ClassifierDF):
+class LogisticRegressionCVDF(ClassifierDF, LogisticRegressionCV):
     """
     Wraps :class:`sklearn.linear_model.logistic.LogisticRegressionCV`; accepts and
     returns data frames.
@@ -408,7 +408,7 @@ class LogisticRegressionCVDF(LogisticRegressionCV, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class PassiveAggressiveClassifierDF(PassiveAggressiveClassifier, ClassifierDF):
+class PassiveAggressiveClassifierDF(ClassifierDF, PassiveAggressiveClassifier):
     """
     Wraps :class:`sklearn.linear_model.passive_aggressive.PassiveAggressiveClassifier`;
     accepts and returns data frames.
@@ -419,7 +419,7 @@ class PassiveAggressiveClassifierDF(PassiveAggressiveClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class PerceptronDF(Perceptron, ClassifierDF):
+class PerceptronDF(ClassifierDF, Perceptron):
     """
     Wraps :class:`sklearn.linear_model.perceptron.Perceptron`; accepts and returns data
     frames.
@@ -430,7 +430,7 @@ class PerceptronDF(Perceptron, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class SGDClassifierDF(SGDClassifier, ClassifierDF):
+class SGDClassifierDF(ClassifierDF, SGDClassifier):
     """
     Wraps :class:`sklearn.linear_model.stochastic_gradient.SGDClassifier`; accepts and
     returns data frames.
@@ -441,7 +441,7 @@ class SGDClassifierDF(SGDClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class RidgeClassifierDF(RidgeClassifier, ClassifierDF):
+class RidgeClassifierDF(ClassifierDF, RidgeClassifier):
     """
     Wraps :class:`sklearn.linear_model.ridge.RidgeClassifier`; accepts and returns data
     frames.
@@ -452,7 +452,7 @@ class RidgeClassifierDF(RidgeClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class RidgeClassifierCVDF(RidgeClassifierCV, ClassifierDF):
+class RidgeClassifierCVDF(ClassifierDF, RidgeClassifierCV):
     """
     Wraps :class:`sklearn.linear_model.ridge.RidgeClassifierCV`; accepts and returns
     data frames.
@@ -468,7 +468,7 @@ class RidgeClassifierCVDF(RidgeClassifierCV, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class LabelPropagationDF(LabelPropagation, ClassifierDF):
+class LabelPropagationDF(ClassifierDF, LabelPropagation):
     """
     Wraps :class:`sklearn.semi_supervised.label_propagation.LabelPropagation`; accepts
     and returns data frames.
@@ -479,7 +479,7 @@ class LabelPropagationDF(LabelPropagation, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class LabelSpreadingDF(LabelSpreading, ClassifierDF):
+class LabelSpreadingDF(ClassifierDF, LabelSpreading):
     """
     Wraps :class:`sklearn.semi_supervised.label_propagation.LabelSpreading`; accepts and
     returns data frames.
@@ -495,7 +495,7 @@ class LabelSpreadingDF(LabelSpreading, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=MetaClassifierWrapperDF)
-class OneVsRestClassifierDF(OneVsRestClassifier, ClassifierDF):
+class OneVsRestClassifierDF(ClassifierDF, OneVsRestClassifier):
     """
     Wraps :class:`sklearn.multiclass.OneVsRestClassifier`; accepts and returns data
     frames.
@@ -506,7 +506,7 @@ class OneVsRestClassifierDF(OneVsRestClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=MetaClassifierWrapperDF)
-class OneVsOneClassifierDF(OneVsOneClassifier, ClassifierDF):
+class OneVsOneClassifierDF(ClassifierDF, OneVsOneClassifier):
     """
     Wraps :class:`sklearn.multiclass.OneVsOneClassifier`; accepts and returns data
     frames.
@@ -517,7 +517,7 @@ class OneVsOneClassifierDF(OneVsOneClassifier, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=MetaClassifierWrapperDF)
-class OutputCodeClassifierDF(OutputCodeClassifier, ClassifierDF):
+class OutputCodeClassifierDF(ClassifierDF, OutputCodeClassifier):
     """
     Wraps :class:`sklearn.multiclass.OutputCodeClassifier`; accepts and returns data
     frames.
@@ -580,7 +580,7 @@ class _MultiOutputClassifierWrapperDF(
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=_MultiOutputClassifierWrapperDF)
-class MultiOutputClassifierDF(MultiOutputClassifier, ClassifierDF):
+class MultiOutputClassifierDF(ClassifierDF, MultiOutputClassifier):
     """
     Wraps :class:`sklearn.multioutput.MultiOutputClassifier`; accepts and returns data
     frames.
@@ -609,7 +609,7 @@ class _ClassifierChainWrapperDF(MetaClassifierWrapperDF[ClassifierChain], ABC):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=_ClassifierChainWrapperDF)
-class ClassifierChainDF(ClassifierChain, ClassifierDF):
+class ClassifierChainDF(ClassifierDF, ClassifierChain):
     """
     Wraps :class:`sklearn.multioutput.ClassifierChain`; accepts and returns data frames.
     """
@@ -624,7 +624,7 @@ class ClassifierChainDF(ClassifierChain, ClassifierDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-class MLPClassifierDF(MLPClassifier, ClassifierDF):
+class MLPClassifierDF(ClassifierDF, MLPClassifier):
     """
     Wraps :class:`sklearn.neural_network.multilayer_perceptron.MLPClassifier`; accepts
     and returns data frames.
