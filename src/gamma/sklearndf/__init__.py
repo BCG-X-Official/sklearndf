@@ -12,13 +12,18 @@
 #
 
 """
-Wrap scikit-learn `BaseEstimator` to return dataframes instead of numpy arrays.
+The Gamma scikit-learn DF library.
 
-The abstract class :class:`BaseEstimatorDF` wraps
-:class:`~sklearn.base.BaseEstimator` so that the ``predict``
-and ``transform`` methods of the implementations return dataframe.
-:class:`BaseEstimatorDF` has an attribute :attr:`~BaseEstimatorDF.features_in`
-which is the index of the columns of the input dataframe.
+Enhances scikit-learn estimators for advanced support of data frames.
+
+The abstract class :class:`BaseEstimatorDF` and its subclasses wrap subclasses of
+:class:`~sklearn.base.BaseEstimator` such that transform methods return data frames
+with feature names in the column index.
+
+The enhanced base estimators also offer attributes
+:attr:`~BaseEstimatorDF.features_in`, :attr:`~TransformerDF.features_out`, and
+:attr:`~TransformerDF.features_original`, which enable tracing features back to the
+original inputs even across complex pipelines.
 """
 
 import logging
@@ -224,13 +229,13 @@ class TransformerDF(BaseEstimatorDF, TransformerMixin, ABC):
 
 class RegressorDF(BasePredictorDF, RegressorMixin, ABC):
     """
-    Sklearn regressor that preserves data frames.
+    Scikit-learn regressor with enhanced support for data frames.
     """
 
 
 class ClassifierDF(BasePredictorDF, ClassifierMixin, ABC):
     """
-    Sklearn classifier that preserves data frames.
+    Scikit-learn classifier with enhanced support for data frames.
     """
 
     # noinspection PyPep8Naming
