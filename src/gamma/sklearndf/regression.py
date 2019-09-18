@@ -117,7 +117,7 @@ class _RegressorTransformerWrapperDF(
 
 
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class LinearSVRDF(LinearSVR, RegressorDF):
+class LinearSVRDF(RegressorDF, LinearSVR):
     """
     Wraps :class:`sklearn.svm.classes.LinearSVR`; accepts and returns data frames.
     """
@@ -127,7 +127,7 @@ class LinearSVRDF(LinearSVR, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class SVRDF(SVR, RegressorDF):
+class SVRDF(RegressorDF, SVR):
     """
     Wraps :class:`sklearn.svm.classes.SVR`; accepts and returns data frames.
     """
@@ -137,7 +137,7 @@ class SVRDF(SVR, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class NuSVRDF(NuSVR, RegressorDF):
+class NuSVRDF(RegressorDF, NuSVR):
     """
     Wraps :class:`sklearn.svm.classes.NuSVR`; accepts and returns data frames.
     """
@@ -152,7 +152,7 @@ class NuSVRDF(NuSVR, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class DummyRegressorDF(DummyRegressor, RegressorDF):
+class DummyRegressorDF(RegressorDF, DummyRegressor):
     """
     Wraps :class:`sklearn.dummy.DummyRegressor`; accepts and returns data frames.
     """
@@ -167,7 +167,7 @@ class DummyRegressorDF(DummyRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=MetaRegressorWrapperDF)
-class MultiOutputRegressorDF(MultiOutputRegressor, RegressorDF):
+class MultiOutputRegressorDF(RegressorDF, MultiOutputRegressor):
     """
     Wraps :class:`sklearn.multioutput.MultiOutputRegressor`; accepts and returns data
     frames.
@@ -178,7 +178,7 @@ class MultiOutputRegressorDF(MultiOutputRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=MetaRegressorWrapperDF)
-class RegressorChainDF(RegressorChain, RegressorDF):
+class RegressorChainDF(RegressorDF, RegressorChain):
     """
     Wraps :class:`sklearn.multioutput.RegressorChain`; accepts and returns data frames.
     """
@@ -193,7 +193,7 @@ class RegressorChainDF(RegressorChain, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class KNeighborsRegressorDF(KNeighborsRegressor, RegressorDF):
+class KNeighborsRegressorDF(RegressorDF, KNeighborsRegressor):
     """
     Wraps :class:`sklearn.neighbors.regression.KNeighborsRegressor`; accepts and returns
     data frames.
@@ -204,7 +204,7 @@ class KNeighborsRegressorDF(KNeighborsRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class RadiusNeighborsRegressorDF(RadiusNeighborsRegressor, RegressorDF):
+class RadiusNeighborsRegressorDF(RegressorDF, RadiusNeighborsRegressor):
     """
     Wraps :class:`sklearn.neighbors.regression.RadiusNeighborsRegressor`; accepts and
     returns data frames.
@@ -220,7 +220,7 @@ class RadiusNeighborsRegressorDF(RadiusNeighborsRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class MLPRegressorDF(MLPRegressor, RegressorDF):
+class MLPRegressorDF(RegressorDF, MLPRegressor):
     """
     Wraps :class:`sklearn.neural_network.multilayer_perceptron.MLPRegressor`; accepts
     and returns data frames.
@@ -236,7 +236,7 @@ class MLPRegressorDF(MLPRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class LinearRegressionDF(LinearRegression, RegressorDF):
+class LinearRegressionDF(RegressorDF, LinearRegression):
     """
     Wraps :class:`sklearn.linear_model.base.LinearRegression`; accepts and returns data
     frames.
@@ -247,7 +247,7 @@ class LinearRegressionDF(LinearRegression, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class RidgeDF(Ridge, RegressorDF):
+class RidgeDF(RegressorDF, Ridge):
     """
     Wraps :class:`sklearn.linear_model.ridge.Ridge`; accepts and returns data frames.
     """
@@ -257,7 +257,7 @@ class RidgeDF(Ridge, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class RidgeCVDF(RidgeCV, RegressorDF):
+class RidgeCVDF(RegressorDF, RidgeCV):
     """
     Wraps :class:`sklearn.linear_model.ridge.RidgeCV`; accepts and returns data frames.
     """
@@ -267,7 +267,7 @@ class RidgeCVDF(RidgeCV, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class SGDRegressorDF(SGDRegressor, RegressorDF):
+class SGDRegressorDF(RegressorDF, SGDRegressor):
     """
     Wraps :class:`sklearn.linear_model.stochastic_gradient.SGDRegressor`; accepts and
     returns data frames.
@@ -278,7 +278,7 @@ class SGDRegressorDF(SGDRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class HuberRegressorDF(HuberRegressor, RegressorDF):
+class HuberRegressorDF(RegressorDF, HuberRegressor):
     """
     Wraps :class:`sklearn.linear_model.huber.HuberRegressor`; accepts and returns data
     frames.
@@ -289,7 +289,7 @@ class HuberRegressorDF(HuberRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class TheilSenRegressorDF(TheilSenRegressor, RegressorDF):
+class TheilSenRegressorDF(RegressorDF, TheilSenRegressor):
     """
     Wraps :class:`sklearn.linear_model.theil_sen.TheilSenRegressor`; accepts and returns
     data frames.
@@ -300,7 +300,7 @@ class TheilSenRegressorDF(TheilSenRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class BayesianRidgeDF(BayesianRidge, RegressorDF):
+class BayesianRidgeDF(RegressorDF, BayesianRidge):
     """
     Wraps :class:`sklearn.linear_model.bayes.BayesianRidge`; accepts and returns data
     frames.
@@ -311,7 +311,7 @@ class BayesianRidgeDF(BayesianRidge, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class ARDRegressionDF(ARDRegression, RegressorDF):
+class ARDRegressionDF(RegressorDF, ARDRegression):
     """
     Wraps :class:`sklearn.linear_model.bayes.ARDRegression`; accepts and returns data
     frames.
@@ -322,7 +322,7 @@ class ARDRegressionDF(ARDRegression, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class OrthogonalMatchingPursuitDF(OrthogonalMatchingPursuit, RegressorDF):
+class OrthogonalMatchingPursuitDF(RegressorDF, OrthogonalMatchingPursuit):
     """
     Wraps :class:`sklearn.linear_model.omp.OrthogonalMatchingPursuit`; accepts and
     returns data frames.
@@ -333,7 +333,7 @@ class OrthogonalMatchingPursuitDF(OrthogonalMatchingPursuit, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class OrthogonalMatchingPursuitCVDF(OrthogonalMatchingPursuitCV, RegressorDF):
+class OrthogonalMatchingPursuitCVDF(RegressorDF, OrthogonalMatchingPursuitCV):
     """
     Wraps :class:`sklearn.linear_model.omp.OrthogonalMatchingPursuitCV`; accepts and
     returns data frames.
@@ -344,7 +344,7 @@ class OrthogonalMatchingPursuitCVDF(OrthogonalMatchingPursuitCV, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class RANSACRegressorDF(RANSACRegressor, RegressorDF):
+class RANSACRegressorDF(RegressorDF, RANSACRegressor):
     """
     Wraps :class:`sklearn.linear_model.ransac.RANSACRegressor`; accepts and returns data
     frames.
@@ -355,7 +355,7 @@ class RANSACRegressorDF(RANSACRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class ElasticNetDF(ElasticNet, RegressorDF):
+class ElasticNetDF(RegressorDF, ElasticNet):
     """
     Wraps :class:`sklearn.linear_model.coordinate_descent.ElasticNet`; accepts and
     returns data frames.
@@ -366,7 +366,7 @@ class ElasticNetDF(ElasticNet, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class LassoCVDF(LassoCV, RegressorDF):
+class LassoCVDF(RegressorDF, LassoCV):
     """
     Wraps :class:`sklearn.linear_model.coordinate_descent.LassoCV`; accepts and returns
     data frames.
@@ -377,7 +377,7 @@ class LassoCVDF(LassoCV, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class ElasticNetCVDF(ElasticNetCV, RegressorDF):
+class ElasticNetCVDF(RegressorDF, ElasticNetCV):
     """
     Wraps :class:`sklearn.linear_model.coordinate_descent.ElasticNetCV`; accepts and
     returns data frames.
@@ -388,7 +388,7 @@ class ElasticNetCVDF(ElasticNetCV, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class MultiTaskElasticNetCVDF(MultiTaskElasticNetCV, RegressorDF):
+class MultiTaskElasticNetCVDF(RegressorDF, MultiTaskElasticNetCV):
     """
     Wraps :class:`sklearn.linear_model.coordinate_descent.MultiTaskElasticNetCV`;
     accepts and returns data frames.
@@ -399,7 +399,7 @@ class MultiTaskElasticNetCVDF(MultiTaskElasticNetCV, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class MultiTaskLassoCVDF(MultiTaskLassoCV, RegressorDF):
+class MultiTaskLassoCVDF(RegressorDF, MultiTaskLassoCV):
     """
     Wraps :class:`sklearn.linear_model.coordinate_descent.MultiTaskLassoCV`; accepts and
     returns data frames.
@@ -410,7 +410,7 @@ class MultiTaskLassoCVDF(MultiTaskLassoCV, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class MultiTaskElasticNetDF(MultiTaskElasticNet, RegressorDF):
+class MultiTaskElasticNetDF(RegressorDF, MultiTaskElasticNet):
     """
     Wraps :class:`sklearn.linear_model.coordinate_descent.MultiTaskElasticNet`; accepts
     and returns data frames.
@@ -421,7 +421,7 @@ class MultiTaskElasticNetDF(MultiTaskElasticNet, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class MultiTaskLassoDF(MultiTaskLasso, RegressorDF):
+class MultiTaskLassoDF(RegressorDF, MultiTaskLasso):
     """
     Wraps :class:`sklearn.linear_model.coordinate_descent.MultiTaskLasso`; accepts and
     returns data frames.
@@ -432,7 +432,7 @@ class MultiTaskLassoDF(MultiTaskLasso, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class LassoDF(Lasso, RegressorDF):
+class LassoDF(RegressorDF, Lasso):
     """
     Wraps :class:`sklearn.linear_model.coordinate_descent.Lasso`; accepts and returns
     data frames.
@@ -443,7 +443,7 @@ class LassoDF(Lasso, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class PassiveAggressiveRegressorDF(PassiveAggressiveRegressor, RegressorDF):
+class PassiveAggressiveRegressorDF(RegressorDF, PassiveAggressiveRegressor):
     """
     Wraps :class:`sklearn.linear_model.passive_aggressive.PassiveAggressiveRegressor`;
     accepts and returns data frames.
@@ -454,7 +454,7 @@ class PassiveAggressiveRegressorDF(PassiveAggressiveRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class LarsDF(Lars, RegressorDF):
+class LarsDF(RegressorDF, Lars):
     """
     Wraps :class:`sklearn.linear_model.least_angle.Lars`; accepts and returns data
     frames.
@@ -465,7 +465,7 @@ class LarsDF(Lars, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class LassoLarsDF(LassoLars, RegressorDF):
+class LassoLarsDF(RegressorDF, LassoLars):
     """
     Wraps :class:`sklearn.linear_model.least_angle.LassoLars`; accepts and returns data
     frames.
@@ -476,7 +476,7 @@ class LassoLarsDF(LassoLars, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class LassoLarsICDF(LassoLarsIC, RegressorDF):
+class LassoLarsICDF(RegressorDF, LassoLarsIC):
     """
     Wraps :class:`sklearn.linear_model.least_angle.LassoLarsIC`; accepts and returns
     data frames.
@@ -487,7 +487,7 @@ class LassoLarsICDF(LassoLarsIC, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class LarsCVDF(LarsCV, RegressorDF):
+class LarsCVDF(RegressorDF, LarsCV):
     """
     Wraps :class:`sklearn.linear_model.least_angle.LarsCV`; accepts and returns data
     frames.
@@ -498,7 +498,7 @@ class LarsCVDF(LarsCV, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class LassoLarsCVDF(LassoLarsCV, RegressorDF):
+class LassoLarsCVDF(RegressorDF, LassoLarsCV):
     """
     Wraps :class:`sklearn.linear_model.least_angle.LassoLarsCV`; accepts and returns
     data frames.
@@ -514,7 +514,7 @@ class LassoLarsCVDF(LassoLarsCV, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class BaggingRegressorDF(BaggingRegressor, RegressorDF):
+class BaggingRegressorDF(RegressorDF, BaggingRegressor):
     """
     Wraps :class:`sklearn.ensemble.bagging.BaggingRegressor`; accepts and returns data
     frames.
@@ -525,7 +525,7 @@ class BaggingRegressorDF(BaggingRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=MetaRegressorWrapperDF)
-class VotingRegressorDF(VotingRegressor, RegressorDF):
+class VotingRegressorDF(RegressorDF, VotingRegressor):
     """
     Wraps :class:`sklearn.ensemble.voting.VotingRegressor`; accepts and returns data
     frames.
@@ -537,7 +537,7 @@ class VotingRegressorDF(VotingRegressor, RegressorDF):
 # noinspection PyAbstractClass
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class GradientBoostingRegressorDF(GradientBoostingRegressor, RegressorDF):
+class GradientBoostingRegressorDF(RegressorDF, GradientBoostingRegressor):
     """
     Wraps :class:`sklearn.ensemble.gradient_boosting.GradientBoostingRegressor`; accepts
     and returns data frames.
@@ -546,7 +546,7 @@ class GradientBoostingRegressorDF(GradientBoostingRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class AdaBoostRegressorDF(AdaBoostRegressor, RegressorDF):
+class AdaBoostRegressorDF(RegressorDF, AdaBoostRegressor):
     """
     Wraps :class:`sklearn.ensemble.weight_boosting.AdaBoostRegressor`; accepts and
     returns data frames.
@@ -557,7 +557,7 @@ class AdaBoostRegressorDF(AdaBoostRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class RandomForestRegressorDF(RandomForestRegressor, RegressorDF):
+class RandomForestRegressorDF(RegressorDF, RandomForestRegressor):
     """
     Wraps :class:`sklearn.ensemble.forest.RandomForestRegressor`; accepts and returns
     data frames.
@@ -568,7 +568,7 @@ class RandomForestRegressorDF(RandomForestRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class ExtraTreesRegressorDF(ExtraTreesRegressor, RegressorDF):
+class ExtraTreesRegressorDF(RegressorDF, ExtraTreesRegressor):
     """
     Wraps :class:`sklearn.ensemble.forest.ExtraTreesRegressor`; accepts and returns data
     frames.
@@ -584,7 +584,7 @@ class ExtraTreesRegressorDF(ExtraTreesRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class GaussianProcessRegressorDF(GaussianProcessRegressor, RegressorDF):
+class GaussianProcessRegressorDF(RegressorDF, GaussianProcessRegressor):
     """
     Wraps :class:`sklearn.gaussian_process.gpr.GaussianProcessRegressor`; accepts and
     returns data frames.
@@ -621,7 +621,7 @@ class _IsotonicRegressionWrapperDF(
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=_IsotonicRegressionWrapperDF)
-class IsotonicRegressionDF(IsotonicRegression, RegressorDF, TransformerDF):
+class IsotonicRegressionDF(RegressorDF, TransformerDF, IsotonicRegression):
     """
     Wraps :class:`sklearn.isotonic.IsotonicRegression`; accepts and returns data frames.
     """
@@ -636,7 +636,7 @@ class IsotonicRegressionDF(IsotonicRegression, RegressorDF, TransformerDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class TransformedTargetRegressorDF(TransformedTargetRegressor, RegressorDF):
+class TransformedTargetRegressorDF(RegressorDF, TransformedTargetRegressor):
     """
     Wraps :class:`sklearn.compose._target.TransformedTargetRegressor`; accepts and
     returns data frames.
@@ -652,7 +652,7 @@ class TransformedTargetRegressorDF(TransformedTargetRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class KernelRidgeDF(KernelRidge, RegressorDF):
+class KernelRidgeDF(RegressorDF, KernelRidge):
     """
     Wraps :class:`sklearn.kernel_ridge.KernelRidge`; accepts and returns data frames.
     """
@@ -667,7 +667,7 @@ class KernelRidgeDF(KernelRidge, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class DecisionTreeRegressorDF(DecisionTreeRegressor, RegressorDF):
+class DecisionTreeRegressorDF(RegressorDF, DecisionTreeRegressor):
     """
     Wraps :class:`sklearn.tree.tree.DecisionTreeRegressor`; accepts and returns data
     frames.
@@ -678,7 +678,7 @@ class DecisionTreeRegressorDF(DecisionTreeRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class ExtraTreeRegressorDF(ExtraTreeRegressor, RegressorDF):
+class ExtraTreeRegressorDF(RegressorDF, ExtraTreeRegressor):
     """
     Wraps :class:`sklearn.tree.tree.ExtraTreeRegressor`; accepts and returns data
     frames.
@@ -694,7 +694,7 @@ class ExtraTreeRegressorDF(ExtraTreeRegressor, RegressorDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=_RegressorTransformerWrapperDF)
-class CCADF(CCA, RegressorDF, TransformerDF):
+class CCADF(RegressorDF, TransformerDF, CCA):
     """
     Wraps :class:`sklearn.cross_decomposition.cca_.CCA`; accepts and returns data
     frames.
@@ -705,7 +705,7 @@ class CCADF(CCA, RegressorDF, TransformerDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=_RegressorTransformerWrapperDF)
-class PLSRegressionDF(PLSRegression, RegressorDF, TransformerDF):
+class PLSRegressionDF(RegressorDF, TransformerDF, PLSRegression):
     """
     Wraps :class:`sklearn.cross_decomposition.pls_.PLSRegression`; accepts and returns
     data frames.
@@ -716,7 +716,7 @@ class PLSRegressionDF(PLSRegression, RegressorDF, TransformerDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=_RegressorTransformerWrapperDF)
-class PLSCanonicalDF(PLSCanonical, RegressorDF, TransformerDF):
+class PLSCanonicalDF(RegressorDF, TransformerDF, PLSCanonical):
     """
     Wraps :class:`sklearn.cross_decomposition.pls_.PLSCanonical`; accepts and returns
     data frames.
@@ -731,7 +731,7 @@ class PLSCanonicalDF(PLSCanonical, RegressorDF, TransformerDF):
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
-class LGBMRegressorDF(LGBMRegressor, RegressorDF):
+class LGBMRegressorDF(RegressorDF, LGBMRegressor):
     """
     Wraps :class:`lightgbm.sklearn.LGBMRegressor`; accepts and returns data frames.
     """
