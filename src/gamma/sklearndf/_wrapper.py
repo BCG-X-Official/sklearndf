@@ -109,20 +109,20 @@ class BaseEstimatorWrapperDF(
     def from_fitted(
         cls: Type[T_EstimatorWrapperDF],
         estimator: T_DelegateEstimator,
-        columns_in: pd.Index,
+        features_in: pd.Index,
     ) -> T_EstimatorWrapperDF:
         """
         Make a new wrapped data frame estimator whose delegate is an estimator which
         has already been fitted
         :param estimator: the fitted estimator
-        :param columns_in: the column names of X used for fitting the estimator
+        :param features_in: the column names of X used for fitting the estimator
         :return: the wrapped data frame estimator
         """
 
         class _FittedEstimator(cls):
             def __init__(self) -> None:
                 super().__init__()
-                self._columns_in = columns_in
+                self._features_in = features_in
 
             @classmethod
             def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
@@ -200,13 +200,13 @@ class BaseEstimatorWrapperDF(
     @property
     def is_fitted(self) -> bool:
         """``True`` if this estimator is fitted, else ``False``."""
-        return self._columns_in is not None
+        return self._features_in is not None
 
-    def _get_columns_in(self) -> pd.Index:
-        return self._columns_in
+    def _get_features_in(self) -> pd.Index:
+        return self._features_in
 
     def _reset_fit(self) -> None:
-        self._columns_in = None
+        self._features_in = None
         self._n_outputs = None
 
     # noinspection PyPep8Naming
@@ -227,7 +227,7 @@ class BaseEstimatorWrapperDF(
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
     ) -> None:
-        self._columns_in = X.columns.rename(self.F_COLUMN_IN)
+        self._features_in = X.columns.rename(self.F_FEATURE_IN)
         self._n_outputs = (
             0 if y is None else 1 if isinstance(y, pd.Series) else y.shape[1]
         )
@@ -239,7 +239,7 @@ class BaseEstimatorWrapperDF(
         if not isinstance(X, pd.DataFrame):
             raise TypeError("arg X must be a DataFrame")
         if self.is_fitted:
-            BaseEstimatorWrapperDF._verify_df(df=X, expected_columns=self.columns_in)
+            BaseEstimatorWrapperDF._verify_df(df=X, expected_columns=self.features_in)
         if y is not None and not isinstance(y, (pd.Series, pd.DataFrame)):
             raise TypeError("arg y must be None, or a pandas Series or DataFrame")
 
@@ -334,7 +334,7 @@ class TransformerWrapperDF(
     objects passed and returned are pandas data frames with valid column names.
 
     Implementations must define ``_make_delegate_estimator`` and
-    ``_get_columns_original``.
+    ``_get_features_original``.
 
     :param `**args`: positional arguments of scikit-learn transformer to be wrapped
     :param `**kwargs`: keyword arguments  of scikit-learn transformer to be wrapped
@@ -353,7 +353,7 @@ class TransformerWrapperDF(
         transformed = self._transform(X)
 
         return self._transformed_to_df(
-            transformed=transformed, index=X.index, columns=self.columns_out
+            transformed=transformed, index=X.index, columns=self.features_out
         )
 
     # noinspection PyPep8Naming
@@ -377,7 +377,7 @@ class TransformerWrapperDF(
         self._post_fit(X, y, **fit_params)
 
         return self._transformed_to_df(
-            transformed=transformed, index=X.index, columns=self.columns_out
+            transformed=transformed, index=X.index, columns=self.features_out
         )
 
     # noinspection PyPep8Naming
@@ -397,7 +397,7 @@ class TransformerWrapperDF(
         transformed = self._inverse_transform(X)
 
         return self._transformed_to_df(
-            transformed=transformed, index=X.index, columns=self.columns_in
+            transformed=transformed, index=X.index, columns=self.features_in
         )
 
     def _reset_fit(self) -> None:
@@ -405,7 +405,7 @@ class TransformerWrapperDF(
             # noinspection PyProtectedMember
             super()._reset_fit()
         finally:
-            self._columns_original = None
+            self._features_original = None
 
     @staticmethod
     def _transformed_to_df(

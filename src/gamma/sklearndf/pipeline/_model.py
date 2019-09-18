@@ -104,11 +104,11 @@ class EstimatorPipelineDF(
     def is_fitted(self) -> bool:
         return self.preprocessing.is_fitted and self.final_estimator_.is_fitted
 
-    def _get_columns_in(self) -> pd.Index:
+    def _get_features_in(self) -> pd.Index:
         if self.preprocessing is not None:
-            return self.preprocessing.columns_in
+            return self.preprocessing.features_in
         else:
-            return self.final_estimator_.columns_in
+            return self.final_estimator_.features_in
 
     # noinspection PyPep8Naming
     def _pre_transform(self, X: pd.DataFrame) -> pd.DataFrame:

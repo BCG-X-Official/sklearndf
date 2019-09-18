@@ -68,18 +68,18 @@ class ColumnSubsetTransformerWrapperDF(
 
     All output columns of a :class:`ColumnSubsetTransformerWrapperDF` have the same
     names as their associated input columns. Some columns can be removed.
-    Implementations must define ``_make_delegate_estimator`` and ``_get_columns_out``.
+    Implementations must define ``_make_delegate_estimator`` and ``_get_features_out``.
     """
 
     @abstractmethod
-    def _get_columns_out(self) -> pd.Index:
+    def _get_features_out(self) -> pd.Index:
         # return column labels for arrays returned by the fitted transformer.
         pass
 
-    def _get_columns_original(self) -> pd.Series:
+    def _get_features_original(self) -> pd.Series:
         # return the series with output columns in index and output columns as values
-        columns_out = self._get_columns_out()
-        return pd.Series(index=columns_out, data=columns_out.values)
+        features_out = self._get_features_out()
+        return pd.Series(index=features_out, data=features_out.values)
 
 
 class ColumnPreservingTransformerWrapperDF(
@@ -92,8 +92,8 @@ class ColumnPreservingTransformerWrapperDF(
     the input columns.
     """
 
-    def _get_columns_out(self) -> pd.Index:
-        return self.columns_in
+    def _get_features_out(self) -> pd.Index:
+        return self.features_in
 
 
 class BaseMultipleInputsPerOutputTransformerWrapperDF(
@@ -104,12 +104,12 @@ class BaseMultipleInputsPerOutputTransformerWrapperDF(
     """
 
     @abstractmethod
-    def _get_columns_out(self) -> pd.Index:
+    def _get_features_out(self) -> pd.Index:
         # make this method abstract to ensure subclasses override the default
-        # behaviour, which usually relies on method `_get_columns_original`
+        # behaviour, which usually relies on method `_get_features_original`
         pass
 
-    def _get_columns_original(self) -> pd.Series:
+    def _get_features_original(self) -> pd.Series:
         raise NotImplementedError(
             f"{type(self.delegate_estimator).__name__} transformers map multiple "
             "inputs to individual output columns; current sklearndf implementation "
@@ -131,7 +131,7 @@ class BaseDimensionalityReductionWrapperDF(
     def _n_components(self) -> int:
         pass
 
-    def _get_columns_out(self) -> pd.Index:
+    def _get_features_out(self) -> pd.Index:
         return pd.Index([f"x_{i}" for i in range(self._n_components)])
 
 
@@ -200,6 +200,6 @@ class FeatureSelectionWrapperDF(
         super().__init__(*args, **kwargs)
         self._validate_delegate_attribute(attribute_name=self._ATTR_GET_SUPPORT)
 
-    def _get_columns_out(self) -> pd.Index:
+    def _get_features_out(self) -> pd.Index:
         get_support = getattr(self.delegate_estimator, self._ATTR_GET_SUPPORT)
-        return self.columns_in[get_support()]
+        return self.features_in[get_support()]

@@ -175,7 +175,7 @@ class _ColumnTransformerWrapperDF(TransformerWrapperDF[ColumnTransformer], ABC):
 
         self._columnTransformer = column_transformer
 
-    def _get_columns_original(self) -> pd.Series:
+    def _get_features_original(self) -> pd.Series:
         """
         Return the series mapping output column names to original columns names.
 
@@ -185,7 +185,7 @@ class _ColumnTransformerWrapperDF(TransformerWrapperDF[ColumnTransformer], ABC):
         return reduce(
             lambda x, y: x.append(y),
             (
-                df_transformer.columns_original
+                df_transformer.features_original
                 for df_transformer in self._inner_transformers()
             ),
         )
@@ -288,7 +288,7 @@ class _SimpleImputerWrapperDF(ColumnSubsetTransformerWrapperDF[SimpleImputer], A
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
-    def _get_columns_out(self) -> pd.Index:
+    def _get_features_out(self) -> pd.Index:
         # get the columns that were dropped during imputation
         stats = self.delegate_estimator.statistics_
         if issubclass(stats.dtype.type, float):
@@ -299,14 +299,15 @@ class _SimpleImputerWrapperDF(ColumnSubsetTransformerWrapperDF[SimpleImputer], A
             ]
 
         # the imputed columns are all ingoing columns, except the ones that were dropped
-        imputed_columns = self.columns_in.delete(np.argwhere(nan_mask))
+        imputed_columns = self.features_in.delete(np.argwhere(nan_mask))
 
         # if the add_indicator flag is set, we will get additional "missing" columns
         if self.delegate_estimator.add_indicator:
-            missing_indicator = MissingIndicatorDF.from_fitted(
-                estimator=self.delegate_estimator.indicator_, columns_in=self.columns_in
+            missing_indicator = _MissingIndicatorWrapperDF.from_fitted(
+                estimator=self.delegate_estimator.indicator_,
+                features_in=self.features_in,
             )
-            return imputed_columns.append(missing_indicator.columns_out)
+            return imputed_columns.append(missing_indicator.features_out)
 
         return imputed_columns
 
@@ -339,12 +340,12 @@ class _MissingIndicatorWrapperDF(TransformerWrapperDF[MissingIndicator], ABC):
             **kwargs,
         )
 
-    def _get_columns_original(self) -> pd.Series:
-        columns_original: np.ndarray = self.columns_in[
+    def _get_features_original(self) -> pd.Series:
+        features_original: np.ndarray = self.features_in[
             self.delegate_estimator.features_
         ].values
-        columns_out = pd.Index([f"{name}__missing" for name in columns_original])
-        return pd.Series(index=columns_out, data=columns_original)
+        features_out = pd.Index([f"{name}__missing" for name in features_original])
+        return pd.Series(index=features_out, data=features_original)
 
 
 # noinspection PyAbstractClass
@@ -391,7 +392,7 @@ class _AdditiveChi2SamplerWrapperDF(
 ):
     @property
     def _n_components(self) -> int:
-        return len(self._columns_in) * (2 * self.delegate_estimator.sample_steps + 1)
+        return len(self._features_in) * (2 * self.delegate_estimator.sample_steps + 1)
 
 
 # noinspection PyAbstractClass
@@ -472,10 +473,10 @@ class RobustScalerDF(TransformerDF, RobustScaler):
 class _PolynomialFeaturesWrapperDF(
     BaseMultipleInputsPerOutputTransformerWrapperDF[PolynomialFeatures], ABC
 ):
-    def _get_columns_out(self) -> pd.Index:
+    def _get_features_out(self) -> pd.Index:
         return pd.Index(
             data=self.delegate_estimator.get_feature_names(
-                input_features=self.columns_in.astype(str)
+                input_features=self.features_in.astype(str)
             )
         )
 
@@ -606,7 +607,7 @@ class _OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], ABC):
         if self.delegate_estimator.sparse:
             raise NotImplementedError("sparse matrices not supported; use sparse=False")
 
-    def _get_columns_original(self) -> pd.Series:
+    def _get_features_original(self) -> pd.Series:
         """
         Return the series mapping output column names to original columns names.
 
@@ -614,11 +615,11 @@ class _OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], ABC):
         values the corresponding input column names.
         """
         return pd.Series(
-            index=pd.Index(self.delegate_estimator.get_feature_names(self.columns_in)),
+            index=pd.Index(self.delegate_estimator.get_feature_names(self.features_in)),
             data=[
                 column_original
                 for column_original, category in zip(
-                    self.columns_in, self.delegate_estimator.categories_
+                    self.features_in, self.delegate_estimator.categories_
                 )
                 for _ in category
             ],
@@ -656,7 +657,7 @@ class _KBinsDiscretizerWrapperDF(TransformerWrapperDF[KBinsDiscretizer], ABC):
                 'consider using "onehot-dense" instead'
             )
 
-    def _get_columns_original(self) -> pd.Series:
+    def _get_features_original(self) -> pd.Series:
         """
         Return the series mapping output column names to original columns names.
 
@@ -665,19 +666,21 @@ class _KBinsDiscretizerWrapperDF(TransformerWrapperDF[KBinsDiscretizer], ABC):
         """
         if self.delegate_estimator.encode == "onehot-dense":
             n_bins_per_feature = self.delegate_estimator.n_bins_
-            columns_in, columns_out = zip(
+            features_in, features_out = zip(
                 *(
                     (feature_name, f"{feature_name}_bin_{bin_index}")
-                    for feature_name, n_bins in zip(self.columns_in, n_bins_per_feature)
+                    for feature_name, n_bins in zip(
+                        self.features_in, n_bins_per_feature
+                    )
                     for bin_index in range(n_bins)
                 )
             )
 
-            return pd.Series(index=columns_out, data=columns_in)
+            return pd.Series(index=features_out, data=features_in)
 
         elif self.delegate_estimator.encode == "ordinal":
             return pd.Series(
-                index=self.columns_in.astype(str) + "_bin", data=self.columns_in
+                index=self.features_in.astype(str) + "_bin", data=self.features_in
             )
         else:
             raise ValueError(

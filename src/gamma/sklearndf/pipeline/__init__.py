@@ -160,20 +160,20 @@ class _PipelineWrapperDF(
         else:
             return _iter_not_none(steps[:-1])
 
-    def _get_columns_original(self) -> pd.Series:
+    def _get_features_original(self) -> pd.Series:
         col_mappings = [
-            df_transformer.columns_original
+            df_transformer.features_original
             for _, df_transformer in self._transformer_steps()
         ]
 
         if len(col_mappings) == 0:
-            _columns_out: pd.Index = self.columns_in
-            _columns_original: Union[
+            _features_out: pd.Index = self.features_in
+            _features_original: Union[
                 pd.np.ndarray, ExtensionArray
-            ] = _columns_out.values
+            ] = _features_out.values
         else:
-            _columns_out: pd.Index = col_mappings[-1].index
-            _columns_original: Union[pd.np.ndarray, ExtensionArray] = col_mappings[
+            _features_out: pd.Index = col_mappings[-1].index
+            _features_original: Union[pd.np.ndarray, ExtensionArray] = col_mappings[
                 -1
             ].values
 
@@ -181,18 +181,18 @@ class _PipelineWrapperDF(
             for preceding_out_to_original_mapping in col_mappings[-2::-1]:
                 # join the original columns of my current transformer on the out columns
                 # in the preceding transformer, then repeat
-                _columns_original = preceding_out_to_original_mapping.loc[
-                    _columns_original
+                _features_original = preceding_out_to_original_mapping.loc[
+                    _features_original
                 ].values
 
-        return pd.Series(index=_columns_out, data=_columns_original)
+        return pd.Series(index=_features_out, data=_features_original)
 
-    def _get_columns_out(self) -> pd.Index:
+    def _get_features_out(self) -> pd.Index:
         for _, transformer in reversed(self.steps):
             if isinstance(transformer, TransformerDF):
-                return transformer.columns_out
+                return transformer.features_out
 
-        return self.columns_in
+        return self.features_in
 
 
 # noinspection PyAbstractClass
@@ -208,37 +208,37 @@ class PipelineDF(TransformerDF, RegressorDF, ClassifierDF, Pipeline):
 
 class _FeatureUnionWrapperDF(TransformerWrapperDF[FeatureUnion], ABC):
     @staticmethod
-    def _prepend_columns_out(columns_out: pd.Index, name_prefix: str) -> pd.Index:
-        return pd.Index(data=f"{name_prefix}__" + columns_out.astype(str))
+    def _prepend_features_out(features_out: pd.Index, name_prefix: str) -> pd.Index:
+        return pd.Index(data=f"{name_prefix}__" + features_out.astype(str))
 
-    def _get_columns_original(self) -> pd.Series:
+    def _get_features_original(self) -> pd.Series:
         # concatenate output->input mappings from all included transformers other than
         # ones stated as `None` or `"drop"` or any other string
 
         # prepend the name of the transformer so the resulting feature name is
         # `<name>__<output column of sub-transformer>
 
-        def _prepend_columns_original(
-            columns_original: pd.Series, name_prefix: str
+        def _prepend_features_original(
+            features_original: pd.Series, name_prefix: str
         ) -> pd.Series:
             return pd.Series(
-                data=columns_original.values,
-                index=self._prepend_columns_out(
-                    columns_out=columns_original.index, name_prefix=name_prefix
+                data=features_original.values,
+                index=self._prepend_features_out(
+                    features_out=features_original.index, name_prefix=name_prefix
                 ),
             )
 
         # noinspection PyProtectedMember
         return pd.concat(
             objs=(
-                _prepend_columns_original(
-                    columns_original=transformer.columns_original, name_prefix=name
+                _prepend_features_original(
+                    features_original=transformer.features_original, name_prefix=name
                 )
                 for name, transformer, _ in self.delegate_estimator._iter()
             )
         )
 
-    def _get_columns_out(self) -> pd.Index:
+    def _get_features_out(self) -> pd.Index:
         # concatenate output columns from all included transformers other than
         # ones stated as `None` or `"drop"` or any other string
 
@@ -247,8 +247,8 @@ class _FeatureUnionWrapperDF(TransformerWrapperDF[FeatureUnion], ABC):
 
         # noinspection PyProtectedMember
         indices = [
-            self._prepend_columns_out(
-                columns_out=transformer.columns_out, name_prefix=name
+            self._prepend_features_out(
+                features_out=transformer.features_out, name_prefix=name
             )
             for name, transformer, _ in self.delegate_estimator._iter()
         ]
