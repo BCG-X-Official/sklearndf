@@ -680,74 +680,6 @@ class ClassifierWrapperDF(
 
 
 #
-# decorator for wrapping scikit-learn estimators
-#
-
-
-def df_estimator(
-    delegate_estimator: Type[T_DelegateEstimator] = None,
-    *,
-    df_wrapper_type: Type[
-        BaseEstimatorWrapperDF[T_DelegateEstimator]
-    ] = BaseEstimatorWrapperDF[T_DelegateEstimator],
-) -> Union[
-    Callable[
-        [Type[T_DelegateEstimator]], Type[BaseEstimatorWrapperDF[T_DelegateEstimator]]
-    ],
-    Type[BaseEstimatorWrapperDF[T_DelegateEstimator]],
-]:
-    """
-    Class decorator wrapping a :class:`sklearn.base.BaseEstimator` in a
-    :class:`BaseEstimatorWrapperDF`.
-    :param delegate_estimator: the estimator class to wrap
-    :param df_wrapper_type: optional parameter indicating the \
-                              :class:`BaseEstimatorWrapperDF` class to be used for \
-                              wrapping; defaults to :class:`BaseEstimatorWrapperDF`
-    :return: the resulting `BaseEstimatorWrapperDF` with ``delegate_estimator`` as \
-             the delegate estimator
-    """
-
-    def _decorate(
-        decoratee: Type[T_DelegateEstimator]
-    ) -> Type[BaseEstimatorWrapperDF[T_DelegateEstimator]]:
-
-        # determine the sklearn estimator we are wrapping
-
-        sklearn_base_estimators = [
-            base for base in decoratee.__bases__ if issubclass(base, BaseEstimator)
-        ]
-
-        if len(sklearn_base_estimators) != 1:
-            raise TypeError(
-                f"class {decoratee.__name__} must have exactly one base class "
-                f"that implements class {BaseEstimator.__name__}"
-            )
-
-        sklearn_base_estimator = sklearn_base_estimators[0]
-
-        # wrap the delegate estimator
-
-        @wraps(decoratee, updated=())
-        class _DataFrameEstimator(df_wrapper_type):
-            @classmethod
-            def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
-                # noinspection PyArgumentList
-                return sklearn_base_estimator(*args, **kwargs)
-
-        return _DataFrameEstimator
-
-    if not issubclass(df_wrapper_type, BaseEstimatorWrapperDF):
-        raise ValueError(
-            f"arg df_transformer_type is not a subclass of "
-            f"{BaseEstimatorWrapperDF.__name__}: {df_wrapper_type}"
-        )
-    if delegate_estimator is None:
-        return _decorate
-    else:
-        return _decorate(delegate_estimator)
-
-
-#
 # Meta estimator wrappers
 #
 
@@ -822,3 +754,71 @@ class MetaRegressorWrapperDF(
     """
 
     pass
+
+
+#
+# decorator for wrapping scikit-learn estimators
+#
+
+
+def df_estimator(
+    delegate_estimator: Type[T_DelegateEstimator] = None,
+    *,
+    df_wrapper_type: Type[
+        BaseEstimatorWrapperDF[T_DelegateEstimator]
+    ] = BaseEstimatorWrapperDF[T_DelegateEstimator],
+) -> Union[
+    Callable[
+        [Type[T_DelegateEstimator]], Type[BaseEstimatorWrapperDF[T_DelegateEstimator]]
+    ],
+    Type[BaseEstimatorWrapperDF[T_DelegateEstimator]],
+]:
+    """
+    Class decorator wrapping a :class:`sklearn.base.BaseEstimator` in a
+    :class:`BaseEstimatorWrapperDF`.
+    :param delegate_estimator: the estimator class to wrap
+    :param df_wrapper_type: optional parameter indicating the \
+                              :class:`BaseEstimatorWrapperDF` class to be used for \
+                              wrapping; defaults to :class:`BaseEstimatorWrapperDF`
+    :return: the resulting `BaseEstimatorWrapperDF` with ``delegate_estimator`` as \
+             the delegate estimator
+    """
+
+    def _decorate(
+        decoratee: Type[T_DelegateEstimator]
+    ) -> Type[BaseEstimatorWrapperDF[T_DelegateEstimator]]:
+
+        # determine the sklearn estimator we are wrapping
+
+        sklearn_base_estimators = [
+            base for base in decoratee.__bases__ if issubclass(base, BaseEstimator)
+        ]
+
+        if len(sklearn_base_estimators) != 1:
+            raise TypeError(
+                f"class {decoratee.__name__} must have exactly one base class "
+                f"that implements class {BaseEstimator.__name__}"
+            )
+
+        sklearn_base_estimator = sklearn_base_estimators[0]
+
+        # wrap the delegate estimator
+
+        @wraps(decoratee, updated=())
+        class _DataFrameEstimator(df_wrapper_type):
+            @classmethod
+            def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
+                # noinspection PyArgumentList
+                return sklearn_base_estimator(*args, **kwargs)
+
+        return _DataFrameEstimator
+
+    if not issubclass(df_wrapper_type, BaseEstimatorWrapperDF):
+        raise ValueError(
+            f"arg df_transformer_type is not a subclass of "
+            f"{BaseEstimatorWrapperDF.__name__}: {df_wrapper_type}"
+        )
+    if delegate_estimator is None:
+        return _decorate
+    else:
+        return _decorate(delegate_estimator)
