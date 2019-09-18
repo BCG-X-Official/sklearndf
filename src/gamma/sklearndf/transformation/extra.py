@@ -53,7 +53,7 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
         self.iqr_multiple = iqr_multiple
         self.threshold_low_ = None
         self.threshold_high_ = None
-        self.columns_original_ = None
+        self.features_original_ = None
 
     # noinspection PyPep8Naming
     def fit(
@@ -73,7 +73,7 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
         threshold_iqr: pd.Series = (q3 - q1) * self.iqr_multiple
         self.threshold_low_ = q1 - threshold_iqr
         self.threshold_high_ = q3 + threshold_iqr
-        self.columns_original_ = pd.Series(index=X.columns, data=X.columns.values)
+        self.features_original_ = pd.Series(index=X.columns, data=X.columns.values)
         return self
 
     # noinspection PyPep8Naming
@@ -96,11 +96,11 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
     def n_outputs(self) -> int:
         return 0 if self.is_fitted else None
 
-    def _get_columns_original(self) -> pd.Series:
-        return self.columns_original_
+    def _get_features_original(self) -> pd.Series:
+        return self.features_original_
 
-    def _get_columns_in(self) -> pd.Index:
-        return self.columns_original.index
+    def _get_features_in(self) -> pd.Index:
+        return self.features_original.index
 
 
 class _BorutaPyWrapperDF(
@@ -109,8 +109,8 @@ class _BorutaPyWrapperDF(
     ColumnSubsetTransformerWrapperDF[BorutaPy],
     ABC,
 ):
-    def _get_columns_out(self) -> pd.Index:
-        return self.columns_in[self.delegate_estimator.support_]
+    def _get_features_out(self) -> pd.Index:
+        return self.features_in[self.delegate_estimator.support_]
 
 
 # noinspection PyAbstractClass,PyUnresolvedReferences

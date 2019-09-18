@@ -17,7 +17,7 @@ Wrap scikit-learn `BaseEstimator` to return dataframes instead of numpy arrays.
 The abstract class :class:`BaseEstimatorDF` wraps
 :class:`~sklearn.base.BaseEstimator` so that the ``predict``
 and ``transform`` methods of the implementations return dataframe.
-:class:`BaseEstimatorDF` has an attribute :attr:`~BaseEstimatorDF.columns_in`
+:class:`BaseEstimatorDF` has an attribute :attr:`~BaseEstimatorDF.features_in`
 which is the index of the columns of the input dataframe.
 """
 
@@ -63,7 +63,7 @@ class BaseEstimatorDF(ABC):
     Implementations must define a ``fit`` method and an ``is_fitted`` property.
     """
 
-    F_COLUMN_IN = "column_in"
+    F_FEATURE_IN = "feature_in"
 
     def __init__(self) -> None:
         super().__init__()
@@ -72,7 +72,6 @@ class BaseEstimatorDF(ABC):
                 f"class {type(self).__name__} is required to inherit from class "
                 f"{BaseEstimator.__name__}"
             )
-        self._columns_in = None
 
     @property
     def root_estimator(self) -> BaseEstimator:
@@ -107,10 +106,13 @@ class BaseEstimatorDF(ABC):
         pass
 
     @property
-    def columns_in(self) -> pd.Index:
-        """The names of the input columns this estimator has been fitted on"""
+    def features_in(self) -> pd.Index:
+        """
+        The pandas column index with the names of the features this estimator has been
+        fitted on
+        """
         self._ensure_fitted()
-        return self._get_columns_in().rename(self.F_COLUMN_IN)
+        return self._get_features_in().rename(self.F_FEATURE_IN)
 
     @property
     @abstractmethod
@@ -134,7 +136,7 @@ class BaseEstimatorDF(ABC):
             raise AttributeError("estimator is not fitted")
 
     @abstractmethod
-    def _get_columns_in(self) -> pd.Index:
+    def _get_features_in(self) -> pd.Index:
         # get the input columns as a pandas Index
         pass
 
@@ -162,11 +164,11 @@ class BasePredictorDF(BaseEstimatorDF, ABC):
 
 
 class TransformerDF(BaseEstimatorDF, TransformerMixin, ABC):
-    F_COLUMN_OUT = "column_out"
+    F_FEATURE_OUT = "feature_out"
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        self._columns_original = None
+        self._features_original = None
 
     # noinspection PyPep8Naming
     @abstractmethod
@@ -185,37 +187,39 @@ class TransformerDF(BaseEstimatorDF, TransformerMixin, ABC):
         pass
 
     @property
-    def columns_original(self) -> pd.Series:
-        """Series mapping output column names to the original columns names.
-
-        Series with index the name of the output columns and with values the
-        original name of the column."""
+    def features_original(self) -> pd.Series:
+        """
+        Pandas series mapping the output features (the series's index) to the
+        original input features (the series' values)
+        """
         self._ensure_fitted()
-        if self._columns_original is None:
-            self._columns_original = (
-                self._get_columns_original()
-                .rename(self.F_COLUMN_IN)
-                .rename_axis(index=self.F_COLUMN_OUT)
+        if self._features_original is None:
+            self._features_original = (
+                self._get_features_original()
+                .rename(self.F_FEATURE_IN)
+                .rename_axis(index=self.F_FEATURE_OUT)
             )
-        return self._columns_original
+        return self._features_original
 
     @property
-    def columns_out(self) -> pd.Index:
-        """The `pd.Index` of names of the output columns."""
+    def features_out(self) -> pd.Index:
+        """
+        Pandas column index with the names of the features produced by this transformer
+        """
         self._ensure_fitted()
-        return self._get_columns_out().rename(self.F_COLUMN_OUT)
+        return self._get_features_out().rename(self.F_FEATURE_OUT)
 
     @abstractmethod
-    def _get_columns_original(self) -> pd.Series:
+    def _get_features_original(self) -> pd.Series:
         """
         :return: a mapping from this transformer's output columns to the original
         columns as a series
         """
         pass
 
-    def _get_columns_out(self) -> pd.Index:
-        # default behaviour: get index returned by columns_original
-        return self.columns_original.index
+    def _get_features_out(self) -> pd.Index:
+        # default behaviour: get index returned by features_original
+        return self.features_original.index
 
 
 class RegressorDF(BasePredictorDF, RegressorMixin, ABC):
