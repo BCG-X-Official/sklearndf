@@ -227,7 +227,7 @@ class BaseEstimatorWrapperDF(
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
     ) -> None:
-        self._features_in = X.columns.rename(self.F_FEATURE_IN)
+        self._features_in = X.columns.rename(self.FEATURE_IN)
         self._n_outputs = (
             0 if y is None else 1 if isinstance(y, pd.Series) else y.shape[1]
         )
