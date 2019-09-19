@@ -62,13 +62,11 @@ _T = TypeVar("_T")
 
 
 class BaseEstimatorDF(ABC):
-    # todo find a good description
-
     """
-    Implementations must define a ``fit`` method and an ``is_fitted`` property.
+    Mix-in class for scikit-learn estimators with enhanced support for data frames.
     """
 
-    F_FEATURE_IN = "feature_in"
+    FEATURE_IN = "feature_in"
 
     def __init__(self) -> None:
         super().__init__()
@@ -117,7 +115,7 @@ class BaseEstimatorDF(ABC):
         fitted on
         """
         self._ensure_fitted()
-        return self._get_features_in().rename(self.F_FEATURE_IN)
+        return self._get_features_in().rename(self.FEATURE_IN)
 
     @property
     @abstractmethod
@@ -147,6 +145,9 @@ class BaseEstimatorDF(ABC):
 
 
 class BasePredictorDF(BaseEstimatorDF, ABC):
+    """
+    Base mix-in class for scikit-learn predictors with enhanced support for data frames.
+    """
 
     # noinspection PyPep8Naming
     @abstractmethod
@@ -169,7 +170,11 @@ class BasePredictorDF(BaseEstimatorDF, ABC):
 
 
 class TransformerDF(BaseEstimatorDF, TransformerMixin, ABC):
-    F_FEATURE_OUT = "feature_out"
+    """
+    Mix-in class for scikit-learn transformers with enhanced support for data frames.
+    """
+
+    FEATURE_OUT = "feature_out"
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -201,8 +206,8 @@ class TransformerDF(BaseEstimatorDF, TransformerMixin, ABC):
         if self._features_original is None:
             self._features_original = (
                 self._get_features_original()
-                .rename(self.F_FEATURE_IN)
-                .rename_axis(index=self.F_FEATURE_OUT)
+                .rename(self.FEATURE_IN)
+                .rename_axis(index=self.FEATURE_OUT)
             )
         return self._features_original
 
@@ -212,7 +217,7 @@ class TransformerDF(BaseEstimatorDF, TransformerMixin, ABC):
         Pandas column index with the names of the features produced by this transformer
         """
         self._ensure_fitted()
-        return self._get_features_out().rename(self.F_FEATURE_OUT)
+        return self._get_features_out().rename(self.FEATURE_OUT)
 
     @abstractmethod
     def _get_features_original(self) -> pd.Series:
@@ -229,13 +234,13 @@ class TransformerDF(BaseEstimatorDF, TransformerMixin, ABC):
 
 class RegressorDF(BasePredictorDF, RegressorMixin, ABC):
     """
-    Scikit-learn regressor with enhanced support for data frames.
+    Mix-in class for scikit-learn regressors with enhanced support for data frames.
     """
 
 
 class ClassifierDF(BasePredictorDF, ClassifierMixin, ABC):
     """
-    Scikit-learn classifier with enhanced support for data frames.
+    Mix-in class for scikit-learn classifiers with enhanced support for data frames.
     """
 
     # noinspection PyPep8Naming
