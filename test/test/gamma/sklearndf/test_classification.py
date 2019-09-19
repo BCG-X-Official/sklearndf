@@ -8,28 +8,30 @@ import pandas as pd
 import pytest
 from sklearn.multioutput import ClassifierChain, MultiOutputEstimator
 
-import gamma.sklearndf.classification
-from gamma.sklearndf.classification import ClassifierDF, RandomForestClassifierDF, SVCDF
+import gamma.sklearndf.classification as classification
+from gamma.sklearndf import ClassifierDF
 from test.gamma.sklearndf import get_classes
 
 CLASSIFIERS_TO_TEST = get_classes(
-    from_module=gamma.sklearndf.classification,
+    from_module=classification,
     matching=r".*DF",
     excluding=[ClassifierDF.__name__, r".*WrapperDF"],
 )
 
 
 CLASSIFIER_INIT_PARAMETERS = {
-    "CalibratedClassifierCVDF": {"base_estimator": RandomForestClassifierDF()},
-    "ClassifierChainDF": {"base_estimator": RandomForestClassifierDF()},
-    "MultiOutputClassifierDF": {"estimator": RandomForestClassifierDF()},
-    "OneVsOneClassifierDF": {"estimator": RandomForestClassifierDF()},
-    "OneVsRestClassifierDF": {"estimator": RandomForestClassifierDF()},
-    "OutputCodeClassifierDF": {"estimator": RandomForestClassifierDF()},
+    "CalibratedClassifierCVDF": {
+        "base_estimator": classification.RandomForestClassifierDF()
+    },
+    "ClassifierChainDF": {"base_estimator": classification.RandomForestClassifierDF()},
+    "MultiOutputClassifierDF": {"estimator": classification.RandomForestClassifierDF()},
+    "OneVsOneClassifierDF": {"estimator": classification.RandomForestClassifierDF()},
+    "OneVsRestClassifierDF": {"estimator": classification.RandomForestClassifierDF()},
+    "OutputCodeClassifierDF": {"estimator": classification.RandomForestClassifierDF()},
     "VotingClassifierDF": {
         "estimators": [
-            ("rfc", RandomForestClassifierDF()),
-            ("svmc", SVCDF(probability=True)),
+            ("rfc", classification.RandomForestClassifierDF()),
+            ("svmc", classification.SVCDF(probability=True)),
         ],
         "voting": "soft",
     },
