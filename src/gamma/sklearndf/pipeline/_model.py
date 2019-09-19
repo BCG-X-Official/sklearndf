@@ -38,10 +38,10 @@ __all__ = [
     "ClassifierPipelineDF",
 ]
 
-T_FinalEstimatorDF = TypeVar("T_EstimatorDF", bound=BaseEstimatorDF)
-T_FinalPredictorDF = TypeVar("T_PredictorDF", bound=BasePredictorDF)
-T_FinalRegressorDF = TypeVar("T_RegressorDF", bound=RegressorDF)
-T_FinalClassifierDF = TypeVar("T_ClassifierDF", bound=ClassifierDF)
+T_FinalEstimatorDF = TypeVar("T_FinalEstimatorDF", bound=BaseEstimatorDF)
+T_FinalPredictorDF = TypeVar("T_FinalPredictorDF", bound=BasePredictorDF)
+T_FinalRegressorDF = TypeVar("T_FinalRegressorDF", bound=RegressorDF)
+T_FinalClassifierDF = TypeVar("T_FinalClassifierDF", bound=ClassifierDF)
 
 
 class EstimatorPipelineDF(
