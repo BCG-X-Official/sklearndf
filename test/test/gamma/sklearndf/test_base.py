@@ -131,12 +131,12 @@ def test_repr() -> None:
 
     test = _DummyEstimator2DF(_DummyEstimator3DF(), _DummyEstimator3DF())
     assert repr(test) == (
-        "DummyEstimator2DF(a=DummyEstimator3DF(c=None, d=None),\n"
-        "                  b=DummyEstimator3DF(c=None, d=None))"
+        "_DummyEstimator2DF(a=_DummyEstimator3DF(c=None, d=None),\n"
+        "                   b=_DummyEstimator3DF(c=None, d=None))"
     )
 
     some_est = _DummyEstimator2DF(a=["long_params"] * 1000)
-    assert len(repr(some_est)) == 649
+    assert len(repr(some_est)) == 702
 
 
 def test_str() -> None:
