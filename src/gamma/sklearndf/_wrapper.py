@@ -23,6 +23,7 @@ DataFrameEstimators and their generic subclasses including transformers and pred
 """
 
 import logging
+import re
 from abc import ABC, abstractmethod
 from functools import wraps
 from typing import *
@@ -73,6 +74,7 @@ T_DelegatePredictor = TypeVar(
 T_DelegateRegressor = TypeVar("T_Regressor", bound=RegressorMixin)
 T_DelegateClassifier = TypeVar("T_Classifier", bound=ClassifierMixin)
 T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="BaseEstimatorWrapperDF")
+
 
 #
 # base wrapper classes
@@ -790,8 +792,21 @@ def df_estimator(
 
         # determine the sklearn estimator we are wrapping
 
+        base_classes = decoratee.__bases__
+        is_sklearn_base_estimator = [
+            issubclass(base, BaseEstimator) for base in base_classes
+        ]
+
+        non_sklearn_bases = [
+            base
+            for base, is_sklearn in zip(base_classes, is_sklearn_base_estimator)
+            if not is_sklearn
+        ]
+
         sklearn_base_estimators = [
-            base for base in decoratee.__bases__ if issubclass(base, BaseEstimator)
+            base
+            for base, is_sklearn in zip(base_classes, is_sklearn_base_estimator)
+            if is_sklearn
         ]
 
         if len(sklearn_base_estimators) != 1:
@@ -805,13 +820,66 @@ def df_estimator(
         # wrap the delegate estimator
 
         @wraps(decoratee, updated=())
-        class _DataFrameEstimator(df_wrapper_type):
+        class _DataFrameEstimator(df_wrapper_type, *non_sklearn_bases):
             @classmethod
             def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
                 # noinspection PyArgumentList
                 return sklearn_base_estimator(*args, **kwargs)
 
+        base_doc = sklearn_base_estimator.__doc__
+        if base_doc is not None:
+            base_doc_lines = _parse_pandas_class_docstring(base_doc)
+
+            # does the pandas docstring start with a tag line?
+            tag_line = []
+            if len(base_doc_lines) >= 3 and len(base_doc_lines[1]) == 0:
+                tag_line = [base_doc_lines[0]]
+                del base_doc_lines[:2]
+
+            _DataFrameEstimator.__doc__ = "\n".join(
+                [
+                    *tag_line,
+                    f"""
+    .. note::
+        This class is a wrapper around class
+        :class:`{sklearn_base_estimator.__module__}.{sklearn_base_estimator.__name__}`.
+        
+        It provides enhanced support for pandas data frames, and otherwise replicates 
+        all parameters and behaviours of class
+        :class:`~{sklearn_base_estimator.__module__}.{sklearn_base_estimator.__name__}`.
+""",
+                    *base_doc_lines,
+                ]
+            )
+
         return _DataFrameEstimator
+
+    def _parse_pandas_class_docstring(pandas_doc: str) -> List[str]:
+        base_doc_split = re.split(
+            r"^\s*((?:\w+\s)*\w+)\s*\n\s*-+\s*$",
+            pandas_doc.replace("``", "`"),
+            flags=re.MULTILINE,
+        )
+        doc_head = base_doc_split[0]
+        doc_sections = dict(zip(base_doc_split[1::2], base_doc_split[2::2]))
+        return [
+            *doc_head.split("\n"),
+            *_parse_pandas_parameters(
+                parameters_section=doc_sections.get("Parameters", "")
+            ),
+        ]
+
+    def _parse_pandas_parameters(parameters_section: str) -> List[str]:
+        parameters = re.split(r"\s*\n\s*\n", parameters_section, flags=re.MULTILINE)
+        # return [f"{len(parameters)} params"]
+        return [
+            re.sub(
+                r"\s*(\w+)\s*:\s*(.*\S)\s*\n((.*\n)*.*)",
+                r":param \1: `\2`: \3",
+                parameter,
+            ).replace("\n", " ")
+            for parameter in parameters
+        ]
 
     if not issubclass(df_wrapper_type, BaseEstimatorWrapperDF):
         raise ValueError(
