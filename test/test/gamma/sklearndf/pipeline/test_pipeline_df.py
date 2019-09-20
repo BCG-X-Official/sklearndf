@@ -55,6 +55,10 @@ class NoFit(BaseEstimator, TransformerMixin):
 
 
 class NoTrans(NoFit):
+    """
+    Not a transformer
+    """
+
     def fit(self, X, y=None, **fit_params) -> "NoTrans":
         return self
 

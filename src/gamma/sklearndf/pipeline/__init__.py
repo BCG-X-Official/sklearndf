@@ -12,8 +12,8 @@
 #
 
 """
-scikit-learn pipeline implementing the TransformerDF, RegressorDF,
-and ClassifierDF interfaces.
+Extended versions of scikit-learn :class:`~sklearn.pipeline.Pipeline` and
+:class:`~sklearn.pipeline.FeatureUnion`, providing enhanced support for data frames
 """
 
 import abc as _abc
@@ -253,8 +253,8 @@ class _FeatureUnionWrapperDF(_wr.TransformerWrapperDF[_ppl.FeatureUnion], _abc.A
 @_wr.df_estimator(df_wrapper_type=_FeatureUnionWrapperDF)
 class FeatureUnionDF(_sdf.TransformerDF, _ppl.FeatureUnion):
     """
-    Wraps :class:`sklearn.pipeline.FeatureUnion`;
-    accepts and returns data frames.
+    Wraps :class:`sklearn.pipeline.FeatureUnion` for enhanced support of pandas data
+    frames.
     """
 
     pass
