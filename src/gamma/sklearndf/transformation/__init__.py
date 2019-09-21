@@ -115,8 +115,6 @@ from gamma.sklearndf.transformation._wrapper import (
 
 log = logging.getLogger(__name__)
 
-__all__ = [sym for sym in dir() if sym.endswith("DF") and not sym.endswith("WrapperDF")]
-
 #
 # cluster
 #
@@ -1059,3 +1057,10 @@ class GenericUnivariateSelectDF(TransformerDF, GenericUnivariateSelect):
     """
 
     pass
+
+
+#
+# export all symbols ending in "DF"
+#
+
+__all__ = [sym for sym in dir() if sym.endswith("DF") and not sym.startswith("_")]
