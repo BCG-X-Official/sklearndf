@@ -608,4 +608,4 @@ class MLPClassifierDF(_df.ClassifierDF, _ann.MLPClassifier):
 # export all symbols ending in "DF"
 #
 
-__all__ = [sym for sym in dir() if sym.endswith("DF")]
+__all__ = [sym for sym in dir() if sym.endswith("DF") and not sym.startswith("_")]

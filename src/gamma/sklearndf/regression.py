@@ -80,8 +80,6 @@ from gamma.sklearndf.transformation import ColumnPreservingTransformerWrapperDF
 
 log = logging.getLogger(__name__)
 
-__all__ = [sym for sym in dir() if sym.endswith("DF")]
-
 
 #
 # type variables
@@ -737,3 +735,10 @@ class LGBMRegressorDF(RegressorDF, LGBMRegressor):
     """
 
     pass
+
+
+#
+# export all symbols ending in "DF"
+#
+
+__all__ = [sym for sym in dir() if sym.endswith("DF") and not sym.startswith("_")]
