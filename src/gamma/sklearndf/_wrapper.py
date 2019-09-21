@@ -792,30 +792,7 @@ def df_estimator(
 
         # determine the sklearn estimator we are wrapping
 
-        base_classes = decoratee.__bases__
-        is_sklearn_base_estimator = [
-            issubclass(base, BaseEstimator) for base in base_classes
-        ]
-
-        non_sklearn_bases = [
-            base
-            for base, is_sklearn in zip(base_classes, is_sklearn_base_estimator)
-            if not is_sklearn
-        ]
-
-        sklearn_base_estimators = [
-            base
-            for base, is_sklearn in zip(base_classes, is_sklearn_base_estimator)
-            if is_sklearn
-        ]
-
-        if len(sklearn_base_estimators) != 1:
-            raise TypeError(
-                f"class {decoratee.__name__} must have exactly one base class "
-                f"that implements class {BaseEstimator.__name__}"
-            )
-
-        sklearn_base_estimator = sklearn_base_estimators[0]
+        sklearn_base_estimator, non_sklearn_bases = _get_base_classes(decoratee)
 
         # wrap the delegate estimator
 
@@ -831,9 +808,9 @@ def df_estimator(
             base_doc_lines = _parse_pandas_class_docstring(base_doc)
 
             # does the pandas docstring start with a tag line?
-            tag_line = []
+            tag_line: List[AnyStr] = []
             if len(base_doc_lines) >= 3 and len(base_doc_lines[1]) == 0:
-                tag_line = [base_doc_lines[0]]
+                tag_line.append(base_doc_lines[0])
                 del base_doc_lines[:2]
 
             _DataFrameEstimator.__doc__ = "\n".join(
@@ -854,7 +831,32 @@ def df_estimator(
 
         return _DataFrameEstimator
 
-    def _parse_pandas_class_docstring(pandas_doc: str) -> List[str]:
+    def _get_base_classes(
+        decoratee: Type[T_DelegateEstimator]
+    ) -> Tuple[Type[BaseEstimator], List[Type[Any]]]:
+        base_classes = decoratee.__bases__
+        is_sklearn_base_estimator = [
+            issubclass(base, BaseEstimator) for base in base_classes
+        ]
+        non_sklearn_bases = [
+            base
+            for base, is_sklearn in zip(base_classes, is_sklearn_base_estimator)
+            if not is_sklearn
+        ]
+        sklearn_base_estimators = [
+            base
+            for base, is_sklearn in zip(base_classes, is_sklearn_base_estimator)
+            if is_sklearn
+        ]
+        if len(sklearn_base_estimators) != 1:
+            raise TypeError(
+                f"class {decoratee.__name__} must have exactly one base class "
+                f"that implements class {BaseEstimator.__name__}"
+            )
+        sklearn_base_estimator = sklearn_base_estimators[0]
+        return sklearn_base_estimator, non_sklearn_bases
+
+    def _parse_pandas_class_docstring(pandas_doc: AnyStr) -> List[AnyStr]:
         base_doc_split = re.split(
             r"^\s*((?:\w+\s)*\w+)\s*\n\s*-+\s*$",
             pandas_doc.replace("``", "`"),
@@ -869,7 +871,7 @@ def df_estimator(
             ),
         ]
 
-    def _parse_pandas_parameters(parameters_section: str) -> List[str]:
+    def _parse_pandas_parameters(parameters_section: AnyStr) -> List[AnyStr]:
         parameters = re.split(r"\s*\n\s*\n", parameters_section, flags=re.MULTILINE)
         # return [f"{len(parameters)} params"]
         return [
