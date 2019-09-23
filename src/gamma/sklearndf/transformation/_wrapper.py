@@ -39,7 +39,7 @@ T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
 #
 
 
-class NDArrayTransformerWrapperDF(
+class _NDArrayTransformerWrapperDF(
     TransformerWrapperDF[T_Transformer], Generic[T_Transformer]
 ):
     """
@@ -59,7 +59,7 @@ class NDArrayTransformerWrapperDF(
         return None if y is None else y.values
 
 
-class ColumnSubsetTransformerWrapperDF(
+class _ColumnSubsetTransformerWrapperDF(
     TransformerWrapperDF[T_Transformer], Generic[T_Transformer]
 ):
     """
@@ -82,8 +82,8 @@ class ColumnSubsetTransformerWrapperDF(
         return pd.Series(index=features_out, data=features_out.values)
 
 
-class ColumnPreservingTransformerWrapperDF(
-    ColumnSubsetTransformerWrapperDF[T_Transformer], Generic[T_Transformer]
+class _ColumnPreservingTransformerWrapperDF(
+    _ColumnSubsetTransformerWrapperDF[T_Transformer], Generic[T_Transformer]
 ):
     """
     Transform a data frame keeping exactly the same columns.
@@ -96,7 +96,7 @@ class ColumnPreservingTransformerWrapperDF(
         return self.features_in
 
 
-class BaseMultipleInputsPerOutputTransformerWrapperDF(
+class _BaseMultipleInputsPerOutputTransformerWrapperDF(
     TransformerWrapperDF[T_Transformer], Generic[T_Transformer], ABC
 ):
     """
@@ -117,8 +117,8 @@ class BaseMultipleInputsPerOutputTransformerWrapperDF(
         )
 
 
-class BaseDimensionalityReductionWrapperDF(
-    BaseMultipleInputsPerOutputTransformerWrapperDF[T_Transformer],
+class _BaseDimensionalityReductionWrapperDF(
+    _BaseMultipleInputsPerOutputTransformerWrapperDF[T_Transformer],
     Generic[T_Transformer],
     ABC,
 ):
@@ -135,8 +135,8 @@ class BaseDimensionalityReductionWrapperDF(
         return pd.Index([f"x_{i}" for i in range(self._n_components)])
 
 
-class NComponentsDimensionalityReductionWrapperDF(
-    BaseDimensionalityReductionWrapperDF[T_Transformer], Generic[T_Transformer]
+class _NComponentsDimensionalityReductionWrapperDF(
+    _BaseDimensionalityReductionWrapperDF[T_Transformer], Generic[T_Transformer]
 ):
     """
     Transform features doing dimensionality reductions.
@@ -155,8 +155,8 @@ class NComponentsDimensionalityReductionWrapperDF(
         return getattr(self.delegate_estimator, self._ATTR_N_COMPONENTS)
 
 
-class ComponentsDimensionalityReductionWrapperDF(
-    BaseDimensionalityReductionWrapperDF[T_Transformer], Generic[T_Transformer]
+class _ComponentsDimensionalityReductionWrapperDF(
+    _BaseDimensionalityReductionWrapperDF[T_Transformer], Generic[T_Transformer]
 ):
     """
     Apply dimensionality reduction on a data frame.
@@ -184,8 +184,8 @@ class ComponentsDimensionalityReductionWrapperDF(
         return len(getattr(self.delegate_estimator, self._ATTR_COMPONENTS))
 
 
-class FeatureSelectionWrapperDF(
-    ColumnSubsetTransformerWrapperDF[T_Transformer], Generic[T_Transformer], ABC
+class _FeatureSelectionWrapperDF(
+    _ColumnSubsetTransformerWrapperDF[T_Transformer], Generic[T_Transformer], ABC
 ):
     """
     Wrapper for feature selection transformers.

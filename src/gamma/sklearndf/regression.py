@@ -76,7 +76,7 @@ from gamma.sklearndf.wrapper import (
 )
 
 # noinspection PyProtectedMember
-from gamma.sklearndf.transformation import ColumnPreservingTransformerWrapperDF
+from gamma.sklearndf.transformation import _ColumnPreservingTransformerWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -95,7 +95,7 @@ T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
 
 class _RegressorTransformerWrapperDF(
     RegressorWrapperDF[T_Regressor],
-    ColumnPreservingTransformerWrapperDF[T_Regressor],
+    _ColumnPreservingTransformerWrapperDF[T_Regressor],
     Generic[T_Regressor],
     ABC,
 ):
