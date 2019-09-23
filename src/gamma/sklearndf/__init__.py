@@ -54,7 +54,7 @@ __all__ = [
 #
 
 # noinspection PyShadowingBuiltins
-_T = TypeVar("_T")
+_T_EstimatorDF = TypeVar("_T_EstimatorDF")
 
 #
 # class definitions
@@ -126,9 +126,10 @@ class BaseEstimatorDF(ABC):
         """
         pass
 
-    def clone(self: _T) -> _T:
+    def clone(self: _T_EstimatorDF) -> _T_EstimatorDF:
         """
         Make an unfitted clone of this estimator.
+
         :return: the unfitted clone
         """
         return clone(self)
