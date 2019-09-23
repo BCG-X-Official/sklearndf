@@ -102,7 +102,7 @@ from sklearn.preprocessing import (
 from sklearn.random_projection import GaussianRandomProjection, SparseRandomProjection
 
 from gamma.sklearndf import TransformerDF
-from gamma.sklearndf._wrapper import df_estimator, TransformerWrapperDF
+from gamma.sklearndf.wrapper import df_estimator, TransformerWrapperDF
 from gamma.sklearndf.transformation._wrapper import (
     BaseDimensionalityReductionWrapperDF,
     BaseMultipleInputsPerOutputTransformerWrapperDF,

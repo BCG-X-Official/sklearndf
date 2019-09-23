@@ -792,12 +792,12 @@ def df_estimator(
 
         # determine the sklearn estimator we are wrapping
 
-        sklearn_base_estimator, non_sklearn_bases = _get_base_classes(decoratee)
+        sklearn_base_estimator, _ = _get_base_classes(decoratee)
 
         # wrap the delegate estimator
 
         @wraps(decoratee, updated=())
-        class _DataFrameEstimator(df_wrapper_type, *non_sklearn_bases):
+        class _DataFrameEstimator(df_wrapper_type):
             @classmethod
             def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
                 # noinspection PyArgumentList

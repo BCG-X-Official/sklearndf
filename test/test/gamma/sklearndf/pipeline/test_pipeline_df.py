@@ -22,7 +22,7 @@ from sklearn.utils.testing import (
 )
 
 from gamma.sklearndf import TransformerDF
-from gamma.sklearndf._wrapper import df_estimator
+from gamma.sklearndf.wrapper import df_estimator
 from gamma.sklearndf.classification import LogisticRegressionDF, SVCDF
 from gamma.sklearndf.pipeline import PipelineDF
 from gamma.sklearndf.regression import DummyRegressorDF, LassoDF, LinearRegressionDF

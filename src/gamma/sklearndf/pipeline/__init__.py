@@ -25,7 +25,7 @@ import pandas.core.arrays as _pda
 import sklearn.pipeline as _ppl
 
 import gamma.sklearndf as _sdf
-import gamma.sklearndf._wrapper as _wr
+import gamma.sklearndf.wrapper as _wr
 from gamma.sklearndf.pipeline import _model
 from ._model import *
 
