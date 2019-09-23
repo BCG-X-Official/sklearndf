@@ -25,8 +25,8 @@ from sklearn.base import BaseEstimator
 
 from gamma.sklearndf import TransformerDF
 from gamma.sklearndf.wrapper import df_estimator, MetaEstimatorWrapperDF
-from gamma.sklearndf.transformation import ColumnSubsetTransformerWrapperDF
-from gamma.sklearndf.transformation._wrapper import NDArrayTransformerWrapperDF
+from gamma.sklearndf.transformation import _ColumnSubsetTransformerWrapperDF
+from gamma.sklearndf.transformation._wrapper import _NDArrayTransformerWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -105,8 +105,8 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
 
 class _BorutaPyWrapperDF(
     MetaEstimatorWrapperDF[BorutaPy],
-    NDArrayTransformerWrapperDF[BorutaPy],
-    ColumnSubsetTransformerWrapperDF[BorutaPy],
+    _NDArrayTransformerWrapperDF[BorutaPy],
+    _ColumnSubsetTransformerWrapperDF[BorutaPy],
     ABC,
 ):
     def _get_features_out(self) -> pd.Index:

@@ -104,13 +104,13 @@ from sklearn.random_projection import GaussianRandomProjection, SparseRandomProj
 from gamma.sklearndf import TransformerDF
 from gamma.sklearndf.wrapper import df_estimator, TransformerWrapperDF
 from gamma.sklearndf.transformation._wrapper import (
-    BaseDimensionalityReductionWrapperDF,
-    BaseMultipleInputsPerOutputTransformerWrapperDF,
-    ColumnPreservingTransformerWrapperDF,
-    ColumnSubsetTransformerWrapperDF,
-    ComponentsDimensionalityReductionWrapperDF,
-    FeatureSelectionWrapperDF,
-    NComponentsDimensionalityReductionWrapperDF,
+    _BaseDimensionalityReductionWrapperDF,
+    _BaseMultipleInputsPerOutputTransformerWrapperDF,
+    _ColumnPreservingTransformerWrapperDF,
+    _ColumnSubsetTransformerWrapperDF,
+    _ComponentsDimensionalityReductionWrapperDF,
+    _FeatureSelectionWrapperDF,
+    _NComponentsDimensionalityReductionWrapperDF,
 )
 
 log = logging.getLogger(__name__)
@@ -120,7 +120,7 @@ log = logging.getLogger(__name__)
 #
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class FeatureAgglomerationDF(TransformerDF, FeatureAgglomeration):
     """
     Wraps :class:`sklearn.cluster.FeatureAgglomeration`;
@@ -214,7 +214,7 @@ class ColumnTransformerDF(TransformerDF, ColumnTransformer):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class PLSSVDDF(TransformerDF, PLSSVD):
     """
     Wraps :class:`sklearn.cross_decomposition.pls_.PLSSVD`;
@@ -225,7 +225,7 @@ class PLSSVDDF(TransformerDF, PLSSVD):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class FeatureHasherDF(TransformerDF, FeatureHasher):
     """
     Wraps :class:`sklearn.feature_extraction.FeatureHasher`;
@@ -236,7 +236,7 @@ class FeatureHasherDF(TransformerDF, FeatureHasher):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class DictVectorizerDF(TransformerDF, DictVectorizer):
     """
     Wraps :class:`sklearn.feature_extraction.dict_vectorizer.DictVectorizer`;
@@ -247,7 +247,7 @@ class DictVectorizerDF(TransformerDF, DictVectorizer):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class HashingVectorizerDF(TransformerDF, HashingVectorizer):
     """
     Wraps :class:`sklearn.feature_extraction.text.HashingVectorizer`;
@@ -258,7 +258,7 @@ class HashingVectorizerDF(TransformerDF, HashingVectorizer):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class TfidfTransformerDF(TransformerDF, TfidfTransformer):
     """
     Wraps :class:`sklearn.feature_extraction.text.TfidfTransformer`;
@@ -273,7 +273,7 @@ class TfidfTransformerDF(TransformerDF, TfidfTransformer):
 #
 
 
-class _SimpleImputerWrapperDF(ColumnSubsetTransformerWrapperDF[SimpleImputer], ABC):
+class _SimpleImputerWrapperDF(_ColumnSubsetTransformerWrapperDF[SimpleImputer], ABC):
     """
     Impute missing values with data frames as input and output.
 
@@ -358,7 +358,7 @@ class MissingIndicatorDF(TransformerDF, MissingIndicator):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class IterativeImputerDF(TransformerDF, IterativeImputer):
     """
     Wraps :class:`sklearn.impute.IterativeImputer`;
@@ -368,7 +368,7 @@ class IterativeImputerDF(TransformerDF, IterativeImputer):
     pass
 
 
-class _IsomapWrapperDF(BaseDimensionalityReductionWrapperDF[Isomap], ABC):
+class _IsomapWrapperDF(_BaseDimensionalityReductionWrapperDF[Isomap], ABC):
     @property
     def _n_components(self) -> int:
         return self.delegate_estimator.embedding_.shape[1]
@@ -386,7 +386,7 @@ class IsomapDF(TransformerDF, IterativeImputer):
 
 
 class _AdditiveChi2SamplerWrapperDF(
-    BaseDimensionalityReductionWrapperDF[AdditiveChi2Sampler], ABC
+    _BaseDimensionalityReductionWrapperDF[AdditiveChi2Sampler], ABC
 ):
     @property
     def _n_components(self) -> int:
@@ -409,7 +409,7 @@ class AdditiveChi2SamplerDF(TransformerDF, AdditiveChi2Sampler):
 #
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class NeighborhoodComponentsAnalysisDF(TransformerDF, NeighborhoodComponentsAnalysis):
     """
     Wraps :class:`sklearn.neighbors.NeighborhoodComponentsAnalysis`;
@@ -425,7 +425,7 @@ class NeighborhoodComponentsAnalysisDF(TransformerDF, NeighborhoodComponentsAnal
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class MinMaxScalerDF(TransformerDF, MinMaxScaler):
     """
     Wraps :class:`sklearn.preprocessing.MinMaxScaler`;
@@ -436,7 +436,7 @@ class MinMaxScalerDF(TransformerDF, MinMaxScaler):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class StandardScalerDF(TransformerDF, StandardScaler):
     """
     Wraps :class:`sklearn.preprocessing.StandardScaler`;
@@ -447,7 +447,7 @@ class StandardScalerDF(TransformerDF, StandardScaler):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class MaxAbsScalerDF(TransformerDF, MaxAbsScaler):
     """
     Wraps :class:`sklearn.preprocessing.MaxAbsScaler`;
@@ -458,7 +458,7 @@ class MaxAbsScalerDF(TransformerDF, MaxAbsScaler):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class RobustScalerDF(TransformerDF, RobustScaler):
     """
     Wraps :class:`sklearn.preprocessing.RobustScaler`;
@@ -469,7 +469,7 @@ class RobustScalerDF(TransformerDF, RobustScaler):
 
 
 class _PolynomialFeaturesWrapperDF(
-    BaseMultipleInputsPerOutputTransformerWrapperDF[PolynomialFeatures], ABC
+    _BaseMultipleInputsPerOutputTransformerWrapperDF[PolynomialFeatures], ABC
 ):
     def _get_features_out(self) -> pd.Index:
         return pd.Index(
@@ -491,7 +491,7 @@ class PolynomialFeaturesDF(TransformerDF, PolynomialFeatures):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class NormalizerDF(TransformerDF, Normalizer):
     """
     Wraps :class:`sklearn.preprocessing.Normalizer`;
@@ -503,7 +503,7 @@ class NormalizerDF(TransformerDF, Normalizer):
 
 # noinspection PyAbstractClass
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class BinarizerDF(TransformerDF, Binarizer):
     """
     Wraps :class:`sklearn.preprocessing.Binarizer`;
@@ -514,7 +514,7 @@ class BinarizerDF(TransformerDF, Binarizer):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class KernelCentererDF(TransformerDF, KernelCenterer):
     """
     Wraps :class:`sklearn.preprocessing.KernelCenterer`;
@@ -525,7 +525,7 @@ class KernelCentererDF(TransformerDF, KernelCenterer):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class QuantileTransformerDF(TransformerDF, QuantileTransformer):
     """
     Wraps :class:`sklearn.preprocessing.QuantileTransformer`;
@@ -536,7 +536,7 @@ class QuantileTransformerDF(TransformerDF, QuantileTransformer):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class PowerTransformerDF(TransformerDF, PowerTransformer):
     """
     Wraps :class:`sklearn.preprocessing.PowerTransformer`;
@@ -547,7 +547,7 @@ class PowerTransformerDF(TransformerDF, PowerTransformer):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class FunctionTransformerDF(TransformerDF, FunctionTransformer):
     """
     Wraps :class:`sklearn.preprocessing.FunctionTransformer`;
@@ -558,7 +558,7 @@ class FunctionTransformerDF(TransformerDF, FunctionTransformer):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class LabelEncoderDF(TransformerDF, LabelEncoder):
     """
     Wraps :class:`sklearn.preprocessing.LabelEncoder`;
@@ -569,7 +569,7 @@ class LabelEncoderDF(TransformerDF, LabelEncoder):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class LabelBinarizerDF(TransformerDF, LabelBinarizer):
     """
     Wraps :class:`sklearn.preprocessing.LabelBinarizer`;
@@ -580,7 +580,7 @@ class LabelBinarizerDF(TransformerDF, LabelBinarizer):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class MultiLabelBinarizerDF(TransformerDF, MultiLabelBinarizer):
     """
     Wraps :class:`sklearn.preprocessing.MultiLabelBinarizer`;
@@ -636,7 +636,7 @@ class OneHotEncoderDF(TransformerDF, OneHotEncoder):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class OrdinalEncoderDF(TransformerDF, OrdinalEncoder):
     """
     Wraps :class:`sklearn.preprocessing.OrdinalEncoder`;
@@ -699,12 +699,12 @@ class KBinsDiscretizerDF(TransformerDF, KBinsDiscretizer):
 
 #
 # Transformers which have a components_ attribute
-# Implemented through ComponentsDimensionalityReductionWrapperDF
+# Implemented through _ComponentsDimensionalityReductionWrapperDF
 #
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
 class BernoulliRBMDF(TransformerDF, BernoulliRBM):
     """
     Wraps :class:`sklearn.neural_network.BernoulliRBM`;
@@ -715,7 +715,7 @@ class BernoulliRBMDF(TransformerDF, BernoulliRBM):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
 class DictionaryLearningDF(TransformerDF, DictionaryLearning):
     """
     Wraps :class:`decomposition.dict_learning.DictionaryLearning`;
@@ -726,7 +726,7 @@ class DictionaryLearningDF(TransformerDF, DictionaryLearning):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
 class FactorAnalysisDF(TransformerDF, FactorAnalysis):
     """
     Wraps :class:`decomposition.factor_analysis.FactorAnalysis`;
@@ -737,7 +737,7 @@ class FactorAnalysisDF(TransformerDF, FactorAnalysis):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
 class FastICADF(TransformerDF, FastICA):
     """
     Wraps :class:`decomposition.fastica_.FastICA`;
@@ -748,7 +748,7 @@ class FastICADF(TransformerDF, FastICA):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
 class GaussianRandomProjectionDF(TransformerDF, GaussianRandomProjection):
     """
     Wraps :class:`sklearn.random_projection.GaussianRandomProjection`;
@@ -759,7 +759,7 @@ class GaussianRandomProjectionDF(TransformerDF, GaussianRandomProjection):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
 class IncrementalPCADF(TransformerDF, IncrementalPCA):
     """
     Wraps :class:`decomposition.incremental_pca.IncrementalPCA`;
@@ -770,7 +770,7 @@ class IncrementalPCADF(TransformerDF, IncrementalPCA):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
 class LatentDirichletAllocationDF(TransformerDF, LatentDirichletAllocation):
     """
     Wraps :class:`decomposition.online_lda.LatentDirichletAllocation`;
@@ -781,7 +781,7 @@ class LatentDirichletAllocationDF(TransformerDF, LatentDirichletAllocation):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
 class MiniBatchDictionaryLearningDF(TransformerDF, MiniBatchDictionaryLearning):
     """
     Wraps :class:`decomposition.dict_learning.MiniBatchDictionaryLearning`;
@@ -792,7 +792,7 @@ class MiniBatchDictionaryLearningDF(TransformerDF, MiniBatchDictionaryLearning):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
 class MiniBatchSparsePCADF(TransformerDF, MiniBatchSparsePCA):
     """
     Wraps :class:`decomposition.sparse_pca.MiniBatchSparsePCA`;
@@ -803,7 +803,7 @@ class MiniBatchSparsePCADF(TransformerDF, MiniBatchSparsePCA):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
 class NMFDF(NMF, TransformerDF):
     """
     Wraps :class:`decomposition.NMF`;
@@ -814,7 +814,7 @@ class NMFDF(NMF, TransformerDF):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=NComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF)
 class PCADF(TransformerDF, PCA):
     """
     Wraps :class:`decomposition.pca.PCA`;
@@ -825,7 +825,7 @@ class PCADF(TransformerDF, PCA):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
 class SparseCoderDF(TransformerDF, SparseCoder):
     """
     Wraps :class:`decomposition.dict_learning.SparseCoder`;
@@ -836,7 +836,7 @@ class SparseCoderDF(TransformerDF, SparseCoder):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
 class SparsePCADF(TransformerDF, SparsePCA):
     """
     Wraps :class:`decomposition.sparse_pca.SparsePCA`;
@@ -847,7 +847,7 @@ class SparsePCADF(TransformerDF, SparsePCA):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
 class SparseRandomProjectionDF(TransformerDF, SparseRandomProjection):
     """
     Wraps :class:`sklearn.random_projection.SparseRandomProjection`;
@@ -858,7 +858,7 @@ class SparseRandomProjectionDF(TransformerDF, SparseRandomProjection):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
 class TruncatedSVDDF(TransformerDF, TruncatedSVD):
     """
     Wraps :class:`decomposition.truncated_svd.TruncatedSVD`;
@@ -875,7 +875,7 @@ class TruncatedSVDDF(TransformerDF, TruncatedSVD):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=NComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF)
 class KernelPCADF(TransformerDF, KernelPCA):
     """
     Wraps :class:`decomposition.kernel_pca.KernelPCA`;
@@ -886,7 +886,7 @@ class KernelPCADF(TransformerDF, KernelPCA):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=NComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF)
 class LinearDiscriminantAnalysisDF(TransformerDF, LinearDiscriminantAnalysis):
     """
     Wraps :class:`sklearn.discriminant_analysis.LinearDiscriminantAnalysis`;
@@ -897,7 +897,7 @@ class LinearDiscriminantAnalysisDF(TransformerDF, LinearDiscriminantAnalysis):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=NComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF)
 class LocallyLinearEmbeddingDF(TransformerDF, LocallyLinearEmbedding):
     """
     Wraps :class:`sklearn.manifold.LocallyLinearEmbedding`;
@@ -908,7 +908,7 @@ class LocallyLinearEmbeddingDF(TransformerDF, LocallyLinearEmbedding):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=NComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF)
 class NystroemDF(TransformerDF, Nystroem):
     """
     Wraps :class:`sklearn.kernel_approximation.Nystroem`;
@@ -919,7 +919,7 @@ class NystroemDF(TransformerDF, Nystroem):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=NComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF)
 class RBFSamplerDF(TransformerDF, RBFSampler):
     """
     Wraps :class:`sklearn.kernel_approximation.RBFSampler`;
@@ -930,7 +930,7 @@ class RBFSamplerDF(TransformerDF, RBFSampler):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=NComponentsDimensionalityReductionWrapperDF)
+@df_estimator(df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF)
 class SkewedChi2SamplerDF(TransformerDF, SkewedChi2Sampler):
     """
     Wraps :class:`sklearn.kernel_approximation.SkewedChi2Sampler`;
@@ -945,12 +945,12 @@ class SkewedChi2SamplerDF(TransformerDF, SkewedChi2Sampler):
 #
 #
 # Transformer which have an get_support method
-# Implemented through FeatureSelectionWrapperDF
+# Implemented through _FeatureSelectionWrapperDF
 #
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=FeatureSelectionWrapperDF)
+@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
 class VarianceThresholdDF(TransformerDF, VarianceThreshold):
     """
     Wraps :class:`sklearn.feature_selection.VarianceThreshold`;
@@ -961,7 +961,7 @@ class VarianceThresholdDF(TransformerDF, VarianceThreshold):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=FeatureSelectionWrapperDF)
+@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
 class RFEDF(TransformerDF, RFE):
     """
     Wraps :class:`sklearn.feature_selection.RFE`;
@@ -972,7 +972,7 @@ class RFEDF(TransformerDF, RFE):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=FeatureSelectionWrapperDF)
+@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
 class RFECVDF(TransformerDF, RFECV):
     """
     Wraps :class:`sklearn.feature_selection.RFECV`;
@@ -983,7 +983,7 @@ class RFECVDF(TransformerDF, RFECV):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=FeatureSelectionWrapperDF)
+@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
 class SelectFromModelDF(TransformerDF, SelectFromModel):
     """
     Wraps :class:`sklearn.feature_selection.SelectFromModel`;
@@ -994,7 +994,7 @@ class SelectFromModelDF(TransformerDF, SelectFromModel):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=FeatureSelectionWrapperDF)
+@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
 class SelectPercentileDF(TransformerDF, SelectPercentile):
     """
     Wraps :class:`sklearn.feature_selection.SelectPercentile`;
@@ -1005,7 +1005,7 @@ class SelectPercentileDF(TransformerDF, SelectPercentile):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=FeatureSelectionWrapperDF)
+@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
 class SelectKBestDF(TransformerDF, SelectKBest):
     """
     Wraps :class:`sklearn.feature_selection.SelectKBest`;
@@ -1016,7 +1016,7 @@ class SelectKBestDF(TransformerDF, SelectKBest):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=FeatureSelectionWrapperDF)
+@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
 class SelectFprDF(TransformerDF, SelectFpr):
     """
     Wraps :class:`sklearn.feature_selection.SelectFpr`;
@@ -1027,7 +1027,7 @@ class SelectFprDF(TransformerDF, SelectFpr):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=FeatureSelectionWrapperDF)
+@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
 class SelectFdrDF(TransformerDF, SelectFdr):
     """
     Wraps :class:`sklearn.feature_selection.SelectFdr`;
@@ -1038,7 +1038,7 @@ class SelectFdrDF(TransformerDF, SelectFdr):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=FeatureSelectionWrapperDF)
+@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
 class SelectFweDF(TransformerDF, SelectFwe):
     """
     Wraps :class:`sklearn.feature_selection.SelectFwe`;
@@ -1049,7 +1049,7 @@ class SelectFweDF(TransformerDF, SelectFwe):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=FeatureSelectionWrapperDF)
+@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
 class GenericUnivariateSelectDF(TransformerDF, GenericUnivariateSelect):
     """
     Wraps :class:`sklearn.feature_selection.GenericUnivariateSelect`;

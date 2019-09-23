@@ -27,7 +27,7 @@ from gamma.sklearndf.classification import LogisticRegressionDF, SVCDF
 from gamma.sklearndf.pipeline import PipelineDF
 from gamma.sklearndf.regression import DummyRegressorDF, LassoDF, LinearRegressionDF
 from gamma.sklearndf.transformation import (
-    ColumnPreservingTransformerWrapperDF,
+    _ColumnPreservingTransformerWrapperDF,
     SelectKBestDF,
     SimpleImputerDF,
 )
@@ -100,14 +100,14 @@ class TransfFitParams(Transf):
         return self
 
 
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class DummyTransfDF(TransformerDF, DummyTransf):
     """ Wraps a  DummyTransf; accepts and returns data frames """
 
     pass
 
 
-@df_estimator(df_wrapper_type=ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class NoTransDF(TransformerDF, NoTrans):
     """ Wraps a  DummyTransf; accepts and returns data frames """
 
