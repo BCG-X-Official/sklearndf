@@ -10,7 +10,7 @@ from sklearn.base import BaseEstimator, is_classifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 
-from gamma.sklearndf._wrapper import BaseEstimatorWrapperDF
+from gamma.sklearndf.wrapper import BaseEstimatorWrapperDF
 from gamma.sklearndf.classification import DecisionTreeClassifierDF, SVCDF
 from gamma.sklearndf.pipeline import PipelineDF
 from gamma.sklearndf.transformation import OneHotEncoderDF

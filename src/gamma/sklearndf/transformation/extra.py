@@ -24,7 +24,7 @@ from boruta import BorutaPy
 from sklearn.base import BaseEstimator
 
 from gamma.sklearndf import TransformerDF
-from gamma.sklearndf._wrapper import df_estimator, MetaEstimatorWrapperDF
+from gamma.sklearndf.wrapper import df_estimator, MetaEstimatorWrapperDF
 from gamma.sklearndf.transformation import ColumnSubsetTransformerWrapperDF
 from gamma.sklearndf.transformation._wrapper import NDArrayTransformerWrapperDF
 

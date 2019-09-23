@@ -37,7 +37,7 @@ import sklearn.tree as _tr
 
 import gamma.common as _cm
 import gamma.sklearndf as _df
-import gamma.sklearndf._wrapper as _wr
+import gamma.sklearndf.wrapper as _wr
 
 log = _logging.getLogger(__name__)
 
