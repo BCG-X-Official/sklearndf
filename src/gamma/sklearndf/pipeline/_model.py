@@ -14,8 +14,8 @@
 GAMMA custom pipelines
 """
 
-import logging as _logging
 import abc as _abc
+import logging as _logging
 import typing as _t
 
 import pandas as _pd
@@ -27,13 +27,13 @@ log = _logging.getLogger(__name__)
 
 __all__ = [
     "EstimatorPipelineDF",
-    "PredictorPipelineDF",
+    "LearnerPipelineDF",
     "RegressorPipelineDF",
     "ClassifierPipelineDF",
 ]
 
 _T_FinalEstimatorDF = _t.TypeVar("_T_FinalEstimatorDF", bound=_sdf.BaseEstimatorDF)
-_T_FinalPredictorDF = _t.TypeVar("_T_FinalPredictorDF", bound=_sdf.BasePredictorDF)
+_T_FinalPredictorDF = _t.TypeVar("_T_FinalPredictorDF", bound=_sdf.BaseLearnerDF)
 _T_FinalRegressorDF = _t.TypeVar("_T_FinalRegressorDF", bound=_sdf.RegressorDF)
 _T_FinalClassifierDF = _t.TypeVar("_T_FinalClassifierDF", bound=_sdf.ClassifierDF)
 
@@ -123,7 +123,7 @@ class EstimatorPipelineDF(
             return X
 
 
-class PredictorPipelineDF(
+class LearnerPipelineDF(
     EstimatorPipelineDF[_T_FinalPredictorDF], _t.Generic[_T_FinalPredictorDF], _abc.ABC
 ):
 
@@ -159,7 +159,7 @@ class PredictorPipelineDF(
 
 
 class RegressorPipelineDF(
-    PredictorPipelineDF[_T_FinalRegressorDF],
+    LearnerPipelineDF[_T_FinalRegressorDF],
     _sdf.RegressorDF,
     _t.Generic[_T_FinalRegressorDF],
 ):
@@ -197,7 +197,7 @@ class RegressorPipelineDF(
 
 
 class ClassifierPipelineDF(
-    PredictorPipelineDF[_T_FinalClassifierDF],
+    LearnerPipelineDF[_T_FinalClassifierDF],
     _sdf.ClassifierDF,
     _t.Generic[_T_FinalClassifierDF],
 ):
