@@ -42,7 +42,7 @@ from sklearn.base import (
 from gamma.common import ListLike
 from gamma.sklearndf import (
     BaseEstimatorDF,
-    BasePredictorDF,
+    BaseLearnerDF,
     ClassifierDF,
     RegressorDF,
     TransformerDF,
@@ -52,7 +52,7 @@ log = logging.getLogger(__name__)
 
 __all__ = [
     "BaseEstimatorWrapperDF",
-    "BasePredictorWrapperDF",
+    "BaseLearnerWrapperDF",
     "ClassifierWrapperDF",
     "df_estimator",
     "MetaClassifierWrapperDF",
@@ -66,13 +66,14 @@ __all__ = [
 # type variables
 #
 
-T_DelegateEstimator = TypeVar("T_Estimator", bound=BaseEstimator)
-T_DelegateTransformer = TypeVar("T_Transformer", bound=TransformerMixin)
-T_DelegatePredictor = TypeVar(
-    "T_Predictor", bound=Union[RegressorMixin, ClassifierMixin]
+T_DelegateEstimator = TypeVar("T_DelegateEstimator", bound=BaseEstimator)
+T_DelegateTransformer = TypeVar("T_DelegateTransformer", bound=TransformerMixin)
+T_DelegateLearner = TypeVar(
+    "T_DelegateLearner", bound=Union[RegressorMixin, ClassifierMixin]
 )
-T_DelegateRegressor = TypeVar("T_Regressor", bound=RegressorMixin)
-T_DelegateClassifier = TypeVar("T_Classifier", bound=ClassifierMixin)
+T_DelegateRegressor = TypeVar("T_DelegateRegressor", bound=RegressorMixin)
+T_DelegateClassifier = TypeVar("T_DelegateClassifier", bound=ClassifierMixin)
+
 T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="BaseEstimatorWrapperDF")
 
 
@@ -445,10 +446,10 @@ class TransformerWrapperDF(
         )
 
 
-class BasePredictorWrapperDF(
-    BasePredictorDF,
-    BaseEstimatorWrapperDF[T_DelegatePredictor],
-    Generic[T_DelegatePredictor],
+class BaseLearnerWrapperDF(
+    BaseLearnerDF,
+    BaseEstimatorWrapperDF[T_DelegateLearner],
+    Generic[T_DelegateLearner],
     ABC,
 ):
     """
@@ -564,7 +565,7 @@ class BasePredictorWrapperDF(
 
 class RegressorWrapperDF(
     RegressorDF,
-    BasePredictorWrapperDF[T_DelegateRegressor],
+    BaseLearnerWrapperDF[T_DelegateRegressor],
     Generic[T_DelegateRegressor],
     ABC,
 ):
@@ -575,7 +576,7 @@ class RegressorWrapperDF(
 
 class ClassifierWrapperDF(
     ClassifierDF,
-    BasePredictorWrapperDF[T_DelegateClassifier],
+    BaseLearnerWrapperDF[T_DelegateClassifier],
     Generic[T_DelegateClassifier],
     ABC,
 ):

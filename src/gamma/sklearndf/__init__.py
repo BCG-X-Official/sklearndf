@@ -43,7 +43,7 @@ log = logging.getLogger(__name__)
 
 __all__ = [
     "BaseEstimatorDF",
-    "BasePredictorDF",
+    "BaseLearnerDF",
     "ClassifierDF",
     "RegressorDF",
     "TransformerDF",
@@ -145,7 +145,7 @@ class BaseEstimatorDF(ABC):
         pass
 
 
-class BasePredictorDF(BaseEstimatorDF, ABC):
+class BaseLearnerDF(BaseEstimatorDF, ABC):
     """
     Base mix-in class for scikit-learn predictors with enhanced support for data frames.
     """
@@ -233,13 +233,13 @@ class TransformerDF(BaseEstimatorDF, TransformerMixin, ABC):
         return self.features_original.index
 
 
-class RegressorDF(BasePredictorDF, RegressorMixin, ABC):
+class RegressorDF(BaseLearnerDF, RegressorMixin, ABC):
     """
     Mix-in class for scikit-learn regressors with enhanced support for data frames.
     """
 
 
-class ClassifierDF(BasePredictorDF, ClassifierMixin, ABC):
+class ClassifierDF(BaseLearnerDF, ClassifierMixin, ABC):
     """
     Mix-in class for scikit-learn classifiers with enhanced support for data frames.
     """
