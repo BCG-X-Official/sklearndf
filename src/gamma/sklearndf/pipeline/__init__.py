@@ -169,6 +169,17 @@ class _PipelineWrapperDF(
             for preceding_out_to_original_mapping in col_mappings[-2::-1]:
                 # join the original columns of my current transformer on the out columns
                 # in the preceding transformer, then repeat
+                if not all(
+                    feature in preceding_out_to_original_mapping
+                    for feature in _features_original
+                ):
+                    unknown_features = set(_features_original) - set(
+                        preceding_out_to_original_mapping
+                    )
+                    raise KeyError(
+                        f"unknown features encountered while tracing original "
+                        f"features along pipeline: {unknown_features}"
+                    )
                 _features_original = preceding_out_to_original_mapping.loc[
                     _features_original
                 ].values
