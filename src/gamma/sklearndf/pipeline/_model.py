@@ -33,7 +33,7 @@ __all__ = [
 ]
 
 _T_FinalEstimatorDF = _t.TypeVar("_T_FinalEstimatorDF", bound=_sdf.BaseEstimatorDF)
-_T_FinalPredictorDF = _t.TypeVar("_T_FinalPredictorDF", bound=_sdf.BaseLearnerDF)
+_T_FinalLearnerDF = _t.TypeVar("_T_FinalLearnerDF", bound=_sdf.BaseLearnerDF)
 _T_FinalRegressorDF = _t.TypeVar("_T_FinalRegressorDF", bound=_sdf.RegressorDF)
 _T_FinalClassifierDF = _t.TypeVar("_T_FinalClassifierDF", bound=_sdf.ClassifierDF)
 
@@ -124,7 +124,7 @@ class EstimatorPipelineDF(
 
 
 class LearnerPipelineDF(
-    EstimatorPipelineDF[_T_FinalPredictorDF], _t.Generic[_T_FinalPredictorDF], _abc.ABC
+    EstimatorPipelineDF[_T_FinalLearnerDF], _t.Generic[_T_FinalLearnerDF], _abc.ABC
 ):
 
     # noinspection PyPep8Naming
