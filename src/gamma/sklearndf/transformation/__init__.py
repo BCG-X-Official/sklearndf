@@ -102,7 +102,6 @@ from sklearn.preprocessing import (
 from sklearn.random_projection import GaussianRandomProjection, SparseRandomProjection
 
 from gamma.sklearndf import TransformerDF
-from gamma.sklearndf.wrapper import df_estimator, TransformerWrapperDF
 from gamma.sklearndf.transformation._wrapper import (
     _BaseDimensionalityReductionWrapperDF,
     _BaseMultipleInputsPerOutputTransformerWrapperDF,
@@ -112,8 +111,10 @@ from gamma.sklearndf.transformation._wrapper import (
     _FeatureSelectionWrapperDF,
     _NComponentsDimensionalityReductionWrapperDF,
 )
+from gamma.sklearndf.wrapper import df_estimator, TransformerWrapperDF
 
 log = logging.getLogger(__name__)
+
 
 #
 # cluster
@@ -273,7 +274,7 @@ class TfidfTransformerDF(TransformerDF, TfidfTransformer):
 #
 
 
-class _SimpleImputerWrapperDF(_ColumnSubsetTransformerWrapperDF[SimpleImputer], ABC):
+class _SimpleImputerWrapperDF(TransformerWrapperDF[SimpleImputer], ABC):
     """
     Impute missing values with data frames as input and output.
 
@@ -286,7 +287,7 @@ class _SimpleImputerWrapperDF(_ColumnSubsetTransformerWrapperDF[SimpleImputer], 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
-    def _get_features_out(self) -> pd.Index:
+    def _get_features_original(self) -> pd.Series:
         # get the columns that were dropped during imputation
         stats = self.delegate_estimator.statistics_
         if issubclass(stats.dtype.type, float):
@@ -298,6 +299,9 @@ class _SimpleImputerWrapperDF(_ColumnSubsetTransformerWrapperDF[SimpleImputer], 
 
         # the imputed columns are all ingoing columns, except the ones that were dropped
         imputed_columns = self.features_in.delete(np.argwhere(nan_mask))
+        features_original = pd.Series(
+            index=imputed_columns, data=imputed_columns.values
+        )
 
         # if the add_indicator flag is set, we will get additional "missing" columns
         if self.delegate_estimator.add_indicator:
@@ -305,9 +309,9 @@ class _SimpleImputerWrapperDF(_ColumnSubsetTransformerWrapperDF[SimpleImputer], 
                 estimator=self.delegate_estimator.indicator_,
                 features_in=self.features_in,
             )
-            return imputed_columns.append(missing_indicator.features_out)
-
-        return imputed_columns
+            return features_original.append(missing_indicator.features_original)
+        else:
+            return features_original
 
 
 # noinspection PyAbstractClass
