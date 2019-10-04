@@ -39,7 +39,7 @@ _T_FinalClassifierDF = _t.TypeVar("_T_FinalClassifierDF", bound=_sdf.ClassifierD
 
 
 class EstimatorPipelineDF(
-    _sdf.BaseEstimatorDF, _sb.BaseEstimator, _t.Generic[_T_FinalEstimatorDF], _abc.ABC
+    _sb.BaseEstimator, _sdf.BaseEstimatorDF, _t.Generic[_T_FinalEstimatorDF], _abc.ABC
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
@@ -63,14 +63,14 @@ class EstimatorPipelineDF(
 
     @property
     @_abc.abstractmethod
-    def final_estimator_(self) -> _T_FinalEstimatorDF:
+    def final_estimator(self) -> _T_FinalEstimatorDF:
         """
         The final estimator following the preprocessing step.
         """
         pass
 
     @property
-    def preprocessing_param_(self) -> str:
+    def preprocessing_name(self) -> str:
         """
         The name of the preprocessing step parameter.
         """
@@ -78,7 +78,7 @@ class EstimatorPipelineDF(
 
     @property
     @_abc.abstractmethod
-    def final_estimator_param_(self) -> str:
+    def final_estimator_name(self) -> str:
         """
         The name of the estimator step parameter.
         """
@@ -91,20 +91,26 @@ class EstimatorPipelineDF(
         y: _t.Optional[_t.Union[_pd.Series, _pd.DataFrame]] = None,
         **fit_params,
     ) -> "EstimatorPipelineDF[_T_FinalEstimatorDF]":
-        self.final_estimator_.fit(
+        self.final_estimator.fit(
             self._pre_fit_transform(X, y, **fit_params), y, **fit_params
         )
         return self
 
     @property
     def is_fitted(self) -> bool:
-        return self.preprocessing.is_fitted and self.final_estimator_.is_fitted
+        return self.preprocessing.is_fitted and self.final_estimator.is_fitted
 
     def _get_features_in(self) -> _pd.Index:
         if self.preprocessing is not None:
             return self.preprocessing.features_in
         else:
-            return self.final_estimator_.features_in
+            return self.final_estimator.features_in
+
+    def _get_n_outputs(self) -> int:
+        if self.preprocessing is not None:
+            return self.preprocessing.n_outputs
+        else:
+            return self.final_estimator.n_outputs
 
     # noinspection PyPep8Naming
     def _pre_transform(self, X: _pd.DataFrame) -> _pd.DataFrame:
@@ -131,11 +137,11 @@ class LearnerPipelineDF(
     def predict(
         self, X: _pd.DataFrame, **predict_params
     ) -> _t.Union[_pd.Series, _pd.DataFrame]:
-        return self.final_estimator_.predict(self._pre_transform(X), **predict_params)
+        return self.final_estimator.predict(self._pre_transform(X), **predict_params)
 
     # noinspection PyPep8Naming
     def fit_predict(self, X: _pd.DataFrame, y: _pd.Series, **fit_params) -> _pd.Series:
-        return self.final_estimator_.fit_predict(
+        return self.final_estimator.fit_predict(
             self._pre_fit_transform(X, y, **fit_params), y, **fit_params
         )
 
@@ -147,15 +153,11 @@ class LearnerPipelineDF(
         sample_weight: _t.Optional[_t.Any] = None,
     ) -> float:
         if sample_weight is None:
-            return self.final_estimator_.score(self._pre_transform(X), y)
+            return self.final_estimator.score(self._pre_transform(X), y)
         else:
-            return self.final_estimator_.score(
+            return self.final_estimator.score(
                 self._pre_transform(X), y, sample_weight=sample_weight
             )
-
-    @property
-    def n_outputs(self) -> int:
-        return self.final_estimator_.n_outputs
 
 
 class RegressorPipelineDF(
@@ -188,11 +190,11 @@ class RegressorPipelineDF(
         self.regressor = regressor
 
     @property
-    def final_estimator_(self) -> _T_FinalRegressorDF:
+    def final_estimator(self) -> _T_FinalRegressorDF:
         return self.regressor
 
     @property
-    def final_estimator_param_(self) -> str:
+    def final_estimator_name(self) -> str:
         return "regressor"
 
 
@@ -225,11 +227,11 @@ class ClassifierPipelineDF(
         self.classifier = classifier
 
     @property
-    def final_estimator_(self) -> _T_FinalClassifierDF:
+    def final_estimator(self) -> _T_FinalClassifierDF:
         return self.classifier
 
     @property
-    def final_estimator_param_(self) -> str:
+    def final_estimator_name(self) -> str:
         return "classifier"
 
     # noinspection PyPep8Naming

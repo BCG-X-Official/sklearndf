@@ -54,6 +54,7 @@ __all__ = [
 #
 
 # noinspection PyShadowingBuiltins
+_T = TypeVar("_T")
 _T_EstimatorDF = TypeVar("_T_EstimatorDF")
 
 #
@@ -66,7 +67,7 @@ class BaseEstimatorDF(ABC):
     Mix-in class for scikit-learn estimators with enhanced support for data frames.
     """
 
-    FEATURE_IN = "feature_in"
+    COL_FEATURE_IN = "feature_in"
 
     def __init__(self) -> None:
         super().__init__()
@@ -95,34 +96,57 @@ class BaseEstimatorDF(ABC):
     # noinspection PyPep8Naming
     @abstractmethod
     def fit(
-        self,
+        self: _T,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
-    ) -> "BaseEstimatorDF":
+    ) -> _T:
         pass
 
     @property
     @abstractmethod
     def is_fitted(self) -> bool:
-        """`True` if the delegate estimator is fitted, else `False`"""
+        """`True` if this estimator is fitted, else `False`"""
         pass
 
     @property
     def features_in(self) -> pd.Index:
         """
         The pandas column index with the names of the features this estimator has been
-        fitted on
+        fitted on; raises an `AttributeError` if this estimator is not fitted
         """
         self._ensure_fitted()
-        return self._get_features_in().rename(self.FEATURE_IN)
+        return self._get_features_in().rename(self.COL_FEATURE_IN)
 
     @property
-    @abstractmethod
     def n_outputs(self) -> int:
         """
-        The number of outputs this estimator has been fitted on; `None` if the
-        estimator is not fitted
+        The number of outputs this estimator has been fitted on;
+        raises an `AttributeError` if this estimator is not fitted
+        """
+        self._ensure_fitted()
+        return self._get_n_outputs()
+
+    @abstractmethod
+    def get_params(self, deep=True) -> Dict[str, Any]:
+        """
+        Get parameters for this estimator.
+
+        :param deep: if ``True``, return the parameters for this estimator and \
+        contained sub-objects that are estimators
+
+        :return: mapping of the parameter names to their values
+        """
+        pass
+
+    @abstractmethod
+    def set_params(self: _T, **kwargs) -> _T:
+        """
+        Set the parameters of this estimator.
+
+        Valid parameter keys can be listed with ``get_params()``.
+
+        :returns self
         """
         pass
 
@@ -142,6 +166,11 @@ class BaseEstimatorDF(ABC):
     @abstractmethod
     def _get_features_in(self) -> pd.Index:
         # get the input columns as a pandas Index
+        pass
+
+    @abstractmethod
+    def _get_n_outputs(self) -> int:
+        # get the number of outputs this estimator has been fitted to
         pass
 
 
@@ -175,7 +204,7 @@ class TransformerDF(BaseEstimatorDF, TransformerMixin, ABC):
     Mix-in class for scikit-learn transformers with enhanced support for data frames.
     """
 
-    FEATURE_OUT = "feature_out"
+    COL_FEATURE_OUT = "feature_out"
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -207,8 +236,8 @@ class TransformerDF(BaseEstimatorDF, TransformerMixin, ABC):
         if self._features_original is None:
             self._features_original = (
                 self._get_features_original()
-                .rename(self.FEATURE_IN)
-                .rename_axis(index=self.FEATURE_OUT)
+                .rename(self.COL_FEATURE_IN)
+                .rename_axis(index=self.COL_FEATURE_OUT)
             )
         return self._features_original
 
@@ -218,7 +247,7 @@ class TransformerDF(BaseEstimatorDF, TransformerMixin, ABC):
         Pandas column index with the names of the features produced by this transformer
         """
         self._ensure_fitted()
-        return self._get_features_out().rename(self.FEATURE_OUT)
+        return self._get_features_out().rename(self.COL_FEATURE_OUT)
 
     @abstractmethod
     def _get_features_original(self) -> pd.Series:
