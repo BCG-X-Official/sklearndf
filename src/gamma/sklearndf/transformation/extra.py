@@ -24,9 +24,9 @@ from boruta import BorutaPy
 from sklearn.base import BaseEstimator
 
 from gamma.sklearndf import TransformerDF
-from gamma.sklearndf.wrapper import df_estimator, MetaEstimatorWrapperDF
 from gamma.sklearndf.transformation import _ColumnSubsetTransformerWrapperDF
 from gamma.sklearndf.transformation._wrapper import _NDArrayTransformerWrapperDF
+from gamma.sklearndf.wrapper import df_estimator, MetaEstimatorWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -53,7 +53,7 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
         self.iqr_multiple = iqr_multiple
         self.threshold_low_ = None
         self.threshold_high_ = None
-        self.features_original_ = None
+        self._features_original = None
 
     # noinspection PyPep8Naming
     def fit(
@@ -73,7 +73,7 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
         threshold_iqr: pd.Series = (q3 - q1) * self.iqr_multiple
         self.threshold_low_ = q1 - threshold_iqr
         self.threshold_high_ = q3 + threshold_iqr
-        self.features_original_ = pd.Series(index=X.columns, data=X.columns.values)
+        self._features_original = pd.Series(index=X.columns, data=X.columns.values)
         return self
 
     # noinspection PyPep8Naming
@@ -92,15 +92,14 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
     def is_fitted(self) -> bool:
         return self.threshold_low_ is not None
 
-    @property
-    def n_outputs(self) -> int:
-        return 0 if self.is_fitted else None
-
     def _get_features_original(self) -> pd.Series:
-        return self.features_original_
+        return self._features_original
 
     def _get_features_in(self) -> pd.Index:
         return self.features_original.index
+
+    def _get_n_outputs(self) -> int:
+        return 0
 
 
 class _BorutaPyWrapperDF(

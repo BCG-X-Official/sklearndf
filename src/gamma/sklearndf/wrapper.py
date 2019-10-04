@@ -76,6 +76,8 @@ T_DelegateClassifier = TypeVar("T_DelegateClassifier", bound=ClassifierMixin)
 
 T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="BaseEstimatorWrapperDF")
 
+# noinspection PyShadowingBuiltins
+_T = TypeVar("_T")
 
 #
 # base wrapper classes
@@ -145,7 +147,7 @@ class BaseEstimatorWrapperDF(
         # noinspection PyUnresolvedReferences
         return self._delegate_estimator.get_params(deep=deep)
 
-    def set_params(self, **kwargs) -> "BaseEstimatorWrapperDF[T_DelegateEstimator]":
+    def set_params(self: _T, **kwargs) -> _T:
         """
         Set the parameters of this estimator.
 
@@ -187,14 +189,6 @@ class BaseEstimatorWrapperDF(
 
         return self
 
-    @property
-    def n_outputs(self) -> int:
-        """
-        The number of outputs this estimator has been fitted on; `None` if the
-        estimator is not fitted
-        """
-        return self._n_outputs
-
     @classmethod
     @abstractmethod
     def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
@@ -207,6 +201,9 @@ class BaseEstimatorWrapperDF(
 
     def _get_features_in(self) -> pd.Index:
         return self._features_in
+
+    def _get_n_outputs(self) -> int:
+        return self._n_outputs
 
     def _reset_fit(self) -> None:
         self._features_in = None
@@ -230,7 +227,7 @@ class BaseEstimatorWrapperDF(
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
     ) -> None:
-        self._features_in = X.columns.rename(self.FEATURE_IN)
+        self._features_in = X.columns.rename(self.COL_FEATURE_IN)
         self._n_outputs = (
             0 if y is None else 1 if isinstance(y, pd.Series) else y.shape[1]
         )
