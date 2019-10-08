@@ -25,12 +25,7 @@ import gamma.sklearndf as _sdf
 
 log = _logging.getLogger(__name__)
 
-__all__ = [
-    "EstimatorPipelineDF",
-    "LearnerPipelineDF",
-    "RegressorPipelineDF",
-    "ClassifierPipelineDF",
-]
+__all__ = ["LearnerPipelineDF", "RegressorPipelineDF", "ClassifierPipelineDF"]
 
 _T_FinalEstimatorDF = _t.TypeVar("_T_FinalEstimatorDF", bound=_sdf.BaseEstimatorDF)
 _T_FinalLearnerDF = _t.TypeVar("_T_FinalLearnerDF", bound=_sdf.BaseLearnerDF)
@@ -38,7 +33,7 @@ _T_FinalRegressorDF = _t.TypeVar("_T_FinalRegressorDF", bound=_sdf.RegressorDF)
 _T_FinalClassifierDF = _t.TypeVar("_T_FinalClassifierDF", bound=_sdf.ClassifierDF)
 
 
-class EstimatorPipelineDF(
+class BaseEstimatorPipelineDF(
     _sb.BaseEstimator, _sdf.BaseEstimatorDF, _t.Generic[_T_FinalEstimatorDF], _abc.ABC
 ):
     """
@@ -90,7 +85,7 @@ class EstimatorPipelineDF(
         X: _pd.DataFrame,
         y: _t.Optional[_t.Union[_pd.Series, _pd.DataFrame]] = None,
         **fit_params,
-    ) -> "EstimatorPipelineDF[_T_FinalEstimatorDF]":
+    ) -> "BaseEstimatorPipelineDF[_T_FinalEstimatorDF]":
         self.final_estimator.fit(
             self._pre_fit_transform(X, y, **fit_params), y, **fit_params
         )
@@ -130,7 +125,7 @@ class EstimatorPipelineDF(
 
 
 class LearnerPipelineDF(
-    EstimatorPipelineDF[_T_FinalLearnerDF], _t.Generic[_T_FinalLearnerDF], _abc.ABC
+    BaseEstimatorPipelineDF[_T_FinalLearnerDF], _t.Generic[_T_FinalLearnerDF], _abc.ABC
 ):
 
     # noinspection PyPep8Naming
