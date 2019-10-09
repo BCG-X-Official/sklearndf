@@ -19,7 +19,6 @@ from abc import ABC
 from typing import *
 
 import pandas as pd
-from lightgbm.sklearn import LGBMRegressor
 from sklearn.base import RegressorMixin
 from sklearn.compose import TransformedTargetRegressor
 from sklearn.cross_decomposition import CCA, PLSCanonical, PLSRegression
@@ -69,14 +68,14 @@ from sklearn.svm import LinearSVR, NuSVR, SVR
 from sklearn.tree import DecisionTreeRegressor, ExtraTreeRegressor
 
 from gamma.sklearndf import RegressorDF, TransformerDF
+
+# noinspection PyProtectedMember
+from gamma.sklearndf.transformation import _ColumnPreservingTransformerWrapperDF
 from gamma.sklearndf.wrapper import (
     df_estimator,
     MetaRegressorWrapperDF,
     RegressorWrapperDF,
 )
-
-# noinspection PyProtectedMember
-from gamma.sklearndf.transformation import _ColumnPreservingTransformerWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -718,20 +717,6 @@ class PLSCanonicalDF(RegressorDF, TransformerDF, PLSCanonical):
     """
     Wraps :class:`sklearn.cross_decomposition.pls_.PLSCanonical`; accepts and returns
     data frames.
-    """
-
-    pass
-
-
-#
-# lightgbm
-#
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=RegressorWrapperDF)
-class LGBMRegressorDF(RegressorDF, LGBMRegressor):
-    """
-    Wraps :class:`lightgbm.sklearn.LGBMRegressor`; accepts and returns data frames.
     """
 
     pass
