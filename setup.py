@@ -130,7 +130,7 @@ setup(
         "lightgbm>=2.2,<2.3",
         "scikit-learn>=0.21,<0.22",
         "boruta>=0.3,<0.4",
-        "gamma-common @ git+ssh://git@git.sourceai.io/alpha/gamma-common.git@v2.0.0#egg=gamma.common",
+        "gamma-common @ git+ssh://git@git.sourceai.io/BCG/gamma-common.git@1.0.0#egg=gamma.common",
     ],
     dependency_links=[],
     # Optional
