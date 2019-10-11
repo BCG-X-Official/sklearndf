@@ -7,13 +7,12 @@ import time
 from tempfile import mkdtemp
 from typing import *
 
-# noinspection PyPackageRequirements
-import joblib
 import numpy as np
 import pandas as pd
 from sklearn import clone
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.feature_selection import f_classif
+from sklearn.utils import Memory
 from sklearn.utils.testing import (
     assert_array_equal,
     assert_no_warnings,
@@ -22,7 +21,6 @@ from sklearn.utils.testing import (
 )
 
 from gamma.sklearndf import TransformerDF
-from gamma.sklearndf.wrapper import df_estimator
 from gamma.sklearndf.classification import LogisticRegressionDF, SVCDF
 from gamma.sklearndf.pipeline import PipelineDF
 from gamma.sklearndf.regression import DummyRegressorDF, LassoDF, LinearRegressionDF
@@ -31,6 +29,7 @@ from gamma.sklearndf.transformation import (
     SelectKBestDF,
     SimpleImputerDF,
 )
+from gamma.sklearndf.wrapper import df_estimator
 
 
 def test_set_params_nested_pipeline_df() -> None:
@@ -121,9 +120,9 @@ def test_pipelinedf_memory(
     sklearn.tests.test_pipeline """
 
     cachedir = mkdtemp()
-    try:
 
-        memory = joblib.Memory(location=cachedir, verbose=10)
+    try:
+        memory = Memory(location=cachedir, verbose=10)
         # Test with Transformer + SVC
         clf = SVCDF(probability=True, random_state=0)
         transf = DummyTransfDF()
