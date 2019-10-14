@@ -1,6 +1,6 @@
 from os import path
 
-from setuptools import setup
+from setuptools import setup, find_namespace_packages
 
 here = path.abspath(path.dirname(__file__))
 # Get the long description from the README file
@@ -26,7 +26,7 @@ setup(
     # For a discussion on single-sourcing the version across setup.py and the
     # project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version="0.9.0",  # Required
+    version="1.0.0",  # Required
     # This is a one-line description or tagline of what your project does. This
     # corresponds to the "Summary" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#summary
@@ -105,13 +105,8 @@ setup(
     #   py_modules=["my_module"],
     #
     # packages=find_packages(exclude=['contrib', 'docs', 'tests']),  # Required
-    packages=[
-        "gamma.sklearndf",
-        "gamma.sklearndf.pipeline",
-        "gamma.sklearndf.transformation",
-    ],
+    packages=find_namespace_packages(where="src"),
     package_dir={"": "src"},
-    namespace_packages=["gamma"],
     # Specify which Python versions you support. In contrast to the
     # 'Programming Language' classifiers above, 'pip install' will check this
     # and refuse to install the project if the version does not match. If you
@@ -127,7 +122,6 @@ setup(
     install_requires=[
         "pandas>=0.24,<0.25",
         "numpy>=1.16,<1.17",
-        "lightgbm>=2.2,<2.3",
         "scikit-learn>=0.21,<0.22",
         "boruta>=0.3,<0.4",
         "gamma-common @ git+ssh://git@git.sourceai.io/BCG/gamma-common.git@1.0.0#egg=gamma.common",
