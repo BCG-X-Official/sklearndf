@@ -93,7 +93,9 @@ class BaseEstimatorPipelineDF(
 
     @property
     def is_fitted(self) -> bool:
-        return self.preprocessing.is_fitted and self.final_estimator.is_fitted
+        return (
+            self.preprocessing is None or self.preprocessing.is_fitted
+        ) and self.final_estimator.is_fitted
 
     def _get_features_in(self) -> _pd.Index:
         if self.preprocessing is not None:
