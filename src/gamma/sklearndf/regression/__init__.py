@@ -22,7 +22,6 @@ import pandas as pd
 from sklearn.base import RegressorMixin
 from sklearn.compose import TransformedTargetRegressor
 from sklearn.cross_decomposition import CCA, PLSCanonical, PLSRegression
-from sklearn.dummy import DummyRegressor
 from sklearn.ensemble import (
     AdaBoostRegressor,
     BaggingRegressor,
@@ -137,21 +136,6 @@ class SVRDF(RegressorDF, SVR):
 class NuSVRDF(RegressorDF, NuSVR):
     """
     Wraps :class:`sklearn.svm.classes.NuSVR`; accepts and returns data frames.
-    """
-
-    pass
-
-
-#
-# dummy
-#
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=RegressorWrapperDF)
-class DummyRegressorDF(RegressorDF, DummyRegressor):
-    """
-    Wraps :class:`sklearn.dummy.DummyRegressor`; accepts and returns data frames.
     """
 
     pass
