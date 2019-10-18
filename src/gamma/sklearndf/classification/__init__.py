@@ -22,7 +22,6 @@ import numpy as _np
 import pandas as _pd
 import sklearn.calibration as _cal
 import sklearn.discriminant_analysis as _da
-import sklearn.dummy as _dm
 import sklearn.ensemble as _ens
 import sklearn.gaussian_process as _gp
 import sklearn.linear_model as _lm
@@ -301,21 +300,6 @@ class NuSVCDF(_df.ClassifierDF, _svm.NuSVC):
 class LinearSVCDF(_df.ClassifierDF, _svm.LinearSVC):
     """
     Wraps :class:`sklearn.svm.classes.LinearSVC`; accepts and returns data frames.
-    """
-
-    pass
-
-
-#
-# dummy
-#
-
-
-# noinspection PyAbstractClass
-@_wr.df_estimator(df_wrapper_type=_wr.ClassifierWrapperDF)
-class DummyClassifierDF(_df.ClassifierDF, _dm.DummyClassifier):
-    """
-    Wraps :class:`sklearn.dummy.DummyClassifier`; accepts and returns data frames.
     """
 
     pass
