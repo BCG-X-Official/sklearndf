@@ -23,7 +23,7 @@ from sklearn.utils.testing import (
 from gamma.sklearndf import TransformerDF
 from gamma.sklearndf.classification import LogisticRegressionDF, SVCDF
 from gamma.sklearndf.pipeline import PipelineDF
-from gamma.sklearndf.regression import DummyRegressorDF, LassoDF, LinearRegressionDF
+from gamma.sklearndf.regression import LassoDF, LinearRegressionDF
 from gamma.sklearndf.transformation import (
     _ColumnPreservingTransformerWrapperDF,
     SelectKBestDF,
@@ -38,7 +38,7 @@ def test_set_params_nested_pipeline_df() -> None:
 
     PipelineDF([("b", SimpleImputerDF(strategy="median"))])
 
-    estimator = PipelineDF([("a", PipelineDF([("b", DummyRegressorDF())]))])
+    estimator = PipelineDF([("a", PipelineDF([("b", LogisticRegressionDF())]))])
 
     estimator.set_params(a__b__alpha=0.001, a__b=LassoDF())
     estimator.set_params(a__steps=[("b", LogisticRegressionDF())], a__b__C=5)
