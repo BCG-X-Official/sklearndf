@@ -25,6 +25,8 @@ from gamma.sklearndf import RegressorDF, TransformerDF
 from gamma.sklearndf.classification import LogisticRegressionDF, SVCDF
 from gamma.sklearndf.pipeline import PipelineDF
 from gamma.sklearndf.regression import LassoDF, LinearRegressionDF
+
+# noinspection PyProtectedMember
 from gamma.sklearndf.transformation import (
     _ColumnPreservingTransformerWrapperDF,
     SelectKBestDF,
