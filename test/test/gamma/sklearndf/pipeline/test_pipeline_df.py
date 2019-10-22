@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 from sklearn import clone
 from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.dummy import DummyRegressor
 from sklearn.feature_selection import f_classif
 from sklearn.utils import Memory
 from sklearn.utils.testing import (
@@ -20,16 +21,28 @@ from sklearn.utils.testing import (
     assert_raises_regex,
 )
 
-from gamma.sklearndf import TransformerDF
+from gamma.sklearndf import RegressorDF, TransformerDF
 from gamma.sklearndf.classification import LogisticRegressionDF, SVCDF
 from gamma.sklearndf.pipeline import PipelineDF
 from gamma.sklearndf.regression import LassoDF, LinearRegressionDF
+
+# noinspection PyProtectedMember
 from gamma.sklearndf.transformation import (
     _ColumnPreservingTransformerWrapperDF,
     SelectKBestDF,
     SimpleImputerDF,
 )
-from gamma.sklearndf.wrapper import df_estimator
+from gamma.sklearndf.wrapper import df_estimator, RegressorWrapperDF
+
+
+# noinspection PyAbstractClass
+@df_estimator(df_wrapper_type=RegressorWrapperDF)
+class DummyRegressorDF(RegressorDF, DummyRegressor):
+    """
+    Wraps :class:`sklearn.dummy.DummyRegressor`; accepts and returns data frames.
+    """
+
+    pass
 
 
 def test_set_params_nested_pipeline_df() -> None:
@@ -38,7 +51,7 @@ def test_set_params_nested_pipeline_df() -> None:
 
     PipelineDF([("b", SimpleImputerDF(strategy="median"))])
 
-    estimator = PipelineDF([("a", PipelineDF([("b", LogisticRegressionDF())]))])
+    estimator = PipelineDF([("a", PipelineDF([("b", DummyRegressorDF())]))])
 
     estimator.set_params(a__b__alpha=0.001, a__b=LassoDF())
     estimator.set_params(a__steps=[("b", LogisticRegressionDF())], a__b__C=5)
