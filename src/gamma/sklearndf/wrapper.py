@@ -39,7 +39,6 @@ from sklearn.base import (
     TransformerMixin,
 )
 
-from gamma.common import ListLike
 from gamma.sklearndf import (
     BaseEstimatorDF,
     BaseLearnerDF,
@@ -651,7 +650,7 @@ class ClassifierWrapperDF(
         self,
         X: pd.DataFrame,
         y: Union[pd.Series, pd.DataFrame, list, np.ndarray],
-        classes: Optional[ListLike[Any]] = None,
+        classes: Optional[Sequence[Any]] = None,
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
 
         if classes is None:
