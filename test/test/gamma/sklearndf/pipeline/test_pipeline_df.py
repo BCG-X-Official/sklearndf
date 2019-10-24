@@ -14,6 +14,8 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.dummy import DummyRegressor
 from sklearn.feature_selection import f_classif
 from sklearn.utils import Memory
+
+# noinspection PyProtectedMember
 from sklearn.utils.testing import (
     assert_array_equal,
     assert_no_warnings,
@@ -22,20 +24,22 @@ from sklearn.utils.testing import (
 )
 
 from gamma.sklearndf import RegressorDF, TransformerDF
+
+# noinspection PyProtectedMember
+from gamma.sklearndf._wrapper import df_estimator, RegressorWrapperDF
 from gamma.sklearndf.classification import LogisticRegressionDF, SVCDF
 from gamma.sklearndf.pipeline import PipelineDF
 from gamma.sklearndf.regression import LassoDF, LinearRegressionDF
 
 # noinspection PyProtectedMember
-from gamma.sklearndf.transformation import (
+from gamma.sklearndf.transformation import SelectKBestDF, SimpleImputerDF
+
+# noinspection PyProtectedMember
+from gamma.sklearndf.transformation._wrapper import (
     _ColumnPreservingTransformerWrapperDF,
-    SelectKBestDF,
-    SimpleImputerDF,
 )
-from gamma.sklearndf.wrapper import df_estimator, RegressorWrapperDF
 
 
-# noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
 class DummyRegressorDF(RegressorDF, DummyRegressor):
     """

@@ -1,29 +1,5 @@
-#
-# NOT FOR CLIENT USE!
-#
-# This is a pre-release library under development. Handling of IP rights is still
-# being investigated. To avoid causing any potential IP disputes or issues, DO NOT USE
-# ANY OF THIS CODE ON A CLIENT PROJECT, not even in modified form.
-#
-# Please direct any queries to any of:
-# - Jan Ittner
-# - Jörg Schneider
-# - Florent Martin
-#
-
 """
-The Gamma scikit-learn DF library.
-
-Enhances scikit-learn estimators for advanced support of data frames.
-
-The abstract class :class:`BaseEstimatorDF` and its subclasses wrap subclasses of
-:class:`~sklearn.base.BaseEstimator` such that transform methods return data frames
-with feature names in the column index.
-
-The enhanced base estimators also offer attributes
-:attr:`~BaseEstimatorDF.features_in`, :attr:`~TransformerDF.features_out`, and
-:attr:`~TransformerDF.features_original`, which enable tracing features back to the
-original inputs even across complex pipelines.
+Core implementation of :mod:`gamma.sklearndf`
 """
 
 import logging
