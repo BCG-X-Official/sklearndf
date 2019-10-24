@@ -23,7 +23,7 @@ import pandas as pd
 from boruta import BorutaPy
 from sklearn.base import BaseEstimator
 
-from gamma.sklearndf import TransformerDF, _T
+from gamma.sklearndf import TransformerDF, T
 from gamma.sklearndf.transformation import _ColumnSubsetTransformerWrapperDF
 from gamma.sklearndf.transformation._wrapper import _NDArrayTransformerWrapperDF
 from gamma.sklearndf.wrapper import df_estimator, MetaEstimatorWrapperDF
@@ -49,7 +49,7 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
     def get_params(self, deep=True) -> Dict[str, Any]:
         return super().get_params(deep)
 
-    def set_params(self: _T, **kwargs) -> _T:
+    def set_params(self: T, **kwargs) -> T:
         return super(**kwargs)
 
     def __init__(self, iqr_multiple: float = 3.0):

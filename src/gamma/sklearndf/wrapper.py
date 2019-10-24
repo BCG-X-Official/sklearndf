@@ -65,6 +65,8 @@ __all__ = [
 # type variables
 #
 
+T = TypeVar("T")
+
 T_DelegateEstimator = TypeVar("T_DelegateEstimator", bound=BaseEstimator)
 T_DelegateTransformer = TypeVar("T_DelegateTransformer", bound=TransformerMixin)
 T_DelegateLearner = TypeVar(
@@ -75,8 +77,6 @@ T_DelegateClassifier = TypeVar("T_DelegateClassifier", bound=ClassifierMixin)
 
 T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="BaseEstimatorWrapperDF")
 
-# noinspection PyShadowingBuiltins
-_T = TypeVar("_T")
 
 #
 # base wrapper classes
@@ -146,7 +146,7 @@ class BaseEstimatorWrapperDF(
         # noinspection PyUnresolvedReferences
         return self._delegate_estimator.get_params(deep=deep)
 
-    def set_params(self: _T, **kwargs) -> _T:
+    def set_params(self: T, **kwargs) -> T:
         """
         Set the parameters of this estimator.
 
