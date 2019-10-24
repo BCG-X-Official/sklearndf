@@ -53,9 +53,9 @@ __all__ = [
 # type variables
 #
 
-# noinspection PyShadowingBuiltins
-_T = TypeVar("_T")
-_T_EstimatorDF = TypeVar("_T_EstimatorDF")
+T = TypeVar("T")
+
+T_EstimatorDF = TypeVar("T_EstimatorDF")
 
 #
 # class definitions
@@ -96,11 +96,11 @@ class BaseEstimatorDF(ABC):
     # noinspection PyPep8Naming
     @abstractmethod
     def fit(
-        self: _T,
+        self: T,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
-    ) -> _T:
+    ) -> T:
         pass
 
     @property
@@ -140,7 +140,7 @@ class BaseEstimatorDF(ABC):
         pass
 
     @abstractmethod
-    def set_params(self: _T, **kwargs) -> _T:
+    def set_params(self: T, **kwargs) -> T:
         """
         Set the parameters of this estimator.
 
@@ -150,7 +150,7 @@ class BaseEstimatorDF(ABC):
         """
         pass
 
-    def clone(self: _T_EstimatorDF) -> _T_EstimatorDF:
+    def clone(self: T_EstimatorDF) -> T_EstimatorDF:
         """
         Make an unfitted clone of this estimator.
 
