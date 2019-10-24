@@ -1,17 +1,5 @@
-# NOT FOR CLIENT USE!
-#
-# This is a pre-release library under development. Handling of IP rights is still
-# being investigated. To avoid causing any potential IP disputes or issues, DO NOT USE
-# ANY OF THIS CODE ON A CLIENT PROJECT, not even in modified form.
-#
-# Please direct any queries to any of:
-# - Jan Ittner
-# - Jörg Schneider
-# - Florent Martin
-#
-
 """
-GAMMA custom pipelines
+GAMMA custom two-step pipelines
 """
 
 import abc as _abc
@@ -25,7 +13,7 @@ import gamma.sklearndf as _sdf
 
 log = _logging.getLogger(__name__)
 
-__all__ = ["LearnerPipelineDF", "RegressorPipelineDF", "ClassifierPipelineDF"]
+__all__ = ["BaseLearnerPipelineDF", "RegressorPipelineDF", "ClassifierPipelineDF"]
 
 T_FinalEstimatorDF = _t.TypeVar("T_FinalEstimatorDF", bound=_sdf.BaseEstimatorDF)
 T_FinalLearnerDF = _t.TypeVar("T_FinalLearnerDF", bound=_sdf.BaseLearnerDF)
@@ -126,7 +114,7 @@ class BaseEstimatorPipelineDF(
             return X
 
 
-class LearnerPipelineDF(
+class BaseLearnerPipelineDF(
     BaseEstimatorPipelineDF[T_FinalLearnerDF], _t.Generic[T_FinalLearnerDF], _abc.ABC
 ):
 
@@ -158,7 +146,7 @@ class LearnerPipelineDF(
 
 
 class RegressorPipelineDF(
-    LearnerPipelineDF[T_FinalRegressorDF],
+    BaseLearnerPipelineDF[T_FinalRegressorDF],
     _sdf.RegressorDF,
     _t.Generic[T_FinalRegressorDF],
 ):
@@ -196,7 +184,7 @@ class RegressorPipelineDF(
 
 
 class ClassifierPipelineDF(
-    LearnerPipelineDF[T_FinalClassifierDF],
+    BaseLearnerPipelineDF[T_FinalClassifierDF],
     _sdf.ClassifierDF,
     _t.Generic[T_FinalClassifierDF],
 ):

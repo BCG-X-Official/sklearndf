@@ -1,44 +1,33 @@
-#
-# NOT FOR CLIENT USE!
-#
-# This is a pre-release library under development. Handling of IP rights is still
-# being investigated. To avoid causing any potential IP disputes or issues, DO NOT USE
-# ANY OF THIS CODE ON A CLIENT PROJECT, not even in modified form.
-#
-# Please direct any queries to any of:
-# - Jan Ittner
-# - Jörg Schneider
-# - Florent Martin
-#
-
 """
-Extended versions of scikit-learn :class:`~sklearn.pipeline.Pipeline` and
-:class:`~sklearn.pipeline.FeatureUnion`, providing enhanced support for data frames
+Core implementation of :mod:`gamma.sklearndf.pipeline`
 """
 
-import abc as _abc
-import logging as _logging
-import typing as _t
+import logging
+from abc import ABC
+from typing import *
 
 import pandas as pd
-import pandas.core.arrays as _pda
-import sklearn.pipeline as _ppl
+from pandas.core.arrays import ExtensionArray
+from sklearn.pipeline import FeatureUnion, Pipeline
 
-import gamma.sklearndf as _sdf
-import gamma.sklearndf.wrapper as _wr
-from gamma.sklearndf.pipeline import _model
-from ._model import *
+from gamma.sklearndf import BaseEstimatorDF, ClassifierDF, RegressorDF, TransformerDF
+from gamma.sklearndf._wrapper import (
+    ClassifierWrapperDF,
+    df_estimator,
+    RegressorWrapperDF,
+    TransformerWrapperDF,
+)
 
-log = _logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
-__all__ = ["PipelineDF", "FeatureUnionDF", *_model.__all__]
+__all__ = ["PipelineDF", "FeatureUnionDF"]
 
 
 class _PipelineWrapperDF(
-    _wr.ClassifierWrapperDF[_ppl.Pipeline],
-    _wr.RegressorWrapperDF[_ppl.Pipeline],
-    _wr.TransformerWrapperDF[_ppl.Pipeline],
-    _abc.ABC,
+    ClassifierWrapperDF[Pipeline],
+    RegressorWrapperDF[Pipeline],
+    TransformerWrapperDF[Pipeline],
+    ABC,
 ):
     PASSTHROUGH = "passthrough"
 
@@ -56,11 +45,11 @@ class _PipelineWrapperDF(
         for name, transformer in steps[:-1]:
             if not (
                 self._is_passthrough(transformer)
-                or isinstance(transformer, _sdf.TransformerDF)
+                or isinstance(transformer, TransformerDF)
             ):
                 raise ValueError(
                     f'expected step "{name}" to contain a '
-                    f"{_sdf.TransformerDF.__name__}, but found an instance of "
+                    f"{TransformerDF.__name__}, but found an instance of "
                     f"{type(transformer).__name__}"
                 )
 
@@ -68,16 +57,16 @@ class _PipelineWrapperDF(
         final_estimator = final_step[1]
         if not (
             self._is_passthrough(final_estimator)
-            or isinstance(final_estimator, _sdf.BaseEstimatorDF)
+            or isinstance(final_estimator, BaseEstimatorDF)
         ):
             raise ValueError(
                 f'expected final step "{final_step[0]}" to contain a '
-                f"{_sdf.BaseEstimatorDF.__name__}, but found an instance of "
+                f"{BaseEstimatorDF.__name__}, but found an instance of "
                 f"{type(final_estimator).__name__}"
             )
 
     @property
-    def steps(self) -> _t.List[_t.Tuple[str, _sdf.BaseEstimatorDF]]:
+    def steps(self) -> List[Tuple[str, BaseEstimatorDF]]:
         """
         The ``steps`` attribute of the underlying :class:`~sklearn.pipeline.Pipeline`.
 
@@ -89,7 +78,7 @@ class _PipelineWrapperDF(
         """The number of steps of the pipeline."""
         return len(self.delegate_estimator.steps)
 
-    def __getitem__(self, ind: _t.Union[slice, int, str]) -> _sdf.BaseEstimatorDF:
+    def __getitem__(self, ind: Union[slice, int, str]) -> BaseEstimatorDF:
         """
         Return a sub-pipeline or a single estimator in the pipeline
 
@@ -105,8 +94,8 @@ class _PipelineWrapperDF(
             if ind.step not in (1, None):
                 raise ValueError("Pipeline slicing only supports a step of 1")
 
-            return _t.cast(
-                _sdf.BaseEstimatorDF,
+            return cast(
+                BaseEstimatorDF,
                 self.__class__(
                     steps=base_pipeline.steps[ind],
                     memory=base_pipeline.memory,
@@ -117,21 +106,21 @@ class _PipelineWrapperDF(
             return self.delegate_estimator[ind]
 
     @staticmethod
-    def _is_passthrough(estimator: _t.Union[_sdf.BaseEstimatorDF, str, None]) -> bool:
+    def _is_passthrough(estimator: Union[BaseEstimatorDF, str, None]) -> bool:
         # return True if the estimator is a "passthrough" (i.e. identity) transformer
         # in the pipeline
         return estimator is None or estimator == _PipelineWrapperDF.PASSTHROUGH
 
-    def _transformer_steps(self) -> _t.Iterator[_t.Tuple[str, _sdf.TransformerDF]]:
+    def _transformer_steps(self) -> Iterator[Tuple[str, TransformerDF]]:
         # make an iterator of all transform steps, i.e. excluding the final step
         # in case it is not a transformer
         # excludes steps whose transformer is `None` or `"passthrough"`
 
         def _iter_not_none(
-            transformer_steps: _t.Sequence[_t.Tuple[str, _sdf.BaseEstimatorDF]]
-        ) -> _t.Iterator[_t.Tuple[str, _sdf.TransformerDF]]:
+            transformer_steps: Sequence[Tuple[str, BaseEstimatorDF]]
+        ) -> Iterator[Tuple[str, TransformerDF]]:
             return (
-                (name, _t.cast(_sdf.TransformerDF, transformer))
+                (name, cast(TransformerDF, transformer))
                 for name, transformer in transformer_steps
                 if not self._is_passthrough(transformer)
             )
@@ -143,7 +132,7 @@ class _PipelineWrapperDF(
 
         final_estimator = steps[-1][1]
 
-        if isinstance(final_estimator, _sdf.TransformerDF):
+        if isinstance(final_estimator, TransformerDF):
             return _iter_not_none(steps)
         else:
             return _iter_not_none(steps[:-1])
@@ -156,14 +145,14 @@ class _PipelineWrapperDF(
 
         if len(col_mappings) == 0:
             _features_out: pd.Index = self.features_in
-            _features_original: _t.Union[
-                pd.np.ndarray, _pda.ExtensionArray
+            _features_original: Union[
+                pd.np.ndarray, ExtensionArray
             ] = _features_out.values
         else:
             _features_out: pd.Index = col_mappings[-1].index
-            _features_original: _t.Union[
-                pd.np.ndarray, _pda.ExtensionArray
-            ] = col_mappings[-1].values
+            _features_original: Union[pd.np.ndarray, ExtensionArray] = col_mappings[
+                -1
+            ].values
 
             # iterate backwards starting from the penultimate item
             for preceding_out_to_original_mapping in col_mappings[-2::-1]:
@@ -188,17 +177,15 @@ class _PipelineWrapperDF(
 
     def _get_features_out(self) -> pd.Index:
         for _, transformer in reversed(self.steps):
-            if isinstance(transformer, _sdf.TransformerDF):
+            if isinstance(transformer, TransformerDF):
                 return transformer.features_out
 
         return self.features_in
 
 
 # noinspection PyAbstractClass
-@_wr.df_estimator(df_wrapper_type=_PipelineWrapperDF)
-class PipelineDF(
-    _sdf.ClassifierDF, _sdf.RegressorDF, _sdf.TransformerDF, _ppl.Pipeline
-):
+@df_estimator(df_wrapper_type=_PipelineWrapperDF)
+class PipelineDF(ClassifierDF, RegressorDF, TransformerDF, Pipeline):
     """
     Wraps :class:`sklearn.pipeline.Pipeline`; accepts and returns data
     frames.
@@ -207,7 +194,7 @@ class PipelineDF(
     pass
 
 
-class _FeatureUnionWrapperDF(_wr.TransformerWrapperDF[_ppl.FeatureUnion], _abc.ABC):
+class _FeatureUnionWrapperDF(TransformerWrapperDF[FeatureUnion], ABC):
     @staticmethod
     def _prepend_features_out(features_out: pd.Index, name_prefix: str) -> pd.Index:
         return pd.Index(data=f"{name_prefix}__" + features_out.astype(str))
@@ -261,8 +248,8 @@ class _FeatureUnionWrapperDF(_wr.TransformerWrapperDF[_ppl.FeatureUnion], _abc.A
 
 
 # noinspection PyAbstractClass
-@_wr.df_estimator(df_wrapper_type=_FeatureUnionWrapperDF)
-class FeatureUnionDF(_sdf.TransformerDF, _ppl.FeatureUnion):
+@df_estimator(df_wrapper_type=_FeatureUnionWrapperDF)
+class FeatureUnionDF(TransformerDF, FeatureUnion):
     """
     Wraps :class:`sklearn.pipeline.FeatureUnion` for enhanced support of pandas data
     frames.

@@ -1,16 +1,3 @@
-#
-# NOT FOR CLIENT USE!
-#
-# This is a pre-release library under development. Handling of IP rights is still
-# being investigated. To avoid causing any potential IP disputes or issues, DO NOT USE
-# ANY OF THIS CODE ON A CLIENT PROJECT, not even in modified form.
-#
-# Please direct any queries to any of:
-# - Jan Ittner
-# - Jörg Schneider
-# - Florent Martin
-#
-
 """
 Specialised transformer wrappers.
 """
@@ -22,7 +9,7 @@ from typing import *
 import pandas as pd
 from sklearn.base import TransformerMixin
 
-from gamma.sklearndf.wrapper import TransformerWrapperDF
+from gamma.sklearndf._wrapper import TransformerWrapperDF
 
 log = logging.getLogger(__name__)
 

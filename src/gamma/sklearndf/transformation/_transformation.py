@@ -1,18 +1,5 @@
-#
-# NOT FOR CLIENT USE!
-#
-# This is a pre-release library under development. Handling of IP rights is still
-# being investigated. To avoid causing any potential IP disputes or issues, DO NOT USE
-# ANY OF THIS CODE ON A CLIENT PROJECT, not even in modified form.
-#
-# Please direct any queries to any of:
-# - Jan Ittner
-# - Jörg Schneider
-# - Florent Martin
-#
-
 """
-data frame versions of scikit-learn transformers
+Core implementation of :mod:`gamma.sklearndf.transformation`
 """
 
 #
@@ -24,7 +11,7 @@ data frame versions of scikit-learn transformers
 # - unindent all lines
 # - use replace with regular expressions
 #   Find: (\w+)\([^\)]+\) \(([\w\.]+)\)
-#   Replace: @_df_transformer\nclass $1DF($1, TransformerDF):\n    """\n    Wraps
+#   Replace: @_df_transformer\nclass $1DF(TransformerDF, $1):\n    """\n    Wraps
 #            :class:`$2.$1`;\n    accepts and returns data frames.\n    """
 #            \n    pass\n\n
 # - clean up imports; import only the module names not the individual classes
@@ -111,7 +98,7 @@ from gamma.sklearndf.transformation._wrapper import (
     _FeatureSelectionWrapperDF,
     _NComponentsDimensionalityReductionWrapperDF,
 )
-from gamma.sklearndf.wrapper import df_estimator, TransformerWrapperDF
+from gamma.sklearndf._wrapper import df_estimator, TransformerWrapperDF
 
 log = logging.getLogger(__name__)
 

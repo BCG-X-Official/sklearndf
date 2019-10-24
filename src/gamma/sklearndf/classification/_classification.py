@@ -1,18 +1,5 @@
-#
-# NOT FOR CLIENT USE!
-#
-# This is a pre-release library under development. Handling of IP rights is still
-# being investigated. To avoid causing any potential IP disputes or issues, DO NOT USE
-# ANY OF THIS CODE ON A CLIENT PROJECT, not even in modified form.
-#
-# Please direct any queries to any of:
-# - Jan Ittner
-# - Jörg Schneider
-# - Florent Martin
-#
-
 """
-Data frame versions of all sklearn regressors
+Core implementation of :mod:`gamma.sklearndf.classification`
 """
 import abc as _abc
 import logging as _logging
@@ -36,7 +23,7 @@ import sklearn.tree as _tr
 
 import gamma.common as _cm
 import gamma.sklearndf as _df
-import gamma.sklearndf.wrapper as _wr
+import gamma.sklearndf._wrapper as _wr
 
 log = _logging.getLogger(__name__)
 
