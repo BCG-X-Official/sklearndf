@@ -495,7 +495,7 @@ class _MultiOutputClassifierWrapperDF(
         self,
         X: _pd.DataFrame,
         y: _t.Union[_pd.Series, _pd.DataFrame, list, _np.ndarray],
-        classes: _t.Optional[_cm.ListLike[_t.Any]] = None,
+        classes: _t.Optional[_cm.Sequence[_t.Any]] = None,
     ) -> _t.Union[_pd.Series, _pd.DataFrame, _t.List[_pd.DataFrame]]:
 
         # if we have a multi-output classifier, prediction of probabilities
@@ -555,7 +555,7 @@ class _ClassifierChainWrapperDF(
         self,
         X: _pd.DataFrame,
         y: _t.Union[_pd.Series, _pd.DataFrame, list, _np.ndarray],
-        classes: _t.Optional[_cm.ListLike[_t.Any]] = None,
+        classes: _t.Optional[_cm.Sequence[_t.Any]] = None,
     ) -> _t.Union[_pd.Series, _pd.DataFrame, _t.List[_pd.DataFrame]]:
         return super()._prediction_with_class_labels(
             X=X, y=y, classes=range(self.n_outputs)
