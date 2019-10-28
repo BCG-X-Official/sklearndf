@@ -13,8 +13,11 @@ The enhanced base estimators also offer attributes
 original inputs even across complex pipelines.
 """
 
+import gamma.common.licensing as _licensing
 from ._sklearndf import *
 from ._wrapper import *
+
+_licensing.check_license(__package__)
 
 # Export only the non-abstract sklearndf classes. Wrapper classes will be visible but
 # will have to be imported explicitly
