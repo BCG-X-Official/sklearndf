@@ -15,6 +15,8 @@ from sklearn.base import (
     TransformerMixin,
 )
 
+from gamma.common.fit import FittableMixin
+
 log = logging.getLogger(__name__)
 
 __all__ = [
@@ -38,7 +40,7 @@ T_EstimatorDF = TypeVar("T_EstimatorDF")
 #
 
 
-class BaseEstimatorDF(ABC):
+class BaseEstimatorDF(FittableMixin[pd.DataFrame], ABC):
     """
     Mix-in class for scikit-learn estimators with enhanced support for data frames.
     """
@@ -77,12 +79,6 @@ class BaseEstimatorDF(ABC):
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
     ) -> T:
-        pass
-
-    @property
-    @abstractmethod
-    def is_fitted(self) -> bool:
-        """`True` if this estimator is fitted, else `False`"""
         pass
 
     @property
@@ -133,11 +129,6 @@ class BaseEstimatorDF(ABC):
         :return: the unfitted clone
         """
         return clone(self)
-
-    def _ensure_fitted(self) -> None:
-        # raise an AttributeError if this transformer is not fitted
-        if not self.is_fitted:
-            raise AttributeError("estimator is not fitted")
 
     @abstractmethod
     def _get_features_in(self) -> pd.Index:

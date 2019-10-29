@@ -83,8 +83,8 @@ T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
 class _RegressorTransformerWrapperDF(
     RegressorWrapperDF[T_Regressor],
     _ColumnPreservingTransformerWrapperDF[T_Regressor],
-    Generic[T_Regressor],
     ABC,
+    Generic[T_Regressor],
 ):
     """
     Wraps a combined regressor and constant column transformer
