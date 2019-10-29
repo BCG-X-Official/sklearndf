@@ -24,7 +24,7 @@ DataFrameEstimators and their generic subclasses including transformers and pred
 
 import logging
 import re
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod, ABCMeta
 from functools import wraps
 from typing import *
 from typing import Type
@@ -84,7 +84,7 @@ T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="BaseEstimatorWrapp
 
 
 class BaseEstimatorWrapperDF(
-    BaseEstimator, BaseEstimatorDF, Generic[T_DelegateEstimator], ABC
+    BaseEstimator, BaseEstimatorDF, ABC, Generic[T_DelegateEstimator]
 ):
     # todo explain what is the benefit compared to the class BaseEstimatorDF
     """
@@ -325,8 +325,8 @@ class BaseEstimatorWrapperDF(
 class TransformerWrapperDF(
     TransformerDF,
     BaseEstimatorWrapperDF[T_DelegateTransformer],
-    Generic[T_DelegateTransformer],
     ABC,
+    Generic[T_DelegateTransformer],
 ):
     """
     Wraps a :class:`sklearn.base.TransformerMixin` and ensures that the X and y
@@ -445,8 +445,8 @@ class TransformerWrapperDF(
 class BaseLearnerWrapperDF(
     BaseLearnerDF,
     BaseEstimatorWrapperDF[T_DelegateLearner],
-    Generic[T_DelegateLearner],
     ABC,
+    Generic[T_DelegateLearner],
 ):
     """
     Base class for sklearn regressors and classifiers that preserve data frames
@@ -562,8 +562,8 @@ class BaseLearnerWrapperDF(
 class RegressorWrapperDF(
     RegressorDF,
     BaseLearnerWrapperDF[T_DelegateRegressor],
-    Generic[T_DelegateRegressor],
     ABC,
+    Generic[T_DelegateRegressor],
 ):
     """
     Wrapper around sklearn regressors that preserves data frames.
@@ -573,8 +573,8 @@ class RegressorWrapperDF(
 class ClassifierWrapperDF(
     ClassifierDF,
     BaseLearnerWrapperDF[T_DelegateClassifier],
-    Generic[T_DelegateClassifier],
     ABC,
+    Generic[T_DelegateClassifier],
 ):
     """
     Wrapper around sklearn classifiers that preserves data frames.
@@ -685,9 +685,9 @@ class ClassifierWrapperDF(
 
 class MetaEstimatorWrapperDF(
     BaseEstimatorWrapperDF[T_DelegateEstimator],
-    Generic[T_DelegateEstimator],
     MetaEstimatorMixin,
     ABC,
+    Generic[T_DelegateEstimator],
 ):
     """
     Abstract base class wrapping around estimators implementing
@@ -730,8 +730,8 @@ class MetaEstimatorWrapperDF(
 class MetaClassifierWrapperDF(
     MetaEstimatorWrapperDF[T_DelegateClassifier],
     ClassifierWrapperDF,
-    Generic[T_DelegateClassifier],
     ABC,
+    Generic[T_DelegateClassifier],
 ):
     """
     Abstract base class wrapping around classifiers implementing
@@ -744,8 +744,8 @@ class MetaClassifierWrapperDF(
 class MetaRegressorWrapperDF(
     MetaEstimatorWrapperDF[T_DelegateRegressor],
     RegressorWrapperDF,
-    Generic[T_DelegateRegressor],
     ABC,
+    Generic[T_DelegateRegressor],
 ):
     """
     Abstract base class wrapping around regressors implementing
