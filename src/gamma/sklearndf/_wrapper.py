@@ -238,16 +238,21 @@ class BaseEstimatorWrapperDF(
         if not isinstance(X, pd.DataFrame):
             raise TypeError("arg X must be a DataFrame")
         if self.is_fitted:
-            BaseEstimatorWrapperDF._verify_df(df=X, expected_columns=self.features_in)
+            BaseEstimatorWrapperDF._verify_df(
+                df_name="X argument", df=X, expected_columns=self.features_in
+            )
         if y is not None and not isinstance(y, (pd.Series, pd.DataFrame)):
             raise TypeError("arg y must be None, or a pandas Series or DataFrame")
 
     @staticmethod
     def _verify_df(
-        df: pd.DataFrame, expected_columns: pd.Index, expected_index: pd.Index = None
+        df_name: str,
+        df: pd.DataFrame,
+        expected_columns: pd.Index,
+        expected_index: pd.Index = None,
     ) -> None:
         def _error_message(axis: str, actual: pd.Index, expected: pd.Index):
-            error_message = f"transformed data frame does not have expected {axis}"
+            error_message = f"{df_name} data frame does not have expected {axis}"
             missing_columns = expected.difference(actual)
             extra_columns = actual.difference(expected)
             error_detail = []
@@ -413,7 +418,10 @@ class TransformerWrapperDF(
         if isinstance(transformed, pd.DataFrame):
             # noinspection PyProtectedMember
             TransformerWrapperDF._verify_df(
-                df=transformed, expected_columns=columns, expected_index=index
+                df_name="transformed",
+                df=transformed,
+                expected_columns=columns,
+                expected_index=index,
             )
             return transformed
         else:
