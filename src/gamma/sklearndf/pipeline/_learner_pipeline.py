@@ -2,27 +2,33 @@
 GAMMA custom two-step pipelines
 """
 
-import abc as _abc
-import logging as _logging
-import typing as _t
+import logging
+from abc import ABC, abstractmethod
+from typing import *
 
-import pandas as _pd
-import sklearn.base as _sb
+import pandas as pd
+from sklearn.base import BaseEstimator
 
-import gamma.sklearndf as _sdf
+from gamma.sklearndf import (
+    BaseEstimatorDF,
+    BaseLearnerDF,
+    ClassifierDF,
+    RegressorDF,
+    TransformerDF,
+)
 
-log = _logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 __all__ = ["BaseLearnerPipelineDF", "RegressorPipelineDF", "ClassifierPipelineDF"]
 
-T_FinalEstimatorDF = _t.TypeVar("T_FinalEstimatorDF", bound=_sdf.BaseEstimatorDF)
-T_FinalLearnerDF = _t.TypeVar("T_FinalLearnerDF", bound=_sdf.BaseLearnerDF)
-T_FinalRegressorDF = _t.TypeVar("T_FinalRegressorDF", bound=_sdf.RegressorDF)
-T_FinalClassifierDF = _t.TypeVar("T_FinalClassifierDF", bound=_sdf.ClassifierDF)
+T_FinalEstimatorDF = TypeVar("T_FinalEstimatorDF", bound=BaseEstimatorDF)
+T_FinalLearnerDF = TypeVar("T_FinalLearnerDF", bound=BaseLearnerDF)
+T_FinalRegressorDF = TypeVar("T_FinalRegressorDF", bound=RegressorDF)
+T_FinalClassifierDF = TypeVar("T_FinalClassifierDF", bound=ClassifierDF)
 
 
 class BaseEstimatorPipelineDF(
-    _sb.BaseEstimator, _sdf.BaseEstimatorDF, _t.Generic[T_FinalEstimatorDF], _abc.ABC
+    BaseEstimator, BaseEstimatorDF, ABC, Generic[T_FinalEstimatorDF]
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
@@ -31,12 +37,10 @@ class BaseEstimatorPipelineDF(
     :param preprocessing: the preprocessing step in the pipeline (defaults to ``None``)
     """
 
-    def __init__(self, preprocessing: _t.Optional[_sdf.TransformerDF] = None) -> None:
+    def __init__(self, preprocessing: Optional[TransformerDF] = None) -> None:
         super().__init__()
 
-        if preprocessing is not None and not isinstance(
-            preprocessing, _sdf.TransformerDF
-        ):
+        if preprocessing is not None and not isinstance(preprocessing, TransformerDF):
             raise TypeError(
                 "arg preprocessing expected to be a TransformerDF but is a "
                 f"{type(preprocessing).__name__}"
@@ -45,7 +49,7 @@ class BaseEstimatorPipelineDF(
         self.preprocessing = preprocessing
 
     @property
-    @_abc.abstractmethod
+    @abstractmethod
     def final_estimator(self) -> T_FinalEstimatorDF:
         """
         The final estimator following the preprocessing step.
@@ -60,7 +64,7 @@ class BaseEstimatorPipelineDF(
         return "preprocessing"
 
     @property
-    @_abc.abstractmethod
+    @abstractmethod
     def final_estimator_name(self) -> str:
         """
         The name of the estimator step parameter.
@@ -70,8 +74,8 @@ class BaseEstimatorPipelineDF(
     # noinspection PyPep8Naming
     def fit(
         self,
-        X: _pd.DataFrame,
-        y: _t.Optional[_t.Union[_pd.Series, _pd.DataFrame]] = None,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
     ) -> "BaseEstimatorPipelineDF[T_FinalEstimatorDF]":
         self.final_estimator.fit(
@@ -85,7 +89,7 @@ class BaseEstimatorPipelineDF(
             self.preprocessing is None or self.preprocessing.is_fitted
         ) and self.final_estimator.is_fitted
 
-    def _get_features_in(self) -> _pd.Index:
+    def _get_features_in(self) -> pd.Index:
         if self.preprocessing is not None:
             return self.preprocessing.features_in
         else:
@@ -98,7 +102,7 @@ class BaseEstimatorPipelineDF(
             return self.final_estimator.n_outputs
 
     # noinspection PyPep8Naming
-    def _pre_transform(self, X: _pd.DataFrame) -> _pd.DataFrame:
+    def _pre_transform(self, X: pd.DataFrame) -> pd.DataFrame:
         if self.preprocessing is not None:
             return self.preprocessing.transform(X)
         else:
@@ -106,8 +110,8 @@ class BaseEstimatorPipelineDF(
 
     # noinspection PyPep8Naming
     def _pre_fit_transform(
-        self, X: _pd.DataFrame, y: _pd.Series, **fit_params
-    ) -> _pd.DataFrame:
+        self, X: pd.DataFrame, y: pd.Series, **fit_params
+    ) -> pd.DataFrame:
         if self.preprocessing is not None:
             return self.preprocessing.fit_transform(X, y, **fit_params)
         else:
@@ -115,17 +119,17 @@ class BaseEstimatorPipelineDF(
 
 
 class BaseLearnerPipelineDF(
-    BaseEstimatorPipelineDF[T_FinalLearnerDF], _t.Generic[T_FinalLearnerDF], _abc.ABC
+    BaseEstimatorPipelineDF[T_FinalLearnerDF], ABC, Generic[T_FinalLearnerDF]
 ):
 
     # noinspection PyPep8Naming
     def predict(
-        self, X: _pd.DataFrame, **predict_params
-    ) -> _t.Union[_pd.Series, _pd.DataFrame]:
+        self, X: pd.DataFrame, **predict_params
+    ) -> Union[pd.Series, pd.DataFrame]:
         return self.final_estimator.predict(self._pre_transform(X), **predict_params)
 
     # noinspection PyPep8Naming
-    def fit_predict(self, X: _pd.DataFrame, y: _pd.Series, **fit_params) -> _pd.Series:
+    def fit_predict(self, X: pd.DataFrame, y: pd.Series, **fit_params) -> pd.Series:
         return self.final_estimator.fit_predict(
             self._pre_fit_transform(X, y, **fit_params), y, **fit_params
         )
@@ -133,9 +137,9 @@ class BaseLearnerPipelineDF(
     # noinspection PyPep8Naming
     def score(
         self,
-        X: _pd.DataFrame,
-        y: _t.Optional[_pd.Series] = None,
-        sample_weight: _t.Optional[_t.Any] = None,
+        X: pd.DataFrame,
+        y: Optional[pd.Series] = None,
+        sample_weight: Optional[Any] = None,
     ) -> float:
         if sample_weight is None:
             return self.final_estimator.score(self._pre_transform(X), y)
@@ -146,9 +150,7 @@ class BaseLearnerPipelineDF(
 
 
 class RegressorPipelineDF(
-    BaseLearnerPipelineDF[T_FinalRegressorDF],
-    _sdf.RegressorDF,
-    _t.Generic[T_FinalRegressorDF],
+    BaseLearnerPipelineDF[T_FinalRegressorDF], RegressorDF, Generic[T_FinalRegressorDF]
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
@@ -162,13 +164,13 @@ class RegressorPipelineDF(
     def __init__(
         self,
         regressor: T_FinalRegressorDF,
-        preprocessing: _t.Optional[_sdf.TransformerDF] = None,
+        preprocessing: Optional[TransformerDF] = None,
     ) -> None:
         super().__init__(preprocessing=preprocessing)
 
-        if not isinstance(regressor, _sdf.RegressorDF):
+        if not isinstance(regressor, RegressorDF):
             raise TypeError(
-                f"arg regressor expected to be a {_sdf.RegressorDF.__name__} but is a "
+                f"arg regressor expected to be a {RegressorDF.__name__} but is a "
                 f"{type(regressor).__name__}"
             )
 
@@ -185,8 +187,8 @@ class RegressorPipelineDF(
 
 class ClassifierPipelineDF(
     BaseLearnerPipelineDF[T_FinalClassifierDF],
-    _sdf.ClassifierDF,
-    _t.Generic[T_FinalClassifierDF],
+    ClassifierDF,
+    Generic[T_FinalClassifierDF],
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
@@ -200,13 +202,13 @@ class ClassifierPipelineDF(
     def __init__(
         self,
         classifier: T_FinalClassifierDF,
-        preprocessing: _t.Optional[_sdf.TransformerDF] = None,
+        preprocessing: Optional[TransformerDF] = None,
     ) -> None:
         super().__init__(preprocessing=preprocessing)
 
-        if not isinstance(classifier, _sdf.ClassifierDF):
+        if not isinstance(classifier, ClassifierDF):
             raise TypeError(
-                f"arg predictor expected to be a {_sdf.ClassifierDF.__name__} but is a "
+                f"arg predictor expected to be a {ClassifierDF.__name__} but is a "
                 f"{type(classifier).__name__}"
             )
         self.classifier = classifier
@@ -220,19 +222,15 @@ class ClassifierPipelineDF(
         return "classifier"
 
     # noinspection PyPep8Naming
-    def predict_proba(
-        self, X: _pd.DataFrame
-    ) -> _t.Union[_pd.DataFrame, _t.List[_pd.DataFrame]]:
+    def predict_proba(self, X: pd.DataFrame) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         return self.classifier.predict_proba(self._pre_transform(X))
 
     # noinspection PyPep8Naming
     def predict_log_proba(
-        self, X: _pd.DataFrame
-    ) -> _t.Union[_pd.DataFrame, _t.List[_pd.DataFrame]]:
+        self, X: pd.DataFrame
+    ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         return self.classifier.predict_log_proba(self._pre_transform(X))
 
     # noinspection PyPep8Naming
-    def decision_function(
-        self, X: _pd.DataFrame
-    ) -> _t.Union[_pd.Series, _pd.DataFrame]:
+    def decision_function(self, X: pd.DataFrame) -> Union[pd.Series, pd.DataFrame]:
         return self.classifier.decision_function(self._pre_transform(X))
