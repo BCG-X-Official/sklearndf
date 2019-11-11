@@ -84,6 +84,18 @@ class BaseEstimatorPipelineDF(
         return self
 
     @property
+    def features_out(self) -> pd.Index:
+        """
+        Pandas column index of all features resulting from the preprocessing step.
+
+        Same as :attr:`.features_in` if the preprocessing step is `None`.
+        """
+        if self.preprocessing is not None:
+            return self.preprocessing.features_out
+        else:
+            return self.features_in.rename(TransformerDF.COL_FEATURE_OUT)
+
+    @property
     def is_fitted(self) -> bool:
         return (
             self.preprocessing is None or self.preprocessing.is_fitted
