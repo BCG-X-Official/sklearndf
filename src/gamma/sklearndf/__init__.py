@@ -18,7 +18,3 @@ from ._sklearndf import *
 from ._wrapper import *
 
 _licensing.check_license(__package__)
-
-# Export only the non-abstract sklearndf classes. Wrapper classes will be visible but
-# will have to be imported explicitly
-__all__ = [member for member in _sklearndf.__all__ if not member.startswith("Base")]
