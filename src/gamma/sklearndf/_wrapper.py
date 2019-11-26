@@ -24,7 +24,7 @@ DataFrameEstimators and their generic subclasses including transformers and pred
 
 import logging
 import re
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod, ABCMeta
 from functools import wraps
 from typing import *
 from typing import Type
@@ -39,7 +39,6 @@ from sklearn.base import (
     TransformerMixin,
 )
 
-from gamma.common import ListLike
 from gamma.sklearndf import (
     BaseEstimatorDF,
     BaseLearnerDF,
@@ -66,6 +65,8 @@ __all__ = [
 # type variables
 #
 
+T = TypeVar("T")
+
 T_DelegateEstimator = TypeVar("T_DelegateEstimator", bound=BaseEstimator)
 T_DelegateTransformer = TypeVar("T_DelegateTransformer", bound=TransformerMixin)
 T_DelegateLearner = TypeVar(
@@ -76,8 +77,6 @@ T_DelegateClassifier = TypeVar("T_DelegateClassifier", bound=ClassifierMixin)
 
 T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="BaseEstimatorWrapperDF")
 
-# noinspection PyShadowingBuiltins
-_T = TypeVar("_T")
 
 #
 # base wrapper classes
@@ -85,7 +84,7 @@ _T = TypeVar("_T")
 
 
 class BaseEstimatorWrapperDF(
-    BaseEstimator, BaseEstimatorDF, Generic[T_DelegateEstimator], ABC
+    BaseEstimator, BaseEstimatorDF, ABC, Generic[T_DelegateEstimator]
 ):
     # todo explain what is the benefit compared to the class BaseEstimatorDF
     """
@@ -147,7 +146,7 @@ class BaseEstimatorWrapperDF(
         # noinspection PyUnresolvedReferences
         return self._delegate_estimator.get_params(deep=deep)
 
-    def set_params(self: _T, **kwargs) -> _T:
+    def set_params(self: T, **kwargs) -> T:
         """
         Set the parameters of this estimator.
 
@@ -239,16 +238,21 @@ class BaseEstimatorWrapperDF(
         if not isinstance(X, pd.DataFrame):
             raise TypeError("arg X must be a DataFrame")
         if self.is_fitted:
-            BaseEstimatorWrapperDF._verify_df(df=X, expected_columns=self.features_in)
+            BaseEstimatorWrapperDF._verify_df(
+                df_name="X argument", df=X, expected_columns=self.features_in
+            )
         if y is not None and not isinstance(y, (pd.Series, pd.DataFrame)):
             raise TypeError("arg y must be None, or a pandas Series or DataFrame")
 
     @staticmethod
     def _verify_df(
-        df: pd.DataFrame, expected_columns: pd.Index, expected_index: pd.Index = None
+        df_name: str,
+        df: pd.DataFrame,
+        expected_columns: pd.Index,
+        expected_index: pd.Index = None,
     ) -> None:
         def _error_message(axis: str, actual: pd.Index, expected: pd.Index):
-            error_message = f"transformed data frame does not have expected {axis}"
+            error_message = f"{df_name} data frame does not have expected {axis}"
             missing_columns = expected.difference(actual)
             extra_columns = actual.difference(expected)
             error_detail = []
@@ -326,8 +330,8 @@ class BaseEstimatorWrapperDF(
 class TransformerWrapperDF(
     TransformerDF,
     BaseEstimatorWrapperDF[T_DelegateTransformer],
-    Generic[T_DelegateTransformer],
     ABC,
+    Generic[T_DelegateTransformer],
 ):
     """
     Wraps a :class:`sklearn.base.TransformerMixin` and ensures that the X and y
@@ -414,7 +418,10 @@ class TransformerWrapperDF(
         if isinstance(transformed, pd.DataFrame):
             # noinspection PyProtectedMember
             TransformerWrapperDF._verify_df(
-                df=transformed, expected_columns=columns, expected_index=index
+                df_name="transformed",
+                df=transformed,
+                expected_columns=columns,
+                expected_index=index,
             )
             return transformed
         else:
@@ -446,8 +453,8 @@ class TransformerWrapperDF(
 class BaseLearnerWrapperDF(
     BaseLearnerDF,
     BaseEstimatorWrapperDF[T_DelegateLearner],
-    Generic[T_DelegateLearner],
     ABC,
+    Generic[T_DelegateLearner],
 ):
     """
     Base class for sklearn regressors and classifiers that preserve data frames
@@ -563,8 +570,8 @@ class BaseLearnerWrapperDF(
 class RegressorWrapperDF(
     RegressorDF,
     BaseLearnerWrapperDF[T_DelegateRegressor],
-    Generic[T_DelegateRegressor],
     ABC,
+    Generic[T_DelegateRegressor],
 ):
     """
     Wrapper around sklearn regressors that preserves data frames.
@@ -574,8 +581,8 @@ class RegressorWrapperDF(
 class ClassifierWrapperDF(
     ClassifierDF,
     BaseLearnerWrapperDF[T_DelegateClassifier],
-    Generic[T_DelegateClassifier],
     ABC,
+    Generic[T_DelegateClassifier],
 ):
     """
     Wrapper around sklearn classifiers that preserves data frames.
@@ -651,7 +658,7 @@ class ClassifierWrapperDF(
         self,
         X: pd.DataFrame,
         y: Union[pd.Series, pd.DataFrame, list, np.ndarray],
-        classes: Optional[ListLike[Any]] = None,
+        classes: Optional[Sequence[Any]] = None,
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
 
         if classes is None:
@@ -686,9 +693,9 @@ class ClassifierWrapperDF(
 
 class MetaEstimatorWrapperDF(
     BaseEstimatorWrapperDF[T_DelegateEstimator],
-    Generic[T_DelegateEstimator],
     MetaEstimatorMixin,
     ABC,
+    Generic[T_DelegateEstimator],
 ):
     """
     Abstract base class wrapping around estimators implementing
@@ -731,8 +738,8 @@ class MetaEstimatorWrapperDF(
 class MetaClassifierWrapperDF(
     MetaEstimatorWrapperDF[T_DelegateClassifier],
     ClassifierWrapperDF,
-    Generic[T_DelegateClassifier],
     ABC,
+    Generic[T_DelegateClassifier],
 ):
     """
     Abstract base class wrapping around classifiers implementing
@@ -745,8 +752,8 @@ class MetaClassifierWrapperDF(
 class MetaRegressorWrapperDF(
     MetaEstimatorWrapperDF[T_DelegateRegressor],
     RegressorWrapperDF,
-    Generic[T_DelegateRegressor],
     ABC,
+    Generic[T_DelegateRegressor],
 ):
     """
     Abstract base class wrapping around regressors implementing

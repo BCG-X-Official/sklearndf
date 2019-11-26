@@ -7,13 +7,15 @@ import time
 from tempfile import mkdtemp
 from typing import *
 
-# noinspection PyPackageRequirements
-import joblib
 import numpy as np
 import pandas as pd
 from sklearn import clone
 from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.dummy import DummyRegressor
 from sklearn.feature_selection import f_classif
+from sklearn.utils import Memory
+
+# noinspection PyProtectedMember
 from sklearn.utils.testing import (
     assert_array_equal,
     assert_no_warnings,
@@ -21,16 +23,30 @@ from sklearn.utils.testing import (
     assert_raises_regex,
 )
 
-from gamma.sklearndf import TransformerDF
-from gamma.sklearndf.wrapper import df_estimator
+from gamma.sklearndf import RegressorDF, TransformerDF
+
+# noinspection PyProtectedMember
+from gamma.sklearndf._wrapper import df_estimator, RegressorWrapperDF
 from gamma.sklearndf.classification import LogisticRegressionDF, SVCDF
 from gamma.sklearndf.pipeline import PipelineDF
-from gamma.sklearndf.regression import DummyRegressorDF, LassoDF, LinearRegressionDF
-from gamma.sklearndf.transformation import (
+from gamma.sklearndf.regression import LassoDF, LinearRegressionDF
+
+# noinspection PyProtectedMember
+from gamma.sklearndf.transformation import SelectKBestDF, SimpleImputerDF
+
+# noinspection PyProtectedMember
+from gamma.sklearndf.transformation._wrapper import (
     _ColumnPreservingTransformerWrapperDF,
-    SelectKBestDF,
-    SimpleImputerDF,
 )
+
+
+@df_estimator(df_wrapper_type=RegressorWrapperDF)
+class DummyRegressorDF(RegressorDF, DummyRegressor):
+    """
+    Wraps :class:`sklearn.dummy.DummyRegressor`; accepts and returns data frames.
+    """
+
+    pass
 
 
 def test_set_params_nested_pipeline_df() -> None:
@@ -121,9 +137,9 @@ def test_pipelinedf_memory(
     sklearn.tests.test_pipeline """
 
     cachedir = mkdtemp()
-    try:
 
-        memory = joblib.Memory(location=cachedir, verbose=10)
+    try:
+        memory = Memory(location=cachedir, verbose=10)
         # Test with Transformer + SVC
         clf = SVCDF(probability=True, random_state=0)
         transf = DummyTransfDF()
