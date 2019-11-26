@@ -1,6 +1,9 @@
+"""
+Pip package definition
+"""
 from os import path
 
-from setuptools import setup
+from setuptools import find_namespace_packages, setup
 
 here = path.abspath(path.dirname(__file__))
 # Get the long description from the README file
@@ -30,7 +33,7 @@ setup(
     # This is a one-line description or tagline of what your project does. This
     # corresponds to the "Summary" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#summary
-    description="Enable scikit-learn to accept and return pandas DataFrames",
+    description="Enhance scikit-learn for advanced support of pandas data frames",
     # This is an optional longer description of your project that represents
     # the body of text which users will see when they visit PyPI.
     #
@@ -105,13 +108,8 @@ setup(
     #   py_modules=["my_module"],
     #
     # packages=find_packages(exclude=['contrib', 'docs', 'tests']),  # Required
-    packages=[
-        "gamma.sklearndf",
-        "gamma.sklearndf.pipeline",
-        "gamma.sklearndf.transformation",
-    ],
+    packages=find_namespace_packages(where="src"),
     package_dir={"": "src"},
-    namespace_packages=["gamma"],
     # Specify which Python versions you support. In contrast to the
     # 'Programming Language' classifiers above, 'pip install' will check this
     # and refuse to install the project if the version does not match. If you
