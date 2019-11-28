@@ -66,10 +66,15 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], ABC):
 
         estimator = cast(BaseEstimator, self)
 
-        while hasattr(estimator, "delegate_estimator"):
-            estimator: BaseEstimator = estimator.delegate_estimator
-
-        return estimator
+        while True:
+            delegate: BaseEstimator = getattr(
+                estimator, "delegate_estimator", estimator
+            )
+            if delegate is estimator:
+                # no delegate defined, or estimator is its own delegate
+                # (which should not happen)
+                return estimator
+            estimator = delegate
 
     # noinspection PyPep8Naming
     @abstractmethod

@@ -37,12 +37,13 @@ class _NDArrayTransformerWrapperDF(
     """
 
     # noinspection PyPep8Naming
-    @staticmethod
-    def _convert_X_for_delegate(X: pd.DataFrame) -> Any:
-        return X.values
+    def _convert_X_for_delegate(self, X: pd.DataFrame) -> Any:
+        return super()._convert_X_for_delegate(X).values
 
-    @staticmethod
-    def _convert_y_for_delegate(y: Optional[Union[pd.Series, pd.DataFrame]]) -> Any:
+    def _convert_y_for_delegate(
+        self, y: Optional[Union[pd.Series, pd.DataFrame]]
+    ) -> Any:
+        y = super()._convert_y_for_delegate(y)
         return None if y is None else y.values
 
 

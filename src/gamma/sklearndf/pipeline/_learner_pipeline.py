@@ -131,7 +131,10 @@ class BaseEstimatorPipelineDF(
 
 
 class BaseLearnerPipelineDF(
-    BaseEstimatorPipelineDF[T_FinalLearnerDF], ABC, Generic[T_FinalLearnerDF]
+    BaseEstimatorPipelineDF[T_FinalLearnerDF],
+    BaseLearnerDF,
+    ABC,
+    Generic[T_FinalLearnerDF],
 ):
 
     # noinspection PyPep8Naming
