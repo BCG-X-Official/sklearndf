@@ -580,12 +580,13 @@ class _IsotonicRegressionWrapperDF(
             )
 
     # noinspection PyPep8Naming
-    @staticmethod
-    def _convert_X_for_delegate(X: pd.DataFrame) -> Any:
-        return X.iloc[:, 0].values
+    def _convert_X_for_delegate(self, X: pd.DataFrame) -> Any:
+        return super()._convert_X_for_delegate(X).iloc[:, 0].values
 
-    @staticmethod
-    def _convert_y_for_delegate(y: Optional[Union[pd.Series, pd.DataFrame]]) -> Any:
+    def _convert_y_for_delegate(
+        self, y: Optional[Union[pd.Series, pd.DataFrame]]
+    ) -> Any:
+        y = super()._convert_y_for_delegate(y)
         return None if y is None else y.values
 
 
