@@ -24,7 +24,7 @@ DataFrameEstimators and their generic subclasses including transformers and pred
 
 import logging
 import re
-from abc import ABC, abstractmethod, ABCMeta
+from abc import ABC, abstractmethod
 from functools import wraps
 from typing import *
 from typing import Type
@@ -293,12 +293,12 @@ class BaseEstimatorWrapperDF(
             )
 
     # noinspection PyPep8Naming
-    @staticmethod
-    def _convert_X_for_delegate(X: pd.DataFrame) -> Any:
-        return X
+    def _convert_X_for_delegate(self, X: pd.DataFrame) -> Any:
+        return X.reindex(columns=self._get_features_in(), copy=False)
 
-    @staticmethod
-    def _convert_y_for_delegate(y: Optional[Union[pd.Series, pd.DataFrame]]) -> Any:
+    def _convert_y_for_delegate(
+        self, y: Optional[Union[pd.Series, pd.DataFrame]]
+    ) -> Any:
         return y
 
     def __dir__(self) -> Iterable[str]:
