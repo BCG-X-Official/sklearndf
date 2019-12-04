@@ -285,7 +285,11 @@ class BaseEstimatorWrapperDF(
 
     # noinspection PyPep8Naming
     def _convert_X_for_delegate(self, X: pd.DataFrame) -> Any:
-        return X.reindex(columns=self._get_features_in(), copy=False)
+        features_in = self._get_features_in()
+        if X.columns.is_(features_in):
+            return X
+        else:
+            return X.reindex(columns=features_in, copy=False)
 
     def _convert_y_for_delegate(
         self, y: Optional[Union[pd.Series, pd.DataFrame]]
