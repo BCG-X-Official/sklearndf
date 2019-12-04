@@ -251,7 +251,7 @@ class BaseEstimatorWrapperDF(
         expected_columns: pd.Index,
         expected_index: pd.Index = None,
     ) -> None:
-        def _error_message(axis: str, actual: pd.Index, expected: pd.Index):
+        def _compare_labels(axis: str, actual: pd.Index, expected: pd.Index):
             error_message = f"{df_name} data frame does not have expected {axis}"
             missing_columns = expected.difference(actual)
             extra_columns = actual.difference(expected)
@@ -260,30 +260,21 @@ class BaseEstimatorWrapperDF(
                 error_detail.append(
                     f"expected {len(expected)} columns but got {len(actual)}"
                 )
-            if len(missing_columns) > 0:
-                error_detail.append(
-                    f"missing columns: "
-                    f"{', '.join(str(item) for item in missing_columns)}"
-                )
-            if len(extra_columns) > 0:
-                error_detail.append(
-                    f"extra columns: "
-                    f"{', '.join(str(item) for item in extra_columns)}"
-                )
-            if len(error_detail) == 0:
-                error_detail = [f"{axis} not in expected order"]
-            return f"{error_message} ({'; '.join(error_detail)})"
+                if len(missing_columns) > 0:
+                    error_detail.append(
+                        f"missing columns: "
+                        f"{', '.join(str(item) for item in missing_columns)}"
+                    )
+                if len(extra_columns) > 0:
+                    error_detail.append(
+                        f"extra columns: "
+                        f"{', '.join(str(item) for item in extra_columns)}"
+                    )
+                raise ValueError(f"{error_message} ({'; '.join(error_detail)})")
 
-        if not df.columns.equals(expected_columns):
-            raise ValueError(
-                _error_message(
-                    axis="columns", actual=df.columns, expected=expected_columns
-                )
-            )
-        if expected_index is not None and not df.index.equals(expected_index):
-            raise ValueError(
-                _error_message(axis="index", actual=df.index, expected=expected_index)
-            )
+        _compare_labels(axis="columns", actual=df.columns, expected=expected_columns)
+        if expected_index is not None:
+            _compare_labels(axis="index", actual=df.index, expected=expected_index)
 
     def _validate_delegate_attribute(self, attribute_name: str) -> None:
         if not hasattr(self.delegate_estimator, attribute_name):
