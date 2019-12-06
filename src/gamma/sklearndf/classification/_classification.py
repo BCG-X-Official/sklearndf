@@ -1,9 +1,9 @@
 """
 Core implementation of :mod:`gamma.sklearndf.classification`
 """
-import abc as _abc
-import logging as _logging
-import typing as _t
+import logging
+from abc import ABC
+from typing import *
 
 import numpy as np
 import pandas as pd
@@ -33,7 +33,7 @@ from gamma.sklearndf._wrapper import (
     MetaClassifierWrapperDF,
 )
 
-log = _logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 #
 # neighbors
@@ -495,15 +495,15 @@ ATTR_MULTI_OUTPUT_ESTIMATORS = "estimators_"
 
 
 class _MultiOutputClassifierWrapperDF(
-    MetaClassifierWrapperDF[sklearn.multioutput.MultiOutputClassifier], _abc.ABC
+    MetaClassifierWrapperDF[sklearn.multioutput.MultiOutputClassifier], ABC
 ):
     # noinspection PyPep8Naming
     def _prediction_with_class_labels(
         self,
         X: pd.DataFrame,
-        y: _t.Union[pd.Series, pd.DataFrame, list, np.ndarray],
-        classes: _t.Optional[_t.Sequence[_t.Any]] = None,
-    ) -> _t.Union[pd.Series, pd.DataFrame, _t.List[pd.DataFrame]]:
+        y: Union[pd.Series, pd.DataFrame, list, np.ndarray],
+        classes: Optional[Sequence[Any]] = None,
+    ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
 
         # if we have a multi-output classifier, prediction of probabilities
         # yields a list of NumPy arrays
@@ -555,15 +555,15 @@ class MultiOutputClassifierDF(ClassifierDF, sklearn.multioutput.MultiOutputClass
 
 
 class _ClassifierChainWrapperDF(
-    MetaClassifierWrapperDF[sklearn.multioutput.ClassifierChain], _abc.ABC
+    MetaClassifierWrapperDF[sklearn.multioutput.ClassifierChain], ABC
 ):
     # noinspection PyPep8Naming
     def _prediction_with_class_labels(
         self,
         X: pd.DataFrame,
-        y: _t.Union[pd.Series, pd.DataFrame, list, np.ndarray],
-        classes: _t.Optional[_t.Sequence[_t.Any]] = None,
-    ) -> _t.Union[pd.Series, pd.DataFrame, _t.List[pd.DataFrame]]:
+        y: Union[pd.Series, pd.DataFrame, list, np.ndarray],
+        classes: Optional[Sequence[Any]] = None,
+    ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
         return super()._prediction_with_class_labels(
             X=X, y=y, classes=range(self.n_outputs)
         )
