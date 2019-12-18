@@ -76,11 +76,29 @@ class BaseEstimatorPipelineDF(
         self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        feature_sequence: Optional[pd.Index] = None,
         **fit_params,
     ) -> "BaseEstimatorPipelineDF[T_FinalEstimatorDF]":
-        self.final_estimator.fit(
-            self._pre_fit_transform(X, y, **fit_params), y, **fit_params
-        )
+        X_preprocessed: pd.DataFrame = self._pre_fit_transform(X, y, **fit_params)
+
+        if feature_sequence is not None:
+            if not feature_sequence.is_unique:
+                raise ValueError("arg feature_sequence contains duplicate values")
+            features = X_preprocessed.columns
+            if not features.is_unique:
+                raise ValueError(
+                    "arg X has columns with duplicate names after preprocessing"
+                )
+            features_reordered = feature_sequence.intersection(features, sort=False)
+            if len(features_reordered) < len(features):
+                raise ValueError(
+                    "arg feature_sequence misses features: "
+                    f"{', '.join(features.difference(feature_sequence))}"
+                )
+            X_preprocessed = X_preprocessed.reindex(columns=features_reordered)
+
+        self.final_estimator.fit(X_preprocessed, y, **fit_params)
+
         return self
 
     @property
