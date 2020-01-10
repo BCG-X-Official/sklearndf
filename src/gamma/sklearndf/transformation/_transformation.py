@@ -142,14 +142,14 @@ class _ColumnTransformerWrapperDF(TransformerWrapperDF[ColumnTransformer], ABC):
 
         if column_transformer.remainder != "drop":
             raise ValueError(
-                f"arg column_transformer with unsupported remainder attribute "
-                f"({column_transformer.remainder})"
+                f"unsupported value for arg remainder: ({column_transformer.remainder})"
             )
 
         if not (
             all(
                 [
-                    isinstance(transformer, TransformerDF)
+                    isinstance(transformer, str)
+                    or isinstance(transformer, TransformerDF)
                     for _, transformer, _ in column_transformer.transformers
                 ]
             )
