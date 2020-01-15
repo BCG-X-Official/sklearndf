@@ -9,6 +9,7 @@ from typing import *
 import pandas as pd
 from sklearn.base import BaseEstimator
 
+from gamma.common.fit import T_Self
 from gamma.sklearndf import (
     BaseEstimatorDF,
     BaseLearnerDF,
@@ -73,12 +74,14 @@ class BaseEstimatorPipelineDF(
 
     # noinspection PyPep8Naming
     def fit(
-        self,
+        self: T_Self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         feature_sequence: Optional[pd.Index] = None,
         **fit_params,
-    ) -> "BaseEstimatorPipelineDF[T_FinalEstimatorDF]":
+    ) -> T_Self:
+        self: BaseEstimatorPipelineDF  # support type hinting in PyCharm
+
         X_preprocessed: pd.DataFrame = self._pre_fit_transform(X, y, **fit_params)
 
         if feature_sequence is not None:
