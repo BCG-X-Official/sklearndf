@@ -15,7 +15,7 @@ from sklearn.base import (
     TransformerMixin,
 )
 
-from gamma.common.fit import FittableMixin
+from gamma.common.fit import FittableMixin, T_Self
 
 log = logging.getLogger(__name__)
 
@@ -30,8 +30,6 @@ __all__ = [
 #
 # type variables
 #
-
-T = TypeVar("T")
 
 T_EstimatorDF = TypeVar("T_EstimatorDF")
 
@@ -79,11 +77,11 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], ABC):
     # noinspection PyPep8Naming
     @abstractmethod
     def fit(
-        self: T,
+        self: T_Self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
-    ) -> T:
+    ) -> T_Self:
         pass
 
     @property
@@ -117,7 +115,7 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], ABC):
         pass
 
     @abstractmethod
-    def set_params(self: T, **kwargs) -> T:
+    def set_params(self: T_Self, **kwargs) -> T_Self:
         """
         Set the parameters of this estimator.
 
