@@ -10,12 +10,13 @@ import pandas as pd
 from boruta import BorutaPy
 from sklearn.base import BaseEstimator
 
+from gamma.common.fit import T_Self
 from gamma.sklearndf import TransformerDF
-from gamma.sklearndf.transformation._wrapper import (
-    _NDArrayTransformerWrapperDF,
-    _ColumnSubsetTransformerWrapperDF,
-)
 from gamma.sklearndf._wrapper import df_estimator, MetaEstimatorWrapperDF
+from gamma.sklearndf.transformation._wrapper import (
+    _ColumnSubsetTransformerWrapperDF,
+    _NDArrayTransformerWrapperDF,
+)
 
 log = logging.getLogger(__name__)
 
@@ -62,16 +63,18 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
 
     # noinspection PyPep8Naming
     def fit(
-        self,
+        self: T_Self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
-    ) -> "OutlierRemoverDF":
+    ) -> T_Self:
         """
         Fit the transformer.
 
         :return: the fitted transformer
         """
+
+        self: OutlierRemoverDF  # support type hinting in PyCharm
 
         q1: pd.Series = X.quantile(q=0.25)
         q3: pd.Series = X.quantile(q=0.75)

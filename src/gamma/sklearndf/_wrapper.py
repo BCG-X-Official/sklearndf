@@ -39,6 +39,7 @@ from sklearn.base import (
     TransformerMixin,
 )
 
+from gamma.common.fit import T_Self
 from gamma.sklearndf import (
     BaseEstimatorDF,
     BaseLearnerDF,
@@ -128,6 +129,7 @@ class BaseEstimatorWrapperDF(
                 super().__init__()
                 self._features_in = features_in
 
+            # noinspection PyUnusedLocal
             @classmethod
             def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
                 return estimator
@@ -146,7 +148,7 @@ class BaseEstimatorWrapperDF(
         # noinspection PyUnresolvedReferences
         return self._delegate_estimator.get_params(deep=deep)
 
-    def set_params(self: T, **kwargs) -> T:
+    def set_params(self: T_Self, **kwargs) -> T_Self:
         """
         Set the parameters of this estimator.
 
@@ -154,23 +156,27 @@ class BaseEstimatorWrapperDF(
 
         :returns self
         """
-        # noinspection PyUnresolvedReferences
+
+        self: BaseEstimatorWrapperDF  # support type hinting in PyCharm
         self._delegate_estimator.set_params(**kwargs)
         return self
 
     # noinspection PyPep8Naming
     def fit(
-        self,
+        self: T_Self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
-    ) -> "BaseEstimatorWrapperDF[T_DelegateEstimator]":
+    ) -> T_Self:
         """
         Fit the delegate estimator.
 
         :param X: feature matrix
         :param y: target as a pandas series or data frame (if multi-output)
         """
+
+        # support type hinting in PyCharm
+        self: BaseEstimatorWrapperDF[T_DelegateEstimator]
 
         self._reset_fit()
 
@@ -546,16 +552,16 @@ class BaseLearnerWrapperDF(
             return y
         elif isinstance(y, np.ndarray):
             if len(y) == len(X):
-                # predictions are usually provided as an ndarray of the same length as X
+                # predictions are usually provided as a numpy array the same length as X
                 if y.ndim == 1:
-                    # single-output predictions yield an ndarray of shape (n_samples)
+                    # single-output predictions yield a numpy array of shape (n_samples)
                     return pd.Series(data=y, name=self.F_PREDICTION, index=X.index)
                 if y.ndim == 2:
-                    # multi-output predictions yield an ndarray of shape (n_samples,
+                    # multi-output predictions yield a numpy array of shape (n_samples,
                     # n_outputs)
                     return pd.DataFrame(data=y, index=X.index)
             raise TypeError(
-                f"Unexpected shape of ndarray returned as prediction:" f" {y.shape}"
+                f"Unexpected shape of numpy array returned as prediction:" f" {y.shape}"
             )
         raise TypeError(
             f"unexpected data type returned as prediction: " f"{type(y).__name__}"
