@@ -38,7 +38,7 @@ class BaseEstimatorPipelineDF(
     :param preprocessing: the preprocessing step in the pipeline (defaults to ``None``)
     """
 
-    def __init__(self, preprocessing: Optional[TransformerDF] = None) -> None:
+    def __init__(self, *, preprocessing: Optional[TransformerDF] = None) -> None:
         super().__init__()
 
         if preprocessing is not None and not isinstance(preprocessing, TransformerDF):
@@ -199,6 +199,7 @@ class RegressorPipelineDF(
 
     def __init__(
         self,
+        *,
         regressor: T_FinalRegressorDF,
         preprocessing: Optional[TransformerDF] = None,
     ) -> None:
@@ -237,6 +238,7 @@ class ClassifierPipelineDF(
 
     def __init__(
         self,
+        *,
         classifier: T_FinalClassifierDF,
         preprocessing: Optional[TransformerDF] = None,
     ) -> None:
