@@ -7,12 +7,11 @@ import pytest
 from sklearn.multioutput import MultiOutputEstimator, RegressorChain
 
 import gamma.sklearndf.regression
-from gamma.sklearndf import RegressorDF
+from gamma.sklearndf import RegressorDF, TransformerDF
 from gamma.sklearndf.regression import (
     IsotonicRegressionDF,
     RandomForestRegressorDF,
     SVRDF,
-    TransformerDF,
 )
 from test.gamma.sklearndf import get_classes
 
