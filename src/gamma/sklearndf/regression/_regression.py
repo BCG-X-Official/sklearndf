@@ -67,6 +67,60 @@ from gamma.sklearndf.transformation._wrapper import (
 
 log = logging.getLogger(__name__)
 
+__all__ = [
+    "ARDRegressionDF",
+    "AdaBoostRegressorDF",
+    "BaggingRegressorDF",
+    "BayesianRidgeDF",
+    "CCADF",
+    "DecisionTreeRegressorDF",
+    "ElasticNetCVDF",
+    "ElasticNetDF",
+    "ExtraTreeRegressorDF",
+    "ExtraTreesRegressorDF",
+    "GaussianProcessRegressorDF",
+    "GradientBoostingRegressorDF",
+    "HuberRegressorDF",
+    "IsotonicRegressionDF",
+    "KNeighborsRegressorDF",
+    "KernelRidgeDF",
+    "LarsCVDF",
+    "LarsDF",
+    "LassoCVDF",
+    "LassoDF",
+    "LassoLarsCVDF",
+    "LassoLarsDF",
+    "LassoLarsICDF",
+    "LinearRegressionDF",
+    "LinearSVRDF",
+    "MLPRegressorDF",
+    "MetaRegressorWrapperDF",
+    "MultiOutputRegressorDF",
+    "MultiTaskElasticNetCVDF",
+    "MultiTaskElasticNetDF",
+    "MultiTaskLassoCVDF",
+    "MultiTaskLassoDF",
+    "NuSVRDF",
+    "OrthogonalMatchingPursuitCVDF",
+    "OrthogonalMatchingPursuitDF",
+    "PLSCanonicalDF",
+    "PLSRegressionDF",
+    "PassiveAggressiveRegressorDF",
+    "RANSACRegressorDF",
+    "RadiusNeighborsRegressorDF",
+    "RandomForestRegressorDF",
+    "RegressorChainDF",
+    "RegressorDF",
+    "RegressorWrapperDF",
+    "RidgeCVDF",
+    "RidgeDF",
+    "SGDRegressorDF",
+    "SVRDF",
+    "TheilSenRegressorDF",
+    "TransformedTargetRegressorDF",
+    "TransformerDF",
+    "VotingRegressorDF",
+]
 
 #
 # type variables
@@ -697,7 +751,12 @@ class PLSCanonicalDF(RegressorDF, TransformerDF, PLSCanonical):
 
 
 #
-# export all symbols ending in "DF"
+# validate that __all__ comprises all symbols ending in "DF", and no others
 #
 
-__all__ = [sym for sym in dir() if sym.endswith("DF") and not sym.startswith("_")]
+__estimators = [sym for sym in dir() if sym.endswith("DF") and not sym.startswith("_")]
+if set(__estimators) != set(__all__):
+    raise RuntimeError(
+        "__all__ does not contain exactly all DF estimators; expected value is:\n"
+        f"{__estimators}"
+    )
