@@ -89,19 +89,83 @@ from sklearn.preprocessing import (
 from sklearn.random_projection import GaussianRandomProjection, SparseRandomProjection
 
 from gamma.sklearndf import TransformerDF
+from gamma.sklearndf._wrapper import df_estimator, TransformerWrapperDF
 from gamma.sklearndf.transformation._wrapper import (
     _BaseDimensionalityReductionWrapperDF,
     _BaseMultipleInputsPerOutputTransformerWrapperDF,
     _ColumnPreservingTransformerWrapperDF,
-    _ColumnSubsetTransformerWrapperDF,
     _ComponentsDimensionalityReductionWrapperDF,
     _FeatureSelectionWrapperDF,
     _NComponentsDimensionalityReductionWrapperDF,
 )
-from gamma.sklearndf._wrapper import df_estimator, TransformerWrapperDF
 
 log = logging.getLogger(__name__)
 
+__all__ = [
+    "AdditiveChi2SamplerDF",
+    "BernoulliRBMDF",
+    "BinarizerDF",
+    "ColumnTransformerDF",
+    "DictVectorizerDF",
+    "DictionaryLearningDF",
+    "FactorAnalysisDF",
+    "FastICADF",
+    "FeatureAgglomerationDF",
+    "FeatureHasherDF",
+    "FunctionTransformerDF",
+    "GaussianRandomProjectionDF",
+    "GenericUnivariateSelectDF",
+    "HashingVectorizerDF",
+    "IncrementalPCADF",
+    "IsomapDF",
+    "IterativeImputerDF",
+    "KBinsDiscretizerDF",
+    "KernelCentererDF",
+    "KernelPCADF",
+    "LabelBinarizerDF",
+    "LabelEncoderDF",
+    "LatentDirichletAllocationDF",
+    "LinearDiscriminantAnalysisDF",
+    "LocallyLinearEmbeddingDF",
+    "MaxAbsScalerDF",
+    "MinMaxScalerDF",
+    "MiniBatchDictionaryLearningDF",
+    "MiniBatchSparsePCADF",
+    "MissingIndicatorDF",
+    "MultiLabelBinarizerDF",
+    "NMFDF",
+    "NeighborhoodComponentsAnalysisDF",
+    "NormalizerDF",
+    "NystroemDF",
+    "OneHotEncoderDF",
+    "OrdinalEncoderDF",
+    "PCADF",
+    "PLSSVDDF",
+    "PolynomialFeaturesDF",
+    "PowerTransformerDF",
+    "QuantileTransformerDF",
+    "RBFSamplerDF",
+    "RFECVDF",
+    "RFEDF",
+    "RobustScalerDF",
+    "SelectFdrDF",
+    "SelectFprDF",
+    "SelectFromModelDF",
+    "SelectFweDF",
+    "SelectKBestDF",
+    "SelectPercentileDF",
+    "SimpleImputerDF",
+    "SkewedChi2SamplerDF",
+    "SparseCoderDF",
+    "SparsePCADF",
+    "SparseRandomProjectionDF",
+    "StandardScalerDF",
+    "TfidfTransformerDF",
+    "TransformerDF",
+    "TransformerWrapperDF",
+    "TruncatedSVDDF",
+    "VarianceThresholdDF",
+]
 
 #
 # cluster
@@ -1051,7 +1115,12 @@ class GenericUnivariateSelectDF(TransformerDF, GenericUnivariateSelect):
 
 
 #
-# export all symbols ending in "DF"
+# validate that __all__ comprises all symbols ending in "DF", and no others
 #
 
-__all__ = [sym for sym in dir() if sym.endswith("DF") and not sym.startswith("_")]
+__estimators = [sym for sym in dir() if sym.endswith("DF") and not sym.startswith("_")]
+if set(__estimators) != set(__all__):
+    raise RuntimeError(
+        "__all__ does not contain exactly all DF estimators; expected value is:\n"
+        f"{__estimators}"
+    )
