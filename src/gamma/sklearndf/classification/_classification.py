@@ -33,6 +33,49 @@ from gamma.sklearndf._wrapper import (
     MetaClassifierWrapperDF,
 )
 
+__all__ = [
+    "AdaBoostClassifierDF",
+    "BaggingClassifierDF",
+    "BernoulliNBDF",
+    "CalibratedClassifierCVDF",
+    "ClassifierChainDF",
+    "ClassifierDF",
+    "ClassifierWrapperDF",
+    "ComplementNBDF",
+    "DecisionTreeClassifierDF",
+    "ExtraTreeClassifierDF",
+    "ExtraTreesClassifierDF",
+    "GaussianNBDF",
+    "GaussianProcessClassifierDF",
+    "GradientBoostingClassifierDF",
+    "KNeighborsClassifierDF",
+    "LabelPropagationDF",
+    "LabelSpreadingDF",
+    "LinearDiscriminantAnalysisDF",
+    "LinearSVCDF",
+    "LogisticRegressionCVDF",
+    "LogisticRegressionDF",
+    "MLPClassifierDF",
+    "MetaClassifierWrapperDF",
+    "MultiOutputClassifierDF",
+    "MultinomialNBDF",
+    "NearestCentroidDF",
+    "NuSVCDF",
+    "OneVsOneClassifierDF",
+    "OneVsRestClassifierDF",
+    "OutputCodeClassifierDF",
+    "PassiveAggressiveClassifierDF",
+    "PerceptronDF",
+    "QuadraticDiscriminantAnalysisDF",
+    "RadiusNeighborsClassifierDF",
+    "RandomForestClassifierDF",
+    "RidgeClassifierCVDF",
+    "RidgeClassifierDF",
+    "SGDClassifierDF",
+    "SVCDF",
+    "VotingClassifierDF",
+]
+
 log = logging.getLogger(__name__)
 
 #
@@ -596,7 +639,12 @@ class MLPClassifierDF(ClassifierDF, sklearn.neural_network.MLPClassifier):
 
 
 #
-# export all symbols ending in "DF"
+# validate that __all__ comprises all symbols ending in "DF", and no others
 #
 
-__all__ = [sym for sym in dir() if sym.endswith("DF") and not sym.startswith("_")]
+__estimators = [sym for sym in dir() if sym.endswith("DF") and not sym.startswith("_")]
+if set(__estimators) != set(__all__):
+    raise RuntimeError(
+        "__all__ does not contain exactly all DF estimators; expected value is:\n"
+        f"{__estimators}"
+    )
