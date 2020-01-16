@@ -94,7 +94,6 @@ __all__ = [
     "LinearRegressionDF",
     "LinearSVRDF",
     "MLPRegressorDF",
-    "MetaRegressorWrapperDF",
     "MultiOutputRegressorDF",
     "MultiTaskElasticNetCVDF",
     "MultiTaskElasticNetDF",
@@ -110,17 +109,16 @@ __all__ = [
     "RadiusNeighborsRegressorDF",
     "RandomForestRegressorDF",
     "RegressorChainDF",
-    "RegressorDF",
-    "RegressorWrapperDF",
     "RidgeCVDF",
     "RidgeDF",
     "SGDRegressorDF",
     "SVRDF",
     "TheilSenRegressorDF",
     "TransformedTargetRegressorDF",
-    "TransformerDF",
     "VotingRegressorDF",
 ]
+
+__imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
 
 #
 # type variables
@@ -754,7 +752,13 @@ class PLSCanonicalDF(RegressorDF, TransformerDF, PLSCanonical):
 # validate that __all__ comprises all symbols ending in "DF", and no others
 #
 
-__estimators = [sym for sym in dir() if sym.endswith("DF") and not sym.startswith("_")]
+__estimators = [
+    sym
+    for sym in dir()
+    if sym.endswith("DF")
+    and sym not in __imported_estimators
+    and not sym.startswith("_")
+]
 if set(__estimators) != set(__all__):
     raise RuntimeError(
         "__all__ does not contain exactly all DF estimators; expected value is:\n"

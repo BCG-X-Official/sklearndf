@@ -33,14 +33,14 @@ from gamma.sklearndf._wrapper import (
     MetaClassifierWrapperDF,
 )
 
+log = logging.getLogger(__name__)
+
 __all__ = [
     "AdaBoostClassifierDF",
     "BaggingClassifierDF",
     "BernoulliNBDF",
     "CalibratedClassifierCVDF",
     "ClassifierChainDF",
-    "ClassifierDF",
-    "ClassifierWrapperDF",
     "ComplementNBDF",
     "DecisionTreeClassifierDF",
     "ExtraTreeClassifierDF",
@@ -56,7 +56,6 @@ __all__ = [
     "LogisticRegressionCVDF",
     "LogisticRegressionDF",
     "MLPClassifierDF",
-    "MetaClassifierWrapperDF",
     "MultiOutputClassifierDF",
     "MultinomialNBDF",
     "NearestCentroidDF",
@@ -76,7 +75,8 @@ __all__ = [
     "VotingClassifierDF",
 ]
 
-log = logging.getLogger(__name__)
+__imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
+
 
 #
 # neighbors
@@ -642,7 +642,13 @@ class MLPClassifierDF(ClassifierDF, sklearn.neural_network.MLPClassifier):
 # validate that __all__ comprises all symbols ending in "DF", and no others
 #
 
-__estimators = [sym for sym in dir() if sym.endswith("DF") and not sym.startswith("_")]
+__estimators = [
+    sym
+    for sym in dir()
+    if sym.endswith("DF")
+    and sym not in __imported_estimators
+    and not sym.startswith("_")
+]
 if set(__estimators) != set(__all__):
     raise RuntimeError(
         "__all__ does not contain exactly all DF estimators; expected value is:\n"
