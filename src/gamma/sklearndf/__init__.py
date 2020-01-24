@@ -17,4 +17,5 @@ import gamma.common.licensing as _licensing
 from ._sklearndf import *
 from ._wrapper import *
 
+__version__ = "1.2.0"
 _licensing.check_license(__package__)
