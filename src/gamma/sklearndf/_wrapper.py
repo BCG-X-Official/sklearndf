@@ -291,6 +291,9 @@ class BaseEstimatorWrapperDF(
 
     # noinspection PyPep8Naming
     def _convert_X_for_delegate(self, X: pd.DataFrame) -> Any:
+        if not self.is_fitted:
+            return X
+
         features_in = self._get_features_in()
         if X.columns.is_(features_in):
             return X
