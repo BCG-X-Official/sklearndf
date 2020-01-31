@@ -504,6 +504,9 @@ class BaseLearnerWrapperDF(
           of the delegate estimator
         :return: series of the predictions for X
         """
+
+        self._reset_fit()
+
         self._check_parameter_types(X, y)
 
         # noinspection PyUnresolvedReferences
