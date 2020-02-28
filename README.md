@@ -12,16 +12,17 @@ Currently this project contains:
 
 
 # Installation
-The pip-project `gamma-sklearndf` can be installed using:
-- `pip install git+ssh://git@git.sourceai.io/BCG/gamma-sklearndf.git#egg=gamma.sklearndf`
- (*latest version*)
- - Check [this page](./../../releases) for available releases and use 
- `pip install git+ssh://git@git.sourceai.io/BCG/gamma-sklearndf.git@[VERSION-TAG]#egg=gamma.sklearndf`
- to install a specific version. E.g. to install `1.0.0` use:
- `pip install git+ssh://git@git.sourceai.io/BCG/gamma-sklearndf.git@1.0.0#egg=gamma.sklearndf`
+Latest stable conda package `gamma-sklearndf` can be installed using:
+`conda install -c https://machine-1511619-alpha:bcggamma2019@artifactory.gamma.bcg.com/artifactory/api/conda/local-conda-1511619-alpha-01 gamma-sklearndf`
 
-Ensure that you have set up a working SSH key on git.sourceai.io!
-
+Or add the alpha channel and this package to your `environment.yml`:
+```
+channels:
+  - conda-forge
+  - https://machine-1511619-alpha:bcggamma2019@artifactory.gamma.bcg.com/artifactory/api/conda/local-conda-1511619-alpha-01
+dependencies:
+    - gamma-sklearndf
+```
 # Documentation
 Documentation for all of alpha's Python projects is available at: 
 https://git.sourceai.io/pages/alpha/alpha/
