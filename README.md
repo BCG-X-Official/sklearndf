@@ -21,7 +21,7 @@ channels:
   - conda-forge
   - https://machine-1511619-alpha:bcggamma2019@artifactory.gamma.bcg.com/artifactory/api/conda/local-conda-1511619-alpha-01
 dependencies:
-    - gamma-sklearndf
+  - gamma-sklearndf
 ```
 # Documentation
 Documentation for all of alpha's Python projects is available at: 
