@@ -4,7 +4,7 @@ import pandas as pd
 
 # noinspection PyPackageRequirements
 import pytest
-from sklearn.multioutput import MultiOutputEstimator, RegressorChain
+from sklearn.multioutput import MultiOutputRegressor, RegressorChain
 
 import gamma.sklearndf.regression
 from gamma.sklearndf import RegressorDF, TransformerDF
@@ -52,7 +52,7 @@ def test_wrapped_fit_predict(
 
     if (
         type(regressor).__name__.startswith("Multi")
-        or isinstance(regressor.root_estimator, MultiOutputEstimator)
+        or isinstance(regressor.root_estimator, MultiOutputRegressor)
         or isinstance(regressor.root_estimator, RegressorChain)
     ):
         regressor.fit(X=boston_features, y=boston_target_df)
