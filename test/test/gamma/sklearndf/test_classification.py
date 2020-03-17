@@ -6,7 +6,7 @@ import pandas as pd
 
 # noinspection PyPackageRequirements
 import pytest
-from sklearn.multioutput import ClassifierChain, MultiOutputEstimator
+from sklearn.multioutput import ClassifierChain, MultiOutputClassifier
 
 import gamma.sklearndf.classification as classification
 from gamma.sklearndf import ClassifierDF
@@ -63,7 +63,7 @@ def test_wrapped_fit_predict(
 
     is_chain = isinstance(classifier.root_estimator, ClassifierChain)
 
-    is_multi_output = isinstance(classifier.root_estimator, MultiOutputEstimator)
+    is_multi_output = isinstance(classifier.root_estimator, MultiOutputClassifier)
 
     if is_chain:
         # for chain classifiers, classes must be numerical so the preceding
