@@ -17,7 +17,7 @@ Core implementation of :mod:`gamma.sklearndf.transformation`
 # - clean up imports; import only the module names not the individual classes
 
 import logging
-from abc import ABC
+from abc import ABCMeta
 from functools import reduce
 from typing import *
 
@@ -187,7 +187,9 @@ class FeatureAgglomerationDF(TransformerDF, FeatureAgglomeration):
 #
 
 
-class _ColumnTransformerWrapperDF(TransformerWrapperDF[ColumnTransformer], ABC):
+class _ColumnTransformerWrapperDF(
+    TransformerWrapperDF[ColumnTransformer], metaclass=ABCMeta
+):
     """
     Wrap :class:`sklearn.compose.ColumnTransformer` and return a DataFrame.
 
@@ -325,7 +327,7 @@ class TfidfTransformerDF(TransformerDF, TfidfTransformer):
 #
 
 
-class _SimpleImputerWrapperDF(TransformerWrapperDF[SimpleImputer], ABC):
+class _SimpleImputerWrapperDF(TransformerWrapperDF[SimpleImputer], metaclass=ABCMeta):
     """
     Impute missing values with data frames as input and output.
 
@@ -376,7 +378,9 @@ class SimpleImputerDF(TransformerDF, SimpleImputer):
     pass
 
 
-class _MissingIndicatorWrapperDF(TransformerWrapperDF[MissingIndicator], ABC):
+class _MissingIndicatorWrapperDF(
+    TransformerWrapperDF[MissingIndicator], metaclass=ABCMeta
+):
     def __init__(
         self,
         missing_values=np.nan,
@@ -423,7 +427,9 @@ class IterativeImputerDF(TransformerDF, IterativeImputer):
     pass
 
 
-class _IsomapWrapperDF(_BaseDimensionalityReductionWrapperDF[Isomap], ABC):
+class _IsomapWrapperDF(
+    _BaseDimensionalityReductionWrapperDF[Isomap], metaclass=ABCMeta
+):
     @property
     def _n_components(self) -> int:
         return self.delegate_estimator.embedding_.shape[1]
@@ -441,7 +447,7 @@ class IsomapDF(TransformerDF, IterativeImputer):
 
 
 class _AdditiveChi2SamplerWrapperDF(
-    _BaseDimensionalityReductionWrapperDF[AdditiveChi2Sampler], ABC
+    _BaseDimensionalityReductionWrapperDF[AdditiveChi2Sampler], metaclass=ABCMeta
 ):
     @property
     def _n_components(self) -> int:
@@ -524,7 +530,8 @@ class RobustScalerDF(TransformerDF, RobustScaler):
 
 
 class _PolynomialFeaturesWrapperDF(
-    _BaseMultipleInputsPerOutputTransformerWrapperDF[PolynomialFeatures], ABC
+    _BaseMultipleInputsPerOutputTransformerWrapperDF[PolynomialFeatures],
+    metaclass=ABCMeta,
 ):
     def _get_features_out(self) -> pd.Index:
         return pd.Index(
@@ -645,7 +652,7 @@ class MultiLabelBinarizerDF(TransformerDF, MultiLabelBinarizer):
     pass
 
 
-class _OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], ABC):
+class _OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCMeta):
     """
     One-hot encoder with dataframes as input and output.
 
@@ -701,7 +708,9 @@ class OrdinalEncoderDF(TransformerDF, OrdinalEncoder):
     pass
 
 
-class _KBinsDiscretizerWrapperDF(TransformerWrapperDF[KBinsDiscretizer], ABC):
+class _KBinsDiscretizerWrapperDF(
+    TransformerWrapperDF[KBinsDiscretizer], metaclass=ABCMeta
+):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
         if self.delegate_estimator.encode == "onehot":
