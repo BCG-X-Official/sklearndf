@@ -3,7 +3,7 @@ Core implementation of :mod:`gamma.sklearndf`
 """
 
 import logging
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 from typing import *
 
 import pandas as pd
@@ -38,7 +38,7 @@ T_EstimatorDF = TypeVar("T_EstimatorDF")
 #
 
 
-class BaseEstimatorDF(FittableMixin[pd.DataFrame], ABC):
+class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     """
     Mix-in class for scikit-learn estimators with enhanced support for data frames.
     """
@@ -144,7 +144,7 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], ABC):
         pass
 
 
-class BaseLearnerDF(BaseEstimatorDF, ABC):
+class BaseLearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
     """
     Base mix-in class for scikit-learn predictors with enhanced support for data frames.
     """
@@ -169,7 +169,7 @@ class BaseLearnerDF(BaseEstimatorDF, ABC):
         pass
 
 
-class TransformerDF(BaseEstimatorDF, TransformerMixin, ABC):
+class TransformerDF(BaseEstimatorDF, TransformerMixin, metaclass=ABCMeta):
     """
     Mix-in class for scikit-learn transformers with enhanced support for data frames.
     """
@@ -232,13 +232,13 @@ class TransformerDF(BaseEstimatorDF, TransformerMixin, ABC):
         return self.features_original.index
 
 
-class RegressorDF(BaseLearnerDF, RegressorMixin, ABC):
+class RegressorDF(BaseLearnerDF, RegressorMixin, metaclass=ABCMeta):
     """
     Mix-in class for scikit-learn regressors with enhanced support for data frames.
     """
 
 
-class ClassifierDF(BaseLearnerDF, ClassifierMixin, ABC):
+class ClassifierDF(BaseLearnerDF, ClassifierMixin, metaclass=ABCMeta):
     """
     Mix-in class for scikit-learn classifiers with enhanced support for data frames.
     """
