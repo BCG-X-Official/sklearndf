@@ -3,7 +3,7 @@ Specialised transformer wrappers.
 """
 
 import logging
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 from typing import *
 
 import pandas as pd
@@ -27,7 +27,7 @@ T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
 
 
 class _NDArrayTransformerWrapperDF(
-    TransformerWrapperDF[T_Transformer], ABC, Generic[T_Transformer]
+    TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
 ):
     """
     `TransformerDF` whose delegate transformer only accepts numpy ndarrays.
@@ -48,7 +48,7 @@ class _NDArrayTransformerWrapperDF(
 
 
 class _ColumnSubsetTransformerWrapperDF(
-    TransformerWrapperDF[T_Transformer], ABC, Generic[T_Transformer]
+    TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
 ):
     """
     Transforms a data frame without changing column names, but possibly removing
@@ -71,7 +71,9 @@ class _ColumnSubsetTransformerWrapperDF(
 
 
 class _ColumnPreservingTransformerWrapperDF(
-    _ColumnSubsetTransformerWrapperDF[T_Transformer], ABC, Generic[T_Transformer]
+    _ColumnSubsetTransformerWrapperDF[T_Transformer],
+    Generic[T_Transformer],
+    metaclass=ABCMeta,
 ):
     """
     Transform a data frame keeping exactly the same columns.
@@ -85,7 +87,7 @@ class _ColumnPreservingTransformerWrapperDF(
 
 
 class _BaseMultipleInputsPerOutputTransformerWrapperDF(
-    TransformerWrapperDF[T_Transformer], ABC, Generic[T_Transformer]
+    TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
 ):
     """
     Transform data whom output columns have multiple input columns.
@@ -107,8 +109,8 @@ class _BaseMultipleInputsPerOutputTransformerWrapperDF(
 
 class _BaseDimensionalityReductionWrapperDF(
     _BaseMultipleInputsPerOutputTransformerWrapperDF[T_Transformer],
-    ABC,
     Generic[T_Transformer],
+    metaclass=ABCMeta,
 ):
     """
     Transform data making dimensionality reduction style transform.
@@ -124,7 +126,9 @@ class _BaseDimensionalityReductionWrapperDF(
 
 
 class _NComponentsDimensionalityReductionWrapperDF(
-    _BaseDimensionalityReductionWrapperDF[T_Transformer], ABC, Generic[T_Transformer]
+    _BaseDimensionalityReductionWrapperDF[T_Transformer],
+    Generic[T_Transformer],
+    metaclass=ABCMeta,
 ):
     """
     Transform features doing dimensionality reductions.
@@ -144,7 +148,9 @@ class _NComponentsDimensionalityReductionWrapperDF(
 
 
 class _ComponentsDimensionalityReductionWrapperDF(
-    _BaseDimensionalityReductionWrapperDF[T_Transformer], ABC, Generic[T_Transformer]
+    _BaseDimensionalityReductionWrapperDF[T_Transformer],
+    Generic[T_Transformer],
+    metaclass=ABCMeta,
 ):
     """
     Apply dimensionality reduction on a data frame.
@@ -173,7 +179,9 @@ class _ComponentsDimensionalityReductionWrapperDF(
 
 
 class _FeatureSelectionWrapperDF(
-    _ColumnSubsetTransformerWrapperDF[T_Transformer], ABC, Generic[T_Transformer]
+    _ColumnSubsetTransformerWrapperDF[T_Transformer],
+    Generic[T_Transformer],
+    metaclass=ABCMeta,
 ):
     """
     Wrapper for feature selection transformers.

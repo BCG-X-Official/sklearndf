@@ -3,7 +3,7 @@ Core implementation of :mod:`gamma.sklearndf.pipeline`
 """
 
 import logging
-from abc import ABC
+from abc import ABCMeta
 from typing import *
 
 import pandas as pd
@@ -27,7 +27,7 @@ class _PipelineWrapperDF(
     ClassifierWrapperDF[Pipeline],
     RegressorWrapperDF[Pipeline],
     TransformerWrapperDF[Pipeline],
-    ABC,
+    metaclass=ABCMeta,
 ):
     PASSTHROUGH = "passthrough"
 
@@ -194,7 +194,7 @@ class PipelineDF(ClassifierDF, RegressorDF, TransformerDF, Pipeline):
     pass
 
 
-class _FeatureUnionWrapperDF(TransformerWrapperDF[FeatureUnion], ABC):
+class _FeatureUnionWrapperDF(TransformerWrapperDF[FeatureUnion], metaclass=ABCMeta):
     @staticmethod
     def _prepend_features_out(features_out: pd.Index, name_prefix: str) -> pd.Index:
         return pd.Index(data=f"{name_prefix}__" + features_out.astype(str))

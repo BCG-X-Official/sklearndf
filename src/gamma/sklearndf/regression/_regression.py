@@ -2,7 +2,7 @@
 Core implementation of :mod:`gamma.sklearndf.regression`
 """
 import logging
-from abc import ABC
+from abc import ABCMeta
 from typing import *
 
 import pandas as pd
@@ -135,8 +135,8 @@ T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
 class _RegressorTransformerWrapperDF(
     RegressorWrapperDF[T_Regressor],
     _ColumnPreservingTransformerWrapperDF[T_Regressor],
-    ABC,
     Generic[T_Regressor],
+    metaclass=ABCMeta,
 ):
     """
     Wraps a combined regressor and constant column transformer
@@ -621,7 +621,7 @@ class GaussianProcessRegressorDF(RegressorDF, GaussianProcessRegressor):
 
 
 class _IsotonicRegressionWrapperDF(
-    _RegressorTransformerWrapperDF[IsotonicRegression], ABC
+    _RegressorTransformerWrapperDF[IsotonicRegression], metaclass=ABCMeta
 ):
     # noinspection PyPep8Naming
     def _check_parameter_types(self, X: pd.DataFrame, y: Optional[pd.Series]) -> None:

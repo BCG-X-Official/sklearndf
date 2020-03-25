@@ -3,7 +3,7 @@ Core implementation of :mod:`gamma.ml.transformation.extra`
 """
 
 import logging
-from abc import ABC
+from abc import ABCMeta
 from typing import *
 
 import pandas as pd
@@ -114,7 +114,7 @@ class _BorutaPyWrapperDF(
     MetaEstimatorWrapperDF[BorutaPy],
     _NDArrayTransformerWrapperDF[BorutaPy],
     _ColumnSubsetTransformerWrapperDF[BorutaPy],
-    ABC,
+    metaclass=ABCMeta,
 ):
     def _get_features_out(self) -> pd.Index:
         return self.features_in[self.delegate_estimator.support_]
