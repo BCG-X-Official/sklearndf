@@ -3,7 +3,7 @@ GAMMA custom two-step pipelines
 """
 
 import logging
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
 from typing import *
 
 import pandas as pd
@@ -29,7 +29,7 @@ T_FinalClassifierDF = TypeVar("T_FinalClassifierDF", bound=ClassifierDF)
 
 
 class BaseEstimatorPipelineDF(
-    BaseEstimator, BaseEstimatorDF, ABC, Generic[T_FinalEstimatorDF]
+    BaseEstimator, BaseEstimatorDF, Generic[T_FinalEstimatorDF], metaclass=ABCMeta
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
@@ -154,8 +154,8 @@ class BaseEstimatorPipelineDF(
 class BaseLearnerPipelineDF(
     BaseEstimatorPipelineDF[T_FinalLearnerDF],
     BaseLearnerDF,
-    ABC,
     Generic[T_FinalLearnerDF],
+    metaclass=ABCMeta,
 ):
 
     # noinspection PyPep8Naming

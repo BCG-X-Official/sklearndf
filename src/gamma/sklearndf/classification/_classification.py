@@ -2,7 +2,7 @@
 Core implementation of :mod:`gamma.sklearndf.classification`
 """
 import logging
-from abc import ABC
+from abc import ABCMeta
 from typing import *
 
 import numpy as np
@@ -538,7 +538,8 @@ ATTR_MULTI_OUTPUT_ESTIMATORS = "estimators_"
 
 
 class _MultiOutputClassifierWrapperDF(
-    MetaClassifierWrapperDF[sklearn.multioutput.MultiOutputClassifier], ABC
+    MetaClassifierWrapperDF[sklearn.multioutput.MultiOutputClassifier],
+    metaclass=ABCMeta,
 ):
     # noinspection PyPep8Naming
     def _prediction_with_class_labels(
@@ -598,7 +599,7 @@ class MultiOutputClassifierDF(ClassifierDF, sklearn.multioutput.MultiOutputClass
 
 
 class _ClassifierChainWrapperDF(
-    MetaClassifierWrapperDF[sklearn.multioutput.ClassifierChain], ABC
+    MetaClassifierWrapperDF[sklearn.multioutput.ClassifierChain], metaclass=ABCMeta
 ):
     # noinspection PyPep8Naming
     def _prediction_with_class_labels(
