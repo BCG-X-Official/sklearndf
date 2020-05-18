@@ -4,16 +4,17 @@ https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/tests/test_pipe
 """
 import shutil
 import time
+from distutils.version import LooseVersion
 from tempfile import mkdtemp
 from typing import *
 
+import joblib
 import numpy as np
 import pandas as pd
 from sklearn import clone
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.dummy import DummyRegressor
 from sklearn.feature_selection import f_classif
-from sklearn.utils import Memory
 
 # noinspection PyProtectedMember
 from sklearn.utils.testing import (
@@ -139,7 +140,12 @@ def test_pipelinedf_memory(
     cachedir = mkdtemp()
 
     try:
-        memory = Memory(location=cachedir, verbose=10)
+        if LooseVersion(joblib.__version__) < LooseVersion("0.12"):
+            # Deal with change of API in joblib
+            memory = joblib.Memory(cachedir=cachedir, verbose=10)
+        else:
+            memory = joblib.Memory(location=cachedir, verbose=10)
+
         # Test with Transformer + SVC
         clf = SVCDF(probability=True, random_state=0)
         transf = DummyTransfDF()
