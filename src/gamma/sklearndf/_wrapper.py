@@ -318,13 +318,13 @@ class BaseEstimatorWrapperDF(
         }
 
     def __getattr__(self, name: str) -> Any:
-        # get a public attribute of the delegate estimator
+        # get a non-private attribute of the delegate estimator
         if name.startswith("_"):
-            raise AttributeError(name)
+            raise AttributeError(f"{type(self).__name__}.{name}")
         else:
             return getattr(self._delegate_estimator, name)
 
-    def __setattr__(self, name: str, value: Any) -> Any:
+    def __setattr__(self, name: str, value: Any) -> None:
         # set a public attribute of the delegate estimator
         if name.startswith("_"):
             super().__setattr__(name, value)
