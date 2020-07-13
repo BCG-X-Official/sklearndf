@@ -31,8 +31,8 @@ class _PipelineWrapperDF(
 ):
     PASSTHROUGH = "passthrough"
 
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
+    def _init(self, *args, **kwargs) -> None:
+        super()._init(*args, **kwargs)
 
         # ensure that all steps support data frames, and that all except the last
         # step are data frame transformers
