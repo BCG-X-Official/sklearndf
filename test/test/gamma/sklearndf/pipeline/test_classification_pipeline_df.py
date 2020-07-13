@@ -1,6 +1,6 @@
+import numpy as np
 import pandas as pd
 
-# noinspection PyPackageRequirements
 import pytest
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import OneHotEncoder
@@ -18,7 +18,7 @@ def test_classification_pipeline_df(
         classifier=RandomForestClassifierDF(),
         preprocessing=make_simple_transformer(
             impute_median_columns=iris_features.select_dtypes(
-                include=pd.np.number
+                include=np.number
             ).columns,
             one_hot_encode_columns=iris_features.select_dtypes(include=object).columns,
         ),
