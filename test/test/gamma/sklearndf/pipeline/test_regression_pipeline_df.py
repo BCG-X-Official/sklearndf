@@ -1,6 +1,5 @@
+import numpy as np
 import pandas as pd
-
-# noinspection PyPackageRequirements
 import pytest
 from lightgbm import LGBMRegressor
 from sklearn.preprocessing import OneHotEncoder
@@ -18,7 +17,7 @@ def test_regression_pipeline_df(
         regressor=LGBMRegressorDF(),
         preprocessing=make_simple_transformer(
             impute_median_columns=boston_features.select_dtypes(
-                include=pd.np.number
+                include=np.number
             ).columns,
             one_hot_encode_columns=boston_features.select_dtypes(
                 include=object
