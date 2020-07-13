@@ -97,8 +97,7 @@ class BaseEstimatorWrapperDF(
     :param `**kwargs`: the arguments passed to the delegate estimator
     """
 
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__()
+    def _init(self, *args, **kwargs) -> None:
         self._delegate_estimator = type(self)._make_delegate_estimator(*args, **kwargs)
         self._reset_fit()
 
@@ -716,8 +715,8 @@ class MetaEstimatorWrapperDF(
     - multiple inner estimators in attribute `estimators`
     """
 
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
+    def _init(self, *args, **kwargs) -> None:
+        super()._init(*args, **kwargs)
 
         def _unwrap_estimator(estimator: BaseEstimator) -> BaseEstimator:
             return (
@@ -840,8 +839,8 @@ def df_estimator(
 
         # we will add this function to the new DF estimator class as the initializer
         def _init_wrapper(self: BaseEstimatorWrapperDF, *args, **kwargs) -> None:
-            # noinspection PyArgumentList
-            super(df_estimator_type, self).__init__(*args, **kwargs)
+            super(df_estimator_type, self).__init__()
+            self._init(*args, **kwargs)
 
         # adopt the initializer signature of the wrapped sklearn estimator
         df_estimator_type.__init__ = update_wrapper(
