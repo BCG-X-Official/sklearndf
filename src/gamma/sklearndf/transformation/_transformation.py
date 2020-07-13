@@ -171,6 +171,7 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 # cluster
 #
 
+
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class FeatureAgglomerationDF(TransformerDF, FeatureAgglomeration):
@@ -201,8 +202,8 @@ class _ColumnTransformerWrapperDF(
     :class:`~yieldengine.df.transform.TransformerDF`.
     """
 
-    def __init__(self, **kwargs) -> None:
-        super().__init__(**kwargs)
+    def _init(self, *args, **kwargs) -> None:
+        super()._init(*args, **kwargs)
         # noinspection PyTypeChecker
         column_transformer = self.delegate_estimator
 
@@ -337,9 +338,6 @@ class _SimpleImputerWrapperDF(TransformerWrapperDF[SimpleImputer], metaclass=ABC
     :class:`impute.SimpleImputer`.
     """
 
-    def __init__(self, **kwargs) -> None:
-        super().__init__(**kwargs)
-
     def _get_features_original(self) -> pd.Series:
         # get the columns that were dropped during imputation
         stats = self.delegate_estimator.statistics_
@@ -381,7 +379,7 @@ class SimpleImputerDF(TransformerDF, SimpleImputer):
 class _MissingIndicatorWrapperDF(
     TransformerWrapperDF[MissingIndicator], metaclass=ABCMeta
 ):
-    def __init__(
+    def _init(
         self,
         missing_values=np.nan,
         features="missing-only",
@@ -389,7 +387,7 @@ class _MissingIndicatorWrapperDF(
         error_on_new=True,
         **kwargs,
     ) -> None:
-        super().__init__(
+        super()._init(
             missing_values=missing_values,
             features=features,
             sparse=sparse,
@@ -662,8 +660,8 @@ class _OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABC
     :class:`preprocessing.OneHotEncoder`.
     """
 
-    def __init__(self, **kwargs) -> None:
-        super().__init__(**kwargs)
+    def _init(self, *args, **kwargs) -> None:
+        super()._init(*args, **kwargs)
         if self.delegate_estimator.sparse:
             raise NotImplementedError("sparse matrices not supported; use sparse=False")
 
@@ -711,8 +709,8 @@ class OrdinalEncoderDF(TransformerDF, OrdinalEncoder):
 class _KBinsDiscretizerWrapperDF(
     TransformerWrapperDF[KBinsDiscretizer], metaclass=ABCMeta
 ):
-    def __init__(self, **kwargs) -> None:
-        super().__init__(**kwargs)
+    def _init(self, *args, **kwargs) -> None:
+        super()._init(*args, **kwargs)
         if self.delegate_estimator.encode == "onehot":
             raise NotImplementedError(
                 'property encode="onehot" is not supported due to sparse matrices;'

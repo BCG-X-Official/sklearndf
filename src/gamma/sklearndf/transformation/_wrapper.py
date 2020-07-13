@@ -138,8 +138,8 @@ class _NComponentsDimensionalityReductionWrapperDF(
 
     _ATTR_N_COMPONENTS = "n_components"
 
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
+    def _init(self, *args, **kwargs) -> None:
+        super()._init(*args, **kwargs)
         self._validate_delegate_attribute(attribute_name=self._ATTR_N_COMPONENTS)
 
     @property
@@ -161,9 +161,6 @@ class _ComponentsDimensionalityReductionWrapperDF(
     """
 
     _ATTR_COMPONENTS = "components_"
-
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
 
     # noinspection PyPep8Naming
     def _post_fit(
@@ -192,8 +189,8 @@ class _FeatureSelectionWrapperDF(
 
     _ATTR_GET_SUPPORT = "get_support"
 
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
+    def _init(self, *args, **kwargs) -> None:
+        super()._init(*args, **kwargs)
         self._validate_delegate_attribute(attribute_name=self._ATTR_GET_SUPPORT)
 
     def _get_features_out(self) -> pd.Index:
