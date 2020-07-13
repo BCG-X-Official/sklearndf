@@ -6,6 +6,7 @@ import logging
 from abc import ABCMeta
 from typing import *
 
+import numpy as np
 import pandas as pd
 from pandas.core.arrays import ExtensionArray
 from sklearn.pipeline import FeatureUnion, Pipeline
@@ -13,9 +14,9 @@ from sklearn.pipeline import FeatureUnion, Pipeline
 from gamma.sklearndf import BaseEstimatorDF, ClassifierDF, RegressorDF, TransformerDF
 from gamma.sklearndf._wrapper import (
     ClassifierWrapperDF,
-    df_estimator,
     RegressorWrapperDF,
     TransformerWrapperDF,
+    df_estimator,
 )
 
 log = logging.getLogger(__name__)
@@ -145,12 +146,10 @@ class _PipelineWrapperDF(
 
         if len(col_mappings) == 0:
             _features_out: pd.Index = self.features_in
-            _features_original: Union[
-                pd.np.ndarray, ExtensionArray
-            ] = _features_out.values
+            _features_original: Union[np.ndarray, ExtensionArray] = _features_out.values
         else:
             _features_out: pd.Index = col_mappings[-1].index
-            _features_original: Union[pd.np.ndarray, ExtensionArray] = col_mappings[
+            _features_original: Union[np.ndarray, ExtensionArray] = col_mappings[
                 -1
             ].values
 
