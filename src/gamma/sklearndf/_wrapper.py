@@ -145,7 +145,6 @@ class BaseEstimatorWrapperDF(
 
         :return: mapping of the parameter names to their values
         """
-        # noinspection PyUnresolvedReferences
         return self._delegate_estimator.get_params(deep=deep)
 
     def set_params(self: T_Self, **kwargs) -> T_Self:
@@ -806,7 +805,7 @@ def df_estimator(
         sklearn_estimator_type = _get_base_classes(decoratee)
 
         # we will add this function to the new DF estimator class as a class method
-        def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
+        def _make_delegate_estimator(_cls, *args, **kwargs) -> T_DelegateEstimator:
             # noinspection PyArgumentList
             return sklearn_estimator_type(*args, **kwargs)
 
