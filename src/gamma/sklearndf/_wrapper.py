@@ -803,7 +803,7 @@ def df_estimator(
     ) -> Type[BaseEstimatorWrapperDF[T_DelegateEstimator]]:
 
         # determine the sklearn estimator we are wrapping
-        sklearn_estimator_type, _ = _get_base_classes(decoratee)
+        sklearn_estimator_type = _get_base_classes(decoratee)
 
         # we will add this function to the new DF estimator class as a class method
         def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
@@ -922,22 +922,10 @@ def df_estimator(
                 ]
             )
 
-    def _get_base_classes(
-        decoratee: Type[T_DelegateEstimator]
-    ) -> Tuple[Type[BaseEstimator], List[Type[Any]]]:
+    def _get_base_classes(decoratee: Type[T_DelegateEstimator]) -> Type[BaseEstimator]:
         base_classes = decoratee.__bases__
-        is_sklearn_base_estimator = [
-            issubclass(base, BaseEstimator) for base in base_classes
-        ]
-        non_sklearn_bases = [
-            base
-            for base, is_sklearn in zip(base_classes, is_sklearn_base_estimator)
-            if not is_sklearn
-        ]
         sklearn_base_estimators = [
-            base
-            for base, is_sklearn in zip(base_classes, is_sklearn_base_estimator)
-            if is_sklearn
+            base for base in base_classes if issubclass(base, BaseEstimator)
         ]
         if len(sklearn_base_estimators) != 1:
             raise TypeError(
@@ -945,7 +933,7 @@ def df_estimator(
                 f"that implements class {BaseEstimator.__name__}"
             )
         sklearn_base_estimator = sklearn_base_estimators[0]
-        return sklearn_base_estimator, non_sklearn_bases
+        return sklearn_base_estimator
 
     def _parse_pandas_class_docstring(pandas_doc: AnyStr) -> List[AnyStr]:
         base_doc_split = re.split(
