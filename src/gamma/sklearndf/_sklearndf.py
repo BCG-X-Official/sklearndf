@@ -10,9 +10,9 @@ import pandas as pd
 from sklearn.base import (
     BaseEstimator,
     ClassifierMixin,
-    clone,
     RegressorMixin,
     TransformerMixin,
+    clone,
 )
 
 from gamma.common.fit import FittableMixin, T_Self
@@ -44,14 +44,6 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     """
 
     COL_FEATURE_IN = "feature_in"
-
-    def __init__(self) -> None:
-        super().__init__()
-        if not isinstance(self, BaseEstimator):
-            raise TypeError(
-                f"class {type(self).__name__} is required to inherit from class "
-                f"{BaseEstimator.__name__}"
-            )
 
     @property
     def root_estimator(self) -> BaseEstimator:
