@@ -42,11 +42,37 @@ def check_expected_not_fitted_error(estimator: Union[BaseLearnerDF, TransformerD
     if version.LooseVersion(sklearn.__version__) <= "0.21":
         return
 
+    test_x = pd.DataFrame(data=range(0, 10))
+
+    def check_sklearndf_call(
+        func_to_call: str, estimator: Union[BaseLearnerDF, TransformerDF]
+    ) -> None:
+        try:
+            getattr(estimator, func_to_call)(X=test_x)
+        except sklearn.exceptions.NotFittedError:
+            # This is the expected error, that sklearn[df] should raise
+            return
+        except Exception as sklearndf_exception:
+            # Re-run the predict/transform ahead of fitting, and compare errors
+            # across sklearn and sklearndf:
+            try:
+                getattr(estimator.root_estimator, func_to_call)(
+                    test_x.values.reshape(-1)
+                )
+            except sklearn.exceptions.NotFittedError:
+                raise AssertionError(
+                    "sklearndf did not return an expected NotFittedError"
+                    f" for {estimator.__class__.__name__}"
+                )
+            except Exception as sklearn_exception:
+                assert str(sklearndf_exception) == str(sklearn_exception), (
+                    "sklearndf raised a different error as sklearn"
+                    f" for {estimator.__class__.__name__}"
+                )
+
     if isinstance(estimator, BaseLearnerDF):
-        with pytest.raises(expected_exception=sklearn.exceptions.NotFittedError):
-            estimator.predict(X=pd.DataFrame(data=range(0, 10)))
+        check_sklearndf_call("predict", estimator)
     elif isinstance(estimator, TransformerDF):
-        with pytest.raises(expected_exception=sklearn.exceptions.NotFittedError):
-            estimator.transform(X=pd.DataFrame(data=range(0, 10)))
+        check_sklearndf_call("transform", estimator)
     else:
         raise TypeError(f"Estimator of unknown type:{estimator.__name__}")
