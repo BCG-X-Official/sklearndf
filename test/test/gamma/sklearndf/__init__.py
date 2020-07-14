@@ -1,7 +1,14 @@
 import inspect
 import re
+from distutils import version
 from typing import *
 from typing import Type
+
+import pandas as pd
+import pytest
+import sklearn
+
+from gamma.sklearndf import BaseLearnerDF, TransformerDF
 
 
 def get_classes(
@@ -28,3 +35,18 @@ def get_wrapped_counterpart(to_wrap: Type, from_package=None) -> Type:
 
     if hasattr(from_package, new_name):
         return getattr(from_package, new_name)
+
+
+def check_expected_not_fitted_error(estimator: Union[BaseLearnerDF, TransformerDF]):
+    """ Check if transformers & learners raise NotFittedError (since sklearn 0.22)"""
+    if version.LooseVersion(sklearn.__version__) <= "0.21":
+        return
+
+    if isinstance(estimator, BaseLearnerDF):
+        with pytest.raises(expected_exception=sklearn.exceptions.NotFittedError):
+            estimator.predict(X=pd.DataFrame(data=range(0, 10)))
+    elif isinstance(estimator, TransformerDF):
+        with pytest.raises(expected_exception=sklearn.exceptions.NotFittedError):
+            estimator.transform(X=pd.DataFrame(data=range(0, 10)))
+    else:
+        raise TypeError(f"Estimator of unknown type:{estimator.__name__}")
