@@ -25,7 +25,11 @@ from gamma.sklearndf.transformation import (
     SparseCoderDF,
 )
 from gamma.sklearndf.transformation.extra import OutlierRemoverDF
-from test.gamma.sklearndf import get_classes, get_wrapped_counterpart
+from test.gamma.sklearndf import (
+    check_expected_not_fitted_error,
+    get_classes,
+    get_wrapped_counterpart,
+)
 
 TRANSFORMERS_TO_TEST = get_classes(
     from_module=gamma.sklearndf.transformation,
@@ -97,6 +101,9 @@ def test_various_transformers(sklearn_cls: Type, test_data: pd.DataFrame) -> Non
     # initalize both kind of transformers
     df_t = df_transf_cls()
     non_df_t = sklearn_cls()
+
+    # for sklearn >=0.22 - check if not_fitted error is raised properly:
+    check_expected_not_fitted_error(estimator=df_t)
 
     # test fit-transform on both in conjecture with ColumnTransformer(DF)
     df_col_t = ColumnTransformerDF(transformers=[("t", df_t, ["c0"])], remainder="drop")
