@@ -42,7 +42,7 @@ def check_expected_not_fitted_error(estimator: Union[BaseLearnerDF, TransformerD
     if version.LooseVersion(sklearn.__version__) <= "0.21":
         return
 
-    test_x = pd.DataFrame(data=range(0, 10))
+    test_x = pd.DataFrame(data=list(range(10)))
 
     def check_sklearndf_call(
         func_to_call: str, estimator: Union[BaseLearnerDF, TransformerDF]
