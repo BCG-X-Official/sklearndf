@@ -1,7 +1,14 @@
 import inspect
 import re
+from distutils import version
 from typing import *
 from typing import Type
+
+import pandas as pd
+import pytest
+import sklearn
+
+from gamma.sklearndf import BaseLearnerDF, TransformerDF
 
 
 def get_classes(
@@ -28,3 +35,44 @@ def get_wrapped_counterpart(to_wrap: Type, from_package=None) -> Type:
 
     if hasattr(from_package, new_name):
         return getattr(from_package, new_name)
+
+
+def check_expected_not_fitted_error(estimator: Union[BaseLearnerDF, TransformerDF]):
+    """ Check if transformers & learners raise NotFittedError (since sklearn 0.22)"""
+    if version.LooseVersion(sklearn.__version__) <= "0.21":
+        return
+
+    test_x = pd.DataFrame(data=list(range(10)))
+
+    def check_sklearndf_call(
+        func_to_call: str, estimator: Union[BaseLearnerDF, TransformerDF]
+    ) -> None:
+        try:
+            getattr(estimator, func_to_call)(X=test_x)
+        except sklearn.exceptions.NotFittedError:
+            # This is the expected error, that sklearn[df] should raise
+            return
+        except Exception as sklearndf_exception:
+            # Re-run the predict/transform ahead of fitting, and compare errors
+            # across sklearn and sklearndf:
+            try:
+                getattr(estimator.root_estimator, func_to_call)(
+                    test_x.values.reshape(-1)
+                )
+            except sklearn.exceptions.NotFittedError:
+                raise AssertionError(
+                    "sklearndf did not return an expected NotFittedError"
+                    f" for {estimator.__class__.__name__}"
+                )
+            except Exception as sklearn_exception:
+                assert repr(sklearndf_exception) == repr(sklearn_exception), (
+                    "sklearndf raised a different error as sklearn"
+                    f" for {estimator.__class__.__name__}"
+                )
+
+    if isinstance(estimator, BaseLearnerDF):
+        check_sklearndf_call("predict", estimator)
+    elif isinstance(estimator, TransformerDF):
+        check_sklearndf_call("transform", estimator)
+    else:
+        raise TypeError(f"Estimator of unknown type:{estimator.__name__}")
