@@ -13,7 +13,7 @@ from gamma.sklearndf.regression import (
     RandomForestRegressorDF,
     SVRDF,
 )
-from test.gamma.sklearndf import get_classes
+from test.gamma.sklearndf import check_expected_not_fitted_error, get_classes
 
 REGRESSORS_TO_TEST: List[Type] = get_classes(
     from_module=gamma.sklearndf.regression,
@@ -49,6 +49,8 @@ def test_wrapped_fit_predict(
     regressor: RegressorDF = sklearndf_cls(
         **DEFAULT_REGRESSOR_PARAMETERS.get(sklearndf_cls.__name__, {})
     )
+
+    check_expected_not_fitted_error(estimator=regressor)
 
     if (
         type(regressor).__name__.startswith("Multi")
