@@ -2,11 +2,10 @@
 Core implementation of :mod:`gamma.ml.regression.extra`
 """
 import logging
-
-from lightgbm.sklearn import LGBMRegressor
+import warnings
 
 from gamma.sklearndf import RegressorDF
-from gamma.sklearndf._wrapper import df_estimator, RegressorWrapperDF
+from gamma.sklearndf._wrapper import RegressorWrapperDF, df_estimator
 
 log = logging.getLogger(__name__)
 
@@ -17,6 +16,11 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 # lightgbm
 #
 
+
+warnings.filterwarnings(
+    "ignore", message=r"Starting from version 2\.2\.1", category=UserWarning
+)
+from lightgbm.sklearn import LGBMRegressor
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=RegressorWrapperDF)
