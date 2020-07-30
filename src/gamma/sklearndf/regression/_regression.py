@@ -9,6 +9,7 @@ import pandas as pd
 from sklearn.base import RegressorMixin
 from sklearn.compose import TransformedTargetRegressor
 from sklearn.cross_decomposition import CCA, PLSCanonical, PLSRegression
+from sklearn.dummy import DummyRegressor
 from sklearn.ensemble import (
     AdaBoostRegressor,
     BaggingRegressor,
@@ -74,6 +75,7 @@ __all__ = [
     "BayesianRidgeDF",
     "CCADF",
     "DecisionTreeRegressorDF",
+    "DummyRegressorDF",
     "ElasticNetCVDF",
     "ElasticNetDF",
     "ExtraTreeRegressorDF",
@@ -140,6 +142,21 @@ class _RegressorTransformerWrapperDF(
 ):
     """
     Wraps a combined regressor and constant column transformer
+    """
+
+    pass
+
+
+#
+# Dummy
+#
+
+# noinspection PyAbstractClass
+@df_estimator(df_wrapper_type=RegressorWrapperDF)
+class DummyRegressorDF(RegressorDF, DummyRegressor):
+    """
+    Wraps :class:`sklearn.dummy.DummyRegressor`; accepts and
+    returns data frames.
     """
 
     pass
