@@ -13,6 +13,7 @@ from sklearn.discriminant_analysis import (
     LinearDiscriminantAnalysis,
     QuadraticDiscriminantAnalysis,
 )
+from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import (
     AdaBoostClassifier,
     BaggingClassifier,
@@ -65,6 +66,7 @@ __all__ = [
     "ClassifierChainDF",
     "ComplementNBDF",
     "DecisionTreeClassifierDF",
+    "DummyClassifierDF",
     "ExtraTreeClassifierDF",
     "ExtraTreesClassifierDF",
     "GaussianNBDF",
@@ -98,6 +100,20 @@ __all__ = [
 ]
 
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
+
+#
+# Dummy
+#
+
+# noinspection PyAbstractClass
+@df_estimator(df_wrapper_type=ClassifierWrapperDF)
+class DummyClassifierDF(ClassifierDF, DummyClassifier):
+    """
+    Wraps :class:`sklearn.dummy.DummyClassifier`; accepts and
+    returns data frames.
+    """
+
+    pass
 
 
 #
