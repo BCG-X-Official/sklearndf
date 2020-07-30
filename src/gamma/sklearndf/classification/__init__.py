@@ -4,3 +4,4 @@ frames.
 """
 from ._classification import *
 from ._classification_v0_22 import *
+from ._classification_v0_23 import *
