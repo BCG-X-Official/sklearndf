@@ -1,45 +1,24 @@
 """
 Additional implementation of :mod:`gamma.sklearndf.classification` loaded
-from sklearn 0.22 onwards
+from sklearn 0.23 onwards
 """
 import sklearn
 from packaging import version
 
-if version.parse(sklearn.__version__) < version.parse("0.22"):
+if version.parse(sklearn.__version__) < version.parse("0.23"):
     # do not expose anything
     __all__ = []
 else:
-    # wrap additional classifiers from sklearn >= 0.22
+    # wrap additional classifiers from sklearn >= 0.23
     import logging
-
-    from sklearn.naive_bayes import CategoricalNB
-
-    from gamma.sklearndf import ClassifierDF
-    from gamma.sklearndf._wrapper import (
-        ClassifierWrapperDF,
-        df_estimator,
-    )
 
     log = logging.getLogger(__name__)
 
-    __all__ = ["CategoricalNBDF"]
+    __all__ = []
 
     __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
 
-    # todo: add other classification implementations for sklearn 0.22
-
-    #
-    # naive bayes
-    #
-
-    # noinspection PyAbstractClass
-    @df_estimator(df_wrapper_type=ClassifierWrapperDF)
-    class CategoricalNBDF(ClassifierDF, CategoricalNB):
-        """
-        Wraps :class:`sklearn.naive_bayes.CategoricalNB`; accepts and returns data frames.
-        """
-
-        pass
+    # todo: add here classification implementations for sklearn 0.23
 
     #
     # validate that __all__ comprises all symbols ending in "DF", and no others
