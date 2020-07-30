@@ -27,11 +27,11 @@ from gamma.sklearndf.transformation import (
 from gamma.sklearndf.transformation.extra import OutlierRemoverDF
 from test.gamma.sklearndf import (
     check_expected_not_fitted_error,
-    get_classes,
+    list_classes,
     get_wrapped_counterpart,
 )
 
-TRANSFORMERS_TO_TEST = get_classes(
+TRANSFORMERS_TO_TEST = list_classes(
     from_module=gamma.sklearndf.transformation,
     matching=r".*DF",
     excluding=[
@@ -87,7 +87,7 @@ def test_special_wrapped_constructors() -> None:
 
 @pytest.mark.parametrize(
     argnames="sklearn_cls",
-    argvalues=get_classes(
+    argvalues=list_classes(
         from_module=sklearn.preprocessing,
         matching=r".*PowerTransformer|QuantileTransformer|.*Scaler",
     ),

@@ -13,9 +13,9 @@ from gamma.sklearndf.regression import (
     RandomForestRegressorDF,
     SVRDF,
 )
-from test.gamma.sklearndf import check_expected_not_fitted_error, get_classes
+from test.gamma.sklearndf import check_expected_not_fitted_error, list_classes
 
-REGRESSORS_TO_TEST: List[Type] = get_classes(
+REGRESSORS_TO_TEST: List[Type] = list_classes(
     from_module=gamma.sklearndf.regression,
     matching=r".*DF",
     excluding=[RegressorDF.__name__, TransformerDF.__name__, r".*WrapperDF"],

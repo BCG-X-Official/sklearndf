@@ -12,10 +12,10 @@ import gamma.sklearndf.classification as classification
 from gamma.sklearndf import ClassifierDF
 from test.gamma.sklearndf import (
     check_expected_not_fitted_error,
-    get_classes,
+    list_classes,
 )
 
-CLASSIFIERS_TO_TEST = get_classes(
+CLASSIFIERS_TO_TEST = list_classes(
     from_module=classification,
     matching=r".*DF",
     excluding=[ClassifierDF.__name__, r".*WrapperDF"],
