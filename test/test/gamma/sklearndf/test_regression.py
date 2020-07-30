@@ -16,7 +16,7 @@ from gamma.sklearndf.regression import (
 from test.gamma.sklearndf import check_expected_not_fitted_error, list_classes
 
 REGRESSORS_TO_TEST: List[Type] = list_classes(
-    from_module=gamma.sklearndf.regression,
+    from_modules=gamma.sklearndf.regression,
     matching=r".*DF",
     excluding=[RegressorDF.__name__, TransformerDF.__name__, r".*WrapperDF"],
 )

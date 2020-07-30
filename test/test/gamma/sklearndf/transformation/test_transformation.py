@@ -32,7 +32,7 @@ from test.gamma.sklearndf import (
 )
 
 TRANSFORMERS_TO_TEST = list_classes(
-    from_module=gamma.sklearndf.transformation,
+    from_modules=gamma.sklearndf.transformation,
     matching=r".*DF",
     excluding=[
         TransformerDF.__name__,
@@ -88,7 +88,7 @@ def test_special_wrapped_constructors() -> None:
 @pytest.mark.parametrize(
     argnames="sklearn_cls",
     argvalues=list_classes(
-        from_module=sklearn.preprocessing,
+        from_modules=sklearn.preprocessing,
         matching=r".*PowerTransformer|QuantileTransformer|.*Scaler",
     ),
 )
