@@ -32,8 +32,12 @@ REGRESSOR_COVERAGE_EXCLUDES = (
     # Base classes and Mixins -->
     sklearn.linear_model._stochastic_gradient.BaseSGDRegressor.__name__,
     sklearn.base.RegressorMixin.__name__,
-    sklearn.ensemble._forest.ForestRegressor.__name__
+    sklearn.ensemble._forest.ForestRegressor.__name__,
     # <--- Base classes and Mixins
+    # Private classes -->
+    sklearn.calibration._SigmoidCalibration.__name__,
+    sklearn.cross_decomposition._pls._PLS.__name__
+    # <-- Private classes
 )
 
 
