@@ -16,7 +16,7 @@ from test.gamma.sklearndf import (
 )
 
 CLASSIFIERS_TO_TEST = list_classes(
-    from_module=classification,
+    from_modules=classification,
     matching=r".*DF",
     excluding=[ClassifierDF.__name__, r".*WrapperDF"],
 )
