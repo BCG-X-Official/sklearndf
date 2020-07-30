@@ -70,13 +70,13 @@ def list_classes(
     ]
 
 
-def get_wrapped_counterpart(to_wrap: Type, from_package=None) -> BaseEstimatorWrapperDF:
+def get_wrapped_counterpart(to_wrap: Type, from_module=None) -> BaseEstimatorWrapperDF:
     """ Helper to return the wrapped counterpart for a sklearn class """
-    for sklearndf_cls, sklearn_cls in sklearndf_to_wrapped(from_package).items():
+    for sklearndf_cls, sklearn_cls in sklearndf_to_wrapped(from_module).items():
         if sklearn_cls == to_wrap:
             return sklearndf_cls
 
-    raise ValueError(f"There is no class that wraps '{to_wrap}' in {from_package}")
+    raise ValueError(f"There is no class that wraps '{to_wrap}' in {from_module}")
 
 
 def check_expected_not_fitted_error(estimator: Union[BaseLearnerDF, TransformerDF]):

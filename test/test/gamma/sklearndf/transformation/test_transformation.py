@@ -95,7 +95,7 @@ def test_special_wrapped_constructors() -> None:
 def test_various_transformers(sklearn_cls: Type, test_data: pd.DataFrame) -> None:
     # get the wrapped counterpart for sklearn:
     df_transf_cls = get_wrapped_counterpart(
-        to_wrap=sklearn_cls, from_package=gamma.sklearndf.transformation
+        to_wrap=sklearn_cls, from_module=gamma.sklearndf.transformation
     )
 
     # initalize both kind of transformers
