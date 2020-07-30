@@ -52,14 +52,14 @@ def sklearndf_to_wrapped(module: Module) -> Dict[BaseEstimatorWrapperDF, BaseEst
 def list_classes(
     from_modules: Union[Module, Iterable[Module]],
     matching: str,
-    excluding: Optional[Union[str, List[str]]] = None,
+    excluding: Optional[Union[str, Iterable[str]]] = None,
 ) -> List[Type]:
     """ Helper to return all classes with matching name from Python module(s) """
 
     if not isinstance(from_modules, Iterable):
         from_modules = (from_modules,)
 
-    if isinstance(excluding, list):
+    if isinstance(excluding, Iterable):
         excluding = "|".join([f"({exclude_pattern})" for exclude_pattern in excluding])
 
     return [
