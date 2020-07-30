@@ -5,13 +5,51 @@ from typing import *
 from typing import Type
 
 import pandas as pd
-import pytest
 import sklearn
+import sys
 
-from gamma.sklearndf import BaseLearnerDF, TransformerDF
+from sklearn.base import BaseEstimator
+
+from gamma.sklearndf import BaseEstimatorWrapperDF, BaseLearnerDF, TransformerDF
+
+Module: type = Any
 
 
-def get_classes(
+def find_all_classes(*modules: Module) -> Set[type]:
+    """ Finds all Class members in given module/modules. """
+    types: Set[type] = set()
+
+    def _add_classes_from_module(_m: Module) -> None:
+        for member in vars(module).values():
+            if isinstance(member, type):
+                types.add(member)
+
+    for module in modules:
+        _add_classes_from_module(module)
+
+    return types
+
+
+def find_all_submodules(parent_module: Module) -> Set[Module]:
+    """ Finds all submodules for a parent module. """
+    parent_name = f"{parent_module.__name__}."
+    return {
+        module
+        for module_name, module in sys.modules.items()
+        if module_name.startswith(parent_name)
+    }
+
+
+def sklearndf_to_wrapped(module: Module) -> Dict[BaseEstimatorWrapperDF, BaseEstimator]:
+    """ Creates a dictionary mapping from sklearndf -> sklearn classes. """
+    return {
+        cdf: cdf.__wrapped__
+        for cdf in find_all_classes((module))
+        if issubclass(cdf, BaseEstimatorWrapperDF)
+    }
+
+
+def list_classes(
     from_module, matching: str, excluding: Optional[Union[str, List[str]]] = None
 ) -> List[Type]:
     """ Helper to return all classes with matching name from a Python module """
@@ -20,21 +58,20 @@ def get_classes(
         excluding = "|".join([f"({exclude_pattern})" for exclude_pattern in excluding])
 
     return [
-        m[1]
-        for m in inspect.getmembers(from_module)
-        if isinstance(m[1], type)
-        and re.match(matching, m[0])
-        and not (excluding and re.match(excluding, m[0]))
+        m
+        for m in find_all_classes(from_module)
+        if re.match(matching, m.__name__)
+        and not (excluding and re.match(excluding, m.__name__))
     ]
 
 
-def get_wrapped_counterpart(to_wrap: Type, from_package=None) -> Type:
+def get_wrapped_counterpart(to_wrap: Type, from_package=None) -> BaseEstimatorWrapperDF:
     """ Helper to return the wrapped counterpart for a sklearn class """
-    orig_name = to_wrap.__name__
-    new_name = orig_name + "DF"
+    for sklearndf_cls, sklearn_cls in sklearndf_to_wrapped(from_package).items():
+        if sklearn_cls == to_wrap:
+            return sklearndf_cls
 
-    if hasattr(from_package, new_name):
-        return getattr(from_package, new_name)
+    raise ValueError(f"There is no class that wraps '{to_wrap}' in {from_package}")
 
 
 def check_expected_not_fitted_error(estimator: Union[BaseLearnerDF, TransformerDF]):
