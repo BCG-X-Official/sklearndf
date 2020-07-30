@@ -1,9 +1,11 @@
 from typing import *
 
 import sklearn
-from sklearn.base import ClassifierMixin
+from sklearn.base import ClassifierMixin, RegressorMixin
 
 import gamma.sklearndf.classification
+import gamma.sklearndf.regression
+
 from test.gamma.sklearndf import find_all_submodules, list_classes, sklearndf_to_wrapped
 
 Module: type = Any
@@ -26,6 +28,14 @@ CLASSIFIER_COVERAGE_EXCLUDES = (
     # <-- deprecated in version 0.22 and will be removed in version 0.24!
 )
 
+REGRESSOR_COVERAGE_EXCLUDES = (
+    # Base classes and Mixins -->
+    sklearn.linear_model._stochastic_gradient.BaseSGDRegressor.__name__,
+    sklearn.base.RegressorMixin.__name__,
+    sklearn.ensemble._forest.ForestRegressor.__name__
+    # <--- Base classes and Mixins
+)
+
 
 def test_classifier_coverage() -> None:
     """ Check if each sklearn classifier has a wrapped sklearndf counterpart. """
@@ -43,6 +53,31 @@ def test_classifier_coverage() -> None:
     missing = []
 
     for sklearn_cls in sklearn_classifier_classes:
+        if sklearn_cls not in sklearndf_cls_to_sklearn_cls.values():
+            missing.append(sklearn_cls)
+
+    if missing:
+        raise ValueError(
+            f"Class(es): {','.join([m.__module__ +'.'+ m.__name__ for m in missing])} is/are not wrapped!"
+        )
+
+
+def test_regressor_coverage() -> None:
+    """ Check if each sklearn regressor has a wrapped sklearndf counterpart. """
+    sklearn_regressor_classes = [
+        cls
+        for cls in list_classes(
+            from_modules=find_all_submodules(sklearn),
+            matching=".*",
+            excluding=REGRESSOR_COVERAGE_EXCLUDES,
+        )
+        if issubclass(cls, RegressorMixin)
+    ]
+    sklearndf_cls_to_sklearn_cls = sklearndf_to_wrapped(gamma.sklearndf.regression)
+
+    missing = []
+
+    for sklearn_cls in sklearn_regressor_classes:
         if sklearn_cls not in sklearndf_cls_to_sklearn_cls.values():
             missing.append(sklearn_cls)
 
