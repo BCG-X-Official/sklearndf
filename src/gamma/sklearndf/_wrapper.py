@@ -28,7 +28,6 @@ import re
 from abc import ABCMeta, abstractmethod
 from functools import update_wrapper
 from typing import *
-from typing import Type
 
 import numpy as np
 import pandas as pd
