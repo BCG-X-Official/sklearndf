@@ -5,13 +5,16 @@ from sklearn.base import ClassifierMixin, RegressorMixin
 
 import gamma.sklearndf.classification
 import gamma.sklearndf.regression
+from test import check_sklearn_version
 
 from test.gamma.sklearndf import find_all_submodules, list_classes, sklearndf_to_wrapped
 
 Module: type = Any
 
 
-CLASSIFIER_COVERAGE_EXCLUDES = (
+CLASSIFIER_COVERAGE_EXCLUDES = {
+    # todo: check to prune parts of this list automatically,
+    #  for when one mod/pkg is private
     # Base classes and Mixins -->
     sklearn.naive_bayes._BaseNB.__name__,
     sklearn.linear_model._base.LinearClassifierMixin.__name__,
@@ -22,11 +25,24 @@ CLASSIFIER_COVERAGE_EXCLUDES = (
     sklearn.ensemble._forest.ForestClassifier.__name__,
     sklearn.linear_model._stochastic_gradient.BaseSGDClassifier.__name__,
     # <--- Base classes and Mixins
-    # deprecated in version 0.22 and will be removed in version 0.24! -->
-    sklearn.naive_bayes.BaseNB.__name__,
-    sklearn.naive_bayes.BaseDiscreteNB.__name__,
-    # <-- deprecated in version 0.22 and will be removed in version 0.24!
-)
+}
+
+if check_sklearn_version(maximum="0.23"):
+    up_to_v0_24 = (
+        # deprecated in version 0.22 and will be removed in version 0.24! -->
+        sklearn.naive_bayes.BaseNB.__name__,
+        sklearn.naive_bayes.BaseDiscreteNB.__name__,
+        # <-- deprecated in version 0.22 and will be removed in version 0.24!
+    )
+    CLASSIFIER_COVERAGE_EXCLUDES.update(up_to_v0_24)
+
+if check_sklearn_version(minimum="0.23"):
+    added_in_v023 = (
+        sklearn.naive_bayes.BaseNB.__name__,
+        sklearn.naive_bayes.BaseDiscreteNB.__name__,
+        sklearn.linear_model._ridge._IdentityClassifier.__name__,
+    )
+    CLASSIFIER_COVERAGE_EXCLUDES.update(added_in_v023)
 
 REGRESSOR_COVERAGE_EXCLUDES = (
     # Base classes and Mixins -->
