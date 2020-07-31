@@ -109,7 +109,7 @@ class BaseEstimatorPipelineDF(
         """
         Pandas column index of all features resulting from the preprocessing step.
 
-        Same as :attr:`.features_in` if the preprocessing step is `None`.
+        Same as :attr:`.features_in` if the preprocessing step is ``None``.
         """
         if self.preprocessing is not None:
             return self.preprocessing.features_out
