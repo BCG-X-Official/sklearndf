@@ -5,17 +5,19 @@ from sklearn 0.22 onwards
 
 import logging
 
+from sklearn.ensemble import StackingClassifier
 from sklearn.naive_bayes import CategoricalNB
 
 from gamma.sklearndf import ClassifierDF
 from gamma.sklearndf._wrapper import (
     ClassifierWrapperDF,
+    StackingClassifierWrapperDF,
     df_estimator,
 )
 
 log = logging.getLogger(__name__)
 
-__all__ = ["CategoricalNBDF"]
+__all__ = ["CategoricalNBDF", "StackingClassifierDF"]
 
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
 
@@ -30,6 +32,16 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 class CategoricalNBDF(ClassifierDF, CategoricalNB):
     """
     Wraps :class:`sklearn.naive_bayes.CategoricalNB`; accepts and returns data frames.
+    """
+
+    pass
+
+
+# noinspection PyAbstractClass
+@df_estimator(df_wrapper_type=StackingClassifierWrapperDF)
+class StackingClassifierDF(ClassifierDF, StackingClassifier):
+    """
+    Wraps :class:`sklearn.ensemble._stacking.StackingClassifier`; accepts and returns data frames.
     """
 
     pass

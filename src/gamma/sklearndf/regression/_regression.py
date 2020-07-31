@@ -56,9 +56,9 @@ from sklearn.tree import DecisionTreeRegressor, ExtraTreeRegressor
 
 from gamma.sklearndf import RegressorDF, TransformerDF
 from gamma.sklearndf._wrapper import (
-    df_estimator,
     MetaRegressorWrapperDF,
     RegressorWrapperDF,
+    df_estimator,
 )
 
 # noinspection PyProtectedMember

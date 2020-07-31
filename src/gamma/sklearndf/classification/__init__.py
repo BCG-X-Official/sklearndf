@@ -2,8 +2,8 @@
 Extended versions of all Scikit-Learn classifiers with enhanced E2E support for data
 frames.
 """
-from sklearn import __version__ as __sklearn_version__
 from packaging.version import parse as __parse_version
+from sklearn import __version__ as __sklearn_version__
 
 from ._classification import *
 

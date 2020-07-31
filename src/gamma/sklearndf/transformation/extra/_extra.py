@@ -12,7 +12,7 @@ from sklearn.base import BaseEstimator
 
 from gamma.common.fit import T_Self
 from gamma.sklearndf import TransformerDF
-from gamma.sklearndf._wrapper import df_estimator, MetaEstimatorWrapperDF
+from gamma.sklearndf._wrapper import MetaEstimatorWrapperDF, df_estimator
 from gamma.sklearndf.transformation._wrapper import (
     _ColumnSubsetTransformerWrapperDF,
     _NDArrayTransformerWrapperDF,
