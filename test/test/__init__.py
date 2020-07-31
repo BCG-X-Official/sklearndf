@@ -1,6 +1,7 @@
 # noinspection PyPackageRequirements
 import yaml
-
+from packaging import version
+import sklearn
 from test.paths import TEST_CONFIG_YML
 
 
@@ -18,3 +19,8 @@ def read_test_config(section: str = None):
                             return element[key]
 
             raise ValueError("Section %s not found in global config!" % section)
+
+
+def check_sklearn_version(minimum: str):
+    """ Utility to check min. sklearn version against provided string. """
+    return version.parse(sklearn.__version__) >= version.parse(minimum)
