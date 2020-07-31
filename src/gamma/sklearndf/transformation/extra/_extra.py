@@ -141,8 +141,8 @@ class BorutaDF(TransformerDF, BorutaPy):
 
     :param estimator: object
         A supervised learning estimator, with a 'fit' method that returns the
-        `feature_importances_` attribute. Important features must correspond to
-        high absolute values in the `feature_importances_`.
+        ``feature_importances_`` attribute. Important features must correspond to
+        high absolute values in the ``feature_importances_``.
     :param n_estimators: int or string, default = 1000
         If int sets the number of estimators in the chosen ensemble method.
         If 'auto' this is determined automatically based on the size of the
@@ -167,7 +167,7 @@ class BorutaDF(TransformerDF, BorutaPy):
         If int, random_state is the seed used by the random number generator;
         If RandomState instance, random_state is the random number generator;
         If None, the random number generator is the RandomState instance used
-        by `np.random`.
+        by ``np.random``.
     :param verbose: int, default=0
         Controls verbosity of output:
         - 0: no output

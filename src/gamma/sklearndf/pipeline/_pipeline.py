@@ -87,7 +87,7 @@ class _PipelineWrapperDF(
         returns another Pipeline instance which copies a slice of this
         Pipeline. This copy is shallow: modifying (or fitting) estimators in
         the sub-pipeline will affect the larger pipeline and vice-versa.
-        However, replacing a value in `steps` will not change a copy.
+        However, replacing a value in ``steps`` will not change a copy.
         """
 
         if isinstance(ind, slice):
@@ -115,7 +115,7 @@ class _PipelineWrapperDF(
     def _transformer_steps(self) -> Iterator[Tuple[str, TransformerDF]]:
         # make an iterator of all transform steps, i.e. excluding the final step
         # in case it is not a transformer
-        # excludes steps whose transformer is `None` or `"passthrough"`
+        # excludes steps whose transformer is ``None`` or ``"passthrough"``
 
         def _iter_not_none(
             transformer_steps: Sequence[Tuple[str, BaseEstimatorDF]]
@@ -200,7 +200,7 @@ class _FeatureUnionWrapperDF(TransformerWrapperDF[FeatureUnion], metaclass=ABCMe
 
     def _get_features_original(self) -> pd.Series:
         # concatenate output->input mappings from all included transformers other than
-        # ones stated as `None` or `"drop"` or any other string
+        # ones stated as ``None`` or ``"drop"`` or any other string
 
         # prepend the name of the transformer so the resulting feature name is
         # `<name>__<output column of sub-transformer>
@@ -227,7 +227,7 @@ class _FeatureUnionWrapperDF(TransformerWrapperDF[FeatureUnion], metaclass=ABCMe
 
     def _get_features_out(self) -> pd.Index:
         # concatenate output columns from all included transformers other than
-        # ones stated as `None` or `"drop"` or any other string
+        # ones stated as ``None`` or ``"drop"`` or any other string
 
         # prepend the name of the transformer so the resulting feature name is
         # `<name>__<output column of sub-transformer>
