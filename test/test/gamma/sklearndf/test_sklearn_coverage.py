@@ -13,43 +13,26 @@ Module: type = Any
 
 
 CLASSIFIER_COVERAGE_EXCLUDES = {
-    # todo: check to prune parts of this list automatically,
-    #  for when one mod/pkg is private
-    # Base classes and Mixins -->
-    sklearn.naive_bayes._BaseNB.__name__,
-    sklearn.linear_model._base.LinearClassifierMixin.__name__,
-    sklearn.naive_bayes._BaseDiscreteNB.__name__,
-    sklearn.base.ClassifierMixin.__name__,
-    sklearn.svm._base.BaseSVC.__name__,
-    sklearn.semi_supervised._label_propagation.BaseLabelPropagation.__name__,
+    # exclude all Base classes, named starting with "Base" or "_Base":
+    r"^_?Base.*",
+    # exclude all Mixin classes, named ending on Mixin:
+    r".*Mixin$",
+    # Base classes and Mixins, not following the convention
     sklearn.ensemble._forest.ForestClassifier.__name__,
-    sklearn.linear_model._stochastic_gradient.BaseSGDClassifier.__name__,
-    # <--- Base classes and Mixins
 }
 
-if check_sklearn_version(maximum="0.23"):
-    up_to_v0_24 = (
-        # deprecated in version 0.22 and will be removed in version 0.24! -->
-        sklearn.naive_bayes.BaseNB.__name__,
-        sklearn.naive_bayes.BaseDiscreteNB.__name__,
-        # <-- deprecated in version 0.22 and will be removed in version 0.24!
-    )
-    CLASSIFIER_COVERAGE_EXCLUDES.update(up_to_v0_24)
-
 if check_sklearn_version(minimum="0.23"):
-    added_in_v023 = (
-        sklearn.naive_bayes.BaseNB.__name__,
-        sklearn.naive_bayes.BaseDiscreteNB.__name__,
-        sklearn.linear_model._ridge._IdentityClassifier.__name__,
-    )
+    added_in_v023 = (sklearn.linear_model._ridge._IdentityClassifier.__name__,)
     CLASSIFIER_COVERAGE_EXCLUDES.update(added_in_v023)
 
 REGRESSOR_COVERAGE_EXCLUDES = (
-    # Base classes and Mixins -->
-    sklearn.linear_model._stochastic_gradient.BaseSGDRegressor.__name__,
-    sklearn.base.RegressorMixin.__name__,
+    # exclude all Base classes, named starting with "Base" or "_Base":
+    r"^_?Base.*",
+    # exclude all Mixin classes, named ending on Mixin:
+    r".*Mixin$",
+    # Base classes and Mixins, not following the convention -->
     sklearn.ensemble._forest.ForestRegressor.__name__,
-    # <--- Base classes and Mixins
+    # <--- Base classes and Mixins, not following the convention
     # Private classes -->
     sklearn.calibration._SigmoidCalibration.__name__,
     sklearn.cross_decomposition._pls._PLS.__name__
