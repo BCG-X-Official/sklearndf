@@ -705,12 +705,12 @@ class MetaEstimatorWrapperDF(
     """
     Abstract base class wrapping around estimators implementing
     :class:`sklearn.base.MetaEstimatorMixin`. A meta-estimator will call the methods
-    of the embedded estimator using a modified copy of the `X` and `y` parameters,
+    of the embedded estimator using a modified copy of the ``X`` and ``y`` parameters,
     so we need to make sure that these are converted back to data frames.
 
     This class covers three cases used in sklearn:
-    - one inner estimator in attribute `estimator` or `base_estimator`
-    - multiple inner estimators in attribute `estimators`
+    - one inner estimator in attribute ``estimator`` or ``base_estimator``
+    - multiple inner estimators in attribute ``estimators``
     """
 
     def _init(self, *args, **kwargs) -> None:
@@ -792,7 +792,7 @@ def df_estimator(
     :param df_wrapper_type: optional parameter indicating the \
                               :class:`BaseEstimatorWrapperDF` class to be used for \
                               wrapping; defaults to :class:`BaseEstimatorWrapperDF`
-    :return: the resulting `BaseEstimatorWrapperDF` with ``delegate_estimator`` as \
+    :return: the resulting ``BaseEstimatorWrapperDF`` with ``delegate_estimator`` as \
              the delegate estimator
     """
 
@@ -954,7 +954,7 @@ def df_estimator(
         return [
             re.sub(
                 r"\s*(\w+)\s*:\s*(.*\S)\s*\n((.*\n)*.*)",
-                r":param \1: `\2`: \3",
+                r":param \1: ``\2``: \3",
                 parameter,
             ).replace("\n", " ")
             for parameter in parameters
