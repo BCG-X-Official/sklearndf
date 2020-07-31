@@ -6,6 +6,7 @@ from sklearn 0.23 onwards
 import logging
 from abc import ABCMeta
 from typing import *
+
 from sklearn.base import RegressorMixin
 
 from gamma.sklearndf._wrapper import RegressorWrapperDF

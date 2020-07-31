@@ -61,6 +61,9 @@ __all__ = [
     "MetaRegressorWrapperDF",
     "RegressorWrapperDF",
     "TransformerWrapperDF",
+    "StackingEstimatorWrapperDF",
+    "StackingClassifierWrapperDF",
+    "StackingRegressorWrapperDF",
 ]
 
 #
@@ -770,6 +773,88 @@ class MetaRegressorWrapperDF(
 
 
 #
+# Stacking Estimator wrappers
+#
+
+
+class StackingEstimatorWrapperDF(
+    BaseEstimatorWrapperDF[T_DelegateEstimator],
+    # note: MetaEstimatorMixin is first public child in inheritance from _BaseStacking
+    # MetaEstimatorMixin <--  _BaseHeterogeneousEnsemble <-- _BaseStacking
+    MetaEstimatorMixin,
+    Generic[T_DelegateEstimator],
+    metaclass=ABCMeta,
+):
+    """
+    Abstract base class wrapping around estimators implementing
+    :class:`sklearn.ensemble._stacking._BaseStacking`. The stacking estimator will call
+    the methods of the embedded estimator using a modified copy of the `X` and `y`
+    parameters, so we need to make sure that these are converted back to data frames.
+
+    This class covers the following cases used in sklearn:
+    - one (optional) inner estimator in attribute `final_estimator`
+    - multiple stacked estimators in attribute `estimators`, as name estimator pairs
+    """
+
+    def _init(self, *args, **kwargs) -> None:
+        super()._init(*args, **kwargs)
+
+        def _unwrap_estimator(estimator: BaseEstimator) -> Optional[BaseEstimator]:
+            if estimator is None:
+                return None
+            else:
+                return (
+                    estimator.root_estimator
+                    if isinstance(estimator, BaseEstimatorDF)
+                    else estimator
+                )
+
+        delegate_estimator = self.delegate_estimator
+
+        # note: as final_estimator is optional, _unwrap_estimator will return None
+        #       attribute "named_estimators_" is constructed based off estimators
+
+        if hasattr(delegate_estimator, "final_estimator"):
+            delegate_estimator.final_estimator = _unwrap_estimator(
+                delegate_estimator.final_estimator
+            )
+
+        if hasattr(delegate_estimator, "estimators"):
+            delegate_estimator.estimators = [
+                (name, _unwrap_estimator(estimator))
+                for name, estimator in delegate_estimator.estimators
+            ]
+
+
+class StackingClassifierWrapperDF(
+    StackingEstimatorWrapperDF[T_DelegateClassifier],
+    ClassifierWrapperDF,
+    Generic[T_DelegateClassifier],
+    metaclass=ABCMeta,
+):
+    """
+    Abstract base class wrapping around classifiers implementing
+    :class:`sklearn.ensemble._stacking._BaseStacking`.
+    """
+
+    pass
+
+
+class StackingRegressorWrapperDF(
+    StackingEstimatorWrapperDF[T_DelegateRegressor],
+    RegressorWrapperDF,
+    Generic[T_DelegateRegressor],
+    metaclass=ABCMeta,
+):
+    """
+    Abstract base class wrapping around regressors implementing
+    :class:`sklearn.ensemble._stacking._BaseStacking`.
+    """
+
+    pass
+
+
+#
 # decorator for wrapping scikit-learn estimators
 #
 
@@ -798,7 +883,7 @@ def df_estimator(
     """
 
     def _decorate(
-        decoratee: Type[T_DelegateEstimator]
+        decoratee: Type[T_DelegateEstimator],
     ) -> Type[BaseEstimatorWrapperDF[T_DelegateEstimator]]:
 
         # determine the sklearn estimator we are wrapping

@@ -12,6 +12,7 @@ from gamma.sklearndf.regression import (
     IsotonicRegressionDF,
     RandomForestRegressorDF,
     SVRDF,
+    LinearRegressionDF,
 )
 from test.gamma.sklearndf import check_expected_not_fitted_error, list_classes
 
@@ -26,6 +27,13 @@ DEFAULT_REGRESSOR_PARAMETERS = {
     "RegressorChainDF": {"base_estimator": RandomForestRegressorDF()},
     "VotingRegressorDF": {
         "estimators": [("rfr", RandomForestRegressorDF()), ("svmr", SVRDF())]
+    },
+    "StackingRegressorDF": {
+        "estimators": (
+            ("Forest", RandomForestRegressorDF()),
+            ("SVR", SVRDF(),),
+            ("Linear", LinearRegressionDF()),
+        )
     },
 }
 

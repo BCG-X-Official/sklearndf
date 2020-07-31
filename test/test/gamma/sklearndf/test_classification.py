@@ -38,6 +38,13 @@ CLASSIFIER_INIT_PARAMETERS = {
         ],
         "voting": "soft",
     },
+    "StackingClassifierDF": {
+        "estimators": (
+            ("Forest", classification.RandomForestClassifierDF()),
+            ("SVC", classification.SVCDF(),),
+            ("AdaBoost", classification.AdaBoostClassifierDF()),
+        )
+    },
 }
 
 
