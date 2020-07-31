@@ -98,9 +98,12 @@ def check_expected_not_fitted_error(estimator: Union[BaseLearnerDF, TransformerD
             # Re-run the predict/transform ahead of fitting, and compare errors
             # across sklearn and sklearndf:
             try:
-                getattr(estimator.root_estimator, func_to_call)(
-                    test_x.values.reshape(-1)
-                )
+                if func_to_call == "transform":
+                    x = test_x.values
+                else:
+                    x = test_x.values.reshape(-1)
+
+                getattr(estimator.root_estimator, func_to_call)(x)
             except sklearn.exceptions.NotFittedError:
                 raise AssertionError(
                     "sklearndf did not return an expected NotFittedError"
