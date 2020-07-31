@@ -140,6 +140,7 @@ def test_repr() -> None:
     test = _DummyEstimator2DF(_DummyEstimator3DF(), _DummyEstimator3DF())
 
     # NOTE: __repr__ behaviour has slightly changed with v0.23
+    #       (https://scikit-learn.org/stable/whats_new/v0.23.html#miscellaneous)
 
     if check_sklearn_version(minimum="0.21", maximum="0.22"):
         assert repr(test) == (
