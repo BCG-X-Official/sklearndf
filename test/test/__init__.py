@@ -21,6 +21,7 @@ def read_test_config(section: str = None):
             raise ValueError("Section %s not found in global config!" % section)
 
 
-def check_sklearn_version(minimum: str):
-    """ Utility to check min. sklearn version against provided string. """
-    return version.parse(sklearn.__version__) >= version.parse(minimum)
+def check_sklearn_version(minimum: str = "0.21", maximum: str = "0.24"):
+    """ Utility to check sklearn version against provided string. """
+    v_sklearn = version.parse(sklearn.__version__)
+    return version.parse(minimum) <= v_sklearn <= version.parse(maximum)
