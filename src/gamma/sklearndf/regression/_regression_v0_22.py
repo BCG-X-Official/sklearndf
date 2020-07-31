@@ -33,23 +33,6 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 
 T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
 
-#
-# wrapper for hybrid regressor/transformer classes
-#
-
-
-class _RegressorTransformerWrapperDF(
-    RegressorWrapperDF[T_Regressor],
-    _ColumnPreservingTransformerWrapperDF[T_Regressor],
-    Generic[T_Regressor],
-    metaclass=ABCMeta,
-):
-    """
-    Wraps a combined regressor and constant column transformer
-    """
-
-    pass
-
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=StackingRegressorWrapperDF)
