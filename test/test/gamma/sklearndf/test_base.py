@@ -18,6 +18,7 @@ from gamma.sklearndf._wrapper import BaseEstimatorWrapperDF, df_estimator
 from gamma.sklearndf.classification import DecisionTreeClassifierDF, SVCDF
 from gamma.sklearndf.pipeline import PipelineDF
 from gamma.sklearndf.transformation import OneHotEncoderDF
+from test import check_sklearn_version
 
 
 class _DummyEstimator(BaseEstimator):
@@ -137,13 +138,26 @@ def test_repr() -> None:
     repr(my_estimator)
 
     test = _DummyEstimator2DF(_DummyEstimator3DF(), _DummyEstimator3DF())
-    assert repr(test) == (
-        "_DummyEstimator2DF(a=_DummyEstimator3DF(c=None, d=None),\n"
-        "                   b=_DummyEstimator3DF(c=None, d=None))"
-    )
+
+    # NOTE: __repr__ behaviour has slightly changed with v0.23
+
+    if check_sklearn_version(minimum="0.21", maximum="0.22"):
+        assert repr(test) == (
+            "_DummyEstimator2DF(a=_DummyEstimator3DF(c=None, d=None),\n"
+            "                   b=_DummyEstimator3DF(c=None, d=None))"
+        )
+    if check_sklearn_version(minimum="0.23"):
+        assert repr(test) == (
+            "_DummyEstimator2DF(a=_DummyEstimator3DF(), b=_DummyEstimator3DF())"
+        )
 
     some_est = _DummyEstimator2DF(a=["long_params"] * 1000)
-    assert len(repr(some_est)) == 702
+
+    if check_sklearn_version(minimum="0.21", maximum="0.22"):
+        assert len(repr(some_est)) == 702
+
+    if check_sklearn_version(minimum="0.23"):
+        assert len(repr(some_est)) == 675
 
 
 def test_str() -> None:
