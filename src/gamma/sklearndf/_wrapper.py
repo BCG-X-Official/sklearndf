@@ -60,9 +60,9 @@ __all__ = [
     "_MetaRegressorWrapperDF",
     "_RegressorWrapperDF",
     "_TransformerWrapperDF",
-    "StackingEstimatorWrapperDF",
-    "StackingClassifierWrapperDF",
-    "StackingRegressorWrapperDF",
+    "_StackingEstimatorWrapperDF",
+    "_StackingClassifierWrapperDF",
+    "_StackingRegressorWrapperDF",
 ]
 
 #
@@ -783,8 +783,8 @@ class _MetaRegressorWrapperDF(
 #
 
 
-class StackingEstimatorWrapperDF(
-    BaseEstimatorWrapperDF[T_DelegateEstimator],
+class _StackingEstimatorWrapperDF(
+    _BaseEstimatorWrapperDF[T_DelegateEstimator],
     # note: MetaEstimatorMixin is first public child in inheritance from _BaseStacking
     # MetaEstimatorMixin <--  _BaseHeterogeneousEnsemble <-- _BaseStacking
     MetaEstimatorMixin,
@@ -832,9 +832,9 @@ class StackingEstimatorWrapperDF(
             ]
 
 
-class StackingClassifierWrapperDF(
-    StackingEstimatorWrapperDF[T_DelegateClassifier],
-    ClassifierWrapperDF,
+class _StackingClassifierWrapperDF(
+    _StackingEstimatorWrapperDF[T_DelegateClassifier],
+    _ClassifierWrapperDF,
     Generic[T_DelegateClassifier],
     metaclass=ABCMeta,
 ):
@@ -846,9 +846,9 @@ class StackingClassifierWrapperDF(
     pass
 
 
-class StackingRegressorWrapperDF(
-    StackingEstimatorWrapperDF[T_DelegateRegressor],
-    RegressorWrapperDF,
+class _StackingRegressorWrapperDF(
+    _StackingEstimatorWrapperDF[T_DelegateRegressor],
+    _RegressorWrapperDF,
     Generic[T_DelegateRegressor],
     metaclass=ABCMeta,
 ):

@@ -10,8 +10,8 @@ from sklearn.naive_bayes import CategoricalNB
 
 from gamma.sklearndf import ClassifierDF
 from gamma.sklearndf._wrapper import (
-    ClassifierWrapperDF,
-    StackingClassifierWrapperDF,
+    _ClassifierWrapperDF,
+    _StackingClassifierWrapperDF,
     df_estimator,
 )
 
@@ -28,7 +28,7 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 #
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ClassifierWrapperDF)
+@df_estimator(df_wrapper_type=_ClassifierWrapperDF,)
 class CategoricalNBDF(ClassifierDF, CategoricalNB):
     """
     Wraps :class:`sklearn.naive_bayes.CategoricalNB`; accepts and returns data frames.
@@ -38,7 +38,7 @@ class CategoricalNBDF(ClassifierDF, CategoricalNB):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=StackingClassifierWrapperDF)
+@df_estimator(df_wrapper_type=_StackingClassifierWrapperDF)
 class StackingClassifierDF(ClassifierDF, StackingClassifier):
     """
     Wraps :class:`sklearn.ensemble._stacking.StackingClassifier`; accepts and returns data frames.

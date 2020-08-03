@@ -140,26 +140,14 @@ def test_repr() -> None:
 
     test = _DummyEstimator2DF(_DummyEstimator3DF(), _DummyEstimator3DF())
 
-    # NOTE: __repr__ behaviour has slightly changed with v0.23
-    #       (https://scikit-learn.org/stable/whats_new/v0.23.html#miscellaneous)
-
-    if check_sklearn_version(minimum="0.21", maximum="0.22"):
-        assert repr(test) == (
-            "_DummyEstimator2DF(a=_DummyEstimator3DF(c=None, d=None),\n"
-            "                   b=_DummyEstimator3DF(c=None, d=None))"
-        )
-    if check_sklearn_version(minimum="0.23"):
-        assert repr(test) == (
-            "_DummyEstimator2DF(a=_DummyEstimator3DF(), b=_DummyEstimator3DF())"
-        )
+    assert repr(test) == (
+        "_DummyEstimator2DF(a=_DummyEstimator3DF(c=None, d=None),\n"
+        "                   b=_DummyEstimator3DF(c=None, d=None))"
+    )
 
     some_est = _DummyEstimator2DF(a=["long_params"] * 1000)
 
-    if check_sklearn_version(minimum="0.21", maximum="0.22"):
-        assert len(repr(some_est)) == 702
-
-    if check_sklearn_version(minimum="0.23"):
-        assert len(repr(some_est)) == 675
+    assert len(repr(some_est)) == 702
 
 
 def test_str() -> None:

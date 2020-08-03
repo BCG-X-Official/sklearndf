@@ -102,7 +102,7 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 #
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=ClassifierWrapperDF)
+@df_estimator(df_wrapper_type=_ClassifierWrapperDF)
 class DummyClassifierDF(ClassifierDF, DummyClassifier):
     """
     Wraps :class:`sklearn.dummy.DummyClassifier`; accepts and
