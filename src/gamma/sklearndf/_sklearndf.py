@@ -80,7 +80,7 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     def features_in(self) -> pd.Index:
         """
         The pandas column index with the names of the features this estimator has been
-        fitted on; raises an `AttributeError` if this estimator is not fitted
+        fitted on; raises an ``AttributeError`` if this estimator is not fitted
         """
         self._ensure_fitted()
         return self._get_features_in().rename(self.COL_FEATURE_IN)
@@ -89,7 +89,7 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     def n_outputs(self) -> int:
         """
         The number of outputs this estimator has been fitted on;
-        raises an `AttributeError` if this estimator is not fitted
+        raises an ``AttributeError`` if this estimator is not fitted
         """
         self._ensure_fitted()
         return self._get_n_outputs()

@@ -5,7 +5,7 @@ import logging
 import warnings
 
 from gamma.sklearndf import RegressorDF
-from gamma.sklearndf._wrapper import RegressorWrapperDF, df_estimator
+from gamma.sklearndf._wrapper import _RegressorWrapperDF, df_estimator
 
 log = logging.getLogger(__name__)
 
@@ -17,13 +17,17 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 #
 
 
+# since we install LGBM via conda, the warning about the Clang compiler is irrelevant
+warnings.filterwarnings("ignore", message=r"Starting from version 2\.2\.1")
+# cross-validation will invariably generate sliced subsets, so the following warning
+# is not helpful
 warnings.filterwarnings(
-    "ignore", message=r"Starting from version 2\.2\.1", category=UserWarning
+    "ignore", message=r"Usage of np\.ndarray subset \(sliced data\) is not recommended"
 )
 from lightgbm.sklearn import LGBMRegressor
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=RegressorWrapperDF)
+@df_estimator(df_wrapper_type=_RegressorWrapperDF)
 class LGBMRegressorDF(RegressorDF, LGBMRegressor):
     """
     Wraps :class:`lightgbm.sklearn.LGBMRegressor`; accepts and returns data frames.
