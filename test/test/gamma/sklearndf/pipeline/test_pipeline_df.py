@@ -27,7 +27,7 @@ from sklearn.utils.testing import (
 from gamma.sklearndf import RegressorDF, TransformerDF
 
 # noinspection PyProtectedMember
-from gamma.sklearndf._wrapper import df_estimator, RegressorWrapperDF
+from gamma.sklearndf._wrapper import _RegressorWrapperDF, df_estimator
 from gamma.sklearndf.classification import LogisticRegressionDF, SVCDF
 from gamma.sklearndf.pipeline import PipelineDF
 from gamma.sklearndf.regression import LassoDF, LinearRegressionDF
@@ -40,8 +40,8 @@ from gamma.sklearndf.transformation._wrapper import (
     _ColumnPreservingTransformerWrapperDF,
 )
 
-
-@df_estimator(df_wrapper_type=RegressorWrapperDF)
+# noinspection PyAbstractClass
+@df_estimator(df_wrapper_type=_RegressorWrapperDF)
 class DummyRegressorDF(RegressorDF, DummyRegressor):
     """
     Wraps :class:`sklearn.dummy.DummyRegressor`; accepts and returns data frames.
@@ -117,6 +117,7 @@ class TransfFitParams(Transf):
         return self
 
 
+# noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class DummyTransfDF(TransformerDF, DummyTransf):
     """ Wraps a  DummyTransf; accepts and returns data frames """
@@ -124,6 +125,7 @@ class DummyTransfDF(TransformerDF, DummyTransf):
     pass
 
 
+# noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
 class NoTransDF(TransformerDF, NoTrans):
     """ Wraps a  DummyTransf; accepts and returns data frames """

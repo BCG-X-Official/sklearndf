@@ -12,7 +12,7 @@ from sklearn.base import BaseEstimator
 
 from gamma.common.fit import T_Self
 from gamma.sklearndf import TransformerDF
-from gamma.sklearndf._wrapper import df_estimator, MetaEstimatorWrapperDF
+from gamma.sklearndf._wrapper import _MetaEstimatorWrapperDF, df_estimator
 from gamma.sklearndf.transformation._wrapper import (
     _ColumnSubsetTransformerWrapperDF,
     _NDArrayTransformerWrapperDF,
@@ -111,7 +111,7 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
 
 
 class _BorutaPyWrapperDF(
-    MetaEstimatorWrapperDF[BorutaPy],
+    _MetaEstimatorWrapperDF[BorutaPy],
     _NDArrayTransformerWrapperDF[BorutaPy],
     _ColumnSubsetTransformerWrapperDF[BorutaPy],
     metaclass=ABCMeta,
