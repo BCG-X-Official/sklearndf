@@ -9,7 +9,7 @@ from typing import *
 import pandas as pd
 from sklearn.base import TransformerMixin
 
-from gamma.sklearndf._wrapper import TransformerWrapperDF
+from .._wrapper import TransformerWrapperDF
 
 log = logging.getLogger(__name__)
 

@@ -49,11 +49,7 @@ from sklearn.svm import LinearSVC, NuSVC, SVC
 from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
 
 from gamma.sklearndf import ClassifierDF
-from gamma.sklearndf._wrapper import (
-    ClassifierWrapperDF,
-    MetaClassifierWrapperDF,
-    df_estimator,
-)
+from .._wrapper import ClassifierWrapperDF, MetaClassifierWrapperDF, df_estimator
 
 log = logging.getLogger(__name__)
 

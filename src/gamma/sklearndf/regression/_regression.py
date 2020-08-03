@@ -54,16 +54,10 @@ from sklearn.svm import LinearSVR, NuSVR, SVR
 from sklearn.tree import DecisionTreeRegressor, ExtraTreeRegressor
 
 from gamma.sklearndf import RegressorDF, TransformerDF
-from gamma.sklearndf._wrapper import (
-    df_estimator,
-    MetaRegressorWrapperDF,
-    RegressorWrapperDF,
-)
+from .._wrapper import MetaRegressorWrapperDF, RegressorWrapperDF, df_estimator
 
 # noinspection PyProtectedMember
-from gamma.sklearndf.transformation._wrapper import (
-    _ColumnPreservingTransformerWrapperDF,
-)
+from ..transformation._wrapper import _ColumnPreservingTransformerWrapperDF
 
 log = logging.getLogger(__name__)
 
