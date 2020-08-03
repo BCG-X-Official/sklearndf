@@ -1,16 +1,15 @@
-import inspect
 import re
+import sys
 from distutils import version
 from typing import *
 from typing import Type
 
 import pandas as pd
 import sklearn
-import sys
-
 from sklearn.base import BaseEstimator
 
-from gamma.sklearndf import BaseEstimatorWrapperDF, BaseLearnerDF, TransformerDF
+from gamma.sklearndf import BaseLearnerDF, TransformerDF
+from gamma.sklearndf._wrapper import _BaseEstimatorWrapperDF
 
 Module: type = Any
 
@@ -40,12 +39,14 @@ def find_all_submodules(parent_module: Module) -> Set[Module]:
     }
 
 
-def sklearndf_to_wrapped(module: Module) -> Dict[BaseEstimatorWrapperDF, BaseEstimator]:
+def sklearndf_to_wrapped(
+    module: Module,
+) -> Dict[_BaseEstimatorWrapperDF, BaseEstimator]:
     """ Creates a dictionary mapping from sklearndf -> sklearn classes. """
     return {
         cdf: cdf.__wrapped__
         for cdf in find_all_classes((module))
-        if issubclass(cdf, BaseEstimatorWrapperDF)
+        if issubclass(cdf, _BaseEstimatorWrapperDF)
     }
 
 
@@ -70,7 +71,7 @@ def list_classes(
     ]
 
 
-def get_wrapped_counterpart(to_wrap: Type, from_module=None) -> BaseEstimatorWrapperDF:
+def get_wrapped_counterpart(to_wrap: Type, from_module=None) -> _BaseEstimatorWrapperDF:
     """ Helper to return the wrapped counterpart for a sklearn class """
     for sklearndf_cls, sklearn_cls in sklearndf_to_wrapped(from_module).items():
         if sklearn_cls == to_wrap:

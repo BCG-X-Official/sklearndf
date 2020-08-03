@@ -3,7 +3,6 @@ Core implementation of :mod:`gamma.sklearndf.regression` loaded
 from sklearn 0.22 onwards
 """
 import logging
-from abc import ABCMeta
 from typing import *
 
 from sklearn.base import RegressorMixin
@@ -11,15 +10,11 @@ from sklearn.ensemble import StackingRegressor
 
 from gamma.sklearndf import RegressorDF
 from gamma.sklearndf._wrapper import (
-    RegressorWrapperDF,
-    StackingRegressorWrapperDF,
+    _StackingRegressorWrapperDF,
     df_estimator,
 )
 
 # noinspection PyProtectedMember
-from gamma.sklearndf.transformation._wrapper import (
-    _ColumnPreservingTransformerWrapperDF,
-)
 
 log = logging.getLogger(__name__)
 
@@ -35,7 +30,7 @@ T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=StackingRegressorWrapperDF)
+@df_estimator(df_wrapper_type=_StackingRegressorWrapperDF)
 class StackingRegressorDF(RegressorDF, StackingRegressor):
     """
     Wraps :class:`sklearn.ensemble._stacking.StackingRegressor`; accepts and
