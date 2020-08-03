@@ -9,7 +9,7 @@ from typing import *
 import pandas as pd
 from sklearn.base import TransformerMixin
 
-from .._wrapper import TransformerWrapperDF
+from .._wrapper import _TransformerWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -27,7 +27,7 @@ T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
 
 
 class _NDArrayTransformerWrapperDF(
-    TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
+    _TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
 ):
     """
     ``TransformerDF`` whose delegate transformer only accepts numpy ndarrays.
@@ -48,7 +48,7 @@ class _NDArrayTransformerWrapperDF(
 
 
 class _ColumnSubsetTransformerWrapperDF(
-    TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
+    _TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
 ):
     """
     Transforms a data frame without changing column names, but possibly removing
@@ -87,7 +87,7 @@ class _ColumnPreservingTransformerWrapperDF(
 
 
 class _BaseMultipleInputsPerOutputTransformerWrapperDF(
-    TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
+    _TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
 ):
     """
     Transform data whom output columns have multiple input columns.
