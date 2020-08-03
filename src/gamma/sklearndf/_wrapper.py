@@ -95,8 +95,20 @@ class _BaseEstimatorWrapperDF(
 
     """
 
-    def __init__(self, delegate_estimator: T_DelegateEstimator) -> None:
-        self._delegate_estimator = delegate_estimator
+    def __init__(
+        self, *args, _delegate_estimator: Optional[T_DelegateEstimator] = None, **kwargs
+    ) -> None:
+        if _delegate_estimator is None:
+            # create a new delegate estimator with the given parameters
+            # noinspection PyProtectedMember
+            self._delegate_estimator = type(self)._make_delegate_estimator(
+                *args, **kwargs
+            )
+        else:
+            self._delegate_estimator = _delegate_estimator
+
+        self._validate_delegate_estimator()
+
         self._reset_fit()
 
     @property
@@ -126,7 +138,7 @@ class _BaseEstimatorWrapperDF(
 
         class _FittedEstimator(cls):
             def __init__(self) -> None:
-                super().__init__(__delegate_estimator=estimator)
+                super().__init__(_delegate_estimator=estimator)
                 self._features_in = features_in
                 self._n_outputs = n_outputs
 
@@ -795,6 +807,8 @@ def df_estimator(
         decoratee: Type[T_DelegateEstimator]
     ) -> Type[_BaseEstimatorWrapperDF[T_DelegateEstimator]]:
 
+        assert issubclass(df_wrapper_type, _BaseEstimatorWrapperDF)
+
         # determine the sklearn estimator we are wrapping
         sklearn_estimator_type = _get_base_classes(decoratee)
 
@@ -830,28 +844,9 @@ def df_estimator(
         df_estimator_type.__module__ = decoratee.__module__
         df_estimator_type.__qualname__ = decoratee.__qualname__
 
-        # we will add this function to the new DF estimator class as the initializer
-        def _init_wrapper(
-            self: _BaseEstimatorWrapperDF,
-            *args,
-            __delegate_estimator: Optional[T_DelegateEstimator] = None,
-            **kwargs,
-        ) -> None:
-            if __delegate_estimator is None:
-                # create a new delegate estimator with the given parameters
-                # noinspection PyProtectedMember
-                __delegate_estimator = type(self)._make_delegate_estimator(
-                    *args, **kwargs
-                )
-            # noinspection PyArgumentList
-            super(df_estimator_type, self).__init__(
-                delegate_estimator=__delegate_estimator
-            )
-            self._validate_delegate_estimator()
-
         # adopt the initializer signature of the wrapped sklearn estimator
         df_estimator_type.__init__ = update_wrapper(
-            _init_wrapper, sklearn_estimator_type.__init__
+            df_estimator_type.__init__, sklearn_estimator_type.__init__
         )
 
         # adopt the class docstring of the wrapped sklearn estimator
