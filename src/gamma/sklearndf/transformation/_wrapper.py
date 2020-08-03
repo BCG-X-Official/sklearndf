@@ -138,8 +138,7 @@ class _NComponentsDimensionalityReductionWrapperDF(
 
     _ATTR_N_COMPONENTS = "n_components"
 
-    def _init(self, *args, **kwargs) -> None:
-        super()._init(*args, **kwargs)
+    def _validate_delegate_estimator(self) -> None:
         self._validate_delegate_attribute(attribute_name=self._ATTR_N_COMPONENTS)
 
     @property
@@ -189,8 +188,7 @@ class _FeatureSelectionWrapperDF(
 
     _ATTR_GET_SUPPORT = "get_support"
 
-    def _init(self, *args, **kwargs) -> None:
-        super()._init(*args, **kwargs)
+    def _validate_delegate_estimator(self) -> None:
         self._validate_delegate_attribute(attribute_name=self._ATTR_GET_SUPPORT)
 
     def _get_features_out(self) -> pd.Index:

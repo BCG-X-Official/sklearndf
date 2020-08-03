@@ -202,10 +202,8 @@ class _ColumnTransformerWrapperDF(
     :class:`~yieldengine.df.transform.TransformerDF`.
     """
 
-    def _init(self, *args, **kwargs) -> None:
-        super()._init(*args, **kwargs)
-        # noinspection PyTypeChecker
-        column_transformer = self.delegate_estimator
+    def _validate_delegate_estimator(self) -> None:
+        column_transformer: ColumnTransformer = self.delegate_estimator
 
         if column_transformer.remainder != "drop":
             raise ValueError(
@@ -225,8 +223,6 @@ class _ColumnTransformerWrapperDF(
                 "arg column_transformer must only contain instances of "
                 f"{TransformerDF.__name__}"
             )
-
-        self._columnTransformer = column_transformer
 
     def _get_features_original(self) -> pd.Series:
         """
@@ -340,7 +336,8 @@ class _SimpleImputerWrapperDF(TransformerWrapperDF[SimpleImputer], metaclass=ABC
 
     def _get_features_original(self) -> pd.Series:
         # get the columns that were dropped during imputation
-        stats = self.delegate_estimator.statistics_
+        delegate_estimator = self.delegate_estimator
+        stats = delegate_estimator.statistics_
         if issubclass(stats.dtype.type, float):
             nan_mask = np.isnan(stats)
         else:
@@ -355,10 +352,11 @@ class _SimpleImputerWrapperDF(TransformerWrapperDF[SimpleImputer], metaclass=ABC
         )
 
         # if the add_indicator flag is set, we will get additional "missing" columns
-        if self.delegate_estimator.add_indicator:
-            missing_indicator = _MissingIndicatorWrapperDF.from_fitted(
-                estimator=self.delegate_estimator.indicator_,
+        if delegate_estimator.add_indicator:
+            missing_indicator = MissingIndicatorDF.from_fitted(
+                estimator=delegate_estimator.indicator_,
                 features_in=self.features_in,
+                n_outputs=self.n_outputs,
             )
             return features_original.append(missing_indicator.features_original)
         else:
@@ -379,22 +377,6 @@ class SimpleImputerDF(TransformerDF, SimpleImputer):
 class _MissingIndicatorWrapperDF(
     TransformerWrapperDF[MissingIndicator], metaclass=ABCMeta
 ):
-    def _init(
-        self,
-        missing_values=np.nan,
-        features="missing-only",
-        sparse="auto",
-        error_on_new=True,
-        **kwargs,
-    ) -> None:
-        super()._init(
-            missing_values=missing_values,
-            features=features,
-            sparse=sparse,
-            error_on_new=error_on_new,
-            **kwargs,
-        )
-
     def _get_features_original(self) -> pd.Series:
         features_original: np.ndarray = self.features_in[
             self.delegate_estimator.features_
@@ -660,8 +642,7 @@ class _OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABC
     :class:`preprocessing.OneHotEncoder`.
     """
 
-    def _init(self, *args, **kwargs) -> None:
-        super()._init(*args, **kwargs)
+    def _validate_delegate_estimator(self) -> None:
         if self.delegate_estimator.sparse:
             raise NotImplementedError("sparse matrices not supported; use sparse=False")
 
@@ -709,8 +690,7 @@ class OrdinalEncoderDF(TransformerDF, OrdinalEncoder):
 class _KBinsDiscretizerWrapperDF(
     TransformerWrapperDF[KBinsDiscretizer], metaclass=ABCMeta
 ):
-    def _init(self, *args, **kwargs) -> None:
-        super()._init(*args, **kwargs)
+    def _validate_delegate_estimator(self) -> None:
         if self.delegate_estimator.encode == "onehot":
             raise NotImplementedError(
                 'property encode="onehot" is not supported due to sparse matrices;'

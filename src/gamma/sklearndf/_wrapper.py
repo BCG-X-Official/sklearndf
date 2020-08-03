@@ -28,6 +28,7 @@ import re
 from abc import ABCMeta, abstractmethod
 from functools import update_wrapper
 from typing import *
+from typing import Type
 
 import numpy as np
 import pandas as pd
@@ -93,11 +94,10 @@ class BaseEstimatorWrapperDF(
 
     Implementations must define a method ``_make_delegate_estimator``.
 
-    :param `**kwargs`: the arguments passed to the delegate estimator
     """
 
-    def _init(self, *args, **kwargs) -> None:
-        self._delegate_estimator = type(self)._make_delegate_estimator(*args, **kwargs)
+    def __init__(self, delegate_estimator: T_DelegateEstimator) -> None:
+        self._delegate_estimator = delegate_estimator
         self._reset_fit()
 
     @property
@@ -114,24 +114,22 @@ class BaseEstimatorWrapperDF(
         cls: Type[T_EstimatorWrapperDF],
         estimator: T_DelegateEstimator,
         features_in: pd.Index,
+        n_outputs: int,
     ) -> T_EstimatorWrapperDF:
         """
         Make a new wrapped data frame estimator whose delegate is an estimator which
         has already been fitted
         :param estimator: the fitted estimator
         :param features_in: the column names of X used for fitting the estimator
+        :param n_outputs: the number of outputs in y used for fitting the estimator
         :return: the wrapped data frame estimator
         """
 
         class _FittedEstimator(cls):
             def __init__(self) -> None:
-                super().__init__()
+                super().__init__(__delegate_estimator=estimator)
                 self._features_in = features_in
-
-            # noinspection PyUnusedLocal
-            @classmethod
-            def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
-                return estimator
+                self._n_outputs = n_outputs
 
         return _FittedEstimator()
 
@@ -178,23 +176,23 @@ class BaseEstimatorWrapperDF(
 
         self._reset_fit()
 
-        success = False
-
         try:
             self._check_parameter_types(X, y)
             self._fit(X, y, **fit_params)
             self._post_fit(X, y, **fit_params)
-            success = True
 
-        finally:
-            if not success:
-                self._reset_fit()
+        except Exception:
+            self._reset_fit()
+            raise
 
         return self
 
     @classmethod
     @abstractmethod
     def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
+        pass
+
+    def _validate_delegate_estimator(self) -> None:
         pass
 
     @property
@@ -713,9 +711,7 @@ class MetaEstimatorWrapperDF(
     - multiple inner estimators in attribute ``estimators``
     """
 
-    def _init(self, *args, **kwargs) -> None:
-        super()._init(*args, **kwargs)
-
+    def _validate_delegate_estimator(self) -> None:
         def _unwrap_estimator(estimator: BaseEstimator) -> BaseEstimator:
             return (
                 estimator.root_estimator
@@ -836,9 +832,22 @@ def df_estimator(
         df_estimator_type.__qualname__ = decoratee.__qualname__
 
         # we will add this function to the new DF estimator class as the initializer
-        def _init_wrapper(self: BaseEstimatorWrapperDF, *args, **kwargs) -> None:
-            super(df_estimator_type, self).__init__()
-            self._init(*args, **kwargs)
+        def _init_wrapper(
+            self: BaseEstimatorWrapperDF,
+            *args,
+            __delegate_estimator: Optional[T_DelegateEstimator] = None,
+            **kwargs,
+        ) -> None:
+            if __delegate_estimator is None:
+                # create a new delegate estimator with the given parameters
+                # noinspection PyProtectedMember
+                __delegate_estimator = type(self)._make_delegate_estimator(
+                    *args, **kwargs
+                )
+            super(df_estimator_type, self).__init__(
+                delegate_estimator=__delegate_estimator
+            )
+            self._validate_delegate_estimator()
 
         # adopt the initializer signature of the wrapped sklearn estimator
         df_estimator_type.__init__ = update_wrapper(
