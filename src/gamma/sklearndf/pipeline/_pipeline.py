@@ -32,9 +32,7 @@ class _PipelineWrapperDF(
 ):
     PASSTHROUGH = "passthrough"
 
-    def _init(self, *args, **kwargs) -> None:
-        super()._init(*args, **kwargs)
-
+    def _validate_delegate_estimator(self) -> None:
         # ensure that all steps support data frames, and that all except the last
         # step are data frame transformers
 
