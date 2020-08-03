@@ -13,9 +13,9 @@ from sklearn.pipeline import FeatureUnion, Pipeline
 
 from gamma.sklearndf import BaseEstimatorDF, ClassifierDF, RegressorDF, TransformerDF
 from gamma.sklearndf._wrapper import (
-    ClassifierWrapperDF,
-    RegressorWrapperDF,
-    TransformerWrapperDF,
+    _ClassifierWrapperDF,
+    _RegressorWrapperDF,
+    _TransformerWrapperDF,
     df_estimator,
 )
 
@@ -25,16 +25,14 @@ __all__ = ["PipelineDF", "FeatureUnionDF"]
 
 
 class _PipelineWrapperDF(
-    ClassifierWrapperDF[Pipeline],
-    RegressorWrapperDF[Pipeline],
-    TransformerWrapperDF[Pipeline],
+    _ClassifierWrapperDF[Pipeline],
+    _RegressorWrapperDF[Pipeline],
+    _TransformerWrapperDF[Pipeline],
     metaclass=ABCMeta,
 ):
     PASSTHROUGH = "passthrough"
 
-    def _init(self, *args, **kwargs) -> None:
-        super()._init(*args, **kwargs)
-
+    def _validate_delegate_estimator(self) -> None:
         # ensure that all steps support data frames, and that all except the last
         # step are data frame transformers
 
@@ -87,7 +85,7 @@ class _PipelineWrapperDF(
         returns another Pipeline instance which copies a slice of this
         Pipeline. This copy is shallow: modifying (or fitting) estimators in
         the sub-pipeline will affect the larger pipeline and vice-versa.
-        However, replacing a value in `steps` will not change a copy.
+        However, replacing a value in ``steps`` will not change a copy.
         """
 
         if isinstance(ind, slice):
@@ -115,7 +113,7 @@ class _PipelineWrapperDF(
     def _transformer_steps(self) -> Iterator[Tuple[str, TransformerDF]]:
         # make an iterator of all transform steps, i.e. excluding the final step
         # in case it is not a transformer
-        # excludes steps whose transformer is `None` or `"passthrough"`
+        # excludes steps whose transformer is ``None`` or ``"passthrough"``
 
         def _iter_not_none(
             transformer_steps: Sequence[Tuple[str, BaseEstimatorDF]]
@@ -193,14 +191,14 @@ class PipelineDF(ClassifierDF, RegressorDF, TransformerDF, Pipeline):
     pass
 
 
-class _FeatureUnionWrapperDF(TransformerWrapperDF[FeatureUnion], metaclass=ABCMeta):
+class _FeatureUnionWrapperDF(_TransformerWrapperDF[FeatureUnion], metaclass=ABCMeta):
     @staticmethod
     def _prepend_features_out(features_out: pd.Index, name_prefix: str) -> pd.Index:
         return pd.Index(data=f"{name_prefix}__" + features_out.astype(str))
 
     def _get_features_original(self) -> pd.Series:
         # concatenate output->input mappings from all included transformers other than
-        # ones stated as `None` or `"drop"` or any other string
+        # ones stated as ``None`` or ``"drop"`` or any other string
 
         # prepend the name of the transformer so the resulting feature name is
         # `<name>__<output column of sub-transformer>
@@ -227,7 +225,7 @@ class _FeatureUnionWrapperDF(TransformerWrapperDF[FeatureUnion], metaclass=ABCMe
 
     def _get_features_out(self) -> pd.Index:
         # concatenate output columns from all included transformers other than
-        # ones stated as `None` or `"drop"` or any other string
+        # ones stated as ``None`` or ``"drop"`` or any other string
 
         # prepend the name of the transformer so the resulting feature name is
         # `<name>__<output column of sub-transformer>

@@ -9,7 +9,7 @@ from typing import *
 import pandas as pd
 from sklearn.base import TransformerMixin
 
-from gamma.sklearndf._wrapper import TransformerWrapperDF
+from .._wrapper import _TransformerWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -27,10 +27,10 @@ T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
 
 
 class _NDArrayTransformerWrapperDF(
-    TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
+    _TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
 ):
     """
-    `TransformerDF` whose delegate transformer only accepts numpy ndarrays.
+    ``TransformerDF`` whose delegate transformer only accepts numpy ndarrays.
 
     Wraps around the delegate transformer and converts the data frame to an array when
     needed.
@@ -48,7 +48,7 @@ class _NDArrayTransformerWrapperDF(
 
 
 class _ColumnSubsetTransformerWrapperDF(
-    TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
+    _TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
 ):
     """
     Transforms a data frame without changing column names, but possibly removing
@@ -87,7 +87,7 @@ class _ColumnPreservingTransformerWrapperDF(
 
 
 class _BaseMultipleInputsPerOutputTransformerWrapperDF(
-    TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
+    _TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
 ):
     """
     Transform data whom output columns have multiple input columns.
@@ -96,7 +96,7 @@ class _BaseMultipleInputsPerOutputTransformerWrapperDF(
     @abstractmethod
     def _get_features_out(self) -> pd.Index:
         # make this method abstract to ensure subclasses override the default
-        # behaviour, which usually relies on method `_get_features_original`
+        # behaviour, which usually relies on method ``_get_features_original``
         pass
 
     def _get_features_original(self) -> pd.Series:
@@ -138,8 +138,7 @@ class _NComponentsDimensionalityReductionWrapperDF(
 
     _ATTR_N_COMPONENTS = "n_components"
 
-    def _init(self, *args, **kwargs) -> None:
-        super()._init(*args, **kwargs)
+    def _validate_delegate_estimator(self) -> None:
         self._validate_delegate_attribute(attribute_name=self._ATTR_N_COMPONENTS)
 
     @property
@@ -183,14 +182,13 @@ class _FeatureSelectionWrapperDF(
     """
     Wrapper for feature selection transformers.
 
-    The delegate transformer has a `get_support` method providing the indices of the
+    The delegate transformer has a ``get_support`` method providing the indices of the
     selected input columns
     """
 
     _ATTR_GET_SUPPORT = "get_support"
 
-    def _init(self, *args, **kwargs) -> None:
-        super()._init(*args, **kwargs)
+    def _validate_delegate_estimator(self) -> None:
         self._validate_delegate_attribute(attribute_name=self._ATTR_GET_SUPPORT)
 
     def _get_features_out(self) -> pd.Index:
