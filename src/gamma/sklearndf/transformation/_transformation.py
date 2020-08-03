@@ -89,7 +89,7 @@ from sklearn.preprocessing import (
 from sklearn.random_projection import GaussianRandomProjection, SparseRandomProjection
 
 from gamma.sklearndf import TransformerDF
-from gamma.sklearndf._wrapper import df_estimator, TransformerWrapperDF
+from gamma.sklearndf._wrapper import _TransformerWrapperDF, df_estimator
 from gamma.sklearndf.transformation._wrapper import (
     _BaseDimensionalityReductionWrapperDF,
     _BaseMultipleInputsPerOutputTransformerWrapperDF,
@@ -189,7 +189,7 @@ class FeatureAgglomerationDF(TransformerDF, FeatureAgglomeration):
 
 
 class _ColumnTransformerWrapperDF(
-    TransformerWrapperDF[ColumnTransformer], metaclass=ABCMeta
+    _TransformerWrapperDF[ColumnTransformer], metaclass=ABCMeta
 ):
     """
     Wrap :class:`sklearn.compose.ColumnTransformer` and return a DataFrame.
@@ -239,7 +239,7 @@ class _ColumnTransformerWrapperDF(
             ),
         )
 
-    def _inner_transformers(self) -> Iterable[TransformerWrapperDF]:
+    def _inner_transformers(self) -> Iterable[_TransformerWrapperDF]:
         return (
             df_transformer
             for _, df_transformer, columns in self.delegate_estimator.transformers_
@@ -324,7 +324,7 @@ class TfidfTransformerDF(TransformerDF, TfidfTransformer):
 #
 
 
-class _SimpleImputerWrapperDF(TransformerWrapperDF[SimpleImputer], metaclass=ABCMeta):
+class _SimpleImputerWrapperDF(_TransformerWrapperDF[SimpleImputer], metaclass=ABCMeta):
     """
     Impute missing values with data frames as input and output.
 
@@ -375,7 +375,7 @@ class SimpleImputerDF(TransformerDF, SimpleImputer):
 
 
 class _MissingIndicatorWrapperDF(
-    TransformerWrapperDF[MissingIndicator], metaclass=ABCMeta
+    _TransformerWrapperDF[MissingIndicator], metaclass=ABCMeta
 ):
     def _get_features_original(self) -> pd.Series:
         features_original: np.ndarray = self.features_in[
@@ -632,7 +632,7 @@ class MultiLabelBinarizerDF(TransformerDF, MultiLabelBinarizer):
     pass
 
 
-class _OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCMeta):
+class _OneHotEncoderWrapperDF(_TransformerWrapperDF[OneHotEncoder], metaclass=ABCMeta):
     """
     One-hot encoder with dataframes as input and output.
 
@@ -688,7 +688,7 @@ class OrdinalEncoderDF(TransformerDF, OrdinalEncoder):
 
 
 class _KBinsDiscretizerWrapperDF(
-    TransformerWrapperDF[KBinsDiscretizer], metaclass=ABCMeta
+    _TransformerWrapperDF[KBinsDiscretizer], metaclass=ABCMeta
 ):
     def _validate_delegate_estimator(self) -> None:
         if self.delegate_estimator.encode == "onehot":

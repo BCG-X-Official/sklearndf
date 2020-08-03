@@ -5,7 +5,7 @@ import logging
 import warnings
 
 from gamma.sklearndf import RegressorDF
-from gamma.sklearndf._wrapper import RegressorWrapperDF, df_estimator
+from gamma.sklearndf._wrapper import _RegressorWrapperDF, df_estimator
 
 log = logging.getLogger(__name__)
 
@@ -27,7 +27,7 @@ warnings.filterwarnings(
 from lightgbm.sklearn import LGBMRegressor
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=RegressorWrapperDF)
+@df_estimator(df_wrapper_type=_RegressorWrapperDF)
 class LGBMRegressorDF(RegressorDF, LGBMRegressor):
     """
     Wraps :class:`lightgbm.sklearn.LGBMRegressor`; accepts and returns data frames.
