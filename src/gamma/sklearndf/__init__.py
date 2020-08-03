@@ -15,7 +15,6 @@ original inputs even across complex pipelines.
 
 import gamma.common.licensing as _licensing
 from ._sklearndf import *
-from ._wrapper import *
 
 __version__ = "1.3.0rc0"
 _licensing.check_license(__package__)
