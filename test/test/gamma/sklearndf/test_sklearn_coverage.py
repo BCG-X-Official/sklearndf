@@ -7,6 +7,7 @@ from sklearn.base import ClassifierMixin, RegressorMixin, TransformerMixin
 import gamma.sklearndf.classification
 import gamma.sklearndf.regression
 import gamma.sklearndf.transformation
+import gamma.sklearndf.pipeline
 from test import check_sklearn_version
 
 from test.gamma.sklearndf import find_all_submodules, list_classes, sklearndf_to_wrapped
@@ -41,9 +42,17 @@ REGRESSOR_COVERAGE_EXCLUDES = {
     # <-- Private classes
 }
 
+
 TRANSFORMER_COVERAGE_EXCLUDES = CLASSIFIER_COVERAGE_EXCLUDES.union(
     REGRESSOR_COVERAGE_EXCLUDES
 )
+
+PIPELINE_COVERAGE_EXCLUDES = {
+    # exclude all Base classes, named starting with "Base" or "_Base":
+    r"^_?Base.*",
+    # exclude all Mixin classes, named ending on Mixin:
+    r".*Mixin$",
+}
 
 
 @pytest.fixture
@@ -73,10 +82,29 @@ def sklearn_regressor_classes() -> List[Type]:
 
 
 @pytest.fixture
+def sklearn_pipeline_classes() -> List[Type]:
+
+    pipeline_modules = find_all_submodules(sklearn.pipeline)
+    pipeline_modules.add(sklearn.pipeline)
+
+    return [
+        cls
+        for cls in list_classes(
+            from_modules=pipeline_modules,
+            matching=".*",
+            excluding=PIPELINE_COVERAGE_EXCLUDES,
+        )
+        if issubclass(cls, TransformerMixin)
+    ]
+
+
+@pytest.fixture
 def sklearn_transformer_classes(
-    sklearn_classifier_classes: List[Type], sklearn_regressor_classes: List[Type]
+    sklearn_classifier_classes: List[Type],
+    sklearn_regressor_classes: List[Type],
+    sklearn_pipeline_classes: List[Type],
 ) -> List[Type]:
-    """ Return all classses that are 'just' transformers, not learners."""
+    """ Return all classses that are 'just' transformers, not learners or pipelines."""
     transfomer_mixin_classes = [
         cls
         for cls in list_classes(
@@ -91,6 +119,7 @@ def sklearn_transformer_classes(
         set(transfomer_mixin_classes)
         .difference(sklearn_classifier_classes)
         .difference(sklearn_regressor_classes)
+        .difference(sklearn_pipeline_classes)
     )
 
     return transformer_classes
@@ -136,6 +165,23 @@ def test_transformer_coverage(sklearn_transformer_classes: List[Type]) -> None:
     missing = []
 
     for sklearn_cls in sklearn_transformer_classes:
+        if sklearn_cls not in sklearndf_cls_to_sklearn_cls.values():
+            missing.append(sklearn_cls)
+
+    if missing:
+        raise ValueError(
+            f"Class(es): {','.join([m.__module__ +'.'+ m.__name__ for m in missing])} is/are not wrapped!"
+        )
+
+
+def test_pipeline_coverage(sklearn_pipeline_classes: List[Type]) -> None:
+    """ Check if each sklearn pipeline estimator has a wrapped sklearndf counterpart. """
+
+    sklearndf_cls_to_sklearn_cls = sklearndf_to_wrapped(gamma.sklearndf.pipeline)
+
+    missing = []
+
+    for sklearn_cls in sklearn_pipeline_classes:
         if sklearn_cls not in sklearndf_cls_to_sklearn_cls.values():
             missing.append(sklearn_cls)
 
