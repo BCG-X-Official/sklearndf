@@ -27,12 +27,12 @@ from gamma.sklearndf.transformation import (
 from gamma.sklearndf.transformation.extra import OutlierRemoverDF
 from test.gamma.sklearndf import (
     check_expected_not_fitted_error,
-    get_classes,
+    list_classes,
     get_wrapped_counterpart,
 )
 
-TRANSFORMERS_TO_TEST = get_classes(
-    from_module=gamma.sklearndf.transformation,
+TRANSFORMERS_TO_TEST = list_classes(
+    from_modules=gamma.sklearndf.transformation,
     matching=r".*DF",
     excluding=[
         TransformerDF.__name__,
@@ -87,15 +87,15 @@ def test_special_wrapped_constructors() -> None:
 
 @pytest.mark.parametrize(
     argnames="sklearn_cls",
-    argvalues=get_classes(
-        from_module=sklearn.preprocessing,
+    argvalues=list_classes(
+        from_modules=sklearn.preprocessing,
         matching=r".*PowerTransformer|QuantileTransformer|.*Scaler",
     ),
 )
 def test_various_transformers(sklearn_cls: Type, test_data: pd.DataFrame) -> None:
     # get the wrapped counterpart for sklearn:
     df_transf_cls = get_wrapped_counterpart(
-        to_wrap=sklearn_cls, from_package=gamma.sklearndf.transformation
+        to_wrap=sklearn_cls, from_module=gamma.sklearndf.transformation
     )
 
     # initalize both kind of transformers

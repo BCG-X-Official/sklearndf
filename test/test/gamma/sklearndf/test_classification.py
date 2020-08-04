@@ -12,11 +12,11 @@ import gamma.sklearndf.classification as classification
 from gamma.sklearndf import ClassifierDF
 from test.gamma.sklearndf import (
     check_expected_not_fitted_error,
-    get_classes,
+    list_classes,
 )
 
-CLASSIFIERS_TO_TEST = get_classes(
-    from_module=classification,
+CLASSIFIERS_TO_TEST = list_classes(
+    from_modules=classification,
     matching=r".*DF",
     excluding=[ClassifierDF.__name__, r".*WrapperDF"],
 )
@@ -37,6 +37,13 @@ CLASSIFIER_INIT_PARAMETERS = {
             ("svmc", classification.SVCDF(probability=True)),
         ],
         "voting": "soft",
+    },
+    "StackingClassifierDF": {
+        "estimators": (
+            ("Forest", classification.RandomForestClassifierDF()),
+            ("SVC", classification.SVCDF(),),
+            ("AdaBoost", classification.AdaBoostClassifierDF()),
+        )
     },
 }
 
