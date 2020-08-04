@@ -19,6 +19,7 @@ from gamma.sklearndf._wrapper import _BaseEstimatorWrapperDF, df_estimator
 from gamma.sklearndf.classification import DecisionTreeClassifierDF, SVCDF
 from gamma.sklearndf.pipeline import PipelineDF
 from gamma.sklearndf.transformation import OneHotEncoderDF
+from test import check_sklearn_version
 
 
 class _DummyEstimator(BaseEstimator):
@@ -138,12 +139,14 @@ def test_repr() -> None:
     repr(my_estimator)
 
     test = _DummyEstimator2DF(_DummyEstimator3DF(), _DummyEstimator3DF())
+
     assert repr(test) == (
         "_DummyEstimator2DF(a=_DummyEstimator3DF(c=None, d=None),\n"
         "                   b=_DummyEstimator3DF(c=None, d=None))"
     )
 
     some_est = _DummyEstimator2DF(a=["long_params"] * 1000)
+
     assert len(repr(some_est)) == 702
 
 
