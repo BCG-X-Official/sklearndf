@@ -802,9 +802,7 @@ class _StackingEstimatorWrapperDF(
     - multiple stacked estimators in attribute `estimators`, as name estimator pairs
     """
 
-    def _init(self, *args, **kwargs) -> None:
-        super()._init(*args, **kwargs)
-
+    def _validate_delegate_estimator(self) -> None:
         def _unwrap_estimator(estimator: BaseEstimator) -> Optional[BaseEstimator]:
             if estimator is None:
                 return None
