@@ -341,16 +341,24 @@ class _ImputerWrapperDF(_TransformerWrapperDF[_BaseImputer], metaclass=ABCMeta):
 
         nan_mask = []
 
+        def _nan_mask_from_statistics(stats: np.array):
+            if issubclass(stats.dtype.type, float):
+                na_mask = np.isnan(stats)
+            else:
+                na_mask = [
+                    x is None or (isinstance(x, float) and np.isnan(x)) for x in stats
+                ]
+            return na_mask
+
         # implementation for i.e. SimpleImputer
         if hasattr(delegate_estimator, "statistics_"):
             stats: np.array = delegate_estimator.statistics_
+            nan_mask = _nan_mask_from_statistics(stats)
 
-            if issubclass(stats.dtype.type, float):
-                nan_mask = np.isnan(stats)
-            else:
-                nan_mask = [
-                    x is None or (isinstance(x, float) and np.isnan(x)) for x in stats
-                ]
+        # implementation for IterativeImputer
+        elif hasattr(delegate_estimator, "initial_imputer_"):
+            initial_imputer: SimpleImputer = delegate_estimator.initial_imputer_
+            nan_mask = _nan_mask_from_statistics(initial_imputer.statistics_)
 
         # implementation for i.e. KNNImputer
         elif hasattr(delegate_estimator, "_mask_fit_X"):
