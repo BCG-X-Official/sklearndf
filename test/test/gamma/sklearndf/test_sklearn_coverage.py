@@ -1,3 +1,4 @@
+import itertools
 from typing import *
 
 import pytest
@@ -10,6 +11,7 @@ import gamma.sklearndf.regression
 import gamma.sklearndf.transformation
 import gamma.sklearndf.pipeline
 from test import check_sklearn_version
+from test.conftest import UNSUPPORTED_SKLEARN_PACKAGES
 
 from test.gamma.sklearndf import find_all_submodules, list_classes, sklearndf_to_wrapped
 
@@ -53,6 +55,16 @@ PIPELINE_COVERAGE_EXCLUDES = {
     r"^_?Base.*",
     # exclude all Mixin classes, named ending on Mixin:
     r".*Mixin$",
+}
+
+SKIP_COVERAGE_FOR = {
+    c.__name__
+    for c in list_classes(
+        from_modules=itertools.chain.from_iterable(
+            find_all_submodules(p) for p in UNSUPPORTED_SKLEARN_PACKAGES
+        ),
+        matching=".*",
+    )
 }
 
 
@@ -120,6 +132,14 @@ def sklearn_transformer_classes() -> List[Type]:
     return transformer_classes
 
 
+def _handle_not_covered_type(cls: Type) -> None:
+    f_cls_name = f"{cls.__module__}.{cls.__name__}"
+    if cls.__name__ in SKIP_COVERAGE_FOR:
+        pytest.skip(f"Class '{f_cls_name} is not wrapped but marked as unsupported!' ")
+    else:
+        raise ValueError(f"Class '{f_cls_name}' is not wrapped!")
+
+
 @pytest.mark.parametrize(
     argnames="sklearn_classifier_cls", argvalues=sklearn_classifier_classes()
 )
@@ -128,11 +148,7 @@ def test_classifier_coverage(sklearn_classifier_cls: Type) -> None:
     sklearndf_cls_to_sklearn_cls = sklearndf_to_wrapped(gamma.sklearndf.classification)
 
     if sklearn_classifier_cls not in sklearndf_cls_to_sklearn_cls.values():
-        raise ValueError(
-            f"Class: "
-            f"{sklearn_classifier_cls.__module__}.{sklearn_classifier_cls.__name__}"
-            " is not wrapped!"
-        )
+        _handle_not_covered_type(sklearn_classifier_cls)
 
 
 @pytest.mark.parametrize(
@@ -143,11 +159,7 @@ def test_regressor_coverage(sklearn_regressor_cls: List[Type]) -> None:
     sklearndf_cls_to_sklearn_cls = sklearndf_to_wrapped(gamma.sklearndf.regression)
 
     if sklearn_regressor_cls not in sklearndf_cls_to_sklearn_cls.values():
-        raise ValueError(
-            f"Class: "
-            f"{sklearn_regressor_cls.__module__}.{sklearn_regressor_cls.__name__}"
-            " is not wrapped!"
-        )
+        _handle_not_covered_type(sklearn_regressor_cls)
 
 
 @pytest.mark.parametrize(
@@ -159,11 +171,7 @@ def test_transformer_coverage(sklearn_transformer_cls: Type) -> None:
     sklearndf_cls_to_sklearn_cls = sklearndf_to_wrapped(gamma.sklearndf.transformation)
 
     if sklearn_transformer_cls not in sklearndf_cls_to_sklearn_cls.values():
-        raise ValueError(
-            f"Class: "
-            f"{sklearn_transformer_cls.__module__}.{sklearn_transformer_cls.__name__}"
-            " is not wrapped!"
-        )
+        _handle_not_covered_type(sklearn_transformer_cls)
 
 
 @pytest.mark.parametrize(
@@ -176,8 +184,4 @@ def test_pipeline_coverage(sklearn_pipeline_cls: Type) -> None:
     sklearndf_cls_to_sklearn_cls = sklearndf_to_wrapped(gamma.sklearndf.pipeline)
 
     if sklearn_pipeline_cls not in sklearndf_cls_to_sklearn_cls.values():
-        raise ValueError(
-            f"Class: "
-            f"{sklearn_pipeline_cls.__module__}.{sklearn_pipeline_cls.__name__}"
-            " is not wrapped!"
-        )
+        _handle_not_covered_type(sklearn_pipeline_cls)
