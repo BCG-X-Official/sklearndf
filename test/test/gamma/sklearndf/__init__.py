@@ -39,14 +39,14 @@ def find_all_submodules(parent_module: Module) -> Set[Module]:
     }
 
 
-def sklearndf_to_wrapped(
-    module: Module,
-) -> Dict[_BaseEstimatorWrapperDF, BaseEstimator]:
+def sklearn_delegate_classes(
+    module: Module
+) -> Dict[BaseEstimator, _BaseEstimatorWrapperDF]:
     """ Creates a dictionary mapping from sklearndf -> sklearn classes. """
     return {
-        cdf: cdf.__wrapped__
-        for cdf in find_all_classes((module))
-        if issubclass(cdf, _BaseEstimatorWrapperDF)
+        df_class.__wrapped__: df_class
+        for df_class in find_all_classes(module)
+        if issubclass(df_class, _BaseEstimatorWrapperDF)
     }
 
 
@@ -61,7 +61,7 @@ def list_classes(
         from_modules = (from_modules,)
 
     if isinstance(excluding, Iterable):
-        excluding = "|".join([f"({exclude_pattern})" for exclude_pattern in excluding])
+        excluding = "|".join(f"({exclude_pattern})" for exclude_pattern in excluding)
 
     return [
         m
@@ -71,13 +71,17 @@ def list_classes(
     ]
 
 
-def get_wrapped_counterpart(to_wrap: Type, from_module=None) -> _BaseEstimatorWrapperDF:
+def get_sklearndf_wrapper_class(
+    to_wrap: Type[BaseEstimator], from_module=None
+) -> _BaseEstimatorWrapperDF:
     """ Helper to return the wrapped counterpart for a sklearn class """
-    for sklearndf_cls, sklearn_cls in sklearndf_to_wrapped(from_module).items():
-        if sklearn_cls == to_wrap:
-            return sklearndf_cls
+    try:
+        return sklearn_delegate_classes(from_module)[to_wrap]
 
-    raise ValueError(f"There is no class that wraps '{to_wrap}' in {from_module}")
+    except KeyError as cause:
+        raise ValueError(
+            f"There is no class that wraps '{to_wrap}' in {from_module}"
+        ) from cause
 
 
 def check_expected_not_fitted_error(estimator: Union[BaseLearnerDF, TransformerDF]):
