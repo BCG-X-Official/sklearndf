@@ -3,6 +3,7 @@ from typing import *
 import pytest
 import sklearn
 from sklearn.base import ClassifierMixin, RegressorMixin, TransformerMixin
+from sklearn.utils.metaestimators import _BaseComposition
 
 import gamma.sklearndf.classification
 import gamma.sklearndf.regression
@@ -92,7 +93,7 @@ def sklearn_pipeline_classes() -> List[Type]:
 
     return _find_sklearn_classes_to_cover(
         from_modules=pipeline_modules,
-        subclass_of=TransformerMixin,
+        subclass_of=_BaseComposition,
         excluding=PIPELINE_COVERAGE_EXCLUDES,
     )
 
