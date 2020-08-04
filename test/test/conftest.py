@@ -7,13 +7,16 @@ import pandas as pd
 import pytest
 from sklearn import datasets
 from sklearn.utils import Bunch
-
+import sklearn
 from gamma.sklearndf.transformation import OneHotEncoderDF
 from test import read_test_config
 from test.paths import TEST_DATA_CSV
 
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger(__name__)
+
+# todo: Keep this up to date, consider impl. of cluster/manifold/neighbors
+UNSUPPORTED_SKLEARN_PACKAGES = [sklearn.cluster, sklearn.manifold, sklearn.neighbors]
 
 
 @pytest.fixture
