@@ -86,6 +86,8 @@ class _BaseEstimatorWrapperDF(
     def __init__(
         self, *args, _delegate_estimator: Optional[T_DelegateEstimator] = None, **kwargs
     ) -> None:
+        super().__init__()
+
         if _delegate_estimator is None:
             # create a new delegate estimator with the given parameters
             # noinspection PyProtectedMember
