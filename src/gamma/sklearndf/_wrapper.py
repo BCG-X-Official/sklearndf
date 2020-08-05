@@ -487,7 +487,9 @@ class _LearnerWrapperDF(
         )
 
     # noinspection PyPep8Naming
-    def fit_predict(self, X: pd.DataFrame, y: pd.Series, **fit_params) -> pd.Series:
+    def fit_predict(
+        self, X: pd.DataFrame, y: pd.Series, **fit_params
+    ) -> Union[pd.Series, pd.DataFrame]:
         """
         Fit and return the predictions.
 

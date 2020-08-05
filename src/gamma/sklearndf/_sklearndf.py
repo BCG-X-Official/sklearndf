@@ -75,11 +75,12 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         **fit_params,
     ) -> T_Self:
         """
-        Fit this estimator.
+        Fit this estimator using the given inputs.
+
         :param X: a data frame of observations as rows and features as columns
         :param y: an optional series or data frame with one or more outputs
-        :param fit_params: additional keyword parameters depending on the specific \
-            estimator
+        :param fit_params: additional keyword parameters as required by specific \
+            estimator implementations
         :return: ``self``
         """
         pass
@@ -87,8 +88,8 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     @property
     def features_in(self) -> pd.Index:
         """
-        The pandas column index with the names of the features this estimator has been
-        fitted on.
+        The pandas column index with the names of the features used to fit this
+        estimator.
 
         :raises AttributeError: if this estimator is not fitted
         """
@@ -98,7 +99,7 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     @property
     def n_outputs(self) -> int:
         """
-        The number of outputs this estimator has been fitted on
+        The number of outputs used to fit this estimator.
 
         :raises AttributeError: if this estimator is not fitted
         """
@@ -111,7 +112,7 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         Get the parameters for this estimator.
 
         :param deep: if ``True``, return the parameters for this estimator, and \
-        for any sub-estimators contained in this estimator
+            for any sub-estimators contained in this estimator
 
         :return: a mapping of parameter names to their values
         """
@@ -149,7 +150,7 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
 
 class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
     """
-    Base mix-in class for scikit-learn predictors with enhanced support for data frames.
+    Base class for `learners`, i.e. regressors and classifiers
     """
 
     # noinspection PyPep8Naming
@@ -157,11 +158,34 @@ class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
     def predict(
         self, X: pd.DataFrame, **predict_params
     ) -> Union[pd.Series, pd.DataFrame]:
+        """
+        Predict outputs for the given inputs.
+
+        The observations must have the same features as the observations used to fit
+        this learner.
+        The features can be provided in any order since they are identified by their
+        column names.
+
+        :param X: data frame with observations in rows and features in columns
+        :param y: a series or data frame with one or more outputs per observation
+        :param predict_params: optional keyword parameters as required by specific \
+            learner implementations
+        """
         pass
 
     # noinspection PyPep8Naming
     @abstractmethod
-    def fit_predict(self, X: pd.DataFrame, y: pd.Series, **fit_params) -> pd.Series:
+    def fit_predict(
+        self, X: pd.DataFrame, y: pd.Series, **fit_params
+    ) -> Union[pd.Series, pd.DataFrame]:
+        """
+        Fit this learner using the given observations, then predict the outputs.
+
+        :param X: data frame with observations in rows and features in columns
+        :param y: a series or data frame with one or more outputs per observation
+        :param fit_params: optional keyword parameters as required by specific \
+            learner implementations
+        """
         pass
 
     # noinspection PyPep8Naming
@@ -169,6 +193,15 @@ class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
     def score(
         self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
     ) -> float:
+        """
+        Score this learner using the given inputs and outputs.
+
+        :param X: data frame with observations in rows and features in columns
+        :param y: a series or data frame with one or more outputs per observation
+        :param sample_weight: optional series of scalar weights, for calculating the \
+            resulting score as the weighted mean of the scores for the individual \
+            predictions
+        """
         pass
 
 
