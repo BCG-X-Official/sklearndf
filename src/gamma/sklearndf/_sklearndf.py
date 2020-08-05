@@ -173,6 +173,8 @@ class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
         :param X: input data frame with observations as rows and features as columns
         :param predict_params: optional keyword parameters as required by specific \
             learner implementations
+        :return predictions per observation as a series, or as a data frame in case of \
+            multiple outputs
         """
         pass
 
