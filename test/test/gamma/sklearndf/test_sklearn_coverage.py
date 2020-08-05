@@ -1,19 +1,29 @@
 import itertools
 from typing import *
+from typing import Dict
 
 import pytest
 import sklearn
-from sklearn.base import ClassifierMixin, RegressorMixin, TransformerMixin
+from sklearn.base import (
+    BaseEstimator,
+    ClassifierMixin,
+    RegressorMixin,
+    TransformerMixin,
+)
 from sklearn.utils.metaestimators import _BaseComposition
 
 import gamma.sklearndf.classification
+import gamma.sklearndf.pipeline
 import gamma.sklearndf.regression
 import gamma.sklearndf.transformation
-import gamma.sklearndf.pipeline
+from gamma.sklearndf._wrapper import _BaseEstimatorWrapperDF
 from test import check_sklearn_version
 from test.conftest import UNSUPPORTED_SKLEARN_PACKAGES
-
-from test.gamma.sklearndf import find_all_submodules, list_classes, sklearndf_to_wrapped
+from test.gamma.sklearndf import (
+    find_all_submodules,
+    list_classes,
+    sklearn_delegate_classes,
+)
 
 Module: type = Any
 
@@ -24,11 +34,11 @@ CLASSIFIER_COVERAGE_EXCLUDES = {
     # exclude all Mixin classes, named ending on Mixin:
     r".*Mixin$",
     # Base classes and Mixins, not following the convention
-    sklearn.ensemble._forest.ForestClassifier.__name__,
+    "ForestClassifier",
 }
 
 if check_sklearn_version(minimum="0.23"):
-    added_in_v023 = (sklearn.linear_model._ridge._IdentityClassifier.__name__,)
+    added_in_v023 = ("_IdentityClassifier",)
     CLASSIFIER_COVERAGE_EXCLUDES.update(added_in_v023)
 
 REGRESSOR_COVERAGE_EXCLUDES = {
@@ -37,18 +47,24 @@ REGRESSOR_COVERAGE_EXCLUDES = {
     # exclude all Mixin classes, named ending on Mixin:
     r".*Mixin$",
     # Base classes and Mixins, not following the convention -->
-    sklearn.ensemble._forest.ForestRegressor.__name__,
+    "ForestRegressor",
     # <--- Base classes and Mixins, not following the convention
     # Private classes -->
-    sklearn.calibration._SigmoidCalibration.__name__,
-    sklearn.cross_decomposition._pls._PLS.__name__
+    "_SigmoidCalibration",
+    "_PLS"
     # <-- Private classes
 }
 
 
-TRANSFORMER_COVERAGE_EXCLUDES = CLASSIFIER_COVERAGE_EXCLUDES.union(
-    REGRESSOR_COVERAGE_EXCLUDES
+TRANSFORMER_COVERAGE_EXCLUDES = (
+    {
+        # class "Imputer" was deprecated in 0.20 and removed in 0.22
+        "Imputer"
+    }
+    | CLASSIFIER_COVERAGE_EXCLUDES
+    | REGRESSOR_COVERAGE_EXCLUDES
 )
+
 
 PIPELINE_COVERAGE_EXCLUDES = {
     # exclude all Base classes, named starting with "Base" or "_Base":
@@ -57,9 +73,9 @@ PIPELINE_COVERAGE_EXCLUDES = {
     r".*Mixin$",
 }
 
-SKIP_COVERAGE_FOR = {
-    c.__name__
-    for c in list_classes(
+UNSUPPORTED_SKLEARN_CLASSES = {
+    sklearn_class.__name__
+    for sklearn_class in list_classes(
         from_modules=itertools.chain.from_iterable(
             find_all_submodules(p) for p in UNSUPPORTED_SKLEARN_PACKAGES
         ),
@@ -76,7 +92,7 @@ def _find_sklearn_classes_to_cover(
     return [
         cls
         for cls in list_classes(
-            from_modules=from_modules, matching=".*", excluding=excluding,
+            from_modules=from_modules, matching=".*", excluding=excluding
         )
         if issubclass(cls, subclass_of)
     ]
@@ -132,46 +148,52 @@ def sklearn_transformer_classes() -> List[Type]:
     return transformer_classes
 
 
-def _handle_not_covered_type(cls: Type) -> None:
+def _check_unexpected_sklearn_class(cls: Type) -> None:
     f_cls_name = f"{cls.__module__}.{cls.__name__}"
-    if cls.__name__ in SKIP_COVERAGE_FOR:
-        pytest.skip(f"Class '{f_cls_name} is not wrapped but marked as unsupported!' ")
+    if cls.__name__ in UNSUPPORTED_SKLEARN_CLASSES:
+        pytest.skip(f"Class '{f_cls_name} is not wrapped but marked as unsupported' ")
     else:
-        raise ValueError(f"Class '{f_cls_name}' is not wrapped!")
+        raise ValueError(f"Class '{f_cls_name}' is not wrapped")
 
 
 @pytest.mark.parametrize(
     argnames="sklearn_classifier_cls", argvalues=sklearn_classifier_classes()
 )
-def test_classifier_coverage(sklearn_classifier_cls: Type) -> None:
+def test_classifier_coverage(sklearn_classifier_cls: Type[ClassifierMixin]) -> None:
     """ Check if each sklearn classifier has a wrapped sklearndf counterpart. """
-    sklearndf_cls_to_sklearn_cls = sklearndf_to_wrapped(gamma.sklearndf.classification)
+    sklearn_classes: Dict[
+        BaseEstimator, _BaseEstimatorWrapperDF
+    ] = sklearn_delegate_classes(gamma.sklearndf.classification)
 
-    if sklearn_classifier_cls not in sklearndf_cls_to_sklearn_cls.values():
-        _handle_not_covered_type(sklearn_classifier_cls)
+    if sklearn_classifier_cls not in sklearn_classes:
+        _check_unexpected_sklearn_class(sklearn_classifier_cls)
 
 
 @pytest.mark.parametrize(
     argnames="sklearn_regressor_cls", argvalues=sklearn_regressor_classes()
 )
-def test_regressor_coverage(sklearn_regressor_cls: List[Type]) -> None:
+def test_regressor_coverage(sklearn_regressor_cls: Type[RegressorMixin]) -> None:
     """ Check if each sklearn regressor has a wrapped sklearndf counterpart. """
-    sklearndf_cls_to_sklearn_cls = sklearndf_to_wrapped(gamma.sklearndf.regression)
+    sklearn_classes: Dict[
+        BaseEstimator, _BaseEstimatorWrapperDF
+    ] = sklearn_delegate_classes(gamma.sklearndf.regression)
 
-    if sklearn_regressor_cls not in sklearndf_cls_to_sklearn_cls.values():
-        _handle_not_covered_type(sklearn_regressor_cls)
+    if sklearn_regressor_cls not in sklearn_classes:
+        _check_unexpected_sklearn_class(sklearn_regressor_cls)
 
 
 @pytest.mark.parametrize(
     argnames="sklearn_transformer_cls", argvalues=sklearn_transformer_classes()
 )
-def test_transformer_coverage(sklearn_transformer_cls: Type) -> None:
+def test_transformer_coverage(sklearn_transformer_cls: Type[TransformerMixin]) -> None:
     """ Check if each sklearn transformer has a wrapped sklearndf counterpart. """
 
-    sklearndf_cls_to_sklearn_cls = sklearndf_to_wrapped(gamma.sklearndf.transformation)
+    sklearn_classes: Dict[
+        BaseEstimator, _BaseEstimatorWrapperDF
+    ] = sklearn_delegate_classes(gamma.sklearndf.transformation)
 
-    if sklearn_transformer_cls not in sklearndf_cls_to_sklearn_cls.values():
-        _handle_not_covered_type(sklearn_transformer_cls)
+    if sklearn_transformer_cls not in sklearn_classes:
+        _check_unexpected_sklearn_class(sklearn_transformer_cls)
 
 
 @pytest.mark.parametrize(
@@ -181,7 +203,7 @@ def test_pipeline_coverage(sklearn_pipeline_cls: Type) -> None:
     """ Check if each sklearn pipeline estimator has
         a wrapped sklearndf counterpart. """
 
-    sklearndf_cls_to_sklearn_cls = sklearndf_to_wrapped(gamma.sklearndf.pipeline)
+    sklearn_classes = sklearn_delegate_classes(gamma.sklearndf.pipeline)
 
-    if sklearn_pipeline_cls not in sklearndf_cls_to_sklearn_cls.values():
-        _handle_not_covered_type(sklearn_pipeline_cls)
+    if sklearn_pipeline_cls not in sklearn_classes:
+        _check_unexpected_sklearn_class(sklearn_pipeline_cls)
