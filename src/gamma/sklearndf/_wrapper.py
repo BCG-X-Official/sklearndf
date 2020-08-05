@@ -1,12 +1,14 @@
 """
-Wrappers around scikit-learn estimators.
+Wrappers around native scikit-learn estimators.
 
-These mimic the behavior of the wrapped scikit-learn estimator, but only accept and
-return data frames (while scikit-learn transformers usually return a numpy arrays, and
-may not accept data frames as input).
+`sklearndf` wrappers accept and return data frames (while scikit-learn transformers
+usually return a numpy arrays, and may not accept data frames as input).
+Otherwise the wrappers are designed to precisely mirror the API and behavior of the
+native estimators they wrap.
 
-The wrappers also support the additional column attributes introduced by the
-DataFrameEstimators and their generic subclasses including transformers and predictors
+The wrappers also implement the additional column attributes introduced by `sklearndf`,
+:meth:`~BaseEstimatorDF.features_in`, :meth:`~TransformerDF.features_out`, and
+:meth:`~TransformerDF.features_original`.
 """
 
 import inspect
@@ -26,11 +28,12 @@ from sklearn.base import (
     TransformerMixin,
 )
 
+from gamma.common import inheritdoc
 from gamma.common.fit import T_Self
 from gamma.sklearndf import (
     BaseEstimatorDF,
-    BaseLearnerDF,
     ClassifierDF,
+    LearnerDF,
     RegressorDF,
     TransformerDF,
 )
@@ -39,7 +42,7 @@ log = logging.getLogger(__name__)
 
 __all__ = [
     "_BaseEstimatorWrapperDF",
-    "_BaseLearnerWrapperDF",
+    "_LearnerWrapperDF",
     "_ClassifierWrapperDF",
     "df_estimator",
     "_MetaClassifierWrapperDF",
@@ -60,9 +63,7 @@ T = TypeVar("T")
 
 T_DelegateEstimator = TypeVar("T_DelegateEstimator", bound=BaseEstimator)
 T_DelegateTransformer = TypeVar("T_DelegateTransformer", bound=TransformerMixin)
-T_DelegateLearner = TypeVar(
-    "T_DelegateLearner", bound=Union[RegressorMixin, ClassifierMixin]
-)
+T_DelegateLearner = TypeVar("T_DelegateLearner", RegressorMixin, ClassifierMixin)
 T_DelegateRegressor = TypeVar("T_DelegateRegressor", bound=RegressorMixin)
 T_DelegateClassifier = TypeVar("T_DelegateClassifier", bound=ClassifierMixin)
 
@@ -74,20 +75,31 @@ T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="_BaseEstimatorWrap
 #
 
 
+@inheritdoc(match="[see superclass]")
 class _BaseEstimatorWrapperDF(
     BaseEstimator, BaseEstimatorDF, Generic[T_DelegateEstimator], metaclass=ABCMeta
 ):
-    # todo explain what is the benefit compared to the class BaseEstimatorDF
     """
-    Abstract base class that is a wrapper around :class:`sklearn.base.BaseEstimator`.
+    Base class for wrappers around a delegate :class:`sklearn.base.BaseEstimator`.
 
-    Implementations must define a method ``_make_delegate_estimator``.
-
+    Implementations must define a method :meth:`._make_delegate_estimator`, used to
+    instantiate the delegate estimator to be wrapped.
     """
 
     def __init__(
         self, *args, _delegate_estimator: Optional[T_DelegateEstimator] = None, **kwargs
     ) -> None:
+        """
+        :param _delegate_estimator: (optional) an estimator to use as the delegate;
+            if specified, do not create a new estimator and ignore any other arguments \
+            passed to this initializer
+        :param args: positional arguments to use when initializing a new new delegate \
+            estimator
+        :param kwargs: keyword arguments to use when initializing a new new delegate \
+            estimator
+        """
+        super().__init__()
+
         if _delegate_estimator is None:
             # create a new delegate estimator with the given parameters
             # noinspection PyProtectedMember
@@ -102,11 +114,14 @@ class _BaseEstimatorWrapperDF(
         self._reset_fit()
 
     @property
-    def delegate_estimator(self) -> T_DelegateEstimator:
-        """
-        Return the original estimator which this wrapper delegates to.
+    def is_fitted(self) -> bool:
+        """[see superclass]"""
+        return self._features_in is not None
 
-        :return: the original estimator which this estimator delegates to
+    @property
+    def native_estimator(self) -> T_DelegateEstimator:
+        """
+        The native estimator which this wrapper delegates to.
         """
         return self._delegate_estimator
 
@@ -134,26 +149,12 @@ class _BaseEstimatorWrapperDF(
 
         return _FittedEstimator()
 
-    def get_params(self, deep=True) -> Dict[str, Any]:
-        """
-        Get parameters for this estimator.
-
-        :param deep: if ``True``, return the parameters for this estimator and \
-        contained sub-objects that are estimators
-
-        :return: mapping of the parameter names to their values
-        """
+    def get_params(self, deep=True) -> Mapping[str, Any]:
+        """[see superclass]"""
         return self._delegate_estimator.get_params(deep=deep)
 
     def set_params(self: T_Self, **kwargs) -> T_Self:
-        """
-        Set the parameters of this estimator.
-
-        Valid parameter keys can be listed with ``get_params()``.
-
-        :returns self
-        """
-
+        """[see superclass]"""
         self: _BaseEstimatorWrapperDF  # support type hinting in PyCharm
         self._delegate_estimator.set_params(**kwargs)
         return self
@@ -165,12 +166,7 @@ class _BaseEstimatorWrapperDF(
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
     ) -> T_Self:
-        """
-        Fit the delegate estimator.
-
-        :param X: feature matrix
-        :param y: target as a pandas series or data frame (if multi-output)
-        """
+        """[see superclass]"""
 
         # support type hinting in PyCharm
         self: _BaseEstimatorWrapperDF[T_DelegateEstimator]
@@ -195,11 +191,6 @@ class _BaseEstimatorWrapperDF(
 
     def _validate_delegate_estimator(self) -> None:
         pass
-
-    @property
-    def is_fitted(self) -> bool:
-        """``True`` if this estimator is fitted, else ``False``."""
-        return self._features_in is not None
 
     def _get_features_in(self) -> pd.Index:
         return self._features_in
@@ -280,9 +271,9 @@ class _BaseEstimatorWrapperDF(
             _compare_labels(axis="index", actual=df.index, expected=expected_index)
 
     def _validate_delegate_attribute(self, attribute_name: str) -> None:
-        if not hasattr(self.delegate_estimator, attribute_name):
+        if not hasattr(self.native_estimator, attribute_name):
             raise AttributeError(
-                f"delegate estimator of type {type(self.delegate_estimator).__name__} "
+                f"delegate estimator of type {type(self.native_estimator).__name__} "
                 f"does not have attribute {attribute_name}"
             )
 
@@ -328,6 +319,7 @@ class _BaseEstimatorWrapperDF(
             setattr(self._delegate_estimator, name, value)
 
 
+@inheritdoc(match="[see superclass]")
 class _TransformerWrapperDF(
     TransformerDF,
     _BaseEstimatorWrapperDF[T_DelegateTransformer],
@@ -335,24 +327,12 @@ class _TransformerWrapperDF(
     metaclass=ABCMeta,
 ):
     """
-    Wraps a :class:`sklearn.base.TransformerMixin` and ensures that the X and y
-    objects passed and returned are pandas data frames with valid column names.
-
-    Implementations must define ``_make_delegate_estimator`` and
-    ``_get_features_original``.
-
-    :param `**args`: positional arguments of scikit-learn transformer to be wrapped
-    :param `**kwargs`: keyword arguments  of scikit-learn transformer to be wrapped
+    Base class for wrappers around a delegate transformer.
     """
 
     # noinspection PyPep8Naming
     def transform(self, X: pd.DataFrame) -> pd.DataFrame:
-        """Call the transform method of the delegate transformer
-        ``self.delegate_estimator``.
-
-        :param X: data frame to transform
-        :return: transformed data frame
-        """
+        """[see superclass]"""
         self._check_parameter_types(X, None)
 
         transformed = self._transform(X)
@@ -365,14 +345,7 @@ class _TransformerWrapperDF(
     def fit_transform(
         self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params
     ) -> pd.DataFrame:
-        """Call the ``fit_transform`` method of ``self.delegate_estimator``.
-
-        :param X: data frame to transform
-        :param y: series of training targets
-        :param fit_params: parameters passed to the fit method of the delegate
-                           transformer
-        :return: data frame of transformed sample
-        """
+        """[see superclass]"""
         self._reset_fit()
 
         self._check_parameter_types(X, y)
@@ -387,14 +360,7 @@ class _TransformerWrapperDF(
 
     # noinspection PyPep8Naming
     def inverse_transform(self, X: pd.DataFrame) -> pd.DataFrame:
-        """
-        Apply inverse transformations in reverse order on the delegate
-        transformer.
-
-        All estimators in the pipeline must support ``inverse_transform``.
-        :param X: data frame of samples
-        :return: data frame of inverse-transformed samples
-        """
+        """[see superclass]"""
         self._reset_fit()
 
         self._check_parameter_types(X, None)
@@ -431,13 +397,13 @@ class _TransformerWrapperDF(
     # noinspection PyPep8Naming
     def _transform(self, X: pd.DataFrame) -> np.ndarray:
         # noinspection PyUnresolvedReferences
-        return self.delegate_estimator.transform(self._convert_X_for_delegate(X))
+        return self.native_estimator.transform(self._convert_X_for_delegate(X))
 
     # noinspection PyPep8Naming
     def _fit_transform(
         self, X: pd.DataFrame, y: Optional[pd.Series], **fit_params
     ) -> np.ndarray:
-        return self.delegate_estimator.fit_transform(
+        return self.native_estimator.fit_transform(
             self._convert_X_for_delegate(X),
             self._convert_y_for_delegate(y),
             **fit_params,
@@ -446,61 +412,42 @@ class _TransformerWrapperDF(
     # noinspection PyPep8Naming
     def _inverse_transform(self, X: pd.DataFrame) -> np.ndarray:
         # noinspection PyUnresolvedReferences
-        return self.delegate_estimator.inverse_transform(
-            self._convert_X_for_delegate(X)
-        )
+        return self.native_estimator.inverse_transform(self._convert_X_for_delegate(X))
 
 
-class _BaseLearnerWrapperDF(
-    BaseLearnerDF,
+@inheritdoc(match="[see superclass]")
+class _LearnerWrapperDF(
+    LearnerDF,
     _BaseEstimatorWrapperDF[T_DelegateLearner],
     Generic[T_DelegateLearner],
     metaclass=ABCMeta,
 ):
     """
-    Base class for sklearn regressors and classifiers that preserve data frames
-
-    :param `**kwargs`: arguments passed to :class:`.BaseEstimatorDF` in ``__init__``
+    Base class for wrappers around a delegate learner.
     """
 
-    F_PREDICTION = "prediction"
+    COL_PREDICTION = "prediction"
 
     # noinspection PyPep8Naming
     def predict(
         self, X: pd.DataFrame, **predict_params
     ) -> Union[pd.Series, pd.DataFrame]:
-        """
-        Compute the prediction as a series or a data frame.
-
-        For single-output problems, return a series, fro multi-output problems,
-        return a data frame.
-
-        :param X: the data frame of features
-        :param predict_params: additional arguments passed to the ``predict`` method \
-        of the delegate estimator
-        :return: the predictions
-        """
+        """[see superclass]"""
         self._check_parameter_types(X, None)
 
         # noinspection PyUnresolvedReferences
         return self._prediction_to_series_or_frame(
             X,
-            self.delegate_estimator.predict(
+            self.native_estimator.predict(
                 self._convert_X_for_delegate(X), **predict_params
             ),
         )
 
     # noinspection PyPep8Naming
-    def fit_predict(self, X: pd.DataFrame, y: pd.Series, **fit_params) -> pd.Series:
-        """
-        Fit and return the predictions.
-
-        :param X: the data frame of features
-        :param y: the series of target used to train the model
-        :param fit_params: additional arguments passed to the the ``predict`` method
-          of the delegate estimator
-        :return: series of the predictions for X
-        """
+    def fit_predict(
+        self, X: pd.DataFrame, y: pd.Series, **fit_params
+    ) -> Union[pd.Series, pd.DataFrame]:
+        """[see superclass]"""
 
         self._reset_fit()
 
@@ -509,7 +456,7 @@ class _BaseLearnerWrapperDF(
         # noinspection PyUnresolvedReferences
         result = self._prediction_to_series_or_frame(
             X,
-            self.delegate_estimator.fit_predict(
+            self.native_estimator.fit_predict(
                 self._convert_X_for_delegate(X),
                 self._convert_y_for_delegate(y),
                 **fit_params,
@@ -524,22 +471,14 @@ class _BaseLearnerWrapperDF(
     def score(
         self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
     ) -> float:
-        """
-        Return the score of the delegate estimator.
-
-        :param X: data frame of the features, shape = (n_samples, n_features)
-        :param y: series of the true targets, shape = (n_samples) or (n_samples, \
-        n_outputs)
-        :param sample_weight:  array-like, sample weights, shape = (n_sample)
-        :return: the score of the model
-        """
+        """[see superclass]"""
         self._check_parameter_types(X, y)
         if y is None:
             raise ValueError("arg y must not be None")
         if sample_weight is not None and not isinstance(sample_weight, pd.Series):
             raise TypeError("arg sample_weight must be None or a Series")
 
-        return self.delegate_estimator.score(
+        return self.native_estimator.score(
             self._convert_X_for_delegate(X),
             self._convert_y_for_delegate(y),
             sample_weight,
@@ -558,7 +497,7 @@ class _BaseLearnerWrapperDF(
                 # predictions are usually provided as a numpy array the same length as X
                 if y.ndim == 1:
                     # single-output predictions yield a numpy array of shape (n_samples)
-                    return pd.Series(data=y, name=self.F_PREDICTION, index=X.index)
+                    return pd.Series(data=y, name=self.COL_PREDICTION, index=X.index)
                 if y.ndim == 2:
                     # multi-output predictions yield a numpy array of shape (n_samples,
                     # n_outputs)
@@ -573,18 +512,19 @@ class _BaseLearnerWrapperDF(
 
 class _RegressorWrapperDF(
     RegressorDF,
-    _BaseLearnerWrapperDF[T_DelegateRegressor],
+    _LearnerWrapperDF[T_DelegateRegressor],
     Generic[T_DelegateRegressor],
     metaclass=ABCMeta,
 ):
     """
-    Wrapper around sklearn regressors that preserves data frames.
+    Base class for wrappers around a delegate learner.
     """
 
 
+@inheritdoc(match="[see superclass]")
 class _ClassifierWrapperDF(
     ClassifierDF,
-    _BaseLearnerWrapperDF[T_DelegateClassifier],
+    _LearnerWrapperDF[T_DelegateClassifier],
     Generic[T_DelegateClassifier],
     metaclass=ABCMeta,
 ):
@@ -593,13 +533,10 @@ class _ClassifierWrapperDF(
     """
 
     # noinspection PyPep8Naming
-    def predict_proba(self, X: pd.DataFrame) -> Union[pd.DataFrame, List[pd.DataFrame]]:
-        """
-        Probability estimates.
-
-        :param X: data frame of features
-        :return: the series of probability estimates
-        """
+    def predict_proba(
+        self, X: pd.DataFrame, **predict_params
+    ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+        """[see superclass]"""
 
         self._ensure_delegate_method("predict_proba")
 
@@ -607,19 +544,17 @@ class _ClassifierWrapperDF(
 
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
-            X, self.delegate_estimator.predict_proba(self._convert_X_for_delegate(X))
+            X,
+            self.native_estimator.predict_proba(
+                self._convert_X_for_delegate(X), **predict_params
+            ),
         )
 
     # noinspection PyPep8Naming
     def predict_log_proba(
-        self, X: pd.DataFrame
+        self, X: pd.DataFrame, **predict_params
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
-        """
-        Log of probability estimates.
-
-        :param X: data frame of features
-        :return: series of log-probabilities
-        """
+        """[see superclass]"""
 
         self._ensure_delegate_method("predict_log_proba")
 
@@ -628,17 +563,16 @@ class _ClassifierWrapperDF(
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
             X,
-            self.delegate_estimator.predict_log_proba(self._convert_X_for_delegate(X)),
+            self.native_estimator.predict_log_proba(
+                self._convert_X_for_delegate(X), **predict_params
+            ),
         )
 
     # noinspection PyPep8Naming
-    def decision_function(self, X: pd.DataFrame) -> Union[pd.Series, pd.DataFrame]:
-        """
-        Evaluate the decision function for the samples in X.
-
-        :param X: data frame of features
-        :return: data frame of the decision functions of the sample for each class
-        """
+    def decision_function(
+        self, X: pd.DataFrame, **predict_params
+    ) -> Union[pd.Series, pd.DataFrame]:
+        """[see superclass]"""
 
         self._ensure_delegate_method("decision_function")
 
@@ -647,13 +581,15 @@ class _ClassifierWrapperDF(
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
             X,
-            self.delegate_estimator.decision_function(self._convert_X_for_delegate(X)),
+            self.native_estimator.decision_function(
+                self._convert_X_for_delegate(X), **predict_params
+            ),
         )
 
     def _ensure_delegate_method(self, method: str) -> None:
-        if not hasattr(self.delegate_estimator, method):
+        if not hasattr(self.native_estimator, method):
             raise NotImplementedError(
-                f"{type(self.delegate_estimator).__name__} does not implement method "
+                f"{type(self.native_estimator).__name__} does not implement method "
                 f"{method}"
             )
 
@@ -666,7 +602,7 @@ class _ClassifierWrapperDF(
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
 
         if classes is None:
-            classes = getattr(self.delegate_estimator, "classes_", None)
+            classes = getattr(self.native_estimator, "classes_", None)
 
         if isinstance(y, pd.DataFrame) or isinstance(y, pd.Series):
             # if we already have a series or data frame, return it unchanged
@@ -704,23 +640,23 @@ class _MetaEstimatorWrapperDF(
     """
     Abstract base class wrapping around estimators implementing
     :class:`sklearn.base.MetaEstimatorMixin`. A meta-estimator will call the methods
-    of the embedded estimator using a modified copy of the ``X`` and ``y`` parameters,
+    of the embedded estimator using a modified copy of the `X` and `y` parameters,
     so we need to make sure that these are converted back to data frames.
 
     This class covers three cases used in sklearn:
-    - one inner estimator in attribute ``estimator`` or ``base_estimator``
-    - multiple inner estimators in attribute ``estimators``
+    - one inner estimator in attribute `estimator` or `base_estimator`
+    - multiple inner estimators in attribute `estimators`
     """
 
     def _validate_delegate_estimator(self) -> None:
         def _unwrap_estimator(estimator: BaseEstimator) -> BaseEstimator:
             return (
-                estimator.root_estimator
+                estimator.native_estimator
                 if isinstance(estimator, BaseEstimatorDF)
                 else estimator
             )
 
-        delegate_estimator = self.delegate_estimator
+        delegate_estimator = self.native_estimator
 
         if hasattr(delegate_estimator, "estimator"):
             delegate_estimator.estimator = _unwrap_estimator(
@@ -795,12 +731,12 @@ class _StackingEstimatorWrapperDF(
                 return None
             else:
                 return (
-                    estimator.root_estimator
+                    estimator.native_estimator
                     if isinstance(estimator, BaseEstimatorDF)
                     else estimator
                 )
 
-        delegate_estimator = self.delegate_estimator
+        delegate_estimator = self.native_estimator
 
         # note: as final_estimator is optional, _unwrap_estimator will return None
         #       attribute "named_estimators_" is constructed based off estimators
@@ -869,7 +805,7 @@ def df_estimator(
     :param df_wrapper_type: optional parameter indicating the \
                               :class:`BaseEstimatorWrapperDF` class to be used for \
                               wrapping; defaults to :class:`BaseEstimatorWrapperDF`
-    :return: the resulting ``BaseEstimatorWrapperDF`` with ``delegate_estimator`` as \
+    :return: the resulting ``BaseEstimatorWrapperDF`` with ``native_estimator`` as \
              the delegate estimator
     """
 
@@ -888,23 +824,21 @@ def df_estimator(
             return sklearn_estimator_type(*args, **kwargs)
 
         # dynamically create the wrapper class
-        df_estimator_type: Type[_BaseEstimatorWrapperDF[T_DelegateEstimator]] = cast(
-            Type[_BaseEstimatorWrapperDF[T_DelegateEstimator]],
-            type(
-                # preserve the name
-                decoratee.__name__,
-                # subclass the wrapper type (e.g., BaseEstimatorWrapperDF)
-                (df_wrapper_type,),
-                {
-                    # implement abstract class method _make_delegate_estimator
-                    _make_delegate_estimator.__name__: classmethod(
-                        _make_delegate_estimator
-                    ),
-                    # mirror all attributes of the wrapped sklearn class, as long
-                    # as they are not inherited from the wrapper base class
-                    **_mirror_attributes(delegate_type=sklearn_estimator_type),
-                },
-            ),
+        # noinspection PyTypeChecker
+        df_estimator_type: Type[_BaseEstimatorWrapperDF[T_DelegateEstimator]] = type(
+            # preserve the name
+            decoratee.__name__,
+            # subclass the wrapper type (e.g., BaseEstimatorWrapperDF)
+            (df_wrapper_type,),
+            {
+                # implement abstract class method _make_delegate_estimator
+                _make_delegate_estimator.__name__: classmethod(
+                    _make_delegate_estimator
+                ),
+                # mirror all attributes of the wrapped sklearn class, as long
+                # as they are not inherited from the wrapper base class
+                **_mirror_attributes(delegate_type=sklearn_estimator_type),
+            },
         )
 
         # add link to the wrapped class, for use in python module 'inspect'

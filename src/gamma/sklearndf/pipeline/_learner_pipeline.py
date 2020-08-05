@@ -12,23 +12,23 @@ from sklearn.base import BaseEstimator
 from gamma.common.fit import T_Self
 from gamma.sklearndf import (
     BaseEstimatorDF,
-    BaseLearnerDF,
     ClassifierDF,
+    LearnerDF,
     RegressorDF,
     TransformerDF,
 )
 
 log = logging.getLogger(__name__)
 
-__all__ = ["BaseLearnerPipelineDF", "RegressorPipelineDF", "ClassifierPipelineDF"]
+__all__ = ["LearnerPipelineDF", "RegressorPipelineDF", "ClassifierPipelineDF"]
 
 T_FinalEstimatorDF = TypeVar("T_FinalEstimatorDF", bound=BaseEstimatorDF)
-T_FinalLearnerDF = TypeVar("T_FinalLearnerDF", bound=BaseLearnerDF)
+T_FinalLearnerDF = TypeVar("T_FinalLearnerDF", bound=LearnerDF)
 T_FinalRegressorDF = TypeVar("T_FinalRegressorDF", bound=RegressorDF)
 T_FinalClassifierDF = TypeVar("T_FinalClassifierDF", bound=ClassifierDF)
 
 
-class BaseEstimatorPipelineDF(
+class _BaseEstimatorPipelineDF(
     BaseEstimator, BaseEstimatorDF, Generic[T_FinalEstimatorDF], metaclass=ABCMeta
 ):
     """
@@ -80,7 +80,7 @@ class BaseEstimatorPipelineDF(
         feature_sequence: Optional[pd.Index] = None,
         **fit_params,
     ) -> T_Self:
-        self: BaseEstimatorPipelineDF  # support type hinting in PyCharm
+        self: _BaseEstimatorPipelineDF  # support type hinting in PyCharm
 
         X_preprocessed: pd.DataFrame = self._pre_fit_transform(X, y, **fit_params)
 
@@ -151,9 +151,9 @@ class BaseEstimatorPipelineDF(
             return X
 
 
-class BaseLearnerPipelineDF(
-    BaseEstimatorPipelineDF[T_FinalLearnerDF],
-    BaseLearnerDF,
+class LearnerPipelineDF(
+    _BaseEstimatorPipelineDF[T_FinalLearnerDF],
+    LearnerDF,
     Generic[T_FinalLearnerDF],
     metaclass=ABCMeta,
 ):
@@ -165,7 +165,9 @@ class BaseLearnerPipelineDF(
         return self.final_estimator.predict(self._pre_transform(X), **predict_params)
 
     # noinspection PyPep8Naming
-    def fit_predict(self, X: pd.DataFrame, y: pd.Series, **fit_params) -> pd.Series:
+    def fit_predict(
+        self, X: pd.DataFrame, y: pd.Series, **fit_params
+    ) -> Union[pd.Series, pd.DataFrame]:
         return self.final_estimator.fit_predict(
             self._pre_fit_transform(X, y, **fit_params), y, **fit_params
         )
@@ -186,7 +188,7 @@ class BaseLearnerPipelineDF(
 
 
 class RegressorPipelineDF(
-    BaseLearnerPipelineDF[T_FinalRegressorDF], RegressorDF, Generic[T_FinalRegressorDF]
+    LearnerPipelineDF[T_FinalRegressorDF], RegressorDF, Generic[T_FinalRegressorDF]
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
@@ -223,9 +225,7 @@ class RegressorPipelineDF(
 
 
 class ClassifierPipelineDF(
-    BaseLearnerPipelineDF[T_FinalClassifierDF],
-    ClassifierDF,
-    Generic[T_FinalClassifierDF],
+    LearnerPipelineDF[T_FinalClassifierDF], ClassifierDF, Generic[T_FinalClassifierDF]
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
@@ -260,15 +260,23 @@ class ClassifierPipelineDF(
         return "classifier"
 
     # noinspection PyPep8Naming
-    def predict_proba(self, X: pd.DataFrame) -> Union[pd.DataFrame, List[pd.DataFrame]]:
-        return self.classifier.predict_proba(self._pre_transform(X))
+    def predict_proba(
+        self, X: pd.DataFrame, **predict_params
+    ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+        return self.classifier.predict_proba(self._pre_transform(X), **predict_params)
 
     # noinspection PyPep8Naming
     def predict_log_proba(
-        self, X: pd.DataFrame
+        self, X: pd.DataFrame, **predict_params
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
-        return self.classifier.predict_log_proba(self._pre_transform(X))
+        return self.classifier.predict_log_proba(
+            self._pre_transform(X), **predict_params
+        )
 
     # noinspection PyPep8Naming
-    def decision_function(self, X: pd.DataFrame) -> Union[pd.Series, pd.DataFrame]:
-        return self.classifier.decision_function(self._pre_transform(X))
+    def decision_function(
+        self, X: pd.DataFrame, **predict_params
+    ) -> Union[pd.Series, pd.DataFrame]:
+        return self.classifier.decision_function(
+            self._pre_transform(X), **predict_params
+        )

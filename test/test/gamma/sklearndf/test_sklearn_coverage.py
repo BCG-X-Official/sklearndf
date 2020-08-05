@@ -16,7 +16,7 @@ import gamma.sklearndf.classification
 import gamma.sklearndf.pipeline
 import gamma.sklearndf.regression
 import gamma.sklearndf.transformation
-from gamma.sklearndf._wrapper import _BaseEstimatorWrapperDF
+from gamma.sklearndf import BaseEstimatorDF
 from test import check_sklearn_version
 from test.conftest import UNSUPPORTED_SKLEARN_PACKAGES
 from test.gamma.sklearndf import (
@@ -25,7 +25,7 @@ from test.gamma.sklearndf import (
     sklearn_delegate_classes,
 )
 
-Module: type = Any
+Module = type(sklearn)
 
 
 CLASSIFIER_COVERAGE_EXCLUDES = {
@@ -161,9 +161,9 @@ def _check_unexpected_sklearn_class(cls: Type) -> None:
 )
 def test_classifier_coverage(sklearn_classifier_cls: Type[ClassifierMixin]) -> None:
     """ Check if each sklearn classifier has a wrapped sklearndf counterpart. """
-    sklearn_classes: Dict[
-        BaseEstimator, _BaseEstimatorWrapperDF
-    ] = sklearn_delegate_classes(gamma.sklearndf.classification)
+    sklearn_classes: Dict[BaseEstimator, BaseEstimatorDF] = sklearn_delegate_classes(
+        gamma.sklearndf.classification
+    )
 
     if sklearn_classifier_cls not in sklearn_classes:
         _check_unexpected_sklearn_class(sklearn_classifier_cls)
@@ -174,9 +174,9 @@ def test_classifier_coverage(sklearn_classifier_cls: Type[ClassifierMixin]) -> N
 )
 def test_regressor_coverage(sklearn_regressor_cls: Type[RegressorMixin]) -> None:
     """ Check if each sklearn regressor has a wrapped sklearndf counterpart. """
-    sklearn_classes: Dict[
-        BaseEstimator, _BaseEstimatorWrapperDF
-    ] = sklearn_delegate_classes(gamma.sklearndf.regression)
+    sklearn_classes: Dict[BaseEstimator, BaseEstimatorDF] = sklearn_delegate_classes(
+        gamma.sklearndf.regression
+    )
 
     if sklearn_regressor_cls not in sklearn_classes:
         _check_unexpected_sklearn_class(sklearn_regressor_cls)
@@ -188,9 +188,9 @@ def test_regressor_coverage(sklearn_regressor_cls: Type[RegressorMixin]) -> None
 def test_transformer_coverage(sklearn_transformer_cls: Type[TransformerMixin]) -> None:
     """ Check if each sklearn transformer has a wrapped sklearndf counterpart. """
 
-    sklearn_classes: Dict[
-        BaseEstimator, _BaseEstimatorWrapperDF
-    ] = sklearn_delegate_classes(gamma.sklearndf.transformation)
+    sklearn_classes: Dict[BaseEstimator, BaseEstimatorDF] = sklearn_delegate_classes(
+        gamma.sklearndf.transformation
+    )
 
     if sklearn_transformer_cls not in sklearn_classes:
         _check_unexpected_sklearn_class(sklearn_transformer_cls)

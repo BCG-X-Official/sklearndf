@@ -46,7 +46,7 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
       far outliers)
     """
 
-    def get_params(self, deep=True) -> Dict[str, Any]:
+    def get_params(self, deep=True) -> Mapping[str, Any]:
         return super().get_params(deep)
 
     def set_params(self: T, **kwargs) -> T:
@@ -117,7 +117,7 @@ class _BorutaPyWrapperDF(
     metaclass=ABCMeta,
 ):
     def _get_features_out(self) -> pd.Index:
-        return self.features_in[self.delegate_estimator.support_]
+        return self.features_in[self.native_estimator.support_]
 
 
 # noinspection PyAbstractClass,PyUnresolvedReferences
