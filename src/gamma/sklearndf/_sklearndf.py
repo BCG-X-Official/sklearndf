@@ -79,7 +79,7 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         """
         Fit this estimator using the given inputs.
 
-        :param X: a data frame of observations as rows and features as columns
+        :param X: input data frame with observations as rows and features as columns
         :param y: an optional series or data frame with one or more outputs
         :param fit_params: additional keyword parameters as required by specific \
             estimator implementations
@@ -165,12 +165,12 @@ class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
         """
         Predict outputs for the given inputs.
 
-        The observations must have the same features as the observations used to fit
+        The inputs must have the same features as the inputs used to fit
         this learner.
         The features can be provided in any order since they are identified by their
         column names.
 
-        :param X: data frame with observations in rows and features in columns
+        :param X: input data frame with observations as rows and features as columns
         :param y: a series or data frame with one or more outputs per observation
         :param predict_params: optional keyword parameters as required by specific \
             learner implementations
@@ -183,9 +183,9 @@ class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
         self, X: pd.DataFrame, y: pd.Series, **fit_params
     ) -> Union[pd.Series, pd.DataFrame]:
         """
-        Fit this learner using the given observations, then predict the outputs.
+        Fit this learner using the given inputs, then predict the outputs.
 
-        :param X: data frame with observations in rows and features in columns
+        :param X: data frame with observations as rows and features as columns
         :param y: a series or data frame with one or more outputs per observation
         :param fit_params: optional keyword parameters as required by specific \
             learner implementations
@@ -200,7 +200,7 @@ class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
         """
         Score this learner using the given inputs and outputs.
 
-        :param X: data frame with observations in rows and features in columns
+        :param X: data frame with observations as rows and features as columns
         :param y: a series or data frame with one or more outputs per observation
         :param sample_weight: optional series of scalar weights, for calculating the \
             resulting score as the weighted mean of the scores for the individual \
