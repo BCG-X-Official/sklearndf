@@ -108,7 +108,7 @@ def check_expected_not_fitted_error(estimator: Union[BaseLearnerDF, TransformerD
                 else:
                     x = test_x.values.reshape(-1)
 
-                getattr(estimator.root_estimator, func_to_call)(x)
+                getattr(estimator.native_estimator, func_to_call)(x)
             except sklearn.exceptions.NotFittedError:
                 raise AssertionError(
                     "sklearndf did not return an expected NotFittedError"

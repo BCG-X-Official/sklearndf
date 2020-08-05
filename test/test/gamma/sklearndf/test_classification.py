@@ -10,10 +10,7 @@ from sklearn.multioutput import ClassifierChain, MultiOutputClassifier
 
 import gamma.sklearndf.classification as classification
 from gamma.sklearndf import ClassifierDF
-from test.gamma.sklearndf import (
-    check_expected_not_fitted_error,
-    list_classes,
-)
+from test.gamma.sklearndf import check_expected_not_fitted_error, list_classes
 
 CLASSIFIERS_TO_TEST = list_classes(
     from_modules=classification,
@@ -41,7 +38,7 @@ CLASSIFIER_INIT_PARAMETERS = {
     "StackingClassifierDF": {
         "estimators": (
             ("Forest", classification.RandomForestClassifierDF()),
-            ("SVC", classification.SVCDF(),),
+            ("SVC", classification.SVCDF()),
             ("AdaBoost", classification.AdaBoostClassifierDF()),
         )
     },
@@ -71,9 +68,9 @@ def test_wrapped_fit_predict(
         **CLASSIFIER_INIT_PARAMETERS.get(sklearndf_cls.__name__, {})
     )
 
-    is_chain = isinstance(classifier.root_estimator, ClassifierChain)
+    is_chain = isinstance(classifier.native_estimator, ClassifierChain)
 
-    is_multi_output = isinstance(classifier.root_estimator, MultiOutputClassifier)
+    is_multi_output = isinstance(classifier.native_estimator, MultiOutputClassifier)
     check_expected_not_fitted_error(estimator=classifier)
 
     if is_chain:
@@ -108,12 +105,12 @@ def test_wrapped_fit_predict(
     test_funcs = [
         getattr(classifier, attr)
         for attr in ["predict_proba", "predict_log_proba"]
-        if hasattr(classifier.root_estimator, attr)
+        if hasattr(classifier.native_estimator, attr)
     ]
     for method_name in ["predict_proba", "predict_log_proba"]:
         method = getattr(classifier, method_name, None)
 
-        if hasattr(classifier.root_estimator, method_name):
+        if hasattr(classifier.native_estimator, method_name):
             predictions = method(X=iris_features)
 
             if is_multi_output:
