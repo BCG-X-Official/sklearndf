@@ -171,7 +171,6 @@ class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
         column names.
 
         :param X: input data frame with observations as rows and features as columns
-        :param y: a series or data frame with one or more outputs per observation
         :param predict_params: optional keyword parameters as required by specific \
             learner implementations
         """
@@ -222,27 +221,14 @@ class TransformerDF(BaseEstimatorDF, TransformerMixin, metaclass=ABCMeta):
         super().__init__(*args, **kwargs)
         self._features_original = None
 
-    # noinspection PyPep8Naming
-    @abstractmethod
-    def transform(self, X: pd.DataFrame) -> pd.DataFrame:
-        pass
-
-    # noinspection PyPep8Naming
-    def fit_transform(
-        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params
-    ) -> pd.DataFrame:
-        return self.fit(X, y, **fit_params).transform(X)
-
-    # noinspection PyPep8Naming
-    @abstractmethod
-    def inverse_transform(self, X: pd.DataFrame) -> pd.DataFrame:
-        pass
-
     @property
     def features_original(self) -> pd.Series:
         """
-        Pandas series mapping the output features (the series's index) to the
-        original input features (the series' values)
+        A pandas series, mapping the output features resulting from the transformation
+        to the original input features.
+
+        The index of the resulting series consists of the names of the output features;
+        the corresponding values are the names of the original input features.
         """
         self._ensure_fitted()
         if self._features_original is None:
@@ -256,20 +242,67 @@ class TransformerDF(BaseEstimatorDF, TransformerMixin, metaclass=ABCMeta):
     @property
     def features_out(self) -> pd.Index:
         """
-        Pandas column index with the names of the features produced by this transformer
+        A pandas column index with the names of the features produced by this
+        transformer
         """
         self._ensure_fitted()
         return self._get_features_out().rename(self.COL_FEATURE_OUT)
 
+    # noinspection PyPep8Naming
     @abstractmethod
-    def _get_features_original(self) -> pd.Series:
+    def transform(self, X: pd.DataFrame) -> pd.DataFrame:
         """
-        :return: a mapping from this transformer's output columns to the original
-        columns as a series
+        Transform the given inputs.
+
+        The inputs must have the same features as the inputs used to fit
+        this transformer.
+        The features can be provided in any order since they are identified by their
+        column names.
+
+        :param X: input data frame with observations as rows and features as columns
+        :return: the transformed inputs
         """
         pass
 
+    # noinspection PyPep8Naming
+    def fit_transform(
+        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params
+    ) -> pd.DataFrame:
+        """
+        Fit this transformer using the given inputs, then transform the inputs.
+
+        :param X: input data frame with observations as rows and features as columns
+        :param y: an optional series or data frame with one or more outputs
+        :param fit_params: additional keyword parameters as required by specific \
+            transformer implementations
+        :return: the transformed inputs
+        """
+        return self.fit(X, y, **fit_params).transform(X)
+
+    # noinspection PyPep8Naming
+    @abstractmethod
+    def inverse_transform(self, X: pd.DataFrame) -> pd.DataFrame:
+        """
+        Inverse-transform the given inputs.
+
+        The inputs must have the same features as the inputs used to fit
+        this transformer.
+        The features can be provided in any order since they are identified by their
+        column names.
+
+        :param X: input data frame with observations as rows and features as columns
+        :return: the reverse-transformed inputs
+        """
+        pass
+
+    @abstractmethod
+    def _get_features_original(self) -> pd.Series:
+        # return a mapping from this transformer's output columns to the original
+        # columns as a series
+        pass
+
     def _get_features_out(self) -> pd.Index:
+        # return a pandas index with this transformer's output columns
         # default behaviour: get index returned by features_original
         return self.features_original.index
 
