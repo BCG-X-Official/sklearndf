@@ -311,7 +311,9 @@ class TransformerDF(BaseEstimatorDF, TransformerMixin, metaclass=ABCMeta):
 
 class RegressorDF(LearnerDF, RegressorMixin, metaclass=ABCMeta):
     """
-    Mix-in class for scikit-learn regressors with enhanced support for data frames.
+    Base class for augmented scikit-learn `regressors`.
+
+    Provides enhanced support for data frames.
     """
 
 
