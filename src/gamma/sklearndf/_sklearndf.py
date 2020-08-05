@@ -21,7 +21,7 @@ log = logging.getLogger(__name__)
 
 __all__ = [
     "BaseEstimatorDF",
-    "BaseLearnerDF",
+    "LearnerDF",
     "ClassifierDF",
     "RegressorDF",
     "TransformerDF",
@@ -147,7 +147,7 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         pass
 
 
-class BaseLearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
+class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
     """
     Base mix-in class for scikit-learn predictors with enhanced support for data frames.
     """
@@ -235,13 +235,13 @@ class TransformerDF(BaseEstimatorDF, TransformerMixin, metaclass=ABCMeta):
         return self.features_original.index
 
 
-class RegressorDF(BaseLearnerDF, RegressorMixin, metaclass=ABCMeta):
+class RegressorDF(LearnerDF, RegressorMixin, metaclass=ABCMeta):
     """
     Mix-in class for scikit-learn regressors with enhanced support for data frames.
     """
 
 
-class ClassifierDF(BaseLearnerDF, ClassifierMixin, metaclass=ABCMeta):
+class ClassifierDF(LearnerDF, ClassifierMixin, metaclass=ABCMeta):
     """
     Mix-in class for scikit-learn classifiers with enhanced support for data frames.
     """

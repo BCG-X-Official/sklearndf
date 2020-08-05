@@ -12,23 +12,23 @@ from sklearn.base import BaseEstimator
 from gamma.common.fit import T_Self
 from gamma.sklearndf import (
     BaseEstimatorDF,
-    BaseLearnerDF,
     ClassifierDF,
+    LearnerDF,
     RegressorDF,
     TransformerDF,
 )
 
 log = logging.getLogger(__name__)
 
-__all__ = ["BaseLearnerPipelineDF", "RegressorPipelineDF", "ClassifierPipelineDF"]
+__all__ = ["LearnerPipelineDF", "RegressorPipelineDF", "ClassifierPipelineDF"]
 
 T_FinalEstimatorDF = TypeVar("T_FinalEstimatorDF", bound=BaseEstimatorDF)
-T_FinalLearnerDF = TypeVar("T_FinalLearnerDF", bound=BaseLearnerDF)
+T_FinalLearnerDF = TypeVar("T_FinalLearnerDF", bound=LearnerDF)
 T_FinalRegressorDF = TypeVar("T_FinalRegressorDF", bound=RegressorDF)
 T_FinalClassifierDF = TypeVar("T_FinalClassifierDF", bound=ClassifierDF)
 
 
-class BaseEstimatorPipelineDF(
+class _BaseEstimatorPipelineDF(
     BaseEstimator, BaseEstimatorDF, Generic[T_FinalEstimatorDF], metaclass=ABCMeta
 ):
     """
@@ -80,7 +80,7 @@ class BaseEstimatorPipelineDF(
         feature_sequence: Optional[pd.Index] = None,
         **fit_params,
     ) -> T_Self:
-        self: BaseEstimatorPipelineDF  # support type hinting in PyCharm
+        self: _BaseEstimatorPipelineDF  # support type hinting in PyCharm
 
         X_preprocessed: pd.DataFrame = self._pre_fit_transform(X, y, **fit_params)
 
@@ -151,9 +151,9 @@ class BaseEstimatorPipelineDF(
             return X
 
 
-class BaseLearnerPipelineDF(
-    BaseEstimatorPipelineDF[T_FinalLearnerDF],
-    BaseLearnerDF,
+class LearnerPipelineDF(
+    _BaseEstimatorPipelineDF[T_FinalLearnerDF],
+    LearnerDF,
     Generic[T_FinalLearnerDF],
     metaclass=ABCMeta,
 ):
@@ -186,7 +186,7 @@ class BaseLearnerPipelineDF(
 
 
 class RegressorPipelineDF(
-    BaseLearnerPipelineDF[T_FinalRegressorDF], RegressorDF, Generic[T_FinalRegressorDF]
+    LearnerPipelineDF[T_FinalRegressorDF], RegressorDF, Generic[T_FinalRegressorDF]
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
@@ -223,9 +223,7 @@ class RegressorPipelineDF(
 
 
 class ClassifierPipelineDF(
-    BaseLearnerPipelineDF[T_FinalClassifierDF],
-    ClassifierDF,
-    Generic[T_FinalClassifierDF],
+    LearnerPipelineDF[T_FinalClassifierDF], ClassifierDF, Generic[T_FinalClassifierDF]
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a

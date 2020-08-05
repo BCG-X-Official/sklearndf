@@ -29,8 +29,8 @@ from sklearn.base import (
 from gamma.common.fit import T_Self
 from gamma.sklearndf import (
     BaseEstimatorDF,
-    BaseLearnerDF,
     ClassifierDF,
+    LearnerDF,
     RegressorDF,
     TransformerDF,
 )
@@ -39,7 +39,7 @@ log = logging.getLogger(__name__)
 
 __all__ = [
     "_BaseEstimatorWrapperDF",
-    "_BaseLearnerWrapperDF",
+    "_LearnerWrapperDF",
     "_ClassifierWrapperDF",
     "df_estimator",
     "_MetaClassifierWrapperDF",
@@ -447,8 +447,8 @@ class _TransformerWrapperDF(
         return self.native_estimator.inverse_transform(self._convert_X_for_delegate(X))
 
 
-class _BaseLearnerWrapperDF(
-    BaseLearnerDF,
+class _LearnerWrapperDF(
+    LearnerDF,
     _BaseEstimatorWrapperDF[T_DelegateLearner],
     Generic[T_DelegateLearner],
     metaclass=ABCMeta,
@@ -569,7 +569,7 @@ class _BaseLearnerWrapperDF(
 
 class _RegressorWrapperDF(
     RegressorDF,
-    _BaseLearnerWrapperDF[T_DelegateRegressor],
+    _LearnerWrapperDF[T_DelegateRegressor],
     Generic[T_DelegateRegressor],
     metaclass=ABCMeta,
 ):
@@ -580,7 +580,7 @@ class _RegressorWrapperDF(
 
 class _ClassifierWrapperDF(
     ClassifierDF,
-    _BaseLearnerWrapperDF[T_DelegateClassifier],
+    _LearnerWrapperDF[T_DelegateClassifier],
     Generic[T_DelegateClassifier],
     metaclass=ABCMeta,
 ):
