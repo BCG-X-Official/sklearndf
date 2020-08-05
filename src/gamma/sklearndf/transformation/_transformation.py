@@ -99,15 +99,6 @@ from gamma.sklearndf.transformation._wrapper import (
     _NComponentsDimensionalityReductionWrapperDF,
 )
 
-try:
-    # scikit-learn 0.22 introduces class _BaseImputer
-    # noinspection PyProtectedMember
-    from sklearn.impute._base import _BaseImputer as BaseImputer
-except ImportError:
-    # scikit-learn 0.21 only implemen ts SimpleImputer
-    # noinspection PyProtectedMember
-    from sklearn.impute._base import SimpleImputer as BaseImputer
-
 log = logging.getLogger(__name__)
 
 __all__ = [
@@ -175,6 +166,13 @@ __all__ = [
 ]
 
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
+
+
+# T_Imputer is needed, as sklearn's _BaseImputer only exists from their v0.22 onwards -
+# once support for sklearn 0.21 is dropped, _BaseImputer could be used.
+# the following TypeVar helps to annotate availability of "add_indicator" and
+# "missing_values" attributes on an imputer instance for _ImputerWrapperDF below
+T_Imputer = TypeVar("T_Imputer", SimpleImputer, IterativeImputer)
 
 #
 # cluster
@@ -333,7 +331,7 @@ class TfidfTransformerDF(TransformerDF, TfidfTransformer):
 #
 
 
-class _ImputerWrapperDF(_TransformerWrapperDF[BaseImputer], metaclass=ABCMeta):
+class _ImputerWrapperDF(_TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
     """
     Impute missing values with data frames as input and output.
 
