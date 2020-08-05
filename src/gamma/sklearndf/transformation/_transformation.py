@@ -57,7 +57,6 @@ from sklearn.feature_selection import (
     VarianceThreshold,
 )
 from sklearn.impute import MissingIndicator, SimpleImputer
-from sklearn.impute._base import _BaseImputer
 from sklearn.impute._iterative import IterativeImputer
 from sklearn.kernel_approximation import (
     AdditiveChi2Sampler,
@@ -99,6 +98,15 @@ from gamma.sklearndf.transformation._wrapper import (
     _FeatureSelectionWrapperDF,
     _NComponentsDimensionalityReductionWrapperDF,
 )
+
+try:
+    # scikit-learn 0.22 introduces class _BaseImputer
+    # noinspection PyProtectedMember
+    from sklearn.impute._base import _BaseImputer as BaseImputer
+except ImportError:
+    # scikit-learn 0.21 only implemen ts SimpleImputer
+    # noinspection PyProtectedMember
+    from sklearn.impute._base import SimpleImputer as BaseImputer
 
 log = logging.getLogger(__name__)
 
@@ -249,7 +257,7 @@ class _ColumnTransformerWrapperDF(
         )
 
 
-# noinspection PyAbstractClass
+# noinspection PyAbstractClass,DuplicatedCode
 @df_estimator(df_wrapper_type=_ColumnTransformerWrapperDF)
 class ColumnTransformerDF(TransformerDF, ColumnTransformer):
     """
@@ -325,7 +333,7 @@ class TfidfTransformerDF(TransformerDF, TfidfTransformer):
 #
 
 
-class _ImputerWrapperDF(_TransformerWrapperDF[_BaseImputer], metaclass=ABCMeta):
+class _ImputerWrapperDF(_TransformerWrapperDF[BaseImputer], metaclass=ABCMeta):
     """
     Impute missing values with data frames as input and output.
 
@@ -352,16 +360,16 @@ class _ImputerWrapperDF(_TransformerWrapperDF[_BaseImputer], metaclass=ABCMeta):
 
         # implementation for i.e. SimpleImputer
         if hasattr(delegate_estimator, "statistics_"):
-            stats: np.array = delegate_estimator.statistics_
-            nan_mask = _nan_mask_from_statistics(stats)
+            nan_mask = _nan_mask_from_statistics(stats=delegate_estimator.statistics_)
 
         # implementation for IterativeImputer
         elif hasattr(delegate_estimator, "initial_imputer_"):
             initial_imputer: SimpleImputer = delegate_estimator.initial_imputer_
-            nan_mask = _nan_mask_from_statistics(initial_imputer.statistics_)
+            nan_mask = _nan_mask_from_statistics(stats=initial_imputer.statistics_)
 
         # implementation for i.e. KNNImputer
         elif hasattr(delegate_estimator, "_mask_fit_X"):
+            # noinspection PyProtectedMember
             nan_mask = np.all(delegate_estimator._mask_fit_X, axis=0)
 
         # the imputed columns are all ingoing columns, except the ones that were dropped
@@ -453,7 +461,7 @@ class _AdditiveChi2SamplerWrapperDF(
         return len(self._features_in) * (2 * self.native_estimator.sample_steps + 1)
 
 
-# noinspection PyAbstractClass
+# noinspection PyAbstractClass,DuplicatedCode
 @df_estimator(df_wrapper_type=_AdditiveChi2SamplerWrapperDF)
 class AdditiveChi2SamplerDF(TransformerDF, AdditiveChi2Sampler):
     """
@@ -540,7 +548,7 @@ class _PolynomialFeaturesWrapperDF(
         )
 
 
-# noinspection PyAbstractClass
+# noinspection PyAbstractClass,DuplicatedCode
 @df_estimator(df_wrapper_type=_PolynomialFeaturesWrapperDF)
 class PolynomialFeaturesDF(TransformerDF, PolynomialFeatures):
     """
@@ -747,7 +755,7 @@ class _KBinsDiscretizerWrapperDF(
             )
 
 
-# noinspection PyAbstractClass
+# noinspection PyAbstractClass,DuplicatedCode
 @df_estimator(df_wrapper_type=_KBinsDiscretizerWrapperDF)
 class KBinsDiscretizerDF(TransformerDF, KBinsDiscretizer):
     """

@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 IMPUTERS_TO_TEST = list_classes(
-    from_modules=gamma.sklearndf.transformation, matching=r".*Imputer*DF", excluding=[],
+    from_modules=gamma.sklearndf.transformation, matching=r".*Imputer*DF", excluding=[]
 )
 
 
@@ -55,7 +55,7 @@ def test_imputer(
     test_data_x_with_all_nan: pd.DataFrame,
 ) -> None:
     imputerdf = imputer_cls(add_indicator=add_indicator)
-    imputer_cls_orig = type(imputerdf.root_estimator)
+    imputer_cls_orig = type(imputerdf.native_estimator)
 
     # noinspection PyArgumentList
     imputer_orig = imputer_cls_orig(add_indicator=add_indicator)
