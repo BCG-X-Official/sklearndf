@@ -165,7 +165,9 @@ class LearnerPipelineDF(
         return self.final_estimator.predict(self._pre_transform(X), **predict_params)
 
     # noinspection PyPep8Naming
-    def fit_predict(self, X: pd.DataFrame, y: pd.Series, **fit_params) -> pd.Series:
+    def fit_predict(
+        self, X: pd.DataFrame, y: pd.Series, **fit_params
+    ) -> Union[pd.Series, pd.DataFrame]:
         return self.final_estimator.fit_predict(
             self._pre_fit_transform(X, y, **fit_params), y, **fit_params
         )
