@@ -60,9 +60,7 @@ T = TypeVar("T")
 
 T_DelegateEstimator = TypeVar("T_DelegateEstimator", bound=BaseEstimator)
 T_DelegateTransformer = TypeVar("T_DelegateTransformer", bound=TransformerMixin)
-T_DelegateLearner = TypeVar(
-    "T_DelegateLearner", bound=Union[RegressorMixin, ClassifierMixin]
-)
+T_DelegateLearner = TypeVar("T_DelegateLearner", RegressorMixin, ClassifierMixin)
 T_DelegateRegressor = TypeVar("T_DelegateRegressor", bound=RegressorMixin)
 T_DelegateClassifier = TypeVar("T_DelegateClassifier", bound=ClassifierMixin)
 
