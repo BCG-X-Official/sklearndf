@@ -57,5 +57,5 @@ All `sklearndf` estimators are fully type hinted.
 import gamma.common.licensing as _licensing
 from ._sklearndf import *
 
-__version__ = "1.3.0rc0"
+__version__ = "1.3.0rc1"
 _licensing.check_license(__package__)
