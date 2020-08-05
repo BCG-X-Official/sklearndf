@@ -202,7 +202,7 @@ class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
         Score this learner using the given inputs and outputs.
 
         :param X: data frame with observations as rows and features as columns
-        :param y: a series or data frame with one or more outputs per observation
+        :param y: a series or data frame with the true outputs per observation
         :param sample_weight: optional series of scalar weights, for calculating the \
             resulting score as the weighted mean of the scores for the individual \
             predictions
