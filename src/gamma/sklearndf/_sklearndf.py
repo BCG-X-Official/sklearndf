@@ -319,22 +319,73 @@ class RegressorDF(LearnerDF, RegressorMixin, metaclass=ABCMeta):
 
 class ClassifierDF(LearnerDF, ClassifierMixin, metaclass=ABCMeta):
     """
-    Mix-in class for scikit-learn classifiers with enhanced support for data frames.
+    Base class for augmented scikit-learn `classifiers`.
+
+    Provides enhanced support for data frames.
     """
 
     # noinspection PyPep8Naming
     @abstractmethod
-    def predict_proba(self, X: pd.DataFrame) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+    def predict_proba(
+        self, X: pd.DataFrame, **predict_params
+    ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+        """
+        Predict class probabilities for the given inputs.
+
+        The inputs must have the same features as the inputs used to fit
+        this learner.
+        The features can be provided in any order since they are identified by their
+        column names.
+
+        :param X: input data frame with observations as rows and features as columns
+        :param predict_params: optional keyword parameters as required by specific \
+            learner implementations
+        :return: a data frame with observations as rows and classes as columns, and \
+            values as probabilities per observation and class; for multi-output \
+            classifiers, a list of one observation/class data frames per output
+        """
         pass
 
     # noinspection PyPep8Naming
     @abstractmethod
     def predict_log_proba(
-        self, X: pd.DataFrame
+        self, X: pd.DataFrame, **predict_params
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+        """
+        Predict class log-probabilities for the given inputs.
+
+        The inputs must have the same features as the inputs used to fit
+        this learner.
+        The features can be provided in any order since they are identified by their
+        column names.
+
+        :param X: input data frame with observations as rows and features as columns
+        :param predict_params: optional keyword parameters as required by specific \
+            learner implementations
+        :return: a data frame with observations as rows and classes as columns, and \
+            values as log-probabilities per observation and class; for multi-output \
+            classifiers, a list of one observation/class data frames per output
+        """
         pass
 
     # noinspection PyPep8Naming
     @abstractmethod
-    def decision_function(self, X: pd.DataFrame) -> Union[pd.Series, pd.DataFrame]:
-        pass
+    def decision_function(
+        self, X: pd.DataFrame, **predict_params
+    ) -> Union[pd.Series, pd.DataFrame]:
+        """
+        Compute the decision function for the given inputs.
+
+        The inputs must have the same features as the inputs used to fit
+        this learner.
+        The features can be provided in any order since they are identified by their
+        column names.
+
+        :param X: input data frame with observations as rows and features as columns
+        :param predict_params: optional keyword parameters as required by specific \
+            learner implementations
+        :return: a data frame with observations as rows and classes as columns, and \
+            values as the raw values predicted per observation and class; \
+            for multi-output classifiers, a list of one observation/class data frames \
+            per output
+        """
