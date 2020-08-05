@@ -71,11 +71,11 @@ class _PipelineWrapperDF(
 
         List of (name, transformer) tuples (transformers implement fit/transform).
         """
-        return self.delegate_estimator.steps
+        return self.native_estimator.steps
 
     def __len__(self) -> int:
         """The number of steps of the pipeline."""
-        return len(self.delegate_estimator.steps)
+        return len(self.native_estimator.steps)
 
     def __getitem__(self, ind: Union[slice, int, str]) -> BaseEstimatorDF:
         """
@@ -89,7 +89,7 @@ class _PipelineWrapperDF(
         """
 
         if isinstance(ind, slice):
-            base_pipeline = self.delegate_estimator
+            base_pipeline = self.native_estimator
             if ind.step not in (1, None):
                 raise ValueError("Pipeline slicing only supports a step of 1")
 
@@ -102,7 +102,7 @@ class _PipelineWrapperDF(
                 ),
             )
         else:
-            return self.delegate_estimator[ind]
+            return self.native_estimator[ind]
 
     @staticmethod
     def _is_passthrough(estimator: Union[BaseEstimatorDF, str, None]) -> bool:
@@ -219,7 +219,7 @@ class _FeatureUnionWrapperDF(_TransformerWrapperDF[FeatureUnion], metaclass=ABCM
                 _prepend_features_original(
                     features_original=transformer.features_original, name_prefix=name
                 )
-                for name, transformer, _ in self.delegate_estimator._iter()
+                for name, transformer, _ in self.native_estimator._iter()
             )
         )
 
@@ -235,7 +235,7 @@ class _FeatureUnionWrapperDF(_TransformerWrapperDF[FeatureUnion], metaclass=ABCM
             self._prepend_features_out(
                 features_out=transformer.features_out, name_prefix=name
             )
-            for name, transformer, _ in self.delegate_estimator._iter()
+            for name, transformer, _ in self.native_estimator._iter()
         ]
 
         if len(indices) == 0:

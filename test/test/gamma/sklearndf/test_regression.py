@@ -10,9 +10,9 @@ import gamma.sklearndf.regression
 from gamma.sklearndf import RegressorDF, TransformerDF
 from gamma.sklearndf.regression import (
     IsotonicRegressionDF,
+    LinearRegressionDF,
     RandomForestRegressorDF,
     SVRDF,
-    LinearRegressionDF,
 )
 from test.gamma.sklearndf import check_expected_not_fitted_error, list_classes
 
@@ -31,7 +31,7 @@ DEFAULT_REGRESSOR_PARAMETERS = {
     "StackingRegressorDF": {
         "estimators": (
             ("Forest", RandomForestRegressorDF()),
-            ("SVR", SVRDF(),),
+            ("SVR", SVRDF()),
             ("Linear", LinearRegressionDF()),
         )
     },
@@ -62,8 +62,8 @@ def test_wrapped_fit_predict(
 
     if (
         type(regressor).__name__.startswith("Multi")
-        or isinstance(regressor.root_estimator, MultiOutputRegressor)
-        or isinstance(regressor.root_estimator, RegressorChain)
+        or isinstance(regressor.native_estimator, MultiOutputRegressor)
+        or isinstance(regressor.native_estimator, RegressorChain)
     ):
         regressor.fit(X=boston_features, y=boston_target_df)
 

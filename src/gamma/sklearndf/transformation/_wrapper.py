@@ -101,7 +101,7 @@ class _BaseMultipleInputsPerOutputTransformerWrapperDF(
 
     def _get_features_original(self) -> pd.Series:
         raise NotImplementedError(
-            f"{type(self.delegate_estimator).__name__} transformers map multiple "
+            f"{type(self.native_estimator).__name__} transformers map multiple "
             "inputs to individual output columns; current sklearndf implementation "
             "only supports many-to-1 mappings from output columns to input columns"
         )
@@ -143,7 +143,7 @@ class _NComponentsDimensionalityReductionWrapperDF(
 
     @property
     def _n_components(self) -> int:
-        return getattr(self.delegate_estimator, self._ATTR_N_COMPONENTS)
+        return getattr(self.native_estimator, self._ATTR_N_COMPONENTS)
 
 
 class _ComponentsDimensionalityReductionWrapperDF(
@@ -171,7 +171,7 @@ class _ComponentsDimensionalityReductionWrapperDF(
 
     @property
     def _n_components(self) -> int:
-        return len(getattr(self.delegate_estimator, self._ATTR_COMPONENTS))
+        return len(getattr(self.native_estimator, self._ATTR_COMPONENTS))
 
 
 class _FeatureSelectionWrapperDF(
@@ -192,5 +192,5 @@ class _FeatureSelectionWrapperDF(
         self._validate_delegate_attribute(attribute_name=self._ATTR_GET_SUPPORT)
 
     def _get_features_out(self) -> pd.Index:
-        get_support = getattr(self.delegate_estimator, self._ATTR_GET_SUPPORT)
+        get_support = getattr(self.native_estimator, self._ATTR_GET_SUPPORT)
         return self.features_in[get_support()]

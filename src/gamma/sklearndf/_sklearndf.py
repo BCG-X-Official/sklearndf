@@ -21,7 +21,7 @@ log = logging.getLogger(__name__)
 
 __all__ = [
     "BaseEstimatorDF",
-    "BaseLearnerDF",
+    "LearnerDF",
     "ClassifierDF",
     "RegressorDF",
     "TransformerDF",
@@ -40,31 +40,33 @@ T_EstimatorDF = TypeVar("T_EstimatorDF")
 
 class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     """
-    Mix-in class for scikit-learn estimators with enhanced support for data frames.
+    Base class for augmented scikit-learn `estimators`.
+
+    Provides enhanced support for data frames.
     """
 
     COL_FEATURE_IN = "feature_in"
 
-    @property
-    def root_estimator(self) -> BaseEstimator:
-        """
-        If this estimator delegates to another estimator in one or more layers,
-        return the innermost wrapped estimator; otherwise, return ``self``.
-
-        :return: the original estimator that this estimator delegates to
-        """
-
-        estimator = cast(BaseEstimator, self)
-
-        while True:
-            delegate: BaseEstimator = getattr(
-                estimator, "delegate_estimator", estimator
+    def __new__(cls: Type["BaseEstimatorDF"], *args, **kwargs) -> object:
+        # make sure this DF estimator also is a subclass of
+        if not issubclass(cls, BaseEstimator):
+            raise TypeError(
+                f"class {cls.__name__} is required to be "
+                f"a subclass of {BaseEstimator.__name__}"
             )
-            if delegate is estimator:
-                # no delegate defined, or estimator is its own delegate
-                # (which should not happen)
-                return estimator
-            estimator = delegate
+
+        return super().__new__(cls, *args, **kwargs)
+
+    @property
+    def native_estimator(self) -> BaseEstimator:
+        """
+        The native estimator underlying this estimator.
+
+        This can be another estimator that this estimator delegates to, otherwise the
+        native estimator is ``self``.
+        """
+
+        return cast(BaseEstimator, self)
 
     # noinspection PyPep8Naming
     @abstractmethod
@@ -74,13 +76,24 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
     ) -> T_Self:
+        """
+        Fit this estimator using the given inputs.
+
+        :param X: input data frame with observations as rows and features as columns
+        :param y: an optional series or data frame with one or more outputs
+        :param fit_params: additional keyword parameters as required by specific \
+            estimator implementations
+        :return: ``self``
+        """
         pass
 
     @property
     def features_in(self) -> pd.Index:
         """
-        The pandas column index with the names of the features this estimator has been
-        fitted on; raises an ``AttributeError`` if this estimator is not fitted
+        The pandas column index with the names of the features used to fit this
+        estimator.
+
+        :raises AttributeError: if this estimator is not fitted
         """
         self._ensure_fitted()
         return self._get_features_in().rename(self.COL_FEATURE_IN)
@@ -88,21 +101,22 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     @property
     def n_outputs(self) -> int:
         """
-        The number of outputs this estimator has been fitted on;
-        raises an ``AttributeError`` if this estimator is not fitted
+        The number of outputs used to fit this estimator.
+
+        :raises AttributeError: if this estimator is not fitted
         """
         self._ensure_fitted()
         return self._get_n_outputs()
 
     @abstractmethod
-    def get_params(self, deep=True) -> Dict[str, Any]:
+    def get_params(self, deep=True) -> Mapping[str, Any]:
         """
-        Get parameters for this estimator.
+        Get the parameters for this estimator.
 
-        :param deep: if ``True``, return the parameters for this estimator and \
-        contained sub-objects that are estimators
+        :param deep: if ``True``, return the parameters for this estimator, and \
+            for any sub-estimators contained in this estimator
 
-        :return: mapping of the parameter names to their values
+        :return: a mapping of parameter names to their values
         """
         pass
 
@@ -111,9 +125,9 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         """
         Set the parameters of this estimator.
 
-        Valid parameter keys can be listed with ``get_params()``.
+        Valid parameter keys can be obtained by calling :meth:`.get_params`.
 
-        :returns self
+        :returns ``self``
         """
         pass
 
@@ -136,9 +150,11 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         pass
 
 
-class BaseLearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
+class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
     """
-    Base mix-in class for scikit-learn predictors with enhanced support for data frames.
+    Base class for augmented scikit-learn `learners`.
+
+    Provides enhanced support for data frames.
     """
 
     # noinspection PyPep8Naming
@@ -146,11 +162,35 @@ class BaseLearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
     def predict(
         self, X: pd.DataFrame, **predict_params
     ) -> Union[pd.Series, pd.DataFrame]:
+        """
+        Predict outputs for the given inputs.
+
+        The inputs must have the same features as the inputs used to fit
+        this learner.
+        The features can be provided in any order since they are identified by their
+        column names.
+
+        :param X: input data frame with observations as rows and features as columns
+        :param predict_params: optional keyword parameters as required by specific \
+            learner implementations
+        :return predictions per observation as a series, or as a data frame in case of \
+            multiple outputs
+        """
         pass
 
     # noinspection PyPep8Naming
     @abstractmethod
-    def fit_predict(self, X: pd.DataFrame, y: pd.Series, **fit_params) -> pd.Series:
+    def fit_predict(
+        self, X: pd.DataFrame, y: pd.Series, **fit_params
+    ) -> Union[pd.Series, pd.DataFrame]:
+        """
+        Fit this learner using the given inputs, then predict the outputs.
+
+        :param X: data frame with observations as rows and features as columns
+        :param y: a series or data frame with one or more outputs per observation
+        :param fit_params: optional keyword parameters as required by specific \
+            learner implementations
+        """
         pass
 
     # noinspection PyPep8Naming
@@ -158,12 +198,23 @@ class BaseLearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
     def score(
         self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
     ) -> float:
+        """
+        Score this learner using the given inputs and outputs.
+
+        :param X: data frame with observations as rows and features as columns
+        :param y: a series or data frame with the true outputs per observation
+        :param sample_weight: optional series of scalar weights, for calculating the \
+            resulting score as the weighted mean of the scores for the individual \
+            predictions
+        """
         pass
 
 
 class TransformerDF(BaseEstimatorDF, TransformerMixin, metaclass=ABCMeta):
     """
-    Mix-in class for scikit-learn transformers with enhanced support for data frames.
+    Base class for augmented scikit-learn `transformers`.
+
+    Provides enhanced support for data frames.
     """
 
     COL_FEATURE_OUT = "feature_out"
@@ -172,27 +223,14 @@ class TransformerDF(BaseEstimatorDF, TransformerMixin, metaclass=ABCMeta):
         super().__init__(*args, **kwargs)
         self._features_original = None
 
-    # noinspection PyPep8Naming
-    @abstractmethod
-    def transform(self, X: pd.DataFrame) -> pd.DataFrame:
-        pass
-
-    # noinspection PyPep8Naming
-    def fit_transform(
-        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params
-    ) -> pd.DataFrame:
-        return self.fit(X, y, **fit_params).transform(X)
-
-    # noinspection PyPep8Naming
-    @abstractmethod
-    def inverse_transform(self, X: pd.DataFrame) -> pd.DataFrame:
-        pass
-
     @property
     def features_original(self) -> pd.Series:
         """
-        Pandas series mapping the output features (the series's index) to the
-        original input features (the series' values)
+        A pandas series, mapping the output features resulting from the transformation
+        to the original input features.
+
+        The index of the resulting series consists of the names of the output features;
+        the corresponding values are the names of the original input features.
         """
         self._ensure_fitted()
         if self._features_original is None:
@@ -206,48 +244,148 @@ class TransformerDF(BaseEstimatorDF, TransformerMixin, metaclass=ABCMeta):
     @property
     def features_out(self) -> pd.Index:
         """
-        Pandas column index with the names of the features produced by this transformer
+        A pandas column index with the names of the features produced by this
+        transformer
         """
         self._ensure_fitted()
         return self._get_features_out().rename(self.COL_FEATURE_OUT)
 
+    # noinspection PyPep8Naming
     @abstractmethod
-    def _get_features_original(self) -> pd.Series:
+    def transform(self, X: pd.DataFrame) -> pd.DataFrame:
         """
-        :return: a mapping from this transformer's output columns to the original
-        columns as a series
+        Transform the given inputs.
+
+        The inputs must have the same features as the inputs used to fit
+        this transformer.
+        The features can be provided in any order since they are identified by their
+        column names.
+
+        :param X: input data frame with observations as rows and features as columns
+        :return: the transformed inputs
         """
         pass
 
+    # noinspection PyPep8Naming
+    def fit_transform(
+        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params
+    ) -> pd.DataFrame:
+        """
+        Fit this transformer using the given inputs, then transform the inputs.
+
+        :param X: input data frame with observations as rows and features as columns
+        :param y: an optional series or data frame with one or more outputs
+        :param fit_params: additional keyword parameters as required by specific \
+            transformer implementations
+        :return: the transformed inputs
+        """
+        return self.fit(X, y, **fit_params).transform(X)
+
+    # noinspection PyPep8Naming
+    @abstractmethod
+    def inverse_transform(self, X: pd.DataFrame) -> pd.DataFrame:
+        """
+        Inverse-transform the given inputs.
+
+        The inputs must have the same features as the inputs used to fit
+        this transformer.
+        The features can be provided in any order since they are identified by their
+        column names.
+
+        :param X: input data frame with observations as rows and features as columns
+        :return: the reverse-transformed inputs
+        """
+        pass
+
+    @abstractmethod
+    def _get_features_original(self) -> pd.Series:
+        # return a mapping from this transformer's output columns to the original
+        # columns as a series
+        pass
+
     def _get_features_out(self) -> pd.Index:
+        # return a pandas index with this transformer's output columns
         # default behaviour: get index returned by features_original
         return self.features_original.index
 
 
-class RegressorDF(BaseLearnerDF, RegressorMixin, metaclass=ABCMeta):
+class RegressorDF(LearnerDF, RegressorMixin, metaclass=ABCMeta):
     """
-    Mix-in class for scikit-learn regressors with enhanced support for data frames.
+    Base class for augmented scikit-learn `regressors`.
+
+    Provides enhanced support for data frames.
     """
 
 
-class ClassifierDF(BaseLearnerDF, ClassifierMixin, metaclass=ABCMeta):
+class ClassifierDF(LearnerDF, ClassifierMixin, metaclass=ABCMeta):
     """
-    Mix-in class for scikit-learn classifiers with enhanced support for data frames.
+    Base class for augmented scikit-learn `classifiers`.
+
+    Provides enhanced support for data frames.
     """
 
     # noinspection PyPep8Naming
     @abstractmethod
-    def predict_proba(self, X: pd.DataFrame) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+    def predict_proba(
+        self, X: pd.DataFrame, **predict_params
+    ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+        """
+        Predict class probabilities for the given inputs.
+
+        The inputs must have the same features as the inputs used to fit
+        this learner.
+        The features can be provided in any order since they are identified by their
+        column names.
+
+        :param X: input data frame with observations as rows and features as columns
+        :param predict_params: optional keyword parameters as required by specific \
+            learner implementations
+        :return: a data frame with observations as rows and classes as columns, and \
+            values as probabilities per observation and class; for multi-output \
+            classifiers, a list of one observation/class data frames per output
+        """
         pass
 
     # noinspection PyPep8Naming
     @abstractmethod
     def predict_log_proba(
-        self, X: pd.DataFrame
+        self, X: pd.DataFrame, **predict_params
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+        """
+        Predict class log-probabilities for the given inputs.
+
+        The inputs must have the same features as the inputs used to fit
+        this learner.
+        The features can be provided in any order since they are identified by their
+        column names.
+
+        :param X: input data frame with observations as rows and features as columns
+        :param predict_params: optional keyword parameters as required by specific \
+            learner implementations
+        :return: a data frame with observations as rows and classes as columns, and \
+            values as log-probabilities per observation and class; for multi-output \
+            classifiers, a list of one observation/class data frames per output
+        """
         pass
 
     # noinspection PyPep8Naming
     @abstractmethod
-    def decision_function(self, X: pd.DataFrame) -> Union[pd.Series, pd.DataFrame]:
-        pass
+    def decision_function(
+        self, X: pd.DataFrame, **predict_params
+    ) -> Union[pd.Series, pd.DataFrame]:
+        """
+        Compute the decision function for the given inputs.
+
+        The inputs must have the same features as the inputs used to fit
+        this learner.
+        The features can be provided in any order since they are identified by their
+        column names.
+
+        :param X: input data frame with observations as rows and features as columns
+        :param predict_params: optional keyword parameters as required by specific \
+            learner implementations
+        :return: a data frame with observations as rows and classes as columns, and \
+            values as the raw values predicted per observation and class; \
+            for multi-output classifiers, a list of one observation/class data frames \
+            per output
+        """

@@ -577,7 +577,7 @@ class _MultiOutputClassifierWrapperDF(
                 f"arrays, but got type {type(y)}"
             )
 
-        delegate_estimator = self.delegate_estimator
+        delegate_estimator = self.native_estimator
 
         # store the super() object as this is not available within a generator
         sup = super()
