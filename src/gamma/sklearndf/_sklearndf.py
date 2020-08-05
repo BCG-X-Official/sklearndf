@@ -40,7 +40,9 @@ T_EstimatorDF = TypeVar("T_EstimatorDF")
 
 class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     """
-    Mix-in class for scikit-learn estimators with enhanced support for data frames.
+    Base class for augmented scikit-learn `estimators`.
+
+    Provides enhanced support for data frames.
     """
 
     COL_FEATURE_IN = "feature_in"
@@ -150,7 +152,9 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
 
 class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
     """
-    Base class for `learners`, i.e. regressors and classifiers
+    Base class for augmented scikit-learn `learners`.
+
+    Provides enhanced support for data frames.
     """
 
     # noinspection PyPep8Naming
@@ -207,7 +211,9 @@ class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
 
 class TransformerDF(BaseEstimatorDF, TransformerMixin, metaclass=ABCMeta):
     """
-    Mix-in class for scikit-learn transformers with enhanced support for data frames.
+    Base class for augmented scikit-learn `transformers`.
+
+    Provides enhanced support for data frames.
     """
 
     COL_FEATURE_OUT = "feature_out"
