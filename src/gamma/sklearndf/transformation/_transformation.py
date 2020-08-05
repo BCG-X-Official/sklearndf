@@ -169,7 +169,7 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 
 
 # T_Imputer is needed, as sklearn's _BaseImputer only exists from their v0.22 onwards -
-# once support for sklearn 0.22 is dropped, _BaseImputer could be used.
+# once support for sklearn 0.21 is dropped, _BaseImputer could be used.
 # the following TypeVar helps to annotate availability of "add_indicator" and
 # "missing_values" attributes on an imputer instance for _ImputerWrapperDF below
 T_Imputer = TypeVar("T_Imputer", SimpleImputer, IterativeImputer)
