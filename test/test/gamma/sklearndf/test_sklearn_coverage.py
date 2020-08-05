@@ -16,7 +16,7 @@ import gamma.sklearndf.classification
 import gamma.sklearndf.pipeline
 import gamma.sklearndf.regression
 import gamma.sklearndf.transformation
-from gamma.sklearndf._wrapper import _BaseEstimatorWrapperDF
+from gamma.sklearndf import BaseEstimatorDF
 from test import check_sklearn_version
 from test.conftest import UNSUPPORTED_SKLEARN_PACKAGES
 from test.gamma.sklearndf import (
@@ -25,7 +25,7 @@ from test.gamma.sklearndf import (
     sklearn_delegate_classes,
 )
 
-Module: type = Any
+Module = type(sklearn)
 
 
 CLASSIFIER_COVERAGE_EXCLUDES = {
