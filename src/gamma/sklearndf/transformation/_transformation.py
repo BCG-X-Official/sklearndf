@@ -57,6 +57,7 @@ from sklearn.feature_selection import (
     VarianceThreshold,
 )
 from sklearn.impute import MissingIndicator, SimpleImputer
+from sklearn.impute._base import _BaseImputer
 from sklearn.impute._iterative import IterativeImputer
 from sklearn.kernel_approximation import (
     AdditiveChi2Sampler,
@@ -324,7 +325,7 @@ class TfidfTransformerDF(TransformerDF, TfidfTransformer):
 #
 
 
-class _SimpleImputerWrapperDF(_TransformerWrapperDF[SimpleImputer], metaclass=ABCMeta):
+class _ImputerWrapperDF(_TransformerWrapperDF[_BaseImputer], metaclass=ABCMeta):
     """
     Impute missing values with data frames as input and output.
 
@@ -337,13 +338,31 @@ class _SimpleImputerWrapperDF(_TransformerWrapperDF[SimpleImputer], metaclass=AB
     def _get_features_original(self) -> pd.Series:
         # get the columns that were dropped during imputation
         delegate_estimator = self.delegate_estimator
-        stats = delegate_estimator.statistics_
-        if issubclass(stats.dtype.type, float):
-            nan_mask = np.isnan(stats)
-        else:
-            nan_mask = [
-                x is None or (isinstance(x, float) and np.isnan(x)) for x in stats
-            ]
+
+        nan_mask = []
+
+        def _nan_mask_from_statistics(stats: np.array):
+            if issubclass(stats.dtype.type, float):
+                na_mask = np.isnan(stats)
+            else:
+                na_mask = [
+                    x is None or (isinstance(x, float) and np.isnan(x)) for x in stats
+                ]
+            return na_mask
+
+        # implementation for i.e. SimpleImputer
+        if hasattr(delegate_estimator, "statistics_"):
+            stats: np.array = delegate_estimator.statistics_
+            nan_mask = _nan_mask_from_statistics(stats)
+
+        # implementation for IterativeImputer
+        elif hasattr(delegate_estimator, "initial_imputer_"):
+            initial_imputer: SimpleImputer = delegate_estimator.initial_imputer_
+            nan_mask = _nan_mask_from_statistics(initial_imputer.statistics_)
+
+        # implementation for i.e. KNNImputer
+        elif hasattr(delegate_estimator, "_mask_fit_X"):
+            nan_mask = np.all(delegate_estimator._mask_fit_X, axis=0)
 
         # the imputed columns are all ingoing columns, except the ones that were dropped
         imputed_columns = self.features_in.delete(np.argwhere(nan_mask))
@@ -364,7 +383,7 @@ class _SimpleImputerWrapperDF(_TransformerWrapperDF[SimpleImputer], metaclass=AB
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_SimpleImputerWrapperDF)
+@df_estimator(df_wrapper_type=_ImputerWrapperDF)
 class SimpleImputerDF(TransformerDF, SimpleImputer):
     """
     Wraps :class:`sklearn.impute.MissingIndicator`;
@@ -397,7 +416,7 @@ class MissingIndicatorDF(TransformerDF, MissingIndicator):
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
+@df_estimator(df_wrapper_type=_ImputerWrapperDF)
 class IterativeImputerDF(TransformerDF, IterativeImputer):
     """
     Wraps :class:`sklearn.impute.IterativeImputer`;
