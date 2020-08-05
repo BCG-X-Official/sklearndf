@@ -56,25 +56,15 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         return super().__new__(cls, *args, **kwargs)
 
     @property
-    def root_estimator(self) -> BaseEstimator:
+    def native_estimator(self) -> BaseEstimator:
         """
-        If this estimator delegates to another estimator in one or more layers,
-        return the innermost wrapped estimator; otherwise, return ``self``.
+        The native estimator underlying this estimator.
 
-        :return: the original estimator that this estimator delegates to
+        This can be another estimator that this estimator delegates to, otherwise the
+        native estimator is ``self``.
         """
 
-        estimator = cast(BaseEstimator, self)
-
-        while True:
-            delegate: BaseEstimator = getattr(
-                estimator, "delegate_estimator", estimator
-            )
-            if delegate is estimator:
-                # no delegate defined, or estimator is its own delegate
-                # (which should not happen)
-                return estimator
-            estimator = delegate
+        return cast(BaseEstimator, self)
 
     # noinspection PyPep8Naming
     @abstractmethod

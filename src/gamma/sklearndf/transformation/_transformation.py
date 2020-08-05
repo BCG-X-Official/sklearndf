@@ -203,7 +203,7 @@ class _ColumnTransformerWrapperDF(
     """
 
     def _validate_delegate_estimator(self) -> None:
-        column_transformer: ColumnTransformer = self.delegate_estimator
+        column_transformer: ColumnTransformer = self.native_estimator
 
         if column_transformer.remainder != "drop":
             raise ValueError(
@@ -242,7 +242,7 @@ class _ColumnTransformerWrapperDF(
     def _inner_transformers(self) -> Iterable[_TransformerWrapperDF]:
         return (
             df_transformer
-            for _, df_transformer, columns in self.delegate_estimator.transformers_
+            for _, df_transformer, columns in self.native_estimator.transformers_
             if len(columns) > 0
             if df_transformer != "drop"
         )
@@ -336,7 +336,7 @@ class _SimpleImputerWrapperDF(_TransformerWrapperDF[SimpleImputer], metaclass=AB
 
     def _get_features_original(self) -> pd.Series:
         # get the columns that were dropped during imputation
-        delegate_estimator = self.delegate_estimator
+        delegate_estimator = self.native_estimator
         stats = delegate_estimator.statistics_
         if issubclass(stats.dtype.type, float):
             nan_mask = np.isnan(stats)
@@ -379,7 +379,7 @@ class _MissingIndicatorWrapperDF(
 ):
     def _get_features_original(self) -> pd.Series:
         features_original: np.ndarray = self.features_in[
-            self.delegate_estimator.features_
+            self.native_estimator.features_
         ].values
         features_out = pd.Index([f"{name}__missing" for name in features_original])
         return pd.Series(index=features_out, data=features_original)
@@ -412,7 +412,7 @@ class _IsomapWrapperDF(
 ):
     @property
     def _n_components(self) -> int:
-        return self.delegate_estimator.embedding_.shape[1]
+        return self.native_estimator.embedding_.shape[1]
 
 
 # noinspection PyAbstractClass
@@ -431,7 +431,7 @@ class _AdditiveChi2SamplerWrapperDF(
 ):
     @property
     def _n_components(self) -> int:
-        return len(self._features_in) * (2 * self.delegate_estimator.sample_steps + 1)
+        return len(self._features_in) * (2 * self.native_estimator.sample_steps + 1)
 
 
 # noinspection PyAbstractClass
@@ -515,7 +515,7 @@ class _PolynomialFeaturesWrapperDF(
 ):
     def _get_features_out(self) -> pd.Index:
         return pd.Index(
-            data=self.delegate_estimator.get_feature_names(
+            data=self.native_estimator.get_feature_names(
                 input_features=self.features_in.astype(str)
             )
         )
@@ -643,7 +643,7 @@ class _OneHotEncoderWrapperDF(_TransformerWrapperDF[OneHotEncoder], metaclass=AB
     """
 
     def _validate_delegate_estimator(self) -> None:
-        if self.delegate_estimator.sparse:
+        if self.native_estimator.sparse:
             raise NotImplementedError("sparse matrices not supported; use sparse=False")
 
     def _get_features_original(self) -> pd.Series:
@@ -654,11 +654,11 @@ class _OneHotEncoderWrapperDF(_TransformerWrapperDF[OneHotEncoder], metaclass=AB
         values the corresponding input column names.
         """
         return pd.Series(
-            index=pd.Index(self.delegate_estimator.get_feature_names(self.features_in)),
+            index=pd.Index(self.native_estimator.get_feature_names(self.features_in)),
             data=[
                 column_original
                 for column_original, category in zip(
-                    self.features_in, self.delegate_estimator.categories_
+                    self.features_in, self.native_estimator.categories_
                 )
                 for _ in category
             ],
@@ -691,7 +691,7 @@ class _KBinsDiscretizerWrapperDF(
     _TransformerWrapperDF[KBinsDiscretizer], metaclass=ABCMeta
 ):
     def _validate_delegate_estimator(self) -> None:
-        if self.delegate_estimator.encode == "onehot":
+        if self.native_estimator.encode == "onehot":
             raise NotImplementedError(
                 'property encode="onehot" is not supported due to sparse matrices;'
                 'consider using "onehot-dense" instead'
@@ -704,8 +704,8 @@ class _KBinsDiscretizerWrapperDF(
         :return: the series with index the column names of the output dataframe and
         values the corresponding input column names.
         """
-        if self.delegate_estimator.encode == "onehot-dense":
-            n_bins_per_feature = self.delegate_estimator.n_bins_
+        if self.native_estimator.encode == "onehot-dense":
+            n_bins_per_feature = self.native_estimator.n_bins_
             features_in, features_out = zip(
                 *(
                     (feature_name, f"{feature_name}_bin_{bin_index}")
@@ -718,13 +718,13 @@ class _KBinsDiscretizerWrapperDF(
 
             return pd.Series(index=features_out, data=features_in)
 
-        elif self.delegate_estimator.encode == "ordinal":
+        elif self.native_estimator.encode == "ordinal":
             return pd.Series(
                 index=self.features_in.astype(str) + "_bin", data=self.features_in
             )
         else:
             raise ValueError(
-                f"unexpected value for property encode={self.delegate_estimator.encode}"
+                f"unexpected value for property encode={self.native_estimator.encode}"
             )
 
 

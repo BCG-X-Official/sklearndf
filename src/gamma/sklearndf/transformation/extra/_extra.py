@@ -117,7 +117,7 @@ class _BorutaPyWrapperDF(
     metaclass=ABCMeta,
 ):
     def _get_features_out(self) -> pd.Index:
-        return self.features_in[self.delegate_estimator.support_]
+        return self.features_in[self.native_estimator.support_]
 
 
 # noinspection PyAbstractClass,PyUnresolvedReferences

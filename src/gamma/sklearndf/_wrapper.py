@@ -102,11 +102,9 @@ class _BaseEstimatorWrapperDF(
         self._reset_fit()
 
     @property
-    def delegate_estimator(self) -> T_DelegateEstimator:
+    def native_estimator(self) -> T_DelegateEstimator:
         """
-        Return the original estimator which this wrapper delegates to.
-
-        :return: the original estimator which this estimator delegates to
+        The native estimator which this wrapper delegates to.
         """
         return self._delegate_estimator
 
@@ -280,9 +278,9 @@ class _BaseEstimatorWrapperDF(
             _compare_labels(axis="index", actual=df.index, expected=expected_index)
 
     def _validate_delegate_attribute(self, attribute_name: str) -> None:
-        if not hasattr(self.delegate_estimator, attribute_name):
+        if not hasattr(self.native_estimator, attribute_name):
             raise AttributeError(
-                f"delegate estimator of type {type(self.delegate_estimator).__name__} "
+                f"delegate estimator of type {type(self.native_estimator).__name__} "
                 f"does not have attribute {attribute_name}"
             )
 
@@ -348,7 +346,7 @@ class _TransformerWrapperDF(
     # noinspection PyPep8Naming
     def transform(self, X: pd.DataFrame) -> pd.DataFrame:
         """Call the transform method of the delegate transformer
-        ``self.delegate_estimator``.
+        ``self.native_estimator``.
 
         :param X: data frame to transform
         :return: transformed data frame
@@ -365,7 +363,7 @@ class _TransformerWrapperDF(
     def fit_transform(
         self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params
     ) -> pd.DataFrame:
-        """Call the ``fit_transform`` method of ``self.delegate_estimator``.
+        """Call the ``fit_transform`` method of ``self.native_estimator``.
 
         :param X: data frame to transform
         :param y: series of training targets
@@ -431,13 +429,13 @@ class _TransformerWrapperDF(
     # noinspection PyPep8Naming
     def _transform(self, X: pd.DataFrame) -> np.ndarray:
         # noinspection PyUnresolvedReferences
-        return self.delegate_estimator.transform(self._convert_X_for_delegate(X))
+        return self.native_estimator.transform(self._convert_X_for_delegate(X))
 
     # noinspection PyPep8Naming
     def _fit_transform(
         self, X: pd.DataFrame, y: Optional[pd.Series], **fit_params
     ) -> np.ndarray:
-        return self.delegate_estimator.fit_transform(
+        return self.native_estimator.fit_transform(
             self._convert_X_for_delegate(X),
             self._convert_y_for_delegate(y),
             **fit_params,
@@ -446,9 +444,7 @@ class _TransformerWrapperDF(
     # noinspection PyPep8Naming
     def _inverse_transform(self, X: pd.DataFrame) -> np.ndarray:
         # noinspection PyUnresolvedReferences
-        return self.delegate_estimator.inverse_transform(
-            self._convert_X_for_delegate(X)
-        )
+        return self.native_estimator.inverse_transform(self._convert_X_for_delegate(X))
 
 
 class _BaseLearnerWrapperDF(
@@ -485,7 +481,7 @@ class _BaseLearnerWrapperDF(
         # noinspection PyUnresolvedReferences
         return self._prediction_to_series_or_frame(
             X,
-            self.delegate_estimator.predict(
+            self.native_estimator.predict(
                 self._convert_X_for_delegate(X), **predict_params
             ),
         )
@@ -509,7 +505,7 @@ class _BaseLearnerWrapperDF(
         # noinspection PyUnresolvedReferences
         result = self._prediction_to_series_or_frame(
             X,
-            self.delegate_estimator.fit_predict(
+            self.native_estimator.fit_predict(
                 self._convert_X_for_delegate(X),
                 self._convert_y_for_delegate(y),
                 **fit_params,
@@ -539,7 +535,7 @@ class _BaseLearnerWrapperDF(
         if sample_weight is not None and not isinstance(sample_weight, pd.Series):
             raise TypeError("arg sample_weight must be None or a Series")
 
-        return self.delegate_estimator.score(
+        return self.native_estimator.score(
             self._convert_X_for_delegate(X),
             self._convert_y_for_delegate(y),
             sample_weight,
@@ -607,7 +603,7 @@ class _ClassifierWrapperDF(
 
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
-            X, self.delegate_estimator.predict_proba(self._convert_X_for_delegate(X))
+            X, self.native_estimator.predict_proba(self._convert_X_for_delegate(X))
         )
 
     # noinspection PyPep8Naming
@@ -627,8 +623,7 @@ class _ClassifierWrapperDF(
 
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
-            X,
-            self.delegate_estimator.predict_log_proba(self._convert_X_for_delegate(X)),
+            X, self.native_estimator.predict_log_proba(self._convert_X_for_delegate(X))
         )
 
     # noinspection PyPep8Naming
@@ -646,14 +641,13 @@ class _ClassifierWrapperDF(
 
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
-            X,
-            self.delegate_estimator.decision_function(self._convert_X_for_delegate(X)),
+            X, self.native_estimator.decision_function(self._convert_X_for_delegate(X))
         )
 
     def _ensure_delegate_method(self, method: str) -> None:
-        if not hasattr(self.delegate_estimator, method):
+        if not hasattr(self.native_estimator, method):
             raise NotImplementedError(
-                f"{type(self.delegate_estimator).__name__} does not implement method "
+                f"{type(self.native_estimator).__name__} does not implement method "
                 f"{method}"
             )
 
@@ -666,7 +660,7 @@ class _ClassifierWrapperDF(
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
 
         if classes is None:
-            classes = getattr(self.delegate_estimator, "classes_", None)
+            classes = getattr(self.native_estimator, "classes_", None)
 
         if isinstance(y, pd.DataFrame) or isinstance(y, pd.Series):
             # if we already have a series or data frame, return it unchanged
@@ -715,12 +709,12 @@ class _MetaEstimatorWrapperDF(
     def _validate_delegate_estimator(self) -> None:
         def _unwrap_estimator(estimator: BaseEstimator) -> BaseEstimator:
             return (
-                estimator.root_estimator
+                estimator.native_estimator
                 if isinstance(estimator, BaseEstimatorDF)
                 else estimator
             )
 
-        delegate_estimator = self.delegate_estimator
+        delegate_estimator = self.native_estimator
 
         if hasattr(delegate_estimator, "estimator"):
             delegate_estimator.estimator = _unwrap_estimator(
@@ -795,12 +789,12 @@ class _StackingEstimatorWrapperDF(
                 return None
             else:
                 return (
-                    estimator.root_estimator
+                    estimator.native_estimator
                     if isinstance(estimator, BaseEstimatorDF)
                     else estimator
                 )
 
-        delegate_estimator = self.delegate_estimator
+        delegate_estimator = self.native_estimator
 
         # note: as final_estimator is optional, _unwrap_estimator will return None
         #       attribute "named_estimators_" is constructed based off estimators
@@ -869,7 +863,7 @@ def df_estimator(
     :param df_wrapper_type: optional parameter indicating the \
                               :class:`BaseEstimatorWrapperDF` class to be used for \
                               wrapping; defaults to :class:`BaseEstimatorWrapperDF`
-    :return: the resulting ``BaseEstimatorWrapperDF`` with ``delegate_estimator`` as \
+    :return: the resulting ``BaseEstimatorWrapperDF`` with ``native_estimator`` as \
              the delegate estimator
     """
 
