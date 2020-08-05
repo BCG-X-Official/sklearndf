@@ -19,11 +19,31 @@ from sklearn 0.22 onwards
 
 import logging
 
+from sklearn.impute import KNNImputer
+
+from gamma.sklearndf import TransformerDF
+from gamma.sklearndf._wrapper import df_estimator
+from gamma.sklearndf.transformation._transformation import _ImputerWrapperDF
+
 log = logging.getLogger(__name__)
 
-__all__ = []
+__all__ = ["KNNImputerDF"]
 
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
+
+#
+# impute
+#
+
+# noinspection PyAbstractClass
+@df_estimator(df_wrapper_type=_ImputerWrapperDF)
+class KNNImputerDF(TransformerDF, KNNImputer):
+    """
+    Wraps :class:`sklearn.impute._knn.KNNImputer`;
+    accepts and returns data frames.
+    """
+
+    pass
 
 
 #
