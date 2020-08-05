@@ -27,8 +27,8 @@ from gamma.sklearndf.transformation import (
 from gamma.sklearndf.transformation.extra import OutlierRemoverDF
 from test.gamma.sklearndf import (
     check_expected_not_fitted_error,
+    get_sklearndf_wrapper_class,
     list_classes,
-    get_wrapped_counterpart,
 )
 
 TRANSFORMERS_TO_TEST = list_classes(
@@ -94,7 +94,7 @@ def test_special_wrapped_constructors() -> None:
 )
 def test_various_transformers(sklearn_cls: Type, test_data: pd.DataFrame) -> None:
     # get the wrapped counterpart for sklearn:
-    df_transf_cls = get_wrapped_counterpart(
+    df_transf_cls = get_sklearndf_wrapper_class(
         to_wrap=sklearn_cls, from_module=gamma.sklearndf.transformation
     )
 
