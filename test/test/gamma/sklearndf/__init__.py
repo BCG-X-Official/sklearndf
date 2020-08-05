@@ -8,7 +8,7 @@ import pandas as pd
 import sklearn
 from sklearn.base import BaseEstimator
 
-from gamma.sklearndf import BaseLearnerDF, TransformerDF
+from gamma.sklearndf import LearnerDF, TransformerDF
 from gamma.sklearndf._wrapper import _BaseEstimatorWrapperDF
 
 Module: type = Any
@@ -84,7 +84,7 @@ def get_sklearndf_wrapper_class(
         ) from cause
 
 
-def check_expected_not_fitted_error(estimator: Union[BaseLearnerDF, TransformerDF]):
+def check_expected_not_fitted_error(estimator: Union[LearnerDF, TransformerDF]):
     """ Check if transformers & learners raise NotFittedError (since sklearn 0.22)"""
     if version.LooseVersion(sklearn.__version__) <= "0.21":
         return
@@ -92,7 +92,7 @@ def check_expected_not_fitted_error(estimator: Union[BaseLearnerDF, TransformerD
     test_x = pd.DataFrame(data=list(range(10)))
 
     def check_sklearndf_call(
-        func_to_call: str, estimator: Union[BaseLearnerDF, TransformerDF]
+        func_to_call: str, estimator: Union[LearnerDF, TransformerDF]
     ) -> None:
         try:
             getattr(estimator, func_to_call)(X=test_x)
@@ -122,7 +122,7 @@ def check_expected_not_fitted_error(estimator: Union[BaseLearnerDF, TransformerD
                     f"sklearn: {repr(sklearn_exception)}"
                 )
 
-    if isinstance(estimator, BaseLearnerDF):
+    if isinstance(estimator, LearnerDF):
         check_sklearndf_call("predict", estimator)
     elif isinstance(estimator, TransformerDF):
         check_sklearndf_call("transform", estimator)
