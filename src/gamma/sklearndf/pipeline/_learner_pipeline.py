@@ -260,15 +260,23 @@ class ClassifierPipelineDF(
         return "classifier"
 
     # noinspection PyPep8Naming
-    def predict_proba(self, X: pd.DataFrame) -> Union[pd.DataFrame, List[pd.DataFrame]]:
-        return self.classifier.predict_proba(self._pre_transform(X))
+    def predict_proba(
+        self, X: pd.DataFrame, **predict_params
+    ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+        return self.classifier.predict_proba(self._pre_transform(X), **predict_params)
 
     # noinspection PyPep8Naming
     def predict_log_proba(
-        self, X: pd.DataFrame
+        self, X: pd.DataFrame, **predict_params
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
-        return self.classifier.predict_log_proba(self._pre_transform(X))
+        return self.classifier.predict_log_proba(
+            self._pre_transform(X), **predict_params
+        )
 
     # noinspection PyPep8Naming
-    def decision_function(self, X: pd.DataFrame) -> Union[pd.Series, pd.DataFrame]:
-        return self.classifier.decision_function(self._pre_transform(X))
+    def decision_function(
+        self, X: pd.DataFrame, **predict_params
+    ) -> Union[pd.Series, pd.DataFrame]:
+        return self.classifier.decision_function(
+            self._pre_transform(X), **predict_params
+        )

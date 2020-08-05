@@ -591,7 +591,9 @@ class _ClassifierWrapperDF(
     """
 
     # noinspection PyPep8Naming
-    def predict_proba(self, X: pd.DataFrame) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+    def predict_proba(
+        self, X: pd.DataFrame, **predict_params
+    ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """
         Probability estimates.
 
@@ -605,12 +607,15 @@ class _ClassifierWrapperDF(
 
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
-            X, self.native_estimator.predict_proba(self._convert_X_for_delegate(X))
+            X,
+            self.native_estimator.predict_proba(
+                self._convert_X_for_delegate(X), **predict_params
+            ),
         )
 
     # noinspection PyPep8Naming
     def predict_log_proba(
-        self, X: pd.DataFrame
+        self, X: pd.DataFrame, **predict_params
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """
         Log of probability estimates.
@@ -625,11 +630,16 @@ class _ClassifierWrapperDF(
 
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
-            X, self.native_estimator.predict_log_proba(self._convert_X_for_delegate(X))
+            X,
+            self.native_estimator.predict_log_proba(
+                self._convert_X_for_delegate(X), **predict_params
+            ),
         )
 
     # noinspection PyPep8Naming
-    def decision_function(self, X: pd.DataFrame) -> Union[pd.Series, pd.DataFrame]:
+    def decision_function(
+        self, X: pd.DataFrame, **predict_params
+    ) -> Union[pd.Series, pd.DataFrame]:
         """
         Evaluate the decision function for the samples in X.
 
@@ -643,7 +653,10 @@ class _ClassifierWrapperDF(
 
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
-            X, self.native_estimator.decision_function(self._convert_X_for_delegate(X))
+            X,
+            self.native_estimator.decision_function(
+                self._convert_X_for_delegate(X), **predict_params
+            ),
         )
 
     def _ensure_delegate_method(self, method: str) -> None:
