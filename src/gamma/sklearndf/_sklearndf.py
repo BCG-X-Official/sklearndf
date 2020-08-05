@@ -74,13 +74,23 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
     ) -> T_Self:
+        """
+        Fit this estimator.
+        :param X: a data frame of observations as rows and features as columns
+        :param y: an optional series or data frame with one or more outputs
+        :param fit_params: additional keyword parameters depending on the specific \
+            estimator
+        :return: ``self``
+        """
         pass
 
     @property
     def features_in(self) -> pd.Index:
         """
         The pandas column index with the names of the features this estimator has been
-        fitted on; raises an ``AttributeError`` if this estimator is not fitted
+        fitted on.
+
+        :raises AttributeError: if this estimator is not fitted
         """
         self._ensure_fitted()
         return self._get_features_in().rename(self.COL_FEATURE_IN)
@@ -88,21 +98,22 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     @property
     def n_outputs(self) -> int:
         """
-        The number of outputs this estimator has been fitted on;
-        raises an ``AttributeError`` if this estimator is not fitted
+        The number of outputs this estimator has been fitted on
+
+        :raises AttributeError: if this estimator is not fitted
         """
         self._ensure_fitted()
         return self._get_n_outputs()
 
     @abstractmethod
-    def get_params(self, deep=True) -> Dict[str, Any]:
+    def get_params(self, deep=True) -> Mapping[str, Any]:
         """
-        Get parameters for this estimator.
+        Get the parameters for this estimator.
 
-        :param deep: if ``True``, return the parameters for this estimator and \
-        contained sub-objects that are estimators
+        :param deep: if ``True``, return the parameters for this estimator, and \
+        for any sub-estimators contained in this estimator
 
-        :return: mapping of the parameter names to their values
+        :return: a mapping of parameter names to their values
         """
         pass
 
@@ -111,9 +122,9 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         """
         Set the parameters of this estimator.
 
-        Valid parameter keys can be listed with ``get_params()``.
+        Valid parameter keys can be obtained by calling :meth:`.get_params`.
 
-        :returns self
+        :returns ``self``
         """
         pass
 
