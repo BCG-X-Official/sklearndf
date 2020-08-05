@@ -132,7 +132,7 @@ class _BaseEstimatorWrapperDF(
 
         return _FittedEstimator()
 
-    def get_params(self, deep=True) -> Dict[str, Any]:
+    def get_params(self, deep=True) -> Mapping[str, Any]:
         """
         Get parameters for this estimator.
 

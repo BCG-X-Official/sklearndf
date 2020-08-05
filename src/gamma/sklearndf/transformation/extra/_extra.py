@@ -46,7 +46,7 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
       far outliers)
     """
 
-    def get_params(self, deep=True) -> Dict[str, Any]:
+    def get_params(self, deep=True) -> Mapping[str, Any]:
         return super().get_params(deep)
 
     def set_params(self: T, **kwargs) -> T:
