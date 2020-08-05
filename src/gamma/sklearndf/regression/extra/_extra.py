@@ -4,12 +4,16 @@ Core implementation of :mod:`gamma.ml.regression.extra`
 import logging
 import warnings
 
-from gamma.sklearndf import RegressorDF
-from gamma.sklearndf._wrapper import _RegressorWrapperDF, df_estimator
+from gamma.sklearndf import ClassifierDF, RegressorDF
+from gamma.sklearndf._wrapper import (
+    _ClassifierWrapperDF,
+    _RegressorWrapperDF,
+    df_estimator,
+)
 
 log = logging.getLogger(__name__)
 
-__all__ = ["LGBMRegressorDF"]
+__all__ = ["LGBMRegressorDF", "LGBMClassifierDF"]
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
 
 #
@@ -24,13 +28,23 @@ warnings.filterwarnings("ignore", message=r"Starting from version 2\.2\.1")
 warnings.filterwarnings(
     "ignore", message=r"Usage of np\.ndarray subset \(sliced data\) is not recommended"
 )
-from lightgbm.sklearn import LGBMRegressor
+from lightgbm.sklearn import LGBMRegressor, LGBMClassifier
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=_RegressorWrapperDF)
 class LGBMRegressorDF(RegressorDF, LGBMRegressor):
     """
     Wraps :class:`lightgbm.sklearn.LGBMRegressor`; accepts and returns data frames.
+    """
+
+    pass
+
+
+# noinspection PyAbstractClass
+@df_estimator(df_wrapper_type=_ClassifierWrapperDF)
+class LGBMClassifierDF(ClassifierDF, LGBMClassifier):
+    """
+    Wraps :class:`lightgbm.sklearn.LGBMClassifier`; accepts and returns data frames.
     """
 
     pass
