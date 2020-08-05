@@ -45,6 +45,16 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
 
     COL_FEATURE_IN = "feature_in"
 
+    def __new__(cls: Type["BaseEstimatorDF"], *args, **kwargs) -> object:
+        # make sure this DF estimator also is a subclass of
+        if not issubclass(cls, BaseEstimator):
+            raise TypeError(
+                f"class {cls.__name__} is required to be "
+                f"a subclass of {BaseEstimator.__name__}"
+            )
+
+        return super().__new__(cls, *args, **kwargs)
+
     @property
     def root_estimator(self) -> BaseEstimator:
         """
