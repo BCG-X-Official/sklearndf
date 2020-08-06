@@ -2,13 +2,13 @@ import logging
 
 import numpy as np
 import pandas as pd
-
 # noinspection PyPackageRequirements
 import pytest
+import sklearn
 from sklearn import datasets
 from sklearn.utils import Bunch
-import sklearn
-from gamma.sklearndf.transformation import OneHotEncoderDF
+
+from sklearndf.transformation import OneHotEncoderDF
 from test import read_test_config
 from test.paths import TEST_DATA_CSV
 
