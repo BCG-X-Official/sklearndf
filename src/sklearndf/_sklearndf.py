@@ -15,7 +15,7 @@ from sklearn.base import (
     clone,
 )
 
-from pytools.common.fit import FittableMixin, T_Self
+from pytools.common.fit import FittableMixin
 
 log = logging.getLogger(__name__)
 
@@ -31,6 +31,7 @@ __all__ = [
 # type variables
 #
 
+T = TypeVar("T")
 T_EstimatorDF = TypeVar("T_EstimatorDF")
 
 #
@@ -71,11 +72,11 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     # noinspection PyPep8Naming
     @abstractmethod
     def fit(
-        self: T_Self,
+        self: T,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
-    ) -> T_Self:
+    ) -> T:
         """
         Fit this estimator using the given inputs.
 
@@ -121,7 +122,7 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def set_params(self: T_Self, **kwargs) -> T_Self:
+    def set_params(self: T, **kwargs) -> T:
         """
         Set the parameters of this estimator.
 
