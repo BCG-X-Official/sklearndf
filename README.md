@@ -5,10 +5,10 @@ to accept and return dataframes.
 
 Currently this project contains:
 
-- `gamma.sklearndf.regression` decorated scikit-learn regressors, incl. LGBM  
-- `gamma.sklearndf.classification` decorated scikit-learn classifiers
-- `gamma.sklearndf.transformation` decorated scikit-learn transformers
-- `gamma.sklearndf.pipeline` decorated scikit-learn pipeline & feature union
+- `sklearndf.regression` decorated scikit-learn regressors, incl. LGBM  
+- `sklearndf.classification` decorated scikit-learn classifiers
+- `sklearndf.transformation` decorated scikit-learn transformers
+- `sklearndf.pipeline` decorated scikit-learn pipeline & feature union
 
 
 # Installation
