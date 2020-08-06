@@ -1,5 +1,5 @@
 """
-Core implementation of :mod:`gamma.sklearndf.transformation` loaded
+Core implementation of :mod:`sklearndf.transformation` loaded
 from sklearn 0.23 onwards
 """
 

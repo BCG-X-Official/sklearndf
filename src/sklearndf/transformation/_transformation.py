@@ -1,5 +1,5 @@
 """
-Core implementation of :mod:`gamma.sklearndf.transformation`
+Core implementation of :mod:`sklearndf.transformation`
 """
 
 #

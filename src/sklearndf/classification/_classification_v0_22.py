@@ -1,5 +1,5 @@
 """
-Additional implementation of :mod:`gamma.sklearndf.classification` loaded
+Additional implementation of :mod:`sklearndf.classification` loaded
 from sklearn 0.22 onwards
 """
 

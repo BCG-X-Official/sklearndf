@@ -1,5 +1,5 @@
 """
-Core implementation of :mod:`gamma.sklearndf.regression` loaded
+Core implementation of :mod:`sklearndf.regression` loaded
 from sklearn 0.22 onwards
 """
 import logging
