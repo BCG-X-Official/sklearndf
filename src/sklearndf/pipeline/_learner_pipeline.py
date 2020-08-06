@@ -9,13 +9,13 @@ from typing import *
 import pandas as pd
 from sklearn.base import BaseEstimator
 
-from pytools.common.fit import T_Self
 from .. import BaseEstimatorDF, ClassifierDF, LearnerDF, RegressorDF, TransformerDF
 
 log = logging.getLogger(__name__)
 
 __all__ = ["LearnerPipelineDF", "RegressorPipelineDF", "ClassifierPipelineDF"]
 
+T=TypeVar("T")
 T_FinalEstimatorDF = TypeVar("T_FinalEstimatorDF", bound=BaseEstimatorDF)
 T_FinalLearnerDF = TypeVar("T_FinalLearnerDF", bound=LearnerDF)
 T_FinalRegressorDF = TypeVar("T_FinalRegressorDF", bound=RegressorDF)
@@ -68,12 +68,12 @@ class _BaseEstimatorPipelineDF(
 
     # noinspection PyPep8Naming
     def fit(
-        self: T_Self,
+        self: T,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         feature_sequence: Optional[pd.Index] = None,
         **fit_params,
-    ) -> T_Self:
+    ) -> T:
         self: _BaseEstimatorPipelineDF  # support type hinting in PyCharm
 
         X_preprocessed: pd.DataFrame = self._pre_fit_transform(X, y, **fit_params)

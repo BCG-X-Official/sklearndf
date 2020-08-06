@@ -29,7 +29,6 @@ from sklearn.base import (
 )
 
 from pytools.common import inheritdoc
-from pytools.common.fit import T_Self
 from sklearndf import (
     BaseEstimatorDF,
     ClassifierDF,
@@ -153,7 +152,7 @@ class _BaseEstimatorWrapperDF(
         """[see superclass]"""
         return self._delegate_estimator.get_params(deep=deep)
 
-    def set_params(self: T_Self, **kwargs) -> T_Self:
+    def set_params(self: T, **kwargs) -> T:
         """[see superclass]"""
         self: _BaseEstimatorWrapperDF  # support type hinting in PyCharm
         self._delegate_estimator.set_params(**kwargs)
@@ -161,11 +160,11 @@ class _BaseEstimatorWrapperDF(
 
     # noinspection PyPep8Naming
     def fit(
-        self: T_Self,
+        self: T,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
-    ) -> T_Self:
+    ) -> T:
         """[see superclass]"""
 
         # support type hinting in PyCharm
