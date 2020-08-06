@@ -1,5 +1,5 @@
 """
-Core implementation of :mod:`gamma.sklearndf.regression`
+Core implementation of :mod:`sklearndf.regression`
 """
 import logging
 from abc import ABCMeta

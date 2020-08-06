@@ -1,5 +1,5 @@
 """
-Core implementation of :mod:`gamma.sklearndf.pipeline`
+Core implementation of :mod:`sklearndf.pipeline`
 """
 
 import logging

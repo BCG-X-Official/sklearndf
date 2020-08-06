@@ -1,5 +1,5 @@
 """
-Core implementation of :mod:`gamma.ml.transformation.extra`
+Core implementation of :mod:`sklearndf.transformation.extra`
 """
 
 import logging
@@ -10,7 +10,6 @@ import pandas as pd
 from boruta import BorutaPy
 from sklearn.base import BaseEstimator
 
-from pytools.common.fit import T_Self
 from .._wrapper import (
     _ColumnSubsetTransformerWrapperDF,
     _NDArrayTransformerWrapperDF,
@@ -63,11 +62,11 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
 
     # noinspection PyPep8Naming
     def fit(
-        self: T_Self,
+        self: T,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
-    ) -> T_Self:
+    ) -> T:
         """
         Fit the transformer.
 

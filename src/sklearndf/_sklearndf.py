@@ -1,5 +1,5 @@
 """
-Core implementation of :mod:`gamma.sklearndf`
+Core implementation of :mod:`sklearndf`
 """
 
 import logging

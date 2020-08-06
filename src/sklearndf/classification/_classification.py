@@ -1,5 +1,5 @@
 """
-Core implementation of :mod:`gamma.sklearndf.classification`
+Core implementation of :mod:`sklearndf.classification`
 """
 import logging
 from abc import ABCMeta

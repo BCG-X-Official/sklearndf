@@ -1,5 +1,5 @@
 """
-Core implementation of :mod:`gamma.ml.regression.extra`
+Core implementation of :mod:`sklearndf.regression.extra`
 """
 import logging
 import warnings
