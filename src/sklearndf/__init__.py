@@ -56,4 +56,4 @@ All `sklearndf` estimators are fully type hinted.
 
 from ._sklearndf import *
 
-__version__ = "1.0"
+__version__ = "1.0.0"
