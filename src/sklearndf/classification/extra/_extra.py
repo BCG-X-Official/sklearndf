@@ -1,21 +1,20 @@
 """
-Core implementation of :mod:`sklearndf.regression.extra`
+Core implementation of :mod:`sklearndf.classification.extra`
 """
 import logging
 import warnings
 
-from ... import RegressorDF
-from ..._wrapper import _RegressorWrapperDF, df_estimator
+from ... import ClassifierDF
+from ..._wrapper import _ClassifierWrapperDF, df_estimator
 
 log = logging.getLogger(__name__)
 
-__all__ = ["LGBMRegressorDF"]
+__all__ = ["LGBMClassifierDF"]
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
 
 #
 # lightgbm
 #
-
 
 # since we install LGBM via conda, the warning about the Clang compiler is irrelevant
 warnings.filterwarnings("ignore", message=r"Starting from version 2\.2\.1")
@@ -24,14 +23,14 @@ warnings.filterwarnings("ignore", message=r"Starting from version 2\.2\.1")
 warnings.filterwarnings(
     "ignore", message=r"Usage of np\.ndarray subset \(sliced data\) is not recommended"
 )
-from lightgbm.sklearn import LGBMRegressor
+from lightgbm.sklearn import LGBMClassifier
 
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_RegressorWrapperDF)
-class LGBMRegressorDF(RegressorDF, LGBMRegressor):
+@df_estimator(df_wrapper_type=_ClassifierWrapperDF)
+class LGBMClassifierDF(ClassifierDF, LGBMClassifier):
     """
-    Wraps :class:`lightgbm.sklearn.LGBMRegressor`; accepts and returns data frames.
+    Wraps :class:`lightgbm.sklearn.LGBMClassifier`; accepts and returns data frames.
     """
 
     pass
