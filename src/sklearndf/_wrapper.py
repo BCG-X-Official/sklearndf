@@ -28,7 +28,7 @@ from sklearn.base import (
     TransformerMixin,
 )
 
-from pytools.common import inheritdoc
+from pytools.api import inheritdoc
 from sklearndf import (
     BaseEstimatorDF,
     ClassifierDF,
