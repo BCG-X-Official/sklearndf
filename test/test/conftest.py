@@ -9,8 +9,6 @@ from sklearn import datasets
 from sklearn.utils import Bunch
 
 from sklearndf.transformation import OneHotEncoderDF
-from test import read_test_config
-from test.paths import TEST_DATA_CSV
 
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger(__name__)
@@ -32,19 +30,6 @@ def iris_target() -> str:
 @pytest.fixture
 def n_jobs() -> int:
     return -3
-
-
-@pytest.fixture
-def batch_table() -> pd.DataFrame:
-
-    # Note: this file is not included within the git repository!
-    inputfile_config = read_test_config(section="inputfile")
-    return pd.read_csv(
-        filepath_or_buffer=TEST_DATA_CSV,
-        delimiter=inputfile_config["delimiter"],
-        header=inputfile_config["header"],
-        decimal=inputfile_config["decimal"],
-    )
 
 
 @pytest.fixture
