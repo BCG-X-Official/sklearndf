@@ -15,7 +15,7 @@ from sklearn.base import (
     clone,
 )
 
-from pytools.common.fit import FittableMixin
+from pytools.fit import FittableMixin
 
 log = logging.getLogger(__name__)
 
