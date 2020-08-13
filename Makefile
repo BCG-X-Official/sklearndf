@@ -12,7 +12,7 @@ endif
 
 # the final command to append to conda build so that it finds locally
 # built packages:
-LOCAL_CHANNELS = $(P_PYTOOLS)
+LOCAL_CHANNELS = $(C_PYTOOLS)
 
 
 help:
