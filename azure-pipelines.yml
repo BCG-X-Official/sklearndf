@@ -51,7 +51,7 @@ stages:
               conda env create -f environment.yml
               conda activate facet-develop
               cd $(System.DefaultWorkingDirectory)/pytools/
-              pip install -e .
+              make package
               cd $(System.DefaultWorkingDirectory)/sklearndf/
               export PYTHONPATH=./src/
               pip install pytest-azurepipelines
