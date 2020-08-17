@@ -47,15 +47,17 @@ stages:
             targetType: 'inline'
             script: |
               eval "$(conda shell.bash hook)"
-              cd /home/vsts/work/1/s/facet/
+              cd $(System.DefaultWorkingDirectory)/facet/
               conda env create -f environment.yml
               conda activate facet-develop
-              cd /home/vsts/work/1/s/pytools/
+              cd $(System.DefaultWorkingDirectory)/pytools/
               pip install -e .
-              cd /home/vsts/work/1/s/sklearndf/
+              cd $(System.DefaultWorkingDirectory)/sklearndf/
               export PYTHONPATH=./src/
               pip install pytest-azurepipelines
-              pytest test/test/
+              make package
+              coverage xml
+              coverage html
           displayName: "Install env and run pytest"
 
 
