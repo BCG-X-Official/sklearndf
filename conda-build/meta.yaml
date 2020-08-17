@@ -35,6 +35,3 @@ test:
     - python -c 'import sklearndf;
                  import os;
                  assert sklearndf.__version__ == os.environ["PKG_VERSION"]'
-
-  # run the tests with the built conda environment:
-    - coverage run -m pytest -vs ${FACET_PATH}/sklearndf/test

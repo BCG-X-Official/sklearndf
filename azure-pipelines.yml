@@ -56,9 +56,24 @@ stages:
               export PYTHONPATH=./src/
               pip install pytest-azurepipelines
               make package
+              coverage run -p pytest test/test/
               coverage xml
               coverage html
           displayName: "Install env and run pytest"
+
+
+        - task: PublishTestResults@2
+            condition: succeededOrFailed()
+            inputs:
+              testResultsFiles: '$(System.DefaultWorkingDirectory)/sklearndf/*.xml'
+              searchFolder: '$(System.DefaultWorkingDirectory)/sklearndf/'
+              testRunTitle: 'Publish test results'
+
+        - task: PublishCodeCoverageResults@1
+          inputs:
+            codeCoverageTool: Cobertura
+            summaryFileLocation: '$(System.DefaultWorkingDirectory)/sklearndf/coverage.xml'
+            reportDirectory: '$(System.DefaultWorkingDirectory)/sklearndf/htmlcov'
 
 
 #        - task: Bash@3 TODO - include once packages are public
