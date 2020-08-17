@@ -73,14 +73,3 @@ stages:
             codeCoverageTool: Cobertura
             summaryFileLocation: '$(System.DefaultWorkingDirectory)/sklearndf/coverage.xml'
             reportDirectory: '$(System.DefaultWorkingDirectory)/sklearndf/htmlcov'
-
-
-#        - task: Bash@3 TODO - include once packages are public
-#          inputs:
-#            targetType: 'inline'
-#            script: |
-#              eval "$(conda shell.bash hook)"
-#              conda activate facet-develop
-#              cd /home/vsts/work/1/s/sklearndf/
-#              make package
-#          displayName: "Build conda package"
