@@ -5,6 +5,11 @@ resources:
       endpoint: konst-int-i # todo - update to final github org
       name: konst-int-i/facet # todo - update to final github org
       ref: develop
+    - repository: pytools
+      type: github
+      endpoint: konst-int-i # todo - update to final github org
+      name: konst-int-i/pytools # todo - update to final github org
+      ref: develop
 
 trigger:
 - master
@@ -34,6 +39,7 @@ stages:
 
         - checkout: self
         - checkout: facet
+        - checkout: pytools
         - script: dir $(Build.SourcesDirectory)
 
         - task: Bash@3
@@ -44,6 +50,8 @@ stages:
               cd /home/vsts/work/1/s/facet/
               conda env create -f environment.yml
               conda activate facet-develop
+              cd /home/vsts/work/1/s/pytools/
+              pip install -e .
               cd /home/vsts/work/1/s/sklearndf/
               export PYTHONPATH=./src/
               pip install pytest-azurepipelines
