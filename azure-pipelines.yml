@@ -61,13 +61,12 @@ stages:
               coverage html
           displayName: "Install env and run pytest"
 
-
         - task: PublishTestResults@2
-            condition: succeededOrFailed()
-            inputs:
-              testResultsFiles: '$(System.DefaultWorkingDirectory)/sklearndf/*.xml'
-              searchFolder: '$(System.DefaultWorkingDirectory)/sklearndf/'
-              testRunTitle: 'Publish test results'
+          condition: succeededOrFailed()
+          inputs:
+            testResultsFiles: '$(System.DefaultWorkingDirectory)/sklearndf/*.xml'
+            searchFolder: '$(System.DefaultWorkingDirectory)/sklearndf/'
+            testRunTitle: 'Publish test results'
 
         - task: PublishCodeCoverageResults@1
           inputs:
