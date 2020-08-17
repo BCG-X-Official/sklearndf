@@ -3,8 +3,7 @@ package:
   version: 1.0.0
 
 source:
-  git_url: https://github.com/konst-int-i/sklearndf #todo: change to final
-  git_rev: develop #todo: change to refs/tags/{{PKG_VERSION}}
+  git_url: {{FACET_PATH}}/sklearndf/ #todo: change to final
 
 build:
   noarch: python
@@ -38,4 +37,4 @@ test:
                  assert sklearndf.__version__ == os.environ["PKG_VERSION"]'
 
   # run the tests with the built conda environment:
-    - pytest -vs ${FACET_PATH}/sklearndf/test
+    - coverage run -m pytest -vs ${FACET_PATH}/sklearndf/test
