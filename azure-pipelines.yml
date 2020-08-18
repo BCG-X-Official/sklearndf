@@ -103,9 +103,8 @@ stages:
               export PYTHONPATH=$(System.DefaultWorkingDirectory)/sklearndf/src/
               export FACET_V_PYTHON_BUILD=$(FACET_V_PYTHON_BUILD)
               export FACET_V_SKLEARN=$(FACET_V_SKLEARN)
-              conda create --yes --name test python=$(FACET_V_PYTHON_BUILD)
-              conda activate test
-              conda install conda-build
+              conda activate facet-develop
+              conda install -y conda-build
               cd $(System.DefaultWorkingDirectory)/pytools/
               make package
               cd $(System.DefaultWorkingDirectory)/sklearndf/
