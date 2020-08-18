@@ -79,7 +79,7 @@ stages:
       strategy:
         matrix:
           Python35:
-            FACET_V_PYTHON_BUILD: '3.5'
+            FACET_V_PYTHON_BUILD: '3.6'
             FACET_V_SKLEARN: '==0.21'
           Python38:
             FACET_V_PYTHON_BUILD: '3.8'
