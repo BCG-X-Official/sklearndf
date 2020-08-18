@@ -47,7 +47,7 @@ log.info(f"sys.path = {sys.path}")
 # -- Project information -----------------------------------------------------
 
 project = 'sklearndf'
-copyright = '2020, sklearndf team'
+copyright = '2020, The Boston Consulting Group (BCG)'
 author = 'sklearndf team'
 
 
