@@ -81,7 +81,7 @@ stages:
           Minimum dependencies:
             FACET_V_PYTHON_BUILD: '3.6'
             FACET_V_PANDAS: '==0.24'
-            FACET_V_SKLEARN: '==0.21'
+            FACET_V_SKLEARN: '==0.21.*'
             FACET_V_JOBLIB: '==0.13'
             FACET_V_NUMPY: '==1.16'
           Maximum dependencies:
