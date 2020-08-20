@@ -17,7 +17,6 @@ sklearndf.transformation
    :undoc-members:
    :show-inheritance:
 
-
 sklearndf.transformation.extra
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -25,6 +24,7 @@ sklearndf.transformation.extra
    :members:
    :undoc-members:
    :show-inheritance:
+
 
 sklearndf.regression
 ---------------------
@@ -41,6 +41,7 @@ sklearndf.regression.extra
    :members:
    :undoc-members:
    :show-inheritance:
+
 
 sklearndf.classification
 -------------------------
