@@ -4,12 +4,12 @@ resources:
       type: github
       endpoint: konst-int-i # todo - update to final github org
       name: konst-int-i/facet # todo - update to final github org
-      ref: develop # todo - update to stable release
+      ref: origin/develop # todo - update to stable release
     - repository: pytools
       type: github
       endpoint: konst-int-i # todo - update to final github org
       name: konst-int-i/pytools # todo - update to final github org
-      ref: develop # todo - update to stable release
+      ref: origin/develop # todo - update to stable release
 
 stages:
   - stage: 'Quick_env_test'
@@ -100,14 +100,11 @@ stages:
             targetType: 'inline'
             script: |
               eval "$(conda shell.bash hook)"
-              export PYTHONPATH=$(System.DefaultWorkingDirectory)/sklearndf/src/
               export FACET_V_PYTHON_BUILD=$(FACET_V_PYTHON_BUILD)
               export FACET_V_SKLEARN=$(FACET_V_SKLEARN)
               conda activate facet-develop
               conda install -y conda-build
+              export PYTHONPATH=$(System.DefaultWorkingDirectory)/pytools/src/
               cd $(System.DefaultWorkingDirectory)/pytools/
-              make package
-              pip install -e .
-              cd $(System.DefaultWorkingDirectory)/sklearndf/
               make package
           displayName: "Build conda package"
