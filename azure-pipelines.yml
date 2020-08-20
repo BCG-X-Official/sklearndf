@@ -107,6 +107,7 @@ stages:
               conda install -y conda-build
               cd $(System.DefaultWorkingDirectory)/pytools/
               make package
+              pip install -e .
               cd $(System.DefaultWorkingDirectory)/sklearndf/
               make package
           displayName: "Build conda package"
