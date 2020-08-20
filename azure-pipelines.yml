@@ -107,7 +107,4 @@ stages:
               export PYTHONPATH=$(System.DefaultWorkingDirectory)/pytools/src/
               cd $(System.DefaultWorkingDirectory)/pytools/
               make package
-              export PYTHONPATH=$(System.DefaultWorkingDirectory)/sklearndf/src/
-              cd $(System.DefaultWorkingDirectory)/sklearndf/
-              make package
           displayName: "Build conda package"
