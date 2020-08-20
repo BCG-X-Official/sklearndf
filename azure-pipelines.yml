@@ -88,7 +88,7 @@ stages:
             FACET_V_PYTHON_BUILD: '3.8'
             FACET_V_SKLEARN: '==0.22'
             FACET_V_PANDAS: '==1.0.0'
-            FACET_V_NUMPY: '==1.8.2'
+            FACET_V_NUMPY: '=>1.16'
           Unconstrained dependencies:
             FACET_V_PYTHON_BUILD: '>=3.6'
             FACET_V_PANDAS: '=>0.24'
