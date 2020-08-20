@@ -80,10 +80,12 @@ stages:
         matrix:
           Python35:
             FACET_V_PYTHON_BUILD: '3.6'
-            FACET_V_SKLEARN: '==0.21'
+            FACET_V_PANDAS: '==0.24'
+            FACET_V_SKLEARN: '==0.22'
           Python38:
             FACET_V_PYTHON_BUILD: '3.8'
-            FACET_V_SKLEARN: '==0.22'
+            FACET_V_PANDAS: '==1.0.0'
+            FACET_V_SKLEARN: '==0.23'
 
       steps:
         - task: UsePythonVersion@0
@@ -103,6 +105,7 @@ stages:
               export PYTHONPATH=$(System.DefaultWorkingDirectory)/sklearndf/src/
               export FACET_V_PYTHON_BUILD=$(FACET_V_PYTHON_BUILD)
               export FACET_V_SKLEARN=$(FACET_V_SKLEARN)
+              export FACET_V_PANDAS=$(FACET_V_PANDAS)
               conda activate facet-develop
               conda install -y conda-build
               cd $(System.DefaultWorkingDirectory)/pytools/

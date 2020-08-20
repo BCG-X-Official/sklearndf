@@ -17,7 +17,7 @@ requirements:
     - python>=3.6,<3.8
     - pandas{{ environ.get('FACET_V_PANDAS', '>=0.24') }}
     - numpy{{ environ.get('FACET_V_NUMPY', '>=1.16') }}
-    - scikit-learn{{ environ.get('FACET_V_SKLEARN', '>=0.21,<=0.22') }}
+    - scikit-learn{{ environ.get('FACET_V_SKLEARN', '>=0.22,<=0.23') }}
     - boruta_py{{ environ.get('FACET_V_BORUTA', '=0.3') }}
     - gamma-pytools=1.0
     - pyyaml=5
