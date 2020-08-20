@@ -93,6 +93,7 @@ stages:
 
         - checkout: self
         - checkout: facet
+        - checkout: pytools
         - script: dir $(Build.SourcesDirectory)
 
         - task: Bash@3
@@ -106,5 +107,8 @@ stages:
               conda install -y conda-build
               export PYTHONPATH=$(System.DefaultWorkingDirectory)/pytools/src/
               cd $(System.DefaultWorkingDirectory)/pytools/
+              make package
+              export PYTHONPATH=$(System.DefaultWorkingDirectory)/sklearndf/src/
+              cd $(System.DefaultWorkingDirectory)/sklearndf/
               make package
           displayName: "Build conda package"
