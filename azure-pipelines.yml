@@ -4,12 +4,12 @@ resources:
       type: github
       endpoint: konst-int-i # todo - update to final github org
       name: konst-int-i/facet # todo - update to final github org
-      ref: origin/develop # todo - update to stable release
+      ref: develop # todo - update to stable release
     - repository: pytools
       type: github
       endpoint: konst-int-i # todo - update to final github org
       name: konst-int-i/pytools # todo - update to final github org
-      ref: origin/develop # todo - update to stable release
+      ref: develop # todo - update to stable release
 
 stages:
   - stage: 'Quick_env_test'
@@ -106,5 +106,8 @@ stages:
               conda install -y conda-build
               export PYTHONPATH=$(System.DefaultWorkingDirectory)/pytools/src/
               cd $(System.DefaultWorkingDirectory)/pytools/
+              make package
+              export PYTHONPATH=$(System.DefaultWorkingDirectory)/sklearndf/src/
+              cd $(System.DefaultWorkingDirectory)/sklearndf/
               make package
           displayName: "Build conda package"
