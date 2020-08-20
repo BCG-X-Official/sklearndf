@@ -10,6 +10,7 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+
 import itertools
 import logging
 import re
@@ -18,16 +19,23 @@ from typing import *
 
 import typing_inspect
 from sphinx.application import Sphinx
+import sphinx
 
 log = logging.getLogger(name=__name__)
 log.setLevel(logging.INFO)
 
 
+# If extensions (or modules to document with autodoc) are in another directory,
+# add these directories to sys.path here. If the directory is relative to the
+# documentation root, use os.path.abspath to make it absolute, like shown here.
 def _set_paths() -> None:
     import sys
     import os
 
-    module_paths = ["sklearndf", "pytools"]
+    module_paths = [
+        "pytools",
+        "sklearndf",
+    ]
 
     if "cwd" not in globals():
         # noinspection PyGlobalUndefined
@@ -44,11 +52,35 @@ _set_paths()
 
 log.info(f"sys.path = {sys.path}")
 
+
+# fix m2r error
+def monkeypatch(cls):
+    """ decorator to monkey-patch methods """
+
+    def decorator(f):
+        method = f.__name__
+        old_method = getattr(cls, method)
+        setattr(cls, method, lambda self, *args, **kwargs: f(old_method, self, *args, **kwargs))
+
+    return decorator
+
+
+# workaround until https://github.com/miyakogi/m2r/pull/55 is merged
+@monkeypatch(sphinx.registry.SphinxComponentRegistry)
+def add_source_parser(_old_add_source_parser, self, *args, **kwargs):
+    # signature is (parser: Type[Parser], **kwargs), but m2r expects
+    # the removed (str, parser: Type[Parser], **kwargs).
+    if isinstance(args[0], str):
+        args = args[1:]
+    return _old_add_source_parser(self, *args, **kwargs)
+
+
+
 # -- Project information -----------------------------------------------------
 
 project = 'sklearndf'
 copyright = '2020, The Boston Consulting Group (BCG)'
-author = 'sklearndf team'
+author = 'BCG Gamma sklearndf Team'
 
 
 # -- General configuration ---------------------------------------------------
@@ -57,6 +89,7 @@ author = 'sklearndf team'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    "nbsphinx",
     "sphinx.ext.autodoc",
     "sphinx.ext.imgmath",
     "sphinx.ext.intersphinx",
@@ -64,8 +97,8 @@ extensions = [
     "sphinx_autodoc_typehints",
     "sphinx_automodapi.automodapi",
     "sphinx_automodapi.smart_resolver",
+    "m2r"
 ]
-
 # -- Options for automodapi ------------------------------------------------------------
 
 # required by default to avoid generating duplicate documentation
@@ -88,14 +121,20 @@ autosummary_generate = True
 # always overwrite generated autosummaries with newly generated versions
 autosummary_generate_overwrite = True
 
+#autodoc_default_options = {
+    #"ignore-module-all": True,
+    # "inherited-members": True,
+    # "show-inheritance": False
+#}
+
 nbsphinx_allow_errors = True
 nbsphinx_timeout = 60 * 15  # 15 minutes due to tutorial/model notebook
 
 # add intersphinx mapping
 intersphinx_mapping = {
-    "pandas": ("https://pandas.pydata.org/pandas-docs/stable/", None),
+    "pandas": ("https://pandas.pydata.org/pandas-docs/stable", None),
     "matplotlib": ("https://matplotlib.org/", None),
-    "numpy": ("https://numpy.org/doc/stable/", None),
+    "numpy": ("https://numpy.org/doc/stable", None),
     "python": ("https://docs.python.org/3.6", None),
     "scipy": ("https://docs.scipy.org/doc/scipy/reference", None),
     "sklearn": ("https://scikit-learn.org/stable", None),
@@ -106,10 +145,12 @@ intersphinx_mapping = {
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
+source_suffix = ['.rst', '.md', '.ipynb']
+
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
+exclude_patterns = ["*/.ipynb_checkpoints/*"]
 
 # -- Options for Math output -----------------------------------------------------------
 
@@ -121,18 +162,20 @@ imgmath_use_preview = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'pydata_sphinx_theme'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_logo = "_static/gamma_logo.jpg"
+latex_logo = html_logo
 
 # Class documentation to include docstrings both global to the class, and from __init__
 autoclass_content = "both"
 
-
 # -- End of options section ------------------------------------------------------------
+
 
 _classes_visited: Set[type] = set()
 
