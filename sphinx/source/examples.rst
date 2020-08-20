@@ -9,4 +9,7 @@ Detailed example
 Detailed sklearndf tutorial
 ------------------------------------------------
 
-Notebook here
+.. toctree::
+   :maxdepth: 2
+
+   tutorial/sklearndf_tutorial
