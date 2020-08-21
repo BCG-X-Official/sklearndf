@@ -9,7 +9,7 @@ Setup
 Python environment
 ~~~~~~~~~~~~~~~~~~~~~~
 There is a ``environment.yml`` provided in the repository root, which installs all
-required development dependencies in the ``sklearndf-development`` environment.
+required development dependencies in the ``sklearndf-develop`` environment.
 
 .. code-block:: RST
 
