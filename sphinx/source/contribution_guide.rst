@@ -468,20 +468,17 @@ The "Test multiple conda environment builds" stage performs the following steps:
             FACET_V_SKLEARN: '==0.21.*'
             FACET_V_JOBLIB: '==0.13'
             FACET_V_NUMPY: '==1.16'
-            FACET_V_SHAP: '==0.34'
           Maximum dependencies:
             FACET_V_PYTHON_BUILD: '3.8'
             FACET_V_SKLEARN: '==0.23'
             FACET_V_PANDAS: '==1.0.0'
             FACET_V_NUMPY: '=>1.16'
-            FACET_V_SHAP: '==0.35'
           Unconstrained dependencies:
             FACET_V_PYTHON_BUILD: '>=3.6'
             FACET_V_PANDAS: '=>0.24'
             FACET_V_SKLEARN: '=>0.21'
             FACET_V_JOBLIB: '=>0.13'
             FACET_V_NUMPY: '=>1.16'
-            FACET_V_SHAP: '=>0.34'
 
 Note that the evironment variables set here are referenced in the
 ``conda-build/meta.yaml``. Testing for this variety of package dependencies helps us
