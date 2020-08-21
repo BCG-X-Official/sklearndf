@@ -7,9 +7,14 @@ SPHINXBUILD           = sphinx-build
 SOURCEDIR             = source
 BUILDDIR              = build
 TEMPLATEDIR           = "${SOURCEDIR}/_templates"
+SCRIPTSDIR            = "${SOURCEDIR}/scripts"
+TUTORIALDIR           = ../notebooks
+TUTORIALBUILD         = "${SCRIPTSDIR}/transform_notebook.py"
 
 SPHINXOPTS            =
-SPHINXAPIDOCOPTS      = -e -t ${TEMPLATEDIR} --no-toc -o $(SOURCEDIR) -f
+SPHINXAPIDOCOPTS      = -e -t ${TEMPLATEDIR} --no-toc -o $(SOURCEDIR)/api/ -f
+
+# export SPHINX_APIDOC_OPTIONS = members,undoc-members,inherited-members,no-show-inheritance
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -27,7 +32,29 @@ build:
 	# run the Sphinx build for html
 	@$(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
+	# create a nojekyll file for gh-pages:
+	touch "$(BUILDDIR)"/html/.nojekyll
+
+
 html: apidoc build
+
+tutorial:
+	# build the tutorial notebooks
+	@$(TUTORIALBUILD) "${TUTORIALDIR}"
+
+# maybe not needed?
+html-gh-pages:
+	# target to generate github pages build on branch "gh-pages"
+	cd .. && \
+	git checkout gh-pages && \
+	rm -rf * && \
+	git checkout master sphinx data scripts && \
+	git reset HEAD && cd sphinx && make html && \
+	cd .. && \
+	mv -fv "./sphinx/$(BUILDDIR)"/html/* ./  && \
+	mkdir -p _static/notebooks && \
+	python scripts/transform_notebook.py ../notebooks/ _static/notebooks/ && \
+	rm -rf sphinx data scripts && git add -A
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
