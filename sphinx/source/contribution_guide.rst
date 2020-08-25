@@ -18,7 +18,7 @@ dependencies in the ``sklearndf-development`` environment.
 
 Pytest
 ~~~~~~~~~~~~~~~
-Run ``pytest tests/`` from the sklearndf root folder or use the PyCharm test runner. To measure coverage, use ``pytest --cov=src/sklearndf tests/``. Note that the code coverage reports are also generated in the Azure Pipelines.
+Run ``pytest tests/`` from the sklearndf root folder or use the PyCharm test runner. To measure coverage, use ``pytest --cov=src/sklearndf tests/``. Note that the code coverage reports are also generated in the Azure Pipelines (see CI/CD section).
 
 Note that you will need to set the PYTHONPATH to the ``src/`` directory by running ``export PYTHONPATH=./src/`` from the repository root.
 
@@ -26,7 +26,7 @@ Note that you will need to set the PYTHONPATH to the ``src/`` directory by runni
 Sphinx Documentation
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-The generated Sphinx documentation of alpha is located at /docs. To build the documentation, ensure you have the following dependencies installed:
+The generated Sphinx documentation for sklearndf is located at ``sphinx/build/html``. To build the documentation, ensure you have the following dependencies installed:
 
 - the Python packages sphinx=2.0.1 installed
 
@@ -40,13 +40,12 @@ The generated Sphinx documentation of alpha is located at /docs. To build the do
 
 Let us mention the following extensions used in the conf.py sphinx configuration script:
 
-- intersphinx (external links to other documentations built with sphins: sklearn, numpy...)
+- intersphinx (external links to other documentations built with Sphinx: scikit-learn, numpy...)
 
-- viewcode to include source code in the docuemtation, and links to the source code from the objects documentation
+- viewcode to include source code in the documentation, and links to the source code from the objects documentation
 
-To update, simply run ``make html`` from within /sphinx. By default make html only compiles files which have been modfified since last compilation. To force the compilation of the full documentation enter first ``make clean``.
-
-To publish the documenation - TODO - finish this section
+To update the Sphinx documentation, run make html from within /sphinx. By default this will only compile files that have been modified since the last compilation. To force compilation of the full documentation run make clean first.
+**TODO**: To publish the documentation - finish this section
 
 
 Git Guidelines
@@ -75,30 +74,30 @@ General guidelines
 
 - The documentation is generated from docstrings in the source code
 
-- Before writing your own documentation, take some time to study the documentation of
-the existing code, and try to emulate the same style
+- Before writing your own documentation, take some time to study the documentation of the existing code and emulate the same style
 
-- As a general rule, aim to describe not only what the code does, but also why ,
-including the rationale for any design choices that may not be obvious
+- Describe not only what the code does, but also why, including the rationale for any design choices that may not be obvious
 
 - Provide examples wherever this helps explain usage patterns
 
 
 Docstring guidelines
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-A docstring is mandatory for all of the following entities in the source code , except
-when they are protected/private (i.e. the name starts with a leading _ character):
+- A docstring is mandatory for all of the following entities in the source code, except when they are protected/private (i.e. the name starts with a leading _ character):
 
-- modules
-- classes
-- functions/methods
-- properties
-- atributes
-- (From PEP 8): Docstrings are not necessary for non-public methods, but you should
-have a comment that describes what the method does.
+    - modules
 
-- Docstrings must follow the reStructuredText syntax (i.e., the default syntax for
-Sphinx)
+    - classes
+
+    - functions/methods
+
+    - properties
+
+    - attributes
+
+- Docstrings are not necessary for non-public methods, but you should have a comment that describes what the method does (PEP 8)
+
+- Docstrings must follow the reStructuredText syntax, the default syntax for Sphinx
 
 - Write docstrings for functions and methods in the imperative style, e.g.,
 
@@ -117,9 +116,8 @@ but not
 (too wordy and not imperative)
 
 
-- Write docstrings for modules, classes, modules, and attributes starting with a
-descriptive phrase (as you would expect in a dictionary entry). Be concise and avoid
-unnecessary or redundant phrases. For example:
+- Write docstrings for modules, classes, modules, and attributes starting with a descriptive phrase (as you would expect in a dictionary entry). Be concise and avoid unnecessary or redundant phrases. For example:
+
 
 .. code-block:: RST
 
@@ -161,8 +159,7 @@ but not
 	        """:return: the foo object"""
 	        pass
 
-Start full sentences and phrases with a capitalised word and end each sentence with
-punctuation , e.g.,
+- Start full sentences and phrases with a capitalised word and end each sentence with punctuation, e.g.,
 
 ``"""Fit the model"""``
 
@@ -171,8 +168,7 @@ but not
 ``"""fit the model"""``
 
 
-- For multi-line docstrings, insert a line break after the leading triple quote and
-before the trailing triple quote, e.g.,
+- For multi-line docstrings, insert a line break after the leading triple quote and before the trailing triple quote, e.g.,
 
 .. code-block:: RST
 
@@ -198,9 +194,7 @@ but not
 
 	    :param sample: training sample"""
 
-- For method arguments, return value, and class parameters, one must hint the type
-using the typing module. Hence do not specify the parameter types in the docstrings,
-e.g.,
+- For method arguments, return value, and class parameters, one must hint the type using the typing module. Hence do not specify the parameter types in the docstrings, e.g.,
 
 .. code-block:: RST
 
@@ -223,16 +217,12 @@ but not
 	   :return float: output value
 
 
-Connverting notebooks to documentation with nbsphinx
+Converting notebooks to documentation with nbsphinx
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- To hide a notebook cell from the generated documentation, add "nbsphinx": "hidden" to
-the metadata of the cell. To change the meatadata of a cell, in the main menu of the
-jupyter notebook server, click on *View -> CellToolbar -> edit Metadata.
+- To hide a notebook cell from the generated documentation, add "nbsphinx": "hidden" to the metadata of the cell. To change the metadata of a cell, in the main menu of the jupyter notebook server, click on *View -> CellToolbar -> edit Metadata*, then click on edit Metadata in the top right part of the cell.
+- To interpret a notebook cell as reStructuredText by nbsphinx, make a Raw NBConvert cell, then click on the jupyter notebook main menu to *View -> CellToolbar -> Raw Cell Format*, then choose ReST in the dropdown in the top right part of the cell.
 
-- To interpret a notebook cell as reStructuredText by nbsphinx, make a Raw NBConvert
-cell, then click on the jupyeter notebook server main menu to View -> CellToolbar ->
-Raw Cell Format, then chose ReST in the dropdown in the top right part of the cell.
 
 
 Building and releasing sklearndf
@@ -250,17 +240,15 @@ To make a new deployment, you should:
 
 1. Increase the version number with ``punch``:
 
-	a. ensure you have once fetched the ``release`` branch
-	b. from ``develop`` git merge into ``release``
+	a. Ensure you have once fetched the ``release`` branch
+	b. From ``develop`` git merge into ``release``
 	c. From ``release``, run ``punch -p [major|minor|patch]`` to increase the version part of your choice
-	d. Note that this will update the version number in ``setup.py`` and relevant parts of
-    the documentation as well as commit this to the ``release`` branch
+	d. Note that this will update the version number in ``setup.py`` and relevant parts of the documentation as well as commit this to the ``release`` branch
 	e. Merge ``release`` back into ``develop`` and push both branches to deploy the update
 
 2. PR from release to Master
 
-	a. Open a PR from release to master to finalize the release - the Azure Pipelines
-    must have passed for the release branch.
+	a. Open a PR from release to master to finalize the release - the Azure Pipelines must have passed for the release branch.
 
 
 Conda Packages
@@ -318,8 +306,8 @@ The **build** section indicates how the previously acquired code should be built
 Note that setting the ``noarch: Python`` flag produces a pure Python, cross-platform
 build. The command given to ``script`` indicates what ``conda-build`` will do to build the
 underlying package: in this case it will install it using pip using the ``setup.py`` in
-the root of the repository. Here, the ``--no-deps`` switch is passed, since we want all
-ependencies to other libraries to be managed by Conda and not through pip.
+the root of the repository. Here, the ``--no-deps`` switch is passed, so that all
+dependencies to other libraries are managed by Conda and not pip.
 
 
 The **requirements** section specifies those dependencies that ``sklearndf`` has:
@@ -331,23 +319,23 @@ The **requirements** section specifies those dependencies that ``sklearndf`` has
 			- pip
 			- python={{ environ.get('FACET_V_PYTHON_BUILD', '3.7') }}
 		run:
-			- python>=3.6,<3.8
-			- pandas{{ environ.get('FACET_V_PANDAS', '>=0.24') }}
-			- numpy{{ environ.get('FACET_V_NUMPY', '>=1.16') }}
-			- matplotlib{{ environ.get('FACET_V_MATPLOT', '>=3') }}
-			- shap{{ environ.get('FACET_V_SHAP', '>=0.34') }}
-			- scikit-learn{{ environ.get('FACET_V_SKLEARN', '>=0.21,<=0.22') }}
-			- gamma-pytools=1.0
-			- gamma-sklearndf=1.0
-			- pyyaml>=5
+            - python>=3.6,<3.8
+            - pandas{{ environ.get('FACET_V_PANDAS', '>=0.24') }}
+            - numpy{{ environ.get('FACET_V_NUMPY', '>=1.16') }}
+            - scikit-learn{{ environ.get('FACET_V_SKLEARN', '>=0.22,<=0.23') }}
+            - boruta_py{{ environ.get('FACET_V_BORUTA', '=0.3') }}
+            - gamma-pytools=1.0.0
+            - pyyaml=5
+            - lightgbm{{ environ.get('FACET_V_LGBM', '=2.2') }}
+
 
 The ``host`` section defines solely what is needed to carry out the build: Python and
 pip.
 
 The ``run`` section defines which Conda packages are required by ``sklearndf`` at runtime.
-For various of them, like pandas, numpy, and scikit-learn. You can see that we defined
+You can see that we defined
 environment variables such as ``V_FACET_PYTHON_BUILD``. This allows us to test a matrix
-strategy of different combinations dependencies in our ``azure-pipelines.yml`` on
+strategy of different combinations of dependencies in our ``azure-pipelines.yml`` on
 Azure DevOps. If the environment variable is not specified, the default value is given
 in this section of the ``meta.yaml``. This setup helps us to detect version conflicts.
 
@@ -357,12 +345,11 @@ build of the package:
 .. code-block:: RST
 
     imports:
-    - sklearndf
-        - sklearndf.crossfit
-        - sklearndf.inspection
-        - sklearndf.selection
-        - sklearndf.validation
-        - sklearndf.simulation
+        - sklearndf
+        - sklearndf.classification
+        - sklearndf.pipeline
+        - sklearndf.regression
+        - sklearndf.transformation
     requires:
         - pytest=5.2
     commands:
@@ -380,7 +367,7 @@ relying on the Conda build recipes introduced above.
 
 **Local Building on macOS**
 
-As introduced above, local building of Alpha is done using the Makefile that will in
+As introduced above, local building of sklearndf is done using the Makefile that will in
 turn orchestrate ``conda-build``.
 
 Please make sure to activate the ``sklearndf-develop`` environment such that
@@ -402,7 +389,7 @@ If successful, the ``dist/conda`` folder should contain the built Conda packages
 Publishing
 """""""""""""""
 
-Section TBD once published.
+**TODO** - once published.
 
 
 PyPI packages
@@ -425,7 +412,7 @@ In order to locally install the package for testing, you can run:
 Publishing
 """""""""""""""""
 
-TBD once published
+**TODO** - once published.
 
 
 
@@ -433,18 +420,18 @@ TBD once published
 CI/CD
 ------------------
 
-This project is using `Azure Devops <https://dev.azure.com/>`_ for CI/CD pipelines.
+This project uses `Azure Devops <https://dev.azure.com/>`_ for CI/CD pipelines.
 The pipelines are defined in the ``azure-pipelines.yml`` file and are divided into
 two main stages.
 
-Stage 1 - Dev environment build and testing
+Stage 1 - Development environment build and testing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The "Environment build & Pytest" stage performs the following steps:
 
 - Checks out the ``sklearndf`` repository at the develop branch
 - Creates the ``sklearndf-develop`` environment from the ``environment.yml``
-- Installs the ``sklearndf`` and ``pytools`` dependencies
+- Installs the ``pytools`` dependency
 - Runs ``pytest`` and generates the code coverage reports for Azure DevOps. Note that
 these can be viewed on the Pipeline summary page.
 
@@ -480,6 +467,6 @@ The "Test multiple conda environment builds" stage performs the following steps:
             FACET_V_JOBLIB: '=>0.13'
             FACET_V_NUMPY: '=>1.16'
 
-Note that the evironment variables set here are referenced in the
-``conda-build/meta.yaml``. Testing for this variety of package dependencies helps us
+Note that the environment variables set here are referenced in the
+``conda-build/meta.yaml``. Testing this variety of package dependencies helps
 to identify potential version conflicts.
