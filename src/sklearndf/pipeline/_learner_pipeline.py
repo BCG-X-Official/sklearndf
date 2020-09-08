@@ -72,6 +72,7 @@ class _BaseEstimatorPipelineDF(
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         feature_sequence: Optional[pd.Index] = None,
+        sample_weight: Optional[pd.Series] = None,
         **fit_params,
     ) -> T:
         self: _BaseEstimatorPipelineDF  # support type hinting in PyCharm
@@ -94,7 +95,12 @@ class _BaseEstimatorPipelineDF(
                 )
             X_preprocessed = X_preprocessed.reindex(columns=features_reordered)
 
-        self.final_estimator.fit(X_preprocessed, y, **fit_params)
+        if sample_weight is None:
+            self.final_estimator.fit(X_preprocessed, y, **fit_params)
+        else:
+            self.final_estimator.fit(
+                X_preprocessed, y, sample_weight=sample_weight, **fit_params
+            )
 
         return self
 
