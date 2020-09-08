@@ -75,6 +75,19 @@ class _BaseEstimatorPipelineDF(
         sample_weight: Optional[pd.Series] = None,
         **fit_params,
     ) -> T:
+        """
+        Fit this pipeline using the given inputs.
+
+        :param X: input data frame with observations as rows and features as columns
+        :param y: an optional series or data frame with one or more outputs
+        :param feature_sequence: the order in which features should be passed to the \
+            final estimator (optional)
+        :param sample_weight: sample weights per feature, to be passed to the final \
+            estimator (optional)
+        :param fit_params: additional keyword parameters as required by specific \
+            estimator implementations
+        :return: ``self``
+        """
         self: _BaseEstimatorPipelineDF  # support type hinting in PyCharm
 
         X_preprocessed: pd.DataFrame = self._pre_fit_transform(X, y, **fit_params)
