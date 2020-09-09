@@ -15,7 +15,7 @@ log = logging.getLogger(__name__)
 
 __all__ = ["LearnerPipelineDF", "RegressorPipelineDF", "ClassifierPipelineDF"]
 
-T=TypeVar("T")
+T = TypeVar("T")
 T_FinalEstimatorDF = TypeVar("T_FinalEstimatorDF", bound=BaseEstimatorDF)
 T_FinalLearnerDF = TypeVar("T_FinalLearnerDF", bound=LearnerDF)
 T_FinalRegressorDF = TypeVar("T_FinalRegressorDF", bound=RegressorDF)
@@ -72,8 +72,22 @@ class _BaseEstimatorPipelineDF(
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         feature_sequence: Optional[pd.Index] = None,
+        sample_weight: Optional[pd.Series] = None,
         **fit_params,
     ) -> T:
+        """
+        Fit this pipeline using the given inputs.
+
+        :param X: input data frame with observations as rows and features as columns
+        :param y: an optional series or data frame with one or more outputs
+        :param feature_sequence: the order in which features should be passed to the \
+            final estimator (optional)
+        :param sample_weight: sample weights for observations, to be passed to the \
+            final estimator (optional)
+        :param fit_params: additional keyword parameters as required by specific \
+            estimator implementations
+        :return: ``self``
+        """
         self: _BaseEstimatorPipelineDF  # support type hinting in PyCharm
 
         X_preprocessed: pd.DataFrame = self._pre_fit_transform(X, y, **fit_params)
@@ -94,7 +108,12 @@ class _BaseEstimatorPipelineDF(
                 )
             X_preprocessed = X_preprocessed.reindex(columns=features_reordered)
 
-        self.final_estimator.fit(X_preprocessed, y, **fit_params)
+        if sample_weight is None:
+            self.final_estimator.fit(X_preprocessed, y, **fit_params)
+        else:
+            self.final_estimator.fit(
+                X_preprocessed, y, sample_weight=sample_weight, **fit_params
+            )
 
         return self
 
