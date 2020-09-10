@@ -83,7 +83,7 @@ T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="_BaseEstimatorWrap
 
 @inheritdoc(match="[see superclass]")
 class _BaseEstimatorWrapperDF(
-    BaseEstimator, BaseEstimatorDF, Generic[T_DelegateEstimator], metaclass=ABCMeta
+    BaseEstimatorDF, BaseEstimator, Generic[T_DelegateEstimator], metaclass=ABCMeta
 ):
     """
     Base class for wrappers around a delegate :class:`sklearn.base.BaseEstimator`.

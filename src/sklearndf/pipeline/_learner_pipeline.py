@@ -23,7 +23,7 @@ T_FinalClassifierDF = TypeVar("T_FinalClassifierDF", bound=ClassifierDF)
 
 
 class _BaseEstimatorPipelineDF(
-    BaseEstimator, BaseEstimatorDF, Generic[T_FinalEstimatorDF], metaclass=ABCMeta
+    BaseEstimatorDF, BaseEstimator, Generic[T_FinalEstimatorDF], metaclass=ABCMeta
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
