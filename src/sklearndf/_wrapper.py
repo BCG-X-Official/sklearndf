@@ -55,6 +55,12 @@ __all__ = [
 ]
 
 #
+# Flags
+#
+
+INCLUDE_FULL_SKLEARN_DOCUMENTATION = False
+
+#
 # type variables
 #
 
@@ -66,6 +72,7 @@ T_DelegateLearner = TypeVar("T_DelegateLearner", RegressorMixin, ClassifierMixin
 T_DelegateRegressor = TypeVar("T_DelegateRegressor", bound=RegressorMixin)
 T_DelegateClassifier = TypeVar("T_DelegateClassifier", bound=ClassifierMixin)
 
+# noinspection PyTypeChecker
 T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="_BaseEstimatorWrapperDF")
 
 
@@ -851,6 +858,8 @@ def df_estimator(
         df_estimator_type.__init__ = update_wrapper(
             df_estimator_type.__init__, sklearn_estimator_type.__init__
         )
+        # but do not keep the docstring of __init__
+        df_estimator_type.__init__.__doc__ = None
 
         # adopt the class docstring of the wrapped sklearn estimator
         _update_class_docstring(df_estimator_type, sklearn_estimator_type)
@@ -862,7 +871,7 @@ def df_estimator(
         inherit_from_base_wrapper = set(dir(df_wrapper_type))
 
         new_dict = {
-            name: _make_alias(name=name, delegate=member)
+            name: _make_alias(name=name, delegate_cls=delegate_type, delegate=member)
             for name, member in vars(delegate_type).items()
             if not (
                 member is None
@@ -873,29 +882,37 @@ def df_estimator(
 
         return new_dict
 
-    def _make_alias(name: str, delegate: T) -> T:
+    def _make_alias(name: str, delegate_cls: type, delegate: T) -> T:
         def _make_forwarder() -> callable:
             def _forwarder(self, *args, **kwargs) -> Any:
                 return delegate(self._delegate, *args, **kwargs)
 
             return _forwarder
 
+        full_name = f"{_full_name(cls=delegate_cls)}.{name}"
+
         if inspect.isfunction(delegate):
-            return update_wrapper(_make_forwarder(), delegate)
-        elif inspect.isdatadescriptor(delegate):
-            return property(
-                fget=lambda self: delegate.__get__(self._delegate),
-                fset=lambda self, value: delegate.__set__(self._delegate, value),
-                fdel=lambda self: delegate.__delete__(self._delegate),
-                doc=delegate.__doc__,
-            )
+            function = update_wrapper(_make_forwarder(), delegate)
+            docstring = f"see :meth:`{full_name}`"
+            function.__doc__ = docstring
         else:
-            return property(
-                fget=lambda self: getattr(self._delegate_estimator, name),
-                fset=lambda self, value: setattr(self._delegate_estimator, name, value),
-                fdel=lambda self: delattr(self._delegate_estimator, name),
-                doc=delegate.__doc__,
-            )
+            docstring = f"see :attr:`{full_name}`"
+            if inspect.isdatadescriptor(delegate):
+                return property(
+                    fget=lambda self: delegate.__get__(self._delegate),
+                    fset=lambda self, value: delegate.__set__(self._delegate, value),
+                    fdel=lambda self: delegate.__delete__(self._delegate),
+                    doc=docstring,
+                )
+            else:
+                return property(
+                    fget=lambda self: getattr(self._delegate_estimator, name),
+                    fset=lambda self, value: setattr(
+                        self._delegate_estimator, name, value
+                    ),
+                    fdel=lambda self: delattr(self._delegate_estimator, name),
+                    doc=docstring,
+                )
 
     def _update_class_docstring(
         df_estimator_type: Type[_BaseEstimatorWrapperDF[T_DelegateEstimator]],
@@ -911,21 +928,38 @@ def df_estimator(
                 tag_line.append(base_doc_lines[0])
                 del base_doc_lines[:2]
 
+            estimator_name = _full_name(cls=sklearn_estimator_type)
+
             df_estimator_type.__doc__ = "\n".join(
                 [
                     *tag_line,
                     f"""
     .. note::
-        This class is a wrapper around class
-        :class:`{sklearn_estimator_type.__module__}.{sklearn_estimator_type.__name__}`.
+        This class is a wrapper around class :class:`{estimator_name}`.
         
         It provides enhanced support for pandas data frames, and otherwise replicates 
-        all parameters and behaviours of class
-        :class:`~{sklearn_estimator_type.__module__}.{sklearn_estimator_type.__name__}`.
+        all parameters and behaviours of class :class:`~{estimator_name}`.
 """,
-                    *base_doc_lines,
+                    *(base_doc_lines if INCLUDE_FULL_SKLEARN_DOCUMENTATION else []),
                 ]
             )
+
+    def _full_name(cls: type):
+        # get the full name of the object, including the module prefix
+
+        try:
+            module_name = cls.__module__
+        except Exception as e:
+            raise RuntimeError(f"cannot get module for {cls}") from e
+
+        # remove private submodules
+        estimator_module_path = module_name.split(".")
+        for i, submudule in enumerate(estimator_module_path):
+            if submudule.startswith("_"):
+                module_name = ".".join(estimator_module_path[:i])
+                break
+
+        return f"{module_name}.{cls.__qualname__}"
 
     def _get_base_classes(decoratee: Type[T_DelegateEstimator]) -> Type[BaseEstimator]:
         base_classes = decoratee.__bases__
@@ -950,8 +984,12 @@ def df_estimator(
         doc_sections = dict(zip(base_doc_split[1::2], base_doc_split[2::2]))
         return [
             *doc_head.split("\n"),
-            *_parse_pandas_parameters(
-                parameters_section=doc_sections.get("Parameters", "")
+            *(
+                _parse_pandas_parameters(
+                    parameters_section=doc_sections.get("Parameters", "")
+                )
+                if INCLUDE_FULL_SKLEARN_DOCUMENTATION
+                else []
             ),
         ]
 
