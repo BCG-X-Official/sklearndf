@@ -4,14 +4,15 @@ frames, while leaving the original API intact.
 
 Augmented scikit-learn classes are named after their native scikit-learn counterparts,
 with `DF` added as a suffix:
-:class:`.SimpleImputer` becomes :class:`.SimpleImputerDF`,
-:class:`RandomForestRegressor` becomes :class:`RandomForestRegressorDF`,
-and so on.
+:class:`.SimpleImputerDF` takes the place of :class:`~sklearn.impute.SimpleImputer`,
+:class:`.RandomForestRegressorDF` takes the place of
+:class:`~sklearn.ensemble.RandomForestRegressor`, and so on.
 
 For all methods expecting an `X` argument for a feature matrix and potentially a
 `y` argument for one or more targets, `sklearndf` estimators expect a pandas
-:class:`.DataFrame` for `X` and a pandas :class:`.Series` for a 1-dimensional `y`,
-or a pandas :class:`DataFrame` when fitting to multiple targets or outputs.
+:class:`~pandas.DataFrame` for `X` and a pandas :class:`~pandas.Series` for a
+1-dimensional `y`, or a pandas :class:`~pandas.DataFrame` when fitting to multiple
+targets or outputs.
 This includes methods such as :meth:`~BaseEstimatorDF.fit`,
 :meth:`~TransformerDF.transform`, :meth:`~LearnerDF.predict`, and so on.
 
@@ -22,7 +23,7 @@ frame used to fit the estimator.
 `sklearndf` transformers also implement :attr:`~TransformerDF.features_out` and
 :attr:`~TransformerDF.features_original`, keeping track of the feature names of the
 transformed outputs as well as mapping output features back to the input features.
-Tnis  enables tracing features back to the original inputs even across complex
+This  enables tracing features back to the original inputs even across complex
 pipelines (see allso :class:`.PipelineDF`)
 
 `sklearndf` classes implement a class hierarchy that follows the taxonomy of
@@ -34,7 +35,7 @@ original implementation):
   :meth:`~TransformerDF.transform`
 - all `sklearndf` regressors are subclasses of :class:`.RegressorDF`, which \
   in turn provides the API for all common regressor methods, e.g., \
-  :meth:`~RegressorDF.predict`
+  :meth:`~LearnerDF.predict`
 - all `sklearndf` classifiers are subclasses of :class:`.ClassifierDF`, which \
   in turn provides the API for all common classifier methods, e.g., \
   :meth:`~ClassifierDF.predict_proba`

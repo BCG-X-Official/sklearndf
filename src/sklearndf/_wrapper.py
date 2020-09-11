@@ -66,6 +66,7 @@ T_DelegateLearner = TypeVar("T_DelegateLearner", RegressorMixin, ClassifierMixin
 T_DelegateRegressor = TypeVar("T_DelegateRegressor", bound=RegressorMixin)
 T_DelegateClassifier = TypeVar("T_DelegateClassifier", bound=ClassifierMixin)
 
+# noinspection PyTypeChecker
 T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="_BaseEstimatorWrapperDF")
 
 
@@ -800,12 +801,13 @@ def df_estimator(
     """
     Class decorator wrapping a :class:`sklearn.base.BaseEstimator` in a
     :class:`BaseEstimatorWrapperDF`.
+
     :param delegate_estimator: the estimator class to wrap
     :param df_wrapper_type: optional parameter indicating the \
-                              :class:`BaseEstimatorWrapperDF` class to be used for \
-                              wrapping; defaults to :class:`BaseEstimatorWrapperDF`
+        :class:`BaseEstimatorWrapperDF` class to be used for wrapping; defaults to \
+        :class:`BaseEstimatorWrapperDF`
     :return: the resulting ``BaseEstimatorWrapperDF`` with ``native_estimator`` as \
-             the delegate estimator
+        the delegate estimator
     """
 
     def _decorate(

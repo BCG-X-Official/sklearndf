@@ -9,6 +9,7 @@ from typing import *
 import pandas as pd
 from sklearn.base import BaseEstimator
 
+from pytools.api import inheritdoc
 from .. import BaseEstimatorDF, ClassifierDF, LearnerDF, RegressorDF, TransformerDF
 
 log = logging.getLogger(__name__)
@@ -22,17 +23,19 @@ T_FinalRegressorDF = TypeVar("T_FinalRegressorDF", bound=RegressorDF)
 T_FinalClassifierDF = TypeVar("T_FinalClassifierDF", bound=ClassifierDF)
 
 
+@inheritdoc(match="[see superclass]")
 class _BaseEstimatorPipelineDF(
     BaseEstimator, BaseEstimatorDF, Generic[T_FinalEstimatorDF], metaclass=ABCMeta
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
     mandatory estimator step.
-
-    :param preprocessing: the preprocessing step in the pipeline (defaults to ``None``)
     """
 
     def __init__(self, *, preprocessing: Optional[TransformerDF] = None) -> None:
+        """
+        :param preprocessing: the preprocessing step in the pipeline (default: ``None``)
+        """
         super().__init__()
 
         if preprocessing is not None and not isinstance(preprocessing, TransformerDF):
@@ -131,6 +134,7 @@ class _BaseEstimatorPipelineDF(
 
     @property
     def is_fitted(self) -> bool:
+        """[see superclass]"""
         return (
             self.preprocessing is None or self.preprocessing.is_fitted
         ) and self.final_estimator.is_fitted
@@ -164,23 +168,30 @@ class _BaseEstimatorPipelineDF(
             return X
 
 
+@inheritdoc(match="[see superclass]")
 class LearnerPipelineDF(
     _BaseEstimatorPipelineDF[T_FinalLearnerDF],
     LearnerDF,
     Generic[T_FinalLearnerDF],
     metaclass=ABCMeta,
 ):
+    """
+    A data frame enabled pipeline with an optional preprocessing step and a
+    mandatory learner step.
+    """
 
     # noinspection PyPep8Naming
     def predict(
         self, X: pd.DataFrame, **predict_params
     ) -> Union[pd.Series, pd.DataFrame]:
+        """[see superclass]"""
         return self.final_estimator.predict(self._pre_transform(X), **predict_params)
 
     # noinspection PyPep8Naming
     def fit_predict(
         self, X: pd.DataFrame, y: pd.Series, **fit_params
     ) -> Union[pd.Series, pd.DataFrame]:
+        """[see superclass]"""
         return self.final_estimator.fit_predict(
             self._pre_fit_transform(X, y, **fit_params), y, **fit_params
         )
@@ -192,6 +203,7 @@ class LearnerPipelineDF(
         y: Optional[pd.Series] = None,
         sample_weight: Optional[Any] = None,
     ) -> float:
+        """[see superclass]"""
         if sample_weight is None:
             return self.final_estimator.score(self._pre_transform(X), y)
         else:
@@ -200,24 +212,26 @@ class LearnerPipelineDF(
             )
 
 
+@inheritdoc(match="[see superclass]")
 class RegressorPipelineDF(
     LearnerPipelineDF[T_FinalRegressorDF], RegressorDF, Generic[T_FinalRegressorDF]
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
     mandatory regression step.
-
-    :param preprocessing: the preprocessing step in the pipeline (defaults to ``None``)
-    :param regressor: the classifier used in the pipeline
-    :type regressor: :class:`.RegressorDF`
     """
 
     def __init__(
         self,
         *,
-        regressor: T_FinalRegressorDF,
         preprocessing: Optional[TransformerDF] = None,
+        regressor: T_FinalRegressorDF,
     ) -> None:
+        """
+        :param preprocessing: the preprocessing step in the pipeline (default:``None``)
+        :param regressor: the regressor used in the pipeline
+        :type regressor: :class:`.RegressorDF`
+        """
         super().__init__(preprocessing=preprocessing)
 
         if not isinstance(regressor, RegressorDF):
@@ -230,31 +244,35 @@ class RegressorPipelineDF(
 
     @property
     def final_estimator(self) -> T_FinalRegressorDF:
+        """[see superclass]"""
         return self.regressor
 
     @property
     def final_estimator_name(self) -> str:
+        """[see superclass]"""
         return "regressor"
 
 
+@inheritdoc(match="[see superclass]")
 class ClassifierPipelineDF(
     LearnerPipelineDF[T_FinalClassifierDF], ClassifierDF, Generic[T_FinalClassifierDF]
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
     mandatory classification step.
-
-    :param preprocessing: the preprocessing step in the pipeline (defaults to ``None``)
-    :param classifier: the classifier used in the pipeline
-    :type classifier: :class:`.ClassifierDF`
     """
 
     def __init__(
         self,
         *,
-        classifier: T_FinalClassifierDF,
         preprocessing: Optional[TransformerDF] = None,
+        classifier: T_FinalClassifierDF,
     ) -> None:
+        """
+        :param preprocessing: the preprocessing step in the pipeline (default: ``None``)
+        :param classifier: the classifier used in the pipeline
+        :type classifier: :class:`.ClassifierDF`
+        """
         super().__init__(preprocessing=preprocessing)
 
         if not isinstance(classifier, ClassifierDF):
@@ -266,22 +284,26 @@ class ClassifierPipelineDF(
 
     @property
     def final_estimator(self) -> T_FinalClassifierDF:
+        """[see superclass]"""
         return self.classifier
 
     @property
     def final_estimator_name(self) -> str:
+        """[see superclass]"""
         return "classifier"
 
     # noinspection PyPep8Naming
     def predict_proba(
         self, X: pd.DataFrame, **predict_params
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+        """[see superclass]"""
         return self.classifier.predict_proba(self._pre_transform(X), **predict_params)
 
     # noinspection PyPep8Naming
     def predict_log_proba(
         self, X: pd.DataFrame, **predict_params
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+        """[see superclass]"""
         return self.classifier.predict_log_proba(
             self._pre_transform(X), **predict_params
         )
@@ -290,6 +312,7 @@ class ClassifierPipelineDF(
     def decision_function(
         self, X: pd.DataFrame, **predict_params
     ) -> Union[pd.Series, pd.DataFrame]:
+        """[see superclass]"""
         return self.classifier.decision_function(
             self._pre_transform(X), **predict_params
         )
