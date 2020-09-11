@@ -954,8 +954,8 @@ def df_estimator(
 
         # remove private submodules
         estimator_module_path = module_name.split(".")
-        for i, submudule in enumerate(estimator_module_path):
-            if submudule.startswith("_"):
+        for i, submodule in enumerate(estimator_module_path):
+            if submodule.startswith("_"):
                 module_name = ".".join(estimator_module_path[:i])
                 break
 
