@@ -36,7 +36,7 @@ build:
 	touch "$(BUILDDIR)"/html/.nojekyll
 
 
-html: apidoc build
+html: build # add apidoc as a dependence to generate separate files per package
 
 tutorial:
 	# build the tutorial notebooks

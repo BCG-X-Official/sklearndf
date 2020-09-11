@@ -109,7 +109,6 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         self._ensure_fitted()
         return self._get_n_outputs()
 
-    @abstractmethod
     def get_params(self, deep=True) -> Mapping[str, Any]:
         """
         Get the parameters for this estimator.
@@ -118,9 +117,9 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
             for any sub-estimators contained in this estimator
         :return: a mapping of parameter names to their values
         """
-        pass
+        # noinspection PyUnresolvedReferences
+        return super().get_params(deep=deep)
 
-    @abstractmethod
     def set_params(self: T, **kwargs) -> T:
         """
         Set the parameters of this estimator.
@@ -129,7 +128,8 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
 
         :return: ``self``
         """
-        pass
+        # noinspection PyUnresolvedReferences
+        return super().set_params(**kwargs)
 
     def clone(self: T_EstimatorDF) -> T_EstimatorDF:
         """
