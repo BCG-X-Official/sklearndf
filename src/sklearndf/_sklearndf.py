@@ -190,8 +190,8 @@ class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
         :param y: a series or data frame with one or more outputs per observation
         :param fit_params: optional keyword parameters as required by specific \
             learner implementations
-        :return predictions per observation as a series, or as a data frame in case of \
-            multiple outputs
+        :return: predictions per observation as a series, or as a data frame in case \
+            of multiple outputs
         """
         pass
 
