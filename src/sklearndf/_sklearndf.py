@@ -392,3 +392,15 @@ class ClassifierDF(LearnerDF, ClassifierMixin, metaclass=ABCMeta):
             for multi-output classifiers, a list of one observation/class data frames \
             per output
         """
+
+    @property
+    def classes(self) -> Sequence[Any]:
+        """
+        Get the classes predicted by this classifier.
+        By default expects classes as a list-like stored in the `classes_` attribute.
+
+        :return: the classes predicted by this classifier
+        """
+        self._ensure_fitted()
+        # noinspection PyUnresolvedReferences
+        return self.classes_
