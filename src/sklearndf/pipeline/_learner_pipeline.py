@@ -30,11 +30,12 @@ class _BaseEstimatorPipelineDF(
     """
     A data frame enabled pipeline with an optional preprocessing step and a
     mandatory estimator step.
-
-    :param preprocessing: the preprocessing step in the pipeline (defaults to ``None``)
     """
 
     def __init__(self, *, preprocessing: Optional[TransformerDF] = None) -> None:
+        """
+        :param preprocessing: the preprocessing step in the pipeline (default: ``None``)
+        """
         super().__init__()
 
         if preprocessing is not None and not isinstance(preprocessing, TransformerDF):
@@ -174,6 +175,10 @@ class LearnerPipelineDF(
     Generic[T_FinalLearnerDF],
     metaclass=ABCMeta,
 ):
+    """
+    A data frame enabled pipeline with an optional preprocessing step and a
+    mandatory learner step.
+    """
 
     # noinspection PyPep8Naming
     def predict(
@@ -214,18 +219,19 @@ class RegressorPipelineDF(
     """
     A data frame enabled pipeline with an optional preprocessing step and a
     mandatory regression step.
-
-    :param preprocessing: the preprocessing step in the pipeline (defaults to ``None``)
-    :param regressor: the classifier used in the pipeline
-    :type regressor: :class:`.RegressorDF`
     """
 
     def __init__(
         self,
         *,
-        regressor: T_FinalRegressorDF,
         preprocessing: Optional[TransformerDF] = None,
+        regressor: T_FinalRegressorDF,
     ) -> None:
+        """
+        :param preprocessing: the preprocessing step in the pipeline (default:``None``)
+        :param regressor: the regressor used in the pipeline
+        :type regressor: :class:`.RegressorDF`
+        """
         super().__init__(preprocessing=preprocessing)
 
         if not isinstance(regressor, RegressorDF):
@@ -254,18 +260,19 @@ class ClassifierPipelineDF(
     """
     A data frame enabled pipeline with an optional preprocessing step and a
     mandatory classification step.
-
-    :param preprocessing: the preprocessing step in the pipeline (defaults to ``None``)
-    :param classifier: the classifier used in the pipeline
-    :type classifier: :class:`.ClassifierDF`
     """
 
     def __init__(
         self,
         *,
-        classifier: T_FinalClassifierDF,
         preprocessing: Optional[TransformerDF] = None,
+        classifier: T_FinalClassifierDF,
     ) -> None:
+        """
+        :param preprocessing: the preprocessing step in the pipeline (default: ``None``)
+        :param classifier: the classifier used in the pipeline
+        :type classifier: :class:`.ClassifierDF`
+        """
         super().__init__(preprocessing=preprocessing)
 
         if not isinstance(classifier, ClassifierDF):

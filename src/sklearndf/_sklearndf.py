@@ -116,7 +116,6 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
 
         :param deep: if ``True``, return the parameters for this estimator, and \
             for any sub-estimators contained in this estimator
-
         :return: a mapping of parameter names to their values
         """
         pass
@@ -128,7 +127,7 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
 
         Valid parameter keys can be obtained by calling :meth:`.get_params`.
 
-        :returns ``self``
+        :return: ``self``
         """
         pass
 
@@ -174,8 +173,8 @@ class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
         :param X: input data frame with observations as rows and features as columns
         :param predict_params: optional keyword parameters as required by specific \
             learner implementations
-        :return predictions per observation as a series, or as a data frame in case of \
-            multiple outputs
+        :return: predictions per observation as a series, or as a data frame in case \
+            of multiple outputs
         """
         pass
 
