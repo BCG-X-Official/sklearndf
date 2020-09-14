@@ -184,9 +184,9 @@ class _BaseEstimatorWrapperDF(
             self._fit(X, y, **fit_params)
             self._post_fit(X, y, **fit_params)
 
-        except Exception:
+        except Exception as cause:
             self._reset_fit()
-            raise
+            raise self._make_verbose_exception(self.fit.__name__, cause) from cause
 
         return self
 
@@ -299,6 +299,14 @@ class _BaseEstimatorWrapperDF(
     ) -> Any:
         return y
 
+    def _make_verbose_exception(self, method: str, cause: Exception) -> Exception:
+        verbose_message = f"{type(self).__name__}.{method}: {cause}"
+        # noinspection PyBroadException
+        try:
+            return type(cause)(verbose_message)
+        except Exception:
+            return RuntimeError(verbose_message)
+
     def __dir__(self) -> Iterable[str]:
         # include non-private attributes of delegate estimator in directory
         return {
@@ -354,11 +362,16 @@ class _TransformerWrapperDF(
         """[see superclass]"""
         self._reset_fit()
 
-        self._check_parameter_types(X, y)
+        try:
+            self._check_parameter_types(X, y)
+            transformed = self._fit_transform(X, y, **fit_params)
+            self._post_fit(X, y, **fit_params)
 
-        transformed = self._fit_transform(X, y, **fit_params)
-
-        self._post_fit(X, y, **fit_params)
+        except Exception as cause:
+            self._reset_fit()
+            raise self._make_verbose_exception(
+                self.fit_transform.__name__, cause
+            ) from cause
 
         return self._transformed_to_df(
             transformed=transformed, index=X.index, columns=self.features_out
@@ -457,19 +470,26 @@ class _LearnerWrapperDF(
 
         self._reset_fit()
 
-        self._check_parameter_types(X, y)
+        try:
+            self._check_parameter_types(X, y)
 
-        # noinspection PyUnresolvedReferences
-        result = self._prediction_to_series_or_frame(
-            X,
-            self.native_estimator.fit_predict(
-                self._convert_X_for_delegate(X),
-                self._convert_y_for_delegate(y),
-                **fit_params,
-            ),
-        )
+            # noinspection PyUnresolvedReferences
+            result = self._prediction_to_series_or_frame(
+                X,
+                self.native_estimator.fit_predict(
+                    self._convert_X_for_delegate(X),
+                    self._convert_y_for_delegate(y),
+                    **fit_params,
+                ),
+            )
 
-        self._post_fit(X, y, **fit_params)
+            self._post_fit(X, y, **fit_params)
+
+        except Exception as cause:
+            self._reset_fit()
+            raise self._make_verbose_exception(
+                self.fit_predict.__name__, cause
+            ) from cause
 
         return result
 
