@@ -20,6 +20,7 @@ import logging
 from abc import ABCMeta
 from functools import reduce
 from typing import *
+from typing import List
 
 import numpy as np
 import pandas as pd
@@ -217,18 +218,18 @@ class _ColumnTransformerWrapperDF(
                 f"unsupported value for arg remainder: ({column_transformer.remainder})"
             )
 
-        if not (
-            all(
-                [
-                    isinstance(transformer, str)
-                    or isinstance(transformer, TransformerDF)
-                    for _, transformer, _ in column_transformer.transformers
-                ]
+        non_compliant_transformers: List[str] = [
+            type(transformer).__name__
+            for _, transformer, _ in column_transformer.transformers
+            if not (
+                isinstance(transformer, str) or isinstance(transformer, TransformerDF)
             )
-        ):
+        ]
+        if non_compliant_transformers:
             raise ValueError(
-                "arg column_transformer must only contain instances of "
-                f"{TransformerDF.__name__}"
+                f"{ColumnTransformerDF.__name__} only accepts strings or "
+                f"instances of " f"{TransformerDF.__name__} as valid transformers, but "
+                f'also got: {", ".join(non_compliant_transformers)}'
             )
 
     def _get_features_original(self) -> pd.Series:
@@ -331,6 +332,7 @@ class TfidfTransformerDF(TransformerDF, TfidfTransformer):
 #
 
 # we cannot move this to package _wrapper as it references MissingIndicatorDF
+
 
 class _ImputerWrapperDF(_TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
     """
