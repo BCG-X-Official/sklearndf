@@ -44,7 +44,7 @@ Let us mention the following extensions used in the conf.py sphinx configuration
 
 - viewcode to include source code in the documentation, and links to the source code from the objects documentation
 
-To update the Sphinx documentation, run make html from within /sphinx. By default this will only compile files that have been modified since the last compilation. To force compilation of the full documentation run make clean first.
+To update the Sphinx documentation, run ``python make.py html`` from within ``/sphinx``. By default this will compile the full documentation.
 **TODO**: To publish the documentation - finish this section
 
 
