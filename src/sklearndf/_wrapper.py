@@ -820,13 +820,13 @@ def df_estimator(
 ]:
     """
     Class decorator wrapping a :class:`sklearn.base.BaseEstimator` in a
-    :class:`BaseEstimatorWrapperDF`.
+    :class:`_EstimatorWrapperDF`.
 
     :param delegate_estimator: the estimator class to wrap
     :param df_wrapper_type: optional parameter indicating the \
-        :class:`BaseEstimatorWrapperDF` class to be used for wrapping; defaults to \
-        :class:`BaseEstimatorWrapperDF`
-    :return: the resulting ``BaseEstimatorWrapperDF`` with ``native_estimator`` as \
+        :class:`_EstimatorWrapperDF` class to be used for wrapping; defaults to \
+        :class:`_EstimatorWrapperDF`
+    :return: the resulting ``_EstimatorWrapperDF`` with ``native_estimator`` as \
         the delegate estimator
     """
 
@@ -849,7 +849,7 @@ def df_estimator(
         df_estimator_type: Type[_EstimatorWrapperDF[T_DelegateEstimator]] = type(
             # preserve the name
             decoratee.__name__,
-            # subclass the wrapper type (e.g., BaseEstimatorWrapperDF)
+            # subclass the wrapper type (e.g., _EstimatorWrapperDF)
             (df_wrapper_type,),
             {
                 # implement abstract class method _make_delegate_estimator
