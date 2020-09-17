@@ -13,11 +13,11 @@ For all methods expecting an `X` argument for a feature matrix and potentially a
 :class:`~pandas.DataFrame` for `X` and a pandas :class:`~pandas.Series` for a
 1-dimensional `y`, or a pandas :class:`~pandas.DataFrame` when fitting to multiple
 targets or outputs.
-This includes methods such as :meth:`~BaseEstimatorDF.fit`,
+This includes methods such as :meth:`~EstimatorDF.fit`,
 :meth:`~TransformerDF.transform`, :meth:`~LearnerDF.predict`, and so on.
 
 All estimators enhanced by `sklearndf` also implement an additional attribute
-:attr:`~BaseEstimatorDF.features_in`, keeping track of the column names of the data
+:attr:`~EstimatorDF.features_in`, keeping track of the column names of the data
 frame used to fit the estimator.
 
 `sklearndf` transformers also implement :attr:`~TransformerDF.features_out` and
@@ -40,7 +40,7 @@ original implementation):
   in turn provides the API for all common classifier methods, e.g., \
   :meth:`~ClassifierDF.predict_proba`
 - all `sklearndf` regressors and classifiers are subclasses of :class:`.LearnerDF`
-- all `sklearndf` estimators are subclasses of :class:`.BaseEstimatorDF`
+- all `sklearndf` estimators are subclasses of :class:`.EstimatorDF`
 
 `sklearndf` introduces two additional pipeline classes, :class:`.RegressorPipelineDF` and
 :class:`.ClassifierPipelineDF`, with an abstract base class :class:`.LearnerPipelineDF`,

@@ -11,7 +11,7 @@ import pandas as pd
 from pandas.core.arrays import ExtensionArray
 from sklearn.pipeline import FeatureUnion, Pipeline
 
-from .. import BaseEstimatorDF, ClassifierDF, RegressorDF, TransformerDF
+from .. import ClassifierDF, EstimatorDF, RegressorDF, TransformerDF
 from .._wrapper import (
     _ClassifierWrapperDF,
     _RegressorWrapperDF,
@@ -56,16 +56,16 @@ class _PipelineWrapperDF(
         final_estimator = final_step[1]
         if not (
             self._is_passthrough(final_estimator)
-            or isinstance(final_estimator, BaseEstimatorDF)
+            or isinstance(final_estimator, EstimatorDF)
         ):
             raise ValueError(
                 f'expected final step "{final_step[0]}" to contain a '
-                f"{BaseEstimatorDF.__name__}, but found an instance of "
+                f"{EstimatorDF.__name__}, but found an instance of "
                 f"{type(final_estimator).__name__}"
             )
 
     @property
-    def steps(self) -> List[Tuple[str, BaseEstimatorDF]]:
+    def steps(self) -> List[Tuple[str, EstimatorDF]]:
         """
         The ``steps`` attribute of the underlying :class:`~sklearn.pipeline.Pipeline`.
 
@@ -77,7 +77,7 @@ class _PipelineWrapperDF(
         """The number of steps of the pipeline."""
         return len(self.native_estimator.steps)
 
-    def __getitem__(self, ind: Union[slice, int, str]) -> BaseEstimatorDF:
+    def __getitem__(self, ind: Union[slice, int, str]) -> EstimatorDF:
         """
         Return a sub-pipeline or a single estimator in the pipeline
 
@@ -94,7 +94,7 @@ class _PipelineWrapperDF(
                 raise ValueError("Pipeline slicing only supports a step of 1")
 
             return cast(
-                BaseEstimatorDF,
+                EstimatorDF,
                 self.__class__(
                     steps=base_pipeline.steps[ind],
                     memory=base_pipeline.memory,
@@ -105,7 +105,7 @@ class _PipelineWrapperDF(
             return self.native_estimator[ind]
 
     @staticmethod
-    def _is_passthrough(estimator: Union[BaseEstimatorDF, str, None]) -> bool:
+    def _is_passthrough(estimator: Union[EstimatorDF, str, None]) -> bool:
         # return True if the estimator is a "passthrough" (i.e. identity) transformer
         # in the pipeline
         return estimator is None or estimator == _PipelineWrapperDF.PASSTHROUGH
@@ -116,7 +116,7 @@ class _PipelineWrapperDF(
         # excludes steps whose transformer is ``None`` or ``"passthrough"``
 
         def _iter_not_none(
-            transformer_steps: Sequence[Tuple[str, BaseEstimatorDF]]
+            transformer_steps: Sequence[Tuple[str, EstimatorDF]]
         ) -> Iterator[Tuple[str, TransformerDF]]:
             return (
                 (name, cast(TransformerDF, transformer))
