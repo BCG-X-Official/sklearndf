@@ -16,7 +16,7 @@ import sklearndf.classification
 import sklearndf.pipeline
 import sklearndf.regression
 import sklearndf.transformation
-from sklearndf import BaseEstimatorDF
+from sklearndf import EstimatorDF
 from test import check_sklearn_version
 from test.conftest import UNSUPPORTED_SKLEARN_PACKAGES
 from test.sklearndf import (
@@ -161,7 +161,7 @@ def _check_unexpected_sklearn_class(cls: Type) -> None:
 )
 def test_classifier_coverage(sklearn_classifier_cls: Type[ClassifierMixin]) -> None:
     """ Check if each sklearn classifier has a wrapped sklearndf counterpart. """
-    sklearn_classes: Dict[BaseEstimator, BaseEstimatorDF] = sklearn_delegate_classes(
+    sklearn_classes: Dict[BaseEstimator, EstimatorDF] = sklearn_delegate_classes(
         sklearndf.classification
     )
 
@@ -174,7 +174,7 @@ def test_classifier_coverage(sklearn_classifier_cls: Type[ClassifierMixin]) -> N
 )
 def test_regressor_coverage(sklearn_regressor_cls: Type[RegressorMixin]) -> None:
     """ Check if each sklearn regressor has a wrapped sklearndf counterpart. """
-    sklearn_classes: Dict[BaseEstimator, BaseEstimatorDF] = sklearn_delegate_classes(
+    sklearn_classes: Dict[BaseEstimator, EstimatorDF] = sklearn_delegate_classes(
         sklearndf.regression
     )
 
@@ -188,7 +188,7 @@ def test_regressor_coverage(sklearn_regressor_cls: Type[RegressorMixin]) -> None
 def test_transformer_coverage(sklearn_transformer_cls: Type[TransformerMixin]) -> None:
     """ Check if each sklearn transformer has a wrapped sklearndf counterpart. """
 
-    sklearn_classes: Dict[BaseEstimator, BaseEstimatorDF] = sklearn_delegate_classes(
+    sklearn_classes: Dict[BaseEstimator, EstimatorDF] = sklearn_delegate_classes(
         sklearndf.transformation
     )
 

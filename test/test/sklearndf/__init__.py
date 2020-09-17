@@ -9,7 +9,7 @@ import sklearn
 from sklearn.base import BaseEstimator
 
 from sklearndf import LearnerDF, TransformerDF
-from sklearndf._wrapper import _BaseEstimatorWrapperDF
+from sklearndf._wrapper import _EstimatorWrapperDF
 
 Module: type = Any
 
@@ -41,12 +41,12 @@ def find_all_submodules(parent_module: Module) -> Set[Module]:
 
 def sklearn_delegate_classes(
     module: Module
-) -> Dict[BaseEstimator, _BaseEstimatorWrapperDF]:
+) -> Dict[BaseEstimator, _EstimatorWrapperDF]:
     """ Creates a dictionary mapping from sklearndf -> sklearn classes. """
     return {
         df_class.__wrapped__: df_class
         for df_class in find_all_classes(module)
-        if issubclass(df_class, _BaseEstimatorWrapperDF)
+        if issubclass(df_class, _EstimatorWrapperDF)
     }
 
 
@@ -73,7 +73,7 @@ def list_classes(
 
 def get_sklearndf_wrapper_class(
     to_wrap: Type[BaseEstimator], from_module=None
-) -> _BaseEstimatorWrapperDF:
+) -> _EstimatorWrapperDF:
     """ Helper to return the wrapped counterpart for a sklearn class """
     try:
         return sklearn_delegate_classes(from_module)[to_wrap]

@@ -10,22 +10,22 @@ import pandas as pd
 from sklearn.base import BaseEstimator
 
 from pytools.api import inheritdoc
-from .. import BaseEstimatorDF, ClassifierDF, LearnerDF, RegressorDF, TransformerDF
+from .. import ClassifierDF, EstimatorDF, LearnerDF, RegressorDF, TransformerDF
 
 log = logging.getLogger(__name__)
 
 __all__ = ["LearnerPipelineDF", "RegressorPipelineDF", "ClassifierPipelineDF"]
 
 T = TypeVar("T")
-T_FinalEstimatorDF = TypeVar("T_FinalEstimatorDF", bound=BaseEstimatorDF)
+T_FinalEstimatorDF = TypeVar("T_FinalEstimatorDF", bound=EstimatorDF)
 T_FinalLearnerDF = TypeVar("T_FinalLearnerDF", bound=LearnerDF)
 T_FinalRegressorDF = TypeVar("T_FinalRegressorDF", bound=RegressorDF)
 T_FinalClassifierDF = TypeVar("T_FinalClassifierDF", bound=ClassifierDF)
 
 
 @inheritdoc(match="[see superclass]")
-class _BaseEstimatorPipelineDF(
-    BaseEstimatorDF, BaseEstimator, Generic[T_FinalEstimatorDF], metaclass=ABCMeta
+class _EstimatorPipelineDF(
+    EstimatorDF, BaseEstimator, Generic[T_FinalEstimatorDF], metaclass=ABCMeta
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
@@ -91,7 +91,7 @@ class _BaseEstimatorPipelineDF(
             estimator implementations
         :return: ``self``
         """
-        self: _BaseEstimatorPipelineDF  # support type hinting in PyCharm
+        self: _EstimatorPipelineDF  # support type hinting in PyCharm
 
         X_preprocessed: pd.DataFrame = self._pre_fit_transform(X, y, **fit_params)
 
@@ -170,7 +170,7 @@ class _BaseEstimatorPipelineDF(
 
 @inheritdoc(match="[see superclass]")
 class LearnerPipelineDF(
-    _BaseEstimatorPipelineDF[T_FinalLearnerDF],
+    _EstimatorPipelineDF[T_FinalLearnerDF],
     LearnerDF,
     Generic[T_FinalLearnerDF],
     metaclass=ABCMeta,

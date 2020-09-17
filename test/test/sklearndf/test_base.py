@@ -11,9 +11,9 @@ from sklearn.base import BaseEstimator, is_classifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 
-from sklearndf import BaseEstimatorDF
+from sklearndf import EstimatorDF
 # noinspection PyProtectedMember
-from sklearndf._wrapper import _BaseEstimatorWrapperDF, df_estimator
+from sklearndf._wrapper import _EstimatorWrapperDF, df_estimator
 from sklearndf.classification import DecisionTreeClassifierDF, SVCDF
 from sklearndf.pipeline import PipelineDF
 from sklearndf.transformation import OneHotEncoderDF
@@ -37,22 +37,22 @@ class _DummyEstimator3(BaseEstimator):
         self.d = d
 
 
-@df_estimator(df_wrapper_type=_BaseEstimatorWrapperDF)
-class _DummyEstimatorDF(BaseEstimatorDF, _DummyEstimator, metaclass=ABCMeta):
+@df_estimator(df_wrapper_type=_EstimatorWrapperDF)
+class _DummyEstimatorDF(EstimatorDF, _DummyEstimator, metaclass=ABCMeta):
     @classmethod
     def _make_delegate_estimator(cls, *args, **kwargs) -> _DummyEstimator:
         return _DummyEstimator(*args, **kwargs)
 
 
-@df_estimator(df_wrapper_type=_BaseEstimatorWrapperDF)
-class _DummyEstimator2DF(BaseEstimatorDF, _DummyEstimator2, metaclass=ABCMeta):
+@df_estimator(df_wrapper_type=_EstimatorWrapperDF)
+class _DummyEstimator2DF(EstimatorDF, _DummyEstimator2, metaclass=ABCMeta):
     @classmethod
     def _make_delegate_estimator(cls, *args, **kwargs) -> _DummyEstimator2:
         return _DummyEstimator2(*args, **kwargs)
 
 
-@df_estimator(df_wrapper_type=_BaseEstimatorWrapperDF)
-class _DummyEstimator3DF(BaseEstimatorDF, _DummyEstimator3, metaclass=ABCMeta):
+@df_estimator(df_wrapper_type=_EstimatorWrapperDF)
+class _DummyEstimator3DF(EstimatorDF, _DummyEstimator3, metaclass=ABCMeta):
     @classmethod
     def _make_delegate_estimator(cls, *args, **kwargs) -> _DummyEstimator3:
         return _DummyEstimator3(*args, **kwargs)

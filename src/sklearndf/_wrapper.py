@@ -7,7 +7,7 @@ Otherwise the wrappers are designed to precisely mirror the API and behavior of 
 native estimators they wrap.
 
 The wrappers also implement the additional column attributes introduced by `sklearndf`,
-:meth:`~BaseEstimatorDF.features_in`, :meth:`~TransformerDF.features_out`, and
+:meth:`~EstimatorDF.features_in`, :meth:`~TransformerDF.features_out`, and
 :meth:`~TransformerDF.features_original`.
 """
 
@@ -29,18 +29,12 @@ from sklearn.base import (
 )
 
 from pytools.api import inheritdoc
-from sklearndf import (
-    BaseEstimatorDF,
-    ClassifierDF,
-    LearnerDF,
-    RegressorDF,
-    TransformerDF,
-)
+from sklearndf import (ClassifierDF, EstimatorDF, LearnerDF, RegressorDF, TransformerDF)
 
 log = logging.getLogger(__name__)
 
 __all__ = [
-    "_BaseEstimatorWrapperDF",
+    "_EstimatorWrapperDF",
     "_LearnerWrapperDF",
     "_ClassifierWrapperDF",
     "df_estimator",
@@ -73,7 +67,7 @@ T_DelegateRegressor = TypeVar("T_DelegateRegressor", bound=RegressorMixin)
 T_DelegateClassifier = TypeVar("T_DelegateClassifier", bound=ClassifierMixin)
 
 # noinspection PyTypeChecker
-T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="_BaseEstimatorWrapperDF")
+T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="_EstimatorWrapperDF")
 
 
 #
@@ -82,8 +76,8 @@ T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="_BaseEstimatorWrap
 
 
 @inheritdoc(match="[see superclass]")
-class _BaseEstimatorWrapperDF(
-    BaseEstimatorDF, BaseEstimator, Generic[T_DelegateEstimator], metaclass=ABCMeta
+class _EstimatorWrapperDF(
+    EstimatorDF, BaseEstimator, Generic[T_DelegateEstimator], metaclass=ABCMeta
 ):
     """
     Base class for wrappers around a delegate :class:`sklearn.base.BaseEstimator`.
@@ -161,7 +155,7 @@ class _BaseEstimatorWrapperDF(
 
     def set_params(self: T, **kwargs) -> T:
         """[see superclass]"""
-        self: _BaseEstimatorWrapperDF  # support type hinting in PyCharm
+        self: _EstimatorWrapperDF  # support type hinting in PyCharm
         self._delegate_estimator.set_params(**kwargs)
         return self
 
@@ -175,7 +169,7 @@ class _BaseEstimatorWrapperDF(
         """[see superclass]"""
 
         # support type hinting in PyCharm
-        self: _BaseEstimatorWrapperDF[T_DelegateEstimator]
+        self: _EstimatorWrapperDF[T_DelegateEstimator]
 
         self._reset_fit()
 
@@ -238,7 +232,7 @@ class _BaseEstimatorWrapperDF(
         if not isinstance(X, pd.DataFrame):
             raise TypeError("arg X must be a DataFrame")
         if self.is_fitted:
-            _BaseEstimatorWrapperDF._verify_df(
+            _EstimatorWrapperDF._verify_df(
                 df_name="X argument", df=X, expected_columns=self.features_in
             )
         if y is not None and not isinstance(y, (pd.Series, pd.DataFrame)):
@@ -336,7 +330,7 @@ class _BaseEstimatorWrapperDF(
 @inheritdoc(match="[see superclass]")
 class _TransformerWrapperDF(
     TransformerDF,
-    _BaseEstimatorWrapperDF[T_DelegateTransformer],
+    _EstimatorWrapperDF[T_DelegateTransformer],
     Generic[T_DelegateTransformer],
     metaclass=ABCMeta,
 ):
@@ -437,7 +431,7 @@ class _TransformerWrapperDF(
 @inheritdoc(match="[see superclass]")
 class _LearnerWrapperDF(
     LearnerDF,
-    _BaseEstimatorWrapperDF[T_DelegateLearner],
+    _EstimatorWrapperDF[T_DelegateLearner],
     Generic[T_DelegateLearner],
     metaclass=ABCMeta,
 ):
@@ -658,7 +652,7 @@ class _ClassifierWrapperDF(
 
 
 class _MetaEstimatorWrapperDF(
-    _BaseEstimatorWrapperDF[T_DelegateEstimator],
+    _EstimatorWrapperDF[T_DelegateEstimator],
     MetaEstimatorMixin,
     Generic[T_DelegateEstimator],
     metaclass=ABCMeta,
@@ -678,7 +672,7 @@ class _MetaEstimatorWrapperDF(
         def _unwrap_estimator(estimator: BaseEstimator) -> BaseEstimator:
             return (
                 estimator.native_estimator
-                if isinstance(estimator, BaseEstimatorDF)
+                if isinstance(estimator, EstimatorDF)
                 else estimator
             )
 
@@ -733,7 +727,7 @@ class _MetaRegressorWrapperDF(
 
 
 class _StackingEstimatorWrapperDF(
-    _BaseEstimatorWrapperDF[T_DelegateEstimator],
+    _EstimatorWrapperDF[T_DelegateEstimator],
     # note: MetaEstimatorMixin is first public child in inheritance from _BaseStacking
     # MetaEstimatorMixin <--  _BaseHeterogeneousEnsemble <-- _BaseStacking
     MetaEstimatorMixin,
@@ -758,7 +752,7 @@ class _StackingEstimatorWrapperDF(
             else:
                 return (
                     estimator.native_estimator
-                    if isinstance(estimator, BaseEstimatorDF)
+                    if isinstance(estimator, EstimatorDF)
                     else estimator
                 )
 
@@ -816,13 +810,13 @@ def df_estimator(
     delegate_estimator: Type[T_DelegateEstimator] = None,
     *,
     df_wrapper_type: Type[
-        _BaseEstimatorWrapperDF[T_DelegateEstimator]
-    ] = _BaseEstimatorWrapperDF[T_DelegateEstimator],
+        _EstimatorWrapperDF[T_DelegateEstimator]
+    ] = _EstimatorWrapperDF[T_DelegateEstimator],
 ) -> Union[
     Callable[
-        [Type[T_DelegateEstimator]], Type[_BaseEstimatorWrapperDF[T_DelegateEstimator]]
+        [Type[T_DelegateEstimator]], Type[_EstimatorWrapperDF[T_DelegateEstimator]]
     ],
-    Type[_BaseEstimatorWrapperDF[T_DelegateEstimator]],
+    Type[_EstimatorWrapperDF[T_DelegateEstimator]],
 ]:
     """
     Class decorator wrapping a :class:`sklearn.base.BaseEstimator` in a
@@ -838,9 +832,9 @@ def df_estimator(
 
     def _decorate(
         decoratee: Type[T_DelegateEstimator],
-    ) -> Type[_BaseEstimatorWrapperDF[T_DelegateEstimator]]:
+    ) -> Type[_EstimatorWrapperDF[T_DelegateEstimator]]:
 
-        assert issubclass(df_wrapper_type, _BaseEstimatorWrapperDF)
+        assert issubclass(df_wrapper_type, _EstimatorWrapperDF)
 
         # determine the sklearn estimator we are wrapping
         sklearn_estimator_type = _get_base_classes(decoratee)
@@ -852,7 +846,7 @@ def df_estimator(
 
         # dynamically create the wrapper class
         # noinspection PyTypeChecker
-        df_estimator_type: Type[_BaseEstimatorWrapperDF[T_DelegateEstimator]] = type(
+        df_estimator_type: Type[_EstimatorWrapperDF[T_DelegateEstimator]] = type(
             # preserve the name
             decoratee.__name__,
             # subclass the wrapper type (e.g., BaseEstimatorWrapperDF)
@@ -936,7 +930,7 @@ def df_estimator(
                 )
 
     def _update_class_docstring(
-        df_estimator_type: Type[_BaseEstimatorWrapperDF[T_DelegateEstimator]],
+        df_estimator_type: Type[_EstimatorWrapperDF[T_DelegateEstimator]],
         sklearn_estimator_type: Type[BaseEstimator],
     ):
         base_doc = sklearn_estimator_type.__doc__
@@ -1026,10 +1020,10 @@ def df_estimator(
             for parameter in parameters
         ]
 
-    if not issubclass(df_wrapper_type, _BaseEstimatorWrapperDF):
+    if not issubclass(df_wrapper_type, _EstimatorWrapperDF):
         raise ValueError(
             f"arg df_transformer_type is not a subclass of "
-            f"{_BaseEstimatorWrapperDF.__name__}: {df_wrapper_type}"
+            f"{_EstimatorWrapperDF.__name__}: {df_wrapper_type}"
         )
     if delegate_estimator is None:
         return _decorate

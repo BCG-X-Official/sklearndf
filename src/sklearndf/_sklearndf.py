@@ -20,7 +20,7 @@ from pytools.fit import FittableMixin
 log = logging.getLogger(__name__)
 
 __all__ = [
-    "BaseEstimatorDF",
+    "EstimatorDF",
     "LearnerDF",
     "ClassifierDF",
     "RegressorDF",
@@ -39,7 +39,7 @@ T_EstimatorDF = TypeVar("T_EstimatorDF")
 #
 
 
-class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
+class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     """
     Base class for augmented scikit-learn `estimators`.
 
@@ -48,7 +48,7 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
 
     COL_FEATURE_IN = "feature_in"
 
-    def __new__(cls: Type["BaseEstimatorDF"], *args, **kwargs) -> object:
+    def __new__(cls: Type["EstimatorDF"], *args, **kwargs) -> object:
         # make sure this DF estimator also is a subclass of
         if not issubclass(cls, BaseEstimator):
             raise TypeError(
@@ -150,7 +150,7 @@ class BaseEstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         pass
 
 
-class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
+class LearnerDF(EstimatorDF, metaclass=ABCMeta):
     """
     Base class for augmented scikit-learn `learners`.
 
@@ -212,7 +212,7 @@ class LearnerDF(BaseEstimatorDF, metaclass=ABCMeta):
         pass
 
 
-class TransformerDF(BaseEstimatorDF, TransformerMixin, metaclass=ABCMeta):
+class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
     """
     Base class for augmented scikit-learn `transformers`.
 
