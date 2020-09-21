@@ -125,12 +125,12 @@ class _EstimatorPipelineDF(
         """
         Pandas column index of all features resulting from the preprocessing step.
 
-        Same as :attr:`.features_in` if the preprocessing step is ``None``.
+        Same as :attr:`.features_in_` if the preprocessing step is ``None``.
         """
         if self.preprocessing is not None:
-            return self.preprocessing.features_out
+            return self.preprocessing.features_out_
         else:
-            return self.features_in.rename(TransformerDF.COL_FEATURE_OUT)
+            return self.features_in_.rename(TransformerDF.COL_FEATURE_OUT)
 
     @property
     def is_fitted(self) -> bool:
@@ -141,15 +141,15 @@ class _EstimatorPipelineDF(
 
     def _get_features_in(self) -> pd.Index:
         if self.preprocessing is not None:
-            return self.preprocessing.features_in
+            return self.preprocessing.features_in_
         else:
-            return self.final_estimator.features_in
+            return self.final_estimator.features_in_
 
     def _get_n_outputs(self) -> int:
         if self.preprocessing is not None:
-            return self.preprocessing.n_outputs
+            return self.preprocessing.n_outputs_
         else:
-            return self.final_estimator.n_outputs
+            return self.final_estimator.n_outputs_
 
     # noinspection PyPep8Naming
     def _pre_transform(self, X: pd.DataFrame) -> pd.DataFrame:
@@ -281,6 +281,11 @@ class ClassifierPipelineDF(
                 f"{type(classifier).__name__}"
             )
         self.classifier = classifier
+
+    @property
+    def classes_(self) -> Sequence[Any]:
+        """[see superclass]"""
+        return self.final_estimator.classes_
 
     @property
     def final_estimator(self) -> T_FinalClassifierDF:

@@ -114,9 +114,9 @@ def test_wrapped_fit_predict(
 
             if is_multi_output:
                 assert isinstance(predictions, list)
-                assert classifier.n_outputs == len(predictions)
+                assert classifier.n_outputs_ == len(predictions)
             else:
-                assert classifier.n_outputs == predictions.shape[1] if is_chain else 1
+                assert classifier.n_outputs_ == predictions.shape[1] if is_chain else 1
                 predictions = [predictions]
 
             for prediction in predictions:

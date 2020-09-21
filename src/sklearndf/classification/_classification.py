@@ -629,7 +629,7 @@ class _ClassifierChainWrapperDF(
         classes: Optional[Sequence[Any]] = None,
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
         return super()._prediction_with_class_labels(
-            X=X, y=y, classes=range(self.n_outputs)
+            X=X, y=y, classes=range(self.n_outputs_)
         )
 
 

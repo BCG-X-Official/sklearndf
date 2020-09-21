@@ -138,12 +138,12 @@ class _PipelineWrapperDF(
 
     def _get_features_original(self) -> pd.Series:
         col_mappings = [
-            df_transformer.features_original
+            df_transformer.features_original_
             for _, df_transformer in self._transformer_steps()
         ]
 
         if len(col_mappings) == 0:
-            _features_out: pd.Index = self.features_in
+            _features_out: pd.Index = self.features_in_
             _features_original: Union[np.ndarray, ExtensionArray] = _features_out.values
         else:
             _features_out: pd.Index = col_mappings[-1].index
@@ -175,9 +175,9 @@ class _PipelineWrapperDF(
     def _get_features_out(self) -> pd.Index:
         for _, transformer in reversed(self.steps):
             if isinstance(transformer, TransformerDF):
-                return transformer.features_out
+                return transformer.features_out_
 
-        return self.features_in
+        return self.features_in_
 
 
 # noinspection PyAbstractClass
@@ -217,7 +217,7 @@ class _FeatureUnionWrapperDF(_TransformerWrapperDF[FeatureUnion], metaclass=ABCM
         return pd.concat(
             objs=(
                 _prepend_features_original(
-                    features_original=transformer.features_original, name_prefix=name
+                    features_original=transformer.features_original_, name_prefix=name
                 )
                 for name, transformer, _ in self.native_estimator._iter()
             )
@@ -233,7 +233,7 @@ class _FeatureUnionWrapperDF(_TransformerWrapperDF[FeatureUnion], metaclass=ABCM
         # noinspection PyProtectedMember
         indices = [
             self._prepend_features_out(
-                features_out=transformer.features_out, name_prefix=name
+                features_out=transformer.features_out_, name_prefix=name
             )
             for name, transformer, _ in self.native_estimator._iter()
         ]
