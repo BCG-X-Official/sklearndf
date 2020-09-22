@@ -17,11 +17,11 @@ This includes methods such as :meth:`~EstimatorDF.fit`,
 :meth:`~TransformerDF.transform`, :meth:`~LearnerDF.predict`, and so on.
 
 All estimators enhanced by `sklearndf` also implement an additional attribute
-:attr:`~EstimatorDF.features_in`, keeping track of the column names of the data
+:attr:`~EstimatorDF.features_in_`, keeping track of the column names of the data
 frame used to fit the estimator.
 
-`sklearndf` transformers also implement :attr:`~TransformerDF.features_out` and
-:attr:`~TransformerDF.features_original`, keeping track of the feature names of the
+`sklearndf` transformers also implement :attr:`~TransformerDF.features_out_` and
+:attr:`~TransformerDF.features_original_`, keeping track of the feature names of the
 transformed outputs as well as mapping output features back to the input features.
 This  enables tracing features back to the original inputs even across complex
 pipelines (see allso :class:`.PipelineDF`)

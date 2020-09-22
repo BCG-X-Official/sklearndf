@@ -89,7 +89,7 @@ class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         pass
 
     @property
-    def features_in(self) -> pd.Index:
+    def features_in_(self) -> pd.Index:
         """
         The pandas column index with the names of the features used to fit this
         estimator.
@@ -100,7 +100,7 @@ class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         return self._get_features_in().rename(self.COL_FEATURE_IN)
 
     @property
-    def n_outputs(self) -> int:
+    def n_outputs_(self) -> int:
         """
         The number of outputs used to fit this estimator.
 
@@ -226,7 +226,7 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
         self._features_original = None
 
     @property
-    def features_original(self) -> pd.Series:
+    def features_original_(self) -> pd.Series:
         """
         A pandas series, mapping the output features resulting from the transformation
         to the original input features.
@@ -244,7 +244,7 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
         return self._features_original
 
     @property
-    def features_out(self) -> pd.Index:
+    def features_out_(self) -> pd.Index:
         """
         A pandas column index with the names of the features produced by this
         transformer
@@ -307,8 +307,8 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
 
     def _get_features_out(self) -> pd.Index:
         # return a pandas index with this transformer's output columns
-        # default behaviour: get index returned by features_original
-        return self.features_original.index
+        # default behaviour: get index returned by features_original_
+        return self.features_original_.index
 
 
 class RegressorDF(LearnerDF, RegressorMixin, metaclass=ABCMeta):
@@ -393,13 +393,12 @@ class ClassifierDF(LearnerDF, ClassifierMixin, metaclass=ABCMeta):
         """
 
     @property
-    def classes(self) -> Sequence[Any]:
+    @abstractmethod
+    def classes_(self) -> Sequence[Any]:
         """
         Get the classes predicted by this classifier.
         By default expects classes as a list-like stored in the `classes_` attribute.
 
         :return: the classes predicted by this classifier
         """
-        self._ensure_fitted()
-        # noinspection PyUnresolvedReferences
-        return self.classes_
+        pass

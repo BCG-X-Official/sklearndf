@@ -7,8 +7,8 @@ Otherwise the wrappers are designed to precisely mirror the API and behavior of 
 native estimators they wrap.
 
 The wrappers also implement the additional column attributes introduced by `sklearndf`,
-:meth:`~EstimatorDF.features_in`, :meth:`~TransformerDF.features_out`, and
-:meth:`~TransformerDF.features_original`.
+:meth:`~EstimatorDF.features_in_`, :meth:`~TransformerDF.features_out_`, and
+:meth:`~TransformerDF.features_original_`.
 """
 
 import inspect
@@ -233,7 +233,7 @@ class _EstimatorWrapperDF(
             raise TypeError("arg X must be a DataFrame")
         if self.is_fitted:
             _EstimatorWrapperDF._verify_df(
-                df_name="X argument", df=X, expected_columns=self.features_in
+                df_name="X argument", df=X, expected_columns=self.features_in_
             )
         if y is not None and not isinstance(y, (pd.Series, pd.DataFrame)):
             raise TypeError("arg y must be None, or a pandas Series or DataFrame")
@@ -346,7 +346,7 @@ class _TransformerWrapperDF(
         transformed = self._transform(X)
 
         return self._transformed_to_df(
-            transformed=transformed, index=X.index, columns=self.features_out
+            transformed=transformed, index=X.index, columns=self.features_out_
         )
 
     # noinspection PyPep8Naming
@@ -368,7 +368,7 @@ class _TransformerWrapperDF(
             ) from cause
 
         return self._transformed_to_df(
-            transformed=transformed, index=X.index, columns=self.features_out
+            transformed=transformed, index=X.index, columns=self.features_out_
         )
 
     # noinspection PyPep8Naming
@@ -381,7 +381,7 @@ class _TransformerWrapperDF(
         transformed = self._inverse_transform(X)
 
         return self._transformed_to_df(
-            transformed=transformed, index=X.index, columns=self.features_in
+            transformed=transformed, index=X.index, columns=self.features_in_
         )
 
     def _reset_fit(self) -> None:
@@ -551,6 +551,13 @@ class _ClassifierWrapperDF(
     """
     Wrapper around sklearn classifiers that preserves data frames.
     """
+
+    @property
+    def classes_(self) -> Sequence[Any]:
+        """[see superclass]"""
+        self._ensure_fitted()
+        # noinspection PyUnresolvedReferences
+        return self._delegate_estimator.classes_
 
     # noinspection PyPep8Naming
     def predict_proba(
