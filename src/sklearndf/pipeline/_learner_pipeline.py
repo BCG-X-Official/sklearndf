@@ -74,6 +74,7 @@ class _EstimatorPipelineDF(
         self: T,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        *,
         feature_sequence: Optional[pd.Index] = None,
         sample_weight: Optional[pd.Series] = None,
         **fit_params,
@@ -121,7 +122,7 @@ class _EstimatorPipelineDF(
         return self
 
     @property
-    def features_out(self) -> pd.Index:
+    def features_out_(self) -> pd.Index:
         """
         Pandas column index of all features resulting from the preprocessing step.
 
