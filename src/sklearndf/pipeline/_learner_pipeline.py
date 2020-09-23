@@ -74,6 +74,7 @@ class _EstimatorPipelineDF(
         self: T,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        *,
         feature_sequence: Optional[pd.Index] = None,
         sample_weight: Optional[pd.Series] = None,
         **fit_params,
