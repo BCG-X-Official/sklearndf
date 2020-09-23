@@ -121,7 +121,7 @@ class _EstimatorPipelineDF(
         return self
 
     @property
-    def features_out(self) -> pd.Index:
+    def features_out_(self) -> pd.Index:
         """
         Pandas column index of all features resulting from the preprocessing step.
 
