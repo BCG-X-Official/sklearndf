@@ -161,3 +161,5 @@ def setup(app: Sphinx) -> None:
         collapsible_submodules=intersphinx_collapsible_submodules
     ).connect(app=app, priority=100000)
 
+    app.add_css_file(filename="css/gamma.css")
+    app.add_js_file(filename="scripts/gamma.js")

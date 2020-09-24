@@ -1,0 +1,9 @@
+code {
+    color: #295e7e;
+}
+
+.py.class {
+    margin-top: 32pt;
+    padding-top: 32pt;
+    border-top: 2pt solid #295e7e;
+}
