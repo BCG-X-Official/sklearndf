@@ -1,3 +1,3 @@
 $(document).ready(function(){
-  $('a.reference.external').attr('target', '_blank');
+  $('a').not('.reference.internal').attr('target', '_blank');
 });
