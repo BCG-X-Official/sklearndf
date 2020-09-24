@@ -162,4 +162,4 @@ def setup(app: Sphinx) -> None:
     ).connect(app=app, priority=100000)
 
     app.add_css_file(filename="css/gamma.css")
-    app.add_js_file(filename="scripts/gamma.js")
+    app.add_js_file(filename="js/gamma.js")
