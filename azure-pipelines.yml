@@ -42,7 +42,7 @@ stages:
               cd $(System.DefaultWorkingDirectory)/sklearndf/
               export PYTHONPATH=$(System.DefaultWorkingDirectory)/sklearndf/src/
               conda env create -f environment.yml
-              conda activate facet-develop
+              conda activate sklearndf-develop
               cd $(System.DefaultWorkingDirectory)/pytools/
               pip install -e .
               cd $(System.DefaultWorkingDirectory)/sklearndf/
@@ -114,7 +114,7 @@ stages:
               export FACET_V_SKLEARN=$(FACET_V_SKLEARN)
               export FACET_V_JOBLIB=$(FACET_V_JOBLIB)
               export FACET_V_NUMPY=$(FACET_V_NUMPY)
-              conda activate facet-develop
+              conda activate sklearndf-develop
               conda install -y conda-build
               cd $(System.DefaultWorkingDirectory)/pytools/
               make package
@@ -173,7 +173,7 @@ stages:
               export FACET_V_SKLEARN=$(FACET_V_SKLEARN)
               export FACET_V_JOBLIB=$(FACET_V_JOBLIB)
               export FACET_V_NUMPY=$(FACET_V_NUMPY)
-              conda activate facet-develop
+              conda activate sklearndf-develop
               conda install -y conda-build
               cd $(System.DefaultWorkingDirectory)/pytools/
               make package
