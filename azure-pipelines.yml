@@ -1,10 +1,13 @@
+# RUN TESTS AND FULL CONDA BUILD MATRIX EVERY NIGHT AT 4AM
+schedules:
+- cron: "0 4 * * *"
+  displayName: Nightly full build
+  branches:
+    include:
+    - develop
+
 resources:
   repositories:
-    - repository: facet
-      type: github
-      endpoint: BCG-Gamma
-      name: BCG-Gamma/facet
-      ref: develop # todo - update to stable release
     - repository: pytools
       type: github
       endpoint: BCG-Gamma
@@ -28,7 +31,6 @@ stages:
           displayName: 'Use Python 3.7'
 
         - checkout: self
-        - checkout: facet
         - checkout: pytools
         - script: dir $(Build.SourcesDirectory)
 
@@ -37,7 +39,7 @@ stages:
             targetType: 'inline'
             script: |
               eval "$(conda shell.bash hook)"
-              cd $(System.DefaultWorkingDirectory)/facet/
+              cd $(System.DefaultWorkingDirectory)/sklearndf/
               export PYTHONPATH=$(System.DefaultWorkingDirectory)/sklearndf/src/
               conda env create -f environment.yml
               conda activate facet-develop
@@ -63,22 +65,75 @@ stages:
             summaryFileLocation: '$(System.DefaultWorkingDirectory)/sklearndf/coverage.xml'
             reportDirectory: '$(System.DefaultWorkingDirectory)/sklearndf/htmlcov'
 
-  # THOROUGH CONDA ENV BUILD TEST
+  # CONDA ENV BUILD TEST
   # TESTING MATRIX OF PYTHON & SKLEARN VERSIONS
+  # - FOR RELEASE BRANCH: 3 BUILD TESTS
+  # - OTHERWISE: 1 BUILD TEST
   - stage: 'Conda_build_test'
     dependsOn:
       - 'Quick_env_test'
-    displayName: 'Test multiple conda environment builds'
+    displayName: 'Test conda environment builds'
 
     jobs:
     - job:
-      displayName: 'Setup & testing'
+      displayName: 'Setup & testing: Single build'
+      condition: |
+        not(or(contains(variables['Build.SourceBranch'], 'refs/heads/release'),
+        eq(variables['Build.SourceBranch'], 'refs/heads/master'),
+        eq(variables['Build.Reason'], 'Schedule')))
 
       pool:
           vmImage: 'ubuntu-latest'
       strategy:
         matrix:
-          Minimum dependencies:
+          maximum_dependencies:
+            FACET_V_PYTHON_BUILD: '3.8'
+            FACET_V_SKLEARN: '==0.23'
+            FACET_V_PANDAS: '==1.0.0'
+            FACET_V_NUMPY: '=>1.16'
+            FACET_V_JOBLIB: '==0.13'
+
+      steps:
+        - task: UsePythonVersion@0
+          inputs:
+            versionSpec: '$(FACET_V_PYTHON_BUILD)'
+          displayName: 'Use Python $(FACET_V_PYTHON_BUILD)'
+
+        - checkout: self
+        - checkout: pytools
+        - script: dir $(Build.SourcesDirectory)
+
+        - task: Bash@3
+          inputs:
+            targetType: 'inline'
+            script: |
+              eval "$(conda shell.bash hook)"
+              export PYTHONPATH=$(System.DefaultWorkingDirectory)/sklearndf/src/
+              export FACET_V_PYTHON_BUILD=$(FACET_V_PYTHON_BUILD)
+              export FACET_V_PANDAS=$(FACET_V_PANDAS)
+              export FACET_V_SKLEARN=$(FACET_V_SKLEARN)
+              export FACET_V_JOBLIB=$(FACET_V_JOBLIB)
+              export FACET_V_NUMPY=$(FACET_V_NUMPY)
+              conda activate facet-develop
+              conda install -y conda-build
+              cd $(System.DefaultWorkingDirectory)/pytools/
+              make package
+              cd $(System.DefaultWorkingDirectory)/sklearndf/
+              make package
+          displayName: "Build conda package"
+
+    - job:
+      displayName: 'Setup & testing: Full build matrix'
+      condition: |
+        or(contains(variables['Build.SourceBranch'], 'refs/heads/release'),
+        eq(variables['Build.SourceBranch'], 'refs/heads/master'),
+        eq(variables['Build.Reason'], 'Schedule'))
+
+      pool:
+        vmImage: 'ubuntu-latest'
+      strategy:
+        matrix:
+          minimum_dependencies:
             FACET_V_PYTHON_BUILD: '3.6'
             FACET_V_PANDAS: '==0.24'
             FACET_V_SKLEARN: '==0.21.*'
@@ -86,9 +141,10 @@ stages:
             FACET_V_NUMPY: '==1.16'
           Maximum dependencies:
             FACET_V_PYTHON_BUILD: '3.8'
-            FACET_V_SKLEARN: '==0.22'
+            FACET_V_SKLEARN: '==0.23'
             FACET_V_PANDAS: '==1.0.0'
             FACET_V_NUMPY: '=>1.16'
+            FACET_V_JOBLIB: '>=0.13'
           Unconstrained dependencies:
             FACET_V_PYTHON_BUILD: '>=3.6'
             FACET_V_PANDAS: '=>0.24'
@@ -103,7 +159,6 @@ stages:
           displayName: 'Use Python $(FACET_V_PYTHON_BUILD)'
 
         - checkout: self
-        - checkout: facet
         - checkout: pytools
         - script: dir $(Build.SourcesDirectory)
 
