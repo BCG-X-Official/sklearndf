@@ -23,7 +23,7 @@ stages:
         steps:
           - checkout: self
 
-          - task: Bash@3
+          - task: check
             inputs:
               targetType: 'inline'
               script: |
@@ -34,11 +34,16 @@ stages:
                 else
                 echo "conda build config is unchanged"
                 fi
-                echo "##vso[task.setvariable variable=conda_build_config_changed]$?"
+                echo "##vso[task.setvariable variable=conda_build_config_changed;isOutput=true]$?"
+
+          - script: echo $(check.conda_build_config_changed)
+            name: echovar
 
   - stage:
     displayName: 'simple pytest'
     dependsOn: 'detect_conda_changes'
+    variables:
+      conda_build_config_changed: $[ dependencies.detect_conda_changes.outputs['check.conda_build_config_changed'] ]
     condition: >
       and(
       not(
@@ -106,6 +111,8 @@ stages:
   - stage:
     displayName: 'conda build & pytest'
     dependsOn: 'detect_conda_changes'
+    variables:
+      conda_build_config_changed: $[ dependencies.detect_conda_changes.outputs['check.conda_build_config_changed'] ]
 
     jobs:
     - job:
