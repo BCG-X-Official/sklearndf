@@ -142,6 +142,9 @@ stages:
             FACET_V_JOBLIB: '>=0.13'
 
       steps:
+        - script: echo $(variables.conda_build_config_changed)
+          name: echovar
+
         - task: UsePythonVersion@0
           inputs:
             versionSpec: '$(FACET_V_PYTHON_BUILD)'
