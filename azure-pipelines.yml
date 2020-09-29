@@ -35,8 +35,10 @@ stages:
     displayName: 'detect conda changes'
 
     jobs:
-      - script: echo $(branch)
-        name: echo_branch_name
+      - job: debug
+        steps:
+          - script: echo $(branch)
+            name: echo_branch_name
 
       - job: checkout_and_diff
         steps:
