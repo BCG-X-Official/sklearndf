@@ -122,7 +122,7 @@ stages:
           maximum_dependencies:
             FACET_V_PYTHON_BUILD: '3.8'
             FACET_V_SKLEARN: '==0.23'
-            FACET_V_PANDAS: '==1.0.0'
+            FACET_V_PANDAS: '==1.0.*'
             FACET_V_NUMPY: '=>1.16'
             FACET_V_JOBLIB: '>=0.13'
 
@@ -142,15 +142,19 @@ stages:
             targetType: 'inline'
             script: |
               eval "$(conda shell.bash hook)"
+
               export PYTHONPATH=$(System.DefaultWorkingDirectory)/sklearndf/src/
               export FACET_V_PYTHON_BUILD=$(FACET_V_PYTHON_BUILD)
               export FACET_V_PANDAS=$(FACET_V_PANDAS)
               export FACET_V_SKLEARN=$(FACET_V_SKLEARN)
               export FACET_V_JOBLIB=$(FACET_V_JOBLIB)
               export FACET_V_NUMPY=$(FACET_V_NUMPY)
+
               conda install -y conda-build
+
               cd $(System.DefaultWorkingDirectory)/pytools/
               make package
+
               cd $(System.DefaultWorkingDirectory)/sklearndf/
               make package
           displayName: "build & test conda package"
@@ -169,15 +173,15 @@ stages:
       strategy:
         matrix:
           minimum_dependencies:
-            FACET_V_PYTHON_BUILD: '3.6'
-            FACET_V_PANDAS: '==0.24'
+            FACET_V_PYTHON_BUILD: '3.6.*'
+            FACET_V_PANDAS: '==0.24.*'
             FACET_V_SKLEARN: '==0.21.*'
-            FACET_V_JOBLIB: '==0.13'
-            FACET_V_NUMPY: '==1.16'
+            FACET_V_JOBLIB: '==0.13,*'
+            FACET_V_NUMPY: '==1.16.*'
           maximum dependencies:
-            FACET_V_PYTHON_BUILD: '3.8'
-            FACET_V_SKLEARN: '==0.23'
-            FACET_V_PANDAS: '==1.0.0'
+            FACET_V_PYTHON_BUILD: '3.8.*'
+            FACET_V_SKLEARN: '==0.23.*'
+            FACET_V_PANDAS: '==1.0.0.*'
             FACET_V_NUMPY: '=>1.16'
             FACET_V_JOBLIB: '>=0.13'
           unconstrained dependencies:
@@ -203,14 +207,19 @@ stages:
             targetType: 'inline'
             script: |
               eval "$(conda shell.bash hook)"
+
               export PYTHONPATH=$(System.DefaultWorkingDirectory)/sklearndf/src/
               export FACET_V_PYTHON_BUILD=$(FACET_V_PYTHON_BUILD)
               export FACET_V_PANDAS=$(FACET_V_PANDAS)
               export FACET_V_JOBLIB=$(FACET_V_JOBLIB)
               export FACET_V_NUMPY=$(FACET_V_NUMPY)
+
               conda install -y conda-build
+
               cd $(System.DefaultWorkingDirectory)/pytools/
               make package
+
               cd $(System.DefaultWorkingDirectory)/sklearndf/
               make package
+
           displayName: "build & test conda package"
