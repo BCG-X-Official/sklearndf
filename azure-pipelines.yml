@@ -55,7 +55,7 @@ stages:
       conda_build_config_changed: $[ stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'] ]
     condition: >
       and(
-      not(variables.master_or_release)),
+      not(variables.master_or_release),
       eq(stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
       )
 
@@ -122,7 +122,7 @@ stages:
       displayName: '(single)'
       condition: >
       and(
-      not(variables.master_or_release)),
+      not(variables.master_or_release),
       ne(stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
       )
 
