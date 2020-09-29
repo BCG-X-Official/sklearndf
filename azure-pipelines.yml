@@ -16,12 +16,12 @@ resources:
 
 variables:
   master_or_release: >
-    $[ or(
+    ${{ or(
     contains(variables['Build.SourceBranch'], 'refs/heads/release'),
     eq(variables['Build.SourceBranch'], 'refs/heads/master'),
     eq(variables['Build.Reason'], 'Schedule')
     )
-    ]
+    }}
 
 stages:
   - stage: detect_conda_changes
@@ -54,15 +54,15 @@ stages:
     dependsOn: 'detect_conda_changes'
     variables:
       conda_build_config_changed: $[ stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'] ]
-    condition: >
-      and(
-      ne(variables.master_or_release, 'True'),
-      eq(stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
-      )
 
     jobs:
     - job:
       displayName: 'pytest @ develop environment'
+      condition: >
+        and(
+        ne(variables.master_or_release, 'True'),
+        eq(stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
+        )
 
       pool:
           vmImage: 'ubuntu-latest'
