@@ -54,7 +54,7 @@ stages:
       eq(variables['Build.Reason'], 'Schedule')
       )
       ),
-      eq( $[ stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'] , '0')
+      eq(stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
       )
 
     jobs:
@@ -127,7 +127,7 @@ stages:
         eq(variables['Build.Reason'], 'Schedule')
         )
         ),
-        ne( $[ stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'] , '0')
+        ne(stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
         )
 
       pool:
