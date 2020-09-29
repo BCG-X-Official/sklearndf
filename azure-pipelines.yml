@@ -14,6 +14,14 @@ resources:
       name: BCG-Gamma/pytools
       ref: develop # todo - update to stable release
 
+variables:
+  master_or_release: >
+    $[ or(contains(variables['Build.SourceBranch'], 'refs/heads/release'),
+    eq(variables['Build.SourceBranch'], 'refs/heads/master'),
+    eq(variables['Build.Reason'], 'Schedule')
+    )
+    ]
+
 stages:
   - stage: detect_conda_changes
     displayName: 'detect conda changes'
@@ -47,13 +55,7 @@ stages:
       conda_build_config_changed: $[ stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'] ]
     condition: >
       and(
-      not(
-      or(
-      contains(variables['Build.SourceBranch'], 'refs/heads/release'),
-      eq(variables['Build.SourceBranch'], 'refs/heads/master'),
-      eq(variables['Build.Reason'], 'Schedule')
-      )
-      ),
+      not(variables.master_or_release)),
       eq(stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
       )
 
@@ -119,16 +121,10 @@ stages:
     - job:
       displayName: '(single)'
       condition: >
-        and(
-        not(
-        or(
-        contains(variables['Build.SourceBranch'], 'refs/heads/release'),
-        eq(variables['Build.SourceBranch'], 'refs/heads/master'),
-        eq(variables['Build.Reason'], 'Schedule')
-        )
-        ),
-        ne(stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
-        )
+      and(
+      not(variables.master_or_release)),
+      ne(stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
+      )
 
       pool:
           vmImage: 'ubuntu-latest'
@@ -179,12 +175,7 @@ stages:
 
     - job:
       displayName: '(matrix)'
-      condition: >
-        or(
-        contains(variables['Build.SourceBranch'], 'refs/heads/release'),
-        eq(variables['Build.SourceBranch'], 'refs/heads/master'),
-        eq(variables['Build.Reason'], 'Schedule')
-        )
+      condition: variables.master_or_release
 
       pool:
         vmImage: 'ubuntu-latest'
