@@ -46,8 +46,6 @@ stages:
                 fi
                 echo "##vso[task.setvariable variable=conda_build_config_changed;isOutput=true]$?"
 
-          - script: echo $(diff.conda_build_config_changed)
-            name: echovar
 
   - stage:
     displayName: 'simple pytest'
@@ -66,10 +64,8 @@ stages:
 
       pool:
           vmImage: 'ubuntu-latest'
-      steps:
-        - script: echo $(master_or_release)
-          name: echo_master_or_release
 
+      steps:
         - task: UsePythonVersion@0
           inputs:
             versionSpec: '3.7'
@@ -142,12 +138,6 @@ stages:
             FACET_V_JOBLIB: '>=0.13'
 
       steps:
-        - script: echo $(conda_build_config_changed)
-          name: echovar
-
-        - script: echo $(master_or_release)
-          name: echo_master_or_release
-
         - task: UsePythonVersion@0
           inputs:
             versionSpec: '$(FACET_V_PYTHON_BUILD)'
@@ -208,9 +198,6 @@ stages:
             FACET_V_NUMPY: '=>1.16'
 
       steps:
-        - script: echo $(master_or_release)
-          name: echo_master_or_release
-
         - task: UsePythonVersion@0
           inputs:
             versionSpec: '$(FACET_V_PYTHON_BUILD)'
