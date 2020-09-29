@@ -1,3 +1,6 @@
+# set the build name
+name: $[ replace(variables['branch'], 'refs/heads/', '') ]
+
 # RUN TESTS AND FULL CONDA BUILD MATRIX EVERY NIGHT AT 4AM
 schedules:
 - cron: "0 4 * * *"
@@ -15,10 +18,14 @@ resources:
       ref: develop # todo - update to stable release
 
 variables:
+  ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/') }}:
+    branch: $[ variables['Build.SourceBranch'] ]
+  ${{ if startsWith(variables['Build.SourceBranch'], 'refs/pull/') }}:
+    branch: $[ variables['System.PullRequest.SourceBranch'] ]
   master_or_release: >
     ${{ or(
-    contains(variables['Build.SourceBranch'], 'refs/heads/release'),
-    eq(variables['Build.SourceBranch'], 'refs/heads/master'),
+    contains(variables['branch'], 'refs/heads/release'),
+    eq(variables['branch'], 'refs/heads/master'),
     eq(variables['Build.Reason'], 'Schedule')
     )
     }}
@@ -28,6 +35,9 @@ stages:
     displayName: 'detect conda changes'
 
     jobs:
+      - script: echo $(branch)
+        name: echo_branch_name
+
       - job: checkout_and_diff
         steps:
           - checkout: self
@@ -182,7 +192,7 @@ stages:
             FACET_V_PYTHON_BUILD: '3.6.*'
             FACET_V_PANDAS: '==0.24.*'
             FACET_V_SKLEARN: '==0.21.*'
-            FACET_V_JOBLIB: '==0.13,*'
+            FACET_V_JOBLIB: '==0.13.*'
             FACET_V_NUMPY: '==1.16.*'
           maximum dependencies:
             FACET_V_PYTHON_BUILD: '3.8.*'
