@@ -27,7 +27,7 @@ stages:
               script: |
                 cd $(System.DefaultWorkingDirectory)
                 git diff-index --quiet develop conda-build
-                conda_build_config_changed=$?
+                echo "##vso[task.setvariable variable=conda_build_config_changed]$?"
 
   - stage:
     displayName: 'simple pytest'
