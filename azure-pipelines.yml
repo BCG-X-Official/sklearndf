@@ -56,7 +56,7 @@ stages:
       conda_build_config_changed: $[ stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'] ]
     condition: >
       and(
-      not(variables.master_or_release),
+      ne(variables.master_or_release, 'True'),
       eq(stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
       )
 
@@ -67,6 +67,9 @@ stages:
       pool:
           vmImage: 'ubuntu-latest'
       steps:
+        - script: echo $(master_or_release)
+          name: echo_master_or_release
+
         - task: UsePythonVersion@0
           inputs:
             versionSpec: '3.7'
@@ -123,7 +126,7 @@ stages:
       displayName: '(single)'
       condition: >
         and(
-        not(variables.master_or_release),
+        ne(variables.master_or_release, 'True'),
         ne(stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
         )
 
@@ -141,6 +144,9 @@ stages:
       steps:
         - script: echo $(conda_build_config_changed)
           name: echovar
+
+        - script: echo $(master_or_release)
+          name: echo_master_or_release
 
         - task: UsePythonVersion@0
           inputs:
@@ -176,7 +182,7 @@ stages:
 
     - job:
       displayName: '(matrix)'
-      condition: variables.master_or_release
+      condition: eq(variables.master_or_release, 'True')
 
       pool:
         vmImage: 'ubuntu-latest'
@@ -202,6 +208,9 @@ stages:
             FACET_V_NUMPY: '=>1.16'
 
       steps:
+        - script: echo $(master_or_release)
+          name: echo_master_or_release
+
         - task: UsePythonVersion@0
           inputs:
             versionSpec: '$(FACET_V_PYTHON_BUILD)'
