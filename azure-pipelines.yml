@@ -45,7 +45,7 @@ stages:
       )
 
     jobs:
-    - job: '
+    - job:
       displayName: 'pytest @ develop environment'
 
       pool:
