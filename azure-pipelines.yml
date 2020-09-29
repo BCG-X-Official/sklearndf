@@ -23,7 +23,8 @@ stages:
         steps:
           - checkout: self
 
-          - task: check
+          - task: Bash@3
+            name: check
             inputs:
               targetType: 'inline'
               script: |
