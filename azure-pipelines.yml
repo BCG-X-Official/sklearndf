@@ -16,12 +16,12 @@ resources:
 
 variables:
   master_or_release: >
-    ${{ or(
+    $[ or(
     contains(variables['Build.SourceBranch'], 'refs/heads/release'),
     eq(variables['Build.SourceBranch'], 'refs/heads/master'),
     eq(variables['Build.Reason'], 'Schedule')
     )
-    }}
+    ]
 
 stages:
   - stage: detect_conda_changes
@@ -122,10 +122,10 @@ stages:
     - job:
       displayName: '(single)'
       condition: >
-      and(
-      not(variables.master_or_release),
-      ne(stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
-      )
+        and(
+        not(variables.master_or_release),
+        ne(stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
+        )
 
       pool:
           vmImage: 'ubuntu-latest'
