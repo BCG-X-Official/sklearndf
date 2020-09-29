@@ -16,11 +16,12 @@ resources:
 
 variables:
   master_or_release: >
-    $[ or(contains(variables['Build.SourceBranch'], 'refs/heads/release'),
+    ${{ or(
+    contains(variables['Build.SourceBranch'], 'refs/heads/release'),
     eq(variables['Build.SourceBranch'], 'refs/heads/master'),
     eq(variables['Build.Reason'], 'Schedule')
     )
-    ]
+    }}
 
 stages:
   - stage: detect_conda_changes
