@@ -21,6 +21,8 @@ stages:
     jobs:
       - job:
         steps:
+          - checkout: self
+
           - task: Bash@3
             inputs:
               targetType: 'inline'
