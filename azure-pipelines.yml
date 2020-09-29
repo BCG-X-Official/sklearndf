@@ -28,6 +28,7 @@ stages:
               targetType: 'inline'
               script: |
                 cd $(Build.Repository.LocalPath)
+                pwd
                 git diff-index --quiet develop conda-build
                 echo "##vso[task.setvariable variable=conda_build_config_changed]$?"
 
