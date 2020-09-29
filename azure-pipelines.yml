@@ -15,16 +15,16 @@ resources:
       ref: develop # todo - update to stable release
 
 stages:
-  - stage: 'detect_conda_changes'
+  - stage: detect_conda_changes
     displayName: 'detect conda changes'
 
     jobs:
-      - job:
+      - job: checkout_and_diff
         steps:
           - checkout: self
 
           - task: Bash@3
-            name: check
+            name: diff
             inputs:
               targetType: 'inline'
               script: |
@@ -37,14 +37,14 @@ stages:
                 fi
                 echo "##vso[task.setvariable variable=conda_build_config_changed;isOutput=true]$?"
 
-          - script: echo $(check.conda_build_config_changed)
+          - script: echo $(diff.conda_build_config_changed)
             name: echovar
 
   - stage:
     displayName: 'simple pytest'
     dependsOn: 'detect_conda_changes'
     variables:
-      conda_build_config_changed: $[ dependencies.detect_conda_changes.outputs['check.conda_build_config_changed'] ]
+      conda_build_config_changed: $[ dependencies.detect_conda_changes.outputs['checkout_and_diff.diff.conda_build_config_changed'] ]
     condition: >
       and(
       not(
@@ -113,7 +113,7 @@ stages:
     displayName: 'conda build & pytest'
     dependsOn: 'detect_conda_changes'
     variables:
-      conda_build_config_changed: $[ dependencies.detect_conda_changes.outputs['check.conda_build_config_changed'] ]
+      conda_build_config_changed: $[ dependencies.detect_conda_changes.outputs['checkout_and_diff.diff.conda_build_config_changed'] ]
 
     jobs:
     - job:
