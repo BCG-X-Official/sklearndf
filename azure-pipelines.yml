@@ -29,6 +29,11 @@ stages:
               script: |
                 cd $(Build.Repository.LocalPath)
                 git diff-index --quiet origin/develop conda-build
+                if [ "$?" = 1 ]; then
+                echo "conda build config has been changed"
+                else
+                echo "conda build config is unchanged"
+                fi
                 echo "##vso[task.setvariable variable=conda_build_config_changed]$?"
 
   - stage:
