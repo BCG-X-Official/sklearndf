@@ -44,7 +44,7 @@ stages:
     displayName: 'simple pytest'
     dependsOn: 'detect_conda_changes'
     variables:
-      conda_build_config_changed: $[ stageDependencies.detect_conda_changes.outputs['checkout_and_diff.diff.conda_build_config_changed'] ]
+      conda_build_config_changed: $[ stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'] ]
     condition: >
       and(
       not(
@@ -113,7 +113,7 @@ stages:
     displayName: 'conda build & pytest'
     dependsOn: 'detect_conda_changes'
     variables:
-      conda_build_config_changed: $[ stageDependencies.detect_conda_changes.outputs['checkout_and_diff.diff.conda_build_config_changed'] ]
+      conda_build_config_changed: $[ stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'] ]
 
     jobs:
     - job:
