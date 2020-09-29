@@ -1,5 +1,5 @@
 # set the build name
-name: $[ replace(variables['branchName'], 'refs/heads/', '') ]
+name: $[ variables['branchName'] ]
 
 # RUN TESTS AND FULL CONDA BUILD MATRIX EVERY NIGHT AT 4AM
 schedules:
@@ -19,7 +19,7 @@ resources:
 
 variables:
   ${{ if eq(variables['System.PullRequest.TargetBranch'], '') }}:
-    branchName: $[ variables['Build.SourceBranchName'] ]
+    branchName: $[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]
   ${{ if ne(variables['System.PullRequest.TargetBranch'], '') }}:
     branchName: $[ replace(variables['System.PullRequest.TargetBranch'], 'refs/heads/', '') ]
   master_or_release: >
