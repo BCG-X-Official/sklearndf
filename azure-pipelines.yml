@@ -1,5 +1,5 @@
 # set the build name
-name: $[ replace(variables['branch'], 'refs/heads/', '') ]
+name: $[ replace(variables['branchName'], 'refs/heads/', '') ]
 
 # RUN TESTS AND FULL CONDA BUILD MATRIX EVERY NIGHT AT 4AM
 schedules:
@@ -18,14 +18,14 @@ resources:
       ref: develop # todo - update to stable release
 
 variables:
-  ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/') }}:
-    branch: $[ variables['Build.SourceBranch'] ]
-  ${{ if startsWith(variables['Build.SourceBranch'], 'refs/pull/') }}:
-    branch: $[ variables['System.PullRequest.SourceBranch'] ]
+  ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+    branchName: $[ variables['Build.SourceBranchName'] ]
+  ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+    branchName: $[ replace(variables['System.PullRequest.TargetBranch'], 'refs/heads/', '') ]
   master_or_release: >
     ${{ or(
-    contains(variables['branch'], 'refs/heads/release'),
-    eq(variables['branch'], 'refs/heads/master'),
+    startsWith(variables['branchName'], 'release'),
+    eq(variables['branchName'], 'master'),
     eq(variables['Build.Reason'], 'Schedule')
     )
     }}
@@ -37,7 +37,7 @@ stages:
     jobs:
       - job: debug
         steps:
-          - script: echo $(branch)
+          - script: echo $(branchName)
             name: echo_branch_name
 
       - job: checkout_and_diff
