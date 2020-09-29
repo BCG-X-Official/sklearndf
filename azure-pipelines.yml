@@ -37,7 +37,7 @@ stages:
     jobs:
       - job: debug
         steps:
-          - script: echo $(branchName)
+          - script: echo $(Build.SourceBranch) $(branchName)
             name: echo_branch_name
 
       - job: checkout_and_diff
