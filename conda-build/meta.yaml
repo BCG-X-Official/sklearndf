@@ -14,15 +14,16 @@ requirements:
     - pip
     - python={{ environ.get('FACET_V_PYTHON_BUILD', '3.8') }}
   run:
-    - python{{ environ.get('FACET_V_PYTHON', '>=3.6,<4') }}
-    - pandas{{ environ.get('FACET_V_PANDAS', '>=0.24') }}
-    - numpy{{ environ.get('FACET_V_NUMPY', '>=1.16') }}
-    - scikit-learn{{ environ.get('FACET_V_SKLEARN', '>=0.21') }}
-    - joblib{{ environ.get('FACET_V_JOBLIB', '>=0.13') }}
+    - python==3.8
+    - pandas{{ environ.get('FACET_V_PANDAS', '>=0.24,<=1.1') }}
+    - numpy{{ environ.get('FACET_V_NUMPY', '>=1.16,<=1.19') }}
+    - matplotlib{{ environ.get('FACET_V_MATPLOT', '==3') }}
+    - scikit-learn{{ environ.get('FACET_V_SKLEARN', '>=0.21,<=0.23') }}
+    - joblib{{ environ.get('FACET_V_JOBLIB', '>=0.13,<=1.16') }}
     - boruta_py{{ environ.get('FACET_V_BORUTA', '>=0.3') }}
-    - pyyaml=5
-    - lightgbm{{ environ.get('FACET_V_LGBM', '>=2.2') }}
-    - gamma-pytools
+    - lightgbm{{ environ.get('FACET_V_LGBM', '==3') }}
+    - gamma-pytools=1.0
+    - pyyaml>=5
 test:
   imports:
     - sklearndf
@@ -36,7 +37,9 @@ test:
   requires:
     - pytest=5.2
   commands:
+    - conda list
     - python -c 'import sklearndf;
                  import os;
                  assert sklearndf.__version__ == os.environ["PKG_VERSION"]'
+    - pytest -vs ${FACET_PATH}/pytools/test
     - pytest -vs ${FACET_PATH}/sklearndf/test
