@@ -11,8 +11,8 @@ build:
 
 requirements:
   host:
-    - pip
-    - python={{ environ.get('FACET_V_PYTHON_BUILD', '3.8.*') }}
+    - pip>=19.1
+    - python{{ environ.get('FACET_V_PYTHON_BUILD', '=3.8.*') }}
   run:
     - python{{ environ.get('FACET_V_PYTHON', '>=3.6,<4') }}
     - pandas{{ environ.get('FACET_V_PANDAS', '>=0.24,<1.2') }}
@@ -22,7 +22,7 @@ requirements:
     - joblib{{ environ.get('FACET_V_JOBLIB', '>=0.13,<1.17') }}
     - boruta_py{{ environ.get('FACET_V_BORUTA', '>=0.3') }}
     - lightgbm{{ environ.get('FACET_V_LGBM', '>=3,<4') }}
-    - gamma-pytools=1.0
+    - gamma-pytools=1.0.*
     - pyyaml>=5
 test:
   imports:
@@ -35,7 +35,7 @@ test:
     - sklearndf.transformation
     - sklearndf.transformation.extra
   requires:
-    - pytest=5.2
+    - pytest=5.2.*
   commands:
     - conda list
     - python -c 'import sklearndf;
