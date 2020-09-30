@@ -17,7 +17,7 @@ requirements:
     - python==3.8
     - pandas{{ environ.get('FACET_V_PANDAS', '>=0.24,<=1.1') }}
     - numpy{{ environ.get('FACET_V_NUMPY', '>=1.16,<=1.19') }}
-    - matplotlib{{ environ.get('FACET_V_MATPLOT', '==3') }}
+    - matplotlib{{ environ.get('FACET_V_MATPLOT', '>=3.1,<=3.3') }}
     - scikit-learn{{ environ.get('FACET_V_SKLEARN', '>=0.21,<=0.23') }}
     - joblib{{ environ.get('FACET_V_JOBLIB', '>=0.13,<=1.16') }}
     - boruta_py{{ environ.get('FACET_V_BORUTA', '>=0.3') }}
