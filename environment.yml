@@ -4,12 +4,12 @@ channels:
 dependencies:
   - conda-build
   - conda-verify
-  - black >= 19.3
-  - boruta_py >= 0.3.*
+  - black = 19.*
+  - boruta_py = 0.3.*
   - docutils
   - joblib = 0.13.*
   - jupyter >= 1.0
-  - lightgbm >= 2.3.*
+  - lightgbm = 3.0.*
   - matplotlib = 3.1.*
   - m2r = 0.2.*
   - nbsphinx = 0.4.*
@@ -17,18 +17,17 @@ dependencies:
   - pandas >= 0.24.*
   - pip >= 19.1
   - pluggy = 0.13.*
-  - pytest = 5.2.0
+  - pytest = 5.2.*
   - pytest-cov = 2.8.*
   - python = 3.7.*
   - pyyaml = 5.1.*
-  - rsa = 4.0.*
-  - scipy >= 1.2.*
-  - sphinx = 3.1.*
-  - sphinx-autodoc-typehints = 1.11.*
+  - scipy = 1.5.*
+  - sphinx = 3.*
+  - sphinx-autodoc-typehints = 1.*
+  - typing_inspect = 0.6.*
   - xlrd = 1.2.*
   - yaml = 0.1.*
   - pip:
       - pre_commit == 1.16.*
       - punch.py==1.6.*
       - pydata-sphinx-theme == 0.3.*
-      - typing-inspect == 0.4.*
