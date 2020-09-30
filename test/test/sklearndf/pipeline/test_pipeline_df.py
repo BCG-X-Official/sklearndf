@@ -87,62 +87,56 @@ class Transformer(NoInvTransformer):
 class DummyTransformer(Transformer):
     """Transformer which stores the column means"""
 
-    def fit(self, X, y=None, **fit_params) -> "DummyTransf":
-        self.means_ = np.mean(X, axis=0)
+    def __init__(self, a: str = None, b: str = None) -> None:
+        super().__init__(a, b)
+
+    # noinspection PyPep8Naming,PyAttributeOutsideInit
+    def fit(self, X, y=None, **fit_params) -> "DummyTransformer":
+        self.means_: np.ndarray = np.mean(X, axis=0)
         # store timestamp to figure out whether the result of 'fit' has been
         # cached or not
-        self.timestamp_ = time.time()
-        return self
-
-
-class TransfFitParams(Transf):
-    def fit(self, X, y=None, **fit_params) -> "TransfFitParams":
-        self.fit_params = fit_params
+        self.timestamp_: float = time.time()
         return self
 
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class DummyTransfDF(TransformerDF, DummyTransf):
-    """ Wraps a  DummyTransf; accepts and returns data frames """
-
+class DummyTransformerDF(TransformerDF, DummyTransformer):
     pass
 
 
 # noinspection PyAbstractClass
 @df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class NoTransDF(TransformerDF, NoTrans):
-    """ Wraps a  DummyTransf; accepts and returns data frames """
-
+class NoTransformerDF(TransformerDF, NoTransformer):
     pass
 
 
-def test_pipelinedf_memory(
+def test_pipeline_df_memory(
     iris_features: pd.DataFrame, iris_target_sr: pd.Series
 ) -> None:
     """ Test memory caching in PipelineDF - taken almost 1:1 from
     sklearn.tests.test_pipeline """
 
-    cachedir = mkdtemp()
+    cache_dir = mkdtemp()
 
     try:
         if LooseVersion(joblib.__version__) < LooseVersion("0.12"):
             # Deal with change of API in joblib
-            memory = joblib.Memory(cachedir=cachedir, verbose=10)
+            memory = joblib.Memory(cachedir=cache_dir, verbose=10)
         else:
-            memory = joblib.Memory(location=cachedir, verbose=10)
+            memory = joblib.Memory(location=cache_dir, verbose=10)
 
         # Test with Transformer + SVC
         clf = SVCDF(probability=True, random_state=0)
-        transf = DummyTransfDF()
-        pipe = PipelineDF([("transf", clone(transf)), ("svc", clf)])
-        cached_pipe = PipelineDF([("transf", transf), ("svc", clf)], memory=memory)
+        tx = DummyTransformerDF()
+        pipe = PipelineDF([("tx", clone(tx)), ("svc", clf)])
+        cached_pipe = PipelineDF([("tx", tx), ("svc", clf)], memory=memory)
 
         # Memoize the transformer at the first fit
         cached_pipe.fit(iris_features, iris_target_sr)
         pipe.fit(iris_features, iris_target_sr)
         # Get the time stamp of the transformer in the cached pipeline
-        ts = cached_pipe.named_steps["transf"].timestamp_
+        ts = cached_pipe.named_steps["tx"].timestamp_
         # Check that cached_pipe and pipe yield identical results
         assert_array_equal(
             pipe.predict(iris_features), cached_pipe.predict(iris_features)
@@ -159,9 +153,9 @@ def test_pipelinedf_memory(
             cached_pipe.score(iris_features, iris_target_sr),
         )
         assert_array_equal(
-            pipe.named_steps["transf"].means_, cached_pipe.named_steps["transf"].means_
+            pipe.named_steps["tx"].means_, cached_pipe.named_steps["tx"].means_
         )
-        assert not hasattr(transf, "means_")
+        assert not hasattr(tx, "means_")
         # Check that we are reading the cache while fitting
         # a second time
         cached_pipe.fit(iris_features, iris_target_sr)
@@ -181,16 +175,14 @@ def test_pipelinedf_memory(
             cached_pipe.score(iris_features, iris_target_sr),
         )
         assert_array_equal(
-            pipe.named_steps["transf"].means_, cached_pipe.named_steps["transf"].means_
+            pipe.named_steps["tx"].means_, cached_pipe.named_steps["tx"].means_
         )
-        assert ts == cached_pipe.named_steps["transf"].timestamp_
+        assert ts == cached_pipe.named_steps["tx"].timestamp_
         # Create a new pipeline with cloned estimators
         # Check that even changing the name step does not affect the cache hit
         clf_2 = SVCDF(probability=True, random_state=0)
-        transf_2 = DummyTransfDF()
-        cached_pipe_2 = PipelineDF(
-            [("transf_2", transf_2), ("svc", clf_2)], memory=memory
-        )
+        tx_2 = DummyTransformerDF()
+        cached_pipe_2 = PipelineDF([("tx_2", tx_2), ("svc", clf_2)], memory=memory)
         cached_pipe_2.fit(iris_features, iris_target_sr)
 
         # Check that cached_pipe and pipe yield identical results
@@ -210,15 +202,14 @@ def test_pipelinedf_memory(
             cached_pipe_2.score(iris_features, iris_target_sr),
         )
         assert_array_equal(
-            pipe.named_steps["transf"].means_,
-            cached_pipe_2.named_steps["transf_2"].means_,
+            pipe.named_steps["tx"].means_, cached_pipe_2.named_steps["tx_2"].means_
         )
-        assert ts == cached_pipe_2.named_steps["transf_2"].timestamp_
+        assert ts == cached_pipe_2.named_steps["tx_2"].timestamp_
     finally:
         shutil.rmtree(cache_dir)
 
 
-def test_pipelinedf__init() -> None:
+def test_pipeline_df__init() -> None:
     """ Test the various init parameters of the pipeline. """
 
     assert_raises(TypeError, PipelineDF)
@@ -285,7 +276,7 @@ def test_pipelinedf__init() -> None:
     assert params == params2
 
 
-def test_pipelinedf_raise_set_params_error() -> None:
+def test_pipeline_df_raise_set_params_error() -> None:
     """ Test pipeline raises set params error message for nested models. """
     pipe = PipelineDF([("cls", LinearRegressionDF())])
 

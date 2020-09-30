@@ -178,6 +178,7 @@ def test_set_params() -> None:
 def test_set_params_updates_valid_params() -> None:
     # Check that set_params tries to set SVC().C, not
     # DecisionTreeClassifier().C
-    gscv = GridSearchCV(DecisionTreeClassifierDF(), {})
-    gscv.set_params(estimator=SVCDF(), estimator__C=42.0)
-    assert gscv.estimator.C == 42.0
+    gs = GridSearchCV(DecisionTreeClassifierDF(), {})
+    # noinspection PyTypeChecker
+    gs.set_params(estimator=SVCDF(), estimator__C=42.0)
+    assert gs.estimator.C == 42.0
