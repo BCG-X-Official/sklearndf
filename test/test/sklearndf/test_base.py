@@ -39,23 +39,17 @@ class _DummyEstimator3(BaseEstimator):
 
 @df_estimator(df_wrapper_type=_EstimatorWrapperDF)
 class _DummyEstimatorDF(EstimatorDF, _DummyEstimator, metaclass=ABCMeta):
-    @classmethod
-    def _make_delegate_estimator(cls, *args, **kwargs) -> _DummyEstimator:
-        return _DummyEstimator(*args, **kwargs)
+    pass
 
 
 @df_estimator(df_wrapper_type=_EstimatorWrapperDF)
 class _DummyEstimator2DF(EstimatorDF, _DummyEstimator2, metaclass=ABCMeta):
-    @classmethod
-    def _make_delegate_estimator(cls, *args, **kwargs) -> _DummyEstimator2:
-        return _DummyEstimator2(*args, **kwargs)
+    pass
 
 
 @df_estimator(df_wrapper_type=_EstimatorWrapperDF)
 class _DummyEstimator3DF(EstimatorDF, _DummyEstimator3, metaclass=ABCMeta):
-    @classmethod
-    def _make_delegate_estimator(cls, *args, **kwargs) -> _DummyEstimator3:
-        return _DummyEstimator3(*args, **kwargs)
+    pass
 
 
 def test_clone() -> None:
@@ -184,6 +178,7 @@ def test_set_params() -> None:
 def test_set_params_updates_valid_params() -> None:
     # Check that set_params tries to set SVC().C, not
     # DecisionTreeClassifier().C
-    gscv = GridSearchCV(DecisionTreeClassifierDF(), {})
-    gscv.set_params(estimator=SVCDF(), estimator__C=42.0)
-    assert gscv.estimator.C == 42.0
+    gs = GridSearchCV(DecisionTreeClassifierDF(), {})
+    # noinspection PyTypeChecker
+    gs.set_params(estimator=SVCDF(), estimator__C=42.0)
+    assert gs.estimator.C == 42.0
