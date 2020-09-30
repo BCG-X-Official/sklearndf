@@ -25,4 +25,4 @@ from conf_base import *
 
 # ----- custom configuration -----
 
-set_config(project="sklearndf", modules=["pytools", "sklearndf"])
+set_config(globals(), project="sklearndf", modules=["pytools", "sklearndf"])
