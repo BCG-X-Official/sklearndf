@@ -226,7 +226,12 @@ def test_pipeline_df__init() -> None:
 
     # Smoke test with only an estimator
     clf = NoTransformerDF()
-    pipe = PipelineDF([("svc", clf)])
+
+    # step names
+    step_svc = "svc"
+    step_anova = "anova"
+
+    pipe = PipelineDF([(step_svc, clf)])
     assert pipe.get_params(deep=True) == dict(
         svc__a=None, svc__b=None, svc=clf, **pipe.get_params(deep=False)
     )
@@ -241,11 +246,11 @@ def test_pipeline_df__init() -> None:
     # Test with two objects
     clf = SVCDF()
     filter1 = SelectKBestDF(f_classif)
-    pipe = PipelineDF([("anova", filter1), ("svc", clf)])
+    pipe = PipelineDF([(step_anova, filter1), (step_svc, clf)])
 
     # Check that estimators are not cloned on pipeline construction
-    assert pipe.named_steps["anova"] is filter1
-    assert pipe.named_steps["svc"] is clf
+    assert pipe.named_steps[step_anova] is filter1
+    assert pipe.named_steps[step_svc] is clf
 
     # Check that params are set
     pipe.set_params(svc__C=0.1)
@@ -258,12 +263,12 @@ def test_pipeline_df__init() -> None:
 
     # Test clone
     pipe2 = assert_no_warnings(clone, pipe)
-    assert not pipe.named_steps["svc"] is pipe2.named_steps["svc"]
+    assert not pipe.named_steps[step_svc] is pipe2.named_steps[step_svc]
 
     # Check that apart from estimators, the parameters are the same
 
     def _get_deep_params(_pipe: PipelineDF) -> Mapping[str, Any]:
-        top_level_params = _pipe.get_params(deep=False)
+        top_level_params = {*_pipe.get_params(deep=False), step_svc, step_anova}
         return {
             k: v
             for k, v in _pipe.get_params(deep=True).items()
