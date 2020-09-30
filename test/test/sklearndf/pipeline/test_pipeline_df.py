@@ -13,9 +13,7 @@ import numpy as np
 import pandas as pd
 from sklearn import clone
 from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.dummy import DummyRegressor
 from sklearn.feature_selection import f_classif
-# noinspection PyProtectedMember
 from sklearn.utils.testing import (
     assert_array_equal,
     assert_no_warnings,
@@ -23,28 +21,13 @@ from sklearn.utils.testing import (
     assert_raises_regex,
 )
 
-from sklearndf import RegressorDF, TransformerDF
-# noinspection PyProtectedMember
-from sklearndf._wrapper import _RegressorWrapperDF, df_estimator
+from sklearndf import TransformerDF
+from sklearndf._wrapper import df_estimator
 from sklearndf.classification import LogisticRegressionDF, SVCDF
 from sklearndf.pipeline import PipelineDF
-from sklearndf.regression import LassoDF, LinearRegressionDF
-# noinspection PyProtectedMember
+from sklearndf.regression import DummyRegressorDF, LassoDF, LinearRegressionDF
 from sklearndf.transformation import SelectKBestDF, SimpleImputerDF
-# noinspection PyProtectedMember
-from sklearndf.transformation._wrapper import (
-    _ColumnPreservingTransformerWrapperDF,
-)
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_RegressorWrapperDF)
-class DummyRegressorDF(RegressorDF, DummyRegressor):
-    """
-    Wraps :class:`sklearn.dummy.DummyRegressor`; accepts and returns data frames.
-    """
-
-    pass
+from sklearndf.transformation._wrapper import _ColumnPreservingTransformerWrapperDF
 
 
 def test_set_params_nested_pipeline_df() -> None:
@@ -59,7 +42,7 @@ def test_set_params_nested_pipeline_df() -> None:
     estimator.set_params(a__steps=[("b", LogisticRegressionDF())], a__b__C=5)
 
 
-class NoFit(BaseEstimator, TransformerMixin):
+class NoFit(BaseEstimator):
     """Small class to test parameter dispatching.
     """
 
@@ -68,37 +51,41 @@ class NoFit(BaseEstimator, TransformerMixin):
         self.b = b
 
 
-class NoTrans(NoFit):
+class NoTransformer(NoFit):
     """
     Not a transformer
     """
 
-    def fit(self, X, y=None, **fit_params) -> "NoTrans":
+    # noinspection PyPep8Naming
+    def fit(self, X, y=None, **fit_params) -> "NoTransformer":
         return self
 
     def get_params(self, deep: bool = False) -> Dict[str, Any]:
         return {"a": self.a, "b": self.b}
 
-    def set_params(self, **params: Dict[str, Any]) -> "NoTrans":
+    def set_params(self, **params: Dict[str, Any]) -> "NoTransformer":
         self.a = params["a"]
         return self
 
 
-class NoInvTransf(NoTrans):
+class NoInvTransformer(NoTransformer, TransformerMixin):
+    # noinspection PyPep8Naming
     def transform(self, X: np.ndarray) -> np.ndarray:
         return X
 
 
-class Transf(NoInvTransf):
+class Transformer(NoInvTransformer):
+    # noinspection PyPep8Naming
     def transform(self, X: np.ndarray) -> np.ndarray:
         return X
 
+    # noinspection PyPep8Naming,PyMethodMayBeStatic
     def inverse_transform(self, X: np.ndarray) -> np.ndarray:
         return X
 
 
-class DummyTransf(Transf):
-    """Transformer which store the column means"""
+class DummyTransformer(Transformer):
+    """Transformer which stores the column means"""
 
     def fit(self, X, y=None, **fit_params) -> "DummyTransf":
         self.means_ = np.mean(X, axis=0)
@@ -228,7 +215,7 @@ def test_pipelinedf_memory(
         )
         assert ts == cached_pipe_2.named_steps["transf_2"].timestamp_
     finally:
-        shutil.rmtree(cachedir)
+        shutil.rmtree(cache_dir)
 
 
 def test_pipelinedf__init() -> None:
@@ -247,7 +234,7 @@ def test_pipelinedf__init() -> None:
     )
 
     # Smoke test with only an estimator
-    clf = NoTransDF()
+    clf = NoTransformerDF()
     pipe = PipelineDF([("svc", clf)])
     assert pipe.get_params(deep=True) == dict(
         svc__a=None, svc__b=None, svc=clf, **pipe.get_params(deep=False)
@@ -283,20 +270,17 @@ def test_pipelinedf__init() -> None:
     assert not pipe.named_steps["svc"] is pipe2.named_steps["svc"]
 
     # Check that apart from estimators, the parameters are the same
-    params = pipe.get_params(deep=True)
-    params2 = pipe2.get_params(deep=True)
 
-    for x in pipe.get_params(deep=False):
-        params.pop(x)
+    def _get_deep_params(_pipe: PipelineDF) -> Mapping[str, Any]:
+        top_level_params = _pipe.get_params(deep=False)
+        return {
+            k: v
+            for k, v in _pipe.get_params(deep=True).items()
+            if k not in top_level_params
+        }
 
-    for x in pipe2.get_params(deep=False):
-        params2.pop(x)
-
-    # Remove estimators that where copied
-    params.pop("svc")
-    params.pop("anova")
-    params2.pop("svc")
-    params2.pop("anova")
+    params = _get_deep_params(pipe)
+    params2 = _get_deep_params(pipe2)
 
     assert params == params2
 
@@ -304,13 +288,6 @@ def test_pipelinedf__init() -> None:
 def test_pipelinedf_raise_set_params_error() -> None:
     """ Test pipeline raises set params error message for nested models. """
     pipe = PipelineDF([("cls", LinearRegressionDF())])
-
-    # expected error message
-    error_msg = (
-        "Invalid parameter %s for estimator Pipeline. "
-        "Check the list of available parameters "
-        "with `estimator.get_params().keys()`."
-    )
 
     assert_raises_regex(
         ValueError,

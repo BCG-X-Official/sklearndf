@@ -39,23 +39,17 @@ class _DummyEstimator3(BaseEstimator):
 
 @df_estimator(df_wrapper_type=_EstimatorWrapperDF)
 class _DummyEstimatorDF(EstimatorDF, _DummyEstimator, metaclass=ABCMeta):
-    @classmethod
-    def _make_delegate_estimator(cls, *args, **kwargs) -> _DummyEstimator:
-        return _DummyEstimator(*args, **kwargs)
+    pass
 
 
 @df_estimator(df_wrapper_type=_EstimatorWrapperDF)
 class _DummyEstimator2DF(EstimatorDF, _DummyEstimator2, metaclass=ABCMeta):
-    @classmethod
-    def _make_delegate_estimator(cls, *args, **kwargs) -> _DummyEstimator2:
-        return _DummyEstimator2(*args, **kwargs)
+    pass
 
 
 @df_estimator(df_wrapper_type=_EstimatorWrapperDF)
 class _DummyEstimator3DF(EstimatorDF, _DummyEstimator3, metaclass=ABCMeta):
-    @classmethod
-    def _make_delegate_estimator(cls, *args, **kwargs) -> _DummyEstimator3:
-        return _DummyEstimator3(*args, **kwargs)
+    pass
 
 
 def test_clone() -> None:
