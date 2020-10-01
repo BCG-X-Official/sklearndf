@@ -1,7 +1,7 @@
 import re
 import sys
 from distutils import version
-from typing import Any, Dict, Iterable, List, Optional, Set, Type, Union
+from typing import Any, Iterable, List, Mapping, Optional, Set, Type, Union
 
 import pandas as pd
 import sklearn
@@ -13,13 +13,14 @@ from sklearndf._wrapper import _EstimatorWrapperDF
 Module: type = Any
 
 
-def find_all_classes(*modules: Module) -> Set[type]:
+def find_all_classes(*modules: Module) -> Set[Type[_EstimatorWrapperDF]]:
     """ Finds all Class members in given module/modules. """
-    types: Set[type] = set()
+    types: Set[Type[_EstimatorWrapperDF]] = set()
 
     def _add_classes_from_module(_m: Module) -> None:
         for member in vars(module).values():
             if isinstance(member, type):
+                member: Type[_EstimatorWrapperDF]
                 types.add(member)
 
     for module in modules:
@@ -39,8 +40,8 @@ def find_all_submodules(parent_module: Module) -> Set[Module]:
 
 
 def sklearn_delegate_classes(
-    module: Module
-) -> Dict[BaseEstimator, _EstimatorWrapperDF]:
+    module: Module,
+) -> Mapping[Type[BaseEstimator], Type[_EstimatorWrapperDF]]:
     """ Creates a dictionary mapping from sklearndf -> sklearn classes. """
     return {
         df_class.__wrapped__: df_class
@@ -53,7 +54,7 @@ def list_classes(
     from_modules: Union[Module, Iterable[Module]],
     matching: str,
     excluding: Optional[Union[str, Iterable[str]]] = None,
-) -> List[Type]:
+) -> List[Type[_EstimatorWrapperDF]]:
     """ Helper to return all classes with matching name from Python module(s) """
 
     if not isinstance(from_modules, Iterable):
@@ -72,7 +73,7 @@ def list_classes(
 
 def get_sklearndf_wrapper_class(
     to_wrap: Type[BaseEstimator], from_module=None
-) -> _EstimatorWrapperDF:
+) -> Type[_EstimatorWrapperDF]:
     """ Helper to return the wrapped counterpart for a sklearn class """
     try:
         return sklearn_delegate_classes(from_module)[to_wrap]
@@ -91,10 +92,10 @@ def check_expected_not_fitted_error(estimator: Union[LearnerDF, TransformerDF]):
     test_x = pd.DataFrame(data=list(range(10)))
 
     def check_sklearndf_call(
-        func_to_call: str, estimator: Union[LearnerDF, TransformerDF]
+        func_to_call: str, _estimator: Union[LearnerDF, TransformerDF]
     ) -> None:
         try:
-            getattr(estimator, func_to_call)(X=test_x)
+            getattr(_estimator, func_to_call)(X=test_x)
         except sklearn.exceptions.NotFittedError:
             # This is the expected error, that sklearn[df] should raise
             return
@@ -107,16 +108,16 @@ def check_expected_not_fitted_error(estimator: Union[LearnerDF, TransformerDF]):
                 else:
                     x = test_x.values.reshape(-1)
 
-                getattr(estimator.native_estimator, func_to_call)(x)
+                getattr(_estimator.native_estimator, func_to_call)(x)
             except sklearn.exceptions.NotFittedError:
                 raise AssertionError(
                     "sklearndf did not return an expected NotFittedError"
-                    f" for {estimator.__class__.__name__}"
+                    f" for {_estimator.__class__.__name__}"
                 )
             except Exception as sklearn_exception:
                 assert repr(sklearndf_exception) == repr(sklearn_exception), (
                     "sklearndf raised a different error as sklearn"
-                    f" for {estimator.__class__.__name__}:"
+                    f" for {_estimator.__class__.__name__}:"
                     f"sklearndf: {repr(sklearndf_exception)} \n"
                     f"sklearn: {repr(sklearn_exception)}"
                 )

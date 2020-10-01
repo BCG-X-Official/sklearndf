@@ -1,12 +1,11 @@
-from typing import Type
+from typing import Type, cast
 
 import numpy as np
 import pandas as pd
-
-# noinspection PyPackageRequirements
 import pytest
 import sklearn
 from pandas.util.testing import assert_frame_equal
+from sklearn.base import BaseEstimator
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import Normalizer
 
@@ -91,14 +90,15 @@ def test_special_wrapped_constructors() -> None:
         matching=r".*PowerTransformer|QuantileTransformer|.*Scaler",
     ),
 )
-def test_various_transformers(sklearn_cls: Type, test_data: pd.DataFrame) -> None:
+def test_various_transformers(
+    sklearn_cls: Type[BaseEstimator], test_data: pd.DataFrame
+) -> None:
     # get the wrapped counterpart for sklearn:
-    df_transf_cls = get_sklearndf_wrapper_class(
+    wrapper_class = get_sklearndf_wrapper_class(
         to_wrap=sklearn_cls, from_module=sklearndf.transformation
     )
-
-    # initalize both kind of transformers
-    df_t = df_transf_cls()
+    # initialize both kind of transformers
+    df_t = cast(TransformerDF, wrapper_class())
     non_df_t = sklearn_cls()
 
     # for sklearn >=0.22 - check if not_fitted error is raised properly:
