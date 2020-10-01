@@ -12,6 +12,44 @@ resources:
       ref: develop # todo - update to stable release
 
 stages:
+  # Check code quality first to fail fast (isort, flake8, black)
+  - stage: code_quality_checks
+    displayName: 'Code quality'
+    jobs:
+      - job:
+        displayName: 'isort'
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.7.*'
+            displayName: 'use Python 3.7'
+          - script: |
+              python -m pip install isort==5.5.4
+              python -m isort --check --diff .
+            displayName: 'isort'
+      - job:
+        displayName: 'black'
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.7.*'
+            displayName: 'use Python 3.7'
+          - script: |
+              python -m pip install black==20.8b1
+              python -m black --check .
+            displayName: 'black'
+      - job:
+        displayName: 'flake8'
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.7.*'
+            displayName: 'use Python 3.7'
+          - script: |
+              python -m pip install flake8 flake8-comprehensions flake8-import-order
+              python -m flake8 --config flake8.ini -v .
+            displayName: 'Run flake8'
+
   - stage: 'Quick_env_test'
     displayName: 'Environment build & pytest'
 
