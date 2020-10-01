@@ -46,7 +46,7 @@ from sklearn.neighbors import (
 )
 from sklearn.neural_network import MLPClassifier
 from sklearn.semi_supervised import LabelPropagation, LabelSpreading
-from sklearn.svm import LinearSVC, NuSVC, SVC
+from sklearn.svm import SVC, LinearSVC, NuSVC
 from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
 
 from .. import ClassifierDF

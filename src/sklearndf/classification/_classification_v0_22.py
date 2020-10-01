@@ -9,11 +9,7 @@ from sklearn.ensemble import StackingClassifier
 from sklearn.naive_bayes import CategoricalNB
 
 from .. import ClassifierDF
-from .._wrapper import (
-    _ClassifierWrapperDF,
-    _StackingClassifierWrapperDF,
-    df_estimator,
-)
+from .._wrapper import _ClassifierWrapperDF, _StackingClassifierWrapperDF, df_estimator
 
 log = logging.getLogger(__name__)
 
@@ -28,7 +24,9 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 #
 
 # noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ClassifierWrapperDF,)
+@df_estimator(
+    df_wrapper_type=_ClassifierWrapperDF,
+)
 class CategoricalNBDF(ClassifierDF, CategoricalNB):
     """
     Wraps :class:`sklearn.naive_bayes.CategoricalNB`; accepts and returns data frames.

@@ -51,7 +51,7 @@ from sklearn.linear_model.stochastic_gradient import SGDRegressor
 from sklearn.multioutput import MultiOutputRegressor, RegressorChain
 from sklearn.neighbors import KNeighborsRegressor, RadiusNeighborsRegressor
 from sklearn.neural_network import MLPRegressor
-from sklearn.svm import LinearSVR, NuSVR, SVR
+from sklearn.svm import SVR, LinearSVR, NuSVR
 from sklearn.tree import DecisionTreeRegressor, ExtraTreeRegressor
 
 from .. import RegressorDF, TransformerDF

@@ -1,5 +1,6 @@
 import itertools
 import logging
+from test.sklearndf import list_classes
 from typing import Type
 
 import numpy as np
@@ -8,7 +9,6 @@ import pytest
 
 import sklearndf.transformation
 from sklearndf import TransformerDF
-from test.sklearndf import list_classes
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

@@ -10,9 +10,9 @@ import pandas as pd
 from boruta import BorutaPy
 from sklearn.base import BaseEstimator
 
-from .._wrapper import _ColumnSubsetTransformerWrapperDF, _NDArrayTransformerWrapperDF
 from ... import TransformerDF
 from ..._wrapper import _MetaEstimatorWrapperDF, df_estimator
+from .._wrapper import _ColumnSubsetTransformerWrapperDF, _NDArrayTransformerWrapperDF
 
 log = logging.getLogger(__name__)
 

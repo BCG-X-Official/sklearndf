@@ -1,4 +1,5 @@
 from itertools import chain
+from test.sklearndf import check_expected_not_fitted_error, list_classes
 from typing import Type
 
 import numpy as np
@@ -8,7 +9,6 @@ from sklearn.multioutput import ClassifierChain, MultiOutputClassifier
 
 import sklearndf.classification as classification
 from sklearndf import ClassifierDF
-from test.sklearndf import check_expected_not_fitted_error, list_classes
 
 CLASSIFIERS_TO_TEST = list_classes(
     from_modules=classification,

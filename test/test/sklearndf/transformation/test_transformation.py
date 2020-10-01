@@ -1,3 +1,8 @@
+from test.sklearndf import (
+    check_expected_not_fitted_error,
+    get_sklearndf_wrapper_class,
+    list_classes,
+)
 from typing import Type, cast
 
 import numpy as np
@@ -13,21 +18,16 @@ import sklearndf.transformation
 from sklearndf import TransformerDF
 from sklearndf.classification import RandomForestClassifierDF
 from sklearndf.transformation import (
+    RFECVDF,
+    RFEDF,
     ColumnTransformerDF,
     KBinsDiscretizerDF,
     NormalizerDF,
     OneHotEncoderDF,
-    RFECVDF,
-    RFEDF,
     SelectFromModelDF,
     SparseCoderDF,
 )
 from sklearndf.transformation.extra import OutlierRemoverDF
-from test.sklearndf import (
-    check_expected_not_fitted_error,
-    get_sklearndf_wrapper_class,
-    list_classes,
-)
 
 TRANSFORMERS_TO_TEST = list_classes(
     from_modules=sklearndf.transformation,

@@ -21,9 +21,9 @@ import logging
 
 from sklearn.impute import KNNImputer
 
-from ._transformation import _ImputerWrapperDF
 from .. import TransformerDF
 from .._wrapper import df_estimator
+from ._transformation import _ImputerWrapperDF
 
 log = logging.getLogger(__name__)
 

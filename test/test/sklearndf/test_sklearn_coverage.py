@@ -1,4 +1,7 @@
 import itertools
+from test import check_sklearn_version
+from test.conftest import UNSUPPORTED_SKLEARN_PACKAGES
+from test.sklearndf import find_all_submodules, list_classes, sklearn_delegate_classes
 from typing import Dict, Iterable, List, Optional, Type, Union
 
 import pytest
@@ -16,9 +19,6 @@ import sklearndf.pipeline
 import sklearndf.regression
 import sklearndf.transformation
 from sklearndf import EstimatorDF
-from test import check_sklearn_version
-from test.conftest import UNSUPPORTED_SKLEARN_PACKAGES
-from test.sklearndf import find_all_submodules, list_classes, sklearn_delegate_classes
 
 Module = type(sklearn)
 
@@ -195,8 +195,8 @@ def test_transformer_coverage(sklearn_transformer_cls: Type[TransformerMixin]) -
     argnames="sklearn_pipeline_cls", argvalues=sklearn_pipeline_classes()
 )
 def test_pipeline_coverage(sklearn_pipeline_cls: Type) -> None:
-    """ Check if each sklearn pipeline estimator has
-        a wrapped sklearndf counterpart. """
+    """Check if each sklearn pipeline estimator has
+    a wrapped sklearndf counterpart."""
 
     sklearn_classes = sklearn_delegate_classes(sklearndf.pipeline)
 

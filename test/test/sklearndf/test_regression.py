@@ -1,3 +1,4 @@
+from test.sklearndf import check_expected_not_fitted_error, list_classes
 from typing import List, Type
 
 import pandas as pd
@@ -8,12 +9,11 @@ import sklearndf.regression
 from sklearndf import RegressorDF, TransformerDF
 from sklearndf._wrapper import _EstimatorWrapperDF
 from sklearndf.regression import (
+    SVRDF,
     IsotonicRegressionDF,
     LinearRegressionDF,
     RandomForestRegressorDF,
-    SVRDF,
 )
-from test.sklearndf import check_expected_not_fitted_error, list_classes
 
 REGRESSORS_TO_TEST: List[Type[_EstimatorWrapperDF]] = list_classes(
     from_modules=sklearndf.regression,

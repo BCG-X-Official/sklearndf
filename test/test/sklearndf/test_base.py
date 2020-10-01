@@ -3,6 +3,7 @@
 from abc import ABCMeta
 
 import numpy as np
+
 # noinspection PyPackageRequirements
 import scipy.sparse as sp
 from numpy.testing import assert_array_equal, assert_raises
@@ -12,9 +13,10 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 
 from sklearndf import EstimatorDF
+
 # noinspection PyProtectedMember
 from sklearndf._wrapper import _EstimatorWrapperDF, df_estimator
-from sklearndf.classification import DecisionTreeClassifierDF, SVCDF
+from sklearndf.classification import SVCDF, DecisionTreeClassifierDF
 from sklearndf.pipeline import PipelineDF
 from sklearndf.transformation import OneHotEncoderDF
 
