@@ -19,8 +19,7 @@ Core implementation of :mod:`sklearndf.transformation`
 import logging
 from abc import ABCMeta
 from functools import reduce
-from typing import *
-from typing import List
+from typing import Iterable, List, TypeVar
 
 import numpy as np
 import pandas as pd
@@ -228,7 +227,8 @@ class _ColumnTransformerWrapperDF(
         if non_compliant_transformers:
             raise ValueError(
                 f"{ColumnTransformerDF.__name__} only accepts strings or "
-                f"instances of " f"{TransformerDF.__name__} as valid transformers, but "
+                f"instances of "
+                f"{TransformerDF.__name__} as valid transformers, but "
                 f'also got: {", ".join(non_compliant_transformers)}'
             )
 

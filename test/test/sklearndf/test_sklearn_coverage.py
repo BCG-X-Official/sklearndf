@@ -1,6 +1,5 @@
 import itertools
-from typing import *
-from typing import Dict
+from typing import Dict, Iterable, List, Optional, Type, Union
 
 import pytest
 import sklearn
@@ -19,11 +18,7 @@ import sklearndf.transformation
 from sklearndf import EstimatorDF
 from test import check_sklearn_version
 from test.conftest import UNSUPPORTED_SKLEARN_PACKAGES
-from test.sklearndf import (
-    find_all_submodules,
-    list_classes,
-    sklearn_delegate_classes,
-)
+from test.sklearndf import find_all_submodules, list_classes, sklearn_delegate_classes
 
 Module = type(sklearn)
 

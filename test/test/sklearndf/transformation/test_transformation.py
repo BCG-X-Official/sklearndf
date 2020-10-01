@@ -1,7 +1,8 @@
-from typing import *
+from typing import Type
 
 import numpy as np
 import pandas as pd
+
 # noinspection PyPackageRequirements
 import pytest
 import sklearn

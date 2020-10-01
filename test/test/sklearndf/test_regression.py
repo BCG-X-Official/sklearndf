@@ -1,7 +1,6 @@
-from typing import *
+from typing import List, Type
 
 import pandas as pd
-# noinspection PyPackageRequirements
 import pytest
 from sklearn.multioutput import MultiOutputRegressor, RegressorChain
 
