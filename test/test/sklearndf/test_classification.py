@@ -1,9 +1,8 @@
 from itertools import chain
-from typing import *
+from typing import Type
 
 import numpy as np
 import pandas as pd
-# noinspection PyPackageRequirements
 import pytest
 from sklearn.multioutput import ClassifierChain, MultiOutputClassifier
 

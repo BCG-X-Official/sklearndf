@@ -1,15 +1,34 @@
+# set the build name
+name: $[ variables['branchName'] ]
+
+# RUN TESTS AND FULL CONDA BUILD MATRIX EVERY NIGHT AT 4AM
+schedules:
+- cron: "0 4 * * *"
+  displayName: Nightly full build
+  branches:
+    include:
+    - develop
+
 resources:
   repositories:
-    - repository: facet
-      type: github
-      endpoint: BCG-Gamma
-      name: BCG-Gamma/facet
-      ref: develop # todo - update to stable release
     - repository: pytools
       type: github
       endpoint: BCG-Gamma
       name: BCG-Gamma/pytools
       ref: develop # todo - update to stable release
+
+variables:
+  ${{ if not(startsWith(variables['Build.SourceBranch'], 'refs/pull/')) }}:
+    branchName: $[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]
+  ${{ if startsWith(variables['Build.SourceBranch'], 'refs/pull/') }}:
+    branchName: $[ replace(variables['System.PullRequest.TargetBranch'], 'refs/heads/', '') ]
+  master_or_release: >
+    ${{ or(
+    startsWith(variables['branchName'], 'release'),
+    eq(variables['branchName'], 'master'),
+    eq(variables['Build.Reason'], 'Schedule')
+    )
+    }}
 
 stages:
   # Check code quality first to fail fast (isort, flake8, black)
@@ -50,15 +69,49 @@ stages:
               python -m flake8 --config flake8.ini -v .
             displayName: 'Run flake8'
 
-  - stage: 'Quick_env_test'
-    displayName: 'Environment build & pytest'
+  - stage: detect_conda_changes
+    displayName: 'detect conda changes'
+
+    jobs:
+
+      - job: checkout_and_diff
+        steps:
+          - checkout: self
+
+          - task: Bash@3
+            name: diff
+            inputs:
+              targetType: 'inline'
+              script: |
+                cd $(Build.Repository.LocalPath)
+                git diff-index --exit-code "origin/$(branchName)" conda-build
+                build_changed="$?"
+                if [ "$build_changed" = 1 ]; then
+                echo "conda build config has been changed"
+                else
+                echo "conda build config is unchanged"
+                fi
+                echo "##vso[task.setvariable variable=conda_build_config_changed;isOutput=true]$build_changed"
+
+
+  - stage:
+    displayName: 'simple pytest'
+    dependsOn: 'detect_conda_changes'
+    variables:
+      conda_build_config_changed: $[ stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'] ]
 
     jobs:
     - job:
-      displayName: 'Setup & testing'
+      displayName: 'pytest @ develop environment'
+      condition: >
+        and(
+        ne(variables.master_or_release, 'True'),
+        eq(stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
+        )
 
       pool:
           vmImage: 'ubuntu-latest'
+
       steps:
         - task: UsePythonVersion@0
           inputs:
@@ -66,8 +119,8 @@ stages:
           displayName: 'Use Python 3.7'
 
         - checkout: self
-        - checkout: facet
         - checkout: pytools
+
         - script: dir $(Build.SourcesDirectory)
 
         - task: Bash@3
@@ -75,10 +128,10 @@ stages:
             targetType: 'inline'
             script: |
               eval "$(conda shell.bash hook)"
-              cd $(System.DefaultWorkingDirectory)/facet/
+              cd $(System.DefaultWorkingDirectory)/sklearndf/
               export PYTHONPATH=$(System.DefaultWorkingDirectory)/sklearndf/src/
               conda env create -f environment.yml
-              conda activate facet-develop
+              conda activate sklearndf-develop
               cd $(System.DefaultWorkingDirectory)/pytools/
               pip install -e .
               cd $(System.DefaultWorkingDirectory)/sklearndf/
@@ -86,7 +139,7 @@ stages:
               coverage run -m pytest test/test/
               coverage xml
               coverage html
-          displayName: 'Pytest'
+          displayName: 'pytest'
 
         - task: PublishTestResults@2
           condition: succeededOrFailed()
@@ -101,38 +154,40 @@ stages:
             summaryFileLocation: '$(System.DefaultWorkingDirectory)/sklearndf/coverage.xml'
             reportDirectory: '$(System.DefaultWorkingDirectory)/sklearndf/htmlcov'
 
-  # THOROUGH CONDA ENV BUILD TEST
+  # CONDA ENV BUILD TEST
   # TESTING MATRIX OF PYTHON & SKLEARN VERSIONS
-  - stage: 'Conda_build_test'
-    dependsOn:
-      - 'Quick_env_test'
-    displayName: 'Test multiple conda environment builds'
+  # - FOR RELEASE BRANCH: 3 BUILD TESTS
+  # - OTHERWISE: 1 BUILD TEST
+  - stage:
+    displayName: 'conda build & pytest'
+    dependsOn: 'detect_conda_changes'
+    variables:
+      conda_build_config_changed: $[ stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'] ]
 
     jobs:
     - job:
-      displayName: 'Setup & testing'
+      displayName: '(single)'
+      condition: >
+        and(
+        ne(variables.master_or_release, 'True'),
+        ne(stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
+        )
 
       pool:
           vmImage: 'ubuntu-latest'
       strategy:
         matrix:
-          Minimum dependencies:
-            FACET_V_PYTHON_BUILD: '3.6'
-            FACET_V_PANDAS: '==0.24'
-            FACET_V_SKLEARN: '==0.21.*'
-            FACET_V_JOBLIB: '==0.13'
-            FACET_V_NUMPY: '==1.16'
-          Maximum dependencies:
-            FACET_V_PYTHON_BUILD: '3.8'
-            FACET_V_SKLEARN: '==0.22'
-            FACET_V_PANDAS: '==1.0.0'
-            FACET_V_NUMPY: '=>1.16'
-          Unconstrained dependencies:
-            FACET_V_PYTHON_BUILD: '>=3.6'
-            FACET_V_PANDAS: '=>0.24'
-            FACET_V_SKLEARN: '=>0.21'
-            FACET_V_JOBLIB: '=>0.13'
-            FACET_V_NUMPY: '=>1.16'
+          maximum_dependencies:
+            FACET_V_PYTHON_BUILD: '=3.8.*'
+            FACET_V_PYTHON: '=3.8.*'
+            FACET_V_PANDAS: '=1.1.*'
+            FACET_V_NUMPY: '=1.19.*'
+            FACET_V_SCIPY: '=1.5.*'
+            FACET_V_MATPLOT: '=3.3.*'
+            FACET_V_SKLEARN: '>=0.23.1,<0.24'
+            FACET_V_BORUTA: '=0.3.*'
+            FACET_V_LGBM: '=3.0.*'
+            FACET_V_JOBLIB: '=0.16.*'
 
       steps:
         - task: UsePythonVersion@0
@@ -141,8 +196,8 @@ stages:
           displayName: 'Use Python $(FACET_V_PYTHON_BUILD)'
 
         - checkout: self
-        - checkout: facet
         - checkout: pytools
+
         - script: dir $(Build.SourcesDirectory)
 
         - task: Bash@3
@@ -150,16 +205,94 @@ stages:
             targetType: 'inline'
             script: |
               eval "$(conda shell.bash hook)"
+
               export PYTHONPATH=$(System.DefaultWorkingDirectory)/sklearndf/src/
               export FACET_V_PYTHON_BUILD=$(FACET_V_PYTHON_BUILD)
               export FACET_V_PANDAS=$(FACET_V_PANDAS)
               export FACET_V_SKLEARN=$(FACET_V_SKLEARN)
               export FACET_V_JOBLIB=$(FACET_V_JOBLIB)
               export FACET_V_NUMPY=$(FACET_V_NUMPY)
-              conda activate facet-develop
+
               conda install -y conda-build
+
               cd $(System.DefaultWorkingDirectory)/pytools/
               make package
+
               cd $(System.DefaultWorkingDirectory)/sklearndf/
               make package
-          displayName: "Build conda package"
+          displayName: "build & test conda package"
+
+    - job:
+      displayName: '(matrix)'
+      condition: eq(variables.master_or_release, 'True')
+
+      pool:
+        vmImage: 'ubuntu-latest'
+      strategy:
+        matrix:
+          minimum_dependencies:
+            FACET_V_PYTHON_BUILD: '=3.6.*'
+            FACET_V_PYTHON: '=3.6.*'
+            FACET_V_PANDAS: '=0.24.*'
+            FACET_V_MATPLOT: '=3.0.*'
+            FACET_V_NUMPY: '=1.16.*'
+            FACET_V_SCIPY: '=1.2.*'
+            FACET_V_SKLEARN: '=0.21.*'
+            FACET_V_BORUTA: '=0.3.*'
+            FACET_V_LGBM: '=2.2.*'
+            FACET_V_JOBLIB: '=0.13.*'
+          maximum_dependencies:
+            FACET_V_PYTHON_BUILD: '=3.8.*'
+            FACET_V_PYTHON: '=3.8.*'
+            FACET_V_PANDAS: '=1.1.*'
+            FACET_V_NUMPY: '=1.19.*'
+            FACET_V_SCIPY: '=1.5.*'
+            FACET_V_MATPLOT: '=3.3.*'
+            FACET_V_SKLEARN: '>=0.23.1,<0.24'
+            FACET_V_BORUTA: '=0.3.*'
+            FACET_V_LGBM: '=3.0.*'
+            FACET_V_JOBLIB: '=0.16.*'
+          unconstrained_dependencies:
+            FACET_V_PYTHON_BUILD: '>=3.6,<4'
+            FACET_V_PYTHON: '>=3.6'
+            FACET_V_PANDAS: '>=0.24'
+            FACET_V_NUMPY: '>=1.16'
+            FACET_V_SCIPY: '>=1.2'
+            FACET_V_MATPLOT: '>=3'
+            FACET_V_SKLEARN: '>=0.23.1'
+            FACET_V_BORUTA: '>=0.3'
+            FACET_V_LGBM: '>=2.2'
+            FACET_V_JOBLIB: '>=0.13'
+
+      steps:
+        - task: UsePythonVersion@0
+          inputs:
+            versionSpec: '$(FACET_V_PYTHON_BUILD)'
+          displayName: 'Use Python $(FACET_V_PYTHON_BUILD)'
+
+        - checkout: self
+        - checkout: pytools
+
+        - script: dir $(Build.SourcesDirectory)
+
+        - task: Bash@3
+          inputs:
+            targetType: 'inline'
+            script: |
+              eval "$(conda shell.bash hook)"
+
+              export PYTHONPATH=$(System.DefaultWorkingDirectory)/sklearndf/src/
+              export FACET_V_PYTHON_BUILD=$(FACET_V_PYTHON_BUILD)
+              export FACET_V_PANDAS=$(FACET_V_PANDAS)
+              export FACET_V_JOBLIB=$(FACET_V_JOBLIB)
+              export FACET_V_NUMPY=$(FACET_V_NUMPY)
+
+              conda install -y conda-build
+
+              cd $(System.DefaultWorkingDirectory)/pytools/
+              make package
+
+              cd $(System.DefaultWorkingDirectory)/sklearndf/
+              make package
+
+          displayName: "build & test conda package"

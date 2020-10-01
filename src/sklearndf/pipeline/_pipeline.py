@@ -4,7 +4,7 @@ Core implementation of :mod:`sklearndf.pipeline`
 
 import logging
 from abc import ABCMeta
-from typing import *
+from typing import Iterator, List, Sequence, Tuple, Union, cast
 
 import numpy as np
 import pandas as pd

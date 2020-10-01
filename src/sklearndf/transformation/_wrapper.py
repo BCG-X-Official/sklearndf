@@ -4,7 +4,7 @@ Specialised transformer wrappers.
 
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import *
+from typing import Any, Generic, Optional, TypeVar, Union
 
 import pandas as pd
 from sklearn.base import TransformerMixin

@@ -4,7 +4,7 @@ Core implementation of :mod:`sklearndf`
 
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import *
+from typing import Any, List, Mapping, Optional, Sequence, Type, TypeVar, Union, cast
 
 import pandas as pd
 from sklearn.base import (
@@ -19,13 +19,7 @@ from pytools.fit import FittableMixin
 
 log = logging.getLogger(__name__)
 
-__all__ = [
-    "EstimatorDF",
-    "LearnerDF",
-    "ClassifierDF",
-    "RegressorDF",
-    "TransformerDF",
-]
+__all__ = ["EstimatorDF", "LearnerDF", "ClassifierDF", "RegressorDF", "TransformerDF"]
 
 #
 # type variables
