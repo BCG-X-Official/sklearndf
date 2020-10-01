@@ -16,7 +16,21 @@ import logging
 import re
 from abc import ABCMeta, abstractmethod
 from functools import update_wrapper
-from typing import *
+from typing import (
+    Optional,
+    Iterable,
+    Generic,
+    Mapping,
+    Sequence,
+    Any,
+    Union,
+    Callable,
+    TypeVar,
+    Type,
+    AnyStr,
+    Dict,
+    List,
+)
 
 import numpy as np
 import pandas as pd
@@ -29,7 +43,7 @@ from sklearn.base import (
 )
 
 from pytools.api import inheritdoc
-from sklearndf import (ClassifierDF, EstimatorDF, LearnerDF, RegressorDF, TransformerDF)
+from sklearndf import ClassifierDF, EstimatorDF, LearnerDF, RegressorDF, TransformerDF
 
 log = logging.getLogger(__name__)
 

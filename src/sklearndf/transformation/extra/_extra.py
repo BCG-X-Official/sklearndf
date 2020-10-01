@@ -4,16 +4,13 @@ Core implementation of :mod:`sklearndf.transformation.extra`
 
 import logging
 from abc import ABCMeta
-from typing import *
+from typing import Any, Mapping, Optional, TypeVar, Union
 
 import pandas as pd
 from boruta import BorutaPy
 from sklearn.base import BaseEstimator
 
-from .._wrapper import (
-    _ColumnSubsetTransformerWrapperDF,
-    _NDArrayTransformerWrapperDF,
-)
+from .._wrapper import _ColumnSubsetTransformerWrapperDF, _NDArrayTransformerWrapperDF
 from ... import TransformerDF
 from ..._wrapper import _MetaEstimatorWrapperDF, df_estimator
 

@@ -3,7 +3,7 @@ Core implementation of :mod:`sklearndf.classification`
 """
 import logging
 from abc import ABCMeta
-from typing import *
+from typing import Any, List, Optional, Sequence, Union
 
 import numpy as np
 import pandas as pd

@@ -3,7 +3,7 @@ Core implementation of :mod:`sklearndf.regression`
 """
 import logging
 from abc import ABCMeta
-from typing import *
+from typing import Any, Generic, Optional, TypeVar, Union
 
 import pandas as pd
 from sklearn.base import RegressorMixin
@@ -56,6 +56,7 @@ from sklearn.tree import DecisionTreeRegressor, ExtraTreeRegressor
 
 from .. import RegressorDF, TransformerDF
 from .._wrapper import _MetaRegressorWrapperDF, _RegressorWrapperDF, df_estimator
+
 # noinspection PyProtectedMember
 from ..transformation._wrapper import _ColumnPreservingTransformerWrapperDF
 

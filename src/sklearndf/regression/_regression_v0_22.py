@@ -3,16 +3,13 @@ Core implementation of :mod:`sklearndf.regression` loaded
 from sklearn 0.22 onwards
 """
 import logging
-from typing import *
+from typing import TypeVar
 
 from sklearn.base import RegressorMixin
 from sklearn.ensemble import StackingRegressor
 
 from .. import RegressorDF
-from .._wrapper import (
-    _StackingRegressorWrapperDF,
-    df_estimator,
-)
+from .._wrapper import _StackingRegressorWrapperDF, df_estimator
 
 # noinspection PyProtectedMember
 

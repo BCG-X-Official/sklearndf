@@ -6,7 +6,7 @@ import shutil
 import time
 from distutils.version import LooseVersion
 from tempfile import mkdtemp
-from typing import *
+from typing import Any, Dict, Mapping
 
 import joblib
 import numpy as np

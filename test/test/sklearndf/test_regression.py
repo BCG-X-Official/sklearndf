@@ -1,12 +1,12 @@
-from typing import *
+from typing import List, Type
 
 import pandas as pd
-# noinspection PyPackageRequirements
 import pytest
 from sklearn.multioutput import MultiOutputRegressor, RegressorChain
 
 import sklearndf.regression
 from sklearndf import RegressorDF, TransformerDF
+from sklearndf._wrapper import _EstimatorWrapperDF
 from sklearndf.regression import (
     IsotonicRegressionDF,
     LinearRegressionDF,
@@ -15,7 +15,7 @@ from sklearndf.regression import (
 )
 from test.sklearndf import check_expected_not_fitted_error, list_classes
 
-REGRESSORS_TO_TEST: List[Type] = list_classes(
+REGRESSORS_TO_TEST: List[Type[_EstimatorWrapperDF]] = list_classes(
     from_modules=sklearndf.regression,
     matching=r".*DF",
     excluding=[RegressorDF.__name__, TransformerDF.__name__, r".*WrapperDF"],
@@ -25,7 +25,7 @@ DEFAULT_REGRESSOR_PARAMETERS = {
     "MultiOutputRegressorDF": {"estimator": RandomForestRegressorDF()},
     "RegressorChainDF": {"base_estimator": RandomForestRegressorDF()},
     "VotingRegressorDF": {
-        "estimators": [("rfr", RandomForestRegressorDF()), ("svmr", SVRDF())]
+        "estimators": [("rfr", RandomForestRegressorDF()), ("svr", SVRDF())]
     },
     "StackingRegressorDF": {
         "estimators": (

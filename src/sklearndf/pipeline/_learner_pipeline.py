@@ -4,7 +4,7 @@ GAMMA custom two-step pipelines
 
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import *
+from typing import Any, Generic, List, Optional, Sequence, TypeVar, Union
 
 import pandas as pd
 from sklearn.base import BaseEstimator

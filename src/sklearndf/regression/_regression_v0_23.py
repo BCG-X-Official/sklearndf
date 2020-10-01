@@ -4,7 +4,7 @@ from sklearn 0.23 onwards
 """
 
 import logging
-from typing import *
+from typing import TypeVar
 
 from sklearn.base import RegressorMixin
 from sklearn.linear_model import GammaRegressor, PoissonRegressor, TweedieRegressor
