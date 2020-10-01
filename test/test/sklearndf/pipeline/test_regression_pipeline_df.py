@@ -1,5 +1,3 @@
-from test.sklearndf.pipeline import make_simple_transformer
-
 import numpy as np
 import pandas as pd
 import pytest
@@ -8,6 +6,7 @@ from sklearn.preprocessing import OneHotEncoder
 
 from sklearndf.pipeline import RegressorPipelineDF
 from sklearndf.regression.extra import LGBMRegressorDF
+from test.sklearndf.pipeline import make_simple_transformer
 
 
 def test_regression_pipeline_df(

@@ -1,5 +1,3 @@
-from test.sklearndf.pipeline import make_simple_transformer
-
 import numpy as np
 import pandas as pd
 import pytest
@@ -8,6 +6,7 @@ from sklearn.preprocessing import OneHotEncoder
 
 from sklearndf.classification import RandomForestClassifierDF
 from sklearndf.pipeline import ClassifierPipelineDF
+from test.sklearndf.pipeline import make_simple_transformer
 
 
 def test_classification_pipeline_df(

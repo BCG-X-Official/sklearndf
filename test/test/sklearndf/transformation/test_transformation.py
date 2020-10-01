@@ -1,8 +1,3 @@
-from test.sklearndf import (
-    check_expected_not_fitted_error,
-    get_sklearndf_wrapper_class,
-    list_classes,
-)
 from typing import Type, cast
 
 import numpy as np
@@ -28,6 +23,11 @@ from sklearndf.transformation import (
     SparseCoderDF,
 )
 from sklearndf.transformation.extra import OutlierRemoverDF
+from test.sklearndf import (
+    check_expected_not_fitted_error,
+    get_sklearndf_wrapper_class,
+    list_classes,
+)
 
 TRANSFORMERS_TO_TEST = list_classes(
     from_modules=sklearndf.transformation,
