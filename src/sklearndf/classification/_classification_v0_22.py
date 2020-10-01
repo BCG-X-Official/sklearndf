@@ -26,9 +26,7 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 # noinspection PyAbstractClass
 
 
-@df_estimator(
-    df_wrapper_type=_ClassifierWrapperDF,
-)
+@df_estimator(df_wrapper_type=_ClassifierWrapperDF)
 class CategoricalNBDF(ClassifierDF, CategoricalNB):
     """
     Wraps :class:`sklearn.naive_bayes.CategoricalNB`; accepts and returns data frames.
