@@ -24,6 +24,8 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 #
 
 # noinspection PyAbstractClass
+
+
 @df_estimator(
     df_wrapper_type=_ClassifierWrapperDF,
 )

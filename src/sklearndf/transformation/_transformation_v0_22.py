@@ -35,7 +35,9 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 # impute
 #
 
-# noinspection PyAbstractClass
+# noinspection PyAbstractClass$
+
+
 @df_estimator(df_wrapper_type=_ImputerWrapperDF)
 class KNNImputerDF(TransformerDF, KNNImputer):
     """
