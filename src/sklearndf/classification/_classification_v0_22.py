@@ -41,7 +41,8 @@ class CategoricalNBDF(ClassifierDF, CategoricalNB):
 @df_estimator(df_wrapper_type=_StackingClassifierWrapperDF)
 class StackingClassifierDF(ClassifierDF, StackingClassifier):
     """
-    Wraps :class:`sklearn.ensemble._stacking.StackingClassifier`; accepts and returns data frames.
+    Wraps :class:`sklearn.ensemble._stacking.StackingClassifier`;
+    accepts and returns data frames.
     """
 
     pass

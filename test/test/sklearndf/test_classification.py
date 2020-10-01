@@ -99,12 +99,7 @@ def test_wrapped_fit_predict(
     assert len(predictions) == len(iris_target_sr)
     assert np.all(predictions.isin(classes))
 
-    # test predict_proba & predict_log_proba only if the root classifier has them:
-    test_funcs = [
-        getattr(classifier, attr)
-        for attr in ["predict_proba", "predict_log_proba"]
-        if hasattr(classifier.native_estimator, attr)
-    ]
+    # test predict_proba & predict_log_proba:
     for method_name in ["predict_proba", "predict_log_proba"]:
         method = getattr(classifier, method_name, None)
 

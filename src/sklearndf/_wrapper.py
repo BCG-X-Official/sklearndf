@@ -970,9 +970,13 @@ def df_estimator(
             df_estimator_type.__doc__ = "\n".join(
                 [
                     *tag_line,
-                    f""".. note::This class is a wrapper around class :class:{estimator_name}. 
-It provides enhanced support for pandas data frames, and otherwise replicates all parameters and 
-behaviours of class :class:~{estimator_name}.""",
+                    (
+                        f".. note::This class is a wrapper around class \n"
+                        f":class:{estimator_name}. It provides enhanced support for "
+                        f"pandas data frames, \n"
+                        f"and otherwise replicates all parameters and \n"
+                        f"behaviours of class :class:~{estimator_name}."
+                    ),
                     *(base_doc_lines if INCLUDE_FULL_SKLEARN_DOCUMENTATION else []),
                 ]
             )
