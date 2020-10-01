@@ -12,4 +12,3 @@ if __parse_version(__sklearn_version__) >= __parse_version("0.22"):
 
 if __parse_version(__sklearn_version__) >= __parse_version("0.23"):
     from ._regression_v0_23 import *
-

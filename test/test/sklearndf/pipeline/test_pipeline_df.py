@@ -23,7 +23,7 @@ from sklearn.utils.testing import (
 
 from sklearndf import TransformerDF
 from sklearndf._wrapper import df_estimator
-from sklearndf.classification import LogisticRegressionDF, SVCDF
+from sklearndf.classification import SVCDF, LogisticRegressionDF
 from sklearndf.pipeline import PipelineDF
 from sklearndf.regression import DummyRegressorDF, LassoDF, LinearRegressionDF
 from sklearndf.transformation import SelectKBestDF, SimpleImputerDF
@@ -31,8 +31,8 @@ from sklearndf.transformation._wrapper import _ColumnPreservingTransformerWrappe
 
 
 def test_set_params_nested_pipeline_df() -> None:
-    """ Test parameter setting for nested pipelines - adapted from
-    sklearn.tests.test_pipeline """
+    """Test parameter setting for nested pipelines - adapted from
+    sklearn.tests.test_pipeline"""
 
     PipelineDF([("b", SimpleImputerDF(strategy="median"))])
 
@@ -43,8 +43,7 @@ def test_set_params_nested_pipeline_df() -> None:
 
 
 class NoFit(BaseEstimator):
-    """Small class to test parameter dispatching.
-    """
+    """Small class to test parameter dispatching."""
 
     def __init__(self, a: str = None, b: str = None) -> None:
         self.a = a
@@ -114,8 +113,8 @@ class NoTransformerDF(TransformerDF, NoTransformer):
 def test_pipeline_df_memory(
     iris_features: pd.DataFrame, iris_target_sr: pd.Series
 ) -> None:
-    """ Test memory caching in PipelineDF - taken almost 1:1 from
-    sklearn.tests.test_pipeline """
+    """Test memory caching in PipelineDF - taken almost 1:1 from
+    sklearn.tests.test_pipeline"""
 
     cache_dir = mkdtemp()
 

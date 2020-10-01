@@ -17,19 +17,19 @@ import re
 from abc import ABCMeta, abstractmethod
 from functools import update_wrapper
 from typing import (
-    Optional,
-    Iterable,
-    Generic,
-    Mapping,
-    Sequence,
     Any,
-    Union,
-    Callable,
-    TypeVar,
-    Type,
     AnyStr,
+    Callable,
     Dict,
+    Generic,
+    Iterable,
     List,
+    Mapping,
+    Optional,
+    Sequence,
+    Type,
+    TypeVar,
+    Union,
 )
 
 import numpy as np
@@ -43,6 +43,7 @@ from sklearn.base import (
 )
 
 from pytools.api import inheritdoc
+
 from sklearndf import ClassifierDF, EstimatorDF, LearnerDF, RegressorDF, TransformerDF
 
 log = logging.getLogger(__name__)
@@ -969,13 +970,13 @@ def df_estimator(
             df_estimator_type.__doc__ = "\n".join(
                 [
                     *tag_line,
-                    f"""
-    .. note::
-        This class is a wrapper around class :class:`{estimator_name}`.
-        
-        It provides enhanced support for pandas data frames, and otherwise replicates 
-        all parameters and behaviours of class :class:`~{estimator_name}`.
-""",
+                    (
+                        f".. note::This class is a wrapper around class \n"
+                        f":class:{estimator_name}. It provides enhanced support for "
+                        f"pandas data frames, \n"
+                        f"and otherwise replicates all parameters and \n"
+                        f"behaviours of class :class:~{estimator_name}."
+                    ),
                     *(base_doc_lines if INCLUDE_FULL_SKLEARN_DOCUMENTATION else []),
                 ]
             )

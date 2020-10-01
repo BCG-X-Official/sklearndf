@@ -31,12 +31,52 @@ variables:
     }}
 
 stages:
+  # Check code quality first to fail fast (isort, flake8, black)
+  - stage: code_quality_checks
+    displayName: 'Code quality'
+    jobs:
+      - job:
+        displayName: 'isort'
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.7.*'
+            displayName: 'use Python 3.7'
+          - script: |
+              python -m pip install isort==5.5.4
+              python -m isort --check --diff .
+            displayName: 'isort'
+      - job:
+        displayName: 'black'
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.7.*'
+            displayName: 'use Python 3.7'
+          - script: |
+              python -m pip install black==20.8b1
+              python -m black --check .
+            displayName: 'black'
+      - job:
+        displayName: 'flake8'
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.7.*'
+            displayName: 'use Python 3.7'
+          - script: |
+              python -m pip install flake8 flake8-comprehensions flake8-import-order
+              python -m flake8 --config flake8.ini -v .
+            displayName: 'Run flake8'
+
+  # detect whether the conda build config was changed -> then we must run a build test
   - stage: detect_conda_changes
-    displayName: 'detect conda changes'
+    displayName: 'Conda build config'
 
     jobs:
 
       - job: checkout_and_diff
+        displayName: 'detect changes'
         steps:
           - checkout: self
 
@@ -57,14 +97,14 @@ stages:
 
 
   - stage:
-    displayName: 'simple pytest'
+    displayName: 'Unit tests'
     dependsOn: 'detect_conda_changes'
     variables:
       conda_build_config_changed: $[ stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'] ]
 
     jobs:
     - job:
-      displayName: 'pytest @ develop environment'
+      displayName: 'in develop environment'
       condition: >
         and(
         ne(variables.master_or_release, 'True'),
@@ -77,8 +117,8 @@ stages:
       steps:
         - task: UsePythonVersion@0
           inputs:
-            versionSpec: '3.7'
-          displayName: 'Use Python 3.7'
+            versionSpec: '3.7.*'
+          displayName: 'use Python 3.7'
 
         - checkout: self
         - checkout: pytools
@@ -121,14 +161,14 @@ stages:
   # - FOR RELEASE BRANCH: 3 BUILD TESTS
   # - OTHERWISE: 1 BUILD TEST
   - stage:
-    displayName: 'conda build & pytest'
+    displayName: 'Conda build & test'
     dependsOn: 'detect_conda_changes'
     variables:
       conda_build_config_changed: $[ stageDependencies.detect_conda_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'] ]
 
     jobs:
     - job:
-      displayName: '(single)'
+      displayName: 'single'
       condition: >
         and(
         ne(variables.master_or_release, 'True'),
@@ -185,7 +225,7 @@ stages:
           displayName: "build & test conda package"
 
     - job:
-      displayName: '(matrix)'
+      displayName: 'matrix'
       condition: eq(variables.master_or_release, 'True')
 
       pool:
@@ -225,7 +265,6 @@ stages:
             FACET_V_BORUTA: '>=0.3'
             FACET_V_LGBM: '>=2.2'
             FACET_V_JOBLIB: '>=0.13'
-
       steps:
         - task: UsePythonVersion@0
           inputs:

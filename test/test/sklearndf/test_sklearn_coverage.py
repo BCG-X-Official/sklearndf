@@ -195,8 +195,8 @@ def test_transformer_coverage(sklearn_transformer_cls: Type[TransformerMixin]) -
     argnames="sklearn_pipeline_cls", argvalues=sklearn_pipeline_classes()
 )
 def test_pipeline_coverage(sklearn_pipeline_cls: Type) -> None:
-    """ Check if each sklearn pipeline estimator has
-        a wrapped sklearndf counterpart. """
+    """Check if each sklearn pipeline estimator has
+    a wrapped sklearndf counterpart."""
 
     sklearn_classes = sklearn_delegate_classes(sklearndf.pipeline)
 

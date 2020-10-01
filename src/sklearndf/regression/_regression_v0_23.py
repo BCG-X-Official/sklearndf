@@ -36,6 +36,8 @@ T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
 # GLM regressors added with v0.23
 #
 # noinspection PyAbstractClass
+
+
 @df_estimator(df_wrapper_type=_RegressorWrapperDF)
 class PoissonRegressorDF(RegressorDF, PoissonRegressor):
     """

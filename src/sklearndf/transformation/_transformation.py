@@ -27,6 +27,8 @@ from sklearn.cluster import FeatureAgglomeration
 from sklearn.compose import ColumnTransformer
 from sklearn.cross_decomposition import PLSSVD
 from sklearn.decomposition import (
+    NMF,
+    PCA,
     DictionaryLearning,
     FactorAnalysis,
     FastICA,
@@ -35,8 +37,6 @@ from sklearn.decomposition import (
     LatentDirichletAllocation,
     MiniBatchDictionaryLearning,
     MiniBatchSparsePCA,
-    NMF,
-    PCA,
     SparseCoder,
     SparsePCA,
     TruncatedSVD,
@@ -45,9 +45,9 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.feature_extraction import DictVectorizer, FeatureHasher
 from sklearn.feature_extraction.text import HashingVectorizer, TfidfTransformer
 from sklearn.feature_selection import (
-    GenericUnivariateSelect,
     RFE,
     RFECV,
+    GenericUnivariateSelect,
     SelectFdr,
     SelectFpr,
     SelectFromModel,
@@ -88,6 +88,8 @@ from sklearn.preprocessing import (
 )
 from sklearn.random_projection import GaussianRandomProjection, SparseRandomProjection
 
+from .. import TransformerDF
+from .._wrapper import _TransformerWrapperDF, df_estimator
 from ._wrapper import (
     _BaseDimensionalityReductionWrapperDF,
     _BaseMultipleInputsPerOutputTransformerWrapperDF,
@@ -96,8 +98,6 @@ from ._wrapper import (
     _FeatureSelectionWrapperDF,
     _NComponentsDimensionalityReductionWrapperDF,
 )
-from .. import TransformerDF
-from .._wrapper import _TransformerWrapperDF, df_estimator
 
 log = logging.getLogger(__name__)
 

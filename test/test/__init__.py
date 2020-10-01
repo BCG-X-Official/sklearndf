@@ -1,7 +1,8 @@
 # noinspection PyPackageRequirements
+import sklearn
 import yaml
 from packaging import version
-import sklearn
+
 from test.paths import TEST_CONFIG_YML
 
 

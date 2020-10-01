@@ -8,10 +8,10 @@ import sklearndf.regression
 from sklearndf import RegressorDF, TransformerDF
 from sklearndf._wrapper import _EstimatorWrapperDF
 from sklearndf.regression import (
+    SVRDF,
     IsotonicRegressionDF,
     LinearRegressionDF,
     RandomForestRegressorDF,
-    SVRDF,
 )
 from test.sklearndf import check_expected_not_fitted_error, list_classes
 

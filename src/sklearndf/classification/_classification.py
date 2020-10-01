@@ -46,7 +46,7 @@ from sklearn.neighbors import (
 )
 from sklearn.neural_network import MLPClassifier
 from sklearn.semi_supervised import LabelPropagation, LabelSpreading
-from sklearn.svm import LinearSVC, NuSVC, SVC
+from sklearn.svm import SVC, LinearSVC, NuSVC
 from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
 
 from .. import ClassifierDF
@@ -102,6 +102,8 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 #
 
 # noinspection PyAbstractClass
+
+
 @df_estimator(df_wrapper_type=_ClassifierWrapperDF)
 class DummyClassifierDF(ClassifierDF, DummyClassifier):
     """
@@ -402,17 +404,6 @@ class LogisticRegressionDF(ClassifierDF, LogisticRegression):
     """
     Wraps :class:`sklearn.linear_model.logistic.LogisticRegression`; accepts and returns
     data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ClassifierWrapperDF)
-class LogisticRegressionCVDF(ClassifierDF, LogisticRegressionCV):
-    """
-    Wraps :class:`sklearn.linear_model.logistic.LogisticRegressionCV`; accepts and
-    returns data frames.
     """
 
     pass
