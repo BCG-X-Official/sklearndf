@@ -3,7 +3,7 @@ package:
   version: 1.0.0
 
 source:
-  git_url: {{FACET_PATH}}/sklearndf/
+  git_url: {{FACET_PATH}}/sklearndf
 
 build:
   noarch: python
