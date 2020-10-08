@@ -19,3 +19,5 @@ repos:
     rev: v3.2.0
     hooks:
       - id: check-added-large-files
+      - id: check-json
+      - id: check-yaml
