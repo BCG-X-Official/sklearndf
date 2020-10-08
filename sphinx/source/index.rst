@@ -1,23 +1,17 @@
-.. You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. image:: _static/sklearndf_logo.png
 
-sklearndf API Documentation
-==================================
+|
 
 Table of contents
---------------------------------------
+-----------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+   :titlesonly:
 
-   getting_started
-   examples
-   api_docs
+   Getting started <getting_started>
+   API reference <apidoc/sklearndf>
+   tutorials
    contribution_guide
    faqs
-
-Indices and tables
-==================
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   genindex

@@ -432,8 +432,8 @@ The "Environment build & Pytest" stage performs the following steps:
 - Checks out the ``sklearndf`` repository at the develop branch
 - Creates the ``sklearndf-develop`` environment from the ``environment.yml``
 - Installs the ``pytools`` dependency
-- Runs ``pytest`` and generates the code coverage reports for Azure DevOps. Note that
-these can be viewed on the Pipeline summary page.
+- Runs ``pytest`` and generates the code coverage reports for Azure DevOps. Note that \
+  these can be viewed on the Pipeline summary page.
 
 
 Stage 2 - Matrix Strategy for Conda package build

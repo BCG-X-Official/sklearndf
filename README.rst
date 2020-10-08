@@ -1,11 +1,11 @@
-sklearndf
-=========
+.. image:: _static/sklearndf_logo.png
 
-by BCG Gamma
+|
 
-.. image:: _static/gamma_logo.jpg
-
-sklearndf is an open source library designed to address a common issue with scikit-learn: the outputs of transformers are numpy arrays, even when the input is a data frame. However, to inspect a model it is essential to keep track of the feature names.
+`sklearndf` is an open source library designed to address a common need with
+scikit-learn: the outputs of transformers are numpy arrays, even when the input is a
+data frame.
+However, to inspect a model it is essential to keep track of the feature names.
 
 TODO - add git badges as substitutions
 
