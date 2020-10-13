@@ -7,7 +7,9 @@ scikit-learn: the outputs of transformers are numpy arrays, even when the input 
 data frame.
 However, to inspect a model it is essential to keep track of the feature names.
 
-TODO - add git badges as substitutions
+|azure_pypi| |azure_conda| |azure_devops_master_ci| |code_cov|
+|python_versions| |code_style| |documentation_status|
+|made_with_sphinx_doc| |License_badge|
 
 Installation
 ---------------------
@@ -32,7 +34,7 @@ Pip
 Quickstart
 ----------------------
 
-sklearndf ehances scikit-learn's estimators to achieve the following:
+sklearndf enhances scikit-learn's estimators to achieve the following:
 
 - **Preserve dataframe structure**:
     Return data frames as results of transformations, preserving feature names as the column index.
@@ -42,14 +44,15 @@ sklearndf ehances scikit-learn's estimators to achieve the following:
     Simply append DF at the end of your usual scikit-learn class names to get enhanced data frame support!
 
 
-Creating a DataFrame friendly scikit-learn pre-processing pipeline 
+Creating a DataFrame friendly scikit-learn preprocessing pipeline
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The titanic data set includes categorical features such as class and sex, and also has
 missing values for numeric features (i.e., age) and categorical features (i.e., embarked).
 The aim is to predict whether or not a passenger survived.
-A standard sklearn example for this dataset can be found here:
-https://scikit-learn.org/stable/auto_examples/compose/plot_column_transformer_mixed_types.html#sphx-glr-auto-examples-compose-plot-column-transformer-mixed-types-py
+A standard sklearn example for this dataset can be found
+`here <https://scikit-learn.org/stable/auto_examples/compose/plot_column_transformer_mixed_types.html#sphx-glr-auto-examples-compose-plot-column-transformer-mixed-types-py>`_.
+
 
 We will build a preprocessing pipeline which:
 
@@ -85,7 +88,7 @@ fit_transform on our preprocessing pipeline.
     numerical_features = ['age', 'fare']
     categorical_features = ['embarked', 'sex', 'pclass']
 
-    # Create a pre-processing pipeline
+    # Create a ocessing pipeline
     preprocessing_numeric_df = SimpleImputerDF(strategy="median")
 
     preprocessing_categorical_df = PipelineDF(
@@ -102,7 +105,7 @@ fit_transform on our preprocessing pipeline.
         ]
     )
 
-    # Run pre-processing
+    # Run preprocessing
     transformed_df = preprocessing_df.fit_transform(X=titanic_X, y=titanic_y)
     transformed_df.head()
 
@@ -162,12 +165,12 @@ The result of any predict and decision function will be returned as a pandas ser
 We can combine the preprocessing pipeline above with a classifier to create a full
 predictive pipeline. sklearndf provides two useful, specialised pipeline objects for
 this, RegressorPipelineDF and ClassifierPipelineDF. Both implement a special two-step
-pipeline with one pre-processing step and one prediction step, while staying compatible
+pipeline with one preprocessing step and one prediction step, while staying compatible
 with the general sklearn pipeline idiom.
 
 Using ClassifierPipelineDF we can combine the preprocessing pipeline with
 RandomForestClassifierDF() to fit a model to a selected training set and then score
-and a test set.
+on a test set.
 
 .. code-block:: Python
 
@@ -204,3 +207,24 @@ Learning:
 
 The `scikit-learn <https://github.com/scikit-learn/scikit-learn>`_ learners and
 pipelining support the corresponding sklearndf implementations.
+
+.. |azure_conda| image::
+    :target:
+.. |azure_pypi| image::
+    :target:
+.. |azure_devops_master_ci| image::
+    :target:
+.. |code_cov| image::
+    :target:
+.. |documentation_status| image::
+    :target:
+
+.. |python_versions| image:: https://img.shields.io/badge/python-3.7|3.8-blue.svg
+    :target: https://www.python.org/downloads/release/python-380/
+
+.. |code_style| image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/psf/black
+.. |made_with_sphinx_doc| image:: https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg
+    :target: https://www.sphinx-doc.org/
+.. |license_badge| image:: https://img.shields.io/badge/License-Apache%202.0-olivegreen.svg
+    :target: https://opensource.org/licenses/Apache-2.0
