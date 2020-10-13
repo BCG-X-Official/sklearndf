@@ -24,7 +24,7 @@ def boston_target() -> str:
 
 
 @pytest.fixture
-def iris_target() -> str:
+def iris_target_name() -> str:
     return "species"
 
 
@@ -67,32 +67,32 @@ def iris_dataset() -> Bunch:
 
 
 @pytest.fixture
-def iris_df(iris_dataset: Bunch, iris_target: str) -> pd.DataFrame:
+def iris_df(iris_dataset: Bunch, iris_target_name) -> pd.DataFrame:
     #  convert sklearn iris data set to data frame
     return pd.DataFrame(
         data=np.c_[iris_dataset.data, iris_dataset.target],
-        columns=[*iris_dataset.feature_names, iris_target],
+        columns=[*iris_dataset.feature_names, iris_target_name],
     )
 
 
 @pytest.fixture
-def iris_features(iris_df: pd.DataFrame, iris_target: str) -> pd.DataFrame:
-    return iris_df.drop(labels=[iris_target], axis=1)
+def iris_features(iris_df: pd.DataFrame, iris_target_name) -> pd.DataFrame:
+    return iris_df.drop(labels=[iris_target_name], axis=1)
 
 
 @pytest.fixture
 def iris_target_sr(
-    iris_dataset: Bunch, iris_df: pd.DataFrame, iris_target: str
+    iris_dataset: Bunch, iris_df: pd.DataFrame, iris_target_name
 ) -> pd.Series:
     # replace numerical targets with actual class labels
-    return iris_df.loc[:, iris_target].apply(
+    return iris_df.loc[:, iris_target_name].apply(
         lambda x: iris_dataset.target_names[int(x)]
     )
 
 
 @pytest.fixture
-def iris_targets_df(iris_df: pd.DataFrame, iris_target: str) -> pd.DataFrame:
-    return iris_df.loc[:, [iris_target, iris_target]]
+def iris_targets_df(iris_df: pd.DataFrame, iris_target_name) -> pd.DataFrame:
+    return iris_df.loc[:, [iris_target_name, iris_target_name]]
 
 
 @pytest.fixture
