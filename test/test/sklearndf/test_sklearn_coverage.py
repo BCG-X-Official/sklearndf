@@ -122,8 +122,8 @@ def sklearn_pipeline_classes() -> List[Type]:
 
 
 def sklearn_transformer_classes() -> List[Type]:
-    """ Return all classses that are 'just' transformers, not learners or pipelines."""
-    transfomer_mixin_classes = [
+    """ Return all classes that are 'just' transformers, not learners or pipelines."""
+    transformer_mixin_classes = [
         cls
         for cls in list_classes(
             from_modules=find_all_submodules(sklearn),
@@ -134,7 +134,7 @@ def sklearn_transformer_classes() -> List[Type]:
     ]
 
     transformer_classes = list(
-        set(transfomer_mixin_classes)
+        set(transformer_mixin_classes)
         .difference(sklearn_classifier_classes())
         .difference(sklearn_regressor_classes())
         .difference(sklearn_pipeline_classes())
