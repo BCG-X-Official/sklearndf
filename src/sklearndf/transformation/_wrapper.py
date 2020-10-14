@@ -83,7 +83,7 @@ class _ColumnPreservingTransformerWrapperDF(
     """
 
     def _get_features_out(self) -> pd.Index:
-        return self.features_in_
+        return self.feature_names_in_
 
 
 class _BaseMultipleInputsPerOutputTransformerWrapperDF(
@@ -193,4 +193,4 @@ class _FeatureSelectionWrapperDF(
 
     def _get_features_out(self) -> pd.Index:
         get_support = getattr(self.native_estimator, self._ATTR_GET_SUPPORT)
-        return self.features_in_[get_support()]
+        return self.feature_names_in_[get_support()]

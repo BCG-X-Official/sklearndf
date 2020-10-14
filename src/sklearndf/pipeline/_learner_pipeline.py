@@ -127,12 +127,12 @@ class _EstimatorPipelineDF(
         """
         Pandas column index of all features resulting from the preprocessing step.
 
-        Same as :attr:`.features_in_` if the preprocessing step is ``None``.
+        Same as :attr:`.feature_names_in_` if the preprocessing step is ``None``.
         """
         if self.preprocessing is not None:
-            return self.preprocessing.features_out_
+            return self.preprocessing.feature_names_out_
         else:
-            return self.features_in_.rename(TransformerDF.COL_FEATURE_OUT)
+            return self.feature_names_in_.rename(TransformerDF.COL_FEATURE_OUT)
 
     @property
     def is_fitted(self) -> bool:
@@ -143,9 +143,9 @@ class _EstimatorPipelineDF(
 
     def _get_features_in(self) -> pd.Index:
         if self.preprocessing is not None:
-            return self.preprocessing.features_in_
+            return self.preprocessing.feature_names_in_
         else:
-            return self.final_estimator.features_in_
+            return self.final_estimator.feature_names_in_
 
     def _get_n_outputs(self) -> int:
         if self.preprocessing is not None:

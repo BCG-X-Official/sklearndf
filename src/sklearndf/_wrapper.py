@@ -7,8 +7,8 @@ Otherwise the wrappers are designed to precisely mirror the API and behavior of 
 native estimators they wrap.
 
 The wrappers also implement the additional column attributes introduced by `sklearndf`,
-:meth:`~EstimatorDF.features_in_`, :meth:`~TransformerDF.features_out_`, and
-:meth:`~TransformerDF.features_original_`.
+:meth:`~EstimatorDF.feature_names_in_`, :meth:`~TransformerDF.feature_names_out_`, and
+:meth:`~TransformerDF.feature_names_original_`.
 """
 
 import inspect
@@ -248,7 +248,7 @@ class _EstimatorWrapperDF(
             raise TypeError("arg X must be a DataFrame")
         if self.is_fitted:
             _EstimatorWrapperDF._verify_df(
-                df_name="X argument", df=X, expected_columns=self.features_in_
+                df_name="X argument", df=X, expected_columns=self.feature_names_in_
             )
         if y is not None and not isinstance(y, (pd.Series, pd.DataFrame)):
             raise TypeError("arg y must be None, or a pandas Series or DataFrame")
@@ -361,7 +361,7 @@ class _TransformerWrapperDF(
         transformed = self._transform(X)
 
         return self._transformed_to_df(
-            transformed=transformed, index=X.index, columns=self.features_out_
+            transformed=transformed, index=X.index, columns=self.feature_names_out_
         )
 
     # noinspection PyPep8Naming
@@ -383,7 +383,7 @@ class _TransformerWrapperDF(
             ) from cause
 
         return self._transformed_to_df(
-            transformed=transformed, index=X.index, columns=self.features_out_
+            transformed=transformed, index=X.index, columns=self.feature_names_out_
         )
 
     # noinspection PyPep8Naming
@@ -396,7 +396,7 @@ class _TransformerWrapperDF(
         transformed = self._inverse_transform(X)
 
         return self._transformed_to_df(
-            transformed=transformed, index=X.index, columns=self.features_in_
+            transformed=transformed, index=X.index, columns=self.feature_names_in_
         )
 
     def _reset_fit(self) -> None:

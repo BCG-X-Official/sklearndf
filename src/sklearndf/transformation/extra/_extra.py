@@ -100,7 +100,7 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
         return self._features_original
 
     def _get_features_in(self) -> pd.Index:
-        return self.features_original_.index
+        return self.feature_names_original_.index
 
     def _get_n_outputs(self) -> int:
         return 0
@@ -113,7 +113,7 @@ class _BorutaPyWrapperDF(
     metaclass=ABCMeta,
 ):
     def _get_features_out(self) -> pd.Index:
-        return self.features_in_[self.native_estimator.support_]
+        return self.feature_names_in_[self.native_estimator.support_]
 
 
 # noinspection PyAbstractClass,PyUnresolvedReferences

@@ -83,7 +83,7 @@ class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         pass
 
     @property
-    def features_in_(self) -> pd.Index:
+    def feature_names_in_(self) -> pd.Index:
         """
         The pandas column index with the names of the features used to fit this
         estimator.
@@ -220,7 +220,7 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
         self._features_original = None
 
     @property
-    def features_original_(self) -> pd.Series:
+    def feature_names_original_(self) -> pd.Series:
         """
         A pandas series, mapping the output features resulting from the transformation
         to the original input features.
@@ -238,7 +238,7 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
         return self._features_original
 
     @property
-    def features_out_(self) -> pd.Index:
+    def feature_names_out_(self) -> pd.Index:
         """
         A pandas column index with the names of the features produced by this
         transformer
@@ -301,8 +301,8 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
 
     def _get_features_out(self) -> pd.Index:
         # return a pandas index with this transformer's output columns
-        # default behaviour: get index returned by features_original_
-        return self.features_original_.index
+        # default behaviour: get index returned by feature_names_original_
+        return self.feature_names_original_.index
 
 
 class RegressorDF(LearnerDF, RegressorMixin, metaclass=ABCMeta):
