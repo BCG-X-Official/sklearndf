@@ -28,7 +28,7 @@ def test_regression_pipeline_df(
     rpdf.fit(X=boston_features, y=boston_target_sr)
     rpdf.predict(X=boston_features)
 
-    # test-type check within constructor:
+    # test type check within constructor
     with pytest.raises(TypeError):
         # noinspection PyTypeChecker
         RegressorPipelineDF(regressor=LGBMRegressor(), preprocessing=OneHotEncoder())
