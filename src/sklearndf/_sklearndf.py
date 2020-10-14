@@ -320,6 +320,17 @@ class ClassifierDF(LearnerDF, ClassifierMixin, metaclass=ABCMeta):
     Provides enhanced support for data frames.
     """
 
+    @property
+    @abstractmethod
+    def classes_(self) -> Sequence[Any]:
+        """
+        Get the classes predicted by this classifier.
+        By default expects classes as a list-like stored in the `classes_` attribute.
+
+        :return: the classes predicted by this classifier
+        """
+        pass
+
     # noinspection PyPep8Naming
     @abstractmethod
     def predict_proba(
@@ -385,14 +396,3 @@ class ClassifierDF(LearnerDF, ClassifierMixin, metaclass=ABCMeta):
             for multi-output classifiers, a list of one observation/class data frames \
             per output
         """
-
-    @property
-    @abstractmethod
-    def classes_(self) -> Sequence[Any]:
-        """
-        Get the classes predicted by this classifier.
-        By default expects classes as a list-like stored in the `classes_` attribute.
-
-        :return: the classes predicted by this classifier
-        """
-        pass
