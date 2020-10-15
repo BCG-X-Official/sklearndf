@@ -242,7 +242,7 @@ class _ColumnTransformerWrapperDF(
         return reduce(
             lambda x, y: x.append(y),
             (
-                df_transformer.features_original_
+                df_transformer.feature_names_original_
                 for df_transformer in self._inner_transformers()
             ),
         )
@@ -374,7 +374,7 @@ class _ImputerWrapperDF(_TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
             nan_mask = np.all(delegate_estimator._mask_fit_X, axis=0)
 
         # the imputed columns are all ingoing columns, except the ones that were dropped
-        imputed_columns = self.features_in_.delete(np.argwhere(nan_mask))
+        imputed_columns = self.feature_names_in_.delete(np.argwhere(nan_mask))
         features_original = pd.Series(
             index=imputed_columns, data=imputed_columns.values
         )
@@ -383,10 +383,10 @@ class _ImputerWrapperDF(_TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
         if delegate_estimator.add_indicator:
             missing_indicator = MissingIndicatorDF.from_fitted(
                 estimator=delegate_estimator.indicator_,
-                features_in=self.features_in_,
+                features_in=self.feature_names_in_,
                 n_outputs=self.n_outputs_,
             )
-            return features_original.append(missing_indicator.features_original_)
+            return features_original.append(missing_indicator.feature_names_original_)
         else:
             return features_original
 
@@ -406,7 +406,7 @@ class _MissingIndicatorWrapperDF(
     _TransformerWrapperDF[MissingIndicator], metaclass=ABCMeta
 ):
     def _get_features_original(self) -> pd.Series:
-        features_original: np.ndarray = self.features_in_[
+        features_original: np.ndarray = self.feature_names_in_[
             self.native_estimator.features_
         ].values
         features_out = pd.Index([f"{name}__missing" for name in features_original])
@@ -544,7 +544,7 @@ class _PolynomialFeaturesWrapperDF(
     def _get_features_out(self) -> pd.Index:
         return pd.Index(
             data=self.native_estimator.get_feature_names(
-                input_features=self.features_in_.astype(str)
+                input_features=self.feature_names_in_.astype(str)
             )
         )
 
@@ -682,11 +682,13 @@ class _OneHotEncoderWrapperDF(_TransformerWrapperDF[OneHotEncoder], metaclass=AB
         values the corresponding input column names.
         """
         return pd.Series(
-            index=pd.Index(self.native_estimator.get_feature_names(self.features_in_)),
+            index=pd.Index(
+                self.native_estimator.get_feature_names(self.feature_names_in_)
+            ),
             data=[
                 column_original
                 for column_original, category in zip(
-                    self.features_in_, self.native_estimator.categories_
+                    self.feature_names_in_, self.native_estimator.categories_
                 )
                 for _ in category
             ],
@@ -738,7 +740,7 @@ class _KBinsDiscretizerWrapperDF(
                 *(
                     (feature_name, f"{feature_name}_bin_{bin_index}")
                     for feature_name, n_bins in zip(
-                        self.features_in_, n_bins_per_feature
+                        self.feature_names_in_, n_bins_per_feature
                     )
                     for bin_index in range(n_bins)
                 )
@@ -748,7 +750,8 @@ class _KBinsDiscretizerWrapperDF(
 
         elif self.native_estimator.encode == "ordinal":
             return pd.Series(
-                index=self.features_in_.astype(str) + "_bin", data=self.features_in_
+                index=self.feature_names_in_.astype(str) + "_bin",
+                data=self.feature_names_in_,
             )
         else:
             raise ValueError(

@@ -25,13 +25,13 @@ and so on.
 
 All estimators enhanced by `sklearndf` also implement an
 additional attribute
-:attr:`~EstimatorDF.features_in_`, keeping track of the
+:attr:`~EstimatorDF.feature_names_in_`, keeping track of the
 column names of the data
 frame used to fit the estimator.
 
 `sklearndf` transformers also implement
-:attr:`~TransformerDF.features_out_` and
-:attr:`~TransformerDF.features_original_`, keeping track
+:attr:`~TransformerDF.feature_names_out_` and
+:attr:`~TransformerDF.feature_names_original_`, keeping track
 of the feature names of the
 transformed outputs as well as mapping output features
 back to the input features.

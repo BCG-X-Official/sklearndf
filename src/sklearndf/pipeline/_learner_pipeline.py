@@ -45,7 +45,14 @@ class _EstimatorPipelineDF(
                 f"{type(preprocessing).__name__}"
             )
 
-        self.preprocessing = preprocessing
+        self._preprocessing = preprocessing
+
+    @property
+    def preprocessing(self) -> Optional[TransformerDF]:
+        """
+        The preprocessing step.
+        """
+        return self._preprocessing
 
     @property
     @abstractmethod
@@ -69,6 +76,35 @@ class _EstimatorPipelineDF(
         The name of the estimator step parameter.
         """
         pass
+
+    @property
+    def feature_names_out_(self) -> pd.Index:
+        """
+        Pandas column index of all features resulting from the preprocessing step.
+
+        Same as :attr:`.feature_names_in_` if the preprocessing step is ``None``.
+        """
+        if self.preprocessing is not None:
+            return self.preprocessing.feature_names_out_
+        else:
+            return self.feature_names_in_.rename(TransformerDF.COL_FEATURE_OUT)
+
+    @property
+    def feature_names_original_(self) -> pd.Series:
+        """
+        Pandas series mapping the names of all features resulting from the preprocessing
+        step to the names of the input features they were derived from.
+
+        Returns an identity mapping of :attr:`.feature_names_in_` onto itself
+        if the preprocessing step is ``None``.
+        """
+        if self.preprocessing is not None:
+            return self.preprocessing.feature_names_original_
+        else:
+            feature_names_in_ = self.feature_names_in_
+            return feature_names_in_.to_series(index=feature_names_in_).rename_axis(
+                index=TransformerDF.COL_FEATURE_OUT
+            )
 
     # noinspection PyPep8Naming
     def fit(
@@ -123,18 +159,6 @@ class _EstimatorPipelineDF(
         return self
 
     @property
-    def features_out_(self) -> pd.Index:
-        """
-        Pandas column index of all features resulting from the preprocessing step.
-
-        Same as :attr:`.features_in_` if the preprocessing step is ``None``.
-        """
-        if self.preprocessing is not None:
-            return self.preprocessing.features_out_
-        else:
-            return self.features_in_.rename(TransformerDF.COL_FEATURE_OUT)
-
-    @property
     def is_fitted(self) -> bool:
         """[see superclass]"""
         return (
@@ -143,9 +167,9 @@ class _EstimatorPipelineDF(
 
     def _get_features_in(self) -> pd.Index:
         if self.preprocessing is not None:
-            return self.preprocessing.features_in_
+            return self.preprocessing.feature_names_in_
         else:
-            return self.final_estimator.features_in_
+            return self.final_estimator.feature_names_in_
 
     def _get_n_outputs(self) -> int:
         if self.preprocessing is not None:
@@ -285,11 +309,6 @@ class ClassifierPipelineDF(
         self.classifier = classifier
 
     @property
-    def classes_(self) -> Sequence[Any]:
-        """[see superclass]"""
-        return self.final_estimator.classes_
-
-    @property
     def final_estimator(self) -> T_FinalClassifierDF:
         """[see superclass]"""
         return self.classifier
@@ -298,6 +317,11 @@ class ClassifierPipelineDF(
     def final_estimator_name(self) -> str:
         """[see superclass]"""
         return "classifier"
+
+    @property
+    def classes_(self) -> Sequence[Any]:
+        """[see superclass]"""
+        return self.final_estimator.classes_
 
     # noinspection PyPep8Naming
     def predict_proba(
