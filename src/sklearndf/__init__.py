@@ -37,7 +37,7 @@ transformed outputs as well as mapping output features
 back to the input features.
 This  enables tracing features back to the original
 inputs even across complex
-pipelines (see allso :class:`.PipelineDF`)
+pipelines (see also :class:`.PipelineDF`)
 
 `sklearndf` classes implement a class hierarchy that
 follows the taxonomy of
