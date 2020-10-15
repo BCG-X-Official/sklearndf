@@ -128,14 +128,14 @@ fit_transform on our preprocessing pipeline.
 Tracing features from post-transform to original 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The sklearndf pipeline has a `features_original_` attribute which returns a series mapping
-the output columns (the series' index) to the input columns (the series' values).
+The sklearndf pipeline has a `feature_names_original_` attribute which returns a series
+mapping the output columns (the series' index) to the input columns (the series' values).
 We can therefore easily select all output features generated from a given input feature,
 such as in this case for embarked.
 
 .. code-block:: Python
 
-    embarked_type_derivatives = preprocessing_df.features_original_ == "embarked"
+    embarked_type_derivatives = preprocessing_df.feature_names_original_ == "embarked"
     transformed_df.loc[:, embarked_type_derivatives].head()
 
 
