@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pytest
 import sklearn
-from pandas.util.testing import assert_frame_equal
+from pandas.testing import assert_frame_equal
 from sklearn.base import BaseEstimator
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import Normalizer
