@@ -86,7 +86,7 @@ stages:
               targetType: 'inline'
               script: |
                 cd $(Build.Repository.LocalPath)
-                git diff-index --exit-code "origin/$(branchName)" conda-build
+                git diff-index --exit-code "origin/$(branchName)" condabuild
                 build_changed="$?"
                 if [ "$build_changed" = 1 ]; then
                 echo "conda build config has been changed"
@@ -218,11 +218,10 @@ stages:
 
               conda install -y conda-build
 
-              cd $(System.DefaultWorkingDirectory)/pytools/
-              make package
-
               cd $(System.DefaultWorkingDirectory)/sklearndf/
-              make package
+              condabuild/make.py pytools
+              condabuild/make.py sklearndf
+
           displayName: "build & test conda package"
 
     - job:
@@ -291,10 +290,8 @@ stages:
 
               conda install -y conda-build
 
-              cd $(System.DefaultWorkingDirectory)/pytools/
-              make package
-
               cd $(System.DefaultWorkingDirectory)/sklearndf/
-              make package
+              condabuild/make.py pytools
+              condabuild/make.py sklearndf
 
           displayName: "build & test conda package"
