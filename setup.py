@@ -7,7 +7,9 @@ import os
 from setuptools import find_packages, setup
 
 # Load the version as defined in sklearndf._version module
-spec = importlib.util.spec_from_file_location("_version", "src/sklearndf/_version.py")
+spec = importlib.util.spec_from_file_location(
+    "_version", os.path.join("src", "sklearndf", "_version.py")
+)
 version_module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(version_module)
 __version__ = version_module.__version__
