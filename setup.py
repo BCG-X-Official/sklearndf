@@ -5,7 +5,7 @@ import os
 
 from setuptools import find_packages, setup
 
-from src.sklearndf import __version__
+from src.sklearndf._version import gamma_sklearndf_version
 
 here = os.path.dirname(os.path.realpath(__file__))
 # Get the long description from the README file
@@ -31,7 +31,7 @@ setup(
     # For a discussion on single-sourcing the version across setup.py and the
     # project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version=__version__,
+    version=gamma_sklearndf_version,
     # This is a one-line description or tagline of what your project does. This
     # corresponds to the "Summary" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#summary

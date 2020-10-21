@@ -85,5 +85,6 @@ All `sklearndf` estimators are fully type hinted.
 """
 
 from ._sklearndf import *
+from ._version import gamma_sklearndf_version
 
-__version__ = "1.0.0"
+__version__ = gamma_sklearndf_version
