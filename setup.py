@@ -1,12 +1,21 @@
 """
 Pip package definition
 """
+import importlib
 import os
 
 from setuptools import find_packages, setup
 
-here = os.path.dirname(os.path.realpath(__file__))
+# Load the version as defined in sklearndf._version module
+spec = importlib.util.spec_from_file_location(
+    "_version", os.path.join("src", "sklearndf", "_version.py")
+)
+version_module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(version_module)
+__version__ = version_module.__version__
+
 # Get the long description from the README file
+here = os.path.dirname(os.path.realpath(__file__))
 with open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
     long_description = f.read()
 
@@ -29,7 +38,7 @@ setup(
     # For a discussion on single-sourcing the version across setup.py and the
     # project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version="1.0.0",
+    version=__version__,
     # This is a one-line description or tagline of what your project does. This
     # corresponds to the "Summary" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#summary
