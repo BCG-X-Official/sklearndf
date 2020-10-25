@@ -88,7 +88,7 @@ fit_transform on our preprocessing pipeline.
     numerical_features = ['age', 'fare']
     categorical_features = ['embarked', 'sex', 'pclass']
 
-    # Create a ocessing pipeline
+    # Create a preprocessing pipeline
     preprocessing_numeric_df = SimpleImputerDF(strategy="median")
 
     preprocessing_categorical_df = PipelineDF(
