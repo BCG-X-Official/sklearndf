@@ -27,7 +27,7 @@ requirements:
     - pyyaml{{ environ.get('FACET_V_PYYAML') }}
     - typing_inspect{{ environ.get('FACET_V_TYPING_INSPECT') }}
     - scikit-learn{{ environ.get('FACET_V_SCIKIT-LEARN') }}
-    - boruta_py{{ environ.get('FACET_V_BORUTA_PY') }}
+    - boruta_py{{ environ.get('FACET_V_BORUTA') }}
     - lightgbm{{ environ.get('FACET_V_LIGHTGBM') }}
     - gamma-pytools{{ environ.get('FACET_V_GAMMA-PYTOOLS') }}
 test:

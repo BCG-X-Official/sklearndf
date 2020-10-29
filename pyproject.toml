@@ -13,7 +13,7 @@ description-file = "README.rst"
 dist-name = "gamma-sklearndf"
 
 requires = [
-    "boruta_py >= 0.3",
+    "boruta >= 0.3",
     "lightgbm >= 3.0",
     "scikit-learn >=0.21,<0.24",
     "tableone >= 0.7",
