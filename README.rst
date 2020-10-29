@@ -208,16 +208,16 @@ Learning:
 The `scikit-learn <https://github.com/scikit-learn/scikit-learn>`_ learners and
 pipelining support the corresponding sklearndf implementations.
 
-.. |azure_conda| image::
-    :target:
-.. |azure_pypi| image::
-    :target:
-.. |azure_devops_master_ci| image::
-    :target:
-.. |code_cov| image::
-    :target:
-.. |documentation_status| image::
-    :target:
+.. |azure_conda| image:: https://
+    :target: https://
+.. |azure_pypi| image:: https://
+    :target: https://
+.. |azure_devops_master_ci| image:: https://
+    :target: https://
+.. |code_cov| image:: https://
+    :target: https://
+.. |documentation_status| image:: https://
+    :target: https://
 
 .. |python_versions| image:: https://img.shields.io/badge/python-3.7|3.8-blue.svg
     :target: https://www.python.org/downloads/release/python-380/
