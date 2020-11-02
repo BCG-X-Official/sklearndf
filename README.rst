@@ -4,8 +4,17 @@
 
 `sklearndf` is an open source library designed to address a common need with
 scikit-learn: the outputs of transformers are numpy arrays, even when the input is a
-data frame.
-However, to inspect a model it is essential to keep track of the feature names.
+data frame. However, to inspect a model it is essential to keep track of the feature names.
+
+To this end, `sklearndf` enhances scikit-learn's estimators as follows:
+
+- **Preserve data frame structure**:
+    Return data frames as results of transformations, preserving feature names as the column index.
+- **Feature name tracing**:
+    Add additional estimator properties to enable tracing a feature name back to its original input feature; this is especially useful for transformers that create new features (e.g., one-hot encode), and for pipelines that include such transformers.
+- **Easy use**:
+    Simply append DF at the end of your usual scikit-learn class names to get enhanced data frame support!
+
 
 |azure_pypi| |azure_conda| |azure_devops_master_ci| |code_cov|
 |python_versions| |code_style| |documentation_status|
@@ -34,14 +43,8 @@ Pip
 Quickstart
 ----------------------
 
-sklearndf enhances scikit-learn's estimators to achieve the following:
-
-- **Preserve dataframe structure**:
-    Return data frames as results of transformations, preserving feature names as the column index.
-- **Feature name tracing**:
-    Add additional estimator properties to enable tracing a feature name back to its original input feature; this is especially useful for transformers that create new features (e.g., one-hot encode), and for pipelines that include such transformers.
-- **Easy use**:
-    Simply append DF at the end of your usual scikit-learn class names to get enhanced data frame support!
+The following quickstart guide provides a minimal example workflow to get up and running
+with sklearndf.
 
 
 Creating a DataFrame friendly scikit-learn preprocessing pipeline
@@ -60,7 +63,7 @@ We will build a preprocessing pipeline which:
 - for numerical values fills missing values using median values
 
 The strength of sklearndf is to maintain the scikit-learn conventions and expressivity,
-while also preserving dataframes, and hence feature names. We can see this after using
+while also preserving data frames, and hence feature names. We can see this after using
 fit_transform on our preprocessing pipeline.
 
 .. code-block:: Python
@@ -194,10 +197,27 @@ on a test set.
 
 model score: 0.79
 
-Development Guidelines
+Contributing
 ---------------------------
 
-TBD - link to long section in documentation
+sklearndf is stable and is being supported long-term.
+
+Contributions to sklearndf are welcome and appreciated.
+For any bug reports or feature requests/enhancements please use the appropriate
+`GitHub form <https://github.com/BCG-Gamma/sklearndf/issues>`_, and if you wish to do so,
+please open a PR addressing the issue.
+
+We do ask that for any major changes please discuss these with us first via an issue or
+at our team email: FacetTeam <at> bcg <dot> com.
+
+For further information on contributing please see our :ref:`contribution-guide`.
+
+License
+---------------------------
+
+sklearndf is licensed under Apache 2.0 as described in the
+`LICENSE <https://github.com/BCG-Gamma/sklearndf/LICENSE>`_ file.
+
 
 Acknowledgements
 ---------------------------
@@ -207,6 +227,19 @@ Learning:
 
 The `scikit-learn <https://github.com/scikit-learn/scikit-learn>`_ learners and
 pipelining support the corresponding sklearndf implementations.
+
+
+BCG GAMMA
+---------------------------
+
+If you would like to know more about the team behind sklearndf please see our :ref:`about_us` page.
+
+We are always on the lookout for passionate and talented data scientists to join the
+BCG GAMMA team. If you would like to know more you can find out about BCG GAMMA
+`here <https://www.bcg.com/en-gb/beyond-consulting/bcg-gamma/default>`_,
+or have a look at
+`career opportunities <https://www.bcg.com/en-gb/beyond-consulting/bcg-gamma/careers>`_.
+
 
 .. |azure_conda| image::
     :target:
