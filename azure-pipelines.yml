@@ -136,7 +136,7 @@ stages:
               conda env create -f environment.yml
               conda activate sklearndf-develop
               cd $(System.DefaultWorkingDirectory)/pytools/
-              pip install -e .
+              flit install -s
               cd $(System.DefaultWorkingDirectory)/sklearndf/
               pip install pytest-azurepipelines
               coverage run -m pytest test/test/
