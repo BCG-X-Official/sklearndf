@@ -235,7 +235,7 @@ If you would like to know more about the team behind sklearndf please see our [L
 
 We are always on the lookout for passionate and talented data scientists to join the
 BCG GAMMA team. If you would like to know more you can find out about BCG GAMMA
-`here <https://www.bcg.com/en-gb/beyond-consulting/bcg-gamma/default>`_,
+`BCG GAMMA <https://www.bcg.com/en-gb/beyond-consulting/bcg-gamma/default>`_,
 or have a look at
 `career opportunities <https://www.bcg.com/en-gb/beyond-consulting/bcg-gamma/careers>`_.
 
