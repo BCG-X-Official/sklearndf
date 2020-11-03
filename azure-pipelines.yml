@@ -135,6 +135,7 @@ stages:
               export PYTHONPATH=$(System.DefaultWorkingDirectory)/sklearndf/src/
               conda env create -f environment.yml
               conda activate sklearndf-develop
+              pip install flit
               cd $(System.DefaultWorkingDirectory)/pytools/
               flit install -s
               cd $(System.DefaultWorkingDirectory)/sklearndf/
