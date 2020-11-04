@@ -10,7 +10,7 @@ module = "sklearndf"
 author = "" # todo: define
 home-page = "https://github.com/BCG-Gamma/sklearndf"
 description-file = "README.rst"
-dist-name = "gamma-sklearndf"
+dist-name = "sklearndf"
 
 requires = [
     "boruta >= 0.3",
