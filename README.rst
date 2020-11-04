@@ -3,8 +3,10 @@
 |
 
 `sklearndf` is an open source library designed to address a common need with
-scikit-learn: the outputs of transformers are numpy arrays, even when the input is a
-data frame. However, to inspect a model it is essential to keep track of the feature names.
+`scikit-learn <https://github.com/scikit-learn/scikit-learn>`__: the outputs of
+transformers are numpy arrays, even when the input is a
+data frame. However, to inspect a model it is essential to keep track of the
+feature names.
 
 To this end, `sklearndf` enhances scikit-learn's estimators as follows:
 
@@ -17,8 +19,7 @@ To this end, `sklearndf` enhances scikit-learn's estimators as follows:
 
 
 |azure_pypi| |azure_conda| |azure_devops_master_ci| |code_cov|
-|python_versions| |code_style| |documentation_status|
-|made_with_sphinx_doc| |License_badge|
+|python_versions| |code_style| |made_with_sphinx_doc| |License_badge|
 
 Installation
 ---------------------
@@ -225,7 +226,7 @@ Acknowledgements
 This package provides a layer on top of some popular building blocks for Machine
 Learning:
 
-The `scikit-learn <https://github.com/scikit-learn/scikit-learn>`_ learners and
+The `scikit-learn <https://github.com/scikit-learn/scikit-learn>`__ learners and
 pipelining support the corresponding sklearndf implementations.
 
 BCG GAMMA
@@ -242,13 +243,14 @@ or have a look at
 
 .. |azure_conda| image:: https://
     :target: https://
+
 .. |azure_pypi| image:: https://
     :target: https://
+
 .. |azure_devops_master_ci| image:: https://
     :target: https://
+
 .. |code_cov| image:: https://
-    :target: https://
-.. |documentation_status| image:: https://
     :target: https://
 
 .. |python_versions| image:: https://img.shields.io/badge/python-3.7|3.8-blue.svg
@@ -256,7 +258,9 @@ or have a look at
 
 .. |code_style| image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/psf/black
+
 .. |made_with_sphinx_doc| image:: https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg
     :target: https://www.sphinx-doc.org/
+
 .. |license_badge| image:: https://img.shields.io/badge/License-Apache%202.0-olivegreen.svg
     :target: https://opensource.org/licenses/Apache-2.0
