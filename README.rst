@@ -30,14 +30,14 @@ Anaconda
 
 .. code-block:: RST
 
-    conda install gamma-sklearndf
+    conda install sklearndf
 
 Pip
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: RST
 
-    pip install gamma-sklearndf
+    pip install sklearndf
 
 
 Quickstart

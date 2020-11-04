@@ -1,5 +1,5 @@
 package:
-  name: gamma-sklearndf
+  name: sklearndf
   version: {{ environ.get('FACET_BUILD_SKLEARNDF_VERSION') }}
 
 source:
