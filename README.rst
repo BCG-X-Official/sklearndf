@@ -30,7 +30,7 @@ Anaconda
 
 .. code-block:: RST
 
-    conda install sklearndf
+    conda install -c bcg_gamma sklearndf
 
 Pip
 ~~~~~~~~~~~~~~~~~~~~~
