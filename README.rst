@@ -229,7 +229,7 @@ This package provides a layer on top of some popular building blocks for Machine
 Learning:
 
 The `scikit-learn <https://github.com/scikit-learn/scikit-learn>`__ learners and
-pipelining support the corresponding sklearndf implementations.
+pipelining support the corresponding *sklearndf* implementations.
 
 BCG GAMMA
 ---------------------------
