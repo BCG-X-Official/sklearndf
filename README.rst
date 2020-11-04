@@ -2,13 +2,13 @@
 
 |
 
-`sklearndf` is an open source library designed to address a common need with
+*sklearndf* is an open source library designed to address a common need with
 `scikit-learn <https://github.com/scikit-learn/scikit-learn>`__: the outputs of
 transformers are numpy arrays, even when the input is a
 data frame. However, to inspect a model it is essential to keep track of the
 feature names.
 
-To this end, `sklearndf` enhances scikit-learn's estimators as follows:
+To this end, *sklearndf* enhances scikit-learn's estimators as follows:
 
 - **Preserve data frame structure**:
     Return data frames as results of transformations, preserving feature names as the column index.
@@ -24,7 +24,7 @@ To this end, `sklearndf` enhances scikit-learn's estimators as follows:
 Installation
 ---------------------
 
-sklearndf supports both PyPI and Anaconda
+*sklearndf* supports both PyPI and Anaconda
 
 Anaconda
 ~~~~~~~~~~~~~~~~~~~~~
@@ -45,7 +45,7 @@ Quickstart
 ----------------------
 
 The following quickstart guide provides a minimal example workflow to get up and running
-with sklearndf.
+with *sklearndf*.
 
 
 Creating a DataFrame friendly scikit-learn preprocessing pipeline
@@ -63,7 +63,7 @@ We will build a preprocessing pipeline which:
 - for categorical variables fills missing values with the string 'Unknown' and then one-hot encodes
 - for numerical values fills missing values using median values
 
-The strength of sklearndf is to maintain the scikit-learn conventions and expressivity,
+The strength of *sklearndf* is to maintain the scikit-learn conventions and expressivity,
 while also preserving data frames, and hence feature names. We can see this after using
 fit_transform on our preprocessing pipeline.
 
@@ -73,7 +73,7 @@ fit_transform on our preprocessing pipeline.
     from sklearn.datasets import fetch_openml
     from sklearn.model_selection import train_test_split
 
-    # Relevant sklearndf imports
+    # relevant sklearndf imports
     from sklearndf.transformation import (
         ColumnTransformerDF,
         OneHotEncoderDF,
@@ -85,14 +85,14 @@ fit_transform on our preprocessing pipeline.
     )
     from sklearndf.classification import RandomForestClassifierDF
 
-    # Load titanic data
+    # load titanic data
     titanic_X, titanic_y = fetch_openml("titanic", version=1, as_frame=True, return_X_y=True)
 
-    # Select features
+    # select features
     numerical_features = ['age', 'fare']
     categorical_features = ['embarked', 'sex', 'pclass']
 
-    # Create a preprocessing pipeline
+    # create a preprocessing pipeline
     preprocessing_numeric_df = SimpleImputerDF(strategy="median")
 
     preprocessing_categorical_df = PipelineDF(
@@ -109,7 +109,7 @@ fit_transform on our preprocessing pipeline.
         ]
     )
 
-    # Run preprocessing
+    # run preprocessing
     transformed_df = preprocessing_df.fit_transform(X=titanic_X, y=titanic_y)
     transformed_df.head()
 
@@ -132,7 +132,7 @@ fit_transform on our preprocessing pipeline.
 Tracing features from post-transform to original 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The sklearndf pipeline has a `feature_names_original_` attribute which returns a series
+The *sklearndf* pipeline has a `feature_names_original_` attribute which returns a series
 mapping the output columns (the series' index) to the input columns (the series' values).
 We can therefore easily select all output features generated from a given input feature,
 such as in this case for embarked.
@@ -161,13 +161,13 @@ such as in this case for embarked.
 Completing the pipeline with a classifier
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Scikit-learn regressors and classifiers have a sklearndf sibling obtained by appending
+Scikit-learn regressors and classifiers have a *sklearndf* sibling obtained by appending
 DF to the class name; the API remains the same.
 The result of any predict and decision function will be returned as a pandas series
 (single output) or data frame (class probabilities or multi-output).
 
 We can combine the preprocessing pipeline above with a classifier to create a full
-predictive pipeline. sklearndf provides two useful, specialised pipeline objects for
+predictive pipeline. *sklearndf* provides two useful, specialised pipeline objects for
 this, RegressorPipelineDF and ClassifierPipelineDF. Both implement a special two-step
 pipeline with one preprocessing step and one prediction step, while staying compatible
 with the general sklearn pipeline idiom.
@@ -198,12 +198,14 @@ on a test set.
 
 model score: 0.79
 
+Download the getting started tutorial and explore *sklearndf* for yourself here: |binder|
+
 Contributing
 ---------------------------
 
-sklearndf is stable and is being supported long-term.
+*sklearndf* is stable and is being supported long-term.
 
-Contributions to sklearndf are welcome and appreciated.
+Contributions to *sklearndf* are welcome and appreciated.
 For any bug reports or feature requests/enhancements please use the appropriate
 `GitHub form <https://github.com/BCG-Gamma/sklearndf/issues>`_, and if you wish to do so,
 please open a PR addressing the issue.
@@ -216,7 +218,7 @@ For further information on contributing please see our [LINK: contribution guide
 License
 ---------------------------
 
-sklearndf is licensed under Apache 2.0 as described in the
+*sklearndf* is licensed under Apache 2.0 as described in the
 `LICENSE <https://github.com/BCG-Gamma/sklearndf/LICENSE>`_ file.
 
 
@@ -232,7 +234,8 @@ pipelining support the corresponding sklearndf implementations.
 BCG GAMMA
 ---------------------------
 
-If you would like to know more about the team behind sklearndf please see our [LINK: about us] page.
+If you would like to know more about the team behind *sklearndf* please see our
+[LINK: about us] page.
 
 We are always on the lookout for passionate and talented data scientists to join the
 BCG GAMMA team. If you would like to know more you can find out about BCG GAMMA
@@ -264,3 +267,6 @@ or have a look at
 
 .. |license_badge| image:: https://img.shields.io/badge/License-Apache%202.0-olivegreen.svg
     :target: https://opensource.org/licenses/Apache-2.0
+
+.. |binder| image:: https://mybinder.org/badge_logo.svg
+   :target: https://mybinder.org/
