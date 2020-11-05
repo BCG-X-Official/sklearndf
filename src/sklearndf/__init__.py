@@ -45,25 +45,21 @@ scikit-learn classes (but is only partially reflected
 via class inheritance in the
 original implementation):
 
-- all `sklearndf` transformers are subclasses of
-:class:`.TransformerDF`, which \
-  in turn provides the API for all common transformer
-  methods, e.g., \
+- all `sklearndf` transformers are subclasses of :class:`.TransformerDF`, which in turn
+  provides the API for all common transformer methods, e.g.,
   :meth:`~TransformerDF.transform`
-- all `sklearndf` regressors are subclasses
-of :class:`.RegressorDF`, which \
-  in turn provides the API for all common regressor
-  methods, e.g., \
+
+- all `sklearndf` regressors are subclasses of :class:`.RegressorDF`, which
+  in turn provides the API for all common regressor methods, e.g.,
   :meth:`~LearnerDF.predict`
-- all `sklearndf` classifiers are subclasses of :class:
-`.ClassifierDF`, which \
-  in turn provides the API for all common classifier
-  methods, e.g., \
+
+- all `sklearndf` classifiers are subclasses of :class:`.ClassifierDF`, which
+  in turn provides the API for all common classifier methods, e.g.,
   :meth:`~ClassifierDF.predict_proba`
-- all `sklearndf` regressors and classifiers are
-subclasses of :class:`.LearnerDF`
-- all `sklearndf` estimators are subclasses of
-:class:`.EstimatorDF`
+
+- all `sklearndf` regressors and classifiers are subclasses of :class:`.LearnerDF`
+
+- all `sklearndf` estimators are subclasses of :class:`.EstimatorDF`
 
 `sklearndf` introduces two additional pipeline classes,
 :class:`.RegressorPipelineDF` and
