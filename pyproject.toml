@@ -7,10 +7,11 @@ exclude = [".idea", "tmp", "dist", ".tox", ".pytest_cache"]
 
 [tool.flit.metadata]
 module = "sklearndf"
-author = "" # todo: define
+author = "Boston Consulting Group (BCG)"
 home-page = "https://github.com/BCG-Gamma/sklearndf"
 description-file = "README.rst"
 dist-name = "sklearndf"
+license = "Apache Software License v2.0"
 
 requires = [
     "boruta >= 0.3",
