@@ -49,3 +49,14 @@ test:
                  assert sklearndf.__version__ == os.environ["PKG_VERSION"]'
     - pytest -vs ${FACET_PATH}/pytools/test
     - pytest -vs ${FACET_PATH}/sklearndf/test
+
+about:
+  home: https://github.com/BCG-Gamma/sklearndf
+  license: Apache Software License v2.0
+  license_file: LICENSE
+  summary: |
+    sklearndf is an open source library designed to enable seamless of pandas in
+    combination with scikit-learn
+  dev_url: https://github.com/BCG-Gamma/sklearndf
+  doc_url: https://pypi.org/project/sklearndf/ # TODO - replace with docs
+  doc_source_url: https://github.com/BCG-Gamma/sklearndf/blob/develop/README.rst
