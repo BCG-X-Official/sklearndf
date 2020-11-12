@@ -7,8 +7,10 @@ from sklearn import __version__ as __sklearn_version__
 
 from ._regression import *
 
-if __parse_version(__sklearn_version__) >= __parse_version("0.22"):
+__sklearn_version = __parse_version(__sklearn_version)
+
+if __sklearn_version >= __parse_version("0.22"):
     from ._regression_v0_22 import *
 
-if __parse_version(__sklearn_version__) >= __parse_version("0.23"):
+if __sklearn_version >= __parse_version("0.23"):
     from ._regression_v0_23 import *
