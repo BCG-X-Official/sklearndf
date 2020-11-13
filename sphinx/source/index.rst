@@ -14,4 +14,3 @@ Table of contents
    tutorials
    contribution_guide
    faqs
-   genindex

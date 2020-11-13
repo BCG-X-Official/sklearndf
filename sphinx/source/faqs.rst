@@ -22,7 +22,7 @@ there you could also try posting on `stackoverflow <https://stackoverflow.com/>`
 
 Citation
 --------
-If you use sklearndf in your work please cite us as follows:
+If you use *sklearndf* in your work please cite us as follows:
 
 Bibtex entry::
 
