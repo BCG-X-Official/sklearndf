@@ -45,9 +45,9 @@ from sklearn.linear_model import (
     RANSACRegressor,
     Ridge,
     RidgeCV,
+    SGDRegressor,
     TheilSenRegressor,
 )
-from sklearn.linear_model.stochastic_gradient import SGDRegressor
 from sklearn.multioutput import MultiOutputRegressor, RegressorChain
 from sklearn.neighbors import KNeighborsRegressor, RadiusNeighborsRegressor
 from sklearn.neural_network import MLPRegressor

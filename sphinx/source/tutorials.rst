@@ -6,8 +6,8 @@ Tutorials
 
 
 
-Detailed sklearndf tutorial
----------------------------
+Detailed *sklearndf* tutorial
+------------------------------
 
 .. raw:: html
 
