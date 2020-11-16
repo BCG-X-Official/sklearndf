@@ -18,6 +18,7 @@ requirements:
     - pandas{{ environ.get('FACET_V_PANDAS') }}
     - scikit-learn{{ environ.get('FACET_V_SCIKIT_LEARN') }}
     - gamma-pytools{{ environ.get('FACET_V_GAMMA_PYTOOLS') }}
+    - packaging>=20
   run:
     - python{{ environ.get('FACET_V_PYTHON') }}
     - pandas{{ environ.get('FACET_V_PANDAS') }}
@@ -30,6 +31,7 @@ requirements:
     - boruta_py{{ environ.get('FACET_V_BORUTA') }}
     - lightgbm{{ environ.get('FACET_V_LIGHTGBM') }}
     - gamma-pytools{{ environ.get('FACET_V_GAMMA_PYTOOLS') }}
+    - packaging>=20
 test:
   imports:
     - sklearndf
