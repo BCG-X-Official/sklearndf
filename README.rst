@@ -18,7 +18,7 @@ To this end, *sklearndf* enhances scikit-learn's estimators as follows:
     Simply append DF at the end of your usual scikit-learn class names to get enhanced data frame support!
 
 
-|azure_pypi| |azure_conda| |azure_devops_master_ci| |code_cov|
+|pypi| |conda| |azure_devops_master_ci| |code_cov|
 |python_versions| |code_style| |made_with_sphinx_doc| |License_badge|
 
 Installation
@@ -244,11 +244,11 @@ or have a look at
 `career opportunities <https://www.bcg.com/en-gb/beyond-consulting/bcg-gamma/careers>`_.
 
 
-.. |azure_conda| image:: https://
-    :target: https://
+.. |conda| image:: https://anaconda.org/bcg_gamma/sklearndf/badges/version.svg
+    :target: https://anaconda.org/BCG_Gamma/sklearndf
 
-.. |azure_pypi| image:: https://
-    :target: https://
+.. |pypi| image:: https://badge.fury.io/py/sklearndf.svg
+    :target: https://pypi.org/project/sklearndf/
 
 .. |azure_devops_master_ci| image:: https://
     :target: https://
