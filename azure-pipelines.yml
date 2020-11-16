@@ -351,7 +351,7 @@ stages:
             targetType: 'inline'
             script: |
               set -e
-              cd $(System.DefaultWorkingDirectory)
+              cd $(System.DefaultWorkingDirectory)/sklearndf
               git checkout --track origin/github-pages
               mkdir -p docs
               sudo apt-get install tree
