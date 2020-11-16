@@ -342,7 +342,7 @@ stages:
           displayName: 'Install the deploy SSH key'
 
         - checkout: self
-          path: pytools
+        - checkout: pytools
 
         - script: dir $(Build.SourcesDirectory)
 
