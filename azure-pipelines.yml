@@ -340,8 +340,8 @@ stages:
         - task: InstallSSHKey@0
           inputs:
             knownHostsEntry: $(knownHostsEntry)
-            sshPublicKey: $(sshPublicKey)
-            sshKeySecureFile: 'deploy_docs'
+            sshPublicKey: $(sshPublicKey_sklearndf)
+            sshKeySecureFile: 'deploy_docs_sklearndf'
           displayName: 'Install the deploy SSH key'
 
         - checkout: self
