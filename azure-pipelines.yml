@@ -392,7 +392,7 @@ stages:
               echo "Current docs contents:"
               tree docs
               echo "Building sphinx docs"
-              conda activate pytools-develop
+              conda activate sklearndf-develop
               python sphinx/make.py prepare_docs_deployment
               echo "Current docs contents:"
               tree docs
