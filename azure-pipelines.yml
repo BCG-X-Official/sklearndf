@@ -370,16 +370,16 @@ stages:
             script: |
               set -e
               eval "$(conda shell.bash hook)"
-              cd $(System.DefaultWorkingDirectory)/sklearndf/
+              cd $(System.DefaultWorkingDirectory)/sklearndf
               echo "Checking out $(branchName)"
               git checkout $(branchName)
               git status
               conda env create -f environment.yml
               conda activate sklearndf-develop
               pip install flit
-              cd $(System.DefaultWorkingDirectory)/pytools/
+              cd $(System.DefaultWorkingDirectory)/pytools
               flit install -s
-              cd $(System.DefaultWorkingDirectory)/sklearndf/
+              cd $(System.DefaultWorkingDirectory)/sklearndf
               python sphinx/make.py html
               echo "Current docs contents:"
               tree docs
@@ -396,7 +396,7 @@ stages:
               tree docs
               echo "Building sphinx docs"
               conda activate sklearndf-develop
-              cd $(System.DefaultWorkingDirectory)/sklearndf/
+              cd $(System.DefaultWorkingDirectory)/sklearndf
               python sphinx/make.py prepare_docs_deployment
               echo "Current docs contents:"
               tree docs
@@ -409,6 +409,7 @@ stages:
             targetType: 'inline'
             script: |
               set -e
+              cd $(System.DefaultWorkingDirectory)/sklearndf
               echo "Adjusting git credentials"
               git config --global user.name "Azure Pipelines"
               git config --global user.email "azuredevops@microsoft.com"
