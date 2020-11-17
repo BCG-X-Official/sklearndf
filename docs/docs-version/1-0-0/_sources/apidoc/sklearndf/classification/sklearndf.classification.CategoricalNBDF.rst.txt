@@ -1,0 +1,50 @@
+sklearndf.classification.CategoricalNBDF
+========================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: CategoricalNBDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~CategoricalNBDF.clone
+      ~CategoricalNBDF.decision_function
+      ~CategoricalNBDF.fit
+      ~CategoricalNBDF.fit_predict
+      ~CategoricalNBDF.from_fitted
+      ~CategoricalNBDF.get_params
+      ~CategoricalNBDF.predict
+      ~CategoricalNBDF.predict_log_proba
+      ~CategoricalNBDF.predict_proba
+      ~CategoricalNBDF.score
+      ~CategoricalNBDF.set_params
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~CategoricalNBDF.COL_FEATURE_IN
+      ~CategoricalNBDF.COL_PREDICTION
+      ~CategoricalNBDF.classes_
+      ~CategoricalNBDF.feature_names_in_
+      ~CategoricalNBDF.is_fitted
+      ~CategoricalNBDF.n_outputs_
+      ~CategoricalNBDF.native_estimator
+      ~CategoricalNBDF.partial_fit
+   
+   
+
+   .. rubric:: Definitions

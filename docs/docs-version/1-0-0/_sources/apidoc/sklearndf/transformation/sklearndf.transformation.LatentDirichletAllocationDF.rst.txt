@@ -1,0 +1,50 @@
+sklearndf.transformation.LatentDirichletAllocationDF
+====================================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: LatentDirichletAllocationDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~LatentDirichletAllocationDF.clone
+      ~LatentDirichletAllocationDF.fit
+      ~LatentDirichletAllocationDF.fit_transform
+      ~LatentDirichletAllocationDF.from_fitted
+      ~LatentDirichletAllocationDF.get_params
+      ~LatentDirichletAllocationDF.inverse_transform
+      ~LatentDirichletAllocationDF.set_params
+      ~LatentDirichletAllocationDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~LatentDirichletAllocationDF.COL_FEATURE_IN
+      ~LatentDirichletAllocationDF.COL_FEATURE_OUT
+      ~LatentDirichletAllocationDF.feature_names_in_
+      ~LatentDirichletAllocationDF.feature_names_original_
+      ~LatentDirichletAllocationDF.feature_names_out_
+      ~LatentDirichletAllocationDF.is_fitted
+      ~LatentDirichletAllocationDF.n_outputs_
+      ~LatentDirichletAllocationDF.native_estimator
+      ~LatentDirichletAllocationDF.partial_fit
+      ~LatentDirichletAllocationDF.perplexity
+      ~LatentDirichletAllocationDF.score
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,50 @@
+sklearndf.transformation.LinearDiscriminantAnalysisDF
+=====================================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: LinearDiscriminantAnalysisDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~LinearDiscriminantAnalysisDF.clone
+      ~LinearDiscriminantAnalysisDF.fit
+      ~LinearDiscriminantAnalysisDF.fit_transform
+      ~LinearDiscriminantAnalysisDF.from_fitted
+      ~LinearDiscriminantAnalysisDF.get_params
+      ~LinearDiscriminantAnalysisDF.inverse_transform
+      ~LinearDiscriminantAnalysisDF.set_params
+      ~LinearDiscriminantAnalysisDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~LinearDiscriminantAnalysisDF.COL_FEATURE_IN
+      ~LinearDiscriminantAnalysisDF.COL_FEATURE_OUT
+      ~LinearDiscriminantAnalysisDF.decision_function
+      ~LinearDiscriminantAnalysisDF.feature_names_in_
+      ~LinearDiscriminantAnalysisDF.feature_names_original_
+      ~LinearDiscriminantAnalysisDF.feature_names_out_
+      ~LinearDiscriminantAnalysisDF.is_fitted
+      ~LinearDiscriminantAnalysisDF.n_outputs_
+      ~LinearDiscriminantAnalysisDF.native_estimator
+      ~LinearDiscriminantAnalysisDF.predict_log_proba
+      ~LinearDiscriminantAnalysisDF.predict_proba
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,578 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearndf._sklearndf &#8212; sklearndf  documentation</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/gamma.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/js/gamma.js"></script>
+    <script src="../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../index.html">
+    
+      <img src="../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../getting_started.html">Getting started</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../apidoc/sklearndf.html">API reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../contribution_guide.html">Development Guidelines</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../faqs.html">FAQ</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for sklearndf._sklearndf</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Core implementation of :mod:`sklearndf`</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">cast</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BaseEstimator</span><span class="p">,</span>
+    <span class="n">ClassifierMixin</span><span class="p">,</span>
+    <span class="n">RegressorMixin</span><span class="p">,</span>
+    <span class="n">TransformerMixin</span><span class="p">,</span>
+    <span class="n">clone</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">pytools.fit</span> <span class="kn">import</span> <span class="n">FittableMixin</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;EstimatorDF&quot;</span><span class="p">,</span> <span class="s2">&quot;LearnerDF&quot;</span><span class="p">,</span> <span class="s2">&quot;ClassifierDF&quot;</span><span class="p">,</span> <span class="s2">&quot;RegressorDF&quot;</span><span class="p">,</span> <span class="s2">&quot;TransformerDF&quot;</span><span class="p">]</span>
+
+<span class="c1">#</span>
+<span class="c1"># type variables</span>
+<span class="c1">#</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
+<span class="n">T_EstimatorDF</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_EstimatorDF&quot;</span><span class="p">)</span>
+
+<span class="c1">#</span>
+<span class="c1"># class definitions</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="EstimatorDF"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.EstimatorDF.html#sklearndf.classification.extra.EstimatorDF">[docs]</a><span class="k">class</span> <span class="nc">EstimatorDF</span><span class="p">(</span><span class="n">FittableMixin</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for augmented scikit-learn `estimators`.</span>
+
+<span class="sd">    Provides enhanced support for data frames.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">COL_FEATURE_IN</span> <span class="o">=</span> <span class="s2">&quot;feature_in&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;EstimatorDF&quot;</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+        <span class="c1"># make sure this DF estimator also is a subclass of</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;class </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> is required to be &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;a subclass of </span><span class="si">{</span><span class="n">BaseEstimator</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">native_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseEstimator</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The native estimator underlying this estimator.</span>
+
+<span class="sd">        This can be another estimator that this estimator delegates to, otherwise the</span>
+<span class="sd">        native estimator is ``self``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="EstimatorDF.fit"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.EstimatorDF.html#sklearndf.classification.extra.EstimatorDF.fit">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">fit_params</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit this estimator using the given inputs.</span>
+
+<span class="sd">        :param X: input data frame with observations as rows and features as columns</span>
+<span class="sd">        :param y: an optional series or data frame with one or more outputs</span>
+<span class="sd">        :param fit_params: additional keyword parameters as required by specific \</span>
+<span class="sd">            estimator implementations</span>
+<span class="sd">        :return: ``self``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">feature_names_in_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The pandas column index with the names of the features used to fit this</span>
+<span class="sd">        estimator.</span>
+
+<span class="sd">        :raises AttributeError: if this estimator is not fitted</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_fitted</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_features_in</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">COL_FEATURE_IN</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_outputs_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The number of outputs used to fit this estimator.</span>
+
+<span class="sd">        :raises AttributeError: if this estimator is not fitted</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_fitted</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_n_outputs</span><span class="p">()</span>
+
+<div class="viewcode-block" id="EstimatorDF.get_params"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.EstimatorDF.html#sklearndf.classification.extra.EstimatorDF.get_params">[docs]</a>    <span class="k">def</span> <span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the parameters for this estimator.</span>
+
+<span class="sd">        :param deep: if ``True``, return the parameters for this estimator, and \</span>
+<span class="sd">            for any sub-estimators contained in this estimator</span>
+<span class="sd">        :return: a mapping of parameter names to their values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyUnresolvedReferences</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_params</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="n">deep</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EstimatorDF.set_params"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.EstimatorDF.html#sklearndf.classification.extra.EstimatorDF.set_params">[docs]</a>    <span class="k">def</span> <span class="nf">set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the parameters of this estimator.</span>
+
+<span class="sd">        Valid parameter keys can be obtained by calling :meth:`.get_params`.</span>
+
+<span class="sd">        :return: ``self``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyUnresolvedReferences</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EstimatorDF.clone"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.EstimatorDF.html#sklearndf.classification.extra.EstimatorDF.clone">[docs]</a>    <span class="k">def</span> <span class="nf">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">T_EstimatorDF</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T_EstimatorDF</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make an unfitted clone of this estimator.</span>
+
+<span class="sd">        :return: the unfitted clone</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">clone</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_get_features_in</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
+        <span class="c1"># get the input columns as a pandas Index</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_get_n_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="c1"># get the number of outputs this estimator has been fitted to</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="LearnerDF"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.LearnerDF.html#sklearndf.classification.extra.LearnerDF">[docs]</a><span class="k">class</span> <span class="nc">LearnerDF</span><span class="p">(</span><span class="n">EstimatorDF</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for augmented scikit-learn `learners`.</span>
+
+<span class="sd">    Provides enhanced support for data frames.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="LearnerDF.predict"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.LearnerDF.html#sklearndf.classification.extra.LearnerDF.predict">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="o">**</span><span class="n">predict_params</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predict outputs for the given inputs.</span>
+
+<span class="sd">        The inputs must have the same features as the inputs used to fit</span>
+<span class="sd">        this learner.</span>
+<span class="sd">        The features can be provided in any order since they are identified by their</span>
+<span class="sd">        column names.</span>
+
+<span class="sd">        :param X: input data frame with observations as rows and features as columns</span>
+<span class="sd">        :param predict_params: optional keyword parameters as required by specific \</span>
+<span class="sd">            learner implementations</span>
+<span class="sd">        :return: predictions per observation as a series, or as a data frame in case \</span>
+<span class="sd">            of multiple outputs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="LearnerDF.fit_predict"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.LearnerDF.html#sklearndf.classification.extra.LearnerDF.fit_predict">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_params</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit this learner using the given inputs, then predict the outputs.</span>
+
+<span class="sd">        :param X: data frame with observations as rows and features as columns</span>
+<span class="sd">        :param y: a series or data frame with one or more outputs per observation</span>
+<span class="sd">        :param fit_params: optional keyword parameters as required by specific \</span>
+<span class="sd">            learner implementations</span>
+<span class="sd">        :return: predictions per observation as a series, or as a data frame in case \</span>
+<span class="sd">            of multiple outputs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="LearnerDF.score"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.LearnerDF.html#sklearndf.classification.extra.LearnerDF.score">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">sample_weight</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Score this learner using the given inputs and outputs.</span>
+
+<span class="sd">        :param X: data frame with observations as rows and features as columns</span>
+<span class="sd">        :param y: a series or data frame with the true outputs per observation</span>
+<span class="sd">        :param sample_weight: optional series of scalar weights, for calculating the \</span>
+<span class="sd">            resulting score as the weighted mean of the scores for the individual \</span>
+<span class="sd">            predictions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div></div>
+
+
+<div class="viewcode-block" id="TransformerDF"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.TransformerDF.html#sklearndf.classification.extra.TransformerDF">[docs]</a><span class="k">class</span> <span class="nc">TransformerDF</span><span class="p">(</span><span class="n">EstimatorDF</span><span class="p">,</span> <span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for augmented scikit-learn `transformers`.</span>
+
+<span class="sd">    Provides enhanced support for data frames.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">COL_FEATURE_OUT</span> <span class="o">=</span> <span class="s2">&quot;feature_out&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_original</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">feature_names_original_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A pandas series, mapping the output features resulting from the transformation</span>
+<span class="sd">        to the original input features.</span>
+
+<span class="sd">        The index of the resulting series consists of the names of the output features;</span>
+<span class="sd">        the corresponding values are the names of the original input features.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_fitted</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_original</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_features_original</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_get_features_original</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">COL_FEATURE_IN</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">rename_axis</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">COL_FEATURE_OUT</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_original</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">feature_names_out_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A pandas column index with the names of the features produced by this</span>
+<span class="sd">        transformer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_fitted</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_features_out</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">COL_FEATURE_OUT</span><span class="p">)</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="TransformerDF.transform"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.TransformerDF.html#sklearndf.classification.extra.TransformerDF.transform">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transform the given inputs.</span>
+
+<span class="sd">        The inputs must have the same features as the inputs used to fit</span>
+<span class="sd">        this transformer.</span>
+<span class="sd">        The features can be provided in any order since they are identified by their</span>
+<span class="sd">        column names.</span>
+
+<span class="sd">        :param X: input data frame with observations as rows and features as columns</span>
+<span class="sd">        :return: the transformed inputs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="TransformerDF.fit_transform"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.TransformerDF.html#sklearndf.classification.extra.TransformerDF.fit_transform">[docs]</a>    <span class="k">def</span> <span class="nf">fit_transform</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_params</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit this transformer using the given inputs, then transform the inputs.</span>
+
+<span class="sd">        :param X: input data frame with observations as rows and features as columns</span>
+<span class="sd">        :param y: an optional series or data frame with one or more outputs</span>
+<span class="sd">        :param fit_params: additional keyword parameters as required by specific \</span>
+<span class="sd">            transformer implementations</span>
+<span class="sd">        :return: the transformed inputs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_params</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="TransformerDF.inverse_transform"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.TransformerDF.html#sklearndf.classification.extra.TransformerDF.inverse_transform">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inverse-transform the given inputs.</span>
+
+<span class="sd">        The inputs must have the same features as the inputs used to fit</span>
+<span class="sd">        this transformer.</span>
+<span class="sd">        The features can be provided in any order since they are identified by their</span>
+<span class="sd">        column names.</span>
+
+<span class="sd">        :param X: input data frame with observations as rows and features as columns</span>
+<span class="sd">        :return: the reverse-transformed inputs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_get_features_original</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+        <span class="c1"># return a mapping from this transformer&#39;s output columns to the original</span>
+        <span class="c1"># columns as a series</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_get_features_out</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
+        <span class="c1"># return a pandas index with this transformer&#39;s output columns</span>
+        <span class="c1"># default behaviour: get index returned by feature_names_original_</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_original_</span><span class="o">.</span><span class="n">index</span></div>
+
+
+<div class="viewcode-block" id="RegressorDF"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.RegressorDF.html#sklearndf.classification.extra.RegressorDF">[docs]</a><span class="k">class</span> <span class="nc">RegressorDF</span><span class="p">(</span><span class="n">LearnerDF</span><span class="p">,</span> <span class="n">RegressorMixin</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for augmented scikit-learn `regressors`.</span>
+
+<span class="sd">    Provides enhanced support for data frames.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="ClassifierDF"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.ClassifierDF.html#sklearndf.classification.extra.ClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">ClassifierDF</span><span class="p">(</span><span class="n">LearnerDF</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for augmented scikit-learn `classifiers`.</span>
+
+<span class="sd">    Provides enhanced support for data frames.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">classes_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the classes predicted by this classifier.</span>
+<span class="sd">        By default expects classes as a list-like stored in the `classes_` attribute.</span>
+
+<span class="sd">        :return: the classes predicted by this classifier</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="ClassifierDF.predict_proba"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.ClassifierDF.html#sklearndf.classification.extra.ClassifierDF.predict_proba">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="o">**</span><span class="n">predict_params</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predict class probabilities for the given inputs.</span>
+
+<span class="sd">        The inputs must have the same features as the inputs used to fit</span>
+<span class="sd">        this learner.</span>
+<span class="sd">        The features can be provided in any order since they are identified by their</span>
+<span class="sd">        column names.</span>
+
+<span class="sd">        :param X: input data frame with observations as rows and features as columns</span>
+<span class="sd">        :param predict_params: optional keyword parameters as required by specific \</span>
+<span class="sd">            learner implementations</span>
+<span class="sd">        :return: a data frame with observations as rows and classes as columns, and \</span>
+<span class="sd">            values as probabilities per observation and class; for multi-output \</span>
+<span class="sd">            classifiers, a list of one observation/class data frames per output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="ClassifierDF.predict_log_proba"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.ClassifierDF.html#sklearndf.classification.extra.ClassifierDF.predict_log_proba">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">predict_log_proba</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="o">**</span><span class="n">predict_params</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predict class log-probabilities for the given inputs.</span>
+
+<span class="sd">        The inputs must have the same features as the inputs used to fit</span>
+<span class="sd">        this learner.</span>
+<span class="sd">        The features can be provided in any order since they are identified by their</span>
+<span class="sd">        column names.</span>
+
+<span class="sd">        :param X: input data frame with observations as rows and features as columns</span>
+<span class="sd">        :param predict_params: optional keyword parameters as required by specific \</span>
+<span class="sd">            learner implementations</span>
+<span class="sd">        :return: a data frame with observations as rows and classes as columns, and \</span>
+<span class="sd">            values as log-probabilities per observation and class; for multi-output \</span>
+<span class="sd">            classifiers, a list of one observation/class data frames per output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="ClassifierDF.decision_function"><a class="viewcode-back" href="../../apidoc/sklearndf/sklearndf.ClassifierDF.html#sklearndf.classification.extra.ClassifierDF.decision_function">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">decision_function</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="o">**</span><span class="n">predict_params</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the decision function for the given inputs.</span>
+
+<span class="sd">        The inputs must have the same features as the inputs used to fit</span>
+<span class="sd">        this learner.</span>
+<span class="sd">        The features can be provided in any order since they are identified by their</span>
+<span class="sd">        column names.</span>
+
+<span class="sd">        :param X: input data frame with observations as rows and features as columns</span>
+<span class="sd">        :param predict_params: optional keyword parameters as required by specific \</span>
+<span class="sd">            learner implementations</span>
+<span class="sd">        :return: a data frame with observations as rows and classes as columns, and \</span>
+<span class="sd">            values as the raw values predicted per observation and class; \</span>
+<span class="sd">            for multi-output classifiers, a list of one observation/class data frames \</span>
+<span class="sd">            per output</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+</pre></div>
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Boston Consulting Group (BCG).<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

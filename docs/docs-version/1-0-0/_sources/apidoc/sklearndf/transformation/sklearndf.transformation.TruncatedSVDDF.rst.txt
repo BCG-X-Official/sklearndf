@@ -1,0 +1,47 @@
+sklearndf.transformation.TruncatedSVDDF
+=======================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: TruncatedSVDDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~TruncatedSVDDF.clone
+      ~TruncatedSVDDF.fit
+      ~TruncatedSVDDF.fit_transform
+      ~TruncatedSVDDF.from_fitted
+      ~TruncatedSVDDF.get_params
+      ~TruncatedSVDDF.inverse_transform
+      ~TruncatedSVDDF.set_params
+      ~TruncatedSVDDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~TruncatedSVDDF.COL_FEATURE_IN
+      ~TruncatedSVDDF.COL_FEATURE_OUT
+      ~TruncatedSVDDF.feature_names_in_
+      ~TruncatedSVDDF.feature_names_original_
+      ~TruncatedSVDDF.feature_names_out_
+      ~TruncatedSVDDF.is_fitted
+      ~TruncatedSVDDF.n_outputs_
+      ~TruncatedSVDDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

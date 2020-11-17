@@ -1,0 +1,47 @@
+sklearndf.transformation.NMFDF
+==============================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: NMFDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~NMFDF.clone
+      ~NMFDF.fit
+      ~NMFDF.fit_transform
+      ~NMFDF.from_fitted
+      ~NMFDF.get_params
+      ~NMFDF.inverse_transform
+      ~NMFDF.set_params
+      ~NMFDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~NMFDF.COL_FEATURE_IN
+      ~NMFDF.COL_FEATURE_OUT
+      ~NMFDF.feature_names_in_
+      ~NMFDF.feature_names_original_
+      ~NMFDF.feature_names_out_
+      ~NMFDF.is_fitted
+      ~NMFDF.n_outputs_
+      ~NMFDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

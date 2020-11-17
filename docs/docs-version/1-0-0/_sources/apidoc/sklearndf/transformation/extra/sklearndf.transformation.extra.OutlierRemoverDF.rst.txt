@@ -1,0 +1,46 @@
+sklearndf.transformation.extra.OutlierRemoverDF
+===============================================
+
+.. currentmodule:: sklearndf.transformation.extra
+
+.. autoclass:: OutlierRemoverDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~OutlierRemoverDF.clone
+      ~OutlierRemoverDF.fit
+      ~OutlierRemoverDF.fit_transform
+      ~OutlierRemoverDF.get_params
+      ~OutlierRemoverDF.inverse_transform
+      ~OutlierRemoverDF.set_params
+      ~OutlierRemoverDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~OutlierRemoverDF.COL_FEATURE_IN
+      ~OutlierRemoverDF.COL_FEATURE_OUT
+      ~OutlierRemoverDF.feature_names_in_
+      ~OutlierRemoverDF.feature_names_original_
+      ~OutlierRemoverDF.feature_names_out_
+      ~OutlierRemoverDF.is_fitted
+      ~OutlierRemoverDF.n_outputs_
+      ~OutlierRemoverDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions
