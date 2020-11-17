@@ -393,6 +393,7 @@ stages:
               tree docs
               echo "Building sphinx docs"
               conda activate sklearndf-develop
+              cd $(System.DefaultWorkingDirectory)/sklearndf/
               python sphinx/make.py prepare_docs_deployment
               echo "Current docs contents:"
               tree docs
