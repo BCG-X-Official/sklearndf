@@ -183,11 +183,11 @@ stages:
     jobs:
     - job:
       displayName: 'single'
-      # condition: >
-      #  and(
-      #  ne(variables.master_or_release, 'True'),
-      #  ne(stageDependencies.detect_build_config_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
-      #  )
+      condition: >
+       and(
+       ne(variables.master_or_release, 'True'),
+       ne(stageDependencies.detect_build_config_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
+       )
 
       pool:
           vmImage: 'ubuntu-latest'
@@ -349,7 +349,7 @@ stages:
     jobs:
       - job:
         displayName: 'Release'
-        # condition: eq(replace(variables['Build.SourceBranch'], 'refs/heads/', ''), 'master')
+        condition: eq(replace(variables['Build.SourceBranch'], 'refs/heads/', ''), 'master')
 
         steps:
           - task: UsePythonVersion@0
@@ -388,10 +388,10 @@ stages:
 
           - task: GitHubRelease@1
             inputs:
-              gitHubConnection: BCG-Gamma-test
-              repositoryName: rkdy/sklearndf # $(Build.Repository.Name)
+              gitHubConnection: BCG-Gamma
+              repositoryName: $(Build.Repository.Name)
               action: create
-              target: develop # $(Build.SourceVersion)
+              target: $(Build.SourceVersion)
               tagSource: userSpecifiedTag
               tag: $(current_version)
               title: sklearndf $(current_version)
