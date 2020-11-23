@@ -184,10 +184,10 @@ stages:
     - job:
       displayName: 'single'
       condition: >
-       and(
-       ne(variables.master_or_release, 'True'),
-       ne(stageDependencies.detect_build_config_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
-       )
+        and(
+        ne(variables.master_or_release, 'True'),
+        ne(stageDependencies.detect_build_config_changes.checkout_and_diff.outputs['diff.conda_build_config_changed'], '0')
+        )
 
       pool:
           vmImage: 'ubuntu-latest'
@@ -209,7 +209,6 @@ stages:
           displayName: 'Use Python $(FACET_V_PYTHON_BUILD)'
 
         - checkout: self
-
         - checkout: pytools
 
         - script: dir $(Build.SourcesDirectory)
@@ -297,7 +296,6 @@ stages:
           displayName: 'Use Python $(FACET_V_PYTHON_BUILD)'
 
         - checkout: self
-
         - checkout: pytools
 
         - script: dir $(Build.SourcesDirectory)
@@ -358,7 +356,6 @@ stages:
             displayName: 'use Python 3.7'
 
           - checkout: self
-
           - checkout: pytools
 
           - task: Bash@3
