@@ -18,7 +18,7 @@ To this end, *sklearndf* enhances scikit-learn's estimators as follows:
     Simply append DF at the end of your usual scikit-learn class names to get enhanced data frame support!
 
 
-|pypi| |conda| |azure_devops_master_ci| |code_cov|
+|pypi| |conda| |azure_build| |azure_code_cov|
 |python_versions| |code_style| |made_with_sphinx_doc| |License_badge|
 
 Installation
@@ -31,7 +31,7 @@ Anaconda
 
 .. code-block:: RST
 
-    conda install -c bcg_gamma sklearndf
+    conda install sklearndf -c bcg_gamma -c conda-forge
 
 Pip
 ~~~~~~~~~~~~~~~~~~~~~
@@ -250,11 +250,11 @@ or have a look at
 .. |pypi| image:: https://badge.fury.io/py/sklearndf.svg
     :target: https://pypi.org/project/sklearndf/
 
-.. |azure_devops_master_ci| image:: https://
-    :target: https://
+.. |azure_build| image:: https://dev.azure.com/gamma-facet/facet/_apis/build/status/BCG-Gamma.sklearndf?repoName=BCG-Gamma%2Fsklearndf&branchName=develop
+   :target: https://dev.azure.com/gamma-facet/facet/_build?definitionId=8&_a=summary
 
-.. |code_cov| image:: https://
-    :target: https://
+.. |azure_code_cov| image:: https://img.shields.io/azure-devops/coverage/gamma-facet/facet/_build?definitionId=8.svg
+   :target: https://dev.azure.com/gamma-facet/facet/_build?definitionId=8&_a=summary
 
 .. |python_versions| image:: https://img.shields.io/badge/python-3.7|3.8-blue.svg
     :target: https://www.python.org/downloads/release/python-380/
