@@ -410,8 +410,8 @@ stages:
               isDraft: false
               isPreRelease: $(is_prerelease)
               assets: |
-                $(System.ArtifactsDirectory)/tox_default/tox/gamma-sklearndf-*.tar.gz
-                $(System.ArtifactsDirectory)/conda_default/conda/noarch/gamma-sklearndf-*.tar.bz2
+                $(System.ArtifactsDirectory)/tox_default/tox/sklearndf-*.tar.gz
+                $(System.ArtifactsDirectory)/conda_default/conda/noarch/sklearndf-*.tar.bz2
 
   # render docs and publish to GitHub Pages
   - stage:
