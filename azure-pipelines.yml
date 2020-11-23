@@ -391,10 +391,9 @@ stages:
               gitHubConnection: BCG-Gamma-test
               repositoryName: rkdy/sklearndf # $(Build.Repository.Name)
               action: create
-              target: $(Build.SourceVersion)
+              target: develop # $(Build.SourceVersion)
               tagSource: userSpecifiedTag
               tag: $(current_version)
-              tagPattern: \d+\.\d+\.\d+(rc\d+)?
               title: sklearndf $(current_version)
               releaseNotesSource: inline
               releaseNotesInline: |
