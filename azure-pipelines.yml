@@ -385,7 +385,7 @@ stages:
 
           - task: GitHubRelease@1
             inputs:
-              gitHubConnection: BCG-Gamma
+              gitHubConnection: github_release
               repositoryName: $(Build.Repository.Name)
               action: create
               target: $(Build.SourceVersion)
