@@ -22,8 +22,8 @@ resources:
   repositories:
     - repository: pytools
       type: github
-      endpoint: BCG-Gamma-test
-      name: rkdy/pytools
+      endpoint: BCG-Gamma
+      name: BCG-Gamma/pytools
       ref: develop # todo - update to stable release
 
 variables:
@@ -389,7 +389,7 @@ stages:
           - task: GitHubRelease@1
             inputs:
               gitHubConnection: BCG-Gamma-test
-              repositoryName: $(Build.Repository.Name)
+              repositoryName: rkdy/sklearndf # $(Build.Repository.Name)
               action: create
               target: $(Build.SourceVersion)
               tagSource: userSpecifiedTag
