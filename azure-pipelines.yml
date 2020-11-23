@@ -196,11 +196,11 @@ stages:
           maximum_dependencies_conda:
             FACET_V_PYTHON_BUILD: '=3.8.*'
             BUILD_SYSTEM: 'conda'
-            PKG_DEPENDENCIES: 'default'
+            PKG_DEPENDENCIES: 'max'
           maximum_dependencies_tox:
             FACET_V_PYTHON_BUILD: '=3.8.*'
             BUILD_SYSTEM: 'tox'
-            PKG_DEPENDENCIES: 'default'
+            PKG_DEPENDENCIES: 'max'
 
       steps:
         - task: UsePythonVersion@0
