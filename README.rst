@@ -198,8 +198,6 @@ on a test set.
 
 model score: 0.79
 
-Download the getting started tutorial and explore *sklearndf* for yourself here: |binder|
-
 Contributing
 ---------------------------
 
@@ -267,6 +265,3 @@ or have a look at
 
 .. |license_badge| image:: https://img.shields.io/badge/License-Apache%202.0-olivegreen.svg
     :target: https://opensource.org/licenses/Apache-2.0
-
-.. |binder| image:: https://mybinder.org/badge_logo.svg
-   :target: https://mybinder.org/
