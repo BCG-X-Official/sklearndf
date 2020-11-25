@@ -1,4 +1,4 @@
-.. image:: _static/sklearndf_logo.png
+.. image:: sphinx/source/_static/sklearndf_logo.png
 
 |
 
@@ -17,9 +17,12 @@ To this end, *sklearndf* enhances scikit-learn's estimators as follows:
 - **Easy use**:
     Simply append DF at the end of your usual scikit-learn class names to get enhanced data frame support!
 
+.. Begin-Badges
 
 |pypi| |conda| |azure_build| |azure_code_cov|
 |python_versions| |code_style| |made_with_sphinx_doc| |License_badge|
+
+.. End-Badges
 
 Installation
 ---------------------
@@ -241,6 +244,7 @@ BCG GAMMA team. If you would like to know more you can find out about BCG GAMMA
 or have a look at
 `career opportunities <https://www.bcg.com/en-gb/beyond-consulting/bcg-gamma/careers>`_.
 
+.. Begin-Badges
 
 .. |conda| image:: https://anaconda.org/bcg_gamma/sklearndf/badges/version.svg
     :target: https://anaconda.org/BCG_Gamma/sklearndf
@@ -265,3 +269,5 @@ or have a look at
 
 .. |license_badge| image:: https://img.shields.io/badge/License-Apache%202.0-olivegreen.svg
     :target: https://opensource.org/licenses/Apache-2.0
+
+.. End-Badges
