@@ -198,6 +198,13 @@ on a test set.
 
 model score: 0.79
 
+.. raw:: html
+
+    <p>Explore the quick start tutorial yourself by downloading the notebook here:
+    <a href="sphinx/auxiliary/Titanic_getting_started_example.ipynb" download>
+    <img src="sphinx/source/_static/nb_download_button.jpg" style="height:3ex;"></a>
+    </p>
+
 Contributing
 ---------------------------
 
