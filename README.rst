@@ -244,7 +244,7 @@ BCG GAMMA team. If you would like to know more you can find out about BCG GAMMA
 or have a look at
 `career opportunities <https://www.bcg.com/en-gb/beyond-consulting/bcg-gamma/careers>`_.
 
-.. Sub-Start-Badges
+.. Begin-Badges
 
 .. |conda| image:: https://anaconda.org/bcg_gamma/sklearndf/badges/version.svg
     :target: https://anaconda.org/BCG_Gamma/sklearndf
@@ -270,4 +270,4 @@ or have a look at
 .. |license_badge| image:: https://img.shields.io/badge/License-Apache%202.0-olivegreen.svg
     :target: https://opensource.org/licenses/Apache-2.0
 
-.. Sub-Stop-Badges
+.. End-Badges
