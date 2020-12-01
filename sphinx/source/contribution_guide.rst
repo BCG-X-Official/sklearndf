@@ -216,7 +216,7 @@ The ``sphinx/source`` folder contains:
 
     *	``faqs.rst``: contains guidance on bug reports/feature requests, how to contribute and answers to frequently asked questions including small code snippets.
 
-    *	``api_landing.rst``: for placing any API landing page preamble for documentation as needed. This information will appear on the API landing page in the documentation build after the short description in ``src/__init__.py``. This file is included in the doc build via the ``custom-module-template.rst``.
+    *	``api_landing.rst``: for placing any API landing page preamble for documentation as needed. This information will appear on the API landing page in the documentation build after the short description in ``src/__init__.py``. This file is included in the documentation build via the ``custom-module-template.rst``.
 
 - ``_static`` contains additional material used in the documentation build, in this case, logos and icons.
 
