@@ -443,7 +443,7 @@ Versioning
 
 *sklearndf* version numbering follows the `semantic versioning <https://semver.org/>`_
 approach, with the pattern ``MAJOR.MINOR.PATCH``.
-The version can be bumped in the ``src/__init__.py`` by updating the
+The version can be bumped in the ``src/_version.py`` by updating the
 ``__version__`` string accordingly.
 
 PyPI
@@ -520,7 +520,7 @@ Release process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before initiating the release process, please ensure the version number
-in ``src/__init__.py`` is correct and the format conforms to semantic
+in ``src/_version.py`` is correct and the format conforms to semantic
 versioning. If the version needs to be corrected/bumped then open a PR for the
 change and merge into develop before going any further.
 
@@ -536,7 +536,7 @@ The release process has the following key steps:
 * If everything passes and looks okay, merge the PR into master, this will
   trigger the release pipeline which will:
 
-  * Tag the release commit with version number as specified in ``src/__init__.py``
+  * Tag the release commit with version number as specified in ``src/_version.py``
   * Create a release on GitHub for the new version, please check the `documentation
     <https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/releasing-projects-on-github>`__
     for details
@@ -550,4 +550,4 @@ The release process has the following key steps:
    This may be automated in the future
 *  Remove any test versions for pip from PyPI test
 *  Merge any changes from release branch also back to develop
-*  Bump up version in ``src/__init__.py`` on develop to start work towards next release
+*  Bump up version in ``src/_version.py`` on develop to start work towards next release
