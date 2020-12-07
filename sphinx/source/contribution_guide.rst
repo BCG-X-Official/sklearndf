@@ -16,6 +16,11 @@ required development dependencies in the ``sklearndf-develop`` environment.
 	conda env create -f environment.yml
 	conda activate sklearndf-develop
 
+This command will:
+
+- Install the conda environment
+- Install pre-commit hooks
+
 
 Pytest
 ~~~~~~~~~~~~~~~
@@ -25,8 +30,6 @@ reports are also generated in the Azure Pipelines (see CI/CD section).
 
 Note that you will need to set the PYTHONPATH to the ``src/`` directory by
 running ``export PYTHONPATH=./src/`` from the repository root.
-
-
 
 
 Git Guidelines
