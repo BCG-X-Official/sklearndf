@@ -29,7 +29,7 @@ T = TypeVar("T")
 T_EstimatorDF = TypeVar("T_EstimatorDF")
 
 #
-# class definitions
+# Class definitions
 #
 
 

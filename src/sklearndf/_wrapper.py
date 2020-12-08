@@ -106,11 +106,11 @@ class _EstimatorWrapperDF(
     ) -> None:
         """
         :param _delegate_estimator: (optional) an estimator to use as the delegate;
-            if specified, do not create a new estimator and ignore any other arguments \
+            if specified, do not create a new estimator and ignore any other arguments
             passed to this initializer
-        :param args: positional arguments to use when initializing a new new delegate \
+        :param args: positional arguments to use when initializing a new new delegate
             estimator
-        :param kwargs: keyword arguments to use when initializing a new new delegate \
+        :param kwargs: keyword arguments to use when initializing a new new delegate
             estimator
         """
         super().__init__()

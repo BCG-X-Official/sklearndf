@@ -121,11 +121,11 @@ class _EstimatorPipelineDF(
 
         :param X: input data frame with observations as rows and features as columns
         :param y: an optional series or data frame with one or more outputs
-        :param feature_sequence: the order in which features should be passed to the \
+        :param feature_sequence: the order in which features should be passed to the
             final estimator (optional)
-        :param sample_weight: sample weights for observations, to be passed to the \
+        :param sample_weight: sample weights for observations, to be passed to the
             final estimator (optional)
-        :param fit_params: additional keyword parameters as required by specific \
+        :param fit_params: additional keyword parameters as required by specific
             estimator implementations
         :return: ``self``
         """
