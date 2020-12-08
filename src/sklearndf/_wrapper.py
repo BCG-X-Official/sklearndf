@@ -845,10 +845,10 @@ def df_estimator(
     :class:`_EstimatorWrapperDF`.
 
     :param delegate_estimator: the estimator class to wrap
-    :param df_wrapper_type: optional parameter indicating the \
-        :class:`_EstimatorWrapperDF` class to be used for wrapping; defaults to \
+    :param df_wrapper_type: optional parameter indicating the
+        :class:`_EstimatorWrapperDF` class to be used for wrapping; defaults to
         :class:`_EstimatorWrapperDF`
-    :return: the resulting ``_EstimatorWrapperDF`` with ``native_estimator`` as \
+    :return: the resulting ``_EstimatorWrapperDF`` with ``native_estimator`` as
         the delegate estimator
     """
 
