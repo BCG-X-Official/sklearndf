@@ -76,7 +76,7 @@ class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
 
         :param X: input data frame with observations as rows and features as columns
         :param y: an optional series or data frame with one or more outputs
-        :param fit_params: additional keyword parameters as required by specific \
+        :param fit_params: additional keyword parameters as required by specific
             estimator implementations
         :return: ``self``
         """
@@ -107,7 +107,7 @@ class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         """
         Get the parameters for this estimator.
 
-        :param deep: if ``True``, return the parameters for this estimator, and \
+        :param deep: if ``True``, return the parameters for this estimator, and
             for any sub-estimators contained in this estimator
         :return: a mapping of parameter names to their values
         """
@@ -165,9 +165,9 @@ class LearnerDF(EstimatorDF, metaclass=ABCMeta):
         column names.
 
         :param X: input data frame with observations as rows and features as columns
-        :param predict_params: optional keyword parameters as required by specific \
+        :param predict_params: optional keyword parameters as required by specific
             learner implementations
-        :return: predictions per observation as a series, or as a data frame in case \
+        :return: predictions per observation as a series, or as a data frame in case
             of multiple outputs
         """
         pass
@@ -182,9 +182,9 @@ class LearnerDF(EstimatorDF, metaclass=ABCMeta):
 
         :param X: data frame with observations as rows and features as columns
         :param y: a series or data frame with one or more outputs per observation
-        :param fit_params: optional keyword parameters as required by specific \
+        :param fit_params: optional keyword parameters as required by specific
             learner implementations
-        :return: predictions per observation as a series, or as a data frame in case \
+        :return: predictions per observation as a series, or as a data frame in case
             of multiple outputs
         """
         pass
@@ -199,8 +199,8 @@ class LearnerDF(EstimatorDF, metaclass=ABCMeta):
 
         :param X: data frame with observations as rows and features as columns
         :param y: a series or data frame with the true outputs per observation
-        :param sample_weight: optional series of scalar weights, for calculating the \
-            resulting score as the weighted mean of the scores for the individual \
+        :param sample_weight: optional series of scalar weights, for calculating the
+            resulting score as the weighted mean of the scores for the individual
             predictions
         """
         pass
@@ -271,7 +271,7 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
 
         :param X: input data frame with observations as rows and features as columns
         :param y: an optional series or data frame with one or more outputs
-        :param fit_params: additional keyword parameters as required by specific \
+        :param fit_params: additional keyword parameters as required by specific
             transformer implementations
         :return: the transformed inputs
         """
@@ -345,10 +345,10 @@ class ClassifierDF(LearnerDF, ClassifierMixin, metaclass=ABCMeta):
         column names.
 
         :param X: input data frame with observations as rows and features as columns
-        :param predict_params: optional keyword parameters as required by specific \
+        :param predict_params: optional keyword parameters as required by specific
             learner implementations
-        :return: a data frame with observations as rows and classes as columns, and \
-            values as probabilities per observation and class; for multi-output \
+        :return: a data frame with observations as rows and classes as columns, and
+            values as probabilities per observation and class; for multi-output
             classifiers, a list of one observation/class data frames per output
         """
         pass
@@ -367,10 +367,10 @@ class ClassifierDF(LearnerDF, ClassifierMixin, metaclass=ABCMeta):
         column names.
 
         :param X: input data frame with observations as rows and features as columns
-        :param predict_params: optional keyword parameters as required by specific \
+        :param predict_params: optional keyword parameters as required by specific
             learner implementations
-        :return: a data frame with observations as rows and classes as columns, and \
-            values as log-probabilities per observation and class; for multi-output \
+        :return: a data frame with observations as rows and classes as columns, and
+            values as log-probabilities per observation and class; for multi-output
             classifiers, a list of one observation/class data frames per output
         """
         pass
@@ -389,10 +389,10 @@ class ClassifierDF(LearnerDF, ClassifierMixin, metaclass=ABCMeta):
         column names.
 
         :param X: input data frame with observations as rows and features as columns
-        :param predict_params: optional keyword parameters as required by specific \
+        :param predict_params: optional keyword parameters as required by specific
             learner implementations
-        :return: a data frame with observations as rows and classes as columns, and \
-            values as the raw values predicted per observation and class; \
-            for multi-output classifiers, a list of one observation/class data frames \
+        :return: a data frame with observations as rows and classes as columns, and
+            values as the raw values predicted per observation and class;
+            for multi-output classifiers, a list of one observation/class data frames
             per output
         """
