@@ -25,7 +25,7 @@ __all__ = ["OutlierRemoverDF", "BorutaDF"]
 T = TypeVar("T")
 
 #
-# class definitions
+# Class definitions
 #
 
 
