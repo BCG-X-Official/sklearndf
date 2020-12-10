@@ -13,8 +13,8 @@ required development dependencies in the ``sklearndf-develop`` environment.
 
 .. code-block:: sh
 
-	conda env create -f environment.yml
-	conda activate sklearndf-develop
+    conda env create -f environment.yml
+    conda activate sklearndf-develop
 
 This command will:
 
@@ -40,13 +40,13 @@ commit will …*, e.g.
 
 .. code-block:: RST
 
-	add method foo to class Bar
+    add method foo to class Bar
 
 but not
 
 .. code-block:: RST
 
-	added method foo to class Bar
+    added method foo to class Bar
 
 
 Documentation
@@ -460,8 +460,8 @@ use the following commands:
 
 .. code-block:: sh
 
-	python make.py sklearndf tox default
-	flit publish
+    python make.py sklearndf tox default
+    flit publish
 
 Please note the following:
 
@@ -493,8 +493,8 @@ use the following commands:
 
 .. code-block:: sh
 
-	python make.py sklearndf conda default
-	anaconda upload --user BCG_Gamma dist/conda/noarch/<*package.tar.gz*>
+    python make.py sklearndf conda default
+    anaconda upload --user BCG_Gamma dist/conda/noarch/<*package.tar.gz*>
 
 Please note the following:
 
