@@ -13,8 +13,8 @@ required development dependencies in the ``sklearndf-develop`` environment.
 
 .. code-block:: sh
 
-	conda env create -f environment.yml
-	conda activate sklearndf-develop
+    conda env create -f environment.yml
+    conda activate sklearndf-develop
 
 This command will:
 
@@ -40,13 +40,13 @@ commit will …*, e.g.
 
 .. code-block:: RST
 
-	add method foo to class Bar
+    add method foo to class Bar
 
 but not
 
 .. code-block:: RST
 
-	added method foo to class Bar
+    added method foo to class Bar
 
 
 Documentation
@@ -327,7 +327,7 @@ there are a few key points to be aware of:
   folder. To ensure these links are correct when the documentation is built, they are
   altered and then the contents of the ``README.rst`` is incorporated into the
   ``getting_started.rst`` which is generated during the build and can be found in
-  ``sphinx/source/gettting_started``.
+  ``sphinx/source/getting_started``.
 
 - The quick start guide based on the ``Boston_getting_started_example.ipynb`` notebook in
   the ``sphinx/auxiliary`` folder is not automatically included (unlike all the other
@@ -460,8 +460,8 @@ use the following commands:
 
 .. code-block:: sh
 
-	python make.py sklearndf tox default
-	flit publish
+    python make.py sklearndf tox default
+    flit publish
 
 Please note the following:
 
@@ -493,8 +493,8 @@ use the following commands:
 
 .. code-block:: sh
 
-	python make.py sklearndf conda default
-	anaconda upload --user BCG_Gamma dist/conda/noarch/<*package.tar.gz*>
+    python make.py sklearndf conda default
+    anaconda upload --user BCG_Gamma dist/conda/noarch/<*package.tar.gz*>
 
 Please note the following:
 
