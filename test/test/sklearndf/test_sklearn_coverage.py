@@ -15,10 +15,10 @@ import sklearndf.classification
 import sklearndf.pipeline
 import sklearndf.regression
 import sklearndf.transformation
+from .. import check_sklearn_version
+from ..conftest import UNSUPPORTED_SKLEARN_PACKAGES
+from ..sklearndf import find_all_submodules, list_classes, sklearn_delegate_classes
 from sklearndf import EstimatorDF
-from test import check_sklearn_version
-from test.conftest import UNSUPPORTED_SKLEARN_PACKAGES
-from test.sklearndf import find_all_submodules, list_classes, sklearn_delegate_classes
 
 Module = type(sklearn)
 
@@ -156,9 +156,9 @@ def _check_unexpected_sklearn_class(cls: Type) -> None:
 )
 def test_classifier_coverage(sklearn_classifier_cls: Type[ClassifierMixin]) -> None:
     """ Check if each sklearn classifier has a wrapped sklearndf counterpart. """
-    sklearn_classes: Dict[BaseEstimator, EstimatorDF] = sklearn_delegate_classes(
-        sklearndf.classification
-    )
+    sklearn_classes: Dict[
+        Type[BaseEstimator], Type[EstimatorDF]
+    ] = sklearn_delegate_classes(sklearndf.classification)
 
     if sklearn_classifier_cls not in sklearn_classes:
         _check_unexpected_sklearn_class(sklearn_classifier_cls)
@@ -169,9 +169,9 @@ def test_classifier_coverage(sklearn_classifier_cls: Type[ClassifierMixin]) -> N
 )
 def test_regressor_coverage(sklearn_regressor_cls: Type[RegressorMixin]) -> None:
     """ Check if each sklearn regressor has a wrapped sklearndf counterpart. """
-    sklearn_classes: Dict[BaseEstimator, EstimatorDF] = sklearn_delegate_classes(
-        sklearndf.regression
-    )
+    sklearn_classes: Dict[
+        Type[BaseEstimator], Type[EstimatorDF]
+    ] = sklearn_delegate_classes(sklearndf.regression)
 
     if sklearn_regressor_cls not in sklearn_classes:
         _check_unexpected_sklearn_class(sklearn_regressor_cls)
@@ -183,9 +183,9 @@ def test_regressor_coverage(sklearn_regressor_cls: Type[RegressorMixin]) -> None
 def test_transformer_coverage(sklearn_transformer_cls: Type[TransformerMixin]) -> None:
     """ Check if each sklearn transformer has a wrapped sklearndf counterpart. """
 
-    sklearn_classes: Dict[BaseEstimator, EstimatorDF] = sklearn_delegate_classes(
-        sklearndf.transformation
-    )
+    sklearn_classes: Dict[
+        Type[BaseEstimator], Type[EstimatorDF]
+    ] = sklearn_delegate_classes(sklearndf.transformation)
 
     if sklearn_transformer_cls not in sklearn_classes:
         _check_unexpected_sklearn_class(sklearn_transformer_cls)

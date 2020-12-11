@@ -1,7 +1,7 @@
 import re
 import sys
 from distutils import version
-from typing import Any, Iterable, List, Mapping, Optional, Set, Type, Union
+from typing import Any, Dict, Iterable, List, Optional, Set, Type, Union
 
 import pandas as pd
 import sklearn
@@ -41,7 +41,7 @@ def find_all_submodules(parent_module: Module) -> Set[Module]:
 
 def sklearn_delegate_classes(
     module: Module,
-) -> Mapping[Type[BaseEstimator], Type[_EstimatorWrapperDF]]:
+) -> Dict[Type[BaseEstimator], Type[_EstimatorWrapperDF]]:
     """ Creates a dictionary mapping from sklearndf -> sklearn classes. """
     return {
         df_class.__wrapped__: df_class
