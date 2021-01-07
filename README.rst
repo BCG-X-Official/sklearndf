@@ -214,7 +214,8 @@ so, please open a PR addressing the issue.
 We do ask that for any major changes please discuss these with us first via an issue or
 at our team email: FacetTeam@bcg.com.
 
-For further information on contributing please see our [LINK: contribution guide].
+For further information on contributing please see our
+`contribution guide <https://bcg-gamma.github.io/sklearndf/contribution_guide.html>`__.
 
 License
 ---------------------------
