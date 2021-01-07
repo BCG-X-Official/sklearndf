@@ -208,11 +208,11 @@ Contributing
 
 Contributions to *sklearndf* are welcome and appreciated.
 For any bug reports or feature requests/enhancements please use the appropriate
-`GitHub form <https://github.com/BCG-Gamma/sklearndf/issues>`_, and if you wish to do so,
-please open a PR addressing the issue.
+`GitHub form <https://github.com/BCG-Gamma/sklearndf/issues>`_, and if you wish to do
+so, please open a PR addressing the issue.
 
 We do ask that for any major changes please discuss these with us first via an issue or
-at our team email: FacetTeam <at> bcg <dot> com.
+at our team email: FacetTeam@bcg.com.
 
 For further information on contributing please see our [LINK: contribution guide].
 
@@ -220,26 +220,21 @@ License
 ---------------------------
 
 *sklearndf* is licensed under Apache 2.0 as described in the
-`LICENSE <https://github.com/BCG-Gamma/sklearndf/LICENSE>`_ file.
+`LICENSE <https://github.com/BCG-Gamma/sklearndf/blob/develop/LICENSE>`_ file.
 
 
 Acknowledgements
 ---------------------------
 
-This package provides a layer on top of some popular building blocks for Machine
-Learning:
-
-The `scikit-learn <https://github.com/scikit-learn/scikit-learn>`__ learners and
-pipelining support the corresponding *sklearndf* implementations.
+Learners and pipelining from the popular Machine Learning package
+`scikit-learn <https://github.com/scikit-learn/scikit-learn>`__  support
+the corresponding *sklearndf* implementations.
 
 BCG GAMMA
 ---------------------------
 
-If you would like to know more about the team behind *sklearndf* please see our
-[LINK: about us] page.
-
 We are always on the lookout for passionate and talented data scientists to join the
-BCG GAMMA team. If you would like to know more you can find out about BCG GAMMA
+BCG GAMMA team. If you would like to know more you can find out about
 `BCG GAMMA <https://www.bcg.com/en-gb/beyond-consulting/bcg-gamma/default>`_,
 or have a look at
 `career opportunities <https://www.bcg.com/en-gb/beyond-consulting/bcg-gamma/careers>`_.
