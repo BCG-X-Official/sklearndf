@@ -17,7 +17,7 @@ log = logging.getLogger(__name__)
 
 __all__ = ["LearnerPipelineDF", "RegressorPipelineDF", "ClassifierPipelineDF"]
 
-T = TypeVar("T")
+T_Self = TypeVar("T_Self")
 T_FinalEstimatorDF = TypeVar("T_FinalEstimatorDF", bound=EstimatorDF)
 T_FinalLearnerDF = TypeVar("T_FinalLearnerDF", bound=LearnerDF)
 T_FinalRegressorDF = TypeVar("T_FinalRegressorDF", bound=RegressorDF)
@@ -108,14 +108,14 @@ class _EstimatorPipelineDF(
 
     # noinspection PyPep8Naming
     def fit(
-        self: T,
+        self: T_Self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         *,
         feature_sequence: Optional[pd.Index] = None,
         sample_weight: Optional[pd.Series] = None,
         **fit_params,
-    ) -> T:
+    ) -> T_Self:
         """
         Fit this pipeline using the given inputs.
 
