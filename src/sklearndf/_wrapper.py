@@ -932,6 +932,7 @@ def df_estimator(
             function = update_wrapper(_make_forwarder(), delegate)
             docstring = f"see :meth:`{full_name}`"
             function.__doc__ = docstring
+            return function
         else:
             docstring = f"see :attr:`{full_name}`"
             if inspect.isdatadescriptor(delegate):
