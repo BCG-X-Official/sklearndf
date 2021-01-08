@@ -455,9 +455,10 @@ class _LearnerWrapperDF(
     Base class for wrappers around a delegate learner.
     """
 
+    #: Name for the series containing model predictions.
     COL_PREDICTION = "prediction"
 
-    # noinspection PyPep8Naming
+    # noinspection PyPep8NamingF
     def predict(
         self, X: pd.DataFrame, **predict_params
     ) -> Union[pd.Series, pd.DataFrame]:

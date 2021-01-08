@@ -40,6 +40,7 @@ class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     Provides enhanced support for data frames.
     """
 
+    #: Name for the series containing input feature names.
     COL_FEATURE_IN = "feature_in"
 
     def __new__(cls: Type["EstimatorDF"], *args, **kwargs) -> object:
@@ -213,6 +214,7 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
     Provides enhanced support for data frames.
     """
 
+    #: Name for the series containing feature names after transform.
     COL_FEATURE_OUT = "feature_out"
 
     def __init__(self, *args, **kwargs) -> None:

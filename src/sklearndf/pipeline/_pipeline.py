@@ -30,6 +30,7 @@ class _PipelineWrapperDF(
     _TransformerWrapperDF[Pipeline],
     metaclass=ABCMeta,
 ):
+    #: Name for transformes in the pipeline that are passthrough.
     PASSTHROUGH = "passthrough"
 
     def _validate_delegate_estimator(self) -> None:
