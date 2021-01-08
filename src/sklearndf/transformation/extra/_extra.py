@@ -22,7 +22,7 @@ __all__ = ["OutlierRemoverDF", "BorutaDF"]
 # type variables
 #
 
-T = TypeVar("T")
+T_Self = TypeVar("T_Self")
 
 #
 # Class definitions
@@ -45,7 +45,7 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
     def get_params(self, deep=True) -> Mapping[str, Any]:
         return super().get_params(deep)
 
-    def set_params(self: T, **kwargs) -> T:
+    def set_params(self: T_Self, **kwargs) -> T_Self:
         return super(**kwargs)
 
     def __init__(self, iqr_multiple: float = 3.0):
@@ -59,11 +59,11 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
 
     # noinspection PyPep8Naming
     def fit(
-        self: T,
+        self: T_Self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
-    ) -> T:
+    ) -> T_Self:
         """
         Fit the transformer.
 

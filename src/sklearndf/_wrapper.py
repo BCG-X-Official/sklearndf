@@ -74,7 +74,7 @@ INCLUDE_FULL_SKLEARN_DOCUMENTATION = False
 #
 
 T = TypeVar("T")
-
+T_Self = TypeVar("T_Self")
 T_DelegateEstimator = TypeVar("T_DelegateEstimator", bound=BaseEstimator)
 T_DelegateTransformer = TypeVar("T_DelegateTransformer", bound=TransformerMixin)
 T_DelegateLearner = TypeVar("T_DelegateLearner", RegressorMixin, ClassifierMixin)
@@ -168,7 +168,7 @@ class _EstimatorWrapperDF(
         """[see superclass]"""
         return self._delegate_estimator.get_params(deep=deep)
 
-    def set_params(self: T, **kwargs) -> T:
+    def set_params(self: T_Self, **kwargs) -> T_Self:
         """[see superclass]"""
         self: _EstimatorWrapperDF  # support type hinting in PyCharm
         self._delegate_estimator.set_params(**kwargs)
@@ -176,11 +176,11 @@ class _EstimatorWrapperDF(
 
     # noinspection PyPep8Naming
     def fit(
-        self: T,
+        self: T_Self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
-    ) -> T:
+    ) -> T_Self:
         """[see superclass]"""
 
         # support type hinting in PyCharm

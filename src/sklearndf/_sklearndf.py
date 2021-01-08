@@ -25,7 +25,7 @@ __all__ = ["EstimatorDF", "LearnerDF", "ClassifierDF", "RegressorDF", "Transform
 # type variables
 #
 
-T = TypeVar("T")
+T_Self = TypeVar("T_Self")
 T_EstimatorDF = TypeVar("T_EstimatorDF")
 
 #
@@ -66,11 +66,11 @@ class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     # noinspection PyPep8Naming
     @abstractmethod
     def fit(
-        self: T,
+        self: T_Self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params,
-    ) -> T:
+    ) -> T_Self:
         """
         Fit this estimator using the given inputs.
 
@@ -114,7 +114,7 @@ class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         # noinspection PyUnresolvedReferences
         return super().get_params(deep=deep)
 
-    def set_params(self: T, **kwargs) -> T:
+    def set_params(self: T_Self, **kwargs) -> T_Self:
         """
         Set the parameters of this estimator.
 
