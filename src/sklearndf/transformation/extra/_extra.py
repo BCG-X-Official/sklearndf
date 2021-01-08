@@ -4,7 +4,7 @@ Core implementation of :mod:`sklearndf.transformation.extra`
 
 import logging
 from abc import ABCMeta
-from typing import Any, Mapping, Optional, TypeVar, Union
+from typing import Optional, TypeVar, Union
 
 import pandas as pd
 from boruta import BorutaPy
@@ -41,12 +41,6 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
       samples in the above explanation (defaults to 3.0 as per Tukey's definition of
       far outliers)
     """
-
-    def get_params(self, deep=True) -> Mapping[str, Any]:
-        return super().get_params(deep)
-
-    def set_params(self: T_Self, **kwargs) -> T_Self:
-        return super(**kwargs)
 
     def __init__(self, iqr_multiple: float = 3.0):
         super().__init__()
