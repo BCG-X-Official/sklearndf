@@ -15,6 +15,7 @@ from sklearn.base import (
     clone,
 )
 
+from pytools.api import AllTracker
 from pytools.fit import FittableMixin
 
 log = logging.getLogger(__name__)
@@ -27,6 +28,14 @@ __all__ = ["EstimatorDF", "LearnerDF", "ClassifierDF", "RegressorDF", "Transform
 
 T_Self = TypeVar("T_Self")
 T_EstimatorDF = TypeVar("T_EstimatorDF")
+
+
+#
+# Ensure all symbols introduced below are included in __all__
+#
+
+__tracker = AllTracker(globals())
+
 
 #
 # Class definitions
@@ -407,3 +416,6 @@ class ClassifierDF(LearnerDF, ClassifierMixin, metaclass=ABCMeta):
             for multi-output classifiers, a list of one observation/class data frames
             per output
         """
+
+
+__tracker.validate()

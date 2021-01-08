@@ -88,6 +88,8 @@ from sklearn.preprocessing import (
 )
 from sklearn.random_projection import GaussianRandomProjection, SparseRandomProjection
 
+from pytools.api import AllTracker
+
 from .. import TransformerDF
 from .._wrapper import _TransformerWrapperDF, df_estimator
 from ._wrapper import (
@@ -173,6 +175,12 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 # The following TypeVar helps to annotate availability of "add_indicator" and
 # "missing_values" attributes on an imputer instance for _ImputerWrapperDF below
 T_Imputer = TypeVar("T_Imputer", SimpleImputer, IterativeImputer)
+
+#
+# Ensure all symbols introduced below are included in __all__
+#
+
+__tracker = AllTracker(globals())
 
 #
 # cluster
@@ -1132,18 +1140,22 @@ class GenericUnivariateSelectDF(TransformerDF, GenericUnivariateSelect):
     pass
 
 
+__tracker.validate()
+
+
 #
 # validate that __all__ comprises all symbols ending in "DF", and no others
 #
 
-__estimators = [
+__estimators = {
     sym
     for sym in dir()
     if sym.endswith("DF")
     and sym not in __imported_estimators
     and not sym.startswith("_")
-]
-if set(__estimators) != set(__all__):
+}
+
+if __estimators != set(__all__):
     raise RuntimeError(
         "__all__ does not contain exactly all DF estimators; expected value is:\n"
         f"{__estimators}"

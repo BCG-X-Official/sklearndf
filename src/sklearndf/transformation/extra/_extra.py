@@ -10,7 +10,7 @@ import pandas as pd
 from boruta import BorutaPy
 from sklearn.base import BaseEstimator
 
-from pytools.api import inheritdoc
+from pytools.api import AllTracker, inheritdoc
 
 from ... import TransformerDF
 from ..._wrapper import _MetaEstimatorWrapperDF, df_estimator
@@ -20,11 +20,20 @@ log = logging.getLogger(__name__)
 
 __all__ = ["OutlierRemoverDF", "BorutaDF"]
 
+
 #
 # type variables
 #
 
 T_Self = TypeVar("T_Self")
+
+
+#
+# Ensure all symbols introduced below are included in __all__
+#
+
+__tracker = AllTracker(globals())
+
 
 #
 # Class definitions
@@ -176,3 +185,6 @@ class BorutaDF(TransformerDF, BorutaPy):
     """
 
     pass
+
+
+__tracker.validate()
