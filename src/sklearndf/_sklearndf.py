@@ -232,7 +232,6 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
     #:
     #: See :meth:`~.TransformerDF.feature_names_out_` and
     #: :meth:`.feature_names_original_`.
-
     COL_FEATURE_OUT = "feature_out"
 
     def __init__(self, *args, **kwargs) -> None:
