@@ -10,6 +10,8 @@ import pandas as pd
 from boruta import BorutaPy
 from sklearn.base import BaseEstimator
 
+from pytools.api import inheritdoc
+
 from ... import TransformerDF
 from ..._wrapper import _MetaEstimatorWrapperDF, df_estimator
 from .._wrapper import _ColumnSubsetTransformerWrapperDF, _NDArrayTransformerWrapperDF
@@ -29,6 +31,7 @@ T_Self = TypeVar("T_Self")
 #
 
 
+@inheritdoc(match="[see superclass]")
 class OutlierRemoverDF(TransformerDF, BaseEstimator):
     """
     Remove outliers according to Tukey's method.
@@ -88,6 +91,7 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
 
     @property
     def is_fitted(self) -> bool:
+        """[see superclass]"""
         return self.threshold_low_ is not None
 
     def _get_features_original(self) -> pd.Series:
