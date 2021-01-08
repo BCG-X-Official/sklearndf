@@ -30,6 +30,8 @@ class _PipelineWrapperDF(
     _TransformerWrapperDF[Pipeline],
     metaclass=ABCMeta,
 ):
+    #: Placeholder that can be used in place of an estimator to designate a pipeline
+    #: step that preserves the original ingoing data
     PASSTHROUGH = "passthrough"
 
     def _validate_delegate_estimator(self) -> None:

@@ -454,6 +454,10 @@ class _LearnerWrapperDF(
     Base class for wrappers around a delegate learner.
     """
 
+    #: Name of :class:`pd.Series` objects containing the predictions of single-output
+    #: learners.
+    #:
+    #: See :meth:`~.LearnerDF.predict`.
     COL_PREDICTION = "prediction"
 
     # noinspection PyPep8Naming
