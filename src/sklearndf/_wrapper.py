@@ -458,7 +458,7 @@ class _LearnerWrapperDF(
     #: Name for the series containing model predictions.
     COL_PREDICTION = "prediction"
 
-    # noinspection PyPep8NamingF
+    # noinspection PyPep8Naming
     def predict(
         self, X: pd.DataFrame, **predict_params
     ) -> Union[pd.Series, pd.DataFrame]:
