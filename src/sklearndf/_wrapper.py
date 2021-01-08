@@ -149,7 +149,8 @@ class _EstimatorWrapperDF(
     ) -> T_EstimatorWrapperDF:
         """
         Make a new wrapped data frame estimator whose delegate is an estimator which
-        has already been fitted
+        has already been fitted.
+
         :param estimator: the fitted estimator
         :param features_in: the column names of X used for fitting the estimator
         :param n_outputs: the number of outputs in y used for fitting the estimator
@@ -972,9 +973,9 @@ def df_estimator(
                     *tag_line,
                     (
                         f"""
-.. note:: This class is a wrapper around class :class:{estimator_name}.
+.. note:: This class is a wrapper around class :class:`{estimator_name}`.
    It provides enhanced support for pandas data frames, and otherwise
-   replicates all parameters and behaviours of class :class:~{estimator_name}."""
+   replicates all parameters and behaviours of class :class:`~{estimator_name}`."""
                     ),
                     *(base_doc_lines if INCLUDE_FULL_SKLEARN_DOCUMENTATION else []),
                 ]
