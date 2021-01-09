@@ -27,6 +27,7 @@ from typing import (
     Mapping,
     Optional,
     Sequence,
+    Set,
     Type,
     TypeVar,
     Union,
@@ -925,7 +926,7 @@ def df_estimator(
         delegate_type: Type[T_DelegateEstimator], wrapper_module: str
     ) -> Dict[str, Any]:
 
-        inherit_from_base_wrapper: Dict[str, Any] = vars(df_wrapper_type)
+        inherit_from_base_wrapper: Set[str] = set(dir(df_wrapper_type))
 
         new_dict = {
             name: _make_alias(
