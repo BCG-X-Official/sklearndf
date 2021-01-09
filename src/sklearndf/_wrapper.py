@@ -13,12 +13,10 @@ The wrappers also implement the additional column attributes introduced by `skle
 
 import inspect
 import logging
-import re
 from abc import ABCMeta, abstractmethod
 from functools import update_wrapper
 from typing import (
     Any,
-    AnyStr,
     Callable,
     Dict,
     Generic,
@@ -64,11 +62,6 @@ __all__ = [
     "_StackingRegressorWrapperDF",
 ]
 
-#
-# Flags
-#
-
-INCLUDE_FULL_SKLEARN_DOCUMENTATION = False
 
 #
 # type variables
@@ -952,7 +945,8 @@ def df_estimator(
 
             return _forwarder
 
-        full_name = f"{_full_name(cls=delegate_cls)}.{name}"
+        class_name = _full_name(cls=delegate_cls)
+        full_name = f"{class_name}.{name}"
 
         if inspect.isfunction(delegate):
             function = _update_wrapper(
@@ -962,7 +956,7 @@ def df_estimator(
             function.__doc__ = docstring
             return function
         else:
-            docstring = f"See :attr:`{full_name}`"
+            docstring = f"See documentation of :class:`{class_name}`."
             if inspect.isdatadescriptor(delegate):
                 return property(
                     fget=lambda self: delegate.__get__(self._delegate_estimator),
@@ -998,29 +992,38 @@ def df_estimator(
         sklearn_native_estimator_type: Type[BaseEstimator],
     ):
         base_doc = sklearn_native_estimator_type.__doc__
-        if base_doc is not None:
-            base_doc_lines = _parse_pandas_class_docstring(pandas_doc=base_doc)
 
-            # does the pandas docstring start with a tag line?
-            tag_line: List[AnyStr] = []
-            if len(base_doc_lines) >= 3 and len(base_doc_lines[1]) == 0:
-                tag_line.append(base_doc_lines[0])
-                del base_doc_lines[:2]
+        if not base_doc:
+            return
 
-            estimator_name = _full_name(cls=sklearn_native_estimator_type)
+        base_doc_lines = base_doc.split("\n")
 
-            df_estimator_type.__doc__ = "\n".join(
-                [
-                    *tag_line,
-                    (
-                        f"""
+        # use the first paragraph as the tag line
+        tag_lines: List[str] = []
+        for line in base_doc_lines:
+            # end of paragraph reached?
+            stripped = line.strip()
+            if stripped:
+                # no: append line to tag lines
+                tag_lines.append(stripped)
+            elif tag_lines:
+                # empty line and we already have tag lines: stop here
+                break
+
+        estimator_name = _full_name(cls=sklearn_native_estimator_type)
+
+        df_estimator_type.__doc__ = "\n".join(
+            [
+                *tag_lines,
+                "",
+                (
+                    f"""
 .. note:: This class is a wrapper around class :class:`{estimator_name}`.
    It provides enhanced support for pandas data frames, and otherwise
    replicates all parameters and behaviours of class :class:`~{estimator_name}`."""
-                    ),
-                    *(base_doc_lines if INCLUDE_FULL_SKLEARN_DOCUMENTATION else []),
-                ]
-            )
+                ),
+            ]
+        )
 
     def _full_name(cls: type):
         # get the full name of the object, including the module prefix
@@ -1047,37 +1050,6 @@ def df_estimator(
                 f"that implements class {BaseEstimator.__name__}"
             )
         return sklearn_native_estimators[0]
-
-    def _parse_pandas_class_docstring(pandas_doc: AnyStr) -> List[AnyStr]:
-        base_doc_split = re.split(
-            r"^\s*((?:\w+\s)*\w+)\s*\n\s*-+\s*$",
-            pandas_doc.replace("``", "`"),
-            flags=re.MULTILINE,
-        )
-        doc_head = base_doc_split[0]
-        doc_sections = dict(zip(base_doc_split[1::2], base_doc_split[2::2]))
-        return [
-            *doc_head.split("\n"),
-            *(
-                _parse_pandas_parameters(
-                    parameters_section=doc_sections.get("Parameters", "")
-                )
-                if INCLUDE_FULL_SKLEARN_DOCUMENTATION
-                else []
-            ),
-        ]
-
-    def _parse_pandas_parameters(parameters_section: AnyStr) -> List[AnyStr]:
-        parameters = re.split(r"\s*\n\s*\n", parameters_section, flags=re.MULTILINE)
-        # return [f"{len(parameters)} params"]
-        return [
-            re.sub(
-                r"\s*(\w+)\s*:\s*(.*\S)\s*\n((.*\n)*.*)",
-                r":param \1: ``\2``: \3",
-                parameter,
-            ).replace("\n", " ")
-            for parameter in parameters
-        ]
 
     if not issubclass(df_wrapper_type, _EstimatorWrapperDF):
         raise ValueError(
