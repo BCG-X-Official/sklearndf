@@ -948,7 +948,7 @@ def df_estimator(
     def _make_alias(module: str, name: str, delegate_cls: type, delegate: T) -> T:
         def _make_forwarder() -> callable:
             def _forwarder(self, *args, **kwargs) -> Any:
-                return delegate(self._delegate, *args, **kwargs)
+                return delegate(self._delegate_estimator, *args, **kwargs)
 
             return _forwarder
 
@@ -965,9 +965,11 @@ def df_estimator(
             docstring = f"See :attr:`{full_name}`"
             if inspect.isdatadescriptor(delegate):
                 return property(
-                    fget=lambda self: delegate.__get__(self._delegate),
-                    fset=lambda self, value: delegate.__set__(self._delegate, value),
-                    fdel=lambda self: delegate.__delete__(self._delegate),
+                    fget=lambda self: delegate.__get__(self._delegate_estimator),
+                    fset=lambda self, value: delegate.__set__(
+                        self._delegate_estimator, value
+                    ),
+                    fdel=lambda self: delegate.__delete__(self._delegate_estimator),
                     doc=docstring,
                 )
             else:
