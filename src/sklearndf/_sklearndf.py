@@ -49,8 +49,8 @@ class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     Provides enhanced support for data frames.
     """
 
-    #: Name assigned to an :class:`.Index` or a :class:`.Series` containing the names of
-    #: the features used to fit a :class:`.EstimatorDF`.
+    #: Name assigned to an :class:`~pandas.Index` or a :class:`~pandas.Series`
+    #: containing the names of the features used to fit a :class:`.EstimatorDF`.
     #:
     #: See :meth:`.feature_names_in_` and
     #: :meth:`~.TransformerDF.feature_names_original_`.
@@ -227,8 +227,8 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
     Provides enhanced support for data frames.
     """
 
-    #: Name assigned to an :class:`.Index` containing the names of the features produced
-    #: by a :class:`.TransformerDF`.
+    #: Name assigned to a :class:`~pandas.Index` containing the names of the features
+    #: produced by a :class:`.TransformerDF`.
     #:
     #: See :meth:`~.TransformerDF.feature_names_out_` and
     #: :meth:`.feature_names_original_`.
