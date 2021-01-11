@@ -15,6 +15,7 @@ from sklearn.base import (
     clone,
 )
 
+from pytools.api import AllTracker
 from pytools.fit import FittableMixin
 
 log = logging.getLogger(__name__)
@@ -28,6 +29,14 @@ __all__ = ["EstimatorDF", "LearnerDF", "ClassifierDF", "RegressorDF", "Transform
 T_Self = TypeVar("T_Self")
 T_EstimatorDF = TypeVar("T_EstimatorDF")
 
+
+#
+# Ensure all symbols introduced below are included in __all__
+#
+
+__tracker = AllTracker(globals())
+
+
 #
 # Class definitions
 #
@@ -40,7 +49,11 @@ class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     Provides enhanced support for data frames.
     """
 
-    #: Name for the series containing input feature names.
+    #: Name assigned to an :class:`~pandas.Index` or a :class:`~pandas.Series`
+    #: containing the names of the features used to fit a :class:`.EstimatorDF`.
+    #:
+    #: See :meth:`.feature_names_in_` and
+    #: :meth:`~.TransformerDF.feature_names_original_`.
     COL_FEATURE_IN = "feature_in"
 
     def __new__(cls: Type["EstimatorDF"], *args, **kwargs) -> object:
@@ -214,7 +227,11 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
     Provides enhanced support for data frames.
     """
 
-    #: Name for the series containing feature names after transform.
+    #: Name assigned to a :class:`~pandas.Index` containing the names of the features
+    #: produced by a :class:`.TransformerDF`.
+    #:
+    #: See :meth:`~.TransformerDF.feature_names_out_` and
+    #: :meth:`.feature_names_original_`.
     COL_FEATURE_OUT = "feature_out"
 
     def __init__(self, *args, **kwargs) -> None:
@@ -398,3 +415,6 @@ class ClassifierDF(LearnerDF, ClassifierMixin, metaclass=ABCMeta):
             for multi-output classifiers, a list of one observation/class data frames
             per output
         """
+
+
+__tracker.validate()

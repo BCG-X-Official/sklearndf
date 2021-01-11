@@ -49,6 +49,8 @@ from sklearn.semi_supervised import LabelPropagation, LabelSpreading
 from sklearn.svm import SVC, LinearSVC, NuSVC
 from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
 
+from pytools.api import AllTracker
+
 from .. import ClassifierDF
 from .._wrapper import _ClassifierWrapperDF, _MetaClassifierWrapperDF, df_estimator
 
@@ -76,8 +78,8 @@ __all__ = [
     "LogisticRegressionCVDF",
     "LogisticRegressionDF",
     "MLPClassifierDF",
-    "MultiOutputClassifierDF",
     "MultinomialNBDF",
+    "MultiOutputClassifierDF",
     "NearestCentroidDF",
     "NuSVCDF",
     "OneVsOneClassifierDF",
@@ -96,6 +98,19 @@ __all__ = [
 ]
 
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
+
+
+#
+# Ensure all symbols introduced below are included in __all__
+#
+
+__tracker = AllTracker(globals())
+
+
+#
+# Class definitions
+#
+
 
 #
 # Dummy
@@ -544,9 +559,6 @@ class OutputCodeClassifierDF(ClassifierDF, OutputCodeClassifier):
 # multi-output
 #
 
-# estimators attribute of abstract class MultiOutputEstimator
-ATTR_MULTI_OUTPUT_ESTIMATORS = "estimators_"
-
 
 class _MultiOutputClassifierWrapperDF(
     _MetaClassifierWrapperDF[sklearn.multioutput.MultiOutputClassifier],
@@ -573,17 +585,18 @@ class _MultiOutputClassifierWrapperDF(
         # store the super() object as this is not available within a generator
         sup = super()
 
+        # estimators attribute of abstract class MultiOutputEstimator
         # usually the delegate estimator will provide a list of estimators used
         # to predict each output. If present, use these estimators to get
         # individual class labels for each output; otherwise we cannot assign class
         # labels
-        if hasattr(delegate_estimator, ATTR_MULTI_OUTPUT_ESTIMATORS):
+        if hasattr(delegate_estimator, "estimators_"):
             return [
                 sup._prediction_with_class_labels(
                     X=X, y=output, classes=getattr(estimator, "classes_", None)
                 )
                 for estimator, output in zip(
-                    getattr(delegate_estimator, ATTR_MULTI_OUTPUT_ESTIMATORS), y
+                    getattr(delegate_estimator, "estimators_"), y
                 )
             ]
         else:
@@ -650,18 +663,21 @@ class MLPClassifierDF(ClassifierDF, MLPClassifier):
     pass
 
 
+__tracker.validate()
+
+
 #
 # validate that __all__ comprises all symbols ending in "DF", and no others
 #
 
-__estimators = [
+__estimators = {
     sym
     for sym in dir()
     if sym.endswith("DF")
     and sym not in __imported_estimators
     and not sym.startswith("_")
-]
-if set(__estimators) != set(__all__):
+}
+if __estimators != set(__all__):
     raise RuntimeError(
         "__all__ does not contain exactly all DF estimators; expected value is:\n"
         f"{__estimators}"

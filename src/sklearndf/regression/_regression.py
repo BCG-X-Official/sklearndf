@@ -54,6 +54,8 @@ from sklearn.neural_network import MLPRegressor
 from sklearn.svm import SVR, LinearSVR, NuSVR
 from sklearn.tree import DecisionTreeRegressor, ExtraTreeRegressor
 
+from pytools.api import AllTracker
+
 from .. import RegressorDF, TransformerDF
 from .._wrapper import _MetaRegressorWrapperDF, _RegressorWrapperDF, df_estimator
 
@@ -122,6 +124,17 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 
 T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
 
+
+#
+# Ensure all symbols introduced below are included in __all__
+#
+
+__tracker = AllTracker(globals())
+
+
+#
+# Class definitions
+#
 
 #
 # wrapper for hybrid regressor/transformer classes
@@ -759,18 +772,21 @@ class PLSCanonicalDF(RegressorDF, TransformerDF, PLSCanonical):
     pass
 
 
+__tracker.validate()
+
+
 #
 # validate that __all__ comprises all symbols ending in "DF", and no others
 #
 
-__estimators = [
+__estimators = {
     sym
     for sym in dir()
     if sym.endswith("DF")
     and sym not in __imported_estimators
     and not sym.startswith("_")
-]
-if set(__estimators) != set(__all__):
+}
+if __estimators != set(__all__):
     raise RuntimeError(
         "__all__ does not contain exactly all DF estimators; expected value is:\n"
         f"{__estimators}"

@@ -11,6 +11,8 @@ import pandas as pd
 from pandas.core.arrays import ExtensionArray
 from sklearn.pipeline import FeatureUnion, Pipeline
 
+from pytools.api import AllTracker
+
 from .. import ClassifierDF, EstimatorDF, RegressorDF, TransformerDF
 from .._wrapper import (
     _ClassifierWrapperDF,
@@ -24,13 +26,26 @@ log = logging.getLogger(__name__)
 __all__ = ["PipelineDF", "FeatureUnionDF"]
 
 
+#
+# Ensure all symbols introduced below are included in __all__
+#
+
+__tracker = AllTracker(globals())
+
+
+#
+# Class definitions
+#
+
+
 class _PipelineWrapperDF(
     _ClassifierWrapperDF[Pipeline],
     _RegressorWrapperDF[Pipeline],
     _TransformerWrapperDF[Pipeline],
     metaclass=ABCMeta,
 ):
-    #: Name for transformes in the pipeline that are passthrough.
+    #: Placeholder that can be used in place of an estimator to designate a pipeline
+    #: step that preserves the original ingoing data.
     PASSTHROUGH = "passthrough"
 
     def _validate_delegate_estimator(self) -> None:
@@ -255,3 +270,6 @@ class FeatureUnionDF(TransformerDF, FeatureUnion):
     """
 
     pass
+
+
+__tracker.validate()
