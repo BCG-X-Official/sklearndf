@@ -64,7 +64,7 @@ class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
                 f"a subclass of {BaseEstimator.__name__}"
             )
 
-        return super().__new__(cls, *args, **kwargs)
+        return super().__new__(cls)
 
     @property
     def native_estimator(self) -> BaseEstimator:
