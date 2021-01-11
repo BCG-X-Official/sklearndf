@@ -9,7 +9,7 @@ exclude = [".idea", "tmp", "dist", ".tox", ".pytest_cache"]
 module = "sklearndf"
 author = "Boston Consulting Group (BCG)"
 home-page = "https://github.com/BCG-Gamma/sklearndf"
-description-file = "README.rst"
+description-file = "pypi_description.rst"
 dist-name = "sklearndf"
 license = "Apache Software License v2.0"
 
