@@ -1,0 +1,66 @@
+package:
+  name: sklearndf
+  version: {{ environ.get('FACET_BUILD_SKLEARNDF_VERSION') }}
+
+source:
+  git_url: {{FACET_PATH}}/sklearndf
+
+build:
+  noarch: python
+  script: "flit install --deps none"
+
+requirements:
+  host:
+    - pip>=20.*
+    - python {{ environ.get('FACET_V_PYTHON', '=3.8.*') }}
+    - flit>=3.0.*
+# note: sklearndf.__init__ already needs pytools, pandas & sklearn:
+    - pandas{{ environ.get('FACET_V_PANDAS') }}
+    - scikit-learn{{ environ.get('FACET_V_SCIKIT_LEARN') }}
+    - gamma-pytools{{ environ.get('FACET_V_GAMMA_PYTOOLS') }}
+    - packaging>=20
+  run:
+    - python{{ environ.get('FACET_V_PYTHON') }}
+    - pandas{{ environ.get('FACET_V_PANDAS') }}
+    - numpy{{ environ.get('FACET_V_NUMPY') }}
+    - joblib{{ environ.get('FACET_V_JOBLIB') }}
+    - scipy{{ environ.get('FACET_V_SCIPY') }}
+    - pyyaml{{ environ.get('FACET_V_PYYAML') }}
+    - typing_inspect{{ environ.get('FACET_V_TYPING_INSPECT') }}
+    - scikit-learn{{ environ.get('FACET_V_SCIKIT_LEARN') }}
+    - boruta_py{{ environ.get('FACET_V_BORUTA') }}
+    - lightgbm{{ environ.get('FACET_V_LIGHTGBM') }}
+    - gamma-pytools{{ environ.get('FACET_V_GAMMA_PYTOOLS') }}
+    - packaging>=20
+test:
+  imports:
+    - sklearndf
+    - sklearndf.classification
+    - sklearndf.classification.extra
+    - sklearndf.pipeline
+    - sklearndf.regression
+    - sklearndf.regression.extra
+    - sklearndf.transformation
+    - sklearndf.transformation.extra
+  requires:
+    - pytest=5.2.*
+  commands:
+    - conda list
+    - python -c 'import sklearndf;
+                 import os;
+                 assert sklearndf.__version__ == os.environ["PKG_VERSION"]'
+    - pytest -vs ${FACET_PATH}/pytools/test
+    - pytest -vs ${FACET_PATH}/sklearndf/test
+
+about:
+  home: https://github.com/BCG-Gamma/sklearndf
+  license: Apache Software License v2.0
+  license_file: LICENSE
+  description: |
+    sklearndf is an open source library designed to address a common need with
+    scikit-learn: the outputs of transformers are numpy arrays, even when the input
+    is a data frame. However, to inspect a model it is essential to keep track of
+    the feature names.
+  dev_url: https://github.com/BCG-Gamma/sklearndf
+  doc_url: https://bcg-gamma.github.io/sklearndf/
+  doc_source_url: https://github.com/BCG-Gamma/sklearndf/blob/develop/README.rst
