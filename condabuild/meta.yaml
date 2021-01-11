@@ -56,7 +56,7 @@ about:
   home: https://github.com/BCG-Gamma/sklearndf
   license: Apache Software License v2.0
   license_file: LICENSE
-  summary: |
+  description: |
     sklearndf is an open source library designed to address a common need with
     scikit-learn: the outputs of transformers are numpy arrays, even when the input
     is a data frame. However, to inspect a model it is essential to keep track of
