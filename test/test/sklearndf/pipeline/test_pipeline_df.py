@@ -11,15 +11,15 @@ from typing import Any, Dict, Mapping
 import joblib
 import numpy as np
 import pandas as pd
-from sklearn import clone
-from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.feature_selection import f_classif
-from sklearn.utils.testing import (
+from numpy.testing import (
     assert_array_equal,
     assert_no_warnings,
     assert_raises,
     assert_raises_regex,
 )
+from sklearn import clone
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.feature_selection import f_classif
 
 from sklearndf import TransformerDF
 from sklearndf._wrapper import df_estimator
