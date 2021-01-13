@@ -1,4 +1,4 @@
-name: sklearndf-develop
+name: facet-develop
 channels:
   - conda-forge
 dependencies:
