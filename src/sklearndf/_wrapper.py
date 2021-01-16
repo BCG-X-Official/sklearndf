@@ -95,13 +95,8 @@ class _EstimatorWrapperDF(
     instantiate the delegate estimator to be wrapped.
     """
 
-    def __init__(
-        self, *args, _delegate_estimator: Optional[T_DelegateEstimator] = None, **kwargs
-    ) -> None:
+    def __init__(self, *args, **kwargs) -> None:
         """
-        :param _delegate_estimator: (optional) an estimator to use as the delegate;
-            if specified, do not create a new estimator and ignore any other arguments
-            passed to this initializer
         :param args: positional arguments to use when initializing a new new delegate
             estimator
         :param kwargs: keyword arguments to use when initializing a new new delegate
@@ -109,14 +104,9 @@ class _EstimatorWrapperDF(
         """
         super().__init__()
 
-        if _delegate_estimator is None:
-            # create a new delegate estimator with the given parameters
-            # noinspection PyProtectedMember
-            self._delegate_estimator = type(self)._make_delegate_estimator(
-                *args, **kwargs
-            )
-        else:
-            self._delegate_estimator = _delegate_estimator
+        # create a new delegate estimator with the given parameters
+        # noinspection PyProtectedMember
+        self._delegate_estimator = type(self)._make_delegate_estimator(*args, **kwargs)
 
         self._validate_delegate_estimator()
 
@@ -153,9 +143,13 @@ class _EstimatorWrapperDF(
 
         class _FittedEstimator(cls):
             def __init__(self) -> None:
-                super().__init__(_delegate_estimator=estimator)
+                super().__init__()
                 self._features_in = features_in
                 self._n_outputs = n_outputs
+
+            @classmethod
+            def _make_delegate_estimator(cls) -> T_DelegateEstimator:
+                return estimator
 
         return _FittedEstimator()
 
