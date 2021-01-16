@@ -10,8 +10,7 @@ from sklearn.naive_bayes import CategoricalNB
 
 from pytools.api import AllTracker
 
-from .. import ClassifierDF
-from .._wrapper import _ClassifierWrapperDF, _StackingClassifierWrapperDF, df_estimator
+from .._wrapper import _StackingClassifierWrapperDF, make_df_classifier
 
 log = logging.getLogger(__name__)
 
@@ -31,35 +30,22 @@ __tracker = AllTracker(globals())
 # Class definitions
 #
 
-
 # todo: add other classification implementations for sklearn 0.22
 
 #
 # naive bayes
 #
 
-# noinspection PyAbstractClass
+CategoricalNBDF = make_df_classifier(CategoricalNB)
+
+StackingClassifierDF = make_df_classifier(
+    StackingClassifier, df_wrapper_type=_StackingClassifierWrapperDF
+)
 
 
-@df_estimator(df_wrapper_type=_ClassifierWrapperDF)
-class CategoricalNBDF(ClassifierDF, CategoricalNB):
-    """
-    Wraps :class:`sklearn.naive_bayes.CategoricalNB`; accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_StackingClassifierWrapperDF)
-class StackingClassifierDF(ClassifierDF, StackingClassifier):
-    """
-    Wraps :class:`sklearn.ensemble._stacking.StackingClassifier`;
-    accepts and returns data frames.
-    """
-
-    pass
-
+#
+# validate __all__
+#
 
 __tracker.validate()
 
