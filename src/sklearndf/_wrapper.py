@@ -1168,7 +1168,7 @@ def make_df_estimator(
 def make_df_transformer(
     transformer: Type[T_DelegateTransformer],
     *,
-    module: str = "sklearndf.transformation",
+    module: str,
     df_wrapper_type: Optional[Type[T_TransformerWrapperDF]] = None,
 ) -> Union[Type[T_TransformerWrapperDF], Type[T_DelegateTransformer]]:
     return df_transformer(
@@ -1184,7 +1184,7 @@ def make_df_transformer(
 def make_df_classifier(
     classifier: Type[T_DelegateClassifier],
     *,
-    module: str = "sklearndf.classification",
+    module: str,
     df_wrapper_type: Optional[T_ClassifierWrapperDF] = None,
 ) -> Union[Type[T_ClassifierWrapperDF], Type[T_DelegateClassifier]]:
     return df_classifier(
@@ -1200,7 +1200,7 @@ def make_df_classifier(
 def make_df_regressor(
     regressor: Type[T_DelegateRegressor],
     *,
-    module: str = "sklearndf.regression",
+    module: str,
     df_wrapper_type: Optional[T_RegressorWrapperDF] = None,
 ) -> Union[Type[T_RegressorWrapperDF], Type[T_DelegateRegressor]]:
     return df_regressor(

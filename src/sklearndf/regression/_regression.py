@@ -1,6 +1,7 @@
 """
 Core implementation of :mod:`sklearndf.regression`
 """
+import functools
 import logging
 from abc import ABCMeta
 from typing import Any, Generic, Optional, TypeVar, Union
@@ -130,10 +131,17 @@ T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
 
 __tracker = AllTracker(globals())
 
+#
+# Set the module for new DF classes
+#
+
+make_df_regressor = functools.partial(make_df_regressor, module="sklearndf.regression")
+
 
 #
 # Class definitions
 #
+
 
 #
 # wrapper for hybrid regressor/transformer classes

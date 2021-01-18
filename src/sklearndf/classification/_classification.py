@@ -1,6 +1,7 @@
 """
 Core implementation of :mod:`sklearndf.classification`
 """
+import functools
 import logging
 from abc import ABCMeta
 from typing import Any, List, Optional, Sequence, Union
@@ -104,6 +105,15 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 #
 
 __tracker = AllTracker(globals())
+
+
+#
+# Set the module for new DF classes
+#
+
+make_df_classifier = functools.partial(
+    make_df_classifier, module="sklearndf.classification"
+)
 
 
 #

@@ -2,7 +2,7 @@
 Additional implementation of :mod:`sklearndf.classification` loaded
 from sklearn 0.22 onwards
 """
-
+import functools
 import logging
 
 from sklearn.ensemble import StackingClassifier
@@ -24,6 +24,15 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 #
 
 __tracker = AllTracker(globals())
+
+
+#
+# Set the module for new DF classes
+#
+
+make_df_classifier = functools.partial(
+    make_df_classifier, module="sklearndf.classification"
+)
 
 
 #
