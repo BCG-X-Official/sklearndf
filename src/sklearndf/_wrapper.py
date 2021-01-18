@@ -54,8 +54,11 @@ __all__ = [
     "_LearnerWrapperDF",
     "_ClassifierWrapperDF",
     "df_estimator",
+    "df_transformer",
     "df_classifier",
     "df_regressor",
+    "make_df_estimator",
+    "make_df_transformer",
     "make_df_classifier",
     "make_df_regressor",
     "_MetaClassifierWrapperDF",
@@ -838,7 +841,7 @@ class _StackingRegressorWrapperDF(
 #
 
 
-class _DFDecorator(metaclass=SingletonMeta):
+class _DFEstimatorDecorator(metaclass=SingletonMeta):
     @property
     def _df_wrapper_base_type(self) -> Type[_EstimatorWrapperDF]:
         return _EstimatorWrapperDF
@@ -1103,23 +1106,56 @@ class _DFDecorator(metaclass=SingletonMeta):
         return sklearn_native_estimators[0]
 
 
-class _DFClassifierDecorator(_DFDecorator):
+class _DFTransformerDecorator(_DFEstimatorDecorator):
+    @property
+    def _df_wrapper_base_type(self) -> Type[_TransformerWrapperDF]:
+        return _TransformerWrapperDF
+
+
+class _DFClassifierDecorator(_DFEstimatorDecorator):
     @property
     def _df_wrapper_base_type(self) -> Type[_ClassifierWrapperDF]:
         return _ClassifierWrapperDF
 
 
-class _DFRegressorDecorator(_DFDecorator):
+class _DFRegressorDecorator(_DFEstimatorDecorator):
     @property
     def _df_wrapper_base_type(self) -> Type[_RegressorWrapperDF]:
         return _RegressorWrapperDF
 
 
-df_estimator = _DFDecorator()
+df_estimator = _DFEstimatorDecorator()
+df_transformer = _DFTransformerDecorator()
 df_classifier = _DFClassifierDecorator()
 df_regressor = _DFRegressorDecorator()
 
-_DFRegressorDecorator()
+
+def make_df_estimator(
+    estimator: Type[T_DelegateEstimator],
+    *,
+    df_wrapper_type: Optional[Type[T_EstimatorWrapperDF]] = None,
+) -> Union[Type[T_EstimatorWrapperDF], Type[T_DelegateEstimator]]:
+    return df_estimator(
+        delegate_estimator=cast(
+            Type[T_DelegateEstimator],
+            type(f"{estimator.__name__}DF", (estimator,), {}),
+        ),
+        df_wrapper_type=df_wrapper_type,
+    )
+
+
+def make_df_transformer(
+    transformer: Type[T_DelegateTransformer],
+    *,
+    df_wrapper_type: Optional[Type[T_TransformerWrapperDF]] = None,
+) -> Union[Type[T_TransformerWrapperDF], Type[T_DelegateTransformer]]:
+    return df_transformer(
+        delegate_estimator=cast(
+            Type[T_DelegateTransformer],
+            type(f"{transformer.__name__}DF", (transformer,), {}),
+        ),
+        df_wrapper_type=df_wrapper_type,
+    )
 
 
 def make_df_classifier(
