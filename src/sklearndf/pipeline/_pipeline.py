@@ -19,6 +19,7 @@ from .._wrapper import (
     _RegressorWrapperDF,
     _TransformerWrapperDF,
     df_estimator,
+    make_df_transformer,
 )
 
 log = logging.getLogger(__name__)
@@ -261,15 +262,9 @@ class _FeatureUnionWrapperDF(_TransformerWrapperDF[FeatureUnion], metaclass=ABCM
             return indices[0].append(other=indices[1:])
 
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_FeatureUnionWrapperDF)
-class FeatureUnionDF(TransformerDF, FeatureUnion):
-    """
-    Wraps :class:`sklearn.pipeline.FeatureUnion` for enhanced support of pandas data
-    frames.
-    """
-
-    pass
+FeatureUnionDF = make_df_transformer(
+    FeatureUnion, df_wrapper_type=_FeatureUnionWrapperDF
+)
 
 
 __tracker.validate()
