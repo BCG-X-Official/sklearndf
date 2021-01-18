@@ -129,7 +129,11 @@ class _BorutaPyWrapperDF(
         return self.feature_names_in_[self.native_estimator.support_]
 
 
-BorutaDF = make_df_transformer(BorutaPy, df_wrapper_type=_BorutaPyWrapperDF)
+BorutaDF = make_df_transformer(
+    BorutaPy,
+    module="sklearndf.transformation.extra",
+    df_wrapper_type=_BorutaPyWrapperDF,
+)
 
 
 __tracker.validate()

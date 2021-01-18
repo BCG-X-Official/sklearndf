@@ -103,7 +103,9 @@ DummyTransformerDF = make_df_transformer(
 
 
 NoTransformerDF = make_df_estimator(
-    NoTransformer, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    NoTransformer,
+    module="sklearndf",
+    df_wrapper_type=_ColumnPreservingTransformerWrapperDF,
 )
 
 
