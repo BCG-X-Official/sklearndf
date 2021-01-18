@@ -13,12 +13,12 @@ from sklearn.pipeline import FeatureUnion, Pipeline
 
 from pytools.api import AllTracker
 
-from .. import ClassifierDF, EstimatorDF, RegressorDF, TransformerDF
+from .. import EstimatorDF, TransformerDF
 from .._wrapper import (
     _ClassifierWrapperDF,
     _RegressorWrapperDF,
     _TransformerWrapperDF,
-    df_estimator,
+    make_df_estimator,
     make_df_transformer,
 )
 
@@ -197,15 +197,7 @@ class _PipelineWrapperDF(
         return self.feature_names_in_
 
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_PipelineWrapperDF)
-class PipelineDF(ClassifierDF, RegressorDF, TransformerDF, Pipeline):
-    """
-    Wraps :class:`sklearn.pipeline.Pipeline`; accepts and returns data
-    frames.
-    """
-
-    pass
+PipelineDF = make_df_estimator(Pipeline, df_wrapper_type=_PipelineWrapperDF)
 
 
 class _FeatureUnionWrapperDF(_TransformerWrapperDF[FeatureUnion], metaclass=ABCMeta):
