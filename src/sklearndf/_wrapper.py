@@ -83,6 +83,11 @@ T_DelegateClassifier = TypeVar("T_DelegateClassifier", bound=ClassifierMixin)
 
 # noinspection PyTypeChecker
 T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="_EstimatorWrapperDF")
+T_TransformerWrapperDF = TypeVar(
+    "T_TransformerWrapperDF", bound="_TransformerWrapperDF"
+)
+T_RegressorWrapperDF = TypeVar("T_RegressorWrapperDF", bound="_RegressorWrapperDF")
+T_ClassifierWrapperDF = TypeVar("T_ClassifierWrapperDF", bound="_ClassifierWrapperDF")
 
 
 #
@@ -1100,13 +1105,13 @@ class _DFDecorator(metaclass=SingletonMeta):
 
 class _DFClassifierDecorator(_DFDecorator):
     @property
-    def _df_wrapper_base_type(self) -> Type[_EstimatorWrapperDF]:
+    def _df_wrapper_base_type(self) -> Type[_ClassifierWrapperDF]:
         return _ClassifierWrapperDF
 
 
 class _DFRegressorDecorator(_DFDecorator):
     @property
-    def _df_wrapper_base_type(self) -> Type[_EstimatorWrapperDF]:
+    def _df_wrapper_base_type(self) -> Type[_RegressorWrapperDF]:
         return _RegressorWrapperDF
 
 
@@ -1120,8 +1125,8 @@ _DFRegressorDecorator()
 def make_df_classifier(
     classifier: Type[T_DelegateClassifier],
     *,
-    df_wrapper_type: Optional[Type[_ClassifierWrapperDF[T_DelegateClassifier]]] = None,
-) -> Union[Type[ClassifierDF], Type[T_DelegateClassifier]]:
+    df_wrapper_type: Optional[T_ClassifierWrapperDF] = None,
+) -> Union[Type[T_ClassifierWrapperDF], Type[T_DelegateClassifier]]:
     return df_classifier(
         delegate_estimator=cast(
             Type[T_DelegateClassifier],
@@ -1134,8 +1139,8 @@ def make_df_classifier(
 def make_df_regressor(
     regressor: Type[T_DelegateRegressor],
     *,
-    df_wrapper_type: Optional[Type[_RegressorWrapperDF[T_DelegateRegressor]]] = None,
-) -> Union[Type[T_DelegateRegressor], Type[RegressorDF]]:
+    df_wrapper_type: Optional[T_RegressorWrapperDF] = None,
+) -> Union[Type[T_RegressorWrapperDF], Type[T_DelegateRegressor]]:
     return df_regressor(
         delegate_estimator=cast(
             Type[T_DelegateRegressor],
