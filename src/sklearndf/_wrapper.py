@@ -13,7 +13,7 @@ The wrappers also implement the additional column attributes introduced by `skle
 
 import inspect
 import logging
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 from functools import update_wrapper
 from typing import (
     Any,
@@ -99,15 +99,15 @@ T_ClassifierWrapperDF = TypeVar("T_ClassifierWrapperDF", bound="_ClassifierWrapp
 
 
 @inheritdoc(match="[see superclass]")
-class _EstimatorWrapperDF(
-    EstimatorDF, BaseEstimator, Generic[T_DelegateEstimator], metaclass=ABCMeta
-):
+class _EstimatorWrapperDF(EstimatorDF, BaseEstimator, Generic[T_DelegateEstimator]):
     """
     Base class for wrappers around a delegate :class:`sklearn.base.BaseEstimator`.
 
     Implementations must define a method :meth:`._make_delegate_estimator`, used to
     instantiate the delegate estimator to be wrapped.
     """
+
+    _native_estimator_type: Type[T_DelegateEstimator]
 
     def __init__(
         self, *args, _delegate_estimator: Optional[T_DelegateEstimator] = None, **kwargs
@@ -126,7 +126,7 @@ class _EstimatorWrapperDF(
         if _delegate_estimator is None:
             # create a new delegate estimator with the given parameters
             # noinspection PyProtectedMember
-            self._delegate_estimator = type(self)._make_delegate_estimator(
+            self._delegate_estimator = type(self)._native_estimator_type(
                 *args, **kwargs
             )
         else:
@@ -207,11 +207,6 @@ class _EstimatorWrapperDF(
             raise self._make_verbose_exception(self.fit.__name__, cause) from cause
 
         return self
-
-    @classmethod
-    @abstractmethod
-    def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
-        pass
 
     def _validate_delegate_estimator(self) -> None:
         pass
@@ -921,20 +916,17 @@ class _DFEstimatorDecorator(metaclass=SingletonMeta):
             wrapper_name,
             # subclass the wrapper type (e.g., _EstimatorWrapperDF)
             (df_wrapper_type,),
-            {
-                # implement abstract class method _make_delegate_estimator
-                _make_delegate_estimator.__name__: classmethod(
-                    _make_delegate_estimator
-                ),
-                # mirror all attributes of the wrapped sklearn class, as long
-                # as they are not inherited from the wrapper base class
-                **self._mirror_attributes(
-                    df_wrapper_type=df_wrapper_type,
-                    delegate_type=sklearn_native_estimator_type,
-                    wrapper_module=sklearndf_wrapper_module,
-                ),
-            },
+            # mirror all attributes of the wrapped sklearn class, as long
+            # as they are not inherited from the wrapper base class
+            self._mirror_attributes(
+                df_wrapper_type=df_wrapper_type,
+                delegate_type=sklearn_native_estimator_type,
+                wrapper_module=sklearndf_wrapper_module,
+            ),
         )
+
+        # set the native estimator that the wrapper class delegates to
+        df_estimator_type._native_estimator_type = sklearn_native_estimator_type
 
         # add link to the wrapped class, for use in python module 'inspect'
         df_estimator_type.__wrapped__ = sklearn_native_estimator_type
