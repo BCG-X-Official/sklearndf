@@ -51,7 +51,12 @@ from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
 
 from pytools.api import AllTracker
 
-from .._wrapper import _MetaClassifierWrapperDF, make_df_classifier
+from .._wrapper import (
+    _ClassifierWrapperDF,
+    _MetaClassifierWrapperDF,
+    make_df_classifier,
+)
+from ..transformation._wrapper import _NComponentsDimensionalityReductionWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -160,8 +165,21 @@ ExtraTreeClassifierDF = make_df_classifier(ExtraTreeClassifier)
 # discriminant analysis
 #
 
+
+class _LinearDiscriminantAnalysisWrapperDF(
+    _NComponentsDimensionalityReductionWrapperDF[LinearDiscriminantAnalysis],
+    _ClassifierWrapperDF[LinearDiscriminantAnalysis],
+    metaclass=ABCMeta,
+):
+    pass
+
+
+LinearDiscriminantAnalysisDF = make_df_classifier(
+    LinearDiscriminantAnalysis,
+    df_wrapper_type=_LinearDiscriminantAnalysisWrapperDF,
+)
+
 QuadraticDiscriminantAnalysisDF = make_df_classifier(QuadraticDiscriminantAnalysis)
-LinearDiscriminantAnalysisDF = make_df_classifier(LinearDiscriminantAnalysis)
 
 
 #

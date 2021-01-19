@@ -40,7 +40,6 @@ from sklearn.decomposition import (
     SparsePCA,
     TruncatedSVD,
 )
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.feature_extraction import DictVectorizer, FeatureHasher
 from sklearn.feature_extraction.text import HashingVectorizer, TfidfTransformer
 from sklearn.feature_selection import (
@@ -126,7 +125,6 @@ __all__ = [
     "LabelBinarizerDF",
     "LabelEncoderDF",
     "LatentDirichletAllocationDF",
-    "LinearDiscriminantAnalysisDF",
     "LocallyLinearEmbeddingDF",
     "MaxAbsScalerDF",
     "MinMaxScalerDF",
@@ -648,17 +646,12 @@ TruncatedSVDDF = make_df_transformer(
 
 
 #
-# Transformer which have an n_components attribute
+# Transformers which have an n_components attribute
 # Implemented through NComponentsDimensionalityReductionWrapperDF
 #
 
 KernelPCADF = make_df_transformer(
     KernelPCA, df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF
-)
-
-LinearDiscriminantAnalysisDF = make_df_transformer(
-    LinearDiscriminantAnalysis,
-    df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF,
 )
 
 LocallyLinearEmbeddingDF = make_df_transformer(
