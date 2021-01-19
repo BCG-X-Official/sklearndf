@@ -15,7 +15,6 @@ Core implementation of :mod:`sklearndf.transformation`
 #            :class:`$2.$1`;\n    accepts and returns data frames.\n    """
 #            \n    pass\n\n
 # - clean up imports; import only the module names not the individual classes
-import functools
 import logging
 from abc import ABCMeta
 from functools import reduce
@@ -181,14 +180,6 @@ T_Imputer = TypeVar("T_Imputer", SimpleImputer, IterativeImputer)
 #
 
 __tracker = AllTracker(globals())
-
-#
-# Set the module for new DF classes
-#
-
-make_df_transformer = functools.partial(
-    make_df_transformer, module="sklearndf.transformation"
-)
 
 
 #

@@ -2,7 +2,6 @@
 Core implementation of :mod:`sklearndf.regression` loaded
 from sklearn 0.23 onwards
 """
-import functools
 import logging
 from typing import TypeVar
 
@@ -39,13 +38,6 @@ T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
 #
 
 __tracker = AllTracker(globals())
-
-
-#
-# Set the module for new DF classes
-#
-
-make_df_regressor = functools.partial(make_df_regressor, module="sklearndf.regression")
 
 
 #

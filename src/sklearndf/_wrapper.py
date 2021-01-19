@@ -13,7 +13,6 @@ The wrappers also implement the additional column attributes introduced by `skle
 
 import inspect
 import logging
-import sys
 from abc import ABCMeta, abstractmethod
 from functools import update_wrapper
 from typing import (
@@ -851,7 +850,6 @@ class _DFEstimatorDecorator(metaclass=SingletonMeta):
         self,
         delegate_estimator: Type[T_DelegateEstimator] = None,
         *,
-        module: str,
         df_wrapper_type: Optional[
             Type[_EstimatorWrapperDF[T_DelegateEstimator]]
         ] = None,
@@ -867,7 +865,6 @@ class _DFEstimatorDecorator(metaclass=SingletonMeta):
         :class:`_EstimatorWrapperDF`.
 
         :param delegate_estimator: the estimator class to wrap
-        :param module: the module to which to add the new class
         :param df_wrapper_type: optional parameter indicating the
             :class:`_EstimatorWrapperDF` class to be used for wrapping; defaults to
             :class:`_EstimatorWrapperDF`
@@ -887,9 +884,7 @@ class _DFEstimatorDecorator(metaclass=SingletonMeta):
         def _decorate(
             delegate: Type[T_DelegateEstimator],
         ) -> Type[_EstimatorWrapperDF[T_DelegateEstimator]]:
-            return self._decorate(
-                df_wrapper_type=df_wrapper_type, module_name=module, delegate=delegate
-            )
+            return self._decorate(df_wrapper_type=df_wrapper_type, delegate=delegate)
 
         if delegate_estimator is None:
             return _decorate
@@ -899,7 +894,6 @@ class _DFEstimatorDecorator(metaclass=SingletonMeta):
     def _decorate(
         self,
         df_wrapper_type: Type[_EstimatorWrapperDF[T_DelegateEstimator]],
-        module_name: str,
         delegate: Type[T_DelegateEstimator],
     ) -> Type[_EstimatorWrapperDF[T_DelegateEstimator]]:
 
@@ -958,16 +952,8 @@ class _DFEstimatorDecorator(metaclass=SingletonMeta):
         # but do not keep the docstring of __init__
         df_estimator_type.__init__.__doc__ = None
 
-        # set the module and add the newly created class to the module
-        # to enable pickling
-        try:
-            module = sys.modules[module_name]
-        except KeyError as e:
-            raise KeyError(
-                f"Unknown module specified for {wrapper_name}: {module_name}"
-            ) from e
-        setattr(module, wrapper_name, df_estimator_type)
-        df_estimator_type.__module__ = module_name
+        # set the module
+        df_estimator_type.__module__ = __name__
 
         # adopt the class docstring of the wrapped sklearn estimator
         self._update_class_docstring(
@@ -1152,7 +1138,6 @@ df_regressor = _DFRegressorDecorator()
 def make_df_estimator(
     estimator: Type[T_DelegateEstimator],
     *,
-    module: str,
     df_wrapper_type: Optional[Type[T_EstimatorWrapperDF]] = None,
 ) -> Union[Type[T_EstimatorWrapperDF], Type[T_DelegateEstimator]]:
     return df_estimator(
@@ -1160,7 +1145,6 @@ def make_df_estimator(
             Type[T_DelegateEstimator],
             type(f"{estimator.__name__}DF", (estimator,), {}),
         ),
-        module=module,
         df_wrapper_type=df_wrapper_type,
     )
 
@@ -1168,7 +1152,6 @@ def make_df_estimator(
 def make_df_transformer(
     transformer: Type[T_DelegateTransformer],
     *,
-    module: str,
     df_wrapper_type: Optional[Type[T_TransformerWrapperDF]] = None,
 ) -> Union[Type[T_TransformerWrapperDF], Type[T_DelegateTransformer]]:
     return df_transformer(
@@ -1176,7 +1159,6 @@ def make_df_transformer(
             Type[T_DelegateTransformer],
             type(f"{transformer.__name__}DF", (transformer,), {}),
         ),
-        module=module,
         df_wrapper_type=df_wrapper_type,
     )
 
@@ -1184,7 +1166,6 @@ def make_df_transformer(
 def make_df_classifier(
     classifier: Type[T_DelegateClassifier],
     *,
-    module: str,
     df_wrapper_type: Optional[T_ClassifierWrapperDF] = None,
 ) -> Union[Type[T_ClassifierWrapperDF], Type[T_DelegateClassifier]]:
     return df_classifier(
@@ -1192,7 +1173,6 @@ def make_df_classifier(
             Type[T_DelegateClassifier],
             type(f"{classifier.__name__}DF", (classifier,), {}),
         ),
-        module=module,
         df_wrapper_type=df_wrapper_type,
     )
 
@@ -1200,7 +1180,6 @@ def make_df_classifier(
 def make_df_regressor(
     regressor: Type[T_DelegateRegressor],
     *,
-    module: str,
     df_wrapper_type: Optional[T_RegressorWrapperDF] = None,
 ) -> Union[Type[T_RegressorWrapperDF], Type[T_DelegateRegressor]]:
     return df_regressor(
@@ -1208,6 +1187,5 @@ def make_df_regressor(
             Type[T_DelegateRegressor],
             type(f"{regressor.__name__}DF", (regressor,), {}),
         ),
-        module=module,
         df_wrapper_type=df_wrapper_type,
     )

@@ -34,7 +34,7 @@ __tracker = AllTracker(globals())
 # Class definitions
 #
 
-LGBMRegressorDF = make_df_regressor(LGBMRegressor, module="sklearndf.regression.extra")
+LGBMRegressorDF = make_df_regressor(LGBMRegressor)
 
 
 #

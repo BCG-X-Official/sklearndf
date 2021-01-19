@@ -33,9 +33,9 @@ class _DummyEstimator3(BaseEstimator):
         self.d = d
 
 
-_DummyEstimatorDF = make_df_estimator(_DummyEstimator, module="sklearndf")
-_DummyEstimator2DF = make_df_estimator(_DummyEstimator2, module="sklearndf")
-_DummyEstimator3DF = make_df_estimator(_DummyEstimator3, module="sklearndf")
+_DummyEstimatorDF = make_df_estimator(_DummyEstimator)
+_DummyEstimator2DF = make_df_estimator(_DummyEstimator2)
+_DummyEstimator3DF = make_df_estimator(_DummyEstimator3)
 
 
 def test_clone() -> None:

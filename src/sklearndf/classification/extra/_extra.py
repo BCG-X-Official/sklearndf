@@ -34,9 +34,7 @@ __tracker = AllTracker(globals())
 # Class definitions
 #
 
-LGBMClassifierDF = make_df_classifier(
-    LGBMClassifier, module="sklearndf.classification.extra"
-)
+LGBMClassifierDF = make_df_classifier(LGBMClassifier)
 
 
 #
