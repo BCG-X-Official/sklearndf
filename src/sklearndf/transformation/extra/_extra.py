@@ -129,8 +129,8 @@ class _BorutaPyWrapperDF(
         return self.feature_names_in_[self.native_estimator.support_]
 
 
-BorutaDF = make_df_transformer(BorutaPy, df_wrapper_type=_BorutaPyWrapperDF)
-# override name BorutaPyDF
-BorutaDF.__name__ = "BorutaDF"
+BorutaDF = make_df_transformer(
+    BorutaPy, name="BorutaDF", df_wrapper_type=_BorutaPyWrapperDF
+)
 
 __tracker.validate()
