@@ -1033,6 +1033,7 @@ def _wrap(
         the delegate estimator
     """
 
+    # validate arg native_estimator
     if native_estimator_bound and not issubclass(
         native_estimator, native_estimator_bound
     ):
@@ -1040,13 +1041,13 @@ def _wrap(
             f"arg native_estimator is not a subclass of "
             f"{native_estimator_bound.__name__}: {native_estimator}"
         )
-
     if not issubclass(native_estimator, BaseEstimator):
         raise ValueError(
             f"arg native_estimator is not a subclass of "
             f"{BaseEstimator.__name__}: {native_estimator}"
         )
 
+    # validate arg base_wrapper
     if base_wrapper is None:
         base_wrapper = base_wrapper_bound
     elif not issubclass(base_wrapper, base_wrapper_bound):
@@ -1067,10 +1068,20 @@ def _wrap(
             f"base_wrapper={base_wrapper.__name__})"
         )
 
-    # determine the module of the wrapper
-    sklearndf_wrapper_module = native_estimator.__module__
-
     # dynamically create the wrapper class
+    df_wrapper_class = _make_df_wrapper_class(native_estimator, name, base_wrapper)
+
+    # finally, register the newly created class in our global WeakValueDictionary
+    _df_wrapper_classes[name] = df_wrapper_class
+
+    return df_wrapper_class
+
+
+def _make_df_wrapper_class(
+    native_estimator: Type[T_DelegateEstimator],
+    name: str,
+    base_wrapper: Type[T_EstimatorWrapperDF],
+) -> Type[T_EstimatorWrapperDF]:
     # noinspection PyMissingOrEmptyDocstring
     class WrapperDF(base_wrapper):
         def __init__(self, *args, **kwargs) -> None:
@@ -1098,8 +1109,8 @@ def _wrap(
     # as they are not inherited from the wrapper base class
     _mirror_attributes(
         wrapper=WrapperDF,
-        delegate_type=native_estimator,
-        wrapper_module=sklearndf_wrapper_module,
+        native_estimator=native_estimator,
+        wrapper_module=native_estimator.__module__,
     )
 
     # add link to the wrapped class, for use in python module 'inspect'
@@ -1109,7 +1120,7 @@ def _wrap(
     _update_wrapper(
         wrapper=WrapperDF.__init__,
         wrapped=native_estimator.__init__,
-        wrapper_module=sklearndf_wrapper_module,
+        wrapper_module=native_estimator.__module__,
     )
 
     # set the module to this module's name
@@ -1120,11 +1131,9 @@ def _wrap(
         df_estimator_type=WrapperDF,
         sklearn_native_estimator_type=native_estimator,
     )
+
     # … but do not keep the docstring of __init__
     WrapperDF.__init__.__doc__ = None
-
-    # finally, register the newly created class in our global WeakValueDictionary
-    _df_wrapper_classes[name] = WrapperDF
 
     return WrapperDF
 
@@ -1147,13 +1156,13 @@ def _get_wrapper_instance(
 
 def _mirror_attributes(
     wrapper: Type[_EstimatorWrapperDF[T_DelegateEstimator]],
-    delegate_type: Type[T_DelegateEstimator],
+    native_estimator: Type[T_DelegateEstimator],
     wrapper_module: str,
 ) -> None:
 
     wrapper_attributes: Set[str] = set(dir(wrapper))
 
-    for name, member in vars(delegate_type).items():
+    for name, member in vars(native_estimator).items():
         if member is None or name.startswith("__") or name in wrapper_attributes:
             continue
 
@@ -1163,7 +1172,7 @@ def _mirror_attributes(
             _make_alias(
                 module=wrapper_module,
                 name=name,
-                delegate_cls=delegate_type,
+                delegate_cls=native_estimator,
                 delegate=member,
             ),
         )
