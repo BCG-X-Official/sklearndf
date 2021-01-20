@@ -38,7 +38,7 @@ __tracker = AllTracker(globals())
 CategoricalNBDF = make_df_classifier(CategoricalNB)
 
 StackingClassifierDF = make_df_classifier(
-    StackingClassifier, df_wrapper_type=_StackingClassifierWrapperDF
+    StackingClassifier, base_wrapper=_StackingClassifierWrapperDF
 )
 
 

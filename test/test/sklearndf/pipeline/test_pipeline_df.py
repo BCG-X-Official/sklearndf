@@ -98,12 +98,12 @@ class DummyTransformer(Transformer):
 
 
 DummyTransformerDF = make_df_transformer(
-    DummyTransformer, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    DummyTransformer, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 
 NoTransformerDF = make_df_estimator(
-    NoTransformer, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    NoTransformer, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 

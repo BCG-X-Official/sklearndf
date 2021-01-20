@@ -175,11 +175,11 @@ NuSVRDF = make_df_regressor(NuSVR)
 #
 
 MultiOutputRegressorDF = make_df_regressor(
-    MultiOutputRegressor, df_wrapper_type=_MetaRegressorWrapperDF
+    MultiOutputRegressor, base_wrapper=_MetaRegressorWrapperDF
 )
 
 RegressorChainDF = make_df_regressor(
-    RegressorChain, df_wrapper_type=_MetaRegressorWrapperDF
+    RegressorChain, base_wrapper=_MetaRegressorWrapperDF
 )
 
 
@@ -235,7 +235,7 @@ LassoLarsCVDF = make_df_regressor(LassoLarsCV)
 
 BaggingRegressorDF = make_df_regressor(BaggingRegressor)
 VotingRegressorDF = make_df_regressor(
-    VotingRegressor, df_wrapper_type=_MetaRegressorWrapperDF
+    VotingRegressor, base_wrapper=_MetaRegressorWrapperDF
 )
 GradientBoostingRegressorDF = make_df_regressor(GradientBoostingRegressor)
 AdaBoostRegressorDF = make_df_regressor(AdaBoostRegressor)
@@ -278,7 +278,7 @@ class _IsotonicRegressionWrapperDF(
 
 
 IsotonicRegressionDF = make_df_regressor(
-    IsotonicRegression, df_wrapper_type=_IsotonicRegressionWrapperDF
+    IsotonicRegression, base_wrapper=_IsotonicRegressionWrapperDF
 )
 
 
@@ -309,14 +309,14 @@ ExtraTreeRegressorDF = make_df_regressor(ExtraTreeRegressor)
 #
 
 
-CCADF = make_df_regressor(CCA, df_wrapper_type=_RegressorTransformerWrapperDF)
+CCADF = make_df_regressor(CCA, base_wrapper=_RegressorTransformerWrapperDF)
 
 PLSRegressionDF = make_df_regressor(
-    PLSRegression, df_wrapper_type=_RegressorTransformerWrapperDF
+    PLSRegression, base_wrapper=_RegressorTransformerWrapperDF
 )
 
 PLSCanonicalDF = make_df_regressor(
-    PLSCanonical, df_wrapper_type=_RegressorTransformerWrapperDF
+    PLSCanonical, base_wrapper=_RegressorTransformerWrapperDF
 )
 
 

@@ -44,7 +44,7 @@ __tracker = AllTracker(globals())
 # impute
 #
 
-KNNImputerDF = make_df_transformer(KNNImputer, df_wrapper_type=_ImputerWrapperDF)
+KNNImputerDF = make_df_transformer(KNNImputer, base_wrapper=_ImputerWrapperDF)
 
 
 #

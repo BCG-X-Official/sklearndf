@@ -197,7 +197,7 @@ class _PipelineWrapperDF(
         return self.feature_names_in_
 
 
-PipelineDF = make_df_estimator(Pipeline, df_wrapper_type=_PipelineWrapperDF)
+PipelineDF = make_df_estimator(Pipeline, base_wrapper=_PipelineWrapperDF)
 
 
 class _FeatureUnionWrapperDF(_TransformerWrapperDF[FeatureUnion], metaclass=ABCMeta):
@@ -254,9 +254,7 @@ class _FeatureUnionWrapperDF(_TransformerWrapperDF[FeatureUnion], metaclass=ABCM
             return indices[0].append(other=indices[1:])
 
 
-FeatureUnionDF = make_df_transformer(
-    FeatureUnion, df_wrapper_type=_FeatureUnionWrapperDF
-)
+FeatureUnionDF = make_df_transformer(FeatureUnion, base_wrapper=_FeatureUnionWrapperDF)
 
 
 __tracker.validate()

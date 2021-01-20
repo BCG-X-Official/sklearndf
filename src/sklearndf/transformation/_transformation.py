@@ -190,7 +190,7 @@ __tracker = AllTracker(globals())
 
 
 FeatureAgglomerationDF = make_df_transformer(
-    FeatureAgglomeration, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    FeatureAgglomeration, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 
@@ -261,7 +261,7 @@ class _ColumnTransformerWrapperDF(
 
 
 ColumnTransformerDF = make_df_transformer(
-    ColumnTransformer, df_wrapper_type=_ColumnTransformerWrapperDF
+    ColumnTransformer, base_wrapper=_ColumnTransformerWrapperDF
 )
 
 
@@ -271,23 +271,23 @@ ColumnTransformerDF = make_df_transformer(
 
 
 PLSSVDDF = make_df_transformer(
-    PLSSVD, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    PLSSVD, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 FeatureHasherDF = make_df_transformer(
-    FeatureHasher, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    FeatureHasher, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 DictVectorizerDF = make_df_transformer(
-    DictVectorizer, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    DictVectorizer, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 HashingVectorizerDF = make_df_transformer(
-    HashingVectorizer, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    HashingVectorizer, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 TfidfTransformerDF = make_df_transformer(
-    TfidfTransformer, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    TfidfTransformer, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 
@@ -353,7 +353,7 @@ class _ImputerWrapperDF(_TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
             return features_original
 
 
-SimpleImputerDF = make_df_transformer(SimpleImputer, df_wrapper_type=_ImputerWrapperDF)
+SimpleImputerDF = make_df_transformer(SimpleImputer, base_wrapper=_ImputerWrapperDF)
 
 
 class _MissingIndicatorWrapperDF(
@@ -368,11 +368,11 @@ class _MissingIndicatorWrapperDF(
 
 
 MissingIndicatorDF = make_df_transformer(
-    MissingIndicator, df_wrapper_type=_MissingIndicatorWrapperDF
+    MissingIndicator, base_wrapper=_MissingIndicatorWrapperDF
 )
 
 IterativeImputerDF = make_df_transformer(
-    IterativeImputer, df_wrapper_type=_ImputerWrapperDF
+    IterativeImputer, base_wrapper=_ImputerWrapperDF
 )
 
 
@@ -384,7 +384,7 @@ class _IsomapWrapperDF(
         return self.native_estimator.embedding_.shape[1]
 
 
-IsomapDF = make_df_transformer(Isomap, df_wrapper_type=_IsomapWrapperDF)
+IsomapDF = make_df_transformer(Isomap, base_wrapper=_IsomapWrapperDF)
 
 
 class _AdditiveChi2SamplerWrapperDF(
@@ -396,7 +396,7 @@ class _AdditiveChi2SamplerWrapperDF(
 
 
 AdditiveChi2SamplerDF = make_df_transformer(
-    AdditiveChi2Sampler, df_wrapper_type=_AdditiveChi2SamplerWrapperDF
+    AdditiveChi2Sampler, base_wrapper=_AdditiveChi2SamplerWrapperDF
 )
 
 
@@ -406,7 +406,7 @@ AdditiveChi2SamplerDF = make_df_transformer(
 
 NeighborhoodComponentsAnalysisDF = make_df_transformer(
     NeighborhoodComponentsAnalysis,
-    df_wrapper_type=_ColumnPreservingTransformerWrapperDF,
+    base_wrapper=_ColumnPreservingTransformerWrapperDF,
 )
 
 
@@ -416,19 +416,19 @@ NeighborhoodComponentsAnalysisDF = make_df_transformer(
 
 
 MinMaxScalerDF = make_df_transformer(
-    MinMaxScaler, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    MinMaxScaler, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 StandardScalerDF = make_df_transformer(
-    StandardScaler, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    StandardScaler, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 MaxAbsScalerDF = make_df_transformer(
-    MaxAbsScaler, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    MaxAbsScaler, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 RobustScalerDF = make_df_transformer(
-    RobustScaler, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    RobustScaler, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 
@@ -445,43 +445,43 @@ class _PolynomialFeaturesWrapperDF(
 
 
 PolynomialFeaturesDF = make_df_transformer(
-    PolynomialFeatures, df_wrapper_type=_PolynomialFeaturesWrapperDF
+    PolynomialFeatures, base_wrapper=_PolynomialFeaturesWrapperDF
 )
 
 NormalizerDF = make_df_transformer(
-    Normalizer, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    Normalizer, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 BinarizerDF = make_df_transformer(
-    Binarizer, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    Binarizer, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 KernelCentererDF = make_df_transformer(
-    KernelCenterer, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    KernelCenterer, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 QuantileTransformerDF = make_df_transformer(
-    QuantileTransformer, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    QuantileTransformer, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 PowerTransformerDF = make_df_transformer(
-    PowerTransformer, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    PowerTransformer, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 FunctionTransformerDF = make_df_transformer(
-    FunctionTransformer, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    FunctionTransformer, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 LabelEncoderDF = make_df_transformer(
-    LabelEncoder, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    LabelEncoder, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 LabelBinarizerDF = make_df_transformer(
-    LabelBinarizer, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    LabelBinarizer, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 MultiLabelBinarizerDF = make_df_transformer(
-    MultiLabelBinarizer, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    MultiLabelBinarizer, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 
@@ -521,11 +521,11 @@ class _OneHotEncoderWrapperDF(_TransformerWrapperDF[OneHotEncoder], metaclass=AB
 
 
 OneHotEncoderDF = make_df_transformer(
-    OneHotEncoder, df_wrapper_type=_OneHotEncoderWrapperDF
+    OneHotEncoder, base_wrapper=_OneHotEncoderWrapperDF
 )
 
 OrdinalEncoderDF = make_df_transformer(
-    OrdinalEncoder, df_wrapper_type=_ColumnPreservingTransformerWrapperDF
+    OrdinalEncoder, base_wrapper=_ColumnPreservingTransformerWrapperDF
 )
 
 
@@ -572,7 +572,7 @@ class _KBinsDiscretizerWrapperDF(
 
 
 KBinsDiscretizerDF = make_df_transformer(
-    KBinsDiscretizer, df_wrapper_type=_KBinsDiscretizerWrapperDF
+    KBinsDiscretizer, base_wrapper=_KBinsDiscretizerWrapperDF
 )
 
 
@@ -582,66 +582,66 @@ KBinsDiscretizerDF = make_df_transformer(
 #
 
 BernoulliRBMDF = make_df_transformer(
-    BernoulliRBM, df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF
+    BernoulliRBM, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
 )
 
 DictionaryLearningDF = make_df_transformer(
-    DictionaryLearning, df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF
+    DictionaryLearning, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
 )
 
 FactorAnalysisDF = make_df_transformer(
-    FactorAnalysis, df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF
+    FactorAnalysis, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
 )
 
 FastICADF = make_df_transformer(
-    FastICA, df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF
+    FastICA, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
 )
 
 GaussianRandomProjectionDF = make_df_transformer(
     GaussianRandomProjection,
-    df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF,
+    base_wrapper=_ComponentsDimensionalityReductionWrapperDF,
 )
 
 IncrementalPCADF = make_df_transformer(
-    IncrementalPCA, df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF
+    IncrementalPCA, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
 )
 
 LatentDirichletAllocationDF = make_df_transformer(
     LatentDirichletAllocation,
-    df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF,
+    base_wrapper=_ComponentsDimensionalityReductionWrapperDF,
 )
 
 MiniBatchDictionaryLearningDF = make_df_transformer(
     MiniBatchDictionaryLearning,
-    df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF,
+    base_wrapper=_ComponentsDimensionalityReductionWrapperDF,
 )
 
 MiniBatchSparsePCADF = make_df_transformer(
-    MiniBatchSparsePCA, df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF
+    MiniBatchSparsePCA, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
 )
 
 NMFDF = make_df_transformer(
-    NMF, df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF
+    NMF, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
 )
 
 PCADF = make_df_transformer(
-    PCA, df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF
+    PCA, base_wrapper=_NComponentsDimensionalityReductionWrapperDF
 )
 
 SparseCoderDF = make_df_transformer(
-    SparseCoder, df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF
+    SparseCoder, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
 )
 
 SparsePCADF = make_df_transformer(
-    SparsePCA, df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF
+    SparsePCA, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
 )
 
 SparseRandomProjectionDF = make_df_transformer(
-    SparseRandomProjection, df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF
+    SparseRandomProjection, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
 )
 
 TruncatedSVDDF = make_df_transformer(
-    TruncatedSVD, df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF
+    TruncatedSVD, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
 )
 
 
@@ -651,23 +651,23 @@ TruncatedSVDDF = make_df_transformer(
 #
 
 KernelPCADF = make_df_transformer(
-    KernelPCA, df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF
+    KernelPCA, base_wrapper=_NComponentsDimensionalityReductionWrapperDF
 )
 
 LocallyLinearEmbeddingDF = make_df_transformer(
-    LocallyLinearEmbedding, df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF
+    LocallyLinearEmbedding, base_wrapper=_NComponentsDimensionalityReductionWrapperDF
 )
 
 NystroemDF = make_df_transformer(
-    Nystroem, df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF
+    Nystroem, base_wrapper=_NComponentsDimensionalityReductionWrapperDF
 )
 
 RBFSamplerDF = make_df_transformer(
-    RBFSampler, df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF
+    RBFSampler, base_wrapper=_NComponentsDimensionalityReductionWrapperDF
 )
 
 SkewedChi2SamplerDF = make_df_transformer(
-    SkewedChi2Sampler, df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF
+    SkewedChi2Sampler, base_wrapper=_NComponentsDimensionalityReductionWrapperDF
 )
 
 
@@ -678,33 +678,33 @@ SkewedChi2SamplerDF = make_df_transformer(
 #
 
 VarianceThresholdDF = make_df_transformer(
-    VarianceThreshold, df_wrapper_type=_FeatureSelectionWrapperDF
+    VarianceThreshold, base_wrapper=_FeatureSelectionWrapperDF
 )
 
-RFEDF = make_df_transformer(RFE, df_wrapper_type=_FeatureSelectionWrapperDF)
+RFEDF = make_df_transformer(RFE, base_wrapper=_FeatureSelectionWrapperDF)
 
-RFECVDF = make_df_transformer(RFECV, df_wrapper_type=_FeatureSelectionWrapperDF)
+RFECVDF = make_df_transformer(RFECV, base_wrapper=_FeatureSelectionWrapperDF)
 
 SelectFromModelDF = make_df_transformer(
-    SelectFromModel, df_wrapper_type=_FeatureSelectionWrapperDF
+    SelectFromModel, base_wrapper=_FeatureSelectionWrapperDF
 )
 
 SelectPercentileDF = make_df_transformer(
-    SelectPercentile, df_wrapper_type=_FeatureSelectionWrapperDF
+    SelectPercentile, base_wrapper=_FeatureSelectionWrapperDF
 )
 
 SelectKBestDF = make_df_transformer(
-    SelectKBest, df_wrapper_type=_FeatureSelectionWrapperDF
+    SelectKBest, base_wrapper=_FeatureSelectionWrapperDF
 )
 
-SelectFprDF = make_df_transformer(SelectFpr, df_wrapper_type=_FeatureSelectionWrapperDF)
+SelectFprDF = make_df_transformer(SelectFpr, base_wrapper=_FeatureSelectionWrapperDF)
 
-SelectFdrDF = make_df_transformer(SelectFdr, df_wrapper_type=_FeatureSelectionWrapperDF)
+SelectFdrDF = make_df_transformer(SelectFdr, base_wrapper=_FeatureSelectionWrapperDF)
 
-SelectFweDF = make_df_transformer(SelectFwe, df_wrapper_type=_FeatureSelectionWrapperDF)
+SelectFweDF = make_df_transformer(SelectFwe, base_wrapper=_FeatureSelectionWrapperDF)
 
 GenericUnivariateSelectDF = make_df_transformer(
-    GenericUnivariateSelect, df_wrapper_type=_FeatureSelectionWrapperDF
+    GenericUnivariateSelect, base_wrapper=_FeatureSelectionWrapperDF
 )
 
 

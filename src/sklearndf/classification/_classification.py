@@ -137,7 +137,7 @@ RadiusNeighborsClassifierDF = make_df_classifier(RadiusNeighborsClassifier)
 #
 
 VotingClassifierDF = make_df_classifier(
-    VotingClassifier, df_wrapper_type=_MetaClassifierWrapperDF
+    VotingClassifier, base_wrapper=_MetaClassifierWrapperDF
 )
 
 
@@ -176,7 +176,7 @@ class _LinearDiscriminantAnalysisWrapperDF(
 
 LinearDiscriminantAnalysisDF = make_df_classifier(
     LinearDiscriminantAnalysis,
-    df_wrapper_type=_LinearDiscriminantAnalysisWrapperDF,
+    base_wrapper=_LinearDiscriminantAnalysisWrapperDF,
 )
 
 QuadraticDiscriminantAnalysisDF = make_df_classifier(QuadraticDiscriminantAnalysis)
@@ -198,7 +198,7 @@ BernoulliNBDF = make_df_classifier(BernoulliNB)
 #
 
 CalibratedClassifierCVDF = make_df_classifier(
-    CalibratedClassifierCV, df_wrapper_type=_MetaClassifierWrapperDF
+    CalibratedClassifierCV, base_wrapper=_MetaClassifierWrapperDF
 )
 
 
@@ -245,15 +245,15 @@ LabelSpreadingDF = make_df_classifier(LabelSpreading)
 #
 
 OneVsRestClassifierDF = make_df_classifier(
-    OneVsRestClassifier, df_wrapper_type=_MetaClassifierWrapperDF
+    OneVsRestClassifier, base_wrapper=_MetaClassifierWrapperDF
 )
 
 OneVsOneClassifierDF = make_df_classifier(
-    OneVsOneClassifier, df_wrapper_type=_MetaClassifierWrapperDF
+    OneVsOneClassifier, base_wrapper=_MetaClassifierWrapperDF
 )
 
 OutputCodeClassifierDF = make_df_classifier(
-    OutputCodeClassifier, df_wrapper_type=_MetaClassifierWrapperDF
+    OutputCodeClassifier, base_wrapper=_MetaClassifierWrapperDF
 )
 
 
@@ -309,7 +309,7 @@ class _MultiOutputClassifierWrapperDF(
 
 
 MultiOutputClassifierDF = make_df_classifier(
-    MultiOutputClassifier, df_wrapper_type=_MultiOutputClassifierWrapperDF
+    MultiOutputClassifier, base_wrapper=_MultiOutputClassifierWrapperDF
 )
 
 
@@ -334,7 +334,7 @@ class _ClassifierChainWrapperDF(
 
 
 ClassifierChainDF = make_df_classifier(
-    ClassifierChain, df_wrapper_type=_ClassifierChainWrapperDF
+    ClassifierChain, base_wrapper=_ClassifierChainWrapperDF
 )
 
 

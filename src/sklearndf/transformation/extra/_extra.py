@@ -130,7 +130,7 @@ class _BorutaPyWrapperDF(
 
 
 BorutaDF = make_df_transformer(
-    BorutaPy, name="BorutaDF", df_wrapper_type=_BorutaPyWrapperDF
+    BorutaPy, name="BorutaDF", base_wrapper=_BorutaPyWrapperDF
 )
 
 __tracker.validate()

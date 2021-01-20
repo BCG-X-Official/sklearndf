@@ -37,7 +37,7 @@ __tracker = AllTracker(globals())
 #
 
 StackingRegressorDF = make_df_regressor(
-    StackingRegressor, df_wrapper_type=_StackingRegressorWrapperDF
+    StackingRegressor, base_wrapper=_StackingRegressorWrapperDF
 )
 
 
