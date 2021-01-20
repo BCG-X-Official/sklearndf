@@ -863,33 +863,27 @@ def df_estimator(
         # determine the module of the wrapper
         sklearndf_wrapper_module = decoratee.__module__
 
-        # we will add this function to the new DF estimator class as a class method
-        def _make_delegate_estimator(_cls, *args, **kwargs) -> T_DelegateEstimator:
-            # noinspection PyArgumentList
-            return sklearn_native_estimator_type(*args, **kwargs)
-
-        _make_delegate_estimator.__module__ = sklearndf_wrapper_module
-
         # dynamically create the wrapper class
-        # noinspection PyTypeChecker
-        df_estimator_type: Type[_EstimatorWrapperDF[T_DelegateEstimator]] = type(
-            # preserve the name
-            decoratee.__name__,
-            # subclass the wrapper type (e.g., _EstimatorWrapperDF)
-            (df_wrapper_type,),
-            {
-                # implement abstract class method _make_delegate_estimator
-                _make_delegate_estimator.__name__: classmethod(
-                    _make_delegate_estimator
-                ),
-                # mirror all attributes of the wrapped sklearn class, as long
-                # as they are not inherited from the wrapper base class
-                **_mirror_attributes(
-                    delegate_type=sklearn_native_estimator_type,
-                    wrapper_module=sklearndf_wrapper_module,
-                ),
-            },
-        )
+        class df_estimator_type(df_wrapper_type):
+            def __init__(self, *args, **kwargs) -> None:
+                super().__init__(*args, **kwargs)
+
+            @classmethod
+            def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
+                # noinspection PyArgumentList
+                return sklearn_native_estimator_type(*args, **kwargs)
+
+            _make_delegate_estimator.__module__ = sklearndf_wrapper_module
+
+        df_estimator_type.__name__ = decoratee.__name__
+
+        # mirror all attributes of the wrapped sklearn class, as long
+        # as they are not inherited from the wrapper base class
+        for k, v in _mirror_attributes(
+            delegate_type=sklearn_native_estimator_type,
+            wrapper_module=sklearndf_wrapper_module,
+        ).items():
+            setattr(df_wrapper_type, k, v)
 
         # add link to the wrapped class, for use in python module 'inspect'
         df_estimator_type.__wrapped__ = sklearn_native_estimator_type
@@ -899,7 +893,7 @@ def df_estimator(
         df_estimator_type.__qualname__ = decoratee.__qualname__
 
         # adopt the initializer signature of the wrapped sklearn estimator
-        df_estimator_type.__init__ = _update_wrapper(
+        _update_wrapper(
             wrapper=df_estimator_type.__init__,
             wrapped=sklearn_native_estimator_type.__init__,
             wrapper_module=sklearndf_wrapper_module,
