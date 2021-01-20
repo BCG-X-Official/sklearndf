@@ -348,9 +348,14 @@ class _EstimatorWrapperDF(
     def __getattr__(self, name: str) -> Any:
         # get a non-private attribute of the delegate estimator
         if name.startswith("_"):
-            raise AttributeError(f"{type(self).__name__}.{name}")
+            # raise attribute error
+            self.__getattribute__(name)
         else:
-            return getattr(self._delegate_estimator, name)
+            try:
+                return getattr(self._delegate_estimator, name)
+            except AttributeError:
+                # raise attribute error
+                self.__getattribute__(name)
 
     def __setattr__(self, name: str, value: Any) -> None:
         # set a public attribute of the delegate estimator
