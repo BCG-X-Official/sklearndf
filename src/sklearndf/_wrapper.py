@@ -118,13 +118,10 @@ class _EstimatorWrapperDF(
     instantiate the delegate estimator to be wrapped.
     """
 
-    def __init__(
-        self, *args, _delegate_estimator: Optional[T_DelegateEstimator] = None, **kwargs
-    ) -> None:
+    __ARG_FITTED_DELEGATE_CONTEXT = "__EstimatorWrapperDF_fitted"
+
+    def __init__(self, *args, **kwargs) -> None:
         """
-        :param _delegate_estimator: (optional) an estimator to use as the delegate;
-            if specified, do not create a new estimator and ignore any other arguments
-            passed to this initializer
         :param args: positional arguments to use when initializing a new new delegate
             estimator
         :param kwargs: keyword arguments to use when initializing a new new delegate
@@ -132,16 +129,24 @@ class _EstimatorWrapperDF(
         """
         super().__init__()
 
-        if _delegate_estimator is None:
+        # check if a fitted estimator was passed by class method is_fitted
+        fitted_delegate_context: Tuple[T_DelegateEstimator, pd.Index, int] = kwargs.get(
+            _EstimatorWrapperDF.__ARG_FITTED_DELEGATE_CONTEXT, None
+        )
+
+        if fitted_delegate_context is None:
             # create a new delegate estimator with the given parameters
             # noinspection PyProtectedMember
             self._delegate_estimator = type(self).__wrapped__(*args, **kwargs)
+            self._reset_fit()
         else:
-            self._delegate_estimator = _delegate_estimator
+            (
+                self._delegate_estimator,
+                self._features_in,
+                self._n_outputs,
+            ) = fitted_delegate_context
 
         self._validate_delegate_estimator()
-
-        self._reset_fit()
 
     @property
     def is_fitted(self) -> bool:
@@ -177,13 +182,15 @@ class _EstimatorWrapperDF(
         :return: the wrapped data frame estimator
         """
 
-        class _FittedEstimator(cls):
-            def __init__(self) -> None:
-                super().__init__(_delegate_estimator=estimator)
-                self._features_in = features_in
-                self._n_outputs = n_outputs
-
-        return _FittedEstimator()
+        return cls(
+            **{
+                _EstimatorWrapperDF.__ARG_FITTED_DELEGATE_CONTEXT: (
+                    estimator,
+                    features_in,
+                    n_outputs,
+                )
+            }
+        )
 
     def get_params(self, deep=True) -> Mapping[str, Any]:
         """[see superclass]"""
