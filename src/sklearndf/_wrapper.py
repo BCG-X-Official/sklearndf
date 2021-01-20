@@ -152,6 +152,12 @@ class _EstimatorWrapperDF(
 
         self._validate_delegate_estimator()
 
+    def __new__(cls: Type[T], *args, **kwargs) -> T:
+        if not hasattr(cls, "__wrapped__"):
+            raise TypeError(f"cannot instantiate abstract wrapper class {cls.__name__}")
+        else:
+            return super().__new__(cls)
+
     @property
     def is_fitted(self) -> bool:
         """[see superclass]"""
