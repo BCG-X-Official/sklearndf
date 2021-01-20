@@ -109,9 +109,7 @@ class _EstimatorWrapperDF(
     EstimatorDF,
     BaseEstimator,
     Generic[T_DelegateEstimator],
-    metaclass=compose_meta(
-        type(EstimatorDF), type(BaseEstimator), _EstimatorWrapperDFMeta
-    ),
+    metaclass=compose_meta(type(EstimatorDF), _EstimatorWrapperDFMeta),
 ):
     """
     Base class for wrappers around a delegate :class:`sklearn.base.BaseEstimator`.
