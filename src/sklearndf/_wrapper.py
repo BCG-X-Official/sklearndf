@@ -943,7 +943,6 @@ class _EstimatorDFClassFactory(metaclass=SingletonMeta):
         # noinspection PyMissingOrEmptyDocstring
         class WrapperDF(base_wrapper):
             def __init__(self, *args, **kwargs) -> None:
-                print(args, kwargs)
                 super().__init__(*args, **kwargs)
 
             def __reduce__(
