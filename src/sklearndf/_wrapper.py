@@ -101,6 +101,9 @@ class _EstimatorWrapperDFMeta(type):
 
     @property
     def native_estimator_type(cls) -> Type[BaseEstimator]:
+        """
+        The type of native estimator that instances of this wrapper class delegate to.
+        """
         return cls.__wrapped__
 
 
@@ -156,12 +159,15 @@ class _EstimatorWrapperDF(
     @property
     def native_estimator(self) -> T_DelegateEstimator:
         """
-        The native estimator which this wrapper delegates to.
+        The native estimator that this wrapper delegates to.
         """
         return self._delegate_estimator
 
     @property
     def native_estimator_type(self) -> Type[T_DelegateEstimator]:
+        """
+        The type of the native estimator that this wrapper delegates to.
+        """
         # noinspection PyTypeChecker
         return type(self).native_estimator_type
 
@@ -1145,11 +1151,11 @@ def make_df_estimator(
 
     The augmented version is realised as a wrapper class that
 
-    - implements additional functionality introduced by :class:`.EstimatorDF`
+    - implements enhanced functionality introduced by :class:`.EstimatorDF`
     - adopts all additional methods and attributes from the wrapped native estimator
     - delegates relevant method calls and attribute access to the native estimator,
       thus replicating the original estimator's behaviour except for the enhanced
-      and/or modified functionality introduced by :class:`.EstimatorDF`
+      functionality introduced by :class:`.EstimatorDF`
 
     :param native_estimator: the native estimator to be augmented
     :param name: the name of the resulting augmented estimator, defaults to the name
@@ -1170,8 +1176,26 @@ def make_df_transformer(
     native_transformer: Type[T_DelegateEstimator] = None,
     *,
     name: Optional[str] = None,
-    base_wrapper: Optional[Type[_EstimatorWrapperDF[T_DelegateEstimator]]] = None,
+    base_wrapper: Type[_EstimatorWrapperDF[T_DelegateEstimator]],
 ) -> Union[Type[_EstimatorWrapperDF[T_DelegateEstimator]], T_DelegateEstimator]:
+    """
+    Create an augmented version of a given transformer that conforms with the
+    scikit-learn API.
+
+    The augmented version is realised as a wrapper class that
+
+    - implements enhanced functionality introduced by :class:`.TransformerDF`
+    - adopts all additional methods and attributes from the wrapped native transformer
+    - delegates relevant method calls and attribute access to the native transformer,
+      thus replicating the original transformer's behaviour except for the enhanced
+      functionality introduced by :class:`.TransformerDF`
+
+    :param native_transformer: the native transformer to be augmented
+    :param name: the name of the resulting augmented transformer, defaults to the name
+        of the native transformer with "DF" appended
+    :param base_wrapper: the wrapper class used to create the augmented version
+    :return: the augmented transformer class
+    """
     return _EstimatorDFClassFactory().wrap(
         native_estimator=native_transformer,
         name=name,
@@ -1187,6 +1211,24 @@ def make_df_classifier(
     name: Optional[str] = None,
     base_wrapper: Optional[Type[_EstimatorWrapperDF[T_DelegateEstimator]]] = None,
 ) -> Union[Type[_EstimatorWrapperDF[T_DelegateEstimator]], T_DelegateEstimator]:
+    """
+    Create an augmented version of a given classifier that conforms with the
+    scikit-learn API.
+
+    The augmented version is realised as a wrapper class that
+
+    - implements enhanced functionality introduced by :class:`.ClassifierDF`
+    - adopts all additional methods and attributes from the wrapped native classifier
+    - delegates relevant method calls and attribute access to the native classifier,
+      thus replicating the original classifier's behaviour except for the enhanced
+      functionality introduced by :class:`.ClassifierDF`
+
+    :param native_classifier: the native classifier to be augmented
+    :param name: the name of the resulting augmented classifier, defaults to the name
+        of the native classifier with "DF" appended
+    :param base_wrapper: the wrapper class used to create the augmented version
+    :return: the augmented classifier class
+    """
     return _EstimatorDFClassFactory().wrap(
         native_estimator=native_classifier,
         name=name,
@@ -1202,6 +1244,24 @@ def make_df_regressor(
     name: Optional[str] = None,
     base_wrapper: Optional[Type[_EstimatorWrapperDF[T_DelegateEstimator]]] = None,
 ) -> Union[Type[_EstimatorWrapperDF[T_DelegateEstimator]], T_DelegateEstimator]:
+    """
+    Create an augmented version of a given regressor that conforms with the
+    scikit-learn API.
+
+    The augmented version is realised as a wrapper class that
+
+    - implements enhanced functionality introduced by :class:`.RegressorDF`
+    - adopts all additional methods and attributes from the wrapped native regressor
+    - delegates relevant method calls and attribute access to the native regressor,
+      thus replicating the original regressor's behaviour except for the enhanced
+      functionality introduced by :class:`.RegressorDF`
+
+    :param native_regressor: the native regressor to be augmented
+    :param name: the name of the resulting augmented regressor, defaults to the name
+        of the native regressor with "DF" appended
+    :param base_wrapper: the wrapper class used to create the augmented version
+    :return: the augmented regressor class
+    """
     return _EstimatorDFClassFactory().wrap(
         native_estimator=native_regressor,
         name=name,
