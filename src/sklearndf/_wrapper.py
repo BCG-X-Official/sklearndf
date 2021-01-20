@@ -45,7 +45,7 @@ from sklearn.base import (
 )
 
 from pytools.api import inheritdoc, public_module_prefix
-from pytools.meta import SingletonMeta
+from pytools.meta import SingletonMeta, compose_meta
 
 from sklearndf import ClassifierDF, EstimatorDF, LearnerDF, RegressorDF, TransformerDF
 
@@ -96,8 +96,23 @@ T_ClassifierWrapperDF = TypeVar("T_ClassifierWrapperDF", bound="_ClassifierWrapp
 #
 
 
+class _EstimatorWrapperDFMeta(type):
+    __wrapped__: Type[T_DelegateEstimator]
+
+    @property
+    def native_estimator_type(cls) -> Type[BaseEstimator]:
+        return cls.__wrapped__
+
+
 @inheritdoc(match="[see superclass]")
-class _EstimatorWrapperDF(EstimatorDF, BaseEstimator, Generic[T_DelegateEstimator]):
+class _EstimatorWrapperDF(
+    EstimatorDF,
+    BaseEstimator,
+    Generic[T_DelegateEstimator],
+    metaclass=compose_meta(
+        type(EstimatorDF), type(BaseEstimator), _EstimatorWrapperDFMeta
+    ),
+):
     """
     Base class for wrappers around a delegate :class:`sklearn.base.BaseEstimator`.
 
@@ -141,6 +156,11 @@ class _EstimatorWrapperDF(EstimatorDF, BaseEstimator, Generic[T_DelegateEstimato
         The native estimator which this wrapper delegates to.
         """
         return self._delegate_estimator
+
+    @property
+    def native_estimator_type(self) -> Type[T_DelegateEstimator]:
+        # noinspection PyTypeChecker
+        return type(self).native_estimator_type
 
     @classmethod
     def from_fitted(
