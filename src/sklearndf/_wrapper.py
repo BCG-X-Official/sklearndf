@@ -1098,6 +1098,8 @@ def _make_df_wrapper_class(
 ) -> Type[T_EstimatorWrapperDF]:
     # noinspection PyMissingOrEmptyDocstring
     class WrapperDF(base_wrapper):
+        # we need to create this __init__ method in order to apply the signature
+        # of the native estimator's __init__ method
         def __init__(self, *args, **kwargs) -> None:
             super().__init__(*args, **kwargs)
 
