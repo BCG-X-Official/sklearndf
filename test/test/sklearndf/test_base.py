@@ -1,10 +1,7 @@
 # inspired by:
 # https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/tests/test_base.py
-from abc import ABCMeta
 
 import numpy as np
-
-# noinspection PyPackageRequirements
 import scipy.sparse as sp
 from numpy.testing import assert_array_equal, assert_raises
 from sklearn import clone
@@ -12,10 +9,7 @@ from sklearn.base import BaseEstimator, is_classifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 
-from sklearndf import EstimatorDF
-
-# noinspection PyProtectedMember
-from sklearndf._wrapper import _EstimatorWrapperDF, df_estimator
+from sklearndf._wrapper import make_df_estimator
 from sklearndf.classification import SVCDF, DecisionTreeClassifierDF
 from sklearndf.pipeline import PipelineDF
 from sklearndf.transformation import OneHotEncoderDF
@@ -34,24 +28,14 @@ class _DummyEstimator2(BaseEstimator):
 
 
 class _DummyEstimator3(BaseEstimator):
-    def __init__(self, c=None, d=None) -> None:
+    def __init__(self, c=0, d=None) -> None:
         self.c = c
         self.d = d
 
 
-@df_estimator(df_wrapper_type=_EstimatorWrapperDF)
-class _DummyEstimatorDF(EstimatorDF, _DummyEstimator, metaclass=ABCMeta):
-    pass
-
-
-@df_estimator(df_wrapper_type=_EstimatorWrapperDF)
-class _DummyEstimator2DF(EstimatorDF, _DummyEstimator2, metaclass=ABCMeta):
-    pass
-
-
-@df_estimator(df_wrapper_type=_EstimatorWrapperDF)
-class _DummyEstimator3DF(EstimatorDF, _DummyEstimator3, metaclass=ABCMeta):
-    pass
+_DummyEstimatorDF = make_df_estimator(_DummyEstimator)
+_DummyEstimator2DF = make_df_estimator(_DummyEstimator2)
+_DummyEstimator3DF = make_df_estimator(_DummyEstimator3)
 
 
 def test_clone() -> None:
@@ -131,16 +115,18 @@ def test_repr() -> None:
     my_estimator = _DummyEstimatorDF()
     repr(my_estimator)
 
-    test = _DummyEstimator2DF(_DummyEstimator3DF(), _DummyEstimator3DF())
+    test = _DummyEstimator2DF(
+        _DummyEstimator3DF(c=None, d=None), _DummyEstimator3DF(c=1, d=2)
+    )
 
     assert repr(test) == (
-        "_DummyEstimator2DF(a=_DummyEstimator3DF(c=None, d=None),\n"
-        "                   b=_DummyEstimator3DF(c=None, d=None))"
+        "_DummyEstimator2DF("
+        "a=_DummyEstimator3DF(c=None), b=_DummyEstimator3DF(c=1, d=2))"
     )
 
     some_est = _DummyEstimator2DF(a=["long_params"] * 1000)
 
-    assert len(repr(some_est)) == 702
+    assert len(repr(some_est)) == 675
 
 
 def test_str() -> None:
@@ -155,6 +141,7 @@ def test_get_params() -> None:
     assert "a__d" in test.get_params(deep=True)
     assert "a__d" not in test.get_params(deep=False)
 
+    # noinspection PyTypeChecker
     test.set_params(a__d=2)
     assert test.a.d == 2
     assert_raises(ValueError, test.set_params, a__a=2)
