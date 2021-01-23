@@ -935,7 +935,9 @@ def df_estimator(
             if alias is not None:
                 setattr(df_estimator_type, name, alias)
 
-    def _make_alias(module: str, name: str, delegate_cls: type, delegate: T) -> T:
+    def _make_alias(
+        module: str, name: str, delegate_cls: type, delegate: T
+    ) -> Optional[T]:
         def _make_forwarder() -> callable:
             def _forwarder(self, *args, **kwargs) -> Any:
                 return delegate(self._delegate_estimator, *args, **kwargs)
