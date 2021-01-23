@@ -18,7 +18,6 @@ from functools import update_wrapper
 from typing import (
     Any,
     Callable,
-    Dict,
     Generic,
     Iterable,
     List,
@@ -863,32 +862,27 @@ def df_estimator(
         # determine the module of the wrapper
         sklearndf_wrapper_module = decoratee.__module__
 
-        # we will add this function to the new DF estimator class as a class method
-        def _make_delegate_estimator(_cls, *args, **kwargs) -> T_DelegateEstimator:
-            # noinspection PyArgumentList
-            return sklearn_native_estimator_type(*args, **kwargs)
-
-        _make_delegate_estimator.__module__ = sklearndf_wrapper_module
-
         # dynamically create the wrapper class
-        # noinspection PyTypeChecker
-        df_estimator_type: Type[_EstimatorWrapperDF[T_DelegateEstimator]] = type(
-            # preserve the name
-            decoratee.__name__,
-            # subclass the wrapper type (e.g., _EstimatorWrapperDF)
-            (df_wrapper_type,),
-            {
-                # implement abstract class method _make_delegate_estimator
-                _make_delegate_estimator.__name__: classmethod(
-                    _make_delegate_estimator
-                ),
-                # mirror all attributes of the wrapped sklearn class, as long
-                # as they are not inherited from the wrapper base class
-                **_mirror_attributes(
-                    delegate_type=sklearn_native_estimator_type,
-                    wrapper_module=sklearndf_wrapper_module,
-                ),
-            },
+        # noinspection PyPep8Naming,PyMissingOrEmptyDocstring
+        class df_estimator_type(df_wrapper_type):
+            def __init__(self, *args, **kwargs) -> None:
+                super().__init__(*args, **kwargs)
+
+            @classmethod
+            def _make_delegate_estimator(cls, *args, **kwargs) -> T_DelegateEstimator:
+                # noinspection PyArgumentList
+                return sklearn_native_estimator_type(*args, **kwargs)
+
+            _make_delegate_estimator.__module__ = sklearndf_wrapper_module
+
+        df_estimator_type.__name__ = decoratee.__name__
+
+        # mirror all attributes of the wrapped sklearn class, as long
+        # as they are not inherited from the wrapper base class
+        _mirror_attributes(
+            df_estimator_type=df_estimator_type,
+            delegate_type=sklearn_native_estimator_type,
+            wrapper_module=sklearndf_wrapper_module,
         )
 
         # add link to the wrapped class, for use in python module 'inspect'
@@ -899,7 +893,7 @@ def df_estimator(
         df_estimator_type.__qualname__ = decoratee.__qualname__
 
         # adopt the initializer signature of the wrapped sklearn estimator
-        df_estimator_type.__init__ = _update_wrapper(
+        _update_wrapper(
             wrapper=df_estimator_type.__init__,
             wrapped=sklearn_native_estimator_type.__init__,
             wrapper_module=sklearndf_wrapper_module,
@@ -916,29 +910,34 @@ def df_estimator(
         return df_estimator_type
 
     def _mirror_attributes(
-        delegate_type: Type[T_DelegateEstimator], wrapper_module: str
-    ) -> Dict[str, Any]:
+        df_estimator_type: Type[T_EstimatorWrapperDF],
+        delegate_type: Type[T_DelegateEstimator],
+        wrapper_module: str,
+    ) -> None:
 
         inherit_from_base_wrapper: Set[str] = set(dir(df_wrapper_type))
 
-        new_dict = {
-            name: _make_alias(
+        for name, member in vars(delegate_type).items():
+
+            if (
+                member is None
+                or name.startswith("_")
+                or name in inherit_from_base_wrapper
+            ):
+                continue
+
+            alias = _make_alias(
                 module=wrapper_module,
                 name=name,
                 delegate_cls=delegate_type,
                 delegate=member,
             )
-            for name, member in vars(delegate_type).items()
-            if not (
-                member is None
-                or name.startswith("__")
-                or name in inherit_from_base_wrapper
-            )
-        }
+            if alias is not None:
+                setattr(df_estimator_type, name, alias)
 
-        return new_dict
-
-    def _make_alias(module: str, name: str, delegate_cls: type, delegate: T) -> T:
+    def _make_alias(
+        module: str, name: str, delegate_cls: type, delegate: T
+    ) -> Optional[T]:
         def _make_forwarder() -> callable:
             def _forwarder(self, *args, **kwargs) -> Any:
                 return delegate(self._delegate_estimator, *args, **kwargs)
@@ -955,26 +954,15 @@ def df_estimator(
             docstring = f"See :meth:`{full_name}`"
             function.__doc__ = docstring
             return function
-        else:
-            docstring = f"See documentation of :class:`{class_name}`."
-            if inspect.isdatadescriptor(delegate):
-                return property(
-                    fget=lambda self: delegate.__get__(self._delegate_estimator),
-                    fset=lambda self, value: delegate.__set__(
-                        self._delegate_estimator, value
-                    ),
-                    fdel=lambda self: delegate.__delete__(self._delegate_estimator),
-                    doc=docstring,
-                )
-            else:
-                return property(
-                    fget=lambda self: getattr(self._delegate_estimator, name),
-                    fset=lambda self, value: setattr(
-                        self._delegate_estimator, name, value
-                    ),
-                    fdel=lambda self: delattr(self._delegate_estimator, name),
-                    doc=docstring,
-                )
+        elif inspect.isdatadescriptor(delegate):
+            return property(
+                fget=lambda self: delegate.__get__(self._delegate_estimator),
+                fset=lambda self, value: delegate.__set__(
+                    self._delegate_estimator, value
+                ),
+                fdel=lambda self: delegate.__delete__(self._delegate_estimator),
+                doc=f"See documentation of :class:`{class_name}`.",
+            )
 
     def _update_wrapper(
         wrapper: Any,

@@ -34,7 +34,7 @@ class _DummyEstimator2(BaseEstimator):
 
 
 class _DummyEstimator3(BaseEstimator):
-    def __init__(self, c=None, d=None) -> None:
+    def __init__(self, c=0, d=None) -> None:
         self.c = c
         self.d = d
 
@@ -131,16 +131,16 @@ def test_repr() -> None:
     my_estimator = _DummyEstimatorDF()
     repr(my_estimator)
 
-    test = _DummyEstimator2DF(_DummyEstimator3DF(), _DummyEstimator3DF())
+    test = _DummyEstimator2DF(_DummyEstimator3DF(c=None), _DummyEstimator3DF(c=1, d=2))
 
     assert repr(test) == (
-        "_DummyEstimator2DF(a=_DummyEstimator3DF(c=None, d=None),\n"
-        "                   b=_DummyEstimator3DF(c=None, d=None))"
+        "_DummyEstimator2DF(a=_DummyEstimator3DF(c=None), "
+        "b=_DummyEstimator3DF(c=1, d=2))"
     )
 
     some_est = _DummyEstimator2DF(a=["long_params"] * 1000)
 
-    assert len(repr(some_est)) == 702
+    assert len(repr(some_est)) == 675
 
 
 def test_str() -> None:
