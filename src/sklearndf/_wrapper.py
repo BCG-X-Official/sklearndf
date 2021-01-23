@@ -863,6 +863,7 @@ def df_estimator(
         sklearndf_wrapper_module = decoratee.__module__
 
         # dynamically create the wrapper class
+        # noinspection PyPep8Naming,PyMissingOrEmptyDocstring
         class df_estimator_type(df_wrapper_type):
             def __init__(self, *args, **kwargs) -> None:
                 super().__init__(*args, **kwargs)
