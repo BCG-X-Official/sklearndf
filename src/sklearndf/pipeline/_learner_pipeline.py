@@ -7,7 +7,6 @@ from abc import ABCMeta, abstractmethod
 from typing import Any, Generic, List, Optional, Sequence, TypeVar, Union
 
 import pandas as pd
-from sklearn.base import BaseEstimator
 
 from pytools.api import AllTracker, inheritdoc
 
@@ -37,9 +36,7 @@ __tracker = AllTracker(globals())
 
 
 @inheritdoc(match="[see superclass]")
-class _EstimatorPipelineDF(
-    EstimatorDF, BaseEstimator, Generic[T_FinalEstimatorDF], metaclass=ABCMeta
-):
+class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=ABCMeta):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
     mandatory estimator step.

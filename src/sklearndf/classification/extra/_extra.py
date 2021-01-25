@@ -6,7 +6,7 @@ import warnings
 
 from pytools.api import AllTracker
 
-from ..._wrapper import make_df_classifier
+from ...wrapper import make_df_classifier
 
 # since we install LGBM via conda, the warning about the Clang compiler is irrelevant
 warnings.filterwarnings("ignore", message=r"Starting from version 2\.2\.1")
