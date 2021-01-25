@@ -6,8 +6,7 @@ import warnings
 
 from pytools.api import AllTracker
 
-from ... import ClassifierDF
-from ..._wrapper import _ClassifierWrapperDF, df_estimator
+from ..._wrapper import make_df_classifier
 
 # since we install LGBM via conda, the warning about the Clang compiler is irrelevant
 warnings.filterwarnings("ignore", message=r"Starting from version 2\.2\.1")
@@ -35,20 +34,7 @@ __tracker = AllTracker(globals())
 # Class definitions
 #
 
-
-#
-# lightgbm
-#
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ClassifierWrapperDF)
-class LGBMClassifierDF(ClassifierDF, LGBMClassifier):
-    """
-    Wraps :class:`lightgbm.sklearn.LGBMClassifier`; accepts and returns data frames.
-    """
-
-    pass
+LGBMClassifierDF = make_df_classifier(LGBMClassifier)
 
 
 #

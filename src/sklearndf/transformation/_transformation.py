@@ -15,7 +15,6 @@ Core implementation of :mod:`sklearndf.transformation`
 #            :class:`$2.$1`;\n    accepts and returns data frames.\n    """
 #            \n    pass\n\n
 # - clean up imports; import only the module names not the individual classes
-
 import logging
 from abc import ABCMeta
 from functools import reduce
@@ -41,7 +40,6 @@ from sklearn.decomposition import (
     SparsePCA,
     TruncatedSVD,
 )
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.feature_extraction import DictVectorizer, FeatureHasher
 from sklearn.feature_extraction.text import HashingVectorizer, TfidfTransformer
 from sklearn.feature_selection import (
@@ -91,7 +89,7 @@ from sklearn.random_projection import GaussianRandomProjection, SparseRandomProj
 from pytools.api import AllTracker
 
 from .. import TransformerDF
-from .._wrapper import _TransformerWrapperDF, df_estimator
+from .._wrapper import _TransformerWrapperDF, make_df_transformer
 from ._wrapper import (
     _BaseDimensionalityReductionWrapperDF,
     _BaseMultipleInputsPerOutputTransformerWrapperDF,
@@ -127,7 +125,6 @@ __all__ = [
     "LabelBinarizerDF",
     "LabelEncoderDF",
     "LatentDirichletAllocationDF",
-    "LinearDiscriminantAnalysisDF",
     "LocallyLinearEmbeddingDF",
     "MaxAbsScalerDF",
     "MinMaxScalerDF",
@@ -182,20 +179,19 @@ T_Imputer = TypeVar("T_Imputer", SimpleImputer, IterativeImputer)
 
 __tracker = AllTracker(globals())
 
+
+#
+# Class definitions
+#
+
 #
 # cluster
 #
 
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class FeatureAgglomerationDF(TransformerDF, FeatureAgglomeration):
-    """
-    Wraps :class:`sklearn.cluster.FeatureAgglomeration`;
-    accepts and returns data frames.
-    """
-
-    pass
+FeatureAgglomerationDF = make_df_transformer(
+    FeatureAgglomeration, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
 
 #
@@ -264,15 +260,9 @@ class _ColumnTransformerWrapperDF(
         )
 
 
-# noinspection PyAbstractClass,DuplicatedCode
-@df_estimator(df_wrapper_type=_ColumnTransformerWrapperDF)
-class ColumnTransformerDF(TransformerDF, ColumnTransformer):
-    """
-    Wraps :class:`sklearn.compose.ColumnTransformer`;
-    accepts and returns data frames.
-    """
-
-    pass
+ColumnTransformerDF = make_df_transformer(
+    ColumnTransformer, base_wrapper=_ColumnTransformerWrapperDF
+)
 
 
 #
@@ -280,59 +270,25 @@ class ColumnTransformerDF(TransformerDF, ColumnTransformer):
 #
 
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class PLSSVDDF(TransformerDF, PLSSVD):
-    """
-    Wraps :class:`sklearn.cross_decomposition.pls_.PLSSVD`;
-    accepts and returns data frames.
-    """
+PLSSVDDF = make_df_transformer(
+    PLSSVD, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
-    pass
+FeatureHasherDF = make_df_transformer(
+    FeatureHasher, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
+DictVectorizerDF = make_df_transformer(
+    DictVectorizer, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class FeatureHasherDF(TransformerDF, FeatureHasher):
-    """
-    Wraps :class:`sklearn.feature_extraction.FeatureHasher`;
-    accepts and returns data frames.
-    """
+HashingVectorizerDF = make_df_transformer(
+    HashingVectorizer, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class DictVectorizerDF(TransformerDF, DictVectorizer):
-    """
-    Wraps :class:`sklearn.feature_extraction.dict_vectorizer.DictVectorizer`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class HashingVectorizerDF(TransformerDF, HashingVectorizer):
-    """
-    Wraps :class:`sklearn.feature_extraction.text.HashingVectorizer`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class TfidfTransformerDF(TransformerDF, TfidfTransformer):
-    """
-    Wraps :class:`sklearn.feature_extraction.text.TfidfTransformer`;
-    accepts and returns data frames.
-    """
-
-    pass
+TfidfTransformerDF = make_df_transformer(
+    TfidfTransformer, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
 
 #
@@ -340,8 +296,6 @@ class TfidfTransformerDF(TransformerDF, TfidfTransformer):
 #
 
 # we cannot move this to package _wrapper as it references MissingIndicatorDF
-
-
 class _ImputerWrapperDF(_TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
     """
     Impute missing values with data frames as input and output.
@@ -399,15 +353,7 @@ class _ImputerWrapperDF(_TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
             return features_original
 
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ImputerWrapperDF)
-class SimpleImputerDF(TransformerDF, SimpleImputer):
-    """
-    Wraps :class:`sklearn.impute.MissingIndicator`;
-    accepts and returns data frames.
-    """
-
-    pass
+SimpleImputerDF = make_df_transformer(SimpleImputer, base_wrapper=_ImputerWrapperDF)
 
 
 class _MissingIndicatorWrapperDF(
@@ -421,26 +367,13 @@ class _MissingIndicatorWrapperDF(
         return pd.Series(index=features_out, data=features_original)
 
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_MissingIndicatorWrapperDF)
-class MissingIndicatorDF(TransformerDF, MissingIndicator):
-    """
-    Wraps :class:`sklearn.impute.MissingIndicator`;
-    accepts and returns data frames.
-    """
+MissingIndicatorDF = make_df_transformer(
+    MissingIndicator, base_wrapper=_MissingIndicatorWrapperDF
+)
 
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ImputerWrapperDF)
-class IterativeImputerDF(TransformerDF, IterativeImputer):
-    """
-    Wraps :class:`sklearn.impute.IterativeImputer`;
-    accepts and returns data frames.
-    """
-
-    pass
+IterativeImputerDF = make_df_transformer(
+    IterativeImputer, base_wrapper=_ImputerWrapperDF
+)
 
 
 class _IsomapWrapperDF(
@@ -451,15 +384,7 @@ class _IsomapWrapperDF(
         return self.native_estimator.embedding_.shape[1]
 
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_IsomapWrapperDF)
-class IsomapDF(TransformerDF, IterativeImputer):
-    """
-    Wraps :class:`sklearn.manifold.Isomap`;
-    accepts and returns data frames.
-    """
-
-    pass
+IsomapDF = make_df_transformer(Isomap, base_wrapper=_IsomapWrapperDF)
 
 
 class _AdditiveChi2SamplerWrapperDF(
@@ -470,30 +395,19 @@ class _AdditiveChi2SamplerWrapperDF(
         return len(self._features_in) * (2 * self.native_estimator.sample_steps + 1)
 
 
-# noinspection PyAbstractClass,DuplicatedCode
-@df_estimator(df_wrapper_type=_AdditiveChi2SamplerWrapperDF)
-class AdditiveChi2SamplerDF(TransformerDF, AdditiveChi2Sampler):
-    """
-    Wraps :class:`sklearn.kernel_approximation.AdditiveChi2Sampler`;
-    accepts and returns data frames.
-    """
-
-    pass
+AdditiveChi2SamplerDF = make_df_transformer(
+    AdditiveChi2Sampler, base_wrapper=_AdditiveChi2SamplerWrapperDF
+)
 
 
 #
 # neighbors
 #
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class NeighborhoodComponentsAnalysisDF(TransformerDF, NeighborhoodComponentsAnalysis):
-    """
-    Wraps :class:`sklearn.neighbors.NeighborhoodComponentsAnalysis`;
-    accepts and returns data frames.
-    """
-
-    pass
+NeighborhoodComponentsAnalysisDF = make_df_transformer(
+    NeighborhoodComponentsAnalysis,
+    base_wrapper=_ColumnPreservingTransformerWrapperDF,
+)
 
 
 #
@@ -501,48 +415,21 @@ class NeighborhoodComponentsAnalysisDF(TransformerDF, NeighborhoodComponentsAnal
 #
 
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class MinMaxScalerDF(TransformerDF, MinMaxScaler):
-    """
-    Wraps :class:`sklearn.preprocessing.MinMaxScaler`;
-    accepts and returns data frames.
-    """
+MinMaxScalerDF = make_df_transformer(
+    MinMaxScaler, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
-    pass
+StandardScalerDF = make_df_transformer(
+    StandardScaler, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
+MaxAbsScalerDF = make_df_transformer(
+    MaxAbsScaler, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class StandardScalerDF(TransformerDF, StandardScaler):
-    """
-    Wraps :class:`sklearn.preprocessing.StandardScaler`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class MaxAbsScalerDF(TransformerDF, MaxAbsScaler):
-    """
-    Wraps :class:`sklearn.preprocessing.MaxAbsScaler`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class RobustScalerDF(TransformerDF, RobustScaler):
-    """
-    Wraps :class:`sklearn.preprocessing.RobustScaler`;
-    accepts and returns data frames.
-    """
-
-    pass
+RobustScalerDF = make_df_transformer(
+    RobustScaler, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
 
 class _PolynomialFeaturesWrapperDF(
@@ -557,115 +444,45 @@ class _PolynomialFeaturesWrapperDF(
         )
 
 
-# noinspection PyAbstractClass,DuplicatedCode
-@df_estimator(df_wrapper_type=_PolynomialFeaturesWrapperDF)
-class PolynomialFeaturesDF(TransformerDF, PolynomialFeatures):
-    """
-    Wraps :class:`sklearn.preprocessing.PolynomialFeatures`;
-    accepts and returns data frames.
-    """
+PolynomialFeaturesDF = make_df_transformer(
+    PolynomialFeatures, base_wrapper=_PolynomialFeaturesWrapperDF
+)
 
-    pass
+NormalizerDF = make_df_transformer(
+    Normalizer, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
+BinarizerDF = make_df_transformer(
+    Binarizer, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class NormalizerDF(TransformerDF, Normalizer):
-    """
-    Wraps :class:`sklearn.preprocessing.Normalizer`;
-    accepts and returns data frames.
-    """
+KernelCentererDF = make_df_transformer(
+    KernelCenterer, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
-    pass
+QuantileTransformerDF = make_df_transformer(
+    QuantileTransformer, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
+PowerTransformerDF = make_df_transformer(
+    PowerTransformer, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
-# noinspection PyAbstractClass
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class BinarizerDF(TransformerDF, Binarizer):
-    """
-    Wraps :class:`sklearn.preprocessing.Binarizer`;
-    accepts and returns data frames.
-    """
+FunctionTransformerDF = make_df_transformer(
+    FunctionTransformer, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
-    pass
+LabelEncoderDF = make_df_transformer(
+    LabelEncoder, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
+LabelBinarizerDF = make_df_transformer(
+    LabelBinarizer, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class KernelCentererDF(TransformerDF, KernelCenterer):
-    """
-    Wraps :class:`sklearn.preprocessing.KernelCenterer`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class QuantileTransformerDF(TransformerDF, QuantileTransformer):
-    """
-    Wraps :class:`sklearn.preprocessing.QuantileTransformer`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class PowerTransformerDF(TransformerDF, PowerTransformer):
-    """
-    Wraps :class:`sklearn.preprocessing.PowerTransformer`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class FunctionTransformerDF(TransformerDF, FunctionTransformer):
-    """
-    Wraps :class:`sklearn.preprocessing.FunctionTransformer`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class LabelEncoderDF(TransformerDF, LabelEncoder):
-    """
-    Wraps :class:`sklearn.preprocessing.LabelEncoder`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class LabelBinarizerDF(TransformerDF, LabelBinarizer):
-    """
-    Wraps :class:`sklearn.preprocessing.LabelBinarizer`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class MultiLabelBinarizerDF(TransformerDF, MultiLabelBinarizer):
-    """
-    Wraps :class:`sklearn.preprocessing.MultiLabelBinarizer`;
-    accepts and returns data frames.
-    """
-
-    pass
+MultiLabelBinarizerDF = make_df_transformer(
+    MultiLabelBinarizer, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
 
 class _OneHotEncoderWrapperDF(_TransformerWrapperDF[OneHotEncoder], metaclass=ABCMeta):
@@ -703,26 +520,13 @@ class _OneHotEncoderWrapperDF(_TransformerWrapperDF[OneHotEncoder], metaclass=AB
         )
 
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_OneHotEncoderWrapperDF)
-class OneHotEncoderDF(TransformerDF, OneHotEncoder):
-    """
-    Wraps :class:`sklearn.preprocessing.OneHotEncoder`;
-    accepts and returns data frames.
-    """
+OneHotEncoderDF = make_df_transformer(
+    OneHotEncoder, base_wrapper=_OneHotEncoderWrapperDF
+)
 
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class OrdinalEncoderDF(TransformerDF, OrdinalEncoder):
-    """
-    Wraps :class:`sklearn.preprocessing.OrdinalEncoder`;
-    accepts and returns data frames.
-    """
-
-    pass
+OrdinalEncoderDF = make_df_transformer(
+    OrdinalEncoder, base_wrapper=_ColumnPreservingTransformerWrapperDF
+)
 
 
 class _KBinsDiscretizerWrapperDF(
@@ -767,15 +571,9 @@ class _KBinsDiscretizerWrapperDF(
             )
 
 
-# noinspection PyAbstractClass,DuplicatedCode
-@df_estimator(df_wrapper_type=_KBinsDiscretizerWrapperDF)
-class KBinsDiscretizerDF(TransformerDF, KBinsDiscretizer):
-    """
-    Wrap :class:`sklearn.preprocessing.KBinsDiscretizer`;
-    accepts and returns dataframes.
-    """
-
-    pass
+KBinsDiscretizerDF = make_df_transformer(
+    KBinsDiscretizer, base_wrapper=_KBinsDiscretizerWrapperDF
+)
 
 
 #
@@ -783,362 +581,136 @@ class KBinsDiscretizerDF(TransformerDF, KBinsDiscretizer):
 # Implemented through _ComponentsDimensionalityReductionWrapperDF
 #
 
+BernoulliRBMDF = make_df_transformer(
+    BernoulliRBM, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
+)
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
-class BernoulliRBMDF(TransformerDF, BernoulliRBM):
-    """
-    Wraps :class:`sklearn.neural_network.BernoulliRBM`;
-    accepts and returns data frames.
-    """
+DictionaryLearningDF = make_df_transformer(
+    DictionaryLearning, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
+)
 
-    pass
+FactorAnalysisDF = make_df_transformer(
+    FactorAnalysis, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
+)
 
+FastICADF = make_df_transformer(
+    FastICA, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
+)
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
-class DictionaryLearningDF(TransformerDF, DictionaryLearning):
-    """
-    Wraps :class:`decomposition.dict_learning.DictionaryLearning`;
-    accepts and returns data frames.
-    """
+GaussianRandomProjectionDF = make_df_transformer(
+    GaussianRandomProjection,
+    base_wrapper=_ComponentsDimensionalityReductionWrapperDF,
+)
 
-    pass
+IncrementalPCADF = make_df_transformer(
+    IncrementalPCA, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
+)
 
+LatentDirichletAllocationDF = make_df_transformer(
+    LatentDirichletAllocation,
+    base_wrapper=_ComponentsDimensionalityReductionWrapperDF,
+)
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
-class FactorAnalysisDF(TransformerDF, FactorAnalysis):
-    """
-    Wraps :class:`decomposition.factor_analysis.FactorAnalysis`;
-    accepts and returns data frames.
-    """
+MiniBatchDictionaryLearningDF = make_df_transformer(
+    MiniBatchDictionaryLearning,
+    base_wrapper=_ComponentsDimensionalityReductionWrapperDF,
+)
 
-    pass
+MiniBatchSparsePCADF = make_df_transformer(
+    MiniBatchSparsePCA, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
+)
 
+NMFDF = make_df_transformer(
+    NMF, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
+)
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
-class FastICADF(TransformerDF, FastICA):
-    """
-    Wraps :class:`decomposition.fastica_.FastICA`;
-    accepts and returns data frames.
-    """
+PCADF = make_df_transformer(
+    PCA, base_wrapper=_NComponentsDimensionalityReductionWrapperDF
+)
 
-    pass
+SparseCoderDF = make_df_transformer(
+    SparseCoder, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
+)
 
+SparsePCADF = make_df_transformer(
+    SparsePCA, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
+)
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
-class GaussianRandomProjectionDF(TransformerDF, GaussianRandomProjection):
-    """
-    Wraps :class:`sklearn.random_projection.GaussianRandomProjection`;
-    accepts and returns data frames.
-    """
+SparseRandomProjectionDF = make_df_transformer(
+    SparseRandomProjection, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
+)
 
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
-class IncrementalPCADF(TransformerDF, IncrementalPCA):
-    """
-    Wraps :class:`decomposition.incremental_pca.IncrementalPCA`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
-class LatentDirichletAllocationDF(TransformerDF, LatentDirichletAllocation):
-    """
-    Wraps :class:`decomposition.online_lda.LatentDirichletAllocation`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
-class MiniBatchDictionaryLearningDF(TransformerDF, MiniBatchDictionaryLearning):
-    """
-    Wraps :class:`decomposition.dict_learning.MiniBatchDictionaryLearning`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
-class MiniBatchSparsePCADF(TransformerDF, MiniBatchSparsePCA):
-    """
-    Wraps :class:`decomposition.sparse_pca.MiniBatchSparsePCA`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
-class NMFDF(NMF, TransformerDF):
-    """
-    Wraps :class:`decomposition.NMF`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF)
-class PCADF(TransformerDF, PCA):
-    """
-    Wraps :class:`decomposition.pca.PCA`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
-class SparseCoderDF(TransformerDF, SparseCoder):
-    """
-    Wraps :class:`decomposition.dict_learning.SparseCoder`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
-class SparsePCADF(TransformerDF, SparsePCA):
-    """
-    Wraps :class:`decomposition.sparse_pca.SparsePCA`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
-class SparseRandomProjectionDF(TransformerDF, SparseRandomProjection):
-    """
-    Wraps :class:`sklearn.random_projection.SparseRandomProjection`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ComponentsDimensionalityReductionWrapperDF)
-class TruncatedSVDDF(TransformerDF, TruncatedSVD):
-    """
-    Wraps :class:`decomposition.truncated_svd.TruncatedSVD`;
-    accepts and returns data frames.
-    """
-
-    pass
+TruncatedSVDDF = make_df_transformer(
+    TruncatedSVD, base_wrapper=_ComponentsDimensionalityReductionWrapperDF
+)
 
 
 #
-# Transformer which have an n_components attribute
+# Transformers which have an n_components attribute
 # Implemented through NComponentsDimensionalityReductionWrapperDF
 #
 
+KernelPCADF = make_df_transformer(
+    KernelPCA, base_wrapper=_NComponentsDimensionalityReductionWrapperDF
+)
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF)
-class KernelPCADF(TransformerDF, KernelPCA):
-    """
-    Wraps :class:`decomposition.kernel_pca.KernelPCA`;
-    accepts and returns data frames.
-    """
+LocallyLinearEmbeddingDF = make_df_transformer(
+    LocallyLinearEmbedding, base_wrapper=_NComponentsDimensionalityReductionWrapperDF
+)
 
-    pass
+NystroemDF = make_df_transformer(
+    Nystroem, base_wrapper=_NComponentsDimensionalityReductionWrapperDF
+)
 
+RBFSamplerDF = make_df_transformer(
+    RBFSampler, base_wrapper=_NComponentsDimensionalityReductionWrapperDF
+)
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF)
-class LinearDiscriminantAnalysisDF(TransformerDF, LinearDiscriminantAnalysis):
-    """
-    Wraps :class:`sklearn.discriminant_analysis.LinearDiscriminantAnalysis`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF)
-class LocallyLinearEmbeddingDF(TransformerDF, LocallyLinearEmbedding):
-    """
-    Wraps :class:`sklearn.manifold.LocallyLinearEmbedding`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF)
-class NystroemDF(TransformerDF, Nystroem):
-    """
-    Wraps :class:`sklearn.kernel_approximation.Nystroem`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF)
-class RBFSamplerDF(TransformerDF, RBFSampler):
-    """
-    Wraps :class:`sklearn.kernel_approximation.RBFSampler`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_NComponentsDimensionalityReductionWrapperDF)
-class SkewedChi2SamplerDF(TransformerDF, SkewedChi2Sampler):
-    """
-    Wraps :class:`sklearn.kernel_approximation.SkewedChi2Sampler`;
-    accepts and returns data frames.
-    """
-
-    pass
+SkewedChi2SamplerDF = make_df_transformer(
+    SkewedChi2Sampler, base_wrapper=_NComponentsDimensionalityReductionWrapperDF
+)
 
 
 #
 # feature_selection
 #
-#
-# Transformer which have an get_support method
-# Implemented through _FeatureSelectionWrapperDF
+# Transformers with a get_support method, implemented via _FeatureSelectionWrapperDF
 #
 
+VarianceThresholdDF = make_df_transformer(
+    VarianceThreshold, base_wrapper=_FeatureSelectionWrapperDF
+)
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
-class VarianceThresholdDF(TransformerDF, VarianceThreshold):
-    """
-    Wraps :class:`sklearn.feature_selection.VarianceThreshold`;
-    accepts and returns data frames.
-    """
+RFEDF = make_df_transformer(RFE, base_wrapper=_FeatureSelectionWrapperDF)
 
-    pass
+RFECVDF = make_df_transformer(RFECV, base_wrapper=_FeatureSelectionWrapperDF)
 
+SelectFromModelDF = make_df_transformer(
+    SelectFromModel, base_wrapper=_FeatureSelectionWrapperDF
+)
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
-class RFEDF(TransformerDF, RFE):
-    """
-    Wraps :class:`sklearn.feature_selection.RFE`;
-    accepts and returns data frames.
-    """
+SelectPercentileDF = make_df_transformer(
+    SelectPercentile, base_wrapper=_FeatureSelectionWrapperDF
+)
 
-    pass
+SelectKBestDF = make_df_transformer(
+    SelectKBest, base_wrapper=_FeatureSelectionWrapperDF
+)
 
+SelectFprDF = make_df_transformer(SelectFpr, base_wrapper=_FeatureSelectionWrapperDF)
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
-class RFECVDF(TransformerDF, RFECV):
-    """
-    Wraps :class:`sklearn.feature_selection.RFECV`;
-    accepts and returns data frames.
-    """
+SelectFdrDF = make_df_transformer(SelectFdr, base_wrapper=_FeatureSelectionWrapperDF)
 
-    pass
+SelectFweDF = make_df_transformer(SelectFwe, base_wrapper=_FeatureSelectionWrapperDF)
+
+GenericUnivariateSelectDF = make_df_transformer(
+    GenericUnivariateSelect, base_wrapper=_FeatureSelectionWrapperDF
+)
 
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
-class SelectFromModelDF(TransformerDF, SelectFromModel):
-    """
-    Wraps :class:`sklearn.feature_selection.SelectFromModel`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
-class SelectPercentileDF(TransformerDF, SelectPercentile):
-    """
-    Wraps :class:`sklearn.feature_selection.SelectPercentile`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
-class SelectKBestDF(TransformerDF, SelectKBest):
-    """
-    Wraps :class:`sklearn.feature_selection.SelectKBest`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
-class SelectFprDF(TransformerDF, SelectFpr):
-    """
-    Wraps :class:`sklearn.feature_selection.SelectFpr`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
-class SelectFdrDF(TransformerDF, SelectFdr):
-    """
-    Wraps :class:`sklearn.feature_selection.SelectFdr`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
-class SelectFweDF(TransformerDF, SelectFwe):
-    """
-    Wraps :class:`sklearn.feature_selection.SelectFwe`;
-    accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_FeatureSelectionWrapperDF)
-class GenericUnivariateSelectDF(TransformerDF, GenericUnivariateSelect):
-    """
-    Wraps :class:`sklearn.feature_selection.GenericUnivariateSelect`;
-    accepts and returns data frames.
-    """
-
-    pass
-
+#
+# validate __all__
+#
 
 __tracker.validate()
 
