@@ -1141,7 +1141,7 @@ def _mirror_attributes(
             delegate=member,
         )
 
-        if alias:
+        if alias is not None:
             setattr(wrapper, name, alias)
 
 
@@ -1161,21 +1161,16 @@ def _make_alias(module: str, name: str, delegate_cls: type, delegate: T) -> Opti
         _update_wrapper(wrapper=function, wrapped=delegate, wrapper_module=module)
         function.__doc__ = f"See :meth:`{full_name}`"
         return function
+    elif inspect.isdatadescriptor(delegate):
+        # noinspection PyShadowingNames
+        return property(
+            fget=lambda self: delegate.__get__(self._native_estimator),
+            fset=lambda self, value: delegate.__set__(self._native_estimator, value),
+            fdel=lambda self: delegate.__delete__(self._native_estimator),
+            doc=f"See documentation of :class:`{class_name}`.",
+        )
     else:
-        docstring = f"See documentation of :class:`{class_name}`."
-        if inspect.isdatadescriptor(delegate):
-            # noinspection PyShadowingNames
-            return property(
-                fget=lambda self: delegate.__get__(self._native_estimator),
-                fset=lambda self, value: delegate.__set__(
-                    self._native_estimator, value
-                ),
-                fdel=lambda self: delegate.__delete__(self._native_estimator),
-                doc=docstring,
-            )
-        else:
-            # noinspection PyShadowingNames
-            return None
+        return None
 
 
 def _update_wrapper(wrapper: Any, wrapped: Any, wrapper_module: str) -> None:
