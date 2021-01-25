@@ -3,7 +3,6 @@ Core implementation of :mod:`sklearndf.transformation.extra`
 """
 
 import logging
-from abc import ABCMeta
 from typing import Optional, TypeVar, Union
 
 import pandas as pd
@@ -13,12 +12,12 @@ from sklearn.base import BaseEstimator
 from pytools.api import AllTracker, inheritdoc
 
 from ... import TransformerDF
-from ..._wrapper import _MetaEstimatorWrapperDF, make_df_transformer
-from .._wrapper import _ColumnSubsetTransformerWrapperDF, _NDArrayTransformerWrapperDF
+from ...wrapper import MetaEstimatorWrapperDF, make_df_transformer
+from ..wrapper import ColumnSubsetTransformerWrapperDF, NumpyTransformerWrapperDF
 
 log = logging.getLogger(__name__)
 
-__all__ = ["OutlierRemoverDF", "BorutaDF"]
+__all__ = ["OutlierRemoverDF", "BorutaPyWrapperDF", "BorutaDF"]
 
 
 #
@@ -119,18 +118,21 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
         return 0
 
 
-class _BorutaPyWrapperDF(
-    _MetaEstimatorWrapperDF[BorutaPy],
-    _NDArrayTransformerWrapperDF[BorutaPy],
-    _ColumnSubsetTransformerWrapperDF[BorutaPy],
-    metaclass=ABCMeta,
+class BorutaPyWrapperDF(
+    MetaEstimatorWrapperDF[BorutaPy],
+    NumpyTransformerWrapperDF[BorutaPy],
+    ColumnSubsetTransformerWrapperDF[BorutaPy],
 ):
+    """
+    DF wrapper for :class:`~boruta.BorutaPy`.
+    """
+
     def _get_features_out(self) -> pd.Index:
         return self.feature_names_in_[self.native_estimator.support_]
 
 
 BorutaDF = make_df_transformer(
-    BorutaPy, name="BorutaDF", base_wrapper=_BorutaPyWrapperDF
+    BorutaPy, name="BorutaDF", base_wrapper=BorutaPyWrapperDF
 )
 
 __tracker.validate()

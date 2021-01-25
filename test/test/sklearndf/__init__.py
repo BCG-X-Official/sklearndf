@@ -7,20 +7,20 @@ import pandas as pd
 import sklearn
 from sklearn.base import BaseEstimator
 
-from sklearndf import LearnerDF, TransformerDF
-from sklearndf._wrapper import _EstimatorWrapperDF
+from sklearndf import EstimatorDF, LearnerDF, TransformerDF
+from sklearndf.wrapper import EstimatorWrapperDF
 
 Module: type = Any
 
 
-def find_all_classes(*modules: Module) -> Set[Type[_EstimatorWrapperDF]]:
+def find_all_classes(*modules: Module) -> Set[Type[EstimatorWrapperDF]]:
     """ Finds all Class members in given module/modules. """
-    types: Set[Type[_EstimatorWrapperDF]] = set()
+    types: Set[Type[EstimatorWrapperDF]] = set()
 
     def _add_classes_from_module(_m: Module) -> None:
         for member in vars(module).values():
             if isinstance(member, type):
-                member: Type[_EstimatorWrapperDF]
+                member: Type[EstimatorWrapperDF]
                 types.add(member)
 
     for module in modules:
@@ -41,12 +41,13 @@ def find_all_submodules(parent_module: Module) -> Set[Module]:
 
 def sklearn_delegate_classes(
     module: Module,
-) -> Dict[Type[BaseEstimator], Type[_EstimatorWrapperDF]]:
+) -> Dict[Type[BaseEstimator], Type[EstimatorWrapperDF]]:
     """ Creates a dictionary mapping from sklearndf -> sklearn classes. """
     return {
         df_class.__wrapped__: df_class
         for df_class in find_all_classes(module)
-        if issubclass(df_class, _EstimatorWrapperDF)
+        # we only consider non-abstract wrapper classes wrapping a specific native class
+        if issubclass(df_class, EstimatorWrapperDF) and hasattr(df_class, "__wrapped__")
     }
 
 
@@ -54,7 +55,7 @@ def list_classes(
     from_modules: Union[Module, Iterable[Module]],
     matching: str,
     excluding: Optional[Union[str, Iterable[str]]] = None,
-) -> List[Type[_EstimatorWrapperDF]]:
+) -> List[Type[EstimatorWrapperDF]]:
     """ Helper to return all classes with matching name from Python module(s) """
 
     if not isinstance(from_modules, Iterable):
@@ -73,7 +74,7 @@ def list_classes(
 
 def get_sklearndf_wrapper_class(
     to_wrap: Type[BaseEstimator], from_module=None
-) -> Type[_EstimatorWrapperDF]:
+) -> Type[EstimatorWrapperDF]:
     """ Helper to return the wrapped counterpart for a sklearn class """
     try:
         return sklearn_delegate_classes(from_module)[to_wrap]
@@ -84,7 +85,7 @@ def get_sklearndf_wrapper_class(
         ) from cause
 
 
-def check_expected_not_fitted_error(estimator: Union[LearnerDF, TransformerDF]):
+def check_expected_not_fitted_error(estimator: EstimatorDF):
     """ Check if transformers & learners raise NotFittedError (since sklearn 0.22)"""
     if version.LooseVersion(sklearn.__version__) <= "0.21":
         return

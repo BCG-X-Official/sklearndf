@@ -11,7 +11,7 @@ from sklearn.linear_model._glm import GeneralizedLinearRegressor
 
 from pytools.api import AllTracker
 
-from .._wrapper import make_df_regressor
+from ..wrapper import make_df_regressor
 
 # noinspection PyProtectedMember
 
@@ -43,7 +43,6 @@ __tracker = AllTracker(globals())
 #
 # Class definitions
 #
-
 
 PoissonRegressorDF = make_df_regressor(PoissonRegressor)
 GammaRegressorDF = make_df_regressor(GammaRegressor)

@@ -23,8 +23,8 @@ from sklearn.impute import KNNImputer
 
 from pytools.api import AllTracker
 
-from .._wrapper import make_df_transformer
-from ._transformation import _ImputerWrapperDF
+from ..wrapper import make_df_transformer
+from .wrapper._wrapper import ImputerWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -44,7 +44,7 @@ __tracker = AllTracker(globals())
 # impute
 #
 
-KNNImputerDF = make_df_transformer(KNNImputer, base_wrapper=_ImputerWrapperDF)
+KNNImputerDF = make_df_transformer(KNNImputer, base_wrapper=ImputerWrapperDF)
 
 
 #

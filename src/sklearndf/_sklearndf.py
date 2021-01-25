@@ -4,7 +4,7 @@ Core implementation of :mod:`sklearndf`
 
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import Any, List, Mapping, Optional, Sequence, Type, TypeVar, Union, cast
+from typing import Any, List, Mapping, Optional, Sequence, TypeVar, Union, cast
 
 import pandas as pd
 from sklearn.base import (
@@ -42,7 +42,7 @@ __tracker = AllTracker(globals())
 #
 
 
-class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
+class EstimatorDF(BaseEstimator, FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     """
     Base class for augmented scikit-learn `estimators`.
 
@@ -55,16 +55,6 @@ class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     #: See :meth:`.feature_names_in_` and
     #: :meth:`~.TransformerDF.feature_names_original_`.
     COL_FEATURE_IN = "feature_in"
-
-    def __new__(cls: Type["EstimatorDF"], *args, **kwargs) -> object:
-        # make sure this DF estimator also is a subclass of
-        if not issubclass(cls, BaseEstimator):
-            raise TypeError(
-                f"class {cls.__name__} is required to be "
-                f"a subclass of {BaseEstimator.__name__}"
-            )
-
-        return super().__new__(cls)
 
     @property
     def native_estimator(self) -> BaseEstimator:

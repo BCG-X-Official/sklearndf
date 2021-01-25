@@ -2,12 +2,7 @@
 Core implementation of :mod:`sklearndf.classification`
 """
 import logging
-from abc import ABCMeta
-from typing import Any, List, Optional, Sequence, Union
 
-import numpy as np
-import pandas as pd
-import sklearn
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.discriminant_analysis import (
     LinearDiscriminantAnalysis,
@@ -51,12 +46,13 @@ from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
 
 from pytools.api import AllTracker
 
-from .._wrapper import (
-    _ClassifierWrapperDF,
-    _MetaClassifierWrapperDF,
-    make_df_classifier,
+from ..wrapper import make_df_classifier
+from .wrapper import (
+    ClassifierChainWrapperDF,
+    LinearDiscriminantAnalysisWrapperDF,
+    MultiOutputClassifierWrapperDF,
 )
-from ..transformation._wrapper import _NComponentsDimensionalityReductionWrapperDF
+from .wrapper._wrapper import MetaClassifierWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -137,7 +133,7 @@ RadiusNeighborsClassifierDF = make_df_classifier(RadiusNeighborsClassifier)
 #
 
 VotingClassifierDF = make_df_classifier(
-    VotingClassifier, base_wrapper=_MetaClassifierWrapperDF
+    VotingClassifier, base_wrapper=MetaClassifierWrapperDF
 )
 
 
@@ -166,17 +162,9 @@ ExtraTreeClassifierDF = make_df_classifier(ExtraTreeClassifier)
 #
 
 
-class _LinearDiscriminantAnalysisWrapperDF(
-    _NComponentsDimensionalityReductionWrapperDF[LinearDiscriminantAnalysis],
-    _ClassifierWrapperDF[LinearDiscriminantAnalysis],
-    metaclass=ABCMeta,
-):
-    pass
-
-
 LinearDiscriminantAnalysisDF = make_df_classifier(
     LinearDiscriminantAnalysis,
-    base_wrapper=_LinearDiscriminantAnalysisWrapperDF,
+    base_wrapper=LinearDiscriminantAnalysisWrapperDF,
 )
 
 QuadraticDiscriminantAnalysisDF = make_df_classifier(QuadraticDiscriminantAnalysis)
@@ -198,7 +186,7 @@ BernoulliNBDF = make_df_classifier(BernoulliNB)
 #
 
 CalibratedClassifierCVDF = make_df_classifier(
-    CalibratedClassifierCV, base_wrapper=_MetaClassifierWrapperDF
+    CalibratedClassifierCV, base_wrapper=MetaClassifierWrapperDF
 )
 
 
@@ -245,15 +233,15 @@ LabelSpreadingDF = make_df_classifier(LabelSpreading)
 #
 
 OneVsRestClassifierDF = make_df_classifier(
-    OneVsRestClassifier, base_wrapper=_MetaClassifierWrapperDF
+    OneVsRestClassifier, base_wrapper=MetaClassifierWrapperDF
 )
 
 OneVsOneClassifierDF = make_df_classifier(
-    OneVsOneClassifier, base_wrapper=_MetaClassifierWrapperDF
+    OneVsOneClassifier, base_wrapper=MetaClassifierWrapperDF
 )
 
 OutputCodeClassifierDF = make_df_classifier(
-    OutputCodeClassifier, base_wrapper=_MetaClassifierWrapperDF
+    OutputCodeClassifier, base_wrapper=MetaClassifierWrapperDF
 )
 
 
@@ -262,54 +250,8 @@ OutputCodeClassifierDF = make_df_classifier(
 #
 
 
-class _MultiOutputClassifierWrapperDF(
-    _MetaClassifierWrapperDF[sklearn.multioutput.MultiOutputClassifier],
-    metaclass=ABCMeta,
-):
-    # noinspection PyPep8Naming
-    def _prediction_with_class_labels(
-        self,
-        X: pd.DataFrame,
-        y: Union[pd.Series, pd.DataFrame, list, np.ndarray],
-        classes: Optional[Sequence[Any]] = None,
-    ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
-
-        # if we have a multi-output classifier, prediction of probabilities
-        # yields a list of NumPy arrays
-        if not isinstance(y, list):
-            raise ValueError(
-                "prediction of multi-output classifier expected to be a list of NumPy "
-                f"arrays, but got type {type(y)}"
-            )
-
-        delegate_estimator = self.native_estimator
-
-        # store the super() object as this is not available within a generator
-        sup = super()
-
-        # estimators attribute of abstract class MultiOutputEstimator
-        # usually the delegate estimator will provide a list of estimators used
-        # to predict each output. If present, use these estimators to get
-        # individual class labels for each output; otherwise we cannot assign class
-        # labels
-        if hasattr(delegate_estimator, "estimators_"):
-            return [
-                sup._prediction_with_class_labels(
-                    X=X, y=output, classes=getattr(estimator, "classes_", None)
-                )
-                for estimator, output in zip(
-                    getattr(delegate_estimator, "estimators_"), y
-                )
-            ]
-        else:
-            return [
-                sup._prediction_with_class_labels(X=X, y=output, classes=None)
-                for output in y
-            ]
-
-
 MultiOutputClassifierDF = make_df_classifier(
-    MultiOutputClassifier, base_wrapper=_MultiOutputClassifierWrapperDF
+    MultiOutputClassifier, base_wrapper=MultiOutputClassifierWrapperDF
 )
 
 
@@ -318,23 +260,8 @@ MultiOutputClassifierDF = make_df_classifier(
 #
 
 
-class _ClassifierChainWrapperDF(
-    _MetaClassifierWrapperDF[sklearn.multioutput.ClassifierChain], metaclass=ABCMeta
-):
-    # noinspection PyPep8Naming
-    def _prediction_with_class_labels(
-        self,
-        X: pd.DataFrame,
-        y: Union[pd.Series, pd.DataFrame, list, np.ndarray],
-        classes: Optional[Sequence[Any]] = None,
-    ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
-        return super()._prediction_with_class_labels(
-            X=X, y=y, classes=range(self.n_outputs_)
-        )
-
-
 ClassifierChainDF = make_df_classifier(
-    ClassifierChain, base_wrapper=_ClassifierChainWrapperDF
+    ClassifierChain, base_wrapper=ClassifierChainWrapperDF
 )
 
 
