@@ -1182,25 +1182,24 @@ def _mirror_attributes(
     wrapper_module: str,
 ) -> None:
 
-    wrapper_attributes: Set[str] = set(dir(wrapper))
+    inherit_from_base_wrapper: Set[str] = set(dir(wrapper))
 
     for name, member in vars(native_estimator).items():
-        if member is None or name.startswith("__") or name in wrapper_attributes:
+
+        if member is None or name.startswith("_") or name in inherit_from_base_wrapper:
             continue
 
-        setattr(
-            wrapper,
-            name,
-            _make_alias(
-                module=wrapper_module,
-                name=name,
-                delegate_cls=native_estimator,
-                delegate=member,
-            ),
+        alias = _make_alias(
+            module=wrapper_module,
+            name=name,
+            delegate_cls=native_estimator,
+            delegate=member,
         )
+        if alias is not None:
+            setattr(wrapper, name, alias)
 
 
-def _make_alias(module: str, name: str, delegate_cls: type, delegate: T) -> T:
+def _make_alias(module: str, name: str, delegate_cls: type, delegate: T) -> Optional[T]:
     def _make_forwarder() -> callable:
         # noinspection PyShadowingNames
         def _forwarder(self, *args, **kwargs) -> Any:
@@ -1216,26 +1215,16 @@ def _make_alias(module: str, name: str, delegate_cls: type, delegate: T) -> T:
         _update_wrapper(wrapper=function, wrapped=delegate, wrapper_module=module)
         function.__doc__ = f"See :meth:`{full_name}`"
         return function
+    elif inspect.isdatadescriptor(delegate):
+        # noinspection PyShadowingNames
+        return property(
+            fget=lambda self: delegate.__get__(self._native_estimator),
+            fset=lambda self, value: delegate.__set__(self._native_estimator, value),
+            fdel=lambda self: delegate.__delete__(self._native_estimator),
+            doc=f"See documentation of :class:`{class_name}`.",
+        )
     else:
-        docstring = f"See documentation of :class:`{class_name}`."
-        if inspect.isdatadescriptor(delegate):
-            # noinspection PyShadowingNames
-            return property(
-                fget=lambda self: delegate.__get__(self._native_estimator),
-                fset=lambda self, value: delegate.__set__(
-                    self._native_estimator, value
-                ),
-                fdel=lambda self: delegate.__delete__(self._native_estimator),
-                doc=docstring,
-            )
-        else:
-            # noinspection PyShadowingNames
-            return property(
-                fget=lambda self: getattr(self._native_estimator, name),
-                fset=lambda self, value: setattr(self._native_estimator, name, value),
-                fdel=lambda self: delattr(self._native_estimator, name),
-                doc=docstring,
-            )
+        return None
 
 
 def _update_wrapper(wrapper: Any, wrapped: Any, wrapper_module: str) -> None:
