@@ -9,10 +9,10 @@ from sklearn.base import BaseEstimator, is_classifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 
-from sklearndf._wrapper import make_df_estimator
 from sklearndf.classification import SVCDF, DecisionTreeClassifierDF
 from sklearndf.pipeline import PipelineDF
 from sklearndf.transformation import OneHotEncoderDF
+from sklearndf.wrapper import make_df_estimator
 
 
 class _DummyEstimator(BaseEstimator):

@@ -21,12 +21,12 @@ from sklearn import clone
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.feature_selection import f_classif
 
-from sklearndf._wrapper import make_df_estimator, make_df_transformer
 from sklearndf.classification import SVCDF, LogisticRegressionDF
 from sklearndf.pipeline import PipelineDF
 from sklearndf.regression import DummyRegressorDF, LassoDF, LinearRegressionDF
 from sklearndf.transformation import SelectKBestDF, SimpleImputerDF
-from sklearndf.transformation._wrapper import _ColumnPreservingTransformerWrapperDF
+from sklearndf.transformation.wrapper import ColumnPreservingTransformerWrapperDF
+from sklearndf.wrapper import make_df_estimator, make_df_transformer
 
 
 def test_set_params_nested_pipeline_df() -> None:
@@ -98,12 +98,12 @@ class DummyTransformer(Transformer):
 
 
 DummyTransformerDF = make_df_transformer(
-    DummyTransformer, base_wrapper=_ColumnPreservingTransformerWrapperDF
+    DummyTransformer, base_wrapper=ColumnPreservingTransformerWrapperDF
 )
 
 
 NoTransformerDF = make_df_estimator(
-    NoTransformer, base_wrapper=_ColumnPreservingTransformerWrapperDF
+    NoTransformer, base_wrapper=ColumnPreservingTransformerWrapperDF
 )
 
 
