@@ -44,7 +44,6 @@ sklearndf.classification.OneVsOneClassifierDF
       ~OneVsOneClassifierDF.n_classes_
       ~OneVsOneClassifierDF.n_outputs_
       ~OneVsOneClassifierDF.native_estimator
-      ~OneVsOneClassifierDF.partial_fit
    
    
 

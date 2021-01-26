@@ -36,17 +36,12 @@ sklearndf.transformation.RFEDF
       ~RFEDF.COL_FEATURE_IN
       ~RFEDF.COL_FEATURE_OUT
       ~RFEDF.classes_
-      ~RFEDF.decision_function
       ~RFEDF.feature_names_in_
       ~RFEDF.feature_names_original_
       ~RFEDF.feature_names_out_
       ~RFEDF.is_fitted
       ~RFEDF.n_outputs_
       ~RFEDF.native_estimator
-      ~RFEDF.predict
-      ~RFEDF.predict_log_proba
-      ~RFEDF.predict_proba
-      ~RFEDF.score
    
    
 

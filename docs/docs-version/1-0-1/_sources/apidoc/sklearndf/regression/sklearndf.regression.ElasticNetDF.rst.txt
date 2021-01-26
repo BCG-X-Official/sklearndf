@@ -39,7 +39,6 @@ sklearndf.regression.ElasticNetDF
       ~ElasticNetDF.is_fitted
       ~ElasticNetDF.n_outputs_
       ~ElasticNetDF.native_estimator
-      ~ElasticNetDF.path
       ~ElasticNetDF.sparse_coef_
    
    

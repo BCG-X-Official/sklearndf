@@ -39,7 +39,6 @@ sklearndf.regression.LassoCVDF
       ~LassoCVDF.is_fitted
       ~LassoCVDF.n_outputs_
       ~LassoCVDF.native_estimator
-      ~LassoCVDF.path
    
    
 

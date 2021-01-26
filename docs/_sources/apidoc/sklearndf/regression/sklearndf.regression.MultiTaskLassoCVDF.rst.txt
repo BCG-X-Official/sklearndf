@@ -39,7 +39,6 @@ sklearndf.regression.MultiTaskLassoCVDF
       ~MultiTaskLassoCVDF.is_fitted
       ~MultiTaskLassoCVDF.n_outputs_
       ~MultiTaskLassoCVDF.native_estimator
-      ~MultiTaskLassoCVDF.path
    
    
 

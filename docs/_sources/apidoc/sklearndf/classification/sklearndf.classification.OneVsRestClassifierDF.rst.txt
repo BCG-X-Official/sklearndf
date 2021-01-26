@@ -48,7 +48,6 @@ sklearndf.classification.OneVsRestClassifierDF
       ~OneVsRestClassifierDF.n_features_in_
       ~OneVsRestClassifierDF.n_outputs_
       ~OneVsRestClassifierDF.native_estimator
-      ~OneVsRestClassifierDF.partial_fit
    
    
 

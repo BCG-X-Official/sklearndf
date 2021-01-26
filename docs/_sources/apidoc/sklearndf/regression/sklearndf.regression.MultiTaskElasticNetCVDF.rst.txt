@@ -39,7 +39,6 @@ sklearndf.regression.MultiTaskElasticNetCVDF
       ~MultiTaskElasticNetCVDF.is_fitted
       ~MultiTaskElasticNetCVDF.n_outputs_
       ~MultiTaskElasticNetCVDF.native_estimator
-      ~MultiTaskElasticNetCVDF.path
    
    
 

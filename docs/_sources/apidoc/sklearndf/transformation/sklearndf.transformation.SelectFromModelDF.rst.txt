@@ -42,7 +42,6 @@ sklearndf.transformation.SelectFromModelDF
       ~SelectFromModelDF.n_features_in_
       ~SelectFromModelDF.n_outputs_
       ~SelectFromModelDF.native_estimator
-      ~SelectFromModelDF.partial_fit
       ~SelectFromModelDF.threshold_
    
    

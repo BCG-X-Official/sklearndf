@@ -52,7 +52,6 @@ sklearndf.pipeline.PipelineDF
       ~PipelineDF.n_outputs_
       ~PipelineDF.named_steps
       ~PipelineDF.native_estimator
-      ~PipelineDF.score_samples
       ~PipelineDF.steps
    
    

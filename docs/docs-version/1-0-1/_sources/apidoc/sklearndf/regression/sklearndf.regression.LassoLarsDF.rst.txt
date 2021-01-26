@@ -37,7 +37,6 @@ sklearndf.regression.LassoLarsDF
       ~LassoLarsDF.COL_PREDICTION
       ~LassoLarsDF.feature_names_in_
       ~LassoLarsDF.is_fitted
-      ~LassoLarsDF.method
       ~LassoLarsDF.n_outputs_
       ~LassoLarsDF.native_estimator
    

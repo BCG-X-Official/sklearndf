@@ -39,7 +39,6 @@ sklearndf.regression.MultiOutputRegressorDF
       ~MultiOutputRegressorDF.is_fitted
       ~MultiOutputRegressorDF.n_outputs_
       ~MultiOutputRegressorDF.native_estimator
-      ~MultiOutputRegressorDF.partial_fit
    
    
 

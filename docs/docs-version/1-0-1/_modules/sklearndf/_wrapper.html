@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>sklearndf._wrapper &#8212; sklearndf  documentation</title>
     
-  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+  <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
     
   <link rel="stylesheet"
@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/gamma.css" />
     
-  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+  <link rel="preload" as="script" href="../../_static/js/index.d3f166471bb80abb5163.js">
 
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -170,7 +170,6 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">Any</span><span class="p">,</span>
     <span class="n">Callable</span><span class="p">,</span>
-    <span class="n">Dict</span><span class="p">,</span>
     <span class="n">Generic</span><span class="p">,</span>
     <span class="n">Iterable</span><span class="p">,</span>
     <span class="n">List</span><span class="p">,</span>
@@ -1015,32 +1014,27 @@
         <span class="c1"># determine the module of the wrapper</span>
         <span class="n">sklearndf_wrapper_module</span> <span class="o">=</span> <span class="n">decoratee</span><span class="o">.</span><span class="vm">__module__</span>
 
-        <span class="c1"># we will add this function to the new DF estimator class as a class method</span>
-        <span class="k">def</span> <span class="nf">_make_delegate_estimator</span><span class="p">(</span><span class="n">_cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T_DelegateEstimator</span><span class="p">:</span>
-            <span class="c1"># noinspection PyArgumentList</span>
-            <span class="k">return</span> <span class="n">sklearn_native_estimator_type</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-        <span class="n">_make_delegate_estimator</span><span class="o">.</span><span class="vm">__module__</span> <span class="o">=</span> <span class="n">sklearndf_wrapper_module</span>
-
         <span class="c1"># dynamically create the wrapper class</span>
-        <span class="c1"># noinspection PyTypeChecker</span>
-        <span class="n">df_estimator_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">_EstimatorWrapperDF</span><span class="p">[</span><span class="n">T_DelegateEstimator</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span>
-            <span class="c1"># preserve the name</span>
-            <span class="n">decoratee</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
-            <span class="c1"># subclass the wrapper type (e.g., _EstimatorWrapperDF)</span>
-            <span class="p">(</span><span class="n">df_wrapper_type</span><span class="p">,),</span>
-            <span class="p">{</span>
-                <span class="c1"># implement abstract class method _make_delegate_estimator</span>
-                <span class="n">_make_delegate_estimator</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="nb">classmethod</span><span class="p">(</span>
-                    <span class="n">_make_delegate_estimator</span>
-                <span class="p">),</span>
-                <span class="c1"># mirror all attributes of the wrapped sklearn class, as long</span>
-                <span class="c1"># as they are not inherited from the wrapper base class</span>
-                <span class="o">**</span><span class="n">_mirror_attributes</span><span class="p">(</span>
-                    <span class="n">delegate_type</span><span class="o">=</span><span class="n">sklearn_native_estimator_type</span><span class="p">,</span>
-                    <span class="n">wrapper_module</span><span class="o">=</span><span class="n">sklearndf_wrapper_module</span><span class="p">,</span>
-                <span class="p">),</span>
-            <span class="p">},</span>
+        <span class="c1"># noinspection PyPep8Naming,PyMissingOrEmptyDocstring</span>
+        <span class="k">class</span> <span class="nc">df_estimator_type</span><span class="p">(</span><span class="n">df_wrapper_type</span><span class="p">):</span>
+            <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="nd">@classmethod</span>
+            <span class="k">def</span> <span class="nf">_make_delegate_estimator</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T_DelegateEstimator</span><span class="p">:</span>
+                <span class="c1"># noinspection PyArgumentList</span>
+                <span class="k">return</span> <span class="n">sklearn_native_estimator_type</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="n">_make_delegate_estimator</span><span class="o">.</span><span class="vm">__module__</span> <span class="o">=</span> <span class="n">sklearndf_wrapper_module</span>
+
+        <span class="n">df_estimator_type</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">decoratee</span><span class="o">.</span><span class="vm">__name__</span>
+
+        <span class="c1"># mirror all attributes of the wrapped sklearn class, as long</span>
+        <span class="c1"># as they are not inherited from the wrapper base class</span>
+        <span class="n">_mirror_attributes</span><span class="p">(</span>
+            <span class="n">df_estimator_type</span><span class="o">=</span><span class="n">df_estimator_type</span><span class="p">,</span>
+            <span class="n">delegate_type</span><span class="o">=</span><span class="n">sklearn_native_estimator_type</span><span class="p">,</span>
+            <span class="n">wrapper_module</span><span class="o">=</span><span class="n">sklearndf_wrapper_module</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="c1"># add link to the wrapped class, for use in python module &#39;inspect&#39;</span>
@@ -1051,7 +1045,7 @@
         <span class="n">df_estimator_type</span><span class="o">.</span><span class="vm">__qualname__</span> <span class="o">=</span> <span class="n">decoratee</span><span class="o">.</span><span class="vm">__qualname__</span>
 
         <span class="c1"># adopt the initializer signature of the wrapped sklearn estimator</span>
-        <span class="n">df_estimator_type</span><span class="o">.</span><span class="fm">__init__</span> <span class="o">=</span> <span class="n">_update_wrapper</span><span class="p">(</span>
+        <span class="n">_update_wrapper</span><span class="p">(</span>
             <span class="n">wrapper</span><span class="o">=</span><span class="n">df_estimator_type</span><span class="o">.</span><span class="fm">__init__</span><span class="p">,</span>
             <span class="n">wrapped</span><span class="o">=</span><span class="n">sklearn_native_estimator_type</span><span class="o">.</span><span class="fm">__init__</span><span class="p">,</span>
             <span class="n">wrapper_module</span><span class="o">=</span><span class="n">sklearndf_wrapper_module</span><span class="p">,</span>
@@ -1068,29 +1062,34 @@
         <span class="k">return</span> <span class="n">df_estimator_type</span>
 
     <span class="k">def</span> <span class="nf">_mirror_attributes</span><span class="p">(</span>
-        <span class="n">delegate_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T_DelegateEstimator</span><span class="p">],</span> <span class="n">wrapper_module</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">df_estimator_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T_EstimatorWrapperDF</span><span class="p">],</span>
+        <span class="n">delegate_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T_DelegateEstimator</span><span class="p">],</span>
+        <span class="n">wrapper_module</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 
         <span class="n">inherit_from_base_wrapper</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">df_wrapper_type</span><span class="p">))</span>
 
-        <span class="n">new_dict</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="n">name</span><span class="p">:</span> <span class="n">_make_alias</span><span class="p">(</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">member</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="n">delegate_type</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">member</span> <span class="ow">is</span> <span class="kc">None</span>
+                <span class="ow">or</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">inherit_from_base_wrapper</span>
+            <span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="n">alias</span> <span class="o">=</span> <span class="n">_make_alias</span><span class="p">(</span>
                 <span class="n">module</span><span class="o">=</span><span class="n">wrapper_module</span><span class="p">,</span>
                 <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">delegate_cls</span><span class="o">=</span><span class="n">delegate_type</span><span class="p">,</span>
                 <span class="n">delegate</span><span class="o">=</span><span class="n">member</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">member</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="n">delegate_type</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span>
-                <span class="n">member</span> <span class="ow">is</span> <span class="kc">None</span>
-                <span class="ow">or</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">)</span>
-                <span class="ow">or</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">inherit_from_base_wrapper</span>
-            <span class="p">)</span>
-        <span class="p">}</span>
+            <span class="k">if</span> <span class="n">alias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">df_estimator_type</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">alias</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">new_dict</span>
-
-    <span class="k">def</span> <span class="nf">_make_alias</span><span class="p">(</span><span class="n">module</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">delegate_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="n">delegate</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_make_alias</span><span class="p">(</span>
+        <span class="n">module</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">delegate_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="n">delegate</span><span class="p">:</span> <span class="n">T</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
         <span class="k">def</span> <span class="nf">_make_forwarder</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">callable</span><span class="p">:</span>
             <span class="k">def</span> <span class="nf">_forwarder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">delegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_delegate_estimator</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -1107,26 +1106,15 @@
             <span class="n">docstring</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;See :meth:`</span><span class="si">{</span><span class="n">full_name</span><span class="si">}</span><span class="s2">`&quot;</span>
             <span class="n">function</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">docstring</span>
             <span class="k">return</span> <span class="n">function</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">docstring</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;See documentation of :class:`</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">`.&quot;</span>
-            <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isdatadescriptor</span><span class="p">(</span><span class="n">delegate</span><span class="p">):</span>
-                <span class="k">return</span> <span class="nb">property</span><span class="p">(</span>
-                    <span class="n">fget</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="n">delegate</span><span class="o">.</span><span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_delegate_estimator</span><span class="p">),</span>
-                    <span class="n">fset</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">delegate</span><span class="o">.</span><span class="fm">__set__</span><span class="p">(</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_delegate_estimator</span><span class="p">,</span> <span class="n">value</span>
-                    <span class="p">),</span>
-                    <span class="n">fdel</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="n">delegate</span><span class="o">.</span><span class="fm">__delete__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_delegate_estimator</span><span class="p">),</span>
-                    <span class="n">doc</span><span class="o">=</span><span class="n">docstring</span><span class="p">,</span>
-                <span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="nb">property</span><span class="p">(</span>
-                    <span class="n">fget</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_delegate_estimator</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span>
-                    <span class="n">fset</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">setattr</span><span class="p">(</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_delegate_estimator</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span>
-                    <span class="p">),</span>
-                    <span class="n">fdel</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_delegate_estimator</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span>
-                    <span class="n">doc</span><span class="o">=</span><span class="n">docstring</span><span class="p">,</span>
-                <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isdatadescriptor</span><span class="p">(</span><span class="n">delegate</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">property</span><span class="p">(</span>
+                <span class="n">fget</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="n">delegate</span><span class="o">.</span><span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_delegate_estimator</span><span class="p">),</span>
+                <span class="n">fset</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">delegate</span><span class="o">.</span><span class="fm">__set__</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_delegate_estimator</span><span class="p">,</span> <span class="n">value</span>
+                <span class="p">),</span>
+                <span class="n">fdel</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="n">delegate</span><span class="o">.</span><span class="fm">__delete__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_delegate_estimator</span><span class="p">),</span>
+                <span class="n">doc</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;See documentation of :class:`</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">`.&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_update_wrapper</span><span class="p">(</span>
         <span class="n">wrapper</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
@@ -1229,7 +1217,7 @@
     </div>
 
     
-  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+  <script src="../../_static/js/index.d3f166471bb80abb5163.js"></script>
 
 
     <footer class="footer mt-5 mt-md-0">
