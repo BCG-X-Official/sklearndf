@@ -329,6 +329,41 @@ stages:
             artifactName: $(BUILD_SYSTEM)_$(PKG_DEPENDENCIES)
             publishLocation: Container
 
+  # apply veracode static code analysis during nightly build
+  - stage: veracode_check
+    displayName: 'Veracode check'
+
+    jobs:
+      - job:
+        displayName: 'Veracode check'
+        condition: eq(variables['Build.Reason'], 'Schedule')
+
+        steps:
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                set -e
+                eval "$(conda shell.bash hook)"
+                cd $(System.DefaultWorkingDirectory)
+                mkdir static_scan
+                git archive --format=zip --output static_scan/archive.zip HEAD
+
+          - task: Veracode@3
+            inputs:
+              ConnectionDetailsSelection: 'Endpoint'
+              AnalysisService: 'veracode'
+              veracodeAppProfile: 'FACET'
+              version: '$(Build.BuildNumber)'
+              filepath: '$(System.DefaultWorkingDirectory)/static_scan'
+              sandboxName: 'sklearndf'
+              createSandBox: false
+              createProfile: false
+              failTheBuildIfVeracodeScanDidNotInitiate: false
+              scanStatusCheckInterval: '60'
+              importResults: false
+              failBuildOnPolicyFail: false
+
   # release on merge from release branch to master:
   # - add release tag
   # - create GitHub release with changelog
