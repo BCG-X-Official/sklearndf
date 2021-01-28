@@ -1,0 +1,919 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearn.preprocessing._encoders &#8212; sklearndf  documentation</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/gamma.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/js/gamma.js"></script>
+    <script src="../../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../../index.html">
+    
+      <img src="../../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../getting_started/getting_started.html">Getting started</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../apidoc/sklearndf.html">API reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../contribution_guide.html">Development Guidelines</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../faqs.html">FAQ</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for sklearn.preprocessing._encoders</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Authors: Andreas Mueller &lt;amueller@ais.uni-bonn.de&gt;</span>
+<span class="c1">#          Joris Van den Bossche &lt;jorisvandenbossche@gmail.com&gt;</span>
+<span class="c1"># License: BSD 3 clause</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">sparse</span>
+
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">check_array</span>
+<span class="kn">from</span> <span class="nn">..utils.validation</span> <span class="kn">import</span> <span class="n">check_is_fitted</span>
+<span class="kn">from</span> <span class="nn">..utils.validation</span> <span class="kn">import</span> <span class="n">_deprecate_positional_args</span>
+
+<span class="kn">from</span> <span class="nn">._label</span> <span class="kn">import</span> <span class="n">_encode</span><span class="p">,</span> <span class="n">_encode_check_unknown</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;OneHotEncoder&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;OrdinalEncoder&#39;</span>
+<span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">_BaseEncoder</span><span class="p">(</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for encoders that includes the code to categorize and</span>
+<span class="sd">    transform the input features.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_check_X</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform custom check_array:</span>
+<span class="sd">        - convert list of strings to object dtype</span>
+<span class="sd">        - check for missing values for object dtype data (check_array does</span>
+<span class="sd">          not do that)</span>
+<span class="sd">        - return list of features (arrays): this list of features is</span>
+<span class="sd">          constructed feature by feature to preserve the data types</span>
+<span class="sd">          of pandas DataFrame columns, as otherwise information is lost</span>
+<span class="sd">          and cannot be used, eg for the `categories_` attribute.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;iloc&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;ndim&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="c1"># if not a dataframe, do normal check_array validation</span>
+            <span class="n">X_temp</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;dtype&#39;</span><span class="p">)</span>
+                    <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">X_temp</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">str_</span><span class="p">)):</span>
+                <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">X</span> <span class="o">=</span> <span class="n">X_temp</span>
+            <span class="n">needs_validation</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># pandas dataframe, do validation later column by column, in order</span>
+            <span class="c1"># to keep the dtype information to be used in the encoder.</span>
+            <span class="n">needs_validation</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">X_columns</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_features</span><span class="p">):</span>
+            <span class="n">Xi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_feature</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">feature_idx</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">Xi</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span> <span class="n">ensure_2d</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                             <span class="n">force_all_finite</span><span class="o">=</span><span class="n">needs_validation</span><span class="p">)</span>
+            <span class="n">X_columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Xi</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">X_columns</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span>
+
+    <span class="k">def</span> <span class="nf">_get_feature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">feature_idx</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;iloc&#39;</span><span class="p">):</span>
+            <span class="c1"># pandas dataframes</span>
+            <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">feature_idx</span><span class="p">]</span>
+        <span class="c1"># numpy arrays, sparse arrays</span>
+        <span class="k">return</span> <span class="n">X</span><span class="p">[:,</span> <span class="n">feature_idx</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">handle_unknown</span><span class="o">=</span><span class="s1">&#39;error&#39;</span><span class="p">):</span>
+        <span class="n">X_list</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_X</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories</span> <span class="o">!=</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n_features</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Shape mismatch: if categories is an array,&quot;</span>
+                                 <span class="s2">&quot; it has to be of shape (n_features,).&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_features</span><span class="p">):</span>
+            <span class="n">Xi</span> <span class="o">=</span> <span class="n">X_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+                <span class="n">cats</span> <span class="o">=</span> <span class="n">_encode</span><span class="p">(</span><span class="n">Xi</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Xi</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">Xi</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="nb">object</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">cats</span><span class="p">)</span> <span class="o">==</span> <span class="n">cats</span><span class="p">):</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unsorted categories are not &quot;</span>
+                                         <span class="s2">&quot;supported for numerical categories&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">handle_unknown</span> <span class="o">==</span> <span class="s1">&#39;error&#39;</span><span class="p">:</span>
+                    <span class="n">diff</span> <span class="o">=</span> <span class="n">_encode_check_unknown</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span> <span class="n">cats</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">diff</span><span class="p">:</span>
+                        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Found unknown categories </span><span class="si">{0}</span><span class="s2"> in column </span><span class="si">{1}</span><span class="s2">&quot;</span>
+                               <span class="s2">&quot; during fit&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cats</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">handle_unknown</span><span class="o">=</span><span class="s1">&#39;error&#39;</span><span class="p">):</span>
+        <span class="n">X_list</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_X</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="n">X_int</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+        <span class="n">X_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">n_features</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;The number of features in X is different to the number of &quot;</span>
+                <span class="s2">&quot;features of the fitted data. The fitted data had </span><span class="si">{}</span><span class="s2"> features &quot;</span>
+                <span class="s2">&quot;and the X has </span><span class="si">{}</span><span class="s2"> features.&quot;</span>
+                <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">,),</span> <span class="n">n_features</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_features</span><span class="p">):</span>
+            <span class="n">Xi</span> <span class="o">=</span> <span class="n">X_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">diff</span><span class="p">,</span> <span class="n">valid_mask</span> <span class="o">=</span> <span class="n">_encode_check_unknown</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                                     <span class="n">return_mask</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">valid_mask</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">handle_unknown</span> <span class="o">==</span> <span class="s1">&#39;error&#39;</span><span class="p">:</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Found unknown categories </span><span class="si">{0}</span><span class="s2"> in column </span><span class="si">{1}</span><span class="s2">&quot;</span>
+                           <span class="s2">&quot; during transform&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Set the problematic rows to an acceptable value and</span>
+                    <span class="c1"># continue `The rows are marked `X_mask` and will be</span>
+                    <span class="c1"># removed later.</span>
+                    <span class="n">X_mask</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">valid_mask</span>
+                    <span class="c1"># cast Xi into the largest string type necessary</span>
+                    <span class="c1"># to handle different lengths of numpy strings</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;U&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+                            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">itemsize</span> <span class="o">&gt;</span> <span class="n">Xi</span><span class="o">.</span><span class="n">itemsize</span><span class="p">):</span>
+                        <span class="n">Xi</span> <span class="o">=</span> <span class="n">Xi</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">Xi</span> <span class="o">=</span> <span class="n">Xi</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+                    <span class="n">Xi</span><span class="p">[</span><span class="o">~</span><span class="n">valid_mask</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># We use check_unknown=False, since _encode_check_unknown was</span>
+            <span class="c1"># already called above.</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">encoded</span> <span class="o">=</span> <span class="n">_encode</span><span class="p">(</span><span class="n">Xi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">encode</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                 <span class="n">check_unknown</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">X_int</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">encoded</span>
+
+        <span class="k">return</span> <span class="n">X_int</span><span class="p">,</span> <span class="n">X_mask</span>
+
+    <span class="k">def</span> <span class="nf">_more_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;X_types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;categorical&#39;</span><span class="p">]}</span>
+
+
+<span class="k">class</span> <span class="nc">OneHotEncoder</span><span class="p">(</span><span class="n">_BaseEncoder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Encode categorical features as a one-hot numeric array.</span>
+
+<span class="sd">    The input to this transformer should be an array-like of integers or</span>
+<span class="sd">    strings, denoting the values taken on by categorical (discrete) features.</span>
+<span class="sd">    The features are encoded using a one-hot (aka &#39;one-of-K&#39; or &#39;dummy&#39;)</span>
+<span class="sd">    encoding scheme. This creates a binary column for each category and</span>
+<span class="sd">    returns a sparse matrix or dense array (depending on the ``sparse``</span>
+<span class="sd">    parameter)</span>
+
+<span class="sd">    By default, the encoder derives the categories based on the unique values</span>
+<span class="sd">    in each feature. Alternatively, you can also specify the `categories`</span>
+<span class="sd">    manually.</span>
+
+<span class="sd">    This encoding is needed for feeding categorical data to many scikit-learn</span>
+<span class="sd">    estimators, notably linear models and SVMs with the standard kernels.</span>
+
+<span class="sd">    Note: a one-hot encoding of y labels should use a LabelBinarizer</span>
+<span class="sd">    instead.</span>
+
+<span class="sd">    Read more in the :ref:`User Guide &lt;preprocessing_categorical_features&gt;`.</span>
+
+<span class="sd">    .. versionchanged:: 0.20</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    categories : &#39;auto&#39; or a list of array-like, default=&#39;auto&#39;</span>
+<span class="sd">        Categories (unique values) per feature:</span>
+
+<span class="sd">        - &#39;auto&#39; : Determine categories automatically from the training data.</span>
+<span class="sd">        - list : ``categories[i]`` holds the categories expected in the ith</span>
+<span class="sd">          column. The passed categories should not mix strings and numeric</span>
+<span class="sd">          values within a single feature, and should be sorted in case of</span>
+<span class="sd">          numeric values.</span>
+
+<span class="sd">        The used categories can be found in the ``categories_`` attribute.</span>
+
+<span class="sd">        .. versionadded:: 0.20</span>
+
+<span class="sd">    drop : {&#39;first&#39;, &#39;if_binary&#39;} or a array-like of shape (n_features,), \</span>
+<span class="sd">            default=None</span>
+<span class="sd">        Specifies a methodology to use to drop one of the categories per</span>
+<span class="sd">        feature. This is useful in situations where perfectly collinear</span>
+<span class="sd">        features cause problems, such as when feeding the resulting data</span>
+<span class="sd">        into a neural network or an unregularized regression.</span>
+
+<span class="sd">        However, dropping one category breaks the symmetry of the original</span>
+<span class="sd">        representation and can therefore induce a bias in downstream models,</span>
+<span class="sd">        for instance for penalized linear classification or regression models.</span>
+
+<span class="sd">        - None : retain all features (the default).</span>
+<span class="sd">        - &#39;first&#39; : drop the first category in each feature. If only one</span>
+<span class="sd">          category is present, the feature will be dropped entirely.</span>
+<span class="sd">        - &#39;if_binary&#39; : drop the first category in each feature with two</span>
+<span class="sd">          categories. Features with 1 or more than 2 categories are</span>
+<span class="sd">          left intact.</span>
+<span class="sd">        - array : ``drop[i]`` is the category in feature ``X[:, i]`` that</span>
+<span class="sd">          should be dropped.</span>
+
+<span class="sd">    sparse : bool, default=True</span>
+<span class="sd">        Will return sparse matrix if set True else will return an array.</span>
+
+<span class="sd">    dtype : number type, default=np.float</span>
+<span class="sd">        Desired dtype of output.</span>
+
+<span class="sd">    handle_unknown : {&#39;error&#39;, &#39;ignore&#39;}, default=&#39;error&#39;</span>
+<span class="sd">        Whether to raise an error or ignore if an unknown categorical feature</span>
+<span class="sd">        is present during transform (default is to raise). When this parameter</span>
+<span class="sd">        is set to &#39;ignore&#39; and an unknown category is encountered during</span>
+<span class="sd">        transform, the resulting one-hot encoded columns for this feature</span>
+<span class="sd">        will be all zeros. In the inverse transform, an unknown category</span>
+<span class="sd">        will be denoted as None.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    categories_ : list of arrays</span>
+<span class="sd">        The categories of each feature determined during fitting</span>
+<span class="sd">        (in order of the features in X and corresponding with the output</span>
+<span class="sd">        of ``transform``). This includes the category specified in ``drop``</span>
+<span class="sd">        (if any).</span>
+
+<span class="sd">    drop_idx_ : array of shape (n_features,)</span>
+<span class="sd">        - ``drop_idx_[i]`` is the index in ``categories_[i]`` of the category</span>
+<span class="sd">          to be dropped for each feature.</span>
+<span class="sd">        - ``drop_idx_[i] = None`` if no category is to be dropped from the</span>
+<span class="sd">          feature with index ``i``, e.g. when `drop=&#39;if_binary&#39;` and the</span>
+<span class="sd">          feature isn&#39;t binary.</span>
+<span class="sd">        - ``drop_idx_ = None`` if all the transformed features will be</span>
+<span class="sd">          retained.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    sklearn.preprocessing.OrdinalEncoder : Performs an ordinal (integer)</span>
+<span class="sd">      encoding of the categorical features.</span>
+<span class="sd">    sklearn.feature_extraction.DictVectorizer : Performs a one-hot encoding of</span>
+<span class="sd">      dictionary items (also handles string-valued features).</span>
+<span class="sd">    sklearn.feature_extraction.FeatureHasher : Performs an approximate one-hot</span>
+<span class="sd">      encoding of dictionary items or strings.</span>
+<span class="sd">    sklearn.preprocessing.LabelBinarizer : Binarizes labels in a one-vs-all</span>
+<span class="sd">      fashion.</span>
+<span class="sd">    sklearn.preprocessing.MultiLabelBinarizer : Transforms between iterable of</span>
+<span class="sd">      iterables and a multilabel format, e.g. a (samples x classes) binary</span>
+<span class="sd">      matrix indicating the presence of a class label.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Given a dataset with two features, we let the encoder find the unique</span>
+<span class="sd">    values per feature and transform the data to a binary one-hot encoding.</span>
+
+<span class="sd">    &gt;&gt;&gt; from sklearn.preprocessing import OneHotEncoder</span>
+
+<span class="sd">    One can discard categories not seen during `fit`:</span>
+
+<span class="sd">    &gt;&gt;&gt; enc = OneHotEncoder(handle_unknown=&#39;ignore&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; X = [[&#39;Male&#39;, 1], [&#39;Female&#39;, 3], [&#39;Female&#39;, 2]]</span>
+<span class="sd">    &gt;&gt;&gt; enc.fit(X)</span>
+<span class="sd">    OneHotEncoder(handle_unknown=&#39;ignore&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; enc.categories_</span>
+<span class="sd">    [array([&#39;Female&#39;, &#39;Male&#39;], dtype=object), array([1, 2, 3], dtype=object)]</span>
+<span class="sd">    &gt;&gt;&gt; enc.transform([[&#39;Female&#39;, 1], [&#39;Male&#39;, 4]]).toarray()</span>
+<span class="sd">    array([[1., 0., 1., 0., 0.],</span>
+<span class="sd">           [0., 1., 0., 0., 0.]])</span>
+<span class="sd">    &gt;&gt;&gt; enc.inverse_transform([[0, 1, 1, 0, 0], [0, 0, 0, 1, 0]])</span>
+<span class="sd">    array([[&#39;Male&#39;, 1],</span>
+<span class="sd">           [None, 2]], dtype=object)</span>
+<span class="sd">    &gt;&gt;&gt; enc.get_feature_names([&#39;gender&#39;, &#39;group&#39;])</span>
+<span class="sd">    array([&#39;gender_Female&#39;, &#39;gender_Male&#39;, &#39;group_1&#39;, &#39;group_2&#39;, &#39;group_3&#39;],</span>
+<span class="sd">      dtype=object)</span>
+
+<span class="sd">    One can always drop the first column for each feature:</span>
+
+<span class="sd">    &gt;&gt;&gt; drop_enc = OneHotEncoder(drop=&#39;first&#39;).fit(X)</span>
+<span class="sd">    &gt;&gt;&gt; drop_enc.categories_</span>
+<span class="sd">    [array([&#39;Female&#39;, &#39;Male&#39;], dtype=object), array([1, 2, 3], dtype=object)]</span>
+<span class="sd">    &gt;&gt;&gt; drop_enc.transform([[&#39;Female&#39;, 1], [&#39;Male&#39;, 2]]).toarray()</span>
+<span class="sd">    array([[0., 0., 0.],</span>
+<span class="sd">           [1., 1., 0.]])</span>
+
+<span class="sd">    Or drop a column for feature only having 2 categories:</span>
+
+<span class="sd">    &gt;&gt;&gt; drop_binary_enc = OneHotEncoder(drop=&#39;if_binary&#39;).fit(X)</span>
+<span class="sd">    &gt;&gt;&gt; drop_binary_enc.transform([[&#39;Female&#39;, 1], [&#39;Male&#39;, 2]]).toarray()</span>
+<span class="sd">    array([[0., 1., 0., 0.],</span>
+<span class="sd">           [1., 0., 1., 0.]])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@_deprecate_positional_args</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">handle_unknown</span><span class="o">=</span><span class="s1">&#39;error&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">categories</span> <span class="o">=</span> <span class="n">categories</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sparse</span> <span class="o">=</span> <span class="n">sparse</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">dtype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_unknown</span> <span class="o">=</span> <span class="n">handle_unknown</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop</span> <span class="o">=</span> <span class="n">drop</span>
+
+    <span class="k">def</span> <span class="nf">_validate_keywords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_unknown</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;handle_unknown should be either &#39;error&#39; or &#39;ignore&#39;, &quot;</span>
+                   <span class="s2">&quot;got </span><span class="si">{0}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_unknown</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="c1"># If we have both dropped columns and ignored unknown</span>
+        <span class="c1"># values, there will be ambiguous cells. This creates difficulties</span>
+        <span class="c1"># in interpreting the model.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_unknown</span> <span class="o">!=</span> <span class="s1">&#39;error&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;`handle_unknown` must be &#39;error&#39; when the drop parameter is &quot;</span>
+                <span class="s2">&quot;specified, as both would create categories that are all &quot;</span>
+                <span class="s2">&quot;zero.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_compute_drop_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drop</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop</span> <span class="o">==</span> <span class="s1">&#39;first&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop</span> <span class="o">==</span> <span class="s1">&#39;if_binary&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cats</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="kc">None</span>
+                                <span class="k">for</span> <span class="n">cats</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="s2">&quot;Wrong input for parameter `drop`. Expected &quot;</span>
+                    <span class="s2">&quot;&#39;first&#39;, &#39;if_binary&#39;, None or array of objects, got </span><span class="si">{}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drop</span><span class="p">)))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">drop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drop</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+                <span class="n">droplen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drop</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="s2">&quot;Wrong input for parameter `drop`. Expected &quot;</span>
+                    <span class="s2">&quot;&#39;first&#39;, &#39;if_binary&#39;, None or array of objects, got </span><span class="si">{}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drop</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="n">droplen</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">):</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;`drop` should have length equal to the number &quot;</span>
+                       <span class="s2">&quot;of features (</span><span class="si">{}</span><span class="s2">), got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">),</span>
+                                            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drop</span><span class="p">)))</span>
+            <span class="n">missing_drops</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drop</span><span class="p">)</span>
+                             <span class="k">if</span> <span class="n">val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">missing_drops</span><span class="p">):</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;The following categories were supposed to be &quot;</span>
+                       <span class="s2">&quot;dropped, but were not found in the training &quot;</span>
+                       <span class="s2">&quot;data.</span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                           <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                                <span class="p">[</span><span class="s2">&quot;Category: </span><span class="si">{}</span><span class="s2">, Feature: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                                    <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">missing_drops</span><span class="p">])))</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cat_list</span> <span class="o">==</span> <span class="n">val</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                             <span class="k">for</span> <span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">cat_list</span><span class="p">)</span> <span class="ow">in</span>
+                             <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drop</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">)],</span>
+                            <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit OneHotEncoder to X.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like, shape [n_samples, n_features]</span>
+<span class="sd">            The data to determine the categories of each feature.</span>
+
+<span class="sd">        y : None</span>
+<span class="sd">            Ignored. This parameter exists only for compatibility with</span>
+<span class="sd">            :class:`sklearn.pipeline.Pipeline`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_keywords</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">handle_unknown</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_unknown</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop_idx_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_drop_idx</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit OneHotEncoder to X, then transform X.</span>
+
+<span class="sd">        Equivalent to fit(X).transform(X) but more convenient.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like, shape [n_samples, n_features]</span>
+<span class="sd">            The data to encode.</span>
+
+<span class="sd">        y : None</span>
+<span class="sd">            Ignored. This parameter exists only for compatibility with</span>
+<span class="sd">            :class:`sklearn.pipeline.Pipeline`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X_out : sparse matrix if sparse=True else a 2-d array</span>
+<span class="sd">            Transformed input.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_keywords</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transform X using one-hot encoding.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like, shape [n_samples, n_features]</span>
+<span class="sd">            The data to encode.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X_out : sparse matrix if sparse=True else a 2-d array</span>
+<span class="sd">            Transformed input.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="c1"># validation of X happens in _check_X called by _transform</span>
+        <span class="n">X_int</span><span class="p">,</span> <span class="n">X_mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">handle_unknown</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">handle_unknown</span><span class="p">)</span>
+
+        <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="n">X_int</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_idx_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">to_drop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_idx_</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="c1"># We remove all the dropped categories from mask, and decrement all</span>
+            <span class="c1"># categories that occur after them to avoid an empty column.</span>
+            <span class="n">keep_cells</span> <span class="o">=</span> <span class="n">X_int</span> <span class="o">!=</span> <span class="n">to_drop</span>
+            <span class="n">n_values</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cats</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">):</span>
+                <span class="n">n_cats</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cats</span><span class="p">)</span>
+
+                <span class="c1"># drop=&#39;if_binary&#39; but feature isn&#39;t binary</span>
+                <span class="k">if</span> <span class="n">to_drop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># set to cardinality to not drop from X_int</span>
+                    <span class="n">to_drop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_cats</span>
+                    <span class="n">n_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_cats</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>  <span class="c1"># dropped</span>
+                    <span class="n">n_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_cats</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">to_drop</span> <span class="o">=</span> <span class="n">to_drop</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">X_int</span><span class="p">[</span><span class="n">X_int</span> <span class="o">&gt;</span> <span class="n">to_drop</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">X_mask</span> <span class="o">&amp;=</span> <span class="n">keep_cells</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_values</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">cats</span><span class="p">)</span> <span class="k">for</span> <span class="n">cats</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">]</span>
+
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">X_mask</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+        <span class="n">feature_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">n_values</span><span class="p">)</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="p">(</span><span class="n">X_int</span> <span class="o">+</span> <span class="n">feature_indices</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="n">mask</span><span class="p">]</span>
+
+        <span class="n">indptr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+        <span class="n">indptr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">X_mask</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">indptr</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">indptr</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">out</span><span class="o">=</span><span class="n">indptr</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">indptr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">((</span><span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">),</span>
+                                <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">feature_indices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
+                                <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">out</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">def</span> <span class="nf">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert the data back to the original representation.</span>
+
+<span class="sd">        In case unknown categories are encountered (all zeros in the</span>
+<span class="sd">        one-hot encoding), ``None`` is used to represent this category.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like or sparse matrix, shape [n_samples, n_encoded_features]</span>
+<span class="sd">            The transformed data.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X_tr : array-like, shape [n_samples, n_features]</span>
+<span class="sd">            Inverse transformed array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">accept_sparse</span><span class="o">=</span><span class="s1">&#39;csr&#39;</span><span class="p">)</span>
+
+        <span class="n">n_samples</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">n_features</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_idx_</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">n_transformed_features</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cats</span><span class="p">)</span>
+                                         <span class="k">for</span> <span class="n">cats</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_transformed_features</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="n">cats</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">to_drop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="n">cats</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">cats</span><span class="p">,</span> <span class="n">to_drop</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_idx_</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># validate shape of passed X</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Shape of the passed X data is not correct. Expected </span><span class="si">{0}</span><span class="s2"> &quot;</span>
+               <span class="s2">&quot;columns, got </span><span class="si">{1}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">n_transformed_features</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_transformed_features</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="c1"># create resulting array of appropriate dtype</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">find_common_type</span><span class="p">([</span><span class="n">cat</span><span class="o">.</span><span class="n">dtype</span> <span class="k">for</span> <span class="n">cat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">],</span> <span class="p">[])</span>
+        <span class="n">X_tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
+
+        <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">found_unknown</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_features</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_idx_</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_idx_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">cats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_idx_</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">n_categories</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cats</span><span class="p">)</span>
+
+            <span class="c1"># Only happens if there was a column with a unique</span>
+            <span class="c1"># category. In this case we just fill the column with this</span>
+            <span class="c1"># unique category value.</span>
+            <span class="k">if</span> <span class="n">n_categories</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">X_tr</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">drop_idx_</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+                <span class="n">j</span> <span class="o">+=</span> <span class="n">n_categories</span>
+                <span class="k">continue</span>
+            <span class="n">sub</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="n">j</span><span class="p">:</span><span class="n">j</span> <span class="o">+</span> <span class="n">n_categories</span><span class="p">]</span>
+            <span class="c1"># for sparse X argmax returns 2D matrix, ensure 1D array</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+            <span class="n">X_tr</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cats</span><span class="p">[</span><span class="n">labels</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_unknown</span> <span class="o">==</span> <span class="s1">&#39;ignore&#39;</span><span class="p">:</span>
+                <span class="n">unknown</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+                <span class="c1"># ignored unknown categories: we have a row of all zero</span>
+                <span class="k">if</span> <span class="n">unknown</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                    <span class="n">found_unknown</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">unknown</span>
+            <span class="c1"># drop will either be None or handle_unknown will be error. If</span>
+            <span class="c1"># self.drop_idx_ is not None, then we can safely assume that all of</span>
+            <span class="c1"># the nulls in each column are the dropped value</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_idx_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">dropped</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">dropped</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                    <span class="n">X_tr</span><span class="p">[</span><span class="n">dropped</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">drop_idx_</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+
+            <span class="n">j</span> <span class="o">+=</span> <span class="n">n_categories</span>
+
+        <span class="c1"># if ignored are found: potentially need to upcast result to</span>
+        <span class="c1"># insert None values</span>
+        <span class="k">if</span> <span class="n">found_unknown</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">X_tr</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="nb">object</span><span class="p">:</span>
+                <span class="n">X_tr</span> <span class="o">=</span> <span class="n">X_tr</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">found_unknown</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">X_tr</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">X_tr</span>
+
+    <span class="k">def</span> <span class="nf">get_feature_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_features</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return feature names for output features.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_features : list of str of shape (n_features,)</span>
+<span class="sd">            String names for input features if available. By default,</span>
+<span class="sd">            &quot;x0&quot;, &quot;x1&quot;, ... &quot;xn_features&quot; is used.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        output_feature_names : ndarray of shape (n_output_features,)</span>
+<span class="sd">            Array of feature names.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">cats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span>
+        <span class="k">if</span> <span class="n">input_features</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">input_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cats</span><span class="p">))]</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_features</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;input_features should have length equal to number of &quot;</span>
+                <span class="s2">&quot;features (</span><span class="si">{}</span><span class="s2">), got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">),</span>
+                                               <span class="nb">len</span><span class="p">(</span><span class="n">input_features</span><span class="p">)))</span>
+
+        <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cats</span><span class="p">)):</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">input_features</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">cats</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_idx_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_idx_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">names</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drop_idx_</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">feature_names</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">OrdinalEncoder</span><span class="p">(</span><span class="n">_BaseEncoder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Encode categorical features as an integer array.</span>
+
+<span class="sd">    The input to this transformer should be an array-like of integers or</span>
+<span class="sd">    strings, denoting the values taken on by categorical (discrete) features.</span>
+<span class="sd">    The features are converted to ordinal integers. This results in</span>
+<span class="sd">    a single column of integers (0 to n_categories - 1) per feature.</span>
+
+<span class="sd">    Read more in the :ref:`User Guide &lt;preprocessing_categorical_features&gt;`.</span>
+
+<span class="sd">    .. versionadded:: 0.20</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    categories : &#39;auto&#39; or a list of array-like, default=&#39;auto&#39;</span>
+<span class="sd">        Categories (unique values) per feature:</span>
+
+<span class="sd">        - &#39;auto&#39; : Determine categories automatically from the training data.</span>
+<span class="sd">        - list : ``categories[i]`` holds the categories expected in the ith</span>
+<span class="sd">          column. The passed categories should not mix strings and numeric</span>
+<span class="sd">          values, and should be sorted in case of numeric values.</span>
+
+<span class="sd">        The used categories can be found in the ``categories_`` attribute.</span>
+
+<span class="sd">    dtype : number type, default np.float64</span>
+<span class="sd">        Desired dtype of output.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    categories_ : list of arrays</span>
+<span class="sd">        The categories of each feature determined during fitting</span>
+<span class="sd">        (in order of the features in X and corresponding with the output</span>
+<span class="sd">        of ``transform``).</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    sklearn.preprocessing.OneHotEncoder : Performs a one-hot encoding of</span>
+<span class="sd">      categorical features.</span>
+<span class="sd">    sklearn.preprocessing.LabelEncoder : Encodes target labels with values</span>
+<span class="sd">      between 0 and n_classes-1.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Given a dataset with two features, we let the encoder find the unique</span>
+<span class="sd">    values per feature and transform the data to an ordinal encoding.</span>
+
+<span class="sd">    &gt;&gt;&gt; from sklearn.preprocessing import OrdinalEncoder</span>
+<span class="sd">    &gt;&gt;&gt; enc = OrdinalEncoder()</span>
+<span class="sd">    &gt;&gt;&gt; X = [[&#39;Male&#39;, 1], [&#39;Female&#39;, 3], [&#39;Female&#39;, 2]]</span>
+<span class="sd">    &gt;&gt;&gt; enc.fit(X)</span>
+<span class="sd">    OrdinalEncoder()</span>
+<span class="sd">    &gt;&gt;&gt; enc.categories_</span>
+<span class="sd">    [array([&#39;Female&#39;, &#39;Male&#39;], dtype=object), array([1, 2, 3], dtype=object)]</span>
+<span class="sd">    &gt;&gt;&gt; enc.transform([[&#39;Female&#39;, 3], [&#39;Male&#39;, 1]])</span>
+<span class="sd">    array([[0., 2.],</span>
+<span class="sd">           [1., 0.]])</span>
+
+<span class="sd">    &gt;&gt;&gt; enc.inverse_transform([[1, 0], [0, 1]])</span>
+<span class="sd">    array([[&#39;Male&#39;, 1],</span>
+<span class="sd">           [&#39;Female&#39;, 2]], dtype=object)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@_deprecate_positional_args</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">categories</span> <span class="o">=</span> <span class="n">categories</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">dtype</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit the OrdinalEncoder to X.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like, shape [n_samples, n_features]</span>
+<span class="sd">            The data to determine the categories of each feature.</span>
+
+<span class="sd">        y : None</span>
+<span class="sd">            Ignored. This parameter exists only for compatibility with</span>
+<span class="sd">            :class:`sklearn.pipeline.Pipeline`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transform X to ordinal codes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like, shape [n_samples, n_features]</span>
+<span class="sd">            The data to encode.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X_out : sparse matrix or a 2-d array</span>
+<span class="sd">            Transformed input.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X_int</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">X_int</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert the data back to the original representation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like or sparse matrix, shape [n_samples, n_encoded_features]</span>
+<span class="sd">            The transformed data.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X_tr : array-like, shape [n_samples, n_features]</span>
+<span class="sd">            Inverse transformed array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">accept_sparse</span><span class="o">=</span><span class="s1">&#39;csr&#39;</span><span class="p">)</span>
+
+        <span class="n">n_samples</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">n_features</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">)</span>
+
+        <span class="c1"># validate shape of passed X</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Shape of the passed X data is not correct. Expected </span><span class="si">{0}</span><span class="s2"> &quot;</span>
+               <span class="s2">&quot;columns, got </span><span class="si">{1}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">n_features</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_features</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="c1"># create resulting array of appropriate dtype</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">find_common_type</span><span class="p">([</span><span class="n">cat</span><span class="o">.</span><span class="n">dtype</span> <span class="k">for</span> <span class="n">cat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">],</span> <span class="p">[])</span>
+        <span class="n">X_tr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_features</span><span class="p">):</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">X_tr</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">labels</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">X_tr</span>
+</pre></div>
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Boston Consulting Group (BCG).<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

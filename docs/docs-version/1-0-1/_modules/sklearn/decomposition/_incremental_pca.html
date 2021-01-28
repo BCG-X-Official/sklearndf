@@ -1,0 +1,537 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearn.decomposition._incremental_pca &#8212; sklearndf  documentation</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/gamma.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/js/gamma.js"></script>
+    <script src="../../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../../index.html">
+    
+      <img src="../../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../getting_started/getting_started.html">Getting started</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../apidoc/sklearndf.html">API reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../contribution_guide.html">Development Guidelines</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../faqs.html">FAQ</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for sklearn.decomposition._incremental_pca</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Incremental Principal Components Analysis.&quot;&quot;&quot;</span>
+
+<span class="c1"># Author: Kyle Kastner &lt;kastnerkyle@gmail.com&gt;</span>
+<span class="c1">#         Giorgio Patrini</span>
+<span class="c1"># License: BSD 3 clause</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">linalg</span><span class="p">,</span> <span class="n">sparse</span>
+
+<span class="kn">from</span> <span class="nn">._base</span> <span class="kn">import</span> <span class="n">_BasePCA</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">check_array</span><span class="p">,</span> <span class="n">gen_batches</span>
+<span class="kn">from</span> <span class="nn">..utils.extmath</span> <span class="kn">import</span> <span class="n">svd_flip</span><span class="p">,</span> <span class="n">_incremental_mean_and_var</span>
+<span class="kn">from</span> <span class="nn">..utils.validation</span> <span class="kn">import</span> <span class="n">_deprecate_positional_args</span>
+
+
+<span class="k">class</span> <span class="nc">IncrementalPCA</span><span class="p">(</span><span class="n">_BasePCA</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Incremental principal components analysis (IPCA).</span>
+
+<span class="sd">    Linear dimensionality reduction using Singular Value Decomposition of</span>
+<span class="sd">    the data, keeping only the most significant singular vectors to</span>
+<span class="sd">    project the data to a lower dimensional space. The input data is centered</span>
+<span class="sd">    but not scaled for each feature before applying the SVD.</span>
+
+<span class="sd">    Depending on the size of the input data, this algorithm can be much more</span>
+<span class="sd">    memory efficient than a PCA, and allows sparse input.</span>
+
+<span class="sd">    This algorithm has constant memory complexity, on the order</span>
+<span class="sd">    of ``batch_size * n_features``, enabling use of np.memmap files without</span>
+<span class="sd">    loading the entire file into memory. For sparse matrices, the input</span>
+<span class="sd">    is converted to dense in batches (in order to be able to subtract the</span>
+<span class="sd">    mean) which avoids storing the entire dense matrix at any one time.</span>
+
+<span class="sd">    The computational overhead of each SVD is</span>
+<span class="sd">    ``O(batch_size * n_features ** 2)``, but only 2 * batch_size samples</span>
+<span class="sd">    remain in memory at a time. There will be ``n_samples / batch_size`` SVD</span>
+<span class="sd">    computations to get the principal components, versus 1 large SVD of</span>
+<span class="sd">    complexity ``O(n_samples * n_features ** 2)`` for PCA.</span>
+
+<span class="sd">    Read more in the :ref:`User Guide &lt;IncrementalPCA&gt;`.</span>
+
+<span class="sd">    .. versionadded:: 0.16</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_components : int or None, (default=None)</span>
+<span class="sd">        Number of components to keep. If ``n_components `` is ``None``,</span>
+<span class="sd">        then ``n_components`` is set to ``min(n_samples, n_features)``.</span>
+
+<span class="sd">    whiten : bool, optional</span>
+<span class="sd">        When True (False by default) the ``components_`` vectors are divided</span>
+<span class="sd">        by ``n_samples`` times ``components_`` to ensure uncorrelated outputs</span>
+<span class="sd">        with unit component-wise variances.</span>
+
+<span class="sd">        Whitening will remove some information from the transformed signal</span>
+<span class="sd">        (the relative variance scales of the components) but can sometimes</span>
+<span class="sd">        improve the predictive accuracy of the downstream estimators by</span>
+<span class="sd">        making data respect some hard-wired assumptions.</span>
+
+<span class="sd">    copy : bool, (default=True)</span>
+<span class="sd">        If False, X will be overwritten. ``copy=False`` can be used to</span>
+<span class="sd">        save memory but is unsafe for general use.</span>
+
+<span class="sd">    batch_size : int or None, (default=None)</span>
+<span class="sd">        The number of samples to use for each batch. Only used when calling</span>
+<span class="sd">        ``fit``. If ``batch_size`` is ``None``, then ``batch_size``</span>
+<span class="sd">        is inferred from the data and set to ``5 * n_features``, to provide a</span>
+<span class="sd">        balance between approximation accuracy and memory consumption.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    components_ : array, shape (n_components, n_features)</span>
+<span class="sd">        Components with maximum variance.</span>
+
+<span class="sd">    explained_variance_ : array, shape (n_components,)</span>
+<span class="sd">        Variance explained by each of the selected components.</span>
+
+<span class="sd">    explained_variance_ratio_ : array, shape (n_components,)</span>
+<span class="sd">        Percentage of variance explained by each of the selected components.</span>
+<span class="sd">        If all components are stored, the sum of explained variances is equal</span>
+<span class="sd">        to 1.0.</span>
+
+<span class="sd">    singular_values_ : array, shape (n_components,)</span>
+<span class="sd">        The singular values corresponding to each of the selected components.</span>
+<span class="sd">        The singular values are equal to the 2-norms of the ``n_components``</span>
+<span class="sd">        variables in the lower-dimensional space.</span>
+
+<span class="sd">    mean_ : array, shape (n_features,)</span>
+<span class="sd">        Per-feature empirical mean, aggregate over calls to ``partial_fit``.</span>
+
+<span class="sd">    var_ : array, shape (n_features,)</span>
+<span class="sd">        Per-feature empirical variance, aggregate over calls to</span>
+<span class="sd">        ``partial_fit``.</span>
+
+<span class="sd">    noise_variance_ : float</span>
+<span class="sd">        The estimated noise covariance following the Probabilistic PCA model</span>
+<span class="sd">        from Tipping and Bishop 1999. See &quot;Pattern Recognition and</span>
+<span class="sd">        Machine Learning&quot; by C. Bishop, 12.2.1 p. 574 or</span>
+<span class="sd">        http://www.miketipping.com/papers/met-mppca.pdf.</span>
+
+<span class="sd">    n_components_ : int</span>
+<span class="sd">        The estimated number of components. Relevant when</span>
+<span class="sd">        ``n_components=None``.</span>
+
+<span class="sd">    n_samples_seen_ : int</span>
+<span class="sd">        The number of samples processed by the estimator. Will be reset on</span>
+<span class="sd">        new calls to fit, but increments across ``partial_fit`` calls.</span>
+
+<span class="sd">    batch_size_ : int</span>
+<span class="sd">        Inferred batch size from ``batch_size``.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.datasets import load_digits</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.decomposition import IncrementalPCA</span>
+<span class="sd">    &gt;&gt;&gt; from scipy import sparse</span>
+<span class="sd">    &gt;&gt;&gt; X, _ = load_digits(return_X_y=True)</span>
+<span class="sd">    &gt;&gt;&gt; transformer = IncrementalPCA(n_components=7, batch_size=200)</span>
+<span class="sd">    &gt;&gt;&gt; # either partially fit on smaller batches of data</span>
+<span class="sd">    &gt;&gt;&gt; transformer.partial_fit(X[:100, :])</span>
+<span class="sd">    IncrementalPCA(batch_size=200, n_components=7)</span>
+<span class="sd">    &gt;&gt;&gt; # or let the fit function itself divide the data into batches</span>
+<span class="sd">    &gt;&gt;&gt; X_sparse = sparse.csr_matrix(X)</span>
+<span class="sd">    &gt;&gt;&gt; X_transformed = transformer.fit_transform(X_sparse)</span>
+<span class="sd">    &gt;&gt;&gt; X_transformed.shape</span>
+<span class="sd">    (1797, 7)</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Implements the incremental PCA model from:</span>
+<span class="sd">    *D. Ross, J. Lim, R. Lin, M. Yang, Incremental Learning for Robust Visual</span>
+<span class="sd">    Tracking, International Journal of Computer Vision, Volume 77, Issue 1-3,</span>
+<span class="sd">    pp. 125-141, May 2008.*</span>
+<span class="sd">    See https://www.cs.toronto.edu/~dross/ivt/RossLimLinYang_ijcv.pdf</span>
+
+<span class="sd">    This model is an extension of the Sequential Karhunen-Loeve Transform from:</span>
+<span class="sd">    *A. Levy and M. Lindenbaum, Sequential Karhunen-Loeve Basis Extraction and</span>
+<span class="sd">    its Application to Images, IEEE Transactions on Image Processing, Volume 9,</span>
+<span class="sd">    Number 8, pp. 1371-1374, August 2000.*</span>
+<span class="sd">    See https://www.cs.technion.ac.il/~mic/doc/skl-ip.pdf</span>
+
+<span class="sd">    We have specifically abstained from an optimization used by authors of both</span>
+<span class="sd">    papers, a QR decomposition used in specific situations to reduce the</span>
+<span class="sd">    algorithmic complexity of the SVD. The source for this technique is</span>
+<span class="sd">    *Matrix Computations, Third Edition, G. Holub and C. Van Loan, Chapter 5,</span>
+<span class="sd">    section 5.4.4, pp 252-253.*. This technique has been omitted because it is</span>
+<span class="sd">    advantageous only when decomposing a matrix with ``n_samples`` (rows)</span>
+<span class="sd">    &gt;= 5/3 * ``n_features`` (columns), and hurts the readability of the</span>
+<span class="sd">    implemented algorithm. This would be a good opportunity for future</span>
+<span class="sd">    optimization, if it is deemed necessary.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    D. Ross, J. Lim, R. Lin, M. Yang. Incremental Learning for Robust Visual</span>
+<span class="sd">    Tracking, International Journal of Computer Vision, Volume 77,</span>
+<span class="sd">    Issue 1-3, pp. 125-141, May 2008.</span>
+
+<span class="sd">    G. Golub and C. Van Loan. Matrix Computations, Third Edition, Chapter 5,</span>
+<span class="sd">    Section 5.4.4, pp. 252-253.</span>
+
+<span class="sd">    See also</span>
+<span class="sd">    --------</span>
+<span class="sd">    PCA</span>
+<span class="sd">    KernelPCA</span>
+<span class="sd">    SparsePCA</span>
+<span class="sd">    TruncatedSVD</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@_deprecate_positional_args</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">whiten</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">batch_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">whiten</span> <span class="o">=</span> <span class="n">whiten</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">copy</span> <span class="o">=</span> <span class="n">copy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit the model with X, using minibatches of size batch_size.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like or sparse matrix, shape (n_samples, n_features)</span>
+<span class="sd">            Training data, where n_samples is the number of samples and</span>
+<span class="sd">            n_features is the number of features.</span>
+
+<span class="sd">        y : Ignored</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : object</span>
+<span class="sd">            Returns the instance itself.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">components_</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_samples_seen_</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean_</span> <span class="o">=</span> <span class="o">.</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_</span> <span class="o">=</span> <span class="o">.</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">singular_values_</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">explained_variance_</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">explained_variance_ratio_</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">singular_values_</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noise_variance_</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_data</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">accept_sparse</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;csr&#39;</span><span class="p">,</span> <span class="s1">&#39;csc&#39;</span><span class="p">,</span> <span class="s1">&#39;lil&#39;</span><span class="p">],</span>
+                                <span class="n">copy</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">])</span>
+        <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">batch_size_</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">n_features</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">batch_size_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span>
+
+        <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">gen_batches</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size_</span><span class="p">,</span>
+                                 <span class="n">min_batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">X_batch</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">batch</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X_batch</span><span class="p">):</span>
+                <span class="n">X_batch</span> <span class="o">=</span> <span class="n">X_batch</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">partial_fit</span><span class="p">(</span><span class="n">X_batch</span><span class="p">,</span> <span class="n">check_input</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">partial_fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">check_input</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Incremental fit with X. All of X is processed as a single batch.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like, shape (n_samples, n_features)</span>
+<span class="sd">            Training data, where n_samples is the number of samples and</span>
+<span class="sd">            n_features is the number of features.</span>
+<span class="sd">        check_input : bool</span>
+<span class="sd">            Run check_array on X.</span>
+
+<span class="sd">        y : Ignored</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : object</span>
+<span class="sd">            Returns the instance itself.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">check_input</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="s2">&quot;IncrementalPCA.partial_fit does not support &quot;</span>
+                    <span class="s2">&quot;sparse input. Either convert data to dense &quot;</span>
+                    <span class="s2">&quot;or use IncrementalPCA.fit to do so in batches.&quot;</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">])</span>
+        <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;components_&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">components_</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">components_</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">n_components_</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">n_components_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">components_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">&lt;=</span> <span class="n">n_features</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;n_components=</span><span class="si">%r</span><span class="s2"> invalid for n_features=</span><span class="si">%d</span><span class="s2">, need &quot;</span>
+                             <span class="s2">&quot;more rows than columns for IncrementalPCA &quot;</span>
+                             <span class="s2">&quot;processing&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="p">,</span> <span class="n">n_features</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">&lt;=</span> <span class="n">n_samples</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;n_components=</span><span class="si">%r</span><span class="s2"> must be less or equal to &quot;</span>
+                             <span class="s2">&quot;the batch number of samples &quot;</span>
+                             <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_components_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span>
+                                               <span class="bp">self</span><span class="o">.</span><span class="n">n_components_</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Number of input features has changed from </span><span class="si">%i</span><span class="s2"> &quot;</span>
+                             <span class="s2">&quot;to </span><span class="si">%i</span><span class="s2"> between calls to partial_fit! Try &quot;</span>
+                             <span class="s2">&quot;setting n_components to a fixed value.&quot;</span> <span class="o">%</span>
+                             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components_</span><span class="p">))</span>
+
+        <span class="c1"># This is the first partial_fit</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;n_samples_seen_&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">n_samples_seen_</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mean_</span> <span class="o">=</span> <span class="o">.</span><span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">var_</span> <span class="o">=</span> <span class="o">.</span><span class="mi">0</span>
+
+        <span class="c1"># Update stats - they are 0 if this is the first step</span>
+        <span class="n">col_mean</span><span class="p">,</span> <span class="n">col_var</span><span class="p">,</span> <span class="n">n_total_samples</span> <span class="o">=</span> \
+            <span class="n">_incremental_mean_and_var</span><span class="p">(</span>
+                <span class="n">X</span><span class="p">,</span> <span class="n">last_mean</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_</span><span class="p">,</span> <span class="n">last_variance</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">var_</span><span class="p">,</span>
+                <span class="n">last_sample_count</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_samples_seen_</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">n_total_samples</span> <span class="o">=</span> <span class="n">n_total_samples</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># Whitening</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples_seen_</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># If it is the first step, simply whiten X</span>
+            <span class="n">X</span> <span class="o">-=</span> <span class="n">col_mean</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">col_batch_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">-=</span> <span class="n">col_batch_mean</span>
+            <span class="c1"># Build matrix of combined previous basis and new data</span>
+            <span class="n">mean_correction</span> <span class="o">=</span> \
+                <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_samples_seen_</span> <span class="o">/</span> <span class="n">n_total_samples</span><span class="p">)</span> <span class="o">*</span>
+                        <span class="n">n_samples</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_</span> <span class="o">-</span> <span class="n">col_batch_mean</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">singular_values_</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">components_</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">mean_correction</span><span class="p">))</span>
+
+        <span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">U</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">svd_flip</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">u_based_decision</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">explained_variance</span> <span class="o">=</span> <span class="n">S</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">n_total_samples</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">explained_variance_ratio</span> <span class="o">=</span> <span class="n">S</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">col_var</span> <span class="o">*</span> <span class="n">n_total_samples</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_samples_seen_</span> <span class="o">=</span> <span class="n">n_total_samples</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">components_</span> <span class="o">=</span> <span class="n">V</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components_</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">singular_values_</span> <span class="o">=</span> <span class="n">S</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components_</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean_</span> <span class="o">=</span> <span class="n">col_mean</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_</span> <span class="o">=</span> <span class="n">col_var</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">explained_variance_</span> <span class="o">=</span> <span class="n">explained_variance</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components_</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">explained_variance_ratio_</span> <span class="o">=</span> \
+            <span class="n">explained_variance_ratio</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components_</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components_</span> <span class="o">&lt;</span> <span class="n">n_features</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">noise_variance_</span> <span class="o">=</span> \
+                <span class="n">explained_variance</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components_</span><span class="p">:]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">noise_variance_</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Apply dimensionality reduction to X.</span>
+
+<span class="sd">        X is projected on the first principal components previously extracted</span>
+<span class="sd">        from a training set, using minibatches of size batch_size if X is</span>
+<span class="sd">        sparse.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like, shape (n_samples, n_features)</span>
+<span class="sd">            New data, where n_samples is the number of samples</span>
+<span class="sd">            and n_features is the number of features.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X_new : array-like, shape (n_samples, n_components)</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; from sklearn.decomposition import IncrementalPCA</span>
+<span class="sd">        &gt;&gt;&gt; X = np.array([[-1, -1], [-2, -1], [-3, -2],</span>
+<span class="sd">        ...               [1, 1], [2, 1], [3, 2]])</span>
+<span class="sd">        &gt;&gt;&gt; ipca = IncrementalPCA(n_components=2, batch_size=3)</span>
+<span class="sd">        &gt;&gt;&gt; ipca.fit(X)</span>
+<span class="sd">        IncrementalPCA(batch_size=3, n_components=2)</span>
+<span class="sd">        &gt;&gt;&gt; ipca.transform(X) # doctest: +SKIP</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+            <span class="n">n_samples</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">gen_batches</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size_</span><span class="p">,</span>
+                                     <span class="n">min_batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">batch</span><span class="p">]</span><span class="o">.</span><span class="n">toarray</span><span class="p">()))</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Boston Consulting Group (BCG).<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

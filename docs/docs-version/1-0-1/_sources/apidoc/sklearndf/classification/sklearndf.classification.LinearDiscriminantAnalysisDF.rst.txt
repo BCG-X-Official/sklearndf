@@ -20,8 +20,10 @@ sklearndf.classification.LinearDiscriminantAnalysisDF
       ~LinearDiscriminantAnalysisDF.decision_function
       ~LinearDiscriminantAnalysisDF.fit
       ~LinearDiscriminantAnalysisDF.fit_predict
+      ~LinearDiscriminantAnalysisDF.fit_transform
       ~LinearDiscriminantAnalysisDF.from_fitted
       ~LinearDiscriminantAnalysisDF.get_params
+      ~LinearDiscriminantAnalysisDF.inverse_transform
       ~LinearDiscriminantAnalysisDF.predict
       ~LinearDiscriminantAnalysisDF.predict_log_proba
       ~LinearDiscriminantAnalysisDF.predict_proba
@@ -38,9 +40,12 @@ sklearndf.classification.LinearDiscriminantAnalysisDF
    .. autosummary::
    
       ~LinearDiscriminantAnalysisDF.COL_FEATURE_IN
+      ~LinearDiscriminantAnalysisDF.COL_FEATURE_OUT
       ~LinearDiscriminantAnalysisDF.COL_PREDICTION
       ~LinearDiscriminantAnalysisDF.classes_
       ~LinearDiscriminantAnalysisDF.feature_names_in_
+      ~LinearDiscriminantAnalysisDF.feature_names_original_
+      ~LinearDiscriminantAnalysisDF.feature_names_out_
       ~LinearDiscriminantAnalysisDF.is_fitted
       ~LinearDiscriminantAnalysisDF.n_outputs_
       ~LinearDiscriminantAnalysisDF.native_estimator

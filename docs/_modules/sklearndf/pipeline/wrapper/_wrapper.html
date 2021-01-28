@@ -1,0 +1,447 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearndf.pipeline.wrapper._wrapper &#8212; sklearndf  documentation</title>
+    
+  <link rel="stylesheet" href="../../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/gamma.css" />
+    
+  <link rel="preload" as="script" href="../../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../_static/js/gamma.js"></script>
+    <script src="../../../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../../../index.html">
+    
+      <img src="../../../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../../getting_started/getting_started.html">Getting started</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../../apidoc/sklearndf.html">API reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../../contribution_guide.html">Development Guidelines</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../../faqs.html">FAQ</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for sklearndf.pipeline.wrapper._wrapper</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Core implementation of :mod:`sklearndf.pipeline.wrapper`</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">cast</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas.core.arrays</span> <span class="kn">import</span> <span class="n">ExtensionArray</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">FeatureUnion</span><span class="p">,</span> <span class="n">Pipeline</span>
+
+<span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span>
+
+<span class="kn">from</span> <span class="nn">sklearndf</span> <span class="kn">import</span> <span class="n">EstimatorDF</span><span class="p">,</span> <span class="n">TransformerDF</span>
+<span class="kn">from</span> <span class="nn">sklearndf.wrapper</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">,</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">,</span>
+    <span class="n">TransformerWrapperDF</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;PipelineWrapperDF&quot;</span><span class="p">,</span> <span class="s2">&quot;FeatureUnionWrapperDF&quot;</span><span class="p">]</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Ensure all symbols introduced below are included in __all__</span>
+<span class="c1">#</span>
+
+<span class="n">__tracker</span> <span class="o">=</span> <span class="n">AllTracker</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Class definitions</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="PipelineWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/pipeline/wrapper/sklearndf.pipeline.wrapper.PipelineWrapperDF.html#sklearndf.pipeline.wrapper.PipelineWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">PipelineWrapperDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">Pipeline</span><span class="p">],</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">Pipeline</span><span class="p">],</span>
+    <span class="n">TransformerWrapperDF</span><span class="p">[</span><span class="n">Pipeline</span><span class="p">],</span>
+    <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DF wrapper for scikit-learn :class:`~sklearn.pipeline.Pipeline`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: Placeholder that can be used in place of an estimator to designate a pipeline</span>
+    <span class="c1">#: step that preserves the original ingoing data.</span>
+    <span class="n">PASSTHROUGH</span> <span class="o">=</span> <span class="s2">&quot;passthrough&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_validate_delegate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># ensure that all steps support data frames, and that all except the last</span>
+        <span class="c1"># step are data frame transformers</span>
+
+        <span class="n">steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">steps</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">transformer</span> <span class="ow">in</span> <span class="n">steps</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_is_passthrough</span><span class="p">(</span><span class="n">transformer</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">transformer</span><span class="p">,</span> <span class="n">TransformerDF</span><span class="p">)</span>
+            <span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;expected step &quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&quot; to contain a &#39;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">TransformerDF</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, but found an instance of &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">transformer</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+        <span class="n">final_step</span> <span class="o">=</span> <span class="n">steps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">final_estimator</span> <span class="o">=</span> <span class="n">final_step</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_is_passthrough</span><span class="p">(</span><span class="n">final_estimator</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">final_estimator</span><span class="p">,</span> <span class="n">EstimatorDF</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;expected final step &quot;</span><span class="si">{</span><span class="n">final_step</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">&quot; to contain a &#39;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">EstimatorDF</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, but found an instance of &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">final_estimator</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">steps</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">EstimatorDF</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The ``steps`` attribute of the underlying :class:`~sklearn.pipeline.Pipeline`.</span>
+
+<span class="sd">        List of (name, transformer) tuples (transformers implement fit/transform).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">steps</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;The number of steps of the pipeline.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">steps</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">slice</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">EstimatorDF</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a sub-pipeline or a single estimator in the pipeline</span>
+
+<span class="sd">        Indexing with an integer will return an estimator; using a slice</span>
+<span class="sd">        returns another Pipeline instance which copies a slice of this</span>
+<span class="sd">        Pipeline. This copy is shallow: modifying (or fitting) estimators in</span>
+<span class="sd">        the sub-pipeline will affect the larger pipeline and vice-versa.</span>
+<span class="sd">        However, replacing a value in ``steps`` will not change a copy.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="nb">slice</span><span class="p">):</span>
+            <span class="n">base_pipeline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span>
+            <span class="k">if</span> <span class="n">ind</span><span class="o">.</span><span class="n">step</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Pipeline slicing only supports a step of 1&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">cast</span><span class="p">(</span>
+                <span class="n">EstimatorDF</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span>
+                    <span class="n">steps</span><span class="o">=</span><span class="n">base_pipeline</span><span class="o">.</span><span class="n">steps</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span>
+                    <span class="n">memory</span><span class="o">=</span><span class="n">base_pipeline</span><span class="o">.</span><span class="n">memory</span><span class="p">,</span>
+                    <span class="n">verbose</span><span class="o">=</span><span class="n">base_pipeline</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_is_passthrough</span><span class="p">(</span><span class="n">estimator</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">EstimatorDF</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="c1"># return True if the estimator is a &quot;passthrough&quot; (i.e. identity) transformer</span>
+        <span class="c1"># in the pipeline</span>
+        <span class="k">return</span> <span class="n">estimator</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">estimator</span> <span class="o">==</span> <span class="n">PipelineWrapperDF</span><span class="o">.</span><span class="n">PASSTHROUGH</span>
+
+    <span class="k">def</span> <span class="nf">_transformer_steps</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TransformerDF</span><span class="p">]]:</span>
+        <span class="c1"># make an iterator of all transform steps, i.e. excluding the final step</span>
+        <span class="c1"># in case it is not a transformer</span>
+        <span class="c1"># excludes steps whose transformer is ``None`` or ``&quot;passthrough&quot;``</span>
+
+        <span class="k">def</span> <span class="nf">_iter_not_none</span><span class="p">(</span>
+            <span class="n">transformer_steps</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">EstimatorDF</span><span class="p">]]</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TransformerDF</span><span class="p">]]:</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">cast</span><span class="p">(</span><span class="n">TransformerDF</span><span class="p">,</span> <span class="n">transformer</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">transformer</span> <span class="ow">in</span> <span class="n">transformer_steps</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_passthrough</span><span class="p">(</span><span class="n">transformer</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="n">steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">steps</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">iter</span><span class="p">([])</span>
+
+        <span class="n">final_estimator</span> <span class="o">=</span> <span class="n">steps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">final_estimator</span><span class="p">,</span> <span class="n">TransformerDF</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">_iter_not_none</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_iter_not_none</span><span class="p">(</span><span class="n">steps</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_get_features_original</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+        <span class="n">col_mappings</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">df_transformer</span><span class="o">.</span><span class="n">feature_names_original_</span>
+            <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">df_transformer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transformer_steps</span><span class="p">()</span>
+        <span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">col_mappings</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">_features_out</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_in_</span>
+            <span class="n">_features_original</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ExtensionArray</span><span class="p">]</span> <span class="o">=</span> <span class="n">_features_out</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_features_out</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span> <span class="o">=</span> <span class="n">col_mappings</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+            <span class="n">_features_original</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">ExtensionArray</span><span class="p">]</span> <span class="o">=</span> <span class="n">col_mappings</span><span class="p">[</span>
+                <span class="o">-</span><span class="mi">1</span>
+            <span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+            <span class="c1"># iterate backwards starting from the penultimate item</span>
+            <span class="k">for</span> <span class="n">preceding_out_to_original_mapping</span> <span class="ow">in</span> <span class="n">col_mappings</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="c1"># join the original columns of my current transformer on the out columns</span>
+                <span class="c1"># in the preceding transformer, then repeat</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span>
+                    <span class="n">feature</span> <span class="ow">in</span> <span class="n">preceding_out_to_original_mapping</span>
+                    <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">_features_original</span>
+                <span class="p">):</span>
+                    <span class="n">unknown_features</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">_features_original</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span>
+                        <span class="n">preceding_out_to_original_mapping</span>
+                    <span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;unknown features encountered while tracing original &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;features along pipeline: </span><span class="si">{</span><span class="n">unknown_features</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="n">_features_original</span> <span class="o">=</span> <span class="n">preceding_out_to_original_mapping</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+                    <span class="n">_features_original</span>
+                <span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">_features_out</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">_features_original</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_features_out</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">transformer</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">steps</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">transformer</span><span class="p">,</span> <span class="n">TransformerDF</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">transformer</span><span class="o">.</span><span class="n">feature_names_out_</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_in_</span></div>
+
+
+<div class="viewcode-block" id="FeatureUnionWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/pipeline/wrapper/sklearndf.pipeline.wrapper.FeatureUnionWrapperDF.html#sklearndf.pipeline.wrapper.FeatureUnionWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">FeatureUnionWrapperDF</span><span class="p">(</span><span class="n">TransformerWrapperDF</span><span class="p">[</span><span class="n">FeatureUnion</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DF wrapper for scikit-learn</span>
+<span class="sd">    :class:`~sklearn.pipeline.FeatureUnion`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_prepend_features_out</span><span class="p">(</span><span class="n">features_out</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span> <span class="n">name_prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name_prefix</span><span class="si">}</span><span class="s2">__&quot;</span> <span class="o">+</span> <span class="n">features_out</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_get_features_original</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+        <span class="c1"># concatenate output-&gt;input mappings from all included transformers other than</span>
+        <span class="c1"># ones stated as ``None`` or ``&quot;drop&quot;`` or any other string</span>
+
+        <span class="c1"># prepend the name of the transformer so the resulting feature name is</span>
+        <span class="c1"># `&lt;name&gt;__&lt;output column of sub-transformer&gt;</span>
+
+        <span class="k">def</span> <span class="nf">_prepend_features_original</span><span class="p">(</span>
+            <span class="n">features_original</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">name_prefix</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">features_original</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_prepend_features_out</span><span class="p">(</span>
+                    <span class="n">features_out</span><span class="o">=</span><span class="n">features_original</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">name_prefix</span><span class="o">=</span><span class="n">name_prefix</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+
+        <span class="c1"># noinspection PyProtectedMember</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+            <span class="n">objs</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">_prepend_features_original</span><span class="p">(</span>
+                    <span class="n">features_original</span><span class="o">=</span><span class="n">transformer</span><span class="o">.</span><span class="n">feature_names_original_</span><span class="p">,</span>
+                    <span class="n">name_prefix</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">transformer</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">_iter</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_features_out</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
+        <span class="c1"># concatenate output columns from all included transformers other than</span>
+        <span class="c1"># ones stated as ``None`` or ``&quot;drop&quot;`` or any other string</span>
+
+        <span class="c1"># prepend the name of the transformer so the resulting feature name is</span>
+        <span class="c1"># `&lt;name&gt;__&lt;output column of sub-transformer&gt;</span>
+
+        <span class="c1"># noinspection PyProtectedMember</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_prepend_features_out</span><span class="p">(</span>
+                <span class="n">features_out</span><span class="o">=</span><span class="n">transformer</span><span class="o">.</span><span class="n">feature_names_out_</span><span class="p">,</span> <span class="n">name_prefix</span><span class="o">=</span><span class="n">name</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">transformer</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">_iter</span><span class="p">()</span>
+        <span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">other</span><span class="o">=</span><span class="n">indices</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># Validate __all__</span>
+<span class="c1">#</span>
+
+<span class="n">__tracker</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+</pre></div>
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Boston Consulting Group (BCG).<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

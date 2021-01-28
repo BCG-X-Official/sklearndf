@@ -98,4 +98,5 @@ Submodules
    :recursive:
 
    sklearndf.regression.extra
+   sklearndf.regression.wrapper
 

@@ -1,0 +1,41 @@
+sklearndf.wrapper.MetaEstimatorWrapperDF
+========================================
+
+.. currentmodule:: sklearndf.wrapper
+
+.. autoclass:: MetaEstimatorWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MetaEstimatorWrapperDF.clone
+      ~MetaEstimatorWrapperDF.fit
+      ~MetaEstimatorWrapperDF.from_fitted
+      ~MetaEstimatorWrapperDF.get_params
+      ~MetaEstimatorWrapperDF.set_params
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MetaEstimatorWrapperDF.COL_FEATURE_IN
+      ~MetaEstimatorWrapperDF.feature_names_in_
+      ~MetaEstimatorWrapperDF.is_fitted
+      ~MetaEstimatorWrapperDF.n_outputs_
+      ~MetaEstimatorWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

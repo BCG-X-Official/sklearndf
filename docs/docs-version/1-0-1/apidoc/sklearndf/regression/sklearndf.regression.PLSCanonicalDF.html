@@ -387,6 +387,10 @@
                             <a href="sklearndf.regression.extra.html">sklearndf.regression.extra</a>
                         </li>
                     
+                        <li class="">
+                            <a href="sklearndf.regression.wrapper.html">sklearndf.regression.wrapper</a>
+                        </li>
+                    
                     </ul>
                 </li>
             
@@ -394,6 +398,12 @@
             
                 <li class="">
                     <a href="../sklearndf.transformation.html">sklearndf.transformation</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="../sklearndf.wrapper.html">sklearndf.wrapper</a>
                 </li>
             
           
@@ -435,7 +445,7 @@
 <h1>sklearndf.regression.PLSCanonicalDF<a class="headerlink" href="#sklearndf-regression-plscanonicaldf" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="sklearndf.regression.PLSCanonicalDF">
-<em class="property">class </em><code class="sig-prename descclassname">sklearndf.regression.</code><code class="sig-name descname">PLSCanonicalDF</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/sklearndf/regression/_regression.html#PLSCanonicalDF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sklearndf.regression.PLSCanonicalDF" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">sklearndf.regression.</code><code class="sig-name descname">PLSCanonicalDF</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.regression.PLSCanonicalDF" title="Permalink to this definition">¶</a></dt>
 <dd><p>PLSCanonical implements the 2 blocks canonical PLS of the original Wold
 algorithm [Tenenhaus 1998] p.204, referred as PLS-C2A in [Wegelin 2000].</p>
 <div class="admonition note">
@@ -446,10 +456,10 @@ replicates all parameters and behaviours of class <a class="reference external" 
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Bases</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../sklearndf.TransformerDF.html#sklearndf.TransformerDF" title="sklearndf.TransformerDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerDF</span></code></a>, <a class="reference internal" href="../sklearndf.RegressorDF.html#sklearndf.RegressorDF" title="sklearndf.RegressorDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegressorDF</span></code></a>, <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="(in scikit-learn v0.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="wrapper/sklearndf.regression.wrapper.RegressorTransformerWrapperDF.html#sklearndf.regression.wrapper.RegressorTransformerWrapperDF" title="sklearndf.regression.wrapper.RegressorTransformerWrapperDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegressorTransformerWrapperDF</span></code></a></p>
 </dd>
 <dt class="field-even">Metaclasses</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.6/library/abc.html#abc.ABCMeta" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABCMeta</span></code></a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.6/library/abc.html#abc.ABCMeta" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABCMeta</span></code></a>, <a class="reference internal" href="../wrapper/sklearndf.wrapper.EstimatorWrapperDFMeta.html#sklearndf.wrapper.EstimatorWrapperDFMeta" title="sklearndf.wrapper.EstimatorWrapperDFMeta"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatorWrapperDFMeta</span></code></a></p>
 </dd>
 </dl>
 <p class="rubric">Method summary</p>
@@ -526,7 +536,7 @@ replicates all parameters and behaviours of class <a class="reference external" 
 <td><p>The number of outputs used to fit this estimator.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.regression.PLSCanonicalDF.native_estimator" title="sklearndf.regression.PLSCanonicalDF.native_estimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">native_estimator</span></code></a></p></td>
-<td><p>The native estimator which this wrapper delegates to.</p></td>
+<td><p>The native estimator that this wrapper delegates to.</p></td>
 </tr>
 </tbody>
 </table>
@@ -626,7 +636,7 @@ has already been fitted.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>estimator</strong> (<em>~T_DelegateEstimator</em>) – the fitted estimator</p></li>
+<li><p><strong>estimator</strong> (<em>~T_NativeEstimator</em>) – the fitted estimator</p></li>
 <li><p><strong>features_in</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a>) – the column names of X used for fitting the estimator</p></li>
 <li><p><strong>n_outputs</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#int" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the number of outputs in y used for fitting the estimator</p></li>
 </ul>
@@ -830,10 +840,10 @@ transformer</p>
 <dl class="py method">
 <dt id="sklearndf.regression.PLSCanonicalDF.native_estimator">
 <em class="property">property </em><code class="sig-name descname">native_estimator</code><a class="headerlink" href="#sklearndf.regression.PLSCanonicalDF.native_estimator" title="Permalink to this definition">¶</a></dt>
-<dd><p>The native estimator which this wrapper delegates to.</p>
+<dd><p>The native estimator that this wrapper delegates to.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>~T_DelegateEstimator</p>
+<dd class="field-odd"><p>~T_NativeEstimator</p>
 </dd>
 </dl>
 </dd></dl>

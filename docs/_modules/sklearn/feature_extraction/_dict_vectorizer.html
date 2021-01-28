@@ -1,0 +1,546 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearn.feature_extraction._dict_vectorizer &#8212; sklearndf  documentation</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/gamma.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../_static/js/gamma.js"></script>
+    <script src="../../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../../index.html">
+    
+      <img src="../../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../getting_started/getting_started.html">Getting started</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../apidoc/sklearndf.html">API reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../contribution_guide.html">Development Guidelines</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../faqs.html">FAQ</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for sklearn.feature_extraction._dict_vectorizer</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Authors: Lars Buitinck</span>
+<span class="c1">#          Dan Blanchard &lt;dblanchard@ets.org&gt;</span>
+<span class="c1"># License: BSD 3 clause</span>
+
+<span class="kn">from</span> <span class="nn">array</span> <span class="kn">import</span> <span class="n">array</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Mapping</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">sp</span>
+
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">check_array</span><span class="p">,</span> <span class="n">tosequence</span>
+<span class="kn">from</span> <span class="nn">..utils.validation</span> <span class="kn">import</span> <span class="n">_deprecate_positional_args</span>
+
+
+<span class="k">def</span> <span class="nf">_tosequence</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Turn X into a sequence or ndarray, avoiding a copy if possible.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>  <span class="c1"># single sample</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">X</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">tosequence</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">DictVectorizer</span><span class="p">(</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transforms lists of feature-value mappings to vectors.</span>
+
+<span class="sd">    This transformer turns lists of mappings (dict-like objects) of feature</span>
+<span class="sd">    names to feature values into Numpy arrays or scipy.sparse matrices for use</span>
+<span class="sd">    with scikit-learn estimators.</span>
+
+<span class="sd">    When feature values are strings, this transformer will do a binary one-hot</span>
+<span class="sd">    (aka one-of-K) coding: one boolean-valued feature is constructed for each</span>
+<span class="sd">    of the possible string values that the feature can take on. For instance,</span>
+<span class="sd">    a feature &quot;f&quot; that can take on the values &quot;ham&quot; and &quot;spam&quot; will become two</span>
+<span class="sd">    features in the output, one signifying &quot;f=ham&quot;, the other &quot;f=spam&quot;.</span>
+
+<span class="sd">    However, note that this transformer will only do a binary one-hot encoding</span>
+<span class="sd">    when feature values are of type string. If categorical features are</span>
+<span class="sd">    represented as numeric values such as int, the DictVectorizer can be</span>
+<span class="sd">    followed by :class:`sklearn.preprocessing.OneHotEncoder` to complete</span>
+<span class="sd">    binary one-hot encoding.</span>
+
+<span class="sd">    Features that do not occur in a sample (mapping) will have a zero value</span>
+<span class="sd">    in the resulting array/matrix.</span>
+
+<span class="sd">    Read more in the :ref:`User Guide &lt;dict_feature_extraction&gt;`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dtype : dtype, default=np.float64</span>
+<span class="sd">        The type of feature values. Passed to Numpy array/scipy.sparse matrix</span>
+<span class="sd">        constructors as the dtype argument.</span>
+<span class="sd">    separator : str, default=&quot;=&quot;</span>
+<span class="sd">        Separator string used when constructing new features for one-hot</span>
+<span class="sd">        coding.</span>
+<span class="sd">    sparse : bool, default=True</span>
+<span class="sd">        Whether transform should produce scipy.sparse matrices.</span>
+<span class="sd">    sort : bool, default=True</span>
+<span class="sd">        Whether ``feature_names_`` and ``vocabulary_`` should be</span>
+<span class="sd">        sorted when fitting.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    vocabulary_ : dict</span>
+<span class="sd">        A dictionary mapping feature names to feature indices.</span>
+
+<span class="sd">    feature_names_ : list</span>
+<span class="sd">        A list of length n_features containing the feature names (e.g., &quot;f=ham&quot;</span>
+<span class="sd">        and &quot;f=spam&quot;).</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.feature_extraction import DictVectorizer</span>
+<span class="sd">    &gt;&gt;&gt; v = DictVectorizer(sparse=False)</span>
+<span class="sd">    &gt;&gt;&gt; D = [{&#39;foo&#39;: 1, &#39;bar&#39;: 2}, {&#39;foo&#39;: 3, &#39;baz&#39;: 1}]</span>
+<span class="sd">    &gt;&gt;&gt; X = v.fit_transform(D)</span>
+<span class="sd">    &gt;&gt;&gt; X</span>
+<span class="sd">    array([[2., 0., 1.],</span>
+<span class="sd">           [0., 1., 3.]])</span>
+<span class="sd">    &gt;&gt;&gt; v.inverse_transform(X) == \</span>
+<span class="sd">        [{&#39;bar&#39;: 2.0, &#39;foo&#39;: 1.0}, {&#39;baz&#39;: 1.0, &#39;foo&#39;: 3.0}]</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; v.transform({&#39;foo&#39;: 4, &#39;unseen_feature&#39;: 3})</span>
+<span class="sd">    array([[0., 0., 4.]])</span>
+
+<span class="sd">    See also</span>
+<span class="sd">    --------</span>
+<span class="sd">    FeatureHasher : performs vectorization using only a hash function.</span>
+<span class="sd">    sklearn.preprocessing.OrdinalEncoder : handles nominal/categorical</span>
+<span class="sd">      features encoded as columns of arbitrary data types.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@_deprecate_positional_args</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="n">sparse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">dtype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">separator</span> <span class="o">=</span> <span class="n">separator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sparse</span> <span class="o">=</span> <span class="n">sparse</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sort</span> <span class="o">=</span> <span class="n">sort</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Learn a list of feature name -&gt; indices mappings.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : Mapping or iterable over Mappings</span>
+<span class="sd">            Dict(s) or Mapping(s) from feature names (arbitrary Python</span>
+<span class="sd">            objects) to feature values (strings or convertible to dtype).</span>
+<span class="sd">        y : (ignored)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">vocab</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="n">f</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s%s%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">separator</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">f</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">vocab</span><span class="p">:</span>
+                    <span class="n">feature_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                    <span class="n">vocab</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort</span><span class="p">:</span>
+            <span class="n">feature_names</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+            <span class="n">vocab</span> <span class="o">=</span> <span class="p">{</span><span class="n">f</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">feature_names</span><span class="p">)}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_</span> <span class="o">=</span> <span class="n">feature_names</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_</span> <span class="o">=</span> <span class="n">vocab</span>
+
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">fitting</span><span class="p">):</span>
+        <span class="c1"># Sanity check: Python&#39;s array has no way of explicitly requesting the</span>
+        <span class="c1"># signed 32-bit integers that scipy.sparse needs, so we use the next</span>
+        <span class="c1"># best thing: typecode &quot;i&quot; (int). However, if that gives larger or</span>
+        <span class="c1"># smaller integers than 32-bit ones, np.frombuffer screws up.</span>
+        <span class="k">assert</span> <span class="n">array</span><span class="p">(</span><span class="s2">&quot;i&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">itemsize</span> <span class="o">==</span> <span class="mi">4</span><span class="p">,</span> <span class="p">(</span>
+            <span class="s2">&quot;sizeof(int) != 4 on your platform; please report this at&quot;</span>
+            <span class="s2">&quot; https://github.com/scikit-learn/scikit-learn/issues and&quot;</span>
+            <span class="s2">&quot; include the output from platform.platform() in your bug report&quot;</span><span class="p">)</span>
+
+        <span class="n">dtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="k">if</span> <span class="n">fitting</span><span class="p">:</span>
+            <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">vocab</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">feature_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_</span>
+            <span class="n">vocab</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_</span>
+
+        <span class="c1"># Process everything as sparse regardless of setting</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="p">[</span><span class="n">X</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">)</span> <span class="k">else</span> <span class="n">X</span>
+
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="s2">&quot;i&quot;</span><span class="p">)</span>
+        <span class="n">indptr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># XXX we could change values to an array.array as well, but it</span>
+        <span class="c1"># would require (heuristic) conversion of dtype to typecode...</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># collect all the possible feature names and build sparse matrix at</span>
+        <span class="c1"># same time</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="n">f</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s%s%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">separator</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">vocab</span><span class="p">:</span>
+                    <span class="n">indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vocab</span><span class="p">[</span><span class="n">f</span><span class="p">])</span>
+                    <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dtype</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">fitting</span><span class="p">:</span>
+                        <span class="n">feature_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                        <span class="n">vocab</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
+                        <span class="n">indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vocab</span><span class="p">[</span><span class="n">f</span><span class="p">])</span>
+                        <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dtype</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+
+            <span class="n">indptr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indptr</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Sample sequence X is empty.&quot;</span><span class="p">)</span>
+
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">intc</span><span class="p">)</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">indptr</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">))</span>
+
+        <span class="n">result_matrix</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">((</span><span class="n">values</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">),</span>
+                                      <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+
+        <span class="c1"># Sort everything if asked</span>
+        <span class="k">if</span> <span class="n">fitting</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort</span><span class="p">:</span>
+            <span class="n">feature_names</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+            <span class="n">map_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">feature_names</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">new_val</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">feature_names</span><span class="p">):</span>
+                <span class="n">map_index</span><span class="p">[</span><span class="n">new_val</span><span class="p">]</span> <span class="o">=</span> <span class="n">vocab</span><span class="p">[</span><span class="n">f</span><span class="p">]</span>
+                <span class="n">vocab</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_val</span>
+            <span class="n">result_matrix</span> <span class="o">=</span> <span class="n">result_matrix</span><span class="p">[:,</span> <span class="n">map_index</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse</span><span class="p">:</span>
+            <span class="n">result_matrix</span><span class="o">.</span><span class="n">sort_indices</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result_matrix</span> <span class="o">=</span> <span class="n">result_matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">fitting</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_</span> <span class="o">=</span> <span class="n">feature_names</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_</span> <span class="o">=</span> <span class="n">vocab</span>
+
+        <span class="k">return</span> <span class="n">result_matrix</span>
+
+    <span class="k">def</span> <span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Learn a list of feature name -&gt; indices mappings and transform X.</span>
+
+<span class="sd">        Like fit(X) followed by transform(X), but does not require</span>
+<span class="sd">        materializing X in memory.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : Mapping or iterable over Mappings</span>
+<span class="sd">            Dict(s) or Mapping(s) from feature names (arbitrary Python</span>
+<span class="sd">            objects) to feature values (strings or convertible to dtype).</span>
+<span class="sd">        y : (ignored)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Xa : {array, sparse matrix}</span>
+<span class="sd">            Feature vectors; always 2-d.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">fitting</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">dict_type</span><span class="o">=</span><span class="nb">dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Transform array or sparse matrix X back to feature mappings.</span>
+
+<span class="sd">        X must have been produced by this DictVectorizer&#39;s transform or</span>
+<span class="sd">        fit_transform method; it may only have passed through transformers</span>
+<span class="sd">        that preserve the number of features and their order.</span>
+
+<span class="sd">        In the case of one-hot/one-of-K coding, the constructed feature</span>
+<span class="sd">        names and values are returned rather than the original ones.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : {array-like, sparse matrix} of shape (n_samples, n_features)</span>
+<span class="sd">            Sample matrix.</span>
+<span class="sd">        dict_type : type, default=dict</span>
+<span class="sd">            Constructor for feature mappings. Must conform to the</span>
+<span class="sd">            collections.Mapping API.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        D : list of dict_type objects of shape (n_samples,)</span>
+<span class="sd">            Feature mappings for the samples in X.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># COO matrix is not subscriptable</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">accept_sparse</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;csr&#39;</span><span class="p">,</span> <span class="s1">&#39;csc&#39;</span><span class="p">])</span>
+        <span class="n">n_samples</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_</span>
+        <span class="n">dicts</span> <span class="o">=</span> <span class="p">[</span><span class="n">dict_type</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)]</span>
+
+        <span class="k">if</span> <span class="n">sp</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">X</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()):</span>
+                <span class="n">dicts</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">names</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dicts</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]):</span>
+                    <span class="k">if</span> <span class="n">v</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">d</span><span class="p">[</span><span class="n">names</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">dicts</span>
+
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Transform feature-&gt;value dicts to array or sparse matrix.</span>
+
+<span class="sd">        Named features not encountered during fit or fit_transform will be</span>
+<span class="sd">        silently ignored.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : Mapping or iterable over Mappings of shape (n_samples,)</span>
+<span class="sd">            Dict(s) or Mapping(s) from feature names (arbitrary Python</span>
+<span class="sd">            objects) to feature values (strings or convertible to dtype).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Xa : {array, sparse matrix}</span>
+<span class="sd">            Feature vectors; always 2-d.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">fitting</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span>
+            <span class="n">vocab</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">_tosequence</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+            <span class="n">Xa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                        <span class="n">f</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s%s%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">separator</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                        <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">Xa</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">vocab</span><span class="p">[</span><span class="n">f</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dtype</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                        <span class="k">pass</span>
+
+            <span class="k">return</span> <span class="n">Xa</span>
+
+    <span class="k">def</span> <span class="nf">get_feature_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a list of feature names, ordered by their indices.</span>
+
+<span class="sd">        If one-of-K coding is applied to categorical features, this will</span>
+<span class="sd">        include the constructed feature names but not the original ones.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_</span>
+
+    <span class="k">def</span> <span class="nf">restrict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">support</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Restrict the features to those in support using feature selection.</span>
+
+<span class="sd">        This function modifies the estimator in-place.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        support : array-like</span>
+<span class="sd">            Boolean mask or list of indices (as returned by the get_support</span>
+<span class="sd">            member of feature selectors).</span>
+<span class="sd">        indices : bool, default=False</span>
+<span class="sd">            Whether support is a list of indices.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; from sklearn.feature_extraction import DictVectorizer</span>
+<span class="sd">        &gt;&gt;&gt; from sklearn.feature_selection import SelectKBest, chi2</span>
+<span class="sd">        &gt;&gt;&gt; v = DictVectorizer()</span>
+<span class="sd">        &gt;&gt;&gt; D = [{&#39;foo&#39;: 1, &#39;bar&#39;: 2}, {&#39;foo&#39;: 3, &#39;baz&#39;: 1}]</span>
+<span class="sd">        &gt;&gt;&gt; X = v.fit_transform(D)</span>
+<span class="sd">        &gt;&gt;&gt; support = SelectKBest(chi2, k=2).fit(X, [0, 1])</span>
+<span class="sd">        &gt;&gt;&gt; v.get_feature_names()</span>
+<span class="sd">        [&#39;bar&#39;, &#39;baz&#39;, &#39;foo&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; v.restrict(support.get_support())</span>
+<span class="sd">        DictVectorizer()</span>
+<span class="sd">        &gt;&gt;&gt; v.get_feature_names()</span>
+<span class="sd">        [&#39;bar&#39;, &#39;foo&#39;]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">indices</span><span class="p">:</span>
+            <span class="n">support</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">support</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_</span>
+        <span class="n">new_vocab</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">support</span><span class="p">:</span>
+            <span class="n">new_vocab</span><span class="p">[</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_vocab</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vocabulary_</span> <span class="o">=</span> <span class="n">new_vocab</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">new_vocab</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
+                                                    <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">))]</span>
+
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">_more_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;X_types&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;dict&quot;</span><span class="p">]}</span>
+</pre></div>
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2020, Boston Consulting Group (BCG).<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

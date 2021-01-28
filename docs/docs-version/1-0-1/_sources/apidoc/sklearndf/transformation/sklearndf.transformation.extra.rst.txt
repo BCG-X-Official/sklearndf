@@ -18,6 +18,7 @@ sklearndf.transformation.extra
       :nosignatures:
    
       BorutaDF
+      BorutaPyWrapperDF
       OutlierRemoverDF
    
    

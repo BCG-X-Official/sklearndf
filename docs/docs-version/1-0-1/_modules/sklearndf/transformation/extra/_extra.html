@@ -155,7 +155,6 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -165,12 +164,12 @@
 <span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span><span class="p">,</span> <span class="n">inheritdoc</span>
 
 <span class="kn">from</span> <span class="nn">...</span> <span class="kn">import</span> <span class="n">TransformerDF</span>
-<span class="kn">from</span> <span class="nn">..._wrapper</span> <span class="kn">import</span> <span class="n">_MetaEstimatorWrapperDF</span><span class="p">,</span> <span class="n">df_estimator</span>
-<span class="kn">from</span> <span class="nn">.._wrapper</span> <span class="kn">import</span> <span class="n">_ColumnSubsetTransformerWrapperDF</span><span class="p">,</span> <span class="n">_NDArrayTransformerWrapperDF</span>
+<span class="kn">from</span> <span class="nn">...wrapper</span> <span class="kn">import</span> <span class="n">MetaEstimatorWrapperDF</span><span class="p">,</span> <span class="n">make_df_transformer</span>
+<span class="kn">from</span> <span class="nn">..wrapper</span> <span class="kn">import</span> <span class="n">ColumnSubsetTransformerWrapperDF</span><span class="p">,</span> <span class="n">NumpyTransformerWrapperDF</span>
 
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;OutlierRemoverDF&quot;</span><span class="p">,</span> <span class="s2">&quot;BorutaDF&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;OutlierRemoverDF&quot;</span><span class="p">,</span> <span class="s2">&quot;BorutaPyWrapperDF&quot;</span><span class="p">,</span> <span class="s2">&quot;BorutaDF&quot;</span><span class="p">]</span>
 
 
 <span class="c1">#</span>
@@ -271,73 +270,22 @@
         <span class="k">return</span> <span class="mi">0</span></div>
 
 
-<span class="k">class</span> <span class="nc">_BorutaPyWrapperDF</span><span class="p">(</span>
-    <span class="n">_MetaEstimatorWrapperDF</span><span class="p">[</span><span class="n">BorutaPy</span><span class="p">],</span>
-    <span class="n">_NDArrayTransformerWrapperDF</span><span class="p">[</span><span class="n">BorutaPy</span><span class="p">],</span>
-    <span class="n">_ColumnSubsetTransformerWrapperDF</span><span class="p">[</span><span class="n">BorutaPy</span><span class="p">],</span>
-    <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
+<div class="viewcode-block" id="BorutaPyWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/extra/sklearndf.transformation.extra.BorutaPyWrapperDF.html#sklearndf.transformation.extra.BorutaPyWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">BorutaPyWrapperDF</span><span class="p">(</span>
+    <span class="n">MetaEstimatorWrapperDF</span><span class="p">[</span><span class="n">BorutaPy</span><span class="p">],</span>
+    <span class="n">NumpyTransformerWrapperDF</span><span class="p">[</span><span class="n">BorutaPy</span><span class="p">],</span>
+    <span class="n">ColumnSubsetTransformerWrapperDF</span><span class="p">[</span><span class="n">BorutaPy</span><span class="p">],</span>
 <span class="p">):</span>
-    <span class="k">def</span> <span class="nf">_get_features_out</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">support_</span><span class="p">]</span>
-
-
-<span class="c1"># noinspection PyAbstractClass,PyUnresolvedReferences</span>
-<div class="viewcode-block" id="BorutaDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/extra/sklearndf.transformation.extra.BorutaDF.html#sklearndf.transformation.extra.BorutaDF">[docs]</a><span class="nd">@df_estimator</span><span class="p">(</span><span class="n">df_wrapper_type</span><span class="o">=</span><span class="n">_BorutaPyWrapperDF</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">BorutaDF</span><span class="p">(</span><span class="n">TransformerDF</span><span class="p">,</span> <span class="n">BorutaPy</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Feature Selection with the Boruta method with dataframes as input and output.</span>
-
-
-<span class="sd">    Given a dataset and an estimator, the Boruta method selects the features that</span>
-<span class="sd">    perform better than noise for the problem. See `BorutaPy</span>
-<span class="sd">    &lt;https://github.com/scikit-learn-contrib/boruta_py&gt;`_.</span>
-
-<span class="sd">    :class:`BorutaDF` wraps :class:`BorutaPy</span>
-<span class="sd">    &lt;https://github.com/scikit-learn-contrib/boruta_py&gt;` with dataframes</span>
-<span class="sd">    as input and output.</span>
-
-<span class="sd">    The parameters are the parameters from the boruta :class:`BorutaPy`. For</span>
-<span class="sd">    convenience we list below the description of the parameters as they appear in</span>
-<span class="sd">    https://github.com/scikit-learn-contrib/boruta_py.</span>
-
-<span class="sd">    :param estimator: object</span>
-<span class="sd">        A supervised learning estimator, with a &#39;fit&#39; method that returns the</span>
-<span class="sd">        ``feature_importances_`` attribute. Important features must correspond to</span>
-<span class="sd">        high absolute values in the ``feature_importances_``.</span>
-<span class="sd">    :param n_estimators: int or string, default = 1000</span>
-<span class="sd">        If int sets the number of estimators in the chosen ensemble method.</span>
-<span class="sd">        If &#39;auto&#39; this is determined automatically based on the size of the</span>
-<span class="sd">        dataset. The other parameters of the used estimators need to be set</span>
-<span class="sd">        with initialisation.</span>
-<span class="sd">    :param perc: int, default = 100</span>
-<span class="sd">        Instead of the max we use the percentile defined by the user, to pick</span>
-<span class="sd">        our threshold for comparison between shadow and real features. The max</span>
-<span class="sd">        tend to be too stringent. This provides a finer control over this. The</span>
-<span class="sd">        lower perc is the more false positives will be picked as relevant but</span>
-<span class="sd">        also the less relevant features will be left out. The usual trade-off.</span>
-<span class="sd">        The default is essentially the vanilla Boruta corresponding to the max.</span>
-<span class="sd">    :param alpha: float, default = 0.05</span>
-<span class="sd">        Level at which the corrected p-values will get rejected in both</span>
-<span class="sd">        correction steps.</span>
-<span class="sd">    :param two_step: Boolean, default = True</span>
-<span class="sd">        If you want to use the original implementation of Boruta with Bonferroni</span>
-<span class="sd">        correction only set this to False.</span>
-<span class="sd">    :param max_iter: int, default = 100</span>
-<span class="sd">        The number of maximum iterations to perform.</span>
-<span class="sd">    :param random_state: int, RandomState instance or None; default=None</span>
-<span class="sd">        If int, random_state is the seed used by the random number generator;</span>
-<span class="sd">        If RandomState instance, random_state is the random number generator;</span>
-<span class="sd">        If None, the random number generator is the RandomState instance used</span>
-<span class="sd">        by ``np.random``.</span>
-<span class="sd">    :param verbose: int, default=0</span>
-<span class="sd">        Controls verbosity of output:</span>
-<span class="sd">        - 0: no output</span>
-<span class="sd">        - 1: displays iteration number</span>
-<span class="sd">        - 2: which features have been selected already</span>
+<span class="sd">    DF wrapper for :class:`~boruta.BorutaPy`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">pass</span></div>
+    <span class="k">def</span> <span class="nf">_get_features_out</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">support_</span><span class="p">]</span></div>
 
+
+<span class="n">BorutaDF</span> <span class="o">=</span> <span class="n">make_df_transformer</span><span class="p">(</span>
+    <span class="n">BorutaPy</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;BorutaDF&quot;</span><span class="p">,</span> <span class="n">base_wrapper</span><span class="o">=</span><span class="n">BorutaPyWrapperDF</span>
+<span class="p">)</span>
 
 <span class="n">__tracker</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
 </pre></div>
