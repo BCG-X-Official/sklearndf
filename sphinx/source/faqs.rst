@@ -36,5 +36,5 @@ Bibtex entry::
      title={sklearndf},
      author={FACET Team at BCG Gamma},
      year={2021},
-     note={Python package version 1.0.1)
+     note={Python package version 1.1.0}
      }
