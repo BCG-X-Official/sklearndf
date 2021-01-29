@@ -54,5 +54,4 @@ Submodules
    sklearndf.pipeline
    sklearndf.regression
    sklearndf.transformation
-   sklearndf.wrapper
 

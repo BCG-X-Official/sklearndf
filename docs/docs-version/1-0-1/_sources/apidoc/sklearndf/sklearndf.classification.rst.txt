@@ -84,5 +84,4 @@ Submodules
    :recursive:
 
    sklearndf.classification.extra
-   sklearndf.classification.wrapper
 

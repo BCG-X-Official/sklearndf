@@ -319,10 +319,6 @@
                             <a href="sklearndf.classification.extra.html">sklearndf.classification.extra</a>
                         </li>
                     
-                        <li class="">
-                            <a href="sklearndf.classification.wrapper.html">sklearndf.classification.wrapper</a>
-                        </li>
-                    
                     </ul>
                 </li>
             
@@ -342,12 +338,6 @@
             
                 <li class="">
                     <a href="../sklearndf.transformation.html">sklearndf.transformation</a>
-                </li>
-            
-          
-            
-                <li class="">
-                    <a href="../sklearndf.wrapper.html">sklearndf.wrapper</a>
                 </li>
             
           
@@ -389,7 +379,7 @@
 <h1>sklearndf.classification.LinearDiscriminantAnalysisDF<a class="headerlink" href="#sklearndf-classification-lineardiscriminantanalysisdf" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="sklearndf.classification.LinearDiscriminantAnalysisDF">
-<em class="property">class </em><code class="sig-prename descclassname">sklearndf.classification.</code><code class="sig-name descname">LinearDiscriminantAnalysisDF</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.classification.LinearDiscriminantAnalysisDF" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">sklearndf.classification.</code><code class="sig-name descname">LinearDiscriminantAnalysisDF</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/sklearndf/classification/_classification.html#LinearDiscriminantAnalysisDF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sklearndf.classification.LinearDiscriminantAnalysisDF" title="Permalink to this definition">¶</a></dt>
 <dd><p>Linear Discriminant Analysis</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -399,10 +389,10 @@ replicates all parameters and behaviours of class <a class="reference external" 
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Bases</dt>
-<dd class="field-odd"><p><a class="reference internal" href="wrapper/sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF.html#sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF" title="sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearDiscriminantAnalysisWrapperDF</span></code></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../sklearndf.ClassifierDF.html#sklearndf.ClassifierDF" title="sklearndf.ClassifierDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClassifierDF</span></code></a>, <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="(in scikit-learn v0.24)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></a></p>
 </dd>
 <dt class="field-even">Metaclasses</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.6/library/abc.html#abc.ABCMeta" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABCMeta</span></code></a>, <a class="reference internal" href="../wrapper/sklearndf.wrapper.EstimatorWrapperDFMeta.html#sklearndf.wrapper.EstimatorWrapperDFMeta" title="sklearndf.wrapper.EstimatorWrapperDFMeta"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatorWrapperDFMeta</span></code></a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.6/library/abc.html#abc.ABCMeta" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABCMeta</span></code></a></p>
 </dd>
 </dl>
 <p class="rubric">Method summary</p>
@@ -424,17 +414,11 @@ replicates all parameters and behaviours of class <a class="reference external" 
 <tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.fit_predict" title="sklearndf.classification.LinearDiscriminantAnalysisDF.fit_predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit_predict</span></code></a></p></td>
 <td><p>Fit this learner using the given inputs, then predict the outputs.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.fit_transform" title="sklearndf.classification.LinearDiscriminantAnalysisDF.fit_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit_transform</span></code></a></p></td>
-<td><p>Fit this transformer using the given inputs, then transform the inputs.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.from_fitted" title="sklearndf.classification.LinearDiscriminantAnalysisDF.from_fitted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_fitted</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.from_fitted" title="sklearndf.classification.LinearDiscriminantAnalysisDF.from_fitted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_fitted</span></code></a></p></td>
 <td><p>Make a new wrapped data frame estimator whose delegate is an estimator which has already been fitted.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.get_params" title="sklearndf.classification.LinearDiscriminantAnalysisDF.get_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_params</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.get_params" title="sklearndf.classification.LinearDiscriminantAnalysisDF.get_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_params</span></code></a></p></td>
 <td><p>Get the parameters for this estimator.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.inverse_transform" title="sklearndf.classification.LinearDiscriminantAnalysisDF.inverse_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverse_transform</span></code></a></p></td>
-<td><p>Inverse-transform the given inputs.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.predict" title="sklearndf.classification.LinearDiscriminantAnalysisDF.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a></p></td>
 <td><p>Predict outputs for the given inputs.</p></td>
@@ -452,7 +436,7 @@ replicates all parameters and behaviours of class <a class="reference external" 
 <td><p>Set the parameters of this estimator.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.transform" title="sklearndf.classification.LinearDiscriminantAnalysisDF.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a></p></td>
-<td><p>Transform the given inputs.</p></td>
+<td><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis.transform" title="(in scikit-learn v0.24)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.discriminant_analysis.LinearDiscriminantAnalysis.transform()</span></code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -466,32 +450,23 @@ replicates all parameters and behaviours of class <a class="reference external" 
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">COL_FEATURE_IN</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">COL_FEATURE_OUT</span></code></p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">COL_PREDICTION</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">COL_PREDICTION</span></code></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.classes_" title="sklearndf.classification.LinearDiscriminantAnalysisDF.classes_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">classes_</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.classes_" title="sklearndf.classification.LinearDiscriminantAnalysisDF.classes_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">classes_</span></code></a></p></td>
 <td><p>Get the classes predicted by this classifier.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.feature_names_in_" title="sklearndf.classification.LinearDiscriminantAnalysisDF.feature_names_in_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feature_names_in_</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.feature_names_in_" title="sklearndf.classification.LinearDiscriminantAnalysisDF.feature_names_in_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feature_names_in_</span></code></a></p></td>
 <td><p>The pandas column index with the names of the features used to fit this estimator.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.feature_names_original_" title="sklearndf.classification.LinearDiscriminantAnalysisDF.feature_names_original_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feature_names_original_</span></code></a></p></td>
-<td><p>A pandas series, mapping the output features resulting from the transformation to the original input features.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.feature_names_out_" title="sklearndf.classification.LinearDiscriminantAnalysisDF.feature_names_out_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feature_names_out_</span></code></a></p></td>
-<td><p>A pandas column index with the names of the features produced by this transformer</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.is_fitted" title="sklearndf.classification.LinearDiscriminantAnalysisDF.is_fitted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_fitted</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.is_fitted" title="sklearndf.classification.LinearDiscriminantAnalysisDF.is_fitted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_fitted</span></code></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if this object is fitted, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.n_outputs_" title="sklearndf.classification.LinearDiscriminantAnalysisDF.n_outputs_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_outputs_</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.n_outputs_" title="sklearndf.classification.LinearDiscriminantAnalysisDF.n_outputs_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_outputs_</span></code></a></p></td>
 <td><p>The number of outputs used to fit this estimator.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.native_estimator" title="sklearndf.classification.LinearDiscriminantAnalysisDF.native_estimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">native_estimator</span></code></a></p></td>
-<td><p>The native estimator that this wrapper delegates to.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.native_estimator" title="sklearndf.classification.LinearDiscriminantAnalysisDF.native_estimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">native_estimator</span></code></a></p></td>
+<td><p>The native estimator which this wrapper delegates to.</p></td>
 </tr>
 </tbody>
 </table>
@@ -590,28 +565,6 @@ of multiple outputs</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="sklearndf.classification.LinearDiscriminantAnalysisDF.fit_transform">
-<code class="sig-name descname">fit_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">fit_params</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.fit_transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fit this transformer using the given inputs, then transform the inputs.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>) – input data frame with observations as rows and features as columns</p></li>
-<li><p><strong>y</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/typing.html#typing.Optional" title="(in Python v3.6)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a>]) – an optional series or data frame with one or more outputs</p></li>
-<li><p><strong>fit_params</strong> – additional keyword parameters as required by specific
-transformer implementations</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a></p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the transformed inputs</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt id="sklearndf.classification.LinearDiscriminantAnalysisDF.from_fitted">
 <em class="property">classmethod </em><code class="sig-name descname">from_fitted</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">estimator</span></em>, <em class="sig-param"><span class="n">features_in</span></em>, <em class="sig-param"><span class="n">n_outputs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.from_fitted" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make a new wrapped data frame estimator whose delegate is an estimator which
@@ -619,7 +572,7 @@ has already been fitted.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>estimator</strong> (<em>~T_NativeEstimator</em>) – the fitted estimator</p></li>
+<li><p><strong>estimator</strong> (<em>~T_DelegateEstimator</em>) – the fitted estimator</p></li>
 <li><p><strong>features_in</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a>) – the column names of X used for fitting the estimator</p></li>
 <li><p><strong>n_outputs</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/functions.html#int" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the number of outputs in y used for fitting the estimator</p></li>
 </ul>
@@ -647,27 +600,6 @@ for any sub-estimators contained in this estimator</p>
 </dd>
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>a mapping of parameter names to their values</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="sklearndf.classification.LinearDiscriminantAnalysisDF.inverse_transform">
-<code class="sig-name descname">inverse_transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.inverse_transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Inverse-transform the given inputs.</p>
-<p>The inputs must have the same features as the inputs used to fit
-this transformer.
-The features can be provided in any order since they are identified by their
-column names.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>X</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>) – input data frame with observations as rows and features as columns</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a></p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the reverse-transformed inputs</p>
 </dd>
 </dl>
 </dd></dl>
@@ -790,22 +722,7 @@ predictions</p></li>
 <dl class="py method">
 <dt id="sklearndf.classification.LinearDiscriminantAnalysisDF.transform">
 <code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform the given inputs.</p>
-<p>The inputs must have the same features as the inputs used to fit
-this transformer.
-The features can be provided in any order since they are identified by their
-column names.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>X</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>) – input data frame with observations as rows and features as columns</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a></p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>the transformed inputs</p>
-</dd>
-</dl>
+<dd><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis.transform" title="(in scikit-learn v0.24)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.discriminant_analysis.LinearDiscriminantAnalysis.transform()</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
@@ -839,32 +756,6 @@ estimator.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="sklearndf.classification.LinearDiscriminantAnalysisDF.feature_names_original_">
-<em class="property">property </em><code class="sig-name descname">feature_names_original_</code><a class="headerlink" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.feature_names_original_" title="Permalink to this definition">¶</a></dt>
-<dd><p>A pandas series, mapping the output features resulting from the transformation
-to the original input features.</p>
-<p>The index of the resulting series consists of the names of the output features;
-the corresponding values are the names of the original input features.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="sklearndf.classification.LinearDiscriminantAnalysisDF.feature_names_out_">
-<em class="property">property </em><code class="sig-name descname">feature_names_out_</code><a class="headerlink" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.feature_names_out_" title="Permalink to this definition">¶</a></dt>
-<dd><p>A pandas column index with the names of the features produced by this
-transformer</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt id="sklearndf.classification.LinearDiscriminantAnalysisDF.is_fitted">
 <em class="property">property </em><code class="sig-name descname">is_fitted</code><a class="headerlink" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.is_fitted" title="Permalink to this definition">¶</a></dt>
 <dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if this object is fitted, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
@@ -892,10 +783,10 @@ transformer</p>
 <dl class="py method">
 <dt id="sklearndf.classification.LinearDiscriminantAnalysisDF.native_estimator">
 <em class="property">property </em><code class="sig-name descname">native_estimator</code><a class="headerlink" href="#sklearndf.classification.LinearDiscriminantAnalysisDF.native_estimator" title="Permalink to this definition">¶</a></dt>
-<dd><p>The native estimator that this wrapper delegates to.</p>
+<dd><p>The native estimator which this wrapper delegates to.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>~T_NativeEstimator</p>
+<dd class="field-odd"><p>~T_DelegateEstimator</p>
 </dd>
 </dl>
 </dd></dl>

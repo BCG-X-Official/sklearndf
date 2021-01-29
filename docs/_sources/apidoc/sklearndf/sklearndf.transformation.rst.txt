@@ -41,6 +41,7 @@ sklearndf.transformation
       LabelBinarizerDF
       LabelEncoderDF
       LatentDirichletAllocationDF
+      LinearDiscriminantAnalysisDF
       LocallyLinearEmbeddingDF
       MaxAbsScalerDF
       MinMaxScalerDF
@@ -105,5 +106,4 @@ Submodules
    :recursive:
 
    sklearndf.transformation.extra
-   sklearndf.transformation.wrapper
 

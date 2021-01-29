@@ -22,7 +22,6 @@ sklearndf.transformation.IsomapDF
       ~IsomapDF.from_fitted
       ~IsomapDF.get_params
       ~IsomapDF.inverse_transform
-      ~IsomapDF.reconstruction_error
       ~IsomapDF.set_params
       ~IsomapDF.transform
    
@@ -42,7 +41,6 @@ sklearndf.transformation.IsomapDF
       ~IsomapDF.is_fitted
       ~IsomapDF.n_outputs_
       ~IsomapDF.native_estimator
-      ~IsomapDF.training_data_
    
    
 

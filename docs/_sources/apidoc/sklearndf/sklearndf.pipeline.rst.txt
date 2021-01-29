@@ -39,14 +39,3 @@ sklearndf.pipeline
 
 
 
-
-==========
-Submodules
-==========
-.. autosummary::
-   :toctree: pipeline
-   :template: custom-module-template.rst
-   :recursive:
-
-   sklearndf.pipeline.wrapper
-
