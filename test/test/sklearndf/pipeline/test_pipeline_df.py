@@ -4,7 +4,6 @@ https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/tests/test_pipe
 """
 import shutil
 import time
-from distutils.version import LooseVersion
 from tempfile import mkdtemp
 from typing import Any, Dict, Mapping
 
@@ -119,11 +118,7 @@ def test_pipeline_df_memory(
     cache_dir = mkdtemp()
 
     try:
-        if LooseVersion(joblib.__version__) < LooseVersion("0.12"):
-            # Deal with change of API in joblib
-            memory = joblib.Memory(cachedir=cache_dir, verbose=10)
-        else:
-            memory = joblib.Memory(location=cache_dir, verbose=10)
+        memory = joblib.Memory(location=cache_dir, verbose=10)
 
         # Test with Transformer + SVC
         clf = SVCDF(probability=True, random_state=0)
