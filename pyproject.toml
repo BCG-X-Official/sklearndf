@@ -14,15 +14,17 @@ dist-name = "sklearndf"
 license = "Apache Software License v2.0"
 
 requires = [
+    # direct requirements of sklearndf
     "boruta         >= 0.3",
     "gamma-pytools  >= 1.0.2,<2",
-    "joblib         >=0.13,<1.1",
     "lightgbm       >= 3.0",
-    "matplotlib     >=3.0,<3.4",
     "numpy          >=1.16,<1.20",
     "packaging      >=20",
     "pandas         >=0.24,<1.2",
     "scikit-learn   >=0.21,<0.24",
+    # additional requirements of gamma-pytools
+    "joblib         >=0.13,<1.1",
+    "matplotlib     >=3.0,<3.4",
     "scipy          >=1.2,<1.6",
     "typing_inspect >=0.4,<0.6",
 ]
@@ -69,28 +71,32 @@ Documentation = "https://bcg-gamma.github.io/sklearndf/"
 Repository = "https://github.com/BCG-Gamma/sklearndf"
 
 [build.matrix.min]
+# direct requirements of sklearndf
 boruta         = "=0.3.*"
 gamma-pytools  = "=1.0.2"
-joblib         = "=0.13.*"
 lightgbm       = "=3.0.*"
-matplotlib     = "=3.0.*"
 numpy          = "=1.16.*"
 pandas         = "=0.24.*"
 python         = "=3.6.*"
 scikit-learn   =  "=0.21.*"
+# additional requirements of gamma-pytools
+joblib         = "=0.13.*"
+matplotlib     = "=3.0.*"
 scipy          = "=1.2.*"
 typing_inspect = "=0.4"
 
 [build.matrix.max]
+# direct requirements of sklearndf
 boruta         = ">=0.3"
 gamma-pytools  = "<2"
-joblib         = "=1.0.*"
 lightgbm       = ">=3.0.*"
-matplotlib     = "=3.3.*"
 numpy          = "=1.19.*"
 pandas         = "=1.1.*"
 python         = "=3.8.*"
 scikit-learn   =  "=0.23.*"
+# additional requirements of gamma-pytools
+joblib         = "=1.0.*"
+matplotlib     = "=3.3.*"
 scipy          = "=1.5.*"
 typing_inspect = "=0.6"
 
