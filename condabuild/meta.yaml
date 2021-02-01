@@ -41,7 +41,6 @@ test:
     - sklearndf.transformation.extra
   requires:
     - pytest=5.2.*
-    - pyyaml=5.*
   commands:
     - conda list
     - python -c 'import sklearndf;
