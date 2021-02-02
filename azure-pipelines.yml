@@ -299,7 +299,7 @@ stages:
           displayName: 'Use Python $(FACET_V_PYTHON_BUILD)'
 
         - checkout: self
-        - checkout: ${{ PYTOOLS_REPO }}
+        - checkout: ${{ variables['PYTOOLS_REPO'] }}
 
         - script: dir $(Build.SourcesDirectory)
 
