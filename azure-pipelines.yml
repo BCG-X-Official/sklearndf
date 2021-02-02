@@ -24,7 +24,6 @@ resources:
       endpoint: BCG-Gamma
       name: BCG-Gamma/pytools
       ref: develop
-      path: s/pytools_min
     - repository: pytools_latest
       type: github
       endpoint: BCG-Gamma
@@ -301,6 +300,7 @@ stages:
 
         - checkout: self
         - checkout: pytools_min
+          path: s/pytools_min
         - checkout: pytools_latest
 
         - script: dir $(Build.SourcesDirectory)
