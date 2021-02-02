@@ -19,11 +19,16 @@ schedules:
 
 resources:
   repositories:
-    - repository: pytools
+    - repository: pytools_min
       type: github
       endpoint: BCG-Gamma
       name: BCG-Gamma/pytools
-      ref: 1.1.x # todo - update to stable release
+      ref: develop
+    - repository: pytools_latest
+      type: github
+      endpoint: BCG-Gamma
+      name: BCG-Gamma/pytools
+      ref: 1.1.x
 
 variables:
   ${{ if not(startsWith(variables['Build.SourceBranch'], 'refs/pull/')) }}:
@@ -128,7 +133,7 @@ stages:
           displayName: 'use Python 3.7'
 
         - checkout: self
-        - checkout: pytools
+        - checkout: pytools_max
 
         - script: dir $(Build.SourcesDirectory)
 
@@ -138,14 +143,14 @@ stages:
             script: |
               set -e
               eval "$(conda shell.bash hook)"
-              cd $(System.DefaultWorkingDirectory)/sklearndf/
+              cd $(System.DefaultWorkingDirectory)/sklearndf
               export PYTHONPATH=$(System.DefaultWorkingDirectory)/sklearndf/src/
               conda env create -f environment.yml
               conda activate sklearndf-develop
               pip install flit
-              cd $(System.DefaultWorkingDirectory)/pytools/
+              cd $(System.DefaultWorkingDirectory)/pytools
               flit install -s
-              cd $(System.DefaultWorkingDirectory)/sklearndf/
+              cd $(System.DefaultWorkingDirectory)/sklearndf
               pip install pytest-azurepipelines
               coverage run -m pytest test/test/
               coverage xml
@@ -205,7 +210,7 @@ stages:
           displayName: 'Use Python $(FACET_V_PYTHON_BUILD)'
 
         - checkout: self
-        - checkout: pytools
+        - checkout: pytools_latest
 
         - script: dir $(Build.SourcesDirectory)
 
@@ -261,34 +266,32 @@ stages:
             FACET_V_PYTHON_BUILD: '=3.7.*'
             BUILD_SYSTEM: 'conda'
             PKG_DEPENDENCIES: 'default'
+            PYTOOLS_REPO: 'pytools_latest'
           minimum_dependencies_conda:
             FACET_V_PYTHON_BUILD: '=3.6.*'
             BUILD_SYSTEM: 'conda'
             PKG_DEPENDENCIES: 'min'
+            PYTOOLS_REPO: 'pytools_min'
           maximum_dependencies_conda:
             FACET_V_PYTHON_BUILD: '=3.8.*'
             BUILD_SYSTEM: 'conda'
             PKG_DEPENDENCIES: 'max'
-          unconstrained_dependencies_conda:
-            FACET_V_PYTHON_BUILD: '>=3.6'
-            PKG_DEPENDENCIES: 'unconstrained'
-            BUILD_SYSTEM: 'conda'
+            PYTOOLS_REPO: 'pytools_latest'
           default_dependencies_tox:
             FACET_V_PYTHON_BUILD: '=3.7.*'
             BUILD_SYSTEM: 'tox'
             PKG_DEPENDENCIES: 'default'
+            PYTOOLS_REPO: 'pytools_latest'
           minimum_dependencies_tox:
             FACET_V_PYTHON_BUILD: '=3.6.*'
             BUILD_SYSTEM: 'tox'
             PKG_DEPENDENCIES: 'min'
+            PYTOOLS_REPO: 'pytools_min'
           maximum_dependencies_tox:
             FACET_V_PYTHON_BUILD: '=3.8.*'
             BUILD_SYSTEM: 'tox'
             PKG_DEPENDENCIES: 'max'
-          unconstrained_dependencies_tox:
-            FACET_V_PYTHON_BUILD: '>=3.6'
-            PKG_DEPENDENCIES: 'unconstrained'
-            BUILD_SYSTEM: 'tox'      
+            PYTOOLS_REPO: 'pytools_latest'
       steps:
         - task: UsePythonVersion@0
           inputs:
@@ -296,7 +299,7 @@ stages:
           displayName: 'Use Python $(FACET_V_PYTHON_BUILD)'
 
         - checkout: self
-        - checkout: pytools
+        - checkout: $[PYTOOLS_REPO]
 
         - script: dir $(Build.SourcesDirectory)
 
@@ -391,7 +394,7 @@ stages:
             displayName: 'use Python 3.7'
 
           - checkout: self
-          - checkout: pytools
+          - checkout: pytools_latest
 
           - task: Bash@3
             inputs:
@@ -475,7 +478,7 @@ stages:
           displayName: 'Install the deploy SSH key'
 
         - checkout: self
-        - checkout: pytools
+        - checkout: pytools_latest
 
         - script: dir $(Build.SourcesDirectory)
 
