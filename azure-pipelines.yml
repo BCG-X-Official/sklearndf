@@ -37,7 +37,7 @@ variables:
   ${{ if startsWith(variables['Build.SourceBranch'], 'refs/pull/') }}:
     branchName: $[ replace(variables['System.PullRequest.SourceBranch'], 'refs/heads/', '') ]
   master_or_release: $[ or(startsWith(variables['branchName'], 'release'), eq(variables['branchName'], 'master')) ]
-  is_scheduled: $[ eq(variables['Build.Reason'], 'Schedule') ]
+  is_scheduled: $[ or(eq(variables['Build.Reason'], 'Schedule'), variables['forceScheduled']) ]
 
 stages:
   # check code quality first to fail fast (isort, flake8, black)
