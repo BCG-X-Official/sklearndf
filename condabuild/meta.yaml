@@ -47,7 +47,6 @@ test:
     - python -c 'import sklearndf;
                  import os;
                  assert sklearndf.__version__ == os.environ["PKG_VERSION"]'
-    - pytest -vs ${FACET_PATH}/pytools/test
     - pytest -vs ${FACET_PATH}/sklearndf/test
 
 about:
