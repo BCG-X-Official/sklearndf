@@ -19,7 +19,7 @@ To this end, *sklearndf* enhances scikit-learn's estimators as follows:
 
 .. Begin-Badges
 
-|pypi| |conda|
+|pypi| |conda| |azure_build|
 |python_versions| |code_style| |made_with_sphinx_doc| |License_badge|
 
 .. End-Badges
