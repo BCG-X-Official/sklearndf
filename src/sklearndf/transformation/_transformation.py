@@ -681,18 +681,33 @@ class _OneHotEncoderWrapperDF(_TransformerWrapperDF[OneHotEncoder], metaclass=AB
         :return: the series with index the column names of the output dataframe and
         values the corresponding input column names.
         """
-        return pd.Series(
-            index=pd.Index(
+        index = pd.Index(
                 self.native_estimator.get_feature_names(self.feature_names_in_)
-            ),
-            data=[
+            )
+        if self.drop == 'first':
+            data = [
                 column_original
                 for column_original, category in zip(
                     self.feature_names_in_, self.native_estimator.categories_
                 )
-                for _ in category
+                for _ in category[1:]
             ],
-        )
+        elif self.drop == 'if_binary':
+            # todo to be tested
+            data = [
+                column_original
+                for column_original, category in zip(
+                    self.feature_names_in_, self.native_estimator.categories_
+                )
+                for _ in category[1:] if len(category) == 2
+            ],
+        else:
+            data = [column_original for column_original, category in zip(
+                self.feature_names_in_, self.native_estimator.categories_
+            )
+                for _ in category
+            ]
+        return pd.Series(index=index, data=data )
 
 
 # noinspection PyAbstractClass
