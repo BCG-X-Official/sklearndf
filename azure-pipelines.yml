@@ -145,7 +145,7 @@ stages:
               flit install -s
               cd $(System.DefaultWorkingDirectory)/sklearndf/
               pytest \
-                 --cov facet \
+                 --cov sklearndf \
                  --cov-config "tox.ini" \
                  --cov-report=xml:coverage.xml --cov-report=html:htmlcov \
                  --junitxml pytest.xml \
