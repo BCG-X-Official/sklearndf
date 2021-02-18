@@ -691,23 +691,23 @@ class _OneHotEncoderWrapperDF(_TransformerWrapperDF[OneHotEncoder], metaclass=AB
                     self.feature_names_in_, self.native_estimator.categories_
                 )
                 for _ in category[1:]
-            ],
+            ]
         elif self.drop == 'if_binary':
-            # todo to be tested
-            data = [
-                column_original
-                for column_original, category in zip(
-                    self.feature_names_in_, self.native_estimator.categories_
-                )
-                for _ in category[1:] if len(category) == 2
-            ],
+            data = []
+            for column_original, category in zip(
+                    self.feature_names_in_, self.native_estimator.categories_):
+                if len(category) == 2:
+                    data.append(column_original)
+                else:
+                    for _ in category:
+                        data.append(column_original)
         else:
             data = [column_original for column_original, category in zip(
                 self.feature_names_in_, self.native_estimator.categories_
             )
                 for _ in category
             ]
-        return pd.Series(index=index, data=data )
+        return pd.Series(index=index, data=data)
 
 
 # noinspection PyAbstractClass
