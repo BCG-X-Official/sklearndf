@@ -688,6 +688,9 @@ class _OneHotEncoderWrapperDF(_TransformerWrapperDF[OneHotEncoder], metaclass=AB
 
         :return: the series with index the column names of the output dataframe and
         values the corresponding input column names.
+
+        Removes the first column of the categorical if argument drop='first' is given
+        Removes only the first categorical column of binary features if drop='if_binary'
         """
         index = pd.Index(
             self.native_estimator.get_feature_names(self.feature_names_in_)
