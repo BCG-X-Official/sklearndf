@@ -690,9 +690,9 @@ class _OneHotEncoderWrapperDF(_TransformerWrapperDF[OneHotEncoder], metaclass=AB
         values the corresponding input column names.
         """
         index = pd.Index(
-                self.native_estimator.get_feature_names(self.feature_names_in_)
-            )
-        if self.drop == 'first':
+            self.native_estimator.get_feature_names(self.feature_names_in_)
+        )
+        if self.drop == "first":
             data = [
                 column_original
                 for column_original, category in zip(
@@ -700,19 +700,22 @@ class _OneHotEncoderWrapperDF(_TransformerWrapperDF[OneHotEncoder], metaclass=AB
                 )
                 for _ in category[1:]
             ]
-        elif self.drop == 'if_binary':
+        elif self.drop == "if_binary":
             data = []
             for column_original, category in zip(
-                    self.feature_names_in_, self.native_estimator.categories_):
+                self.feature_names_in_, self.native_estimator.categories_
+            ):
                 if len(category) == 2:
                     data.append(column_original)
                 else:
                     for _ in category:
                         data.append(column_original)
         else:
-            data = [column_original for column_original, category in zip(
-                self.feature_names_in_, self.native_estimator.categories_
-            )
+            data = [
+                column_original
+                for column_original, category in zip(
+                    self.feature_names_in_, self.native_estimator.categories_
+                )
                 for _ in category
             ]
         return pd.Series(index=index, data=data)
