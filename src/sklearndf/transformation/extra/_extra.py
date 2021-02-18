@@ -4,11 +4,13 @@ Core implementation of :mod:`sklearndf.transformation.extra`
 
 import logging
 from abc import ABCMeta
-from typing import Any, Mapping, Optional, TypeVar, Union
+from typing import Optional, TypeVar, Union
 
 import pandas as pd
 from boruta import BorutaPy
 from sklearn.base import BaseEstimator
+
+from pytools.api import AllTracker, inheritdoc
 
 from ... import TransformerDF
 from ..._wrapper import _MetaEstimatorWrapperDF, df_estimator
@@ -18,17 +20,27 @@ log = logging.getLogger(__name__)
 
 __all__ = ["OutlierRemoverDF", "BorutaDF"]
 
+
 #
 # type variables
 #
 
 T_Self = TypeVar("T_Self")
 
+
+#
+# Ensure all symbols introduced below are included in __all__
+#
+
+__tracker = AllTracker(globals())
+
+
 #
 # Class definitions
 #
 
 
+@inheritdoc(match="[see superclass]")
 class OutlierRemoverDF(TransformerDF, BaseEstimator):
     """
     Remove outliers according to Tukey's method.
@@ -41,12 +53,6 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
       samples in the above explanation (defaults to 3.0 as per Tukey's definition of
       far outliers)
     """
-
-    def get_params(self, deep=True) -> Mapping[str, Any]:
-        return super().get_params(deep)
-
-    def set_params(self: T_Self, **kwargs) -> T_Self:
-        return super(**kwargs)
 
     def __init__(self, iqr_multiple: float = 3.0):
         super().__init__()
@@ -77,23 +83,30 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
         threshold_iqr: pd.Series = (q3 - q1) * self.iqr_multiple
         self.threshold_low_ = q1 - threshold_iqr
         self.threshold_high_ = q3 + threshold_iqr
-        self._features_original = pd.Series(index=X.columns, data=X.columns.values)
+        self._features_original = X.columns.to_series()
         return self
 
     # noinspection PyPep8Naming
     def transform(self, X: pd.DataFrame) -> pd.DataFrame:
         """
-        Return X where outliers are replaced by Nan.
+        Return ``X`` with outliers are replaced by ``NaN``.
 
-        :return: the dataframe X where outliers are replaced by Nan
+        :return: the ``X`` where outliers are replaced by ``NaN``
         """
         return X.where(cond=(X >= self.threshold_low_) & (X <= self.threshold_high_))
 
+    # noinspection PyPep8Naming
     def inverse_transform(self, X: pd.DataFrame) -> pd.DataFrame:
-        raise RuntimeError("inverse transform not possible")
+        """
+        Inverse transform is not implemented.
+
+        :raises NotImplementedError:
+        """
+        raise NotImplementedError("inverse transform is not implemented")
 
     @property
     def is_fitted(self) -> bool:
+        """[see superclass]"""
         return self.threshold_low_ is not None
 
     def _get_features_original(self) -> pd.Series:
@@ -172,3 +185,6 @@ class BorutaDF(TransformerDF, BorutaPy):
     """
 
     pass
+
+
+__tracker.validate()

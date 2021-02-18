@@ -4,22 +4,21 @@ https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/tests/test_pipe
 """
 import shutil
 import time
-from distutils.version import LooseVersion
 from tempfile import mkdtemp
 from typing import Any, Dict, Mapping
 
 import joblib
 import numpy as np
 import pandas as pd
-from sklearn import clone
-from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.feature_selection import f_classif
-from sklearn.utils.testing import (
+from numpy.testing import (
     assert_array_equal,
     assert_no_warnings,
     assert_raises,
     assert_raises_regex,
 )
+from sklearn import clone
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.feature_selection import f_classif
 
 from sklearndf import TransformerDF
 from sklearndf._wrapper import df_estimator
@@ -119,11 +118,7 @@ def test_pipeline_df_memory(
     cache_dir = mkdtemp()
 
     try:
-        if LooseVersion(joblib.__version__) < LooseVersion("0.12"):
-            # Deal with change of API in joblib
-            memory = joblib.Memory(cachedir=cache_dir, verbose=10)
-        else:
-            memory = joblib.Memory(location=cache_dir, verbose=10)
+        memory = joblib.Memory(location=cache_dir, verbose=10)
 
         # Test with Transformer + SVC
         clf = SVCDF(probability=True, random_state=0)

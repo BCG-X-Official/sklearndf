@@ -9,7 +9,7 @@ from typing import Any, Generic, List, Optional, Sequence, TypeVar, Union
 import pandas as pd
 from sklearn.base import BaseEstimator
 
-from pytools.api import inheritdoc
+from pytools.api import AllTracker, inheritdoc
 
 from .. import ClassifierDF, EstimatorDF, LearnerDF, RegressorDF, TransformerDF
 
@@ -22,6 +22,18 @@ T_FinalEstimatorDF = TypeVar("T_FinalEstimatorDF", bound=EstimatorDF)
 T_FinalLearnerDF = TypeVar("T_FinalLearnerDF", bound=LearnerDF)
 T_FinalRegressorDF = TypeVar("T_FinalRegressorDF", bound=RegressorDF)
 T_FinalClassifierDF = TypeVar("T_FinalClassifierDF", bound=ClassifierDF)
+
+
+#
+# Ensure all symbols introduced below are included in __all__
+#
+
+__tracker = AllTracker(globals())
+
+
+#
+# Class definitions
+#
 
 
 @inheritdoc(match="[see superclass]")
@@ -347,3 +359,6 @@ class ClassifierPipelineDF(
         return self.classifier.decision_function(
             self._pre_transform(X), **predict_params
         )
+
+
+__tracker.validate()
