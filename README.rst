@@ -19,7 +19,7 @@ To this end, *sklearndf* enhances scikit-learn's estimators as follows:
 
 .. Begin-Badges
 
-|pypi| |conda|
+|pypi| |conda| |azure_build| |azure_code_cov|
 |python_versions| |code_style| |made_with_sphinx_doc| |License_badge|
 
 .. End-Badges
@@ -251,7 +251,7 @@ or have a look at
 .. |azure_build| image:: https://dev.azure.com/gamma-facet/facet/_apis/build/status/BCG-Gamma.sklearndf?repoName=BCG-Gamma%2Fsklearndf&branchName=develop
    :target: https://dev.azure.com/gamma-facet/facet/_build?definitionId=8&_a=summary
 
-.. |azure_code_cov| image:: https://img.shields.io/azure-devops/coverage/gamma-facet/facet/_build?definitionId=8.svg
+.. |azure_code_cov| image:: https://img.shields.io/azure-devops/coverage/gamma-facet/facet/8/develop.svg
    :target: https://dev.azure.com/gamma-facet/facet/_build?definitionId=8&_a=summary
 
 .. |python_versions| image:: https://img.shields.io/badge/python-3.6|3.7|3.8-blue.svg
