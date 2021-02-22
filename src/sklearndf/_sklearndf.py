@@ -216,6 +216,7 @@ class LearnerDF(EstimatorDF, metaclass=ABCMeta):
         :param sample_weight: optional series of scalar weights, for calculating the
             resulting score as the weighted mean of the scores for the individual
             predictions
+        :return: the score
         """
         pass
 
