@@ -6,8 +6,7 @@ import warnings
 
 from pytools.api import AllTracker
 
-from ... import RegressorDF
-from ..._wrapper import _RegressorWrapperDF, df_estimator
+from ...wrapper import make_df_regressor
 
 # since we install LGBM via conda, the warning about the Clang compiler is irrelevant
 warnings.filterwarnings("ignore", message=r"Starting from version 2\.2\.1")
@@ -35,21 +34,12 @@ __tracker = AllTracker(globals())
 # Class definitions
 #
 
+LGBMRegressorDF = make_df_regressor(LGBMRegressor)
+
 
 #
-# lightgbm
+# validate __all__
 #
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_RegressorWrapperDF)
-class LGBMRegressorDF(RegressorDF, LGBMRegressor):
-    """
-    Wraps :class:`lightgbm.sklearn.LGBMRegressor`; accepts and returns data frames.
-    """
-
-    pass
-
 
 __tracker.validate()
 

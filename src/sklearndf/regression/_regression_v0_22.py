@@ -10,10 +10,8 @@ from sklearn.ensemble import StackingRegressor
 
 from pytools.api import AllTracker
 
-from .. import RegressorDF
-from .._wrapper import _StackingRegressorWrapperDF, df_estimator
-
-# noinspection PyProtectedMember
+from ..wrapper import make_df_regressor
+from .wrapper import StackingRegressorWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -39,17 +37,14 @@ __tracker = AllTracker(globals())
 # Class definitions
 #
 
+StackingRegressorDF = make_df_regressor(
+    StackingRegressor, base_wrapper=StackingRegressorWrapperDF
+)
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_StackingRegressorWrapperDF)
-class StackingRegressorDF(RegressorDF, StackingRegressor):
-    """
-    Wraps :class:`sklearn.ensemble._stacking.StackingRegressor`; accepts and
-     returns data frames.
-    """
 
-    pass
-
+#
+# validate __all__
+#
 
 __tracker.validate()
 
