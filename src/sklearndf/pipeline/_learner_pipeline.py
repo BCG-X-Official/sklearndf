@@ -217,14 +217,14 @@ class LearnerPipelineDF(
 
     # noinspection PyPep8Naming
     def predict(
-        self, X: pd.DataFrame, **predict_params
+        self, X: pd.DataFrame, **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
         return self.final_estimator.predict(self._pre_transform(X), **predict_params)
 
     # noinspection PyPep8Naming
     def fit_predict(
-        self, X: pd.DataFrame, y: pd.Series, **fit_params
+        self, X: pd.DataFrame, y: pd.Series, **fit_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
         return self.final_estimator.fit_predict(
@@ -334,14 +334,14 @@ class ClassifierPipelineDF(
 
     # noinspection PyPep8Naming
     def predict_proba(
-        self, X: pd.DataFrame, **predict_params
+        self, X: pd.DataFrame, **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """[see superclass]"""
         return self.classifier.predict_proba(self._pre_transform(X), **predict_params)
 
     # noinspection PyPep8Naming
     def predict_log_proba(
-        self, X: pd.DataFrame, **predict_params
+        self, X: pd.DataFrame, **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """[see superclass]"""
         return self.classifier.predict_log_proba(
@@ -350,7 +350,7 @@ class ClassifierPipelineDF(
 
     # noinspection PyPep8Naming
     def decision_function(
-        self, X: pd.DataFrame, **predict_params
+        self, X: pd.DataFrame, **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
         return self.classifier.decision_function(

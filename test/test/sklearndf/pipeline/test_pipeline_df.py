@@ -54,7 +54,7 @@ class NoTransformer(NoFit):
     """
 
     # noinspection PyPep8Naming
-    def fit(self, X, y=None, **fit_params) -> "NoTransformer":
+    def fit(self, X, y=None, **fit_params: Any) -> "NoTransformer":
         return self
 
     def get_params(self, deep: bool = False) -> Dict[str, Any]:
@@ -88,7 +88,7 @@ class DummyTransformer(Transformer):
         super().__init__(a, b)
 
     # noinspection PyPep8Naming,PyAttributeOutsideInit
-    def fit(self, X, y=None, **fit_params) -> "DummyTransformer":
+    def fit(self, X, y=None, **fit_params: Any) -> "DummyTransformer":
         self.means_: np.ndarray = np.mean(X, axis=0)
         # store timestamp to figure out whether the result of 'fit' has been
         # cached or not

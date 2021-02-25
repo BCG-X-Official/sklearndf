@@ -130,7 +130,7 @@ class EstimatorWrapperDF(
 
     __ARG_FITTED_DELEGATE_CONTEXT = "__EstimatorWrapperDF_fitted"
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         """
         :param args: positional arguments to use when initializing a new new delegate
             estimator
@@ -158,7 +158,7 @@ class EstimatorWrapperDF(
 
         self._validate_delegate_estimator()
 
-    def __new__(cls: Type[T], *args, **kwargs) -> T:
+    def __new__(cls: Type[T], *args, **kwargs: Any) -> T:
         if not hasattr(cls, "__wrapped__"):
             raise TypeError(f"cannot instantiate abstract wrapper class {cls.__name__}")
         else:
@@ -203,14 +203,14 @@ class EstimatorWrapperDF(
             }
         )
 
-    def get_params(self, deep=True) -> Mapping[str, Any]:
+    def get_params(self, deep: bool = True) -> Mapping[str, Any]:
         """[see superclass]"""
         return self._native_estimator.get_params(deep=deep)
 
-    def set_params(self: T_Self, **kwargs) -> T_Self:
+    def set_params(self: T_Self, **params: Any) -> T_Self:
         """[see superclass]"""
         self: EstimatorWrapperDF  # support type hinting in PyCharm
-        self._native_estimator.set_params(**kwargs)
+        self._native_estimator.set_params(**params)
         return self
 
     # noinspection PyPep8Naming
@@ -218,7 +218,7 @@ class EstimatorWrapperDF(
         self: T_Self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
-        **fit_params,
+        **fit_params: Any,
     ) -> T_Self:
         """[see superclass]"""
 
@@ -409,7 +409,7 @@ class TransformerWrapperDF(
 
     # noinspection PyPep8Naming
     def fit_transform(
-        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params
+        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params: Any
     ) -> pd.DataFrame:
         """[see superclass]"""
         self._reset_fit()
@@ -506,7 +506,7 @@ class LearnerWrapperDF(
 
     # noinspection PyPep8Naming
     def predict(
-        self, X: pd.DataFrame, **predict_params
+        self, X: pd.DataFrame, **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
         self._check_parameter_types(X, None)
@@ -521,7 +521,7 @@ class LearnerWrapperDF(
 
     # noinspection PyPep8Naming
     def fit_predict(
-        self, X: pd.DataFrame, y: pd.Series, **fit_params
+        self, X: pd.DataFrame, y: pd.Series, **fit_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
 
@@ -632,7 +632,7 @@ class ClassifierWrapperDF(
 
     # noinspection PyPep8Naming
     def predict_proba(
-        self, X: pd.DataFrame, **predict_params
+        self, X: pd.DataFrame, **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """[see superclass]"""
 
@@ -650,7 +650,7 @@ class ClassifierWrapperDF(
 
     # noinspection PyPep8Naming
     def predict_log_proba(
-        self, X: pd.DataFrame, **predict_params
+        self, X: pd.DataFrame, **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """[see superclass]"""
 
@@ -668,7 +668,7 @@ class ClassifierWrapperDF(
 
     # noinspection PyPep8Naming
     def decision_function(
-        self, X: pd.DataFrame, **predict_params
+        self, X: pd.DataFrame, **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
 
@@ -1052,7 +1052,7 @@ def _make_df_wrapper_class(
     class WrapperDF(base_wrapper):
         # we need to create this __init__ method in order to apply the signature
         # of the native estimator's __init__ method
-        def __init__(self, *args, **kwargs) -> None:
+        def __init__(self, *args, **kwargs: Any) -> None:
             super().__init__(*args, **kwargs)
 
         def __reduce__(
@@ -1073,6 +1073,15 @@ def _make_df_wrapper_class(
     # set the name
     WrapperDF.__name__ = WrapperDF.__qualname__ = name
 
+    # add link to the wrapped class, for use in python module 'inspect'
+    WrapperDF.__wrapped__ = native_estimator
+
+    # set the module to this module's name
+    WrapperDF.__module__ = __name__
+
+    # … but do not keep the docstring of __init__
+    WrapperDF.__init__.__doc__ = None
+
     # mirror all attributes of the wrapped sklearn class, as long
     # as they are not inherited from the wrapper base class
     _mirror_attributes(
@@ -1081,27 +1090,19 @@ def _make_df_wrapper_class(
         wrapper_module=native_estimator.__module__,
     )
 
-    # add link to the wrapped class, for use in python module 'inspect'
-    WrapperDF.__wrapped__ = native_estimator
-
     # adopt the initializer signature of the wrapped sklearn estimator
     _update_wrapper(
         wrapper=WrapperDF.__init__,
         wrapped=native_estimator.__init__,
         wrapper_module=native_estimator.__module__,
+        wrapper_parent=name,
     )
-
-    # set the module to this module's name
-    WrapperDF.__module__ = __name__
 
     # adopt the class docstring of the wrapped sklearn estimator …
     _update_class_docstring(
         df_estimator_type=WrapperDF,
         sklearn_native_estimator_type=native_estimator,
     )
-
-    # … but do not keep the docstring of __init__
-    WrapperDF.__init__.__doc__ = None
 
     return WrapperDF
 
@@ -1128,6 +1129,7 @@ def _mirror_attributes(
     wrapper_module: str,
 ) -> None:
 
+    wrapper_name = wrapper.__name__
     wrapper_attributes: Set[str] = set(dir(wrapper))
 
     for name, member in vars(native_estimator).items():
@@ -1137,6 +1139,7 @@ def _mirror_attributes(
 
         alias = _make_alias(
             module=wrapper_module,
+            class_=wrapper_name,
             name=name,
             delegate_cls=native_estimator,
             delegate=member,
@@ -1148,10 +1151,12 @@ def _mirror_attributes(
             setattr(wrapper, name, alias)
 
 
-def _make_alias(module: str, name: str, delegate_cls: type, delegate: T) -> Optional[T]:
+def _make_alias(
+    module: str, class_: str, name: str, delegate_cls: type, delegate: T
+) -> Optional[T]:
     def _make_forwarder() -> callable:
         # noinspection PyShadowingNames
-        def _forwarder(self, *args, **kwargs) -> Any:
+        def _forwarder(self, *args, **kwargs: Any) -> Any:
             return delegate(self._native_estimator, *args, **kwargs)
 
         return _forwarder
@@ -1161,7 +1166,12 @@ def _make_alias(module: str, name: str, delegate_cls: type, delegate: T) -> Opti
 
     if inspect.isfunction(delegate):
         function = _make_forwarder()
-        _update_wrapper(wrapper=function, wrapped=delegate, wrapper_module=module)
+        _update_wrapper(
+            wrapper=function,
+            wrapped=delegate,
+            wrapper_module=module,
+            wrapper_parent=class_,
+        )
         function.__doc__ = f"See :meth:`{full_name}`"
         return function
     elif inspect.isdatadescriptor(delegate):
@@ -1176,11 +1186,18 @@ def _make_alias(module: str, name: str, delegate_cls: type, delegate: T) -> Opti
         return None
 
 
-def _update_wrapper(wrapper: Any, wrapped: Any, wrapper_module: str) -> None:
-    updated = update_wrapper(
-        wrapper, wrapped, assigned=("__name__", "__qualname__", "__annotations__")
-    )
+def _update_wrapper(
+    wrapper: Any,
+    wrapped: Any,
+    wrapper_module: str,
+    wrapper_parent: str,
+) -> None:
+    updated = update_wrapper(wrapper, wrapped, assigned=("__name__", "__annotations__"))
     updated.__module__ = wrapper_module
+    if wrapper_parent:
+        updated.__qualname__ = f"{wrapper_parent}.{updated.__name__}"
+    else:
+        updated.__qualname__ = updated.__name__
 
 
 def _update_class_docstring(
