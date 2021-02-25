@@ -16,7 +16,7 @@ license = "Apache Software License v2.0"
 requires = [
     # direct requirements of sklearndf
     "boruta         >= 0.3",
-    "gamma-pytools  >1.0.1,<2",
+    "gamma-pytools  >=1.0.2rc0,<2",
     "lightgbm       >= 3.0",
     "numpy          >=1.16,<1.21",
     "packaging      >=20",
