@@ -88,7 +88,7 @@ typing_inspect = "=0.4"
 [build.matrix.max]
 # direct requirements of sklearndf
 boruta         = ">=0.3"
-gamma-pytools  = "<2"
+gamma-pytools  = ">=1.1.0rc0,<2"
 lightgbm       = ">=3.0"
 numpy          = "<1.21"
 pandas         = "<1.3"
