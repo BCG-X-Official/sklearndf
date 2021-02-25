@@ -9,17 +9,20 @@ def test_docstrings() -> None:
     assert DocValidator(
         root_dir="src",
         exclude_from_parameter_validation=(
-            "|".join(
+            r"sklearndf\.(?:"
+            + "|".join(
                 f"(?:{pattern})"
                 for pattern in (
-                    (
-                        r"sklearndf\.(?:classification|regression|transformation)\."
-                        r"(?!extra\.).*"
-                    ),
-                    r"sklearndf\.(?:classification|regression)\.extra\.LGBM.*",
-                    r"sklearndf\.transformation\.extra\.Boruta.*",
-                    r"sklearndf\.pipeline\.(PipelineDF|FeatureUnionDF)\..*",
+                    # generated classes, except in the '.extra' subpackages
+                    r"(?:classification|regression|transformation)\.(?!extra\.).*",
+                    # LGBM estimators in the '.extra' packages
+                    r"(?:classification|regression)\.extra\.LGBM.*",
+                    # BorutaDF
+                    r"transformation\.extra\.BorutaDF.*",
+                    # scikit-learn pipeline classes
+                    r"pipeline\.(PipelineDF|FeatureUnionDF).*",
                 )
             )
+            + ")"
         ),
     ).validate_docstrings(), "docstrings are valid"
