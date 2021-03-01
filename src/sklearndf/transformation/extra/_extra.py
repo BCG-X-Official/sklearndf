@@ -3,7 +3,7 @@ Core implementation of :mod:`sklearndf.transformation.extra`
 """
 
 import logging
-from typing import Optional, TypeVar, Union
+from typing import Any, Optional, TypeVar, Union
 
 import pandas as pd
 from boruta import BorutaPy
@@ -47,13 +47,14 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
     A sample is considered an outlier if it is outside the range
     :math:`[Q_1 - iqr\\_ multiple(Q_3-Q_1), Q_3 + iqr\\_ multiple(Q_3-Q_1)]`
     where :math:`Q_1` and :math:`Q_3` are the lower and upper quartiles.
-
-    :param iqr_multiple: the multiple used to define the range of non-outlier
-      samples in the above explanation (defaults to 3.0 as per Tukey's definition of
-      far outliers)
     """
 
-    def __init__(self, iqr_multiple: float = 3.0):
+    def __init__(self, iqr_multiple: float = 3.0) -> None:
+        """
+        :param iqr_multiple: the multiple used to define the range of non-outlier
+          samples in the above explanation (defaults to 3.0 as per Tukey's definition of
+          far outliers)
+        """
         super().__init__()
         if iqr_multiple < 0.0:
             raise ValueError(f"arg iqr_multiple is negative: {iqr_multiple}")
@@ -67,12 +68,15 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
         self: T_Self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
-        **fit_params,
+        **fit_params: Any,
     ) -> T_Self:
         """
-        Fit the transformer.
+        Fit this transformer, establishing the thresholds for outlier removal.
 
-        :return: the fitted transformer
+        :param X: input data frame with observations as rows and features as columns
+        :param y: an optional series or data frame with one or more outputs
+        :param fit_params: additional fit parameters (ignored)
+        :return: ``self``
         """
 
         self: OutlierRemoverDF  # support type hinting in PyCharm
@@ -90,15 +94,18 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
         """
         Return ``X`` with outliers are replaced by ``NaN``.
 
-        :return: the ``X`` where outliers are replaced by ``NaN``
+        :param X: input data frame with observations as rows and features as columns
+        :return: the input data, with outliers replaced by ``NaN``
         """
         return X.where(cond=(X >= self.threshold_low_) & (X <= self.threshold_high_))
 
     # noinspection PyPep8Naming
     def inverse_transform(self, X: pd.DataFrame) -> pd.DataFrame:
         """
-        Inverse transform is not implemented.
+        The inverse transform of outlier removal is not implemented.
 
+        :param X: input data frame with observations as rows and features as columns
+        :return: `n/a` (never returns)
         :raises NotImplementedError:
         """
         raise NotImplementedError("inverse transform is not implemented")
