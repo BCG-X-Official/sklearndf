@@ -259,7 +259,7 @@ class ColumnTransformerWrapperDF(
     def _validate_delegate_estimator(self) -> None:
         column_transformer: ColumnTransformer = self.native_estimator
 
-        if column_transformer.remainder != "drop":
+        if column_transformer.remainder != ColumnTransformerWrapperDF.__DROP:
             raise ValueError(
                 f"unsupported value for arg remainder: ({column_transformer.remainder})"
             )
@@ -291,21 +291,13 @@ class ColumnTransformerWrapperDF(
         values the corresponding input column names.
         """
 
-        def _features_original(df_transformer: Union[TransformerDF, str]) -> pd.Series:
-            if df_transformer == ColumnTransformerWrapperDF.__DROP:
-                return pd.Series()
-
-            else:
-                df_transformer: TransformerDF
-                return df_transformer.feature_names_original_
-
         return reduce(
             lambda x, y: x.append(y),
             (
                 (
                     pd.Series(index=columns, data=columns)
                     if df_transformer == ColumnTransformerWrapperDF.__PASSTHROUGH
-                    else _features_original(df_transformer)
+                    else df_transformer.feature_names_original_
                 )
                 for _, df_transformer, columns in self.native_estimator.transformers_
                 if (
