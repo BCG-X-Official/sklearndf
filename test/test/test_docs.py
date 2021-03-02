@@ -5,7 +5,7 @@ Test docstrings.
 from pytools.api import DocValidator
 
 
-def test_docstrings() -> None:
+def test_doc() -> None:
     assert DocValidator(
         root_dir="src",
         exclude_from_parameter_validation=(
@@ -25,4 +25,4 @@ def test_docstrings() -> None:
             )
             + ")"
         ),
-    ).validate_docstrings(), "docstrings are valid"
+    ).validate_doc(), "docstrings and type hints are valid"
