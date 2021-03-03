@@ -683,15 +683,11 @@ class _OneHotEncoderWrapperDF(_TransformerWrapperDF[OneHotEncoder], metaclass=AB
             raise NotImplementedError("sparse matrices not supported; use sparse=False")
 
     def _get_features_original(self) -> pd.Series:
-        """
-        Return the series mapping output column names to original columns names.
+        # Return the series mapping output column names to original column names.
+        #
+        # Remove 1st category column if argument drop == 'first'
+        # Remove 1st category column only of binary features if arg drop == 'if_binary'
 
-        :return: the series with index the column names of the output dataframe and
-        values the corresponding input column names.
-
-        Removes the first column of the categorical if argument drop='first' is given
-        Removes only the first categorical column of binary features if drop='if_binary'
-        """
         feature_names_out = pd.Index(
             self.native_estimator.get_feature_names(self.feature_names_in_)
         )
