@@ -1,4 +1,5 @@
-from typing import Type, cast
+import itertools
+from typing import Optional, Type, cast
 
 import numpy as np
 import pandas as pd
@@ -7,7 +8,7 @@ import sklearn
 from pandas.testing import assert_frame_equal
 from sklearn.base import BaseEstimator
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import Normalizer
+from sklearn.preprocessing import Normalizer, OneHotEncoder
 
 import sklearndf.transformation
 from sklearndf import TransformerDF
@@ -162,3 +163,37 @@ def test_outlier_remover(df_outlier: pd.DataFrame) -> None:
         }
     )
     assert_frame_equal(df_transformed, df_transformed_expected)
+
+
+@pytest.fixture
+def test_data_categorical() -> pd.DataFrame:
+    return pd.DataFrame(
+        data=[
+            ["yes", "red", "child"],
+            ["yes", "blue", "father"],
+            ["no", "green", "mother"],
+        ],
+        columns=["a", "b", "c"],
+    )
+
+
+@pytest.mark.parametrize(
+    argnames=["drop"],
+    argvalues=itertools.product((None, "if_binary", "first")),
+)
+def test_one_hot_encoding(drop: Optional, test_data_categorical: pd.DataFrame):
+
+    encoder = OneHotEncoder(drop=drop)
+    encoderdf = OneHotEncoderDF(drop=drop, sparse=False)
+
+    # sklearn version
+    y_transformed = encoder.fit_transform(test_data_categorical).toarray()
+
+    # sklearndf version
+    y_transformed_df = encoderdf.fit_transform(test_data_categorical)
+
+    assert np.array_equal(y_transformed, y_transformed_df.values), (
+        f"Different transformation results! "
+        f"sklearn: {y_transformed} "
+        f"sklearndf: {y_transformed_df.values}"
+    )

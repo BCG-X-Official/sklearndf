@@ -51,6 +51,15 @@ def test_imputer(
     test_data_y: pd.DataFrame,
     test_data_x_with_all_nan: pd.DataFrame,
 ) -> None:
+    """
+    uses the combinations of arguments from @pytest.mark.parametrize
+    :param imputer_cls: uses
+    :param add_indicator:
+    :param test_data_x: fixtures no need to be added in the function calls
+    :param test_data_y: fixtures no need to be added in the function calls
+    :param test_data_x_with_all_nan: fixtures no need to be added in the function calls
+    :return:
+    """
     imputerdf = imputer_cls(add_indicator=add_indicator)
     imputer_cls_orig = type(imputerdf.native_estimator)
 
