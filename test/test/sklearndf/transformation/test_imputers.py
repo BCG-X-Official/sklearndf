@@ -52,12 +52,13 @@ def test_imputer(
     test_data_x_with_all_nan: pd.DataFrame,
 ) -> None:
     """
-    uses the combinations of arguments from @pytest.mark.parametrize
-    :param imputer_cls: uses
-    :param add_indicator:
-    :param test_data_x: fixtures no need to be added in the function calls
-    :param test_data_y: fixtures no need to be added in the function calls
-    :param test_data_x_with_all_nan: fixtures no need to be added in the function calls
+    Test imputer classes using the combinations of arguments from ``@pytest.mark.parametrize``
+    
+    :param imputer_cls: the imputer class to test
+    :param add_indicator: whether to add an indicator column
+    :param test_data_x: data used to fit the imputer
+    :param test_data_y: data to be transformed by the fitted imputer
+    :param test_data_x_with_all_nan: alternative data used to fit the imputer, including NaN values
     :return:
     """
     imputerdf = imputer_cls(add_indicator=add_indicator)
