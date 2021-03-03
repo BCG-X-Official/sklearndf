@@ -121,7 +121,6 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         *,
-        feature_sequence: Optional[pd.Index] = None,
         sample_weight: Optional[pd.Series] = None,
         **fit_params,
     ) -> T_Self:
@@ -130,8 +129,6 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
 
         :param X: input data frame with observations as rows and features as columns
         :param y: an optional series or data frame with one or more outputs
-        :param feature_sequence: the order in which features should be passed to the
-            final estimator (optional)
         :param sample_weight: sample weights for observations, to be passed to the
             final estimator (optional)
         :param fit_params: additional keyword parameters as required by specific
@@ -141,22 +138,6 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
         self: _EstimatorPipelineDF  # support type hinting in PyCharm
 
         X_preprocessed: pd.DataFrame = self._pre_fit_transform(X, y, **fit_params)
-
-        if feature_sequence is not None:
-            if not feature_sequence.is_unique:
-                raise ValueError("arg feature_sequence contains duplicate values")
-            features = X_preprocessed.columns
-            if not features.is_unique:
-                raise ValueError(
-                    "arg X has columns with duplicate names after preprocessing"
-                )
-            features_reordered = feature_sequence.intersection(features, sort=False)
-            if len(features_reordered) < len(features):
-                raise ValueError(
-                    "arg feature_sequence misses features: "
-                    f"{', '.join(features.difference(feature_sequence))}"
-                )
-            X_preprocessed = X_preprocessed.reindex(columns=features_reordered)
 
         if sample_weight is None:
             self.final_estimator.fit(X_preprocessed, y, **fit_params)
