@@ -162,3 +162,62 @@ def test_outlier_remover(df_outlier: pd.DataFrame) -> None:
         }
     )
     assert_frame_equal(df_transformed, df_transformed_expected)
+
+
+def test_one_hot_encoding() -> None:
+    test_data_categorical = pd.DataFrame(
+        data=[
+            ["yes", "red", "child"],
+            ["yes", "blue", "father"],
+            ["no", "green", "mother"],
+        ],
+        columns=["a", "b", "c"],
+    )
+
+    assert_frame_equal(
+        OneHotEncoderDF(drop=None, sparse=False).fit_transform(test_data_categorical),
+        pd.DataFrame(
+            {
+                "a_no": [0.0, 0.0, 1.0],
+                "a_yes": [1.0, 1.0, 0.0],
+                "b_blue": [0.0, 1.0, 0.0],
+                "b_green": [0.0, 0.0, 1.0],
+                "b_red": [1.0, 0.0, 0.0],
+                "c_child": [1.0, 0.0, 0.0],
+                "c_father": [0.0, 1.0, 0.0],
+                "c_mother": [0.0, 0.0, 1.0],
+            }
+        ).rename_axis(columns="feature_out"),
+    )
+
+    assert_frame_equal(
+        OneHotEncoderDF(drop="if_binary", sparse=False).fit_transform(
+            test_data_categorical
+        ),
+        pd.DataFrame(
+            {
+                "a_yes": [1.0, 1.0, 0.0],
+                "b_blue": [0.0, 1.0, 0.0],
+                "b_green": [0.0, 0.0, 1.0],
+                "b_red": [1.0, 0.0, 0.0],
+                "c_child": [1.0, 0.0, 0.0],
+                "c_father": [0.0, 1.0, 0.0],
+                "c_mother": [0.0, 0.0, 1.0],
+            }
+        ).rename_axis(columns="feature_out"),
+    )
+
+    assert_frame_equal(
+        OneHotEncoderDF(drop="first", sparse=False).fit_transform(
+            test_data_categorical
+        ),
+        pd.DataFrame(
+            {
+                "a_yes": [1.0, 1.0, 0.0],
+                "b_green": [0.0, 0.0, 1.0],
+                "b_red": [1.0, 0.0, 0.0],
+                "c_father": [0.0, 1.0, 0.0],
+                "c_mother": [0.0, 0.0, 1.0],
+            }
+        ).rename_axis(columns="feature_out"),
+    )
