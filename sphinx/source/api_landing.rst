@@ -72,3 +72,5 @@ estimators, most notably :class:`.BorutaDF`,
 :class:`.LGBMClassifierDF`.
 
 All `sklearndf` estimators are fully type hinted.
+
+Please see the :ref:`release notes<release-notes>` for recent API updates and bug fixes.
