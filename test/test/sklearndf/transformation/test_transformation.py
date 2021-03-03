@@ -1,5 +1,4 @@
-import itertools
-from typing import Optional, Type, cast
+from typing import Type, cast
 
 import numpy as np
 import pandas as pd
@@ -8,7 +7,7 @@ import sklearn
 from pandas.testing import assert_frame_equal
 from sklearn.base import BaseEstimator
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import Normalizer, OneHotEncoder
+from sklearn.preprocessing import Normalizer
 
 import sklearndf.transformation
 from sklearndf import TransformerDF
@@ -165,9 +164,8 @@ def test_outlier_remover(df_outlier: pd.DataFrame) -> None:
     assert_frame_equal(df_transformed, df_transformed_expected)
 
 
-@pytest.fixture
-def test_data_categorical() -> pd.DataFrame:
-    return pd.DataFrame(
+def test_one_hot_encoding() -> None:
+    test_data_categorical = pd.DataFrame(
         data=[
             ["yes", "red", "child"],
             ["yes", "blue", "father"],
@@ -176,24 +174,50 @@ def test_data_categorical() -> pd.DataFrame:
         columns=["a", "b", "c"],
     )
 
+    assert_frame_equal(
+        OneHotEncoderDF(drop=None, sparse=False).fit_transform(test_data_categorical),
+        pd.DataFrame(
+            {
+                "a_no": [0.0, 0.0, 1.0],
+                "a_yes": [1.0, 1.0, 0.0],
+                "b_blue": [0.0, 1.0, 0.0],
+                "b_green": [0.0, 0.0, 1.0],
+                "b_red": [1.0, 0.0, 0.0],
+                "c_child": [1.0, 0.0, 0.0],
+                "c_father": [0.0, 1.0, 0.0],
+                "c_mother": [0.0, 0.0, 1.0],
+            }
+        ).rename_axis(columns="feature_out"),
+    )
 
-@pytest.mark.parametrize(
-    argnames=["drop"],
-    argvalues=itertools.product((None, "if_binary", "first")),
-)
-def test_one_hot_encoding(drop: Optional, test_data_categorical: pd.DataFrame):
+    assert_frame_equal(
+        OneHotEncoderDF(drop="if_binary", sparse=False).fit_transform(
+            test_data_categorical
+        ),
+        pd.DataFrame(
+            {
+                "a_yes": [1.0, 1.0, 0.0],
+                "b_blue": [0.0, 1.0, 0.0],
+                "b_green": [0.0, 0.0, 1.0],
+                "b_red": [1.0, 0.0, 0.0],
+                "c_child": [1.0, 0.0, 0.0],
+                "c_father": [0.0, 1.0, 0.0],
+                "c_mother": [0.0, 0.0, 1.0],
+            }
+        ).rename_axis(columns="feature_out"),
+    )
 
-    encoder = OneHotEncoder(drop=drop)
-    encoderdf = OneHotEncoderDF(drop=drop, sparse=False)
-
-    # sklearn version
-    y_transformed = encoder.fit_transform(test_data_categorical).toarray()
-
-    # sklearndf version
-    y_transformed_df = encoderdf.fit_transform(test_data_categorical)
-
-    assert np.array_equal(y_transformed, y_transformed_df.values), (
-        f"Different transformation results! "
-        f"sklearn: {y_transformed} "
-        f"sklearndf: {y_transformed_df.values}"
+    assert_frame_equal(
+        OneHotEncoderDF(drop="first", sparse=False).fit_transform(
+            test_data_categorical
+        ),
+        pd.DataFrame(
+            {
+                "a_yes": [1.0, 1.0, 0.0],
+                "b_green": [0.0, 0.0, 1.0],
+                "b_red": [1.0, 0.0, 0.0],
+                "c_father": [0.0, 1.0, 0.0],
+                "c_mother": [0.0, 0.0, 1.0],
+            }
+        ).rename_axis(columns="feature_out"),
     )
