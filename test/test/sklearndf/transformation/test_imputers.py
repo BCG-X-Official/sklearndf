@@ -14,13 +14,13 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 IMPUTERS_TO_TEST = list_classes(
-    from_modules=sklearndf.transformation, matching=r".*Imputer*DF", excluding=[]
+    from_modules=sklearndf.transformation, matching=r".*Imputer.*DF", excluding=[]
 )
 
 
 @pytest.mark.parametrize(
     argnames=["imputer_cls", "add_indicator"],
-    argvalues=itertools.product(IMPUTERS_TO_TEST, (True, False)),
+    argvalues=itertools.product(IMPUTERS_TO_TEST, [True, False]),
 )
 def test_imputer(
     imputer_cls: Type[TransformerDF],
