@@ -14,7 +14,8 @@ ENV_RUN_PACKAGE_VERSION_TEST = "RUN_PACKAGE_VERSION_TEST"
 
 
 @mark.skipif(
-    condition=environ.get(ENV_RUN_PACKAGE_VERSION_TEST, "") != sklearndf.__name__
+    condition=environ.get(ENV_RUN_PACKAGE_VERSION_TEST, "") != sklearndf.__name__,
+    reason="Parent build is not primarily for sklearndf.",
 )
 def test_package_version() -> None:
     dev_version = sklearndf.__version__
