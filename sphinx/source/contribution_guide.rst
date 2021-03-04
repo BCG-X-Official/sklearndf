@@ -16,10 +16,18 @@ required development dependencies in the ``sklearndf-develop`` environment.
     conda env create -f environment.yml
     conda activate sklearndf-develop
 
-This command will:
 
-- Install the conda environment
-- Install pre-commit hooks
+Pre-commit hooks
+~~~~~~~~~~~~~~~~~~~~
+This project uses a number of pre-commit hooks such as black and flake8 to enforce
+uniform coding standards in all commits. Before committing code, please run
+
+.. code-block:: sh
+
+    pre-commit install
+
+You can use ``pre-commit run`` to manually run the pre-commit hooks from the command
+line.
 
 
 Pytest
