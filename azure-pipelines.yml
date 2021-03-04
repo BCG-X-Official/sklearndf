@@ -399,7 +399,7 @@ stages:
               script: |
                 set -e
                 python -m pip install "toml==0.10.*"
-                cd $(System.DefaultWorkingDirectory)
+                cd $(System.DefaultWorkingDirectory)/pytools
                 python <<EOF
                 from os import environ
                 from make import ToxBuilder
