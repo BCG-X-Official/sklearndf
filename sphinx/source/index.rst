@@ -14,3 +14,4 @@ Table of contents
    tutorials
    contribution_guide
    faqs
+   release_notes
