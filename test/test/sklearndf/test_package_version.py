@@ -1,13 +1,19 @@
 import logging
 import re
+from os import environ
 from urllib import request
 from xml.etree import ElementTree
+
+from pytest import mark
 
 import sklearndf
 
 log = logging.getLogger(__name__)
 
+ENV_SKIP_SKLEARNDF_PACKAGE_VERSION_TEST = "SKIP_SKLEARNDF_PACKAGE_VERSION_TEST"
 
+
+@mark.skipif(condition=ENV_SKIP_SKLEARNDF_PACKAGE_VERSION_TEST in environ)
 def test_package_version() -> None:
     dev_version = sklearndf.__version__
 
