@@ -390,7 +390,7 @@ stages:
             displayName: 'use Python 3.7'
 
           - checkout: self
-            path: pytools
+          - checkout: pytools
 
           - task: Bash@3
             env:
@@ -416,7 +416,7 @@ stages:
                 ), "This check should only run on versioned branches – check pipeline."
 
                 branch_version = branch.split("/", maxsplit=1)[1]
-                package_version = ToxBuilder("pytools", "default").package_version
+                package_version = ToxBuilder("sklearndf", "default").package_version
 
                 assert (
                     package_version == branch_version
@@ -461,7 +461,7 @@ stages:
             inputs:
               targetType: inline
               script: |
-                set -e
+                set -eux
                 echo "Getting version"
                 pip install packaging
                 cd $(System.DefaultWorkingDirectory)/sklearndf/src
