@@ -3,7 +3,6 @@ import re
 from os import environ
 from urllib import request
 from xml.etree import ElementTree
-
 from pytest import mark
 
 import sklearndf
