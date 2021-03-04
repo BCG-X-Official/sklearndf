@@ -10,10 +10,12 @@ import sklearndf
 
 log = logging.getLogger(__name__)
 
-ENV_SKIP_SKLEARNDF_PACKAGE_VERSION_TEST = "SKIP_SKLEARNDF_PACKAGE_VERSION_TEST"
+ENV_RUN_PACKAGE_VERSION_TEST = "RUN_PACKAGE_VERSION_TEST"
 
 
-@mark.skipif(condition=ENV_SKIP_SKLEARNDF_PACKAGE_VERSION_TEST in environ)
+@mark.skipif(
+    condition=environ.get(ENV_RUN_PACKAGE_VERSION_TEST, "") != sklearndf.__name__
+)
 def test_package_version() -> None:
     dev_version = sklearndf.__version__
 
