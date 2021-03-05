@@ -19,25 +19,28 @@ To this end, *sklearndf* enhances scikit-learn's estimators as follows:
 
 .. Begin-Badges
 
-|pypi| |conda|
+|pypi| |conda| |azure_build| |azure_code_cov|
 |python_versions| |code_style| |made_with_sphinx_doc| |License_badge|
 
 .. End-Badges
 
+
 Installation
----------------------
+------------
 
 *sklearndf* supports both PyPI and Anaconda
 
+
 Anaconda
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~
 
 .. code-block:: RST
 
     conda install sklearndf -c bcg_gamma -c conda-forge
 
+
 Pip
-~~~~~~~~~~~~~~~~~~~~~
+~~~
 
 .. code-block:: RST
 
@@ -45,14 +48,19 @@ Pip
 
 
 Quickstart
-----------------------
+----------
 
 The following quickstart guide provides a minimal example workflow to get up and running
 with *sklearndf*.
+For additional tutorials and the API reference,
+see the `*sklearndf* documentation <https://bcg-gamma.github.io/facet/>`__.
+
+Changes and additions to new versions are summarized in the
+`release notes <https://bcg-gamma.github.io/sklearndf/release_notes.html>`__.
 
 
 Creating a DataFrame friendly scikit-learn preprocessing pipeline
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The titanic data set includes categorical features such as class and sex, and also has
 missing values for numeric features (i.e., age) and categorical features (i.e., embarked).
@@ -162,7 +170,7 @@ such as in this case for embarked.
 
 
 Completing the pipeline with a classifier
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Scikit-learn regressors and classifiers have a *sklearndf* sibling obtained by appending
 DF to the class name; the API remains the same.
@@ -201,8 +209,9 @@ on a test set.
 
 model score: 0.79
 
+
 Contributing
----------------------------
+------------
 
 *sklearndf* is stable and is being supported long-term.
 
@@ -217,22 +226,24 @@ at our team email: FacetTeam@bcg.com.
 For further information on contributing please see our
 `contribution guide <https://bcg-gamma.github.io/sklearndf/contribution_guide.html>`__.
 
+
 License
----------------------------
+-------
 
 *sklearndf* is licensed under Apache 2.0 as described in the
 `LICENSE <https://github.com/BCG-Gamma/sklearndf/blob/develop/LICENSE>`_ file.
 
 
 Acknowledgements
----------------------------
+----------------
 
 Learners and pipelining from the popular Machine Learning package
 `scikit-learn <https://github.com/scikit-learn/scikit-learn>`__  support
 the corresponding *sklearndf* implementations.
 
+
 BCG GAMMA
----------------------------
+---------
 
 We are always on the lookout for passionate and talented data scientists to join the
 BCG GAMMA team. If you would like to know more you can find out about
@@ -251,7 +262,7 @@ or have a look at
 .. |azure_build| image:: https://dev.azure.com/gamma-facet/facet/_apis/build/status/BCG-Gamma.sklearndf?repoName=BCG-Gamma%2Fsklearndf&branchName=develop
    :target: https://dev.azure.com/gamma-facet/facet/_build?definitionId=8&_a=summary
 
-.. |azure_code_cov| image:: https://img.shields.io/azure-devops/coverage/gamma-facet/facet/_build?definitionId=8.svg
+.. |azure_code_cov| image:: https://img.shields.io/azure-devops/coverage/gamma-facet/facet/8/develop.svg
    :target: https://dev.azure.com/gamma-facet/facet/_build?definitionId=8&_a=summary
 
 .. |python_versions| image:: https://img.shields.io/badge/python-3.6|3.7|3.8-blue.svg

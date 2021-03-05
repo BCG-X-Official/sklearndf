@@ -12,6 +12,7 @@ from sklearn.base import BaseEstimator, is_classifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 
+import sklearndf
 from sklearndf import EstimatorDF
 
 # noinspection PyProtectedMember
@@ -34,7 +35,7 @@ class _DummyEstimator2(BaseEstimator):
 
 
 class _DummyEstimator3(BaseEstimator):
-    def __init__(self, c=None, d=None) -> None:
+    def __init__(self, c=0, d=None) -> None:
         self.c = c
         self.d = d
 
@@ -131,16 +132,26 @@ def test_repr() -> None:
     my_estimator = _DummyEstimatorDF()
     repr(my_estimator)
 
-    test = _DummyEstimator2DF(_DummyEstimator3DF(), _DummyEstimator3DF())
+    if sklearndf.__sklearn_version__ < sklearndf.__sklearn_0_23__:
+        expected_repr = (
+            "_DummyEstimator2DF(a=_DummyEstimator3DF(c=None, d=None),\n"
+            "                   b=_DummyEstimator3DF(c=1, d=2))"
+        )
+        expected_len = 702
+    else:
+        expected_repr = (
+            "_DummyEstimator2DF(a=_DummyEstimator3DF(c=None), "
+            "b=_DummyEstimator3DF(c=1, d=2))"
+        )
+        expected_len = 675
 
-    assert repr(test) == (
-        "_DummyEstimator2DF(a=_DummyEstimator3DF(c=None, d=None),\n"
-        "                   b=_DummyEstimator3DF(c=None, d=None))"
+    estimator_1 = _DummyEstimator2DF(
+        _DummyEstimator3DF(c=None), _DummyEstimator3DF(c=1, d=2)
     )
+    assert repr(estimator_1) == expected_repr
 
-    some_est = _DummyEstimator2DF(a=["long_params"] * 1000)
-
-    assert len(repr(some_est)) == 702
+    estimator_2 = _DummyEstimator2DF(a=["long_params"] * 1000)
+    assert len(repr(estimator_2)) == expected_len
 
 
 def test_str() -> None:

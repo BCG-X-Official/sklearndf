@@ -13,6 +13,7 @@ requirements:
   host:
     - pip>=20.*
     - python {{ environ.get('FACET_V_PYTHON', '=3.8.*') }}
+    - numpy {{ environ.get('FACET_V_NUMPY', '>=1.11.*') }}
     - flit>=3.0.*
 # note: sklearndf.__init__ already needs pytools, pandas & sklearn:
     - pandas{{ environ.get('FACET_V_PANDAS') }}
@@ -20,18 +21,15 @@ requirements:
     - gamma-pytools{{ environ.get('FACET_V_GAMMA_PYTOOLS') }}
     - packaging>=20
   run:
-    - python{{ environ.get('FACET_V_PYTHON') }}
-    - pandas{{ environ.get('FACET_V_PANDAS') }}
-    - numpy{{ environ.get('FACET_V_NUMPY') }}
-    - joblib{{ environ.get('FACET_V_JOBLIB') }}
-    - scipy{{ environ.get('FACET_V_SCIPY') }}
-    - pyyaml{{ environ.get('FACET_V_PYYAML') }}
-    - typing_inspect{{ environ.get('FACET_V_TYPING_INSPECT') }}
-    - scikit-learn{{ environ.get('FACET_V_SCIKIT_LEARN') }}
     - boruta_py{{ environ.get('FACET_V_BORUTA') }}
-    - lightgbm{{ environ.get('FACET_V_LIGHTGBM') }}
     - gamma-pytools{{ environ.get('FACET_V_GAMMA_PYTOOLS') }}
-    - packaging>=20
+    - lightgbm{{ environ.get('FACET_V_LIGHTGBM') }}
+    - numpy{{ environ.get('FACET_V_NUMPY') }}
+    - packaging{{ environ.get('FACET_V_PACKAGING') }}
+    - pandas{{ environ.get('FACET_V_PANDAS') }}
+    - python{{ environ.get('FACET_V_PYTHON') }}
+    - scikit-learn{{ environ.get('FACET_V_SCIKIT_LEARN') }}
+    - scipy{{ environ.get('FACET_V_SCIPY') }}
 test:
   imports:
     - sklearndf
@@ -49,7 +47,6 @@ test:
     - python -c 'import sklearndf;
                  import os;
                  assert sklearndf.__version__ == os.environ["PKG_VERSION"]'
-    - pytest -vs ${FACET_PATH}/pytools/test
     - pytest -vs ${FACET_PATH}/sklearndf/test
 
 about:

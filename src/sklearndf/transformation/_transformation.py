@@ -19,7 +19,7 @@ Core implementation of :mod:`sklearndf.transformation`
 import logging
 from abc import ABCMeta
 from functools import reduce
-from typing import Iterable, List, TypeVar
+from typing import List, TypeVar
 
 import numpy as np
 import pandas as pd
@@ -207,15 +207,16 @@ class _ColumnTransformerWrapperDF(
     _TransformerWrapperDF[ColumnTransformer], metaclass=ABCMeta
 ):
     """
-    Wrap :class:`sklearn.compose.ColumnTransformer` and return a DataFrame.
+    DF wrapper for :class:`sklearn.compose.ColumnTransformer`.
 
-    Like :class:`~sklearn.compose.ColumnTransformer`, it has a ``transformers``
-    parameter
-    (``None`` by default) which is a list of tuple of the form (name, transformer,
-    column(s)),
-    but here all the transformers must be of type
-    :class:`~yieldengine.df.transform.TransformerDF`.
+    Requires all transformers passed as the ``transformers`` parameter to implement
+    :class:`.TransformerDF`.
     """
+
+    __DROP = "drop"
+    __PASSTHROUGH = "passthrough"
+
+    __SPECIAL_TRANSFORMERS = (__DROP, __PASSTHROUGH)
 
     def _validate_delegate_estimator(self) -> None:
         column_transformer: ColumnTransformer = self.native_estimator
@@ -229,14 +230,16 @@ class _ColumnTransformerWrapperDF(
             type(transformer).__name__
             for _, transformer, _ in column_transformer.transformers
             if not (
-                isinstance(transformer, str) or isinstance(transformer, TransformerDF)
+                isinstance(transformer, TransformerDF)
+                or transformer in _ColumnTransformerWrapperDF.__SPECIAL_TRANSFORMERS
             )
         ]
         if non_compliant_transformers:
             raise ValueError(
-                f"{ColumnTransformerDF.__name__} only accepts strings or "
-                f"instances of "
-                f"{TransformerDF.__name__} as valid transformers, but "
+                f"{ColumnTransformerDF.__name__} only accepts instances of "
+                f"{TransformerDF.__name__} or special values "
+                f'"{" and ".join(_ColumnTransformerWrapperDF.__SPECIAL_TRANSFORMERS)}" '
+                "as valid transformers, but "
                 f'also got: {", ".join(non_compliant_transformers)}'
             )
 
@@ -247,20 +250,21 @@ class _ColumnTransformerWrapperDF(
         :return: the series with index the column names of the output dataframe and
         values the corresponding input column names.
         """
+
         return reduce(
             lambda x, y: x.append(y),
             (
-                df_transformer.feature_names_original_
-                for df_transformer in self._inner_transformers()
+                (
+                    pd.Series(index=columns, data=columns)
+                    if df_transformer == _ColumnTransformerWrapperDF.__PASSTHROUGH
+                    else df_transformer.feature_names_original_
+                )
+                for _, df_transformer, columns in self.native_estimator.transformers_
+                if (
+                    len(columns) > 0
+                    and df_transformer != _ColumnTransformerWrapperDF.__DROP
+                )
             ),
-        )
-
-    def _inner_transformers(self) -> Iterable[_TransformerWrapperDF]:
-        return (
-            df_transformer
-            for _, df_transformer, columns in self.native_estimator.transformers_
-            if len(columns) > 0
-            if df_transformer != "drop"
         )
 
 
@@ -683,24 +687,41 @@ class _OneHotEncoderWrapperDF(_TransformerWrapperDF[OneHotEncoder], metaclass=AB
             raise NotImplementedError("sparse matrices not supported; use sparse=False")
 
     def _get_features_original(self) -> pd.Series:
-        """
-        Return the series mapping output column names to original columns names.
+        # Return the series mapping output column names to original column names.
+        #
+        # Remove 1st category column if argument drop == 'first'
+        # Remove 1st category column only of binary features if arg drop == 'if_binary'
 
-        :return: the series with index the column names of the output dataframe and
-        values the corresponding input column names.
-        """
-        return pd.Series(
-            index=pd.Index(
-                self.native_estimator.get_feature_names(self.feature_names_in_)
-            ),
-            data=[
+        feature_names_out = pd.Index(
+            self.native_estimator.get_feature_names(self.feature_names_in_)
+        )
+
+        if self.drop == "first":
+            feature_names_in = [
+                column_original
+                for column_original, category in zip(
+                    self.feature_names_in_, self.native_estimator.categories_
+                )
+                for _ in range(len(category) - 1)
+            ]
+        elif self.drop == "if_binary":
+            feature_names_in = [
+                column_original
+                for column_original, category in zip(
+                    self.feature_names_in_, self.native_estimator.categories_
+                )
+                for _ in (range(1) if len(category) == 2 else category)
+            ]
+        else:
+            feature_names_in = [
                 column_original
                 for column_original, category in zip(
                     self.feature_names_in_, self.native_estimator.categories_
                 )
                 for _ in category
-            ],
-        )
+            ]
+
+        return pd.Series(index=feature_names_out, data=feature_names_in)
 
 
 # noinspection PyAbstractClass
