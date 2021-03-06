@@ -501,8 +501,9 @@ stages:
 
           - script: |
               set -eux
-              cd $(System.DefaultWorkingDirectory)
+              cd $(System.DefaultWorkingDirectory)/sklearndf
               pip install flit
+              flit install -s
               flit publish
               echo "##vso[task.setvariable variable=pypi_published]True"
             displayName: 'Publish to PyPi'
