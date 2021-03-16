@@ -158,7 +158,7 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 # Ensure all symbols introduced below are included in __all__
 #
 
-__tracker = AllTracker(globals())
+__tracker = AllTracker(globals(), allow_imported_definitions=True)
 
 
 #

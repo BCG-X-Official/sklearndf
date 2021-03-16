@@ -20,7 +20,7 @@ __all__ = ["PipelineDF", "FeatureUnionDF"]
 # Ensure all symbols introduced below are included in __all__
 #
 
-__tracker = AllTracker(globals())
+__tracker = AllTracker(globals(), allow_imported_definitions=True)
 
 
 #
