@@ -425,24 +425,41 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
             raise NotImplementedError("sparse matrices not supported; use sparse=False")
 
     def _get_features_original(self) -> pd.Series:
-        """
-        Return the series mapping output column names to original columns names.
+        # Return the series mapping output column names to original column names.
+        #
+        # Remove 1st category column if argument drop == 'first'
+        # Remove 1st category column only of binary features if arg drop == 'if_binary'
 
-        :return: the series with index the column names of the output dataframe and
-        values the corresponding input column names.
-        """
-        return pd.Series(
-            index=pd.Index(
-                self.native_estimator.get_feature_names(self.feature_names_in_)
-            ),
-            data=[
+        feature_names_out = pd.Index(
+            self.native_estimator.get_feature_names(self.feature_names_in_)
+        )
+
+        if self.drop == "first":
+            feature_names_in = [
+                column_original
+                for column_original, category in zip(
+                    self.feature_names_in_, self.native_estimator.categories_
+                )
+                for _ in range(len(category) - 1)
+            ]
+        elif self.drop == "if_binary":
+            feature_names_in = [
+                column_original
+                for column_original, category in zip(
+                    self.feature_names_in_, self.native_estimator.categories_
+                )
+                for _ in (range(1) if len(category) == 2 else category)
+            ]
+        else:
+            feature_names_in = [
                 column_original
                 for column_original, category in zip(
                     self.feature_names_in_, self.native_estimator.categories_
                 )
                 for _ in category
-            ],
-        )
+            ]
+
+        return pd.Series(index=feature_names_out, data=feature_names_in)
 
 
 class KBinsDiscretizerWrapperDF(
