@@ -1,0 +1,38 @@
+sklearndf.transformation.extra
+==============================
+
+.. automodule:: sklearndf.transformation.extra
+   :no-imported-members:
+
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: extra
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      BorutaDF
+      OutlierRemoverDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

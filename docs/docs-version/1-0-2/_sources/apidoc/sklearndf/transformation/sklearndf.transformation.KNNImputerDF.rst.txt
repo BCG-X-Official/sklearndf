@@ -1,0 +1,47 @@
+sklearndf.transformation.KNNImputerDF
+=====================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: KNNImputerDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~KNNImputerDF.clone
+      ~KNNImputerDF.fit
+      ~KNNImputerDF.fit_transform
+      ~KNNImputerDF.from_fitted
+      ~KNNImputerDF.get_params
+      ~KNNImputerDF.inverse_transform
+      ~KNNImputerDF.set_params
+      ~KNNImputerDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~KNNImputerDF.COL_FEATURE_IN
+      ~KNNImputerDF.COL_FEATURE_OUT
+      ~KNNImputerDF.feature_names_in_
+      ~KNNImputerDF.feature_names_original_
+      ~KNNImputerDF.feature_names_out_
+      ~KNNImputerDF.is_fitted
+      ~KNNImputerDF.n_outputs_
+      ~KNNImputerDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,50 @@
+sklearndf.classification.OneVsOneClassifierDF
+=============================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: OneVsOneClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~OneVsOneClassifierDF.clone
+      ~OneVsOneClassifierDF.decision_function
+      ~OneVsOneClassifierDF.fit
+      ~OneVsOneClassifierDF.fit_predict
+      ~OneVsOneClassifierDF.from_fitted
+      ~OneVsOneClassifierDF.get_params
+      ~OneVsOneClassifierDF.predict
+      ~OneVsOneClassifierDF.predict_log_proba
+      ~OneVsOneClassifierDF.predict_proba
+      ~OneVsOneClassifierDF.score
+      ~OneVsOneClassifierDF.set_params
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~OneVsOneClassifierDF.COL_FEATURE_IN
+      ~OneVsOneClassifierDF.COL_PREDICTION
+      ~OneVsOneClassifierDF.classes_
+      ~OneVsOneClassifierDF.feature_names_in_
+      ~OneVsOneClassifierDF.is_fitted
+      ~OneVsOneClassifierDF.n_classes_
+      ~OneVsOneClassifierDF.n_outputs_
+      ~OneVsOneClassifierDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

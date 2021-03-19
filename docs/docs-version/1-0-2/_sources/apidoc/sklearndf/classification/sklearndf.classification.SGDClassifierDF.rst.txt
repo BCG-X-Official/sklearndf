@@ -1,0 +1,49 @@
+sklearndf.classification.SGDClassifierDF
+========================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: SGDClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SGDClassifierDF.clone
+      ~SGDClassifierDF.decision_function
+      ~SGDClassifierDF.fit
+      ~SGDClassifierDF.fit_predict
+      ~SGDClassifierDF.from_fitted
+      ~SGDClassifierDF.get_params
+      ~SGDClassifierDF.predict
+      ~SGDClassifierDF.predict_log_proba
+      ~SGDClassifierDF.predict_proba
+      ~SGDClassifierDF.score
+      ~SGDClassifierDF.set_params
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~SGDClassifierDF.COL_FEATURE_IN
+      ~SGDClassifierDF.COL_PREDICTION
+      ~SGDClassifierDF.classes_
+      ~SGDClassifierDF.feature_names_in_
+      ~SGDClassifierDF.is_fitted
+      ~SGDClassifierDF.n_outputs_
+      ~SGDClassifierDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

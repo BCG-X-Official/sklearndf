@@ -1,0 +1,46 @@
+sklearndf.TransformerDF
+=======================
+
+.. currentmodule:: sklearndf
+
+.. autoclass:: TransformerDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~TransformerDF.clone
+      ~TransformerDF.fit
+      ~TransformerDF.fit_transform
+      ~TransformerDF.get_params
+      ~TransformerDF.inverse_transform
+      ~TransformerDF.set_params
+      ~TransformerDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~TransformerDF.COL_FEATURE_IN
+      ~TransformerDF.COL_FEATURE_OUT
+      ~TransformerDF.feature_names_in_
+      ~TransformerDF.feature_names_original_
+      ~TransformerDF.feature_names_out_
+      ~TransformerDF.is_fitted
+      ~TransformerDF.n_outputs_
+      ~TransformerDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

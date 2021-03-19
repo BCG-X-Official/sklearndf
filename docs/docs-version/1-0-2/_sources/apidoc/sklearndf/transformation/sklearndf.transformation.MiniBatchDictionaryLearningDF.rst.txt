@@ -1,0 +1,48 @@
+sklearndf.transformation.MiniBatchDictionaryLearningDF
+======================================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: MiniBatchDictionaryLearningDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MiniBatchDictionaryLearningDF.clone
+      ~MiniBatchDictionaryLearningDF.fit
+      ~MiniBatchDictionaryLearningDF.fit_transform
+      ~MiniBatchDictionaryLearningDF.from_fitted
+      ~MiniBatchDictionaryLearningDF.get_params
+      ~MiniBatchDictionaryLearningDF.inverse_transform
+      ~MiniBatchDictionaryLearningDF.partial_fit
+      ~MiniBatchDictionaryLearningDF.set_params
+      ~MiniBatchDictionaryLearningDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MiniBatchDictionaryLearningDF.COL_FEATURE_IN
+      ~MiniBatchDictionaryLearningDF.COL_FEATURE_OUT
+      ~MiniBatchDictionaryLearningDF.feature_names_in_
+      ~MiniBatchDictionaryLearningDF.feature_names_original_
+      ~MiniBatchDictionaryLearningDF.feature_names_out_
+      ~MiniBatchDictionaryLearningDF.is_fitted
+      ~MiniBatchDictionaryLearningDF.n_outputs_
+      ~MiniBatchDictionaryLearningDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

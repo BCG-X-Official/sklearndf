@@ -1,0 +1,49 @@
+sklearndf.transformation.PolynomialFeaturesDF
+=============================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: PolynomialFeaturesDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PolynomialFeaturesDF.clone
+      ~PolynomialFeaturesDF.fit
+      ~PolynomialFeaturesDF.fit_transform
+      ~PolynomialFeaturesDF.from_fitted
+      ~PolynomialFeaturesDF.get_feature_names
+      ~PolynomialFeaturesDF.get_params
+      ~PolynomialFeaturesDF.inverse_transform
+      ~PolynomialFeaturesDF.set_params
+      ~PolynomialFeaturesDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~PolynomialFeaturesDF.COL_FEATURE_IN
+      ~PolynomialFeaturesDF.COL_FEATURE_OUT
+      ~PolynomialFeaturesDF.feature_names_in_
+      ~PolynomialFeaturesDF.feature_names_original_
+      ~PolynomialFeaturesDF.feature_names_out_
+      ~PolynomialFeaturesDF.is_fitted
+      ~PolynomialFeaturesDF.n_outputs_
+      ~PolynomialFeaturesDF.native_estimator
+      ~PolynomialFeaturesDF.powers_
+   
+   
+
+   .. rubric:: Definitions

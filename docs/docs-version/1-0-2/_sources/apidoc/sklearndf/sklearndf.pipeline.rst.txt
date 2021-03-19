@@ -1,0 +1,41 @@
+sklearndf.pipeline
+==================
+
+.. automodule:: sklearndf.pipeline
+   :no-imported-members:
+
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: pipeline
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      ClassifierPipelineDF
+      FeatureUnionDF
+      LearnerPipelineDF
+      PipelineDF
+      RegressorPipelineDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
