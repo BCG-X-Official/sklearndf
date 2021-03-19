@@ -53,7 +53,7 @@ Quickstart
 The following quickstart guide provides a minimal example workflow to get up and running
 with *sklearndf*.
 For additional tutorials and the API reference,
-see the `*sklearndf* documentation <https://bcg-gamma.github.io/facet/>`__.
+see the *sklearndf* `documentation <https://bcg-gamma.github.io/facet/>`__.
 
 Changes and additions to new versions are summarized in the
 `release notes <https://bcg-gamma.github.io/sklearndf/release_notes.html>`__.
