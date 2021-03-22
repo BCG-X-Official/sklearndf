@@ -4,7 +4,7 @@ Core implementation of :mod:`sklearndf`
 
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import Any, List, Mapping, Optional, Sequence, Type, TypeVar, Union, cast
+from typing import Any, List, Mapping, Optional, Sequence, TypeVar, Union, cast
 
 import pandas as pd
 from sklearn.base import (
@@ -42,7 +42,7 @@ __tracker = AllTracker(globals())
 #
 
 
-class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
+class EstimatorDF(BaseEstimator, FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     """
     Base class for augmented scikit-learn `estimators`.
 
@@ -55,16 +55,6 @@ class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
     #: See :meth:`.feature_names_in_` and
     #: :meth:`~.TransformerDF.feature_names_original_`.
     COL_FEATURE_IN = "feature_in"
-
-    def __new__(cls: Type["EstimatorDF"], *args, **kwargs) -> object:
-        # make sure this DF estimator also is a subclass of
-        if not issubclass(cls, BaseEstimator):
-            raise TypeError(
-                f"class {cls.__name__} is required to be "
-                f"a subclass of {BaseEstimator.__name__}"
-            )
-
-        return super().__new__(cls)
 
     @property
     def native_estimator(self) -> BaseEstimator:
@@ -83,7 +73,7 @@ class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         self: T_Self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
-        **fit_params,
+        **fit_params: Any,
     ) -> T_Self:
         """
         Fit this estimator using the given inputs.
@@ -117,7 +107,7 @@ class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         self._ensure_fitted()
         return self._get_n_outputs()
 
-    def get_params(self, deep=True) -> Mapping[str, Any]:
+    def get_params(self, deep: bool = True) -> Mapping[str, Any]:
         """
         Get the parameters for this estimator.
 
@@ -128,16 +118,17 @@ class EstimatorDF(FittableMixin[pd.DataFrame], metaclass=ABCMeta):
         # noinspection PyUnresolvedReferences
         return super().get_params(deep=deep)
 
-    def set_params(self: T_Self, **kwargs) -> T_Self:
+    def set_params(self: T_Self, **params: Any) -> T_Self:
         """
         Set the parameters of this estimator.
 
         Valid parameter keys can be obtained by calling :meth:`.get_params`.
 
+        :param params: the estimator parameters to set
         :return: ``self``
         """
         # noinspection PyUnresolvedReferences
-        return super().set_params(**kwargs)
+        return super().set_params(**params)
 
     def clone(self: T_EstimatorDF) -> T_EstimatorDF:
         """
@@ -168,7 +159,7 @@ class LearnerDF(EstimatorDF, metaclass=ABCMeta):
     # noinspection PyPep8Naming
     @abstractmethod
     def predict(
-        self, X: pd.DataFrame, **predict_params
+        self, X: pd.DataFrame, **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """
         Predict outputs for the given inputs.
@@ -189,7 +180,7 @@ class LearnerDF(EstimatorDF, metaclass=ABCMeta):
     # noinspection PyPep8Naming
     @abstractmethod
     def fit_predict(
-        self, X: pd.DataFrame, y: pd.Series, **fit_params
+        self, X: pd.DataFrame, y: pd.Series, **fit_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """
         Fit this learner using the given inputs, then predict the outputs.
@@ -216,6 +207,7 @@ class LearnerDF(EstimatorDF, metaclass=ABCMeta):
         :param sample_weight: optional series of scalar weights, for calculating the
             resulting score as the weighted mean of the scores for the individual
             predictions
+        :return: the score
         """
         pass
 
@@ -234,7 +226,11 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
     #: :meth:`.feature_names_original_`.
     COL_FEATURE_OUT = "feature_out"
 
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        """
+        :param args: transformer parameters
+        :param kwargs: transformer keyword parameters
+        """
         super().__init__(*args, **kwargs)
         self._features_original = None
 
@@ -283,7 +279,7 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
 
     # noinspection PyPep8Naming
     def fit_transform(
-        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params
+        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params: Any
     ) -> pd.DataFrame:
         """
         Fit this transformer using the given inputs, then transform the inputs.
@@ -353,7 +349,7 @@ class ClassifierDF(LearnerDF, ClassifierMixin, metaclass=ABCMeta):
     # noinspection PyPep8Naming
     @abstractmethod
     def predict_proba(
-        self, X: pd.DataFrame, **predict_params
+        self, X: pd.DataFrame, **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """
         Predict class probabilities for the given inputs.
@@ -375,7 +371,7 @@ class ClassifierDF(LearnerDF, ClassifierMixin, metaclass=ABCMeta):
     # noinspection PyPep8Naming
     @abstractmethod
     def predict_log_proba(
-        self, X: pd.DataFrame, **predict_params
+        self, X: pd.DataFrame, **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """
         Predict class log-probabilities for the given inputs.
@@ -397,7 +393,7 @@ class ClassifierDF(LearnerDF, ClassifierMixin, metaclass=ABCMeta):
     # noinspection PyPep8Naming
     @abstractmethod
     def decision_function(
-        self, X: pd.DataFrame, **predict_params
+        self, X: pd.DataFrame, **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """
         Compute the decision function for the given inputs.

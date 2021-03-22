@@ -2,7 +2,6 @@
 Core implementation of :mod:`sklearndf.regression` loaded
 from sklearn 0.23 onwards
 """
-
 import logging
 from typing import TypeVar
 
@@ -12,8 +11,7 @@ from sklearn.linear_model._glm import GeneralizedLinearRegressor
 
 from pytools.api import AllTracker
 
-from .. import RegressorDF
-from .._wrapper import _RegressorWrapperDF, df_estimator
+from ..wrapper import make_df_regressor
 
 # noinspection PyProtectedMember
 
@@ -39,62 +37,22 @@ T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
 # Ensure all symbols introduced below are included in __all__
 #
 
-__tracker = AllTracker(globals())
+__tracker = AllTracker(globals(), allow_imported_definitions=True)
 
 
 #
 # Class definitions
 #
 
+PoissonRegressorDF = make_df_regressor(PoissonRegressor)
+GammaRegressorDF = make_df_regressor(GammaRegressor)
+TweedieRegressorDF = make_df_regressor(TweedieRegressor)
+GeneralizedLinearRegressorDF = make_df_regressor(GeneralizedLinearRegressor)
+
 
 #
-# GLM regressors added with v0.23
+# validate __all__
 #
-# noinspection PyAbstractClass
-
-
-@df_estimator(df_wrapper_type=_RegressorWrapperDF)
-class PoissonRegressorDF(RegressorDF, PoissonRegressor):
-    """
-    Wraps :class:`sklearn.linear_model._glm.glm.PoissonRegressor`; accepts and
-     returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_RegressorWrapperDF)
-class GammaRegressorDF(RegressorDF, GammaRegressor):
-    """
-    Wraps :class:`sklearn.linear_model._glm.glm.GammaRegressor`; accepts and
-     returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_RegressorWrapperDF)
-class TweedieRegressorDF(RegressorDF, TweedieRegressor):
-    """
-    Wraps :class:`sklearn.linear_model._glm.glm.TweedieRegressor`; accepts and
-     returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_RegressorWrapperDF)
-class GeneralizedLinearRegressorDF(RegressorDF, GeneralizedLinearRegressor):
-    """
-    Wraps :class:`sklearn.linear_model._glm.glm.GeneralizedLinearRegressor`; accepts and
-     returns data frames.
-    """
-
-    pass
-
 
 __tracker.validate()
 

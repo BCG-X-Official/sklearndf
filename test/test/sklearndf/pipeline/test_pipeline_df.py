@@ -20,13 +20,12 @@ from sklearn import clone
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.feature_selection import f_classif
 
-from sklearndf import TransformerDF
-from sklearndf._wrapper import df_estimator
 from sklearndf.classification import SVCDF, LogisticRegressionDF
 from sklearndf.pipeline import PipelineDF
 from sklearndf.regression import DummyRegressorDF, LassoDF, LinearRegressionDF
 from sklearndf.transformation import SelectKBestDF, SimpleImputerDF
-from sklearndf.transformation._wrapper import _ColumnPreservingTransformerWrapperDF
+from sklearndf.transformation.wrapper import ColumnPreservingTransformerWrapperDF
+from sklearndf.wrapper import make_df_estimator, make_df_transformer
 
 
 def test_set_params_nested_pipeline_df() -> None:
@@ -55,7 +54,7 @@ class NoTransformer(NoFit):
     """
 
     # noinspection PyPep8Naming
-    def fit(self, X, y=None, **fit_params) -> "NoTransformer":
+    def fit(self, X, y=None, **fit_params: Any) -> "NoTransformer":
         return self
 
     def get_params(self, deep: bool = False) -> Dict[str, Any]:
@@ -89,7 +88,7 @@ class DummyTransformer(Transformer):
         super().__init__(a, b)
 
     # noinspection PyPep8Naming,PyAttributeOutsideInit
-    def fit(self, X, y=None, **fit_params) -> "DummyTransformer":
+    def fit(self, X, y=None, **fit_params: Any) -> "DummyTransformer":
         self.means_: np.ndarray = np.mean(X, axis=0)
         # store timestamp to figure out whether the result of 'fit' has been
         # cached or not
@@ -97,16 +96,14 @@ class DummyTransformer(Transformer):
         return self
 
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class DummyTransformerDF(TransformerDF, DummyTransformer):
-    pass
+DummyTransformerDF = make_df_transformer(
+    DummyTransformer, base_wrapper=ColumnPreservingTransformerWrapperDF
+)
 
 
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_ColumnPreservingTransformerWrapperDF)
-class NoTransformerDF(TransformerDF, NoTransformer):
-    pass
+NoTransformerDF = make_df_estimator(
+    NoTransformer, base_wrapper=ColumnPreservingTransformerWrapperDF
+)
 
 
 def test_pipeline_df_memory(

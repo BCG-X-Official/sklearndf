@@ -2,7 +2,6 @@
 Additional implementation of :mod:`sklearndf.classification` loaded
 from sklearn 0.22 onwards
 """
-
 import logging
 
 from sklearn.ensemble import StackingClassifier
@@ -10,8 +9,8 @@ from sklearn.naive_bayes import CategoricalNB
 
 from pytools.api import AllTracker
 
-from .. import ClassifierDF
-from .._wrapper import _ClassifierWrapperDF, _StackingClassifierWrapperDF, df_estimator
+from ..wrapper import make_df_classifier
+from .wrapper._wrapper import StackingClassifierWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -24,13 +23,12 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 # Ensure all symbols introduced below are included in __all__
 #
 
-__tracker = AllTracker(globals())
+__tracker = AllTracker(globals(), allow_imported_definitions=True)
 
 
 #
 # Class definitions
 #
-
 
 # todo: add other classification implementations for sklearn 0.22
 
@@ -38,28 +36,16 @@ __tracker = AllTracker(globals())
 # naive bayes
 #
 
-# noinspection PyAbstractClass
+CategoricalNBDF = make_df_classifier(CategoricalNB)
+
+StackingClassifierDF = make_df_classifier(
+    StackingClassifier, base_wrapper=StackingClassifierWrapperDF
+)
 
 
-@df_estimator(df_wrapper_type=_ClassifierWrapperDF)
-class CategoricalNBDF(ClassifierDF, CategoricalNB):
-    """
-    Wraps :class:`sklearn.naive_bayes.CategoricalNB`; accepts and returns data frames.
-    """
-
-    pass
-
-
-# noinspection PyAbstractClass
-@df_estimator(df_wrapper_type=_StackingClassifierWrapperDF)
-class StackingClassifierDF(ClassifierDF, StackingClassifier):
-    """
-    Wraps :class:`sklearn.ensemble._stacking.StackingClassifier`;
-    accepts and returns data frames.
-    """
-
-    pass
-
+#
+# validate __all__
+#
 
 __tracker.validate()
 
