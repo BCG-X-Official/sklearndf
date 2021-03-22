@@ -1,0 +1,49 @@
+sklearndf.classification.BernoulliNBDF
+======================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: BernoulliNBDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~BernoulliNBDF.clone
+      ~BernoulliNBDF.decision_function
+      ~BernoulliNBDF.fit
+      ~BernoulliNBDF.fit_predict
+      ~BernoulliNBDF.from_fitted
+      ~BernoulliNBDF.get_params
+      ~BernoulliNBDF.predict
+      ~BernoulliNBDF.predict_log_proba
+      ~BernoulliNBDF.predict_proba
+      ~BernoulliNBDF.score
+      ~BernoulliNBDF.set_params
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~BernoulliNBDF.COL_FEATURE_IN
+      ~BernoulliNBDF.COL_PREDICTION
+      ~BernoulliNBDF.classes_
+      ~BernoulliNBDF.feature_names_in_
+      ~BernoulliNBDF.is_fitted
+      ~BernoulliNBDF.n_outputs_
+      ~BernoulliNBDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

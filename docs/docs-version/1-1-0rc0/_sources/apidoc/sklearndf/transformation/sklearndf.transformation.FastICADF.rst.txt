@@ -1,0 +1,47 @@
+sklearndf.transformation.FastICADF
+==================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: FastICADF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~FastICADF.clone
+      ~FastICADF.fit
+      ~FastICADF.fit_transform
+      ~FastICADF.from_fitted
+      ~FastICADF.get_params
+      ~FastICADF.inverse_transform
+      ~FastICADF.set_params
+      ~FastICADF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~FastICADF.COL_FEATURE_IN
+      ~FastICADF.COL_FEATURE_OUT
+      ~FastICADF.feature_names_in_
+      ~FastICADF.feature_names_original_
+      ~FastICADF.feature_names_out_
+      ~FastICADF.is_fitted
+      ~FastICADF.n_outputs_
+      ~FastICADF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

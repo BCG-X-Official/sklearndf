@@ -1,0 +1,47 @@
+sklearndf.transformation.wrapper.ImputerWrapperDF
+=================================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: ImputerWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ImputerWrapperDF.clone
+      ~ImputerWrapperDF.fit
+      ~ImputerWrapperDF.fit_transform
+      ~ImputerWrapperDF.from_fitted
+      ~ImputerWrapperDF.get_params
+      ~ImputerWrapperDF.inverse_transform
+      ~ImputerWrapperDF.set_params
+      ~ImputerWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ImputerWrapperDF.COL_FEATURE_IN
+      ~ImputerWrapperDF.COL_FEATURE_OUT
+      ~ImputerWrapperDF.feature_names_in_
+      ~ImputerWrapperDF.feature_names_original_
+      ~ImputerWrapperDF.feature_names_out_
+      ~ImputerWrapperDF.is_fitted
+      ~ImputerWrapperDF.n_outputs_
+      ~ImputerWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions
