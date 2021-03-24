@@ -1,0 +1,682 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearn.ensemble._voting &#8212; sklearndf  documentation</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/gamma.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/gamma.js"></script>
+    <script src="../../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../../index.html">
+    
+      <img src="../../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../getting_started/getting_started.html">Getting started</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../apidoc/sklearndf.html">API reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../contribution_guide.html">Development Guidelines</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../faqs.html">FAQ</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../release_notes.html">Release Notes</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for sklearn.ensemble._voting</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Soft Voting/Majority Rule classifier and Voting regressor.</span>
+
+<span class="sd">This module contains:</span>
+<span class="sd"> - A Soft Voting/Majority Rule classifier for classification estimators.</span>
+<span class="sd"> - A Voting regressor for regression estimators.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Authors: Sebastian Raschka &lt;se.raschka@gmail.com&gt;,</span>
+<span class="c1">#          Gilles Louppe &lt;g.louppe@gmail.com&gt;,</span>
+<span class="c1">#          Ramil Nugmanov &lt;stsouko@live.ru&gt;</span>
+<span class="c1">#          Mohamed Ali Jamaoui &lt;m.ali.jamaoui@gmail.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># License: BSD 3 clause</span>
+
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
+
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">ClassifierMixin</span>
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">RegressorMixin</span>
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">TransformerMixin</span>
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">clone</span>
+<span class="kn">from</span> <span class="nn">._base</span> <span class="kn">import</span> <span class="n">_fit_single_estimator</span>
+<span class="kn">from</span> <span class="nn">._base</span> <span class="kn">import</span> <span class="n">_BaseHeterogeneousEnsemble</span>
+<span class="kn">from</span> <span class="nn">..preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">Bunch</span>
+<span class="kn">from</span> <span class="nn">..utils.validation</span> <span class="kn">import</span> <span class="n">check_is_fitted</span>
+<span class="kn">from</span> <span class="nn">..utils.multiclass</span> <span class="kn">import</span> <span class="n">check_classification_targets</span>
+<span class="kn">from</span> <span class="nn">..utils.validation</span> <span class="kn">import</span> <span class="n">column_or_1d</span>
+<span class="kn">from</span> <span class="nn">..utils.validation</span> <span class="kn">import</span> <span class="n">_deprecate_positional_args</span>
+<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">NotFittedError</span>
+<span class="kn">from</span> <span class="nn">..utils._estimator_html_repr</span> <span class="kn">import</span> <span class="n">_VisualBlock</span>
+
+
+<span class="k">class</span> <span class="nc">_BaseVoting</span><span class="p">(</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">_BaseHeterogeneousEnsemble</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for voting.</span>
+
+<span class="sd">    Warning: This class should not be used directly. Use derived classes</span>
+<span class="sd">    instead.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_log_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">total</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="s1">&#39;(</span><span class="si">%d</span><span class="s1"> of </span><span class="si">%d</span><span class="s1">) Processing </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_weights_not_none</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the weights of not `None` estimators.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">est</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">estimators</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">est</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;drop&#39;</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Collect results from clf.predict calls.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">est</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimators_</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get common fit operations.&quot;&quot;&quot;</span>
+        <span class="n">names</span><span class="p">,</span> <span class="n">clfs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_estimators</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span>
+                <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">estimators</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Number of `estimators` and weights must be equal&#39;</span>
+                             <span class="s1">&#39;; got </span><span class="si">%d</span><span class="s1"> weights, </span><span class="si">%d</span><span class="s1"> estimators&#39;</span>
+                             <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">estimators</span><span class="p">)))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">estimators_</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">)(</span>
+                <span class="n">delayed</span><span class="p">(</span><span class="n">_fit_single_estimator</span><span class="p">)(</span>
+                        <span class="n">clone</span><span class="p">(</span><span class="n">clf</span><span class="p">),</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+                        <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">,</span>
+                        <span class="n">message_clsname</span><span class="o">=</span><span class="s1">&#39;Voting&#39;</span><span class="p">,</span>
+                        <span class="n">message</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_log_message</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span>
+                                                  <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">clfs</span><span class="p">))</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">clf</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">clfs</span><span class="p">)</span> <span class="k">if</span> <span class="n">clf</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;drop&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">named_estimators_</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">()</span>
+
+        <span class="c1"># Uses None or &#39;drop&#39; as placeholder for dropped estimators</span>
+        <span class="n">est_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">estimators_</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">est</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimators</span><span class="p">:</span>
+            <span class="n">current_est</span> <span class="o">=</span> <span class="n">est</span> <span class="k">if</span> <span class="n">est</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;drop&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="nb">next</span><span class="p">(</span><span class="n">est_iter</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">named_estimators_</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_est</span>
+
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_features_in_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># For consistency with other estimators we raise a AttributeError so</span>
+        <span class="c1"># that hasattr() fails if the estimator isn&#39;t fitted.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">NotFittedError</span> <span class="k">as</span> <span class="n">nfe</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> object has no n_features_in_ attribute.&quot;</span>
+                <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="nn">nfe</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimators_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">n_features_in_</span>
+
+    <span class="k">def</span> <span class="nf">_sk_visual_block_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">names</span><span class="p">,</span> <span class="n">estimators</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">estimators</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_VisualBlock</span><span class="p">(</span><span class="s1">&#39;parallel&#39;</span><span class="p">,</span> <span class="n">estimators</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">VotingClassifier</span><span class="p">(</span><span class="n">ClassifierMixin</span><span class="p">,</span> <span class="n">_BaseVoting</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Soft Voting/Majority Rule classifier for unfitted estimators.</span>
+
+<span class="sd">    .. versionadded:: 0.17</span>
+
+<span class="sd">    Read more in the :ref:`User Guide &lt;voting_classifier&gt;`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    estimators : list of (str, estimator) tuples</span>
+<span class="sd">        Invoking the ``fit`` method on the ``VotingClassifier`` will fit clones</span>
+<span class="sd">        of those original estimators that will be stored in the class attribute</span>
+<span class="sd">        ``self.estimators_``. An estimator can be set to ``&#39;drop&#39;``</span>
+<span class="sd">        using ``set_params``.</span>
+
+<span class="sd">        .. versionchanged:: 0.21</span>
+<span class="sd">            ``&#39;drop&#39;`` is accepted.</span>
+
+<span class="sd">        .. deprecated:: 0.22</span>
+<span class="sd">           Using ``None`` to drop an estimator is deprecated in 0.22 and</span>
+<span class="sd">           support will be dropped in 0.24. Use the string ``&#39;drop&#39;`` instead.</span>
+
+<span class="sd">    voting : {&#39;hard&#39;, &#39;soft&#39;}, default=&#39;hard&#39;</span>
+<span class="sd">        If &#39;hard&#39;, uses predicted class labels for majority rule voting.</span>
+<span class="sd">        Else if &#39;soft&#39;, predicts the class label based on the argmax of</span>
+<span class="sd">        the sums of the predicted probabilities, which is recommended for</span>
+<span class="sd">        an ensemble of well-calibrated classifiers.</span>
+
+<span class="sd">    weights : array-like of shape (n_classifiers,), default=None</span>
+<span class="sd">        Sequence of weights (`float` or `int`) to weight the occurrences of</span>
+<span class="sd">        predicted class labels (`hard` voting) or class probabilities</span>
+<span class="sd">        before averaging (`soft` voting). Uses uniform weights if `None`.</span>
+
+<span class="sd">    n_jobs : int, default=None</span>
+<span class="sd">        The number of jobs to run in parallel for ``fit``.</span>
+<span class="sd">        ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.</span>
+<span class="sd">        ``-1`` means using all processors. See :term:`Glossary &lt;n_jobs&gt;`</span>
+<span class="sd">        for more details.</span>
+
+<span class="sd">        .. versionadded:: 0.18</span>
+
+<span class="sd">    flatten_transform : bool, default=True</span>
+<span class="sd">        Affects shape of transform output only when voting=&#39;soft&#39;</span>
+<span class="sd">        If voting=&#39;soft&#39; and flatten_transform=True, transform method returns</span>
+<span class="sd">        matrix with shape (n_samples, n_classifiers * n_classes). If</span>
+<span class="sd">        flatten_transform=False, it returns</span>
+<span class="sd">        (n_classifiers, n_samples, n_classes).</span>
+
+<span class="sd">    verbose : bool, default=False</span>
+<span class="sd">        If True, the time elapsed while fitting will be printed as it</span>
+<span class="sd">        is completed.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    estimators_ : list of classifiers</span>
+<span class="sd">        The collection of fitted sub-estimators as defined in ``estimators``</span>
+<span class="sd">        that are not &#39;drop&#39;.</span>
+
+<span class="sd">    named_estimators_ : :class:`~sklearn.utils.Bunch`</span>
+<span class="sd">        Attribute to access any fitted sub-estimators by name.</span>
+
+<span class="sd">        .. versionadded:: 0.20</span>
+
+<span class="sd">    classes_ : array-like of shape (n_predictions,)</span>
+<span class="sd">        The classes labels.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    VotingRegressor: Prediction voting regressor.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.linear_model import LogisticRegression</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.naive_bayes import GaussianNB</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.ensemble import RandomForestClassifier, VotingClassifier</span>
+<span class="sd">    &gt;&gt;&gt; clf1 = LogisticRegression(multi_class=&#39;multinomial&#39;, random_state=1)</span>
+<span class="sd">    &gt;&gt;&gt; clf2 = RandomForestClassifier(n_estimators=50, random_state=1)</span>
+<span class="sd">    &gt;&gt;&gt; clf3 = GaussianNB()</span>
+<span class="sd">    &gt;&gt;&gt; X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])</span>
+<span class="sd">    &gt;&gt;&gt; y = np.array([1, 1, 1, 2, 2, 2])</span>
+<span class="sd">    &gt;&gt;&gt; eclf1 = VotingClassifier(estimators=[</span>
+<span class="sd">    ...         (&#39;lr&#39;, clf1), (&#39;rf&#39;, clf2), (&#39;gnb&#39;, clf3)], voting=&#39;hard&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; eclf1 = eclf1.fit(X, y)</span>
+<span class="sd">    &gt;&gt;&gt; print(eclf1.predict(X))</span>
+<span class="sd">    [1 1 1 2 2 2]</span>
+<span class="sd">    &gt;&gt;&gt; np.array_equal(eclf1.named_estimators_.lr.predict(X),</span>
+<span class="sd">    ...                eclf1.named_estimators_[&#39;lr&#39;].predict(X))</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; eclf2 = VotingClassifier(estimators=[</span>
+<span class="sd">    ...         (&#39;lr&#39;, clf1), (&#39;rf&#39;, clf2), (&#39;gnb&#39;, clf3)],</span>
+<span class="sd">    ...         voting=&#39;soft&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; eclf2 = eclf2.fit(X, y)</span>
+<span class="sd">    &gt;&gt;&gt; print(eclf2.predict(X))</span>
+<span class="sd">    [1 1 1 2 2 2]</span>
+<span class="sd">    &gt;&gt;&gt; eclf3 = VotingClassifier(estimators=[</span>
+<span class="sd">    ...        (&#39;lr&#39;, clf1), (&#39;rf&#39;, clf2), (&#39;gnb&#39;, clf3)],</span>
+<span class="sd">    ...        voting=&#39;soft&#39;, weights=[2,1,1],</span>
+<span class="sd">    ...        flatten_transform=True)</span>
+<span class="sd">    &gt;&gt;&gt; eclf3 = eclf3.fit(X, y)</span>
+<span class="sd">    &gt;&gt;&gt; print(eclf3.predict(X))</span>
+<span class="sd">    [1 1 1 2 2 2]</span>
+<span class="sd">    &gt;&gt;&gt; print(eclf3.transform(X).shape)</span>
+<span class="sd">    (6, 6)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@_deprecate_positional_args</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">estimators</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">voting</span><span class="o">=</span><span class="s1">&#39;hard&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">flatten_transform</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">estimators</span><span class="o">=</span><span class="n">estimators</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">voting</span> <span class="o">=</span> <span class="n">voting</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flatten_transform</span> <span class="o">=</span> <span class="n">flatten_transform</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit the estimators.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : {array-like, sparse matrix} of shape (n_samples, n_features)</span>
+<span class="sd">            Training vectors, where n_samples is the number of samples and</span>
+<span class="sd">            n_features is the number of features.</span>
+
+<span class="sd">        y : array-like of shape (n_samples,)</span>
+<span class="sd">            Target values.</span>
+
+<span class="sd">        sample_weight : array-like of shape (n_samples,), default=None</span>
+<span class="sd">            Sample weights. If None, then samples are equally weighted.</span>
+<span class="sd">            Note that this is supported only if all underlying estimators</span>
+<span class="sd">            support sample weights.</span>
+
+<span class="sd">            .. versionadded:: 0.18</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_classification_targets</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Multilabel and multi-output&#39;</span>
+                                      <span class="s1">&#39; classification is not supported.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">voting</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;soft&#39;</span><span class="p">,</span> <span class="s1">&#39;hard&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Voting must be &#39;soft&#39; or &#39;hard&#39;; got (voting=</span><span class="si">%r</span><span class="s2">)&quot;</span>
+                             <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">voting</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">le_</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">le_</span><span class="o">.</span><span class="n">classes_</span>
+        <span class="n">transformed_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">le_</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">transformed_y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict class labels for X.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : {array-like, sparse matrix} of shape (n_samples, n_features)</span>
+<span class="sd">            The input samples.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        maj : array-like of shape (n_samples,)</span>
+<span class="sd">            Predicted class labels.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">voting</span> <span class="o">==</span> <span class="s1">&#39;soft&#39;</span><span class="p">:</span>
+            <span class="n">maj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># &#39;hard&#39; voting</span>
+            <span class="n">predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+            <span class="n">maj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_weights_not_none</span><span class="p">)),</span>
+                <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">arr</span><span class="o">=</span><span class="n">predictions</span><span class="p">)</span>
+
+        <span class="n">maj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">le_</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">maj</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">maj</span>
+
+    <span class="k">def</span> <span class="nf">_collect_probas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Collect results from clf.predict calls.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">clf</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="k">for</span> <span class="n">clf</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimators_</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict class probabilities for X in &#39;soft&#39; voting.&quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_collect_probas</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                         <span class="n">weights</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_weights_not_none</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">avg</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute probabilities of possible outcomes for samples in X.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : {array-like, sparse matrix} of shape (n_samples, n_features)</span>
+<span class="sd">            The input samples.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        avg : array-like of shape (n_samples, n_classes)</span>
+<span class="sd">            Weighted average probability for each class per sample.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">voting</span> <span class="o">==</span> <span class="s1">&#39;hard&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;predict_proba is not available when&quot;</span>
+                                 <span class="s2">&quot; voting=</span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">voting</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_predict_proba</span>
+
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return class labels or probabilities for X for each estimator.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : {array-like, sparse matrix} of shape (n_samples, n_features)</span>
+<span class="sd">            Training vectors, where n_samples is the number of samples and</span>
+<span class="sd">            n_features is the number of features.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        probabilities_or_labels</span>
+<span class="sd">            If `voting=&#39;soft&#39;` and `flatten_transform=True`:</span>
+<span class="sd">                returns ndarray of shape (n_classifiers, n_samples *</span>
+<span class="sd">                n_classes), being class probabilities calculated by each</span>
+<span class="sd">                classifier.</span>
+<span class="sd">            If `voting=&#39;soft&#39; and `flatten_transform=False`:</span>
+<span class="sd">                ndarray of shape (n_classifiers, n_samples, n_classes)</span>
+<span class="sd">            If `voting=&#39;hard&#39;`:</span>
+<span class="sd">                ndarray of shape (n_samples, n_classifiers), being</span>
+<span class="sd">                class labels predicted by each classifier.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">voting</span> <span class="o">==</span> <span class="s1">&#39;soft&#39;</span><span class="p">:</span>
+            <span class="n">probas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collect_probas</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">flatten_transform</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">probas</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">probas</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">VotingRegressor</span><span class="p">(</span><span class="n">RegressorMixin</span><span class="p">,</span> <span class="n">_BaseVoting</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Prediction voting regressor for unfitted estimators.</span>
+
+<span class="sd">    .. versionadded:: 0.21</span>
+
+<span class="sd">    A voting regressor is an ensemble meta-estimator that fits several base</span>
+<span class="sd">    regressors, each on the whole dataset. Then it averages the individual</span>
+<span class="sd">    predictions to form a final prediction.</span>
+
+<span class="sd">    Read more in the :ref:`User Guide &lt;voting_regressor&gt;`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    estimators : list of (str, estimator) tuples</span>
+<span class="sd">        Invoking the ``fit`` method on the ``VotingRegressor`` will fit clones</span>
+<span class="sd">        of those original estimators that will be stored in the class attribute</span>
+<span class="sd">        ``self.estimators_``. An estimator can be set to ``&#39;drop&#39;`` using</span>
+<span class="sd">        ``set_params``.</span>
+
+<span class="sd">        .. versionchanged:: 0.21</span>
+<span class="sd">            ``&#39;drop&#39;`` is accepted.</span>
+
+<span class="sd">        .. deprecated:: 0.22</span>
+<span class="sd">           Using ``None`` to drop an estimator is deprecated in 0.22 and</span>
+<span class="sd">           support will be dropped in 0.24. Use the string ``&#39;drop&#39;`` instead.</span>
+
+<span class="sd">    weights : array-like of shape (n_regressors,), default=None</span>
+<span class="sd">        Sequence of weights (`float` or `int`) to weight the occurrences of</span>
+<span class="sd">        predicted values before averaging. Uses uniform weights if `None`.</span>
+
+<span class="sd">    n_jobs : int, default=None</span>
+<span class="sd">        The number of jobs to run in parallel for ``fit``.</span>
+<span class="sd">        ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.</span>
+<span class="sd">        ``-1`` means using all processors. See :term:`Glossary &lt;n_jobs&gt;`</span>
+<span class="sd">        for more details.</span>
+
+<span class="sd">    verbose : bool, default=False</span>
+<span class="sd">        If True, the time elapsed while fitting will be printed as it</span>
+<span class="sd">        is completed.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    estimators_ : list of regressors</span>
+<span class="sd">        The collection of fitted sub-estimators as defined in ``estimators``</span>
+<span class="sd">        that are not &#39;drop&#39;.</span>
+
+<span class="sd">    named_estimators_ : Bunch</span>
+<span class="sd">        Attribute to access any fitted sub-estimators by name.</span>
+
+<span class="sd">        .. versionadded:: 0.20</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    VotingClassifier: Soft Voting/Majority Rule classifier.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.linear_model import LinearRegression</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.ensemble import RandomForestRegressor</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.ensemble import VotingRegressor</span>
+<span class="sd">    &gt;&gt;&gt; r1 = LinearRegression()</span>
+<span class="sd">    &gt;&gt;&gt; r2 = RandomForestRegressor(n_estimators=10, random_state=1)</span>
+<span class="sd">    &gt;&gt;&gt; X = np.array([[1, 1], [2, 4], [3, 9], [4, 16], [5, 25], [6, 36]])</span>
+<span class="sd">    &gt;&gt;&gt; y = np.array([2, 6, 12, 20, 30, 42])</span>
+<span class="sd">    &gt;&gt;&gt; er = VotingRegressor([(&#39;lr&#39;, r1), (&#39;rf&#39;, r2)])</span>
+<span class="sd">    &gt;&gt;&gt; print(er.fit(X, y).predict(X))</span>
+<span class="sd">    [ 3.3  5.7 11.8 19.7 28.  40.3]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@_deprecate_positional_args</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">estimators</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">estimators</span><span class="o">=</span><span class="n">estimators</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit the estimators.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : {array-like, sparse matrix} of shape (n_samples, n_features)</span>
+<span class="sd">            Training vectors, where n_samples is the number of samples and</span>
+<span class="sd">            n_features is the number of features.</span>
+
+<span class="sd">        y : array-like of shape (n_samples,)</span>
+<span class="sd">            Target values.</span>
+
+<span class="sd">        sample_weight : array-like of shape (n_samples,), default=None</span>
+<span class="sd">            Sample weights. If None, then samples are equally weighted.</span>
+<span class="sd">            Note that this is supported only if all underlying estimators</span>
+<span class="sd">            support sample weights.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : object</span>
+<span class="sd">            Fitted estimator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">column_or_1d</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">warn</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict regression target for X.</span>
+
+<span class="sd">        The predicted regression target of an input sample is computed as the</span>
+<span class="sd">        mean predicted regression targets of the estimators in the ensemble.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : {array-like, sparse matrix} of shape (n_samples, n_features)</span>
+<span class="sd">            The input samples.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        y : ndarray of shape (n_samples,)</span>
+<span class="sd">            The predicted values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_predict</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                          <span class="n">weights</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_weights_not_none</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return predictions for X for each estimator.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : {array-like, sparse matrix} of shape (n_samples, n_features)</span>
+<span class="sd">            The input samples.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        predictions: ndarray of shape (n_samples, n_classifiers)</span>
+<span class="sd">            Values predicted by each regressor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2021, Boston Consulting Group (BCG).<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

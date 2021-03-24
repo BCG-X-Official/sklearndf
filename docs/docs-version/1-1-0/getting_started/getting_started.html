@@ -1,0 +1,582 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Getting started with &#8212; sklearndf  documentation</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/gamma.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/gamma.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="sklearndf" href="../apidoc/sklearndf.html" />
+    <link rel="prev" title="Table of contents" href="../index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../index.html">
+    
+      <img src="../_static/gamma_sklearndf_logo.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item active">
+            <a class="nav-link" href="">Getting started</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../apidoc/sklearndf.html">API reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../contribution_guide.html">Development Guidelines</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../faqs.html">FAQ</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../release_notes.html">Release Notes</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+          
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#installation" class="nav-link">Installation</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#anaconda" class="nav-link">Anaconda</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#pip" class="nav-link">Pip</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#quickstart" class="nav-link">Quickstart</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#creating-a-dataframe-friendly-scikit-learn-preprocessing-pipeline" class="nav-link">Creating a DataFrame friendly scikit-learn preprocessing pipeline</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#tracing-features-from-post-transform-to-original" class="nav-link">Tracing features from post-transform to original</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#completing-the-pipeline-with-a-classifier" class="nav-link">Completing the pipeline with a classifier</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#contributing" class="nav-link">Contributing</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#license" class="nav-link">License</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#acknowledgements" class="nav-link">Acknowledgements</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#bcg-gamma" class="nav-link">BCG GAMMA</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="getting-started-with">
+<span id="getting-started"></span><h1>Getting started with<a class="headerlink" href="#getting-started-with" title="Permalink to this headline">¶</a></h1>
+<img alt="../_images/sklearndf_logo.png" src="../_images/sklearndf_logo.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><em>sklearndf</em> is an open source library designed to address a common need with
+<a class="reference external" href="https://github.com/scikit-learn/scikit-learn">scikit-learn</a>: the outputs of
+transformers are numpy arrays, even when the input is a
+data frame. However, to inspect a model it is essential to keep track of the
+feature names.</p>
+<p>To this end, <em>sklearndf</em> enhances scikit-learn’s estimators as follows:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Preserve data frame structure</strong>:</dt><dd><p>Return data frames as results of transformations, preserving feature names as the column index.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Feature name tracing</strong>:</dt><dd><p>Add additional estimator properties to enable tracing a feature name back to its original input feature; this is especially useful for transformers that create new features (e.g., one-hot encode), and for pipelines that include such transformers.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Easy use</strong>:</dt><dd><p>Simply append DF at the end of your usual scikit-learn class names to get enhanced data frame support!</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p><em>sklearndf</em> supports both PyPI and Anaconda</p>
+<div class="section" id="anaconda">
+<h3>Anaconda<a class="headerlink" href="#anaconda" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span>conda install sklearndf -c bcg_gamma -c conda-forge
+</pre></div>
+</div>
+</div>
+<div class="section" id="pip">
+<h3>Pip<a class="headerlink" href="#pip" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span>pip install sklearndf
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="quickstart">
+<h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
+<p>The following quickstart guide provides a minimal example workflow to get up and running
+with <em>sklearndf</em>.
+For additional tutorials and the API reference,
+see the <em>sklearndf</em> <a class="reference external" href="https://bcg-gamma.github.io/facet/">documentation</a>.</p>
+<p>Changes and additions to new versions are summarized in the
+<a class="reference external" href="https://bcg-gamma.github.io/sklearndf/release_notes.html">release notes</a>.</p>
+<div class="section" id="creating-a-dataframe-friendly-scikit-learn-preprocessing-pipeline">
+<h3>Creating a DataFrame friendly scikit-learn preprocessing pipeline<a class="headerlink" href="#creating-a-dataframe-friendly-scikit-learn-preprocessing-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>The titanic data set includes categorical features such as class and sex, and also has
+missing values for numeric features (i.e., age) and categorical features (i.e., embarked).
+The aim is to predict whether or not a passenger survived.
+A standard sklearn example for this dataset can be found
+<a class="reference external" href="https://scikit-learn.org/stable/auto_examples/compose/plot_column_transformer_mixed_types.html#sphx-glr-auto-examples-compose-plot-column-transformer-mixed-types-py">here</a>.</p>
+<p>We will build a preprocessing pipeline which:</p>
+<ul class="simple">
+<li><p>for categorical variables fills missing values with the string ‘Unknown’ and then one-hot encodes</p></li>
+<li><p>for numerical values fills missing values using median values</p></li>
+</ul>
+<p>The strength of <em>sklearndf</em> is to maintain the scikit-learn conventions and expressivity,
+while also preserving data frames, and hence feature names. We can see this after using
+fit_transform on our preprocessing pipeline.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_openml</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="c1"># relevant sklearndf imports</span>
+<span class="kn">from</span> <span class="nn">sklearndf.transformation</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ColumnTransformerDF</span><span class="p">,</span>
+    <span class="n">OneHotEncoderDF</span><span class="p">,</span>
+    <span class="n">SimpleImputerDF</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearndf.pipeline</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">PipelineDF</span><span class="p">,</span>
+    <span class="n">ClassifierPipelineDF</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearndf.classification</span> <span class="kn">import</span> <span class="n">RandomForestClassifierDF</span>
+
+<span class="c1"># load titanic data</span>
+<span class="n">titanic_X</span><span class="p">,</span> <span class="n">titanic_y</span> <span class="o">=</span> <span class="n">fetch_openml</span><span class="p">(</span><span class="s2">&quot;titanic&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># select features</span>
+<span class="n">numerical_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;fare&#39;</span><span class="p">]</span>
+<span class="n">categorical_features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;embarked&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="s1">&#39;pclass&#39;</span><span class="p">]</span>
+
+<span class="c1"># create a preprocessing pipeline</span>
+<span class="n">preprocessing_numeric_df</span> <span class="o">=</span> <span class="n">SimpleImputerDF</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">)</span>
+
+<span class="n">preprocessing_categorical_df</span> <span class="o">=</span> <span class="n">PipelineDF</span><span class="p">(</span>
+    <span class="n">steps</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;imputer&#39;</span><span class="p">,</span> <span class="n">SimpleImputerDF</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;Unknown&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="s1">&#39;one-hot&#39;</span><span class="p">,</span> <span class="n">OneHotEncoderDF</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">handle_unknown</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">))</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">preprocessing_df</span> <span class="o">=</span> <span class="n">ColumnTransformerDF</span><span class="p">(</span>
+    <span class="n">transformers</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;categorical&#39;</span><span class="p">,</span> <span class="n">preprocessing_categorical_df</span><span class="p">,</span> <span class="n">categorical_features</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;numeric&#39;</span><span class="p">,</span> <span class="n">preprocessing_numeric_df</span><span class="p">,</span> <span class="n">numerical_features</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># run preprocessing</span>
+<span class="n">transformed_df</span> <span class="o">=</span> <span class="n">preprocessing_df</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">titanic_X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">titanic_y</span><span class="p">)</span>
+<span class="n">transformed_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<table class="table">
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 13%" />
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 6%" />
+<col style="width: 7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>feature_out</p></th>
+<th class="head"><p>embarked_C</p></th>
+<th class="head"><p>embarked_Q</p></th>
+<th class="head"><p>embarked_S</p></th>
+<th class="head"><p>embarked_Unknown</p></th>
+<th class="head"><p>sex_female</p></th>
+<th class="head"><p>sex_male</p></th>
+<th class="head"><p>pclass_1.0</p></th>
+<th class="head"><p>pclass_2.0</p></th>
+<th class="head"><p>pclass_3.0</p></th>
+<th class="head"><p>age</p></th>
+<th class="head"><p>fare</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>29</p></td>
+<td><p>211.3375</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>0.9167</p></td>
+<td><p>151.55</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>2</p></td>
+<td><p>151.55</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>30</p></td>
+<td><p>151.55</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>25</p></td>
+<td><p>151.55</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="tracing-features-from-post-transform-to-original">
+<h3>Tracing features from post-transform to original<a class="headerlink" href="#tracing-features-from-post-transform-to-original" title="Permalink to this headline">¶</a></h3>
+<p>The <em>sklearndf</em> pipeline has a <cite>feature_names_original_</cite> attribute which returns a series
+mapping the output columns (the series’ index) to the input columns (the series’ values).
+We can therefore easily select all output features generated from a given input feature,
+such as in this case for embarked.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">embarked_type_derivatives</span> <span class="o">=</span> <span class="n">preprocessing_df</span><span class="o">.</span><span class="n">feature_names_original_</span> <span class="o">==</span> <span class="s2">&quot;embarked&quot;</span>
+<span class="n">transformed_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">embarked_type_derivatives</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<table class="table">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+<col style="width: 27%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>feature_out</p></th>
+<th class="head"><p>embarked_C</p></th>
+<th class="head"><p>embarked_Q</p></th>
+<th class="head"><p>embarked_S</p></th>
+<th class="head"><p>embarked_Unknown</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0.0</p></td>
+<td><p>0.0</p></td>
+<td><p>1.0</p></td>
+<td><p>0.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>0.0</p></td>
+<td><p>0.0</p></td>
+<td><p>1.0</p></td>
+<td><p>0.0</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>0.0</p></td>
+<td><p>0.0</p></td>
+<td><p>1.0</p></td>
+<td><p>0.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>0.0</p></td>
+<td><p>0.0</p></td>
+<td><p>1.0</p></td>
+<td><p>0.0</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>0.0</p></td>
+<td><p>0.0</p></td>
+<td><p>1.0</p></td>
+<td><p>0.0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="completing-the-pipeline-with-a-classifier">
+<h3>Completing the pipeline with a classifier<a class="headerlink" href="#completing-the-pipeline-with-a-classifier" title="Permalink to this headline">¶</a></h3>
+<p>Scikit-learn regressors and classifiers have a <em>sklearndf</em> sibling obtained by appending
+DF to the class name; the API remains the same.
+The result of any predict and decision function will be returned as a pandas series
+(single output) or data frame (class probabilities or multi-output).</p>
+<p>We can combine the preprocessing pipeline above with a classifier to create a full
+predictive pipeline. <em>sklearndf</em> provides two useful, specialised pipeline objects for
+this, RegressorPipelineDF and ClassifierPipelineDF. Both implement a special two-step
+pipeline with one preprocessing step and one prediction step, while staying compatible
+with the general sklearn pipeline idiom.</p>
+<p>Using ClassifierPipelineDF we can combine the preprocessing pipeline with
+RandomForestClassifierDF() to fit a model to a selected training set and then score
+on a test set.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create full pipeline</span>
+<span class="n">pipeline_df</span> <span class="o">=</span> <span class="n">ClassifierPipelineDF</span><span class="p">(</span>
+    <span class="n">preprocessing</span><span class="o">=</span><span class="n">preprocessing_df</span><span class="p">,</span>
+    <span class="n">classifier</span><span class="o">=</span><span class="n">RandomForestClassifierDF</span><span class="p">(</span>
+        <span class="n">n_estimators</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">max_features</span><span class="o">=</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">max_depth</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+        <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">3</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># split data and then fit and score random forest classifier</span>
+<span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">titanic_X</span><span class="p">,</span> <span class="n">titanic_y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">pipeline_df</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model score: </span><span class="si">{</span><span class="n">pipeline_df</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">df_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>model score: 0.79</p>
+</div>
+</div>
+<div class="section" id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
+<p><em>sklearndf</em> is stable and is being supported long-term.</p>
+<p>Contributions to <em>sklearndf</em> are welcome and appreciated.
+For any bug reports or feature requests/enhancements please use the appropriate
+<a class="reference external" href="https://github.com/BCG-Gamma/sklearndf/issues">GitHub form</a>, and if you wish to do
+so, please open a PR addressing the issue.</p>
+<p>We do ask that for any major changes please discuss these with us first via an issue or
+at our team email: <a class="reference external" href="mailto:FacetTeam&#37;&#52;&#48;bcg&#46;com">FacetTeam<span>&#64;</span>bcg<span>&#46;</span>com</a>.</p>
+<p>For further information on contributing please see our
+<a class="reference external" href="https://bcg-gamma.github.io/sklearndf/contribution_guide.html">contribution guide</a>.</p>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p><em>sklearndf</em> is licensed under Apache 2.0 as described in the
+<a class="reference external" href="https://github.com/BCG-Gamma/sklearndf/blob/develop/LICENSE">LICENSE</a> file.</p>
+</div>
+<div class="section" id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h2>
+<p>Learners and pipelining from the popular Machine Learning package
+<a class="reference external" href="https://github.com/scikit-learn/scikit-learn">scikit-learn</a>  support
+the corresponding <em>sklearndf</em> implementations.</p>
+</div>
+<div class="section" id="bcg-gamma">
+<h2>BCG GAMMA<a class="headerlink" href="#bcg-gamma" title="Permalink to this headline">¶</a></h2>
+<p>We are always on the lookout for passionate and talented data scientists to join the
+BCG GAMMA team. If you would like to know more you can find out about
+<a class="reference external" href="https://www.bcg.com/en-gb/beyond-consulting/bcg-gamma/default">BCG GAMMA</a>,
+or have a look at
+<a class="reference external" href="https://www.bcg.com/en-gb/beyond-consulting/bcg-gamma/careers">career opportunities</a>.</p>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='left-prev' id="prev-link" href="../index.html" title="previous page">Table of contents</a>
+    <a class='right-next' id="next-link" href="../apidoc/sklearndf.html" title="next page">sklearndf</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2021, Boston Consulting Group (BCG).<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+sklearndf.regression.VotingRegressorDF
+======================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: VotingRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~VotingRegressorDF.clone
+      ~VotingRegressorDF.fit
+      ~VotingRegressorDF.fit_predict
+      ~VotingRegressorDF.from_fitted
+      ~VotingRegressorDF.get_params
+      ~VotingRegressorDF.predict
+      ~VotingRegressorDF.score
+      ~VotingRegressorDF.set_params
+      ~VotingRegressorDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~VotingRegressorDF.COL_FEATURE_IN
+      ~VotingRegressorDF.COL_PREDICTION
+      ~VotingRegressorDF.feature_names_in_
+      ~VotingRegressorDF.is_fitted
+      ~VotingRegressorDF.n_outputs_
+      ~VotingRegressorDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

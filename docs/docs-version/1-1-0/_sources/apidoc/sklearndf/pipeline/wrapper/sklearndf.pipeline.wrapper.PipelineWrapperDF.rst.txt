@@ -1,0 +1,57 @@
+sklearndf.pipeline.wrapper.PipelineWrapperDF
+============================================
+
+.. currentmodule:: sklearndf.pipeline.wrapper
+
+.. autoclass:: PipelineWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PipelineWrapperDF.clone
+      ~PipelineWrapperDF.decision_function
+      ~PipelineWrapperDF.fit
+      ~PipelineWrapperDF.fit_predict
+      ~PipelineWrapperDF.fit_transform
+      ~PipelineWrapperDF.from_fitted
+      ~PipelineWrapperDF.get_params
+      ~PipelineWrapperDF.inverse_transform
+      ~PipelineWrapperDF.predict
+      ~PipelineWrapperDF.predict_log_proba
+      ~PipelineWrapperDF.predict_proba
+      ~PipelineWrapperDF.score
+      ~PipelineWrapperDF.set_params
+      ~PipelineWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~PipelineWrapperDF.COL_FEATURE_IN
+      ~PipelineWrapperDF.COL_FEATURE_OUT
+      ~PipelineWrapperDF.COL_PREDICTION
+      ~PipelineWrapperDF.PASSTHROUGH
+      ~PipelineWrapperDF.classes_
+      ~PipelineWrapperDF.feature_names_in_
+      ~PipelineWrapperDF.feature_names_original_
+      ~PipelineWrapperDF.feature_names_out_
+      ~PipelineWrapperDF.is_fitted
+      ~PipelineWrapperDF.n_outputs_
+      ~PipelineWrapperDF.native_estimator
+      ~PipelineWrapperDF.steps
+   
+   
+
+   .. rubric:: Definitions

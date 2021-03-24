@@ -1,0 +1,6 @@
+sklearndf.wrapper.make\_df\_transformer
+=======================================
+
+.. currentmodule:: sklearndf.wrapper
+
+.. autofunction:: make_df_transformer

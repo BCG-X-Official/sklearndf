@@ -1,0 +1,47 @@
+sklearndf.transformation.OrdinalEncoderDF
+=========================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: OrdinalEncoderDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~OrdinalEncoderDF.clone
+      ~OrdinalEncoderDF.fit
+      ~OrdinalEncoderDF.fit_transform
+      ~OrdinalEncoderDF.from_fitted
+      ~OrdinalEncoderDF.get_params
+      ~OrdinalEncoderDF.inverse_transform
+      ~OrdinalEncoderDF.set_params
+      ~OrdinalEncoderDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~OrdinalEncoderDF.COL_FEATURE_IN
+      ~OrdinalEncoderDF.COL_FEATURE_OUT
+      ~OrdinalEncoderDF.feature_names_in_
+      ~OrdinalEncoderDF.feature_names_original_
+      ~OrdinalEncoderDF.feature_names_out_
+      ~OrdinalEncoderDF.is_fitted
+      ~OrdinalEncoderDF.n_outputs_
+      ~OrdinalEncoderDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions
