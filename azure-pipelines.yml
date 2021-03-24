@@ -631,6 +631,8 @@ stages:
               cp -r $(Build.ArtifactStagingDirectory)/old_docs/docs .
               echo "Current docs contents:"
               tree docs
+              mkdir -p $(System.DefaultWorkingDirectory)/sklearndf/sphinx/build/
+              cp -R docs/docs-version $(System.DefaultWorkingDirectory)/sklearndf/sphinx/build/
               echo "Building sphinx docs"
               conda activate sklearndf-develop
               cd $(System.DefaultWorkingDirectory)/sklearndf
