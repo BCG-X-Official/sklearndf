@@ -1,6 +1,22 @@
 Release Notes
 =============
 
+*sklearndf* 1.1
+---------------
+
+1.1.0
+~~~~~
+
+This release exposes the `wrapper` API used to generate augmented DF estimators from
+native `scikit-learn` estimators.
+
+- API: expose the :class:`.EstimatorWrapperDF` class hierarchy through the new
+  :mod:`sklearndf.wrapper` package
+- API: create new `scikit-learn` wrapper classes with the new functions
+  :func:`.make_df_estimator`, :func:`.make_df_classifier`, :func:`.make_df_regressor`,
+  and :func:`.make_df_transformer`
+
+
 *sklearndf* 1.0
 ---------------
 
