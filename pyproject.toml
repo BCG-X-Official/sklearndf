@@ -18,7 +18,7 @@ requires = [
     "gamma-pytools  ~=1.1",
     "lightgbm       ==3.*",
     "numpy          >=1.16,<1.21a",
-    "packaging      =20.*",
+    "packaging      ==20.*",
     "pandas         >=0.24,<2a",
     "scikit-learn   >=0.21,<0.24a",
     "scipy          >=1.2,<1.6a",
