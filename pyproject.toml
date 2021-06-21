@@ -20,7 +20,7 @@ requires = [
     "numpy          >=1.16,<1.21a",
     "packaging      ==20.*",
     "pandas         >=0.24,<2a",
-    "scikit-learn   >=0.21,<0.24a",
+    "scikit-learn   >=0.21,<0.25a",
     "scipy          >=1.2,<1.6a",
 ]
 
@@ -89,7 +89,7 @@ lightgbm       = "~=3.2"
 numpy          = "=1.20.*"
 pandas         = "~=1.2"
 python         = "=3.8.*"
-scikit-learn   = "=0.23.*"
+scikit-learn   = "=0.24.*"
 scipy          = "=1.5.*"
 # additional requirements of gamma-pytools
 joblib         = "=1.*"
