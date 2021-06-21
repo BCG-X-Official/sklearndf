@@ -13,9 +13,9 @@ from sklearndf.regression import (
     RandomForestRegressorDF,
 )
 from sklearndf.wrapper import EstimatorWrapperDF
-from test.sklearndf import check_expected_not_fitted_error, list_classes
+from test.sklearndf import check_expected_not_fitted_error, iterate_classes
 
-REGRESSORS_TO_TEST: List[Type[EstimatorWrapperDF]] = list_classes(
+REGRESSORS_TO_TEST: List[Type[EstimatorWrapperDF]] = iterate_classes(
     from_modules=sklearndf.regression,
     matching=r".*DF",
     excluding=[RegressorDF.__name__, TransformerDF.__name__, r".*WrapperDF"],
