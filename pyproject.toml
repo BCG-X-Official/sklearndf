@@ -16,7 +16,7 @@ license = "Apache Software License v2.0"
 requires = [
     "boruta         ~=0.3",
     "gamma-pytools  ~=1.1",
-    "lightgbm       =3.*",
+    "lightgbm       ==3.*",
     "numpy          >=1.16,<1.21a",
     "packaging      =20.*",
     "pandas         >=0.24,<2a",
