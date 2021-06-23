@@ -14,7 +14,6 @@ dependencies:
   - python ~= 3.8
   - scikit-learn = 0.24.*
   - scipy ~= 1.6
-  - typing_inspect ~= 0.7
   # build/test
   - black = 20.8b1
   - conda-build ~= 3.20
