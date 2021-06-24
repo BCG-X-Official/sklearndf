@@ -90,7 +90,7 @@ numpy          = "=1.20.*"
 pandas         = "~=1.2"
 python         = "=3.8.*"
 scikit-learn   = "=0.24.*"
-scipy          = "=1.5.*"
+scipy          = "=1.6.*"
 # additional requirements of gamma-pytools
 joblib         = "=1.*"
 matplotlib     = "~=3.3"
