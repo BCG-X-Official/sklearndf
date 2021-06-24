@@ -1,0 +1,48 @@
+sklearndf.regression.GradientBoostingRegressorDF
+================================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: GradientBoostingRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~GradientBoostingRegressorDF.apply
+      ~GradientBoostingRegressorDF.clone
+      ~GradientBoostingRegressorDF.fit
+      ~GradientBoostingRegressorDF.fit_predict
+      ~GradientBoostingRegressorDF.from_fitted
+      ~GradientBoostingRegressorDF.get_params
+      ~GradientBoostingRegressorDF.predict
+      ~GradientBoostingRegressorDF.score
+      ~GradientBoostingRegressorDF.set_params
+      ~GradientBoostingRegressorDF.staged_predict
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~GradientBoostingRegressorDF.COL_FEATURE_IN
+      ~GradientBoostingRegressorDF.COL_PREDICTION
+      ~GradientBoostingRegressorDF.feature_names_in_
+      ~GradientBoostingRegressorDF.is_fitted
+      ~GradientBoostingRegressorDF.n_classes_
+      ~GradientBoostingRegressorDF.n_outputs_
+      ~GradientBoostingRegressorDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

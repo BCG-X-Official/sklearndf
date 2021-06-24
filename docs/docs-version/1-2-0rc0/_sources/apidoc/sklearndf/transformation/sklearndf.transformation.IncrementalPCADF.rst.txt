@@ -1,0 +1,48 @@
+sklearndf.transformation.IncrementalPCADF
+=========================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: IncrementalPCADF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~IncrementalPCADF.clone
+      ~IncrementalPCADF.fit
+      ~IncrementalPCADF.fit_transform
+      ~IncrementalPCADF.from_fitted
+      ~IncrementalPCADF.get_params
+      ~IncrementalPCADF.inverse_transform
+      ~IncrementalPCADF.partial_fit
+      ~IncrementalPCADF.set_params
+      ~IncrementalPCADF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~IncrementalPCADF.COL_FEATURE_IN
+      ~IncrementalPCADF.COL_FEATURE_OUT
+      ~IncrementalPCADF.feature_names_in_
+      ~IncrementalPCADF.feature_names_original_
+      ~IncrementalPCADF.feature_names_out_
+      ~IncrementalPCADF.is_fitted
+      ~IncrementalPCADF.n_outputs_
+      ~IncrementalPCADF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

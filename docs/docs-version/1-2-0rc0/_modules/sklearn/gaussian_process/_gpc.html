@@ -1,0 +1,994 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearn.gaussian_process._gpc &#8212; sklearndf  documentation</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/gamma.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/gamma.js"></script>
+    <script src="../../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../../index.html">
+    
+      <img src="../../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../getting_started/getting_started.html">Getting started</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../apidoc/sklearndf.html">API reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../contribution_guide.html">Development Guidelines</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../faqs.html">FAQ</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../release_notes.html">Release Notes</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for sklearn.gaussian_process._gpc</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Gaussian processes classification.&quot;&quot;&quot;</span>
+
+<span class="c1"># Authors: Jan Hendrik Metzen &lt;jhm@informatik.uni-bremen.de&gt;</span>
+<span class="c1">#</span>
+<span class="c1"># License: BSD 3 clause</span>
+
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="kn">import</span> <span class="n">cholesky</span><span class="p">,</span> <span class="n">cho_solve</span><span class="p">,</span> <span class="n">solve</span>
+<span class="kn">import</span> <span class="nn">scipy.optimize</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">erf</span><span class="p">,</span> <span class="n">expit</span>
+
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">,</span> <span class="n">clone</span>
+<span class="kn">from</span> <span class="nn">.kernels</span> \
+    <span class="kn">import</span> <span class="nn">RBF</span><span class="o">,</span> <span class="nn">CompoundKernel</span><span class="o">,</span> <span class="nn">ConstantKernel</span> <span class="k">as</span> <span class="nn">C</span>
+<span class="kn">from</span> <span class="nn">..utils.validation</span> <span class="kn">import</span> <span class="n">check_is_fitted</span><span class="p">,</span> <span class="n">check_array</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">check_random_state</span>
+<span class="kn">from</span> <span class="nn">..utils.optimize</span> <span class="kn">import</span> <span class="n">_check_optimize_result</span>
+<span class="kn">from</span> <span class="nn">..preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
+<span class="kn">from</span> <span class="nn">..multiclass</span> <span class="kn">import</span> <span class="n">OneVsRestClassifier</span><span class="p">,</span> <span class="n">OneVsOneClassifier</span>
+<span class="kn">from</span> <span class="nn">..utils.validation</span> <span class="kn">import</span> <span class="n">_deprecate_positional_args</span>
+
+
+<span class="c1"># Values required for approximating the logistic sigmoid by</span>
+<span class="c1"># error functions. coefs are obtained via:</span>
+<span class="c1"># x = np.array([0, 0.6, 2, 3.5, 4.5, np.inf])</span>
+<span class="c1"># b = logistic(x)</span>
+<span class="c1"># A = (erf(np.dot(x, self.lambdas)) + 1) / 2</span>
+<span class="c1"># coefs = lstsq(A, b)[0]</span>
+<span class="n">LAMBDAS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.41</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.37</span><span class="p">,</span> <span class="mf">0.44</span><span class="p">,</span> <span class="mf">0.39</span><span class="p">])[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">COEFS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1854.8214151</span><span class="p">,</span> <span class="mf">3516.89893646</span><span class="p">,</span> <span class="mf">221.29346712</span><span class="p">,</span>
+                  <span class="mf">128.12323805</span><span class="p">,</span> <span class="o">-</span><span class="mf">2010.49422654</span><span class="p">])[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">_BinaryGaussianProcessClassifierLaplace</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Binary Gaussian process classification based on Laplace approximation.</span>
+
+<span class="sd">    The implementation is based on Algorithm 3.1, 3.2, and 5.1 of</span>
+<span class="sd">    ``Gaussian Processes for Machine Learning&#39;&#39; (GPML) by Rasmussen and</span>
+<span class="sd">    Williams.</span>
+
+<span class="sd">    Internally, the Laplace approximation is used for approximating the</span>
+<span class="sd">    non-Gaussian posterior by a Gaussian.</span>
+
+<span class="sd">    Currently, the implementation is restricted to using the logistic link</span>
+<span class="sd">    function.</span>
+
+<span class="sd">    .. versionadded:: 0.18</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    kernel : kernel instance, default=None</span>
+<span class="sd">        The kernel specifying the covariance function of the GP. If None is</span>
+<span class="sd">        passed, the kernel &quot;1.0 * RBF(1.0)&quot; is used as default. Note that</span>
+<span class="sd">        the kernel&#39;s hyperparameters are optimized during fitting.</span>
+
+<span class="sd">    optimizer : &#39;fmin_l_bfgs_b&#39; or callable, default=&#39;fmin_l_bfgs_b&#39;</span>
+<span class="sd">        Can either be one of the internally supported optimizers for optimizing</span>
+<span class="sd">        the kernel&#39;s parameters, specified by a string, or an externally</span>
+<span class="sd">        defined optimizer passed as a callable. If a callable is passed, it</span>
+<span class="sd">        must have the  signature::</span>
+
+<span class="sd">            def optimizer(obj_func, initial_theta, bounds):</span>
+<span class="sd">                # * &#39;obj_func&#39; is the objective function to be maximized, which</span>
+<span class="sd">                #   takes the hyperparameters theta as parameter and an</span>
+<span class="sd">                #   optional flag eval_gradient, which determines if the</span>
+<span class="sd">                #   gradient is returned additionally to the function value</span>
+<span class="sd">                # * &#39;initial_theta&#39;: the initial value for theta, which can be</span>
+<span class="sd">                #   used by local optimizers</span>
+<span class="sd">                # * &#39;bounds&#39;: the bounds on the values of theta</span>
+<span class="sd">                ....</span>
+<span class="sd">                # Returned are the best found hyperparameters theta and</span>
+<span class="sd">                # the corresponding value of the target function.</span>
+<span class="sd">                return theta_opt, func_min</span>
+
+<span class="sd">        Per default, the &#39;L-BFGS-B&#39; algorithm from scipy.optimize.minimize</span>
+<span class="sd">        is used. If None is passed, the kernel&#39;s parameters are kept fixed.</span>
+<span class="sd">        Available internal optimizers are::</span>
+
+<span class="sd">            &#39;fmin_l_bfgs_b&#39;</span>
+
+<span class="sd">    n_restarts_optimizer : int, default=0</span>
+<span class="sd">        The number of restarts of the optimizer for finding the kernel&#39;s</span>
+<span class="sd">        parameters which maximize the log-marginal likelihood. The first run</span>
+<span class="sd">        of the optimizer is performed from the kernel&#39;s initial parameters,</span>
+<span class="sd">        the remaining ones (if any) from thetas sampled log-uniform randomly</span>
+<span class="sd">        from the space of allowed theta-values. If greater than 0, all bounds</span>
+<span class="sd">        must be finite. Note that n_restarts_optimizer=0 implies that one</span>
+<span class="sd">        run is performed.</span>
+
+<span class="sd">    max_iter_predict : int, default=100</span>
+<span class="sd">        The maximum number of iterations in Newton&#39;s method for approximating</span>
+<span class="sd">        the posterior during predict. Smaller values will reduce computation</span>
+<span class="sd">        time at the cost of worse results.</span>
+
+<span class="sd">    warm_start : bool, default=False</span>
+<span class="sd">        If warm-starts are enabled, the solution of the last Newton iteration</span>
+<span class="sd">        on the Laplace approximation of the posterior mode is used as</span>
+<span class="sd">        initialization for the next call of _posterior_mode(). This can speed</span>
+<span class="sd">        up convergence when _posterior_mode is called several times on similar</span>
+<span class="sd">        problems as in hyperparameter optimization. See :term:`the Glossary</span>
+<span class="sd">        &lt;warm_start&gt;`.</span>
+
+<span class="sd">    copy_X_train : bool, default=True</span>
+<span class="sd">        If True, a persistent copy of the training data is stored in the</span>
+<span class="sd">        object. Otherwise, just a reference to the training data is stored,</span>
+<span class="sd">        which might cause predictions to change if the data is modified</span>
+<span class="sd">        externally.</span>
+
+<span class="sd">    random_state : int, RandomState instance or None, default=None</span>
+<span class="sd">        Determines random number generation used to initialize the centers.</span>
+<span class="sd">        Pass an int for reproducible results across multiple function calls.</span>
+<span class="sd">        See :term: `Glossary &lt;random_state&gt;`.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X_train_ : array-like of shape (n_samples, n_features) or list of object</span>
+<span class="sd">        Feature vectors or other representations of training data (also</span>
+<span class="sd">        required for prediction).</span>
+
+<span class="sd">    y_train_ : array-like of shape (n_samples,)</span>
+<span class="sd">        Target values in training data (also required for prediction)</span>
+
+<span class="sd">    classes_ : array-like of shape (n_classes,)</span>
+<span class="sd">        Unique class labels.</span>
+
+<span class="sd">    kernel_ : kernl instance</span>
+<span class="sd">        The kernel used for prediction. The structure of the kernel is the</span>
+<span class="sd">        same as the one passed as parameter but with optimized hyperparameters</span>
+
+<span class="sd">    L_ : array-like of shape (n_samples, n_samples)</span>
+<span class="sd">        Lower-triangular Cholesky decomposition of the kernel in X_train_</span>
+
+<span class="sd">    pi_ : array-like of shape (n_samples,)</span>
+<span class="sd">        The probabilities of the positive class for the training points</span>
+<span class="sd">        X_train_</span>
+
+<span class="sd">    W_sr_ : array-like of shape (n_samples,)</span>
+<span class="sd">        Square root of W, the Hessian of log-likelihood of the latent function</span>
+<span class="sd">        values for the observed labels. Since W is diagonal, only the diagonal</span>
+<span class="sd">        of sqrt(W) is stored.</span>
+
+<span class="sd">    log_marginal_likelihood_value_ : float</span>
+<span class="sd">        The log-marginal-likelihood of ``self.kernel_.theta``</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@_deprecate_positional_args</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;fmin_l_bfgs_b&quot;</span><span class="p">,</span>
+                 <span class="n">n_restarts_optimizer</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_iter_predict</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                 <span class="n">warm_start</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">copy_X_train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span> <span class="o">=</span> <span class="n">kernel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optimizer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_restarts_optimizer</span> <span class="o">=</span> <span class="n">n_restarts_optimizer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter_predict</span> <span class="o">=</span> <span class="n">max_iter_predict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warm_start</span> <span class="o">=</span> <span class="n">warm_start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">copy_X_train</span> <span class="o">=</span> <span class="n">copy_X_train</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit Gaussian process classification model</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like of shape (n_samples, n_features) or list of object</span>
+<span class="sd">            Feature vectors or other representations of training data.</span>
+
+<span class="sd">        y : array-like of shape (n_samples,)</span>
+<span class="sd">            Target values, must be binary</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : returns an instance of self.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Use an RBF kernel as default</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span> <span class="o">=</span> <span class="n">C</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">constant_value_bounds</span><span class="o">=</span><span class="s2">&quot;fixed&quot;</span><span class="p">)</span> \
+                <span class="o">*</span> <span class="n">RBF</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">length_scale_bounds</span><span class="o">=</span><span class="s2">&quot;fixed&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rng</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">X_train_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy_X_train</span> <span class="k">else</span> <span class="n">X</span>
+
+        <span class="c1"># Encode class labels and check that it is a binary classification</span>
+        <span class="c1"># problem</span>
+        <span class="n">label_encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_train_</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">classes_</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> supports only binary classification. &quot;</span>
+                             <span class="s2">&quot;y contains classes </span><span class="si">%s</span><span class="s2">&quot;</span>
+                             <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:s}</span><span class="s2"> requires 2 classes; got </span><span class="si">{1:d}</span><span class="s2"> class&quot;</span>
+                             <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">n_dims</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Choose hyperparameters based on maximizing the log-marginal</span>
+            <span class="c1"># likelihood (potentially starting from several initial values)</span>
+            <span class="k">def</span> <span class="nf">obj_func</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">eval_gradient</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">eval_gradient</span><span class="p">:</span>
+                    <span class="n">lml</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood</span><span class="p">(</span>
+                        <span class="n">theta</span><span class="p">,</span> <span class="n">eval_gradient</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">clone_kernel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="o">-</span><span class="n">lml</span><span class="p">,</span> <span class="o">-</span><span class="n">grad</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span>
+                                                         <span class="n">clone_kernel</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="c1"># First optimize starting from theta specified in kernel</span>
+            <span class="n">optima</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_constrained_optimization</span><span class="p">(</span><span class="n">obj_func</span><span class="p">,</span>
+                                                     <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">theta</span><span class="p">,</span>
+                                                     <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">bounds</span><span class="p">)]</span>
+
+            <span class="c1"># Additional runs are performed from log-uniform chosen initial</span>
+            <span class="c1"># theta</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_restarts_optimizer</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">bounds</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;Multiple optimizer restarts (n_restarts_optimizer&gt;0) &quot;</span>
+                        <span class="s2">&quot;requires that all bounds are finite.&quot;</span><span class="p">)</span>
+                <span class="n">bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">bounds</span>
+                <span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_restarts_optimizer</span><span class="p">):</span>
+                    <span class="n">theta_initial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">bounds</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+                                                            <span class="n">bounds</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]))</span>
+                    <span class="n">optima</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_constrained_optimization</span><span class="p">(</span><span class="n">obj_func</span><span class="p">,</span> <span class="n">theta_initial</span><span class="p">,</span>
+                                                       <span class="n">bounds</span><span class="p">))</span>
+            <span class="c1"># Select result from run with minimal (negative) log-marginal</span>
+            <span class="c1"># likelihood</span>
+            <span class="n">lml_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">optima</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">optima</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">lml_values</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">_check_bounds_params</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood_value_</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lml_values</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood_value_</span> <span class="o">=</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+
+        <span class="c1"># Precompute quantities required for predictions which are independent</span>
+        <span class="c1"># of actual query points</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train_</span><span class="p">)</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pi_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">W_sr_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">L_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">_posterior_mode</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">return_temporaries</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Perform classification on an array of test vectors X.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like of shape (n_samples, n_features) or list of object</span>
+<span class="sd">            Query points where the GP is evaluated for classification.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        C : ndarray of shape (n_samples,)</span>
+<span class="sd">            Predicted target values for X, values are from ``classes_``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># As discussed on Section 3.4.2 of GPML, for making hard binary</span>
+        <span class="c1"># decisions, it is enough to compute the MAP of the posterior and</span>
+        <span class="c1"># pass it through the link function</span>
+        <span class="n">K_star</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train_</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>  <span class="c1"># K_star =k(x_star)</span>
+        <span class="n">f_star</span> <span class="o">=</span> <span class="n">K_star</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train_</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_</span><span class="p">)</span>  <span class="c1"># Algorithm 3.2,Line 4</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f_star</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return probability estimates for the test vector X.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like of shape (n_samples, n_features) or list of object</span>
+<span class="sd">            Query points where the GP is evaluated for classification.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        C : array-like of shape (n_samples, n_classes)</span>
+<span class="sd">            Returns the probability of the samples for each class in</span>
+<span class="sd">            the model. The columns correspond to the classes in sorted</span>
+<span class="sd">            order, as they appear in the attribute ``classes_``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># Based on Algorithm 3.2 of GPML</span>
+        <span class="n">K_star</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train_</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>  <span class="c1"># K_star =k(x_star)</span>
+        <span class="n">f_star</span> <span class="o">=</span> <span class="n">K_star</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train_</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pi_</span><span class="p">)</span>  <span class="c1"># Line 4</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">L_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">W_sr_</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">K_star</span><span class="p">)</span>  <span class="c1"># Line 5</span>
+        <span class="c1"># Line 6 (compute np.diag(v.T.dot(v)) via einsum)</span>
+        <span class="n">var_f_star</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij,ij-&gt;j&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+        <span class="c1"># Line 7:</span>
+        <span class="c1"># Approximate \int log(z) * N(z | f_star, var_f_star)</span>
+        <span class="c1"># Approximation is due to Williams &amp; Barber, &quot;Bayesian Classification</span>
+        <span class="c1"># with Gaussian Processes&quot;, Appendix A: Approximate the logistic</span>
+        <span class="c1"># sigmoid by a linear combination of 5 error functions.</span>
+        <span class="c1"># For information on how this integral can be computed see</span>
+        <span class="c1"># blitiri.blogspot.de/2012/11/gaussian-integral-of-error-function.html</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">var_f_star</span><span class="p">)</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="n">LAMBDAS</span> <span class="o">*</span> <span class="n">f_star</span>
+        <span class="n">integrals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">alpha</span><span class="p">)</span> \
+            <span class="o">*</span> <span class="n">erf</span><span class="p">(</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">alpha</span> <span class="o">/</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">+</span> <span class="n">LAMBDAS</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span> \
+            <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var_f_star</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+        <span class="n">pi_star</span> <span class="o">=</span> <span class="p">(</span><span class="n">COEFS</span> <span class="o">*</span> <span class="n">integrals</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mf">.5</span> <span class="o">*</span> <span class="n">COEFS</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pi_star</span><span class="p">,</span> <span class="n">pi_star</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="k">def</span> <span class="nf">log_marginal_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eval_gradient</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                <span class="n">clone_kernel</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns log-marginal likelihood of theta for training data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        theta : array-like of shape (n_kernel_params,), default=None</span>
+<span class="sd">            Kernel hyperparameters for which the log-marginal likelihood is</span>
+<span class="sd">            evaluated. If None, the precomputed log_marginal_likelihood</span>
+<span class="sd">            of ``self.kernel_.theta`` is returned.</span>
+
+<span class="sd">        eval_gradient : bool, default=False</span>
+<span class="sd">            If True, the gradient of the log-marginal likelihood with respect</span>
+<span class="sd">            to the kernel hyperparameters at position theta is returned</span>
+<span class="sd">            additionally. If True, theta must not be None.</span>
+
+<span class="sd">        clone_kernel : bool, default=True</span>
+<span class="sd">            If True, the kernel attribute is copied. If False, the kernel</span>
+<span class="sd">            attribute is modified, but may result in a performance improvement.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        log_likelihood : float</span>
+<span class="sd">            Log-marginal likelihood of theta for training data.</span>
+
+<span class="sd">        log_likelihood_gradient : ndarray of shape (n_kernel_params,), \</span>
+<span class="sd">                optional</span>
+<span class="sd">            Gradient of the log-marginal likelihood with respect to the kernel</span>
+<span class="sd">            hyperparameters at position theta.</span>
+<span class="sd">            Only returned when `eval_gradient` is True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">theta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">eval_gradient</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Gradient can only be evaluated for theta!=None&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood_value_</span>
+
+        <span class="k">if</span> <span class="n">clone_kernel</span><span class="p">:</span>
+            <span class="n">kernel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">clone_with_theta</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">kernel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_</span>
+            <span class="n">kernel</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">theta</span>
+
+        <span class="k">if</span> <span class="n">eval_gradient</span><span class="p">:</span>
+            <span class="n">K</span><span class="p">,</span> <span class="n">K_gradient</span> <span class="o">=</span> <span class="n">kernel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train_</span><span class="p">,</span> <span class="n">eval_gradient</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">K</span> <span class="o">=</span> <span class="n">kernel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train_</span><span class="p">)</span>
+
+        <span class="c1"># Compute log-marginal-likelihood Z and also store some temporaries</span>
+        <span class="c1"># which can be reused for computing Z&#39;s gradient</span>
+        <span class="n">Z</span><span class="p">,</span> <span class="p">(</span><span class="n">pi</span><span class="p">,</span> <span class="n">W_sr</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span> <span class="o">=</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">_posterior_mode</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">return_temporaries</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">eval_gradient</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Z</span>
+
+        <span class="c1"># Compute gradient based on Algorithm 5.1 of GPML</span>
+        <span class="n">d_Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">theta</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># XXX: Get rid of the np.diag() in the next line</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">W_sr</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">cho_solve</span><span class="p">((</span><span class="n">L</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">W_sr</span><span class="p">))</span>  <span class="c1"># Line 7</span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">W_sr</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">K</span><span class="p">)</span>  <span class="c1"># Line 8</span>
+        <span class="c1"># Line 9: (use einsum to compute np.diag(C.T.dot(C))))</span>
+        <span class="n">s_2</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">K</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ij, ij -&gt; j&#39;</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">C</span><span class="p">))</span> \
+            <span class="o">*</span> <span class="p">(</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span><span class="p">))</span>  <span class="c1"># third derivative</span>
+
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">d_Z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">C</span> <span class="o">=</span> <span class="n">K_gradient</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">j</span><span class="p">]</span>   <span class="c1"># Line 11</span>
+            <span class="c1"># Line 12: (R.T.ravel().dot(C.ravel()) = np.trace(R.dot(C)))</span>
+            <span class="n">s_1</span> <span class="o">=</span> <span class="mf">.5</span> <span class="o">*</span> <span class="n">a</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="mf">.5</span> <span class="o">*</span> <span class="n">R</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+
+            <span class="n">b</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train_</span> <span class="o">-</span> <span class="n">pi</span><span class="p">)</span>  <span class="c1"># Line 13</span>
+            <span class="n">s_3</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">K</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>  <span class="c1"># Line 14</span>
+
+            <span class="n">d_Z</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_1</span> <span class="o">+</span> <span class="n">s_2</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">s_3</span><span class="p">)</span>  <span class="c1"># Line 15</span>
+
+        <span class="k">return</span> <span class="n">Z</span><span class="p">,</span> <span class="n">d_Z</span>
+
+    <span class="k">def</span> <span class="nf">_posterior_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">return_temporaries</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Mode-finding for binary Laplace GPC and fixed kernel.</span>
+
+<span class="sd">        This approximates the posterior of the latent function values for given</span>
+<span class="sd">        inputs and target observations with a Gaussian approximation and uses</span>
+<span class="sd">        Newton&#39;s iteration to find the mode of this approximation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Based on Algorithm 3.1 of GPML</span>
+
+        <span class="c1"># If warm_start are enabled, we reuse the last solution for the</span>
+        <span class="c1"># posterior mode as initialization; otherwise, we initialize with 0</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">warm_start</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;f_cached&quot;</span><span class="p">)</span> \
+           <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_cached</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_train_</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_cached</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train_</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+        <span class="c1"># Use Newton&#39;s iteration method to find mode of Laplace approximation</span>
+        <span class="n">log_marginal_likelihood</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter_predict</span><span class="p">):</span>
+            <span class="c1"># Line 4</span>
+            <span class="n">pi</span> <span class="o">=</span> <span class="n">expit</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">W</span> <span class="o">=</span> <span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pi</span><span class="p">)</span>
+            <span class="c1"># Line 5</span>
+            <span class="n">W_sr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+            <span class="n">W_sr_K</span> <span class="o">=</span> <span class="n">W_sr</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">K</span>
+            <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">W_sr_K</span> <span class="o">*</span> <span class="n">W_sr</span>
+            <span class="n">L</span> <span class="o">=</span> <span class="n">cholesky</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="c1"># Line 6</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">W</span> <span class="o">*</span> <span class="n">f</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train_</span> <span class="o">-</span> <span class="n">pi</span><span class="p">)</span>
+            <span class="c1"># Line 7</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">W_sr</span> <span class="o">*</span> <span class="n">cho_solve</span><span class="p">((</span><span class="n">L</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span> <span class="n">W_sr_K</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+            <span class="c1"># Line 8</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+            <span class="c1"># Line 10: Compute log marginal likelihood in loop and use as</span>
+            <span class="c1">#          convergence criterion</span>
+            <span class="n">lml</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">a</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> \
+                <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train_</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">f</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> \
+                <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">L</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="c1"># Check if we have converged (log marginal likelihood does</span>
+            <span class="c1"># not decrease)</span>
+            <span class="c1"># XXX: more complex convergence criterion</span>
+            <span class="k">if</span> <span class="n">lml</span> <span class="o">-</span> <span class="n">log_marginal_likelihood</span> <span class="o">&lt;</span> <span class="mf">1e-10</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">log_marginal_likelihood</span> <span class="o">=</span> <span class="n">lml</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">f_cached</span> <span class="o">=</span> <span class="n">f</span>  <span class="c1"># Remember solution for later warm-starts</span>
+        <span class="k">if</span> <span class="n">return_temporaries</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">log_marginal_likelihood</span><span class="p">,</span> <span class="p">(</span><span class="n">pi</span><span class="p">,</span> <span class="n">W_sr</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">log_marginal_likelihood</span>
+
+    <span class="k">def</span> <span class="nf">_constrained_optimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_func</span><span class="p">,</span> <span class="n">initial_theta</span><span class="p">,</span> <span class="n">bounds</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">==</span> <span class="s2">&quot;fmin_l_bfgs_b&quot;</span><span class="p">:</span>
+            <span class="n">opt_res</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">optimize</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span>
+                <span class="n">obj_func</span><span class="p">,</span> <span class="n">initial_theta</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;L-BFGS-B&quot;</span><span class="p">,</span> <span class="n">jac</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
+            <span class="n">_check_optimize_result</span><span class="p">(</span><span class="s2">&quot;lbfgs&quot;</span><span class="p">,</span> <span class="n">opt_res</span><span class="p">)</span>
+            <span class="n">theta_opt</span><span class="p">,</span> <span class="n">func_min</span> <span class="o">=</span> <span class="n">opt_res</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">opt_res</span><span class="o">.</span><span class="n">fun</span>
+        <span class="k">elif</span> <span class="n">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">):</span>
+            <span class="n">theta_opt</span><span class="p">,</span> <span class="n">func_min</span> <span class="o">=</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">(</span><span class="n">obj_func</span><span class="p">,</span> <span class="n">initial_theta</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown optimizer </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">theta_opt</span><span class="p">,</span> <span class="n">func_min</span>
+
+
+<span class="k">class</span> <span class="nc">GaussianProcessClassifier</span><span class="p">(</span><span class="n">ClassifierMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gaussian process classification (GPC) based on Laplace approximation.</span>
+
+<span class="sd">    The implementation is based on Algorithm 3.1, 3.2, and 5.1 of</span>
+<span class="sd">    Gaussian Processes for Machine Learning (GPML) by Rasmussen and</span>
+<span class="sd">    Williams.</span>
+
+<span class="sd">    Internally, the Laplace approximation is used for approximating the</span>
+<span class="sd">    non-Gaussian posterior by a Gaussian.</span>
+
+<span class="sd">    Currently, the implementation is restricted to using the logistic link</span>
+<span class="sd">    function. For multi-class classification, several binary one-versus rest</span>
+<span class="sd">    classifiers are fitted. Note that this class thus does not implement</span>
+<span class="sd">    a true multi-class Laplace approximation.</span>
+
+<span class="sd">    Read more in the :ref:`User Guide &lt;gaussian_process&gt;`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    kernel : kernel instance, default=None</span>
+<span class="sd">        The kernel specifying the covariance function of the GP. If None is</span>
+<span class="sd">        passed, the kernel &quot;1.0 * RBF(1.0)&quot; is used as default. Note that</span>
+<span class="sd">        the kernel&#39;s hyperparameters are optimized during fitting.</span>
+
+<span class="sd">    optimizer : &#39;fmin_l_bfgs_b&#39; or callable, default=&#39;fmin_l_bfgs_b&#39;</span>
+<span class="sd">        Can either be one of the internally supported optimizers for optimizing</span>
+<span class="sd">        the kernel&#39;s parameters, specified by a string, or an externally</span>
+<span class="sd">        defined optimizer passed as a callable. If a callable is passed, it</span>
+<span class="sd">        must have the  signature::</span>
+
+<span class="sd">            def optimizer(obj_func, initial_theta, bounds):</span>
+<span class="sd">                # * &#39;obj_func&#39; is the objective function to be maximized, which</span>
+<span class="sd">                #   takes the hyperparameters theta as parameter and an</span>
+<span class="sd">                #   optional flag eval_gradient, which determines if the</span>
+<span class="sd">                #   gradient is returned additionally to the function value</span>
+<span class="sd">                # * &#39;initial_theta&#39;: the initial value for theta, which can be</span>
+<span class="sd">                #   used by local optimizers</span>
+<span class="sd">                # * &#39;bounds&#39;: the bounds on the values of theta</span>
+<span class="sd">                ....</span>
+<span class="sd">                # Returned are the best found hyperparameters theta and</span>
+<span class="sd">                # the corresponding value of the target function.</span>
+<span class="sd">                return theta_opt, func_min</span>
+
+<span class="sd">        Per default, the &#39;L-BFGS-B&#39; algorithm from scipy.optimize.minimize</span>
+<span class="sd">        is used. If None is passed, the kernel&#39;s parameters are kept fixed.</span>
+<span class="sd">        Available internal optimizers are::</span>
+
+<span class="sd">            &#39;fmin_l_bfgs_b&#39;</span>
+
+<span class="sd">    n_restarts_optimizer : int, default=0</span>
+<span class="sd">        The number of restarts of the optimizer for finding the kernel&#39;s</span>
+<span class="sd">        parameters which maximize the log-marginal likelihood. The first run</span>
+<span class="sd">        of the optimizer is performed from the kernel&#39;s initial parameters,</span>
+<span class="sd">        the remaining ones (if any) from thetas sampled log-uniform randomly</span>
+<span class="sd">        from the space of allowed theta-values. If greater than 0, all bounds</span>
+<span class="sd">        must be finite. Note that n_restarts_optimizer=0 implies that one</span>
+<span class="sd">        run is performed.</span>
+
+<span class="sd">    max_iter_predict : int, default=100</span>
+<span class="sd">        The maximum number of iterations in Newton&#39;s method for approximating</span>
+<span class="sd">        the posterior during predict. Smaller values will reduce computation</span>
+<span class="sd">        time at the cost of worse results.</span>
+
+<span class="sd">    warm_start : bool, default=False</span>
+<span class="sd">        If warm-starts are enabled, the solution of the last Newton iteration</span>
+<span class="sd">        on the Laplace approximation of the posterior mode is used as</span>
+<span class="sd">        initialization for the next call of _posterior_mode(). This can speed</span>
+<span class="sd">        up convergence when _posterior_mode is called several times on similar</span>
+<span class="sd">        problems as in hyperparameter optimization. See :term:`the Glossary</span>
+<span class="sd">        &lt;warm_start&gt;`.</span>
+
+<span class="sd">    copy_X_train : bool, default=True</span>
+<span class="sd">        If True, a persistent copy of the training data is stored in the</span>
+<span class="sd">        object. Otherwise, just a reference to the training data is stored,</span>
+<span class="sd">        which might cause predictions to change if the data is modified</span>
+<span class="sd">        externally.</span>
+
+<span class="sd">    random_state : int, RandomState instance or None, default=None</span>
+<span class="sd">        Determines random number generation used to initialize the centers.</span>
+<span class="sd">        Pass an int for reproducible results across multiple function calls.</span>
+<span class="sd">        See :term: `Glossary &lt;random_state&gt;`.</span>
+
+<span class="sd">    multi_class : {&#39;one_vs_rest&#39;, &#39;one_vs_one&#39;}, default=&#39;one_vs_rest&#39;</span>
+<span class="sd">        Specifies how multi-class classification problems are handled.</span>
+<span class="sd">        Supported are &#39;one_vs_rest&#39; and &#39;one_vs_one&#39;. In &#39;one_vs_rest&#39;,</span>
+<span class="sd">        one binary Gaussian process classifier is fitted for each class, which</span>
+<span class="sd">        is trained to separate this class from the rest. In &#39;one_vs_one&#39;, one</span>
+<span class="sd">        binary Gaussian process classifier is fitted for each pair of classes,</span>
+<span class="sd">        which is trained to separate these two classes. The predictions of</span>
+<span class="sd">        these binary predictors are combined into multi-class predictions.</span>
+<span class="sd">        Note that &#39;one_vs_one&#39; does not support predicting probability</span>
+<span class="sd">        estimates.</span>
+
+<span class="sd">    n_jobs : int, default=None</span>
+<span class="sd">        The number of jobs to use for the computation: the specified</span>
+<span class="sd">        multiclass problems are computed in parallel.</span>
+<span class="sd">        ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.</span>
+<span class="sd">        ``-1`` means using all processors. See :term:`Glossary &lt;n_jobs&gt;`</span>
+<span class="sd">        for more details.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    base_estimator_ : ``Estimator`` instance</span>
+<span class="sd">        The estimator instance that defines the likelihood function</span>
+<span class="sd">        using the observed data.</span>
+
+<span class="sd">    kernel_ : kernel instance</span>
+<span class="sd">        The kernel used for prediction. In case of binary classification,</span>
+<span class="sd">        the structure of the kernel is the same as the one passed as parameter</span>
+<span class="sd">        but with optimized hyperparameters. In case of multi-class</span>
+<span class="sd">        classification, a CompoundKernel is returned which consists of the</span>
+<span class="sd">        different kernels used in the one-versus-rest classifiers.</span>
+
+<span class="sd">    log_marginal_likelihood_value_ : float</span>
+<span class="sd">        The log-marginal-likelihood of ``self.kernel_.theta``</span>
+
+<span class="sd">    classes_ : array-like of shape (n_classes,)</span>
+<span class="sd">        Unique class labels.</span>
+
+<span class="sd">    n_classes_ : int</span>
+<span class="sd">        The number of classes in the training data</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.datasets import load_iris</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.gaussian_process import GaussianProcessClassifier</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.gaussian_process.kernels import RBF</span>
+<span class="sd">    &gt;&gt;&gt; X, y = load_iris(return_X_y=True)</span>
+<span class="sd">    &gt;&gt;&gt; kernel = 1.0 * RBF(1.0)</span>
+<span class="sd">    &gt;&gt;&gt; gpc = GaussianProcessClassifier(kernel=kernel,</span>
+<span class="sd">    ...         random_state=0).fit(X, y)</span>
+<span class="sd">    &gt;&gt;&gt; gpc.score(X, y)</span>
+<span class="sd">    0.9866...</span>
+<span class="sd">    &gt;&gt;&gt; gpc.predict_proba(X[:2,:])</span>
+<span class="sd">    array([[0.83548752, 0.03228706, 0.13222543],</span>
+<span class="sd">           [0.79064206, 0.06525643, 0.14410151]])</span>
+
+<span class="sd">    .. versionadded:: 0.18</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@_deprecate_positional_args</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;fmin_l_bfgs_b&quot;</span><span class="p">,</span>
+                 <span class="n">n_restarts_optimizer</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_iter_predict</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                 <span class="n">warm_start</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">copy_X_train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">multi_class</span><span class="o">=</span><span class="s2">&quot;one_vs_rest&quot;</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span> <span class="o">=</span> <span class="n">kernel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optimizer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_restarts_optimizer</span> <span class="o">=</span> <span class="n">n_restarts_optimizer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter_predict</span> <span class="o">=</span> <span class="n">max_iter_predict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warm_start</span> <span class="o">=</span> <span class="n">warm_start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">copy_X_train</span> <span class="o">=</span> <span class="n">copy_X_train</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multi_class</span> <span class="o">=</span> <span class="n">multi_class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit Gaussian process classification model</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like of shape (n_samples, n_features) or list of object</span>
+<span class="sd">            Feature vectors or other representations of training data.</span>
+
+<span class="sd">        y : array-like of shape (n_samples,)</span>
+<span class="sd">            Target values, must be binary</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : returns an instance of self.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="o">.</span><span class="n">requires_vector_input</span><span class="p">:</span>
+            <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_data</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">multi_output</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                       <span class="n">ensure_2d</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_data</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">multi_output</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                       <span class="n">ensure_2d</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_estimator_</span> <span class="o">=</span> <span class="n">_BinaryGaussianProcessClassifierLaplace</span><span class="p">(</span>
+            <span class="n">kernel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">,</span>
+            <span class="n">optimizer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">,</span>
+            <span class="n">n_restarts_optimizer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_restarts_optimizer</span><span class="p">,</span>
+            <span class="n">max_iter_predict</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter_predict</span><span class="p">,</span>
+            <span class="n">warm_start</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">warm_start</span><span class="p">,</span>
+            <span class="n">copy_X_train</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">copy_X_train</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_classes_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="o">.</span><span class="n">size</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_classes_</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;GaussianProcessClassifier requires 2 or more &quot;</span>
+                             <span class="s2">&quot;distinct classes; got </span><span class="si">%d</span><span class="s2"> class (only class </span><span class="si">%s</span><span class="s2"> &quot;</span>
+                             <span class="s2">&quot;is present)&quot;</span>
+                             <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_classes_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_classes_</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multi_class</span> <span class="o">==</span> <span class="s2">&quot;one_vs_rest&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">base_estimator_</span> <span class="o">=</span> \
+                    <span class="n">OneVsRestClassifier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_estimator_</span><span class="p">,</span>
+                                        <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">multi_class</span> <span class="o">==</span> <span class="s2">&quot;one_vs_one&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">base_estimator_</span> <span class="o">=</span> \
+                    <span class="n">OneVsOneClassifier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_estimator_</span><span class="p">,</span>
+                                       <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown multi-class mode </span><span class="si">%s</span><span class="s2">&quot;</span>
+                                 <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">multi_class</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_estimator_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_classes_</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood_value_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">estimator</span><span class="o">.</span><span class="n">log_marginal_likelihood</span><span class="p">()</span>
+                 <span class="k">for</span> <span class="n">estimator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_estimator_</span><span class="o">.</span><span class="n">estimators_</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood_value_</span> <span class="o">=</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">base_estimator_</span><span class="o">.</span><span class="n">log_marginal_likelihood</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Perform classification on an array of test vectors X.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like of shape (n_samples, n_features) or list of object</span>
+<span class="sd">            Query points where the GP is evaluated for classification.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        C : ndarray of shape (n_samples,)</span>
+<span class="sd">            Predicted target values for X, values are from ``classes_``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="o">.</span><span class="n">requires_vector_input</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ensure_2d</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ensure_2d</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_estimator_</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return probability estimates for the test vector X.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like of shape (n_samples, n_features) or list of object</span>
+<span class="sd">            Query points where the GP is evaluated for classification.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        C : array-like of shape (n_samples, n_classes)</span>
+<span class="sd">            Returns the probability of the samples for each class in</span>
+<span class="sd">            the model. The columns correspond to the classes in sorted</span>
+<span class="sd">            order, as they appear in the attribute :term:`classes_`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_classes_</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">multi_class</span> <span class="o">==</span> <span class="s2">&quot;one_vs_one&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;one_vs_one multi-class mode does not support &quot;</span>
+                             <span class="s2">&quot;predicting probability estimates. Use &quot;</span>
+                             <span class="s2">&quot;one_vs_rest mode instead.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="o">.</span><span class="n">requires_vector_input</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ensure_2d</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;numeric&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ensure_2d</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_estimator_</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">kernel_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_classes_</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_estimator_</span><span class="o">.</span><span class="n">kernel_</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">CompoundKernel</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">estimator</span><span class="o">.</span><span class="n">kernel_</span>
+                 <span class="k">for</span> <span class="n">estimator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_estimator_</span><span class="o">.</span><span class="n">estimators_</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">log_marginal_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eval_gradient</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                <span class="n">clone_kernel</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns log-marginal likelihood of theta for training data.</span>
+
+<span class="sd">        In the case of multi-class classification, the mean log-marginal</span>
+<span class="sd">        likelihood of the one-versus-rest classifiers are returned.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        theta : array-like of shape (n_kernel_params,), default=None</span>
+<span class="sd">            Kernel hyperparameters for which the log-marginal likelihood is</span>
+<span class="sd">            evaluated. In the case of multi-class classification, theta may</span>
+<span class="sd">            be the  hyperparameters of the compound kernel or of an individual</span>
+<span class="sd">            kernel. In the latter case, all individual kernel get assigned the</span>
+<span class="sd">            same theta values. If None, the precomputed log_marginal_likelihood</span>
+<span class="sd">            of ``self.kernel_.theta`` is returned.</span>
+
+<span class="sd">        eval_gradient : bool, default=False</span>
+<span class="sd">            If True, the gradient of the log-marginal likelihood with respect</span>
+<span class="sd">            to the kernel hyperparameters at position theta is returned</span>
+<span class="sd">            additionally. Note that gradient computation is not supported</span>
+<span class="sd">            for non-binary classification. If True, theta must not be None.</span>
+
+<span class="sd">        clone_kernel : bool, default=True</span>
+<span class="sd">            If True, the kernel attribute is copied. If False, the kernel</span>
+<span class="sd">            attribute is modified, but may result in a performance improvement.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        log_likelihood : float</span>
+<span class="sd">            Log-marginal likelihood of theta for training data.</span>
+
+<span class="sd">        log_likelihood_gradient : ndarray of shape (n_kernel_params,), optional</span>
+<span class="sd">            Gradient of the log-marginal likelihood with respect to the kernel</span>
+<span class="sd">            hyperparameters at position theta.</span>
+<span class="sd">            Only returned when `eval_gradient` is True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">theta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">eval_gradient</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Gradient can only be evaluated for theta!=None&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_marginal_likelihood_value_</span>
+
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_classes_</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_estimator_</span><span class="o">.</span><span class="n">log_marginal_likelihood</span><span class="p">(</span>
+                <span class="n">theta</span><span class="p">,</span> <span class="n">eval_gradient</span><span class="p">,</span> <span class="n">clone_kernel</span><span class="o">=</span><span class="n">clone_kernel</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">eval_gradient</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                    <span class="s2">&quot;Gradient of log-marginal-likelihood not implemented for &quot;</span>
+                    <span class="s2">&quot;multi-class GPC.&quot;</span><span class="p">)</span>
+            <span class="n">estimators</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_estimator_</span><span class="o">.</span><span class="n">estimators_</span>
+            <span class="n">n_dims</span> <span class="o">=</span> <span class="n">estimators</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">n_dims</span>
+            <span class="k">if</span> <span class="n">theta</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">n_dims</span><span class="p">:</span>  <span class="c1"># use same theta for all sub-kernels</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">estimator</span><span class="o">.</span><span class="n">log_marginal_likelihood</span><span class="p">(</span>
+                        <span class="n">theta</span><span class="p">,</span> <span class="n">clone_kernel</span><span class="o">=</span><span class="n">clone_kernel</span><span class="p">)</span>
+                     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">estimator</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">estimators</span><span class="p">)])</span>
+            <span class="k">elif</span> <span class="n">theta</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">n_dims</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="c1"># theta for compound kernel</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">estimator</span><span class="o">.</span><span class="n">log_marginal_likelihood</span><span class="p">(</span>
+                        <span class="n">theta</span><span class="p">[</span><span class="n">n_dims</span> <span class="o">*</span> <span class="n">i</span><span class="p">:</span><span class="n">n_dims</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)],</span>
+                        <span class="n">clone_kernel</span><span class="o">=</span><span class="n">clone_kernel</span><span class="p">)</span>
+                     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">estimator</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">estimators</span><span class="p">)])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Shape of theta must be either </span><span class="si">%d</span><span class="s2"> or </span><span class="si">%d</span><span class="s2">. &quot;</span>
+                                 <span class="s2">&quot;Obtained theta with shape </span><span class="si">%d</span><span class="s2">.&quot;</span>
+                                 <span class="o">%</span> <span class="p">(</span><span class="n">n_dims</span><span class="p">,</span> <span class="n">n_dims</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                    <span class="n">theta</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2021, Boston Consulting Group (BCG).<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

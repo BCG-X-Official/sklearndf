@@ -1,0 +1,45 @@
+sklearndf.regression.LassoDF
+============================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: LassoDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~LassoDF.clone
+      ~LassoDF.fit
+      ~LassoDF.fit_predict
+      ~LassoDF.from_fitted
+      ~LassoDF.get_params
+      ~LassoDF.predict
+      ~LassoDF.score
+      ~LassoDF.set_params
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~LassoDF.COL_FEATURE_IN
+      ~LassoDF.COL_PREDICTION
+      ~LassoDF.feature_names_in_
+      ~LassoDF.is_fitted
+      ~LassoDF.n_outputs_
+      ~LassoDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

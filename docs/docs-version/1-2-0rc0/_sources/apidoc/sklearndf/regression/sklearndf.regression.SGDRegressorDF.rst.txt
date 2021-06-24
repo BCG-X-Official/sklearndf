@@ -1,0 +1,45 @@
+sklearndf.regression.SGDRegressorDF
+===================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: SGDRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SGDRegressorDF.clone
+      ~SGDRegressorDF.fit
+      ~SGDRegressorDF.fit_predict
+      ~SGDRegressorDF.from_fitted
+      ~SGDRegressorDF.get_params
+      ~SGDRegressorDF.predict
+      ~SGDRegressorDF.score
+      ~SGDRegressorDF.set_params
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~SGDRegressorDF.COL_FEATURE_IN
+      ~SGDRegressorDF.COL_PREDICTION
+      ~SGDRegressorDF.feature_names_in_
+      ~SGDRegressorDF.is_fitted
+      ~SGDRegressorDF.n_outputs_
+      ~SGDRegressorDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions
