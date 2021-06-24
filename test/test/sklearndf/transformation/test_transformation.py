@@ -20,6 +20,7 @@ from sklearndf.transformation import (
     NormalizerDF,
     OneHotEncoderDF,
     SelectFromModelDF,
+    SequentialFeatureSelectorDF,
     SparseCoderDF,
 )
 from sklearndf.transformation.extra import OutlierRemoverDF
@@ -27,16 +28,17 @@ from test import check_sklearn_version
 from test.sklearndf import (
     check_expected_not_fitted_error,
     get_sklearndf_wrapper_class,
-    list_classes,
+    iterate_classes,
 )
 
-TRANSFORMERS_TO_TEST = list_classes(
+TRANSFORMERS_TO_TEST = iterate_classes(
     from_modules=sklearndf.transformation,
     matching=r".*DF",
     excluding=[
         TransformerDF.__name__,
         OneHotEncoderDF.__name__,
         SelectFromModelDF.__name__,
+        SequentialFeatureSelectorDF.__name__,
         SparseCoderDF.__name__,
         ColumnTransformerDF.__name__,
         KBinsDiscretizerDF.__name__,
@@ -71,6 +73,8 @@ def test_special_wrapped_constructors() -> None:
 
     SelectFromModelDF(estimator=rf)
 
+    SequentialFeatureSelectorDF(estimator=rf)
+
     SparseCoderDF(dictionary=np.array([]))
 
     ColumnTransformerDF(transformers=[])
@@ -86,7 +90,7 @@ def test_special_wrapped_constructors() -> None:
 
 @pytest.mark.parametrize(
     argnames="sklearn_cls",
-    argvalues=list_classes(
+    argvalues=iterate_classes(
         from_modules=sklearn.preprocessing,
         matching=r".*PowerTransformer|QuantileTransformer|.*Scaler",
     ),

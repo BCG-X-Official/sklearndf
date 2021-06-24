@@ -17,30 +17,32 @@ import sklearndf.regression
 import sklearndf.transformation
 from .. import check_sklearn_version
 from ..conftest import UNSUPPORTED_SKLEARN_PACKAGES
-from ..sklearndf import find_all_submodules, list_classes, sklearn_delegate_classes
+from ..sklearndf import find_all_submodules, iterate_classes, sklearn_delegate_classes
 from sklearndf import EstimatorDF
 
 Module = type(sklearn)
 
-
-CLASSIFIER_COVERAGE_EXCLUDES = {
-    # exclude all Base classes, named starting with "Base" or "_Base":
-    r"^_?Base.*",
-    # exclude all Mixin classes, named ending on Mixin:
+GENERAL_COVERAGE_EXCLUSIONS = {
+    # exclude all private classes:
+    r"^_",
+    # exclude all Base classes:
+    r"^Base[A-Z]",
+    # exclude all Mixin classes:
     r".*Mixin$",
-    # Base classes and Mixins, not following the convention
+}
+
+CLASSIFIER_COVERAGE_EXCLUSIONS = {
+    *GENERAL_COVERAGE_EXCLUSIONS,
+    # Base classes and Mixins not following the convention
     "ForestClassifier",
 }
 
 if check_sklearn_version(minimum="0.23"):
     added_in_v023 = ("_IdentityClassifier",)
-    CLASSIFIER_COVERAGE_EXCLUDES.update(added_in_v023)
+    CLASSIFIER_COVERAGE_EXCLUSIONS.update(added_in_v023)
 
-REGRESSOR_COVERAGE_EXCLUDES = {
-    # exclude all Base classes, named starting with "Base" or "_Base":
-    r"^_?Base.*",
-    # exclude all Mixin classes, named ending on Mixin:
-    r".*Mixin$",
+REGRESSOR_COVERAGE_EXCLUSIONS = {
+    *GENERAL_COVERAGE_EXCLUSIONS,
     # Base classes and Mixins, not following the convention -->
     "ForestRegressor",
     # <--- Base classes and Mixins, not following the convention
@@ -51,26 +53,18 @@ REGRESSOR_COVERAGE_EXCLUDES = {
 }
 
 
-TRANSFORMER_COVERAGE_EXCLUDES = (
-    {
-        # class "Imputer" was deprecated in 0.20 and removed in 0.22
-        "Imputer"
-    }
-    | CLASSIFIER_COVERAGE_EXCLUDES
-    | REGRESSOR_COVERAGE_EXCLUDES
-)
-
-
-PIPELINE_COVERAGE_EXCLUDES = {
-    # exclude all Base classes, named starting with "Base" or "_Base":
-    r"^_?Base.*",
-    # exclude all Mixin classes, named ending on Mixin:
-    r".*Mixin$",
+TRANSFORMER_COVERAGE_EXCLUSIONS = {
+    *GENERAL_COVERAGE_EXCLUSIONS,
+    # class "Imputer" was deprecated in 0.20 and removed in 0.22
+    "Imputer",
 }
+
+
+PIPELINE_COVERAGE_EXCLUSIONS = GENERAL_COVERAGE_EXCLUSIONS
 
 UNSUPPORTED_SKLEARN_CLASSES = {
     sklearn_class.__name__
-    for sklearn_class in list_classes(
+    for sklearn_class in iterate_classes(
         from_modules=itertools.chain.from_iterable(
             find_all_submodules(p) for p in UNSUPPORTED_SKLEARN_PACKAGES
         ),
@@ -86,7 +80,7 @@ def _find_sklearn_classes_to_cover(
 ) -> List[Type]:
     return [
         cls
-        for cls in list_classes(
+        for cls in iterate_classes(
             from_modules=from_modules, matching=".*", excluding=excluding
         )
         if issubclass(cls, subclass_of)
@@ -97,7 +91,7 @@ def sklearn_classifier_classes() -> List[Type]:
     return _find_sklearn_classes_to_cover(
         from_modules=find_all_submodules(sklearn),
         subclass_of=ClassifierMixin,
-        excluding=CLASSIFIER_COVERAGE_EXCLUDES,
+        excluding=CLASSIFIER_COVERAGE_EXCLUSIONS,
     )
 
 
@@ -105,7 +99,7 @@ def sklearn_regressor_classes() -> List[Type]:
     return _find_sklearn_classes_to_cover(
         from_modules=find_all_submodules(sklearn),
         subclass_of=RegressorMixin,
-        excluding=REGRESSOR_COVERAGE_EXCLUDES,
+        excluding=REGRESSOR_COVERAGE_EXCLUSIONS,
     )
 
 
@@ -117,7 +111,7 @@ def sklearn_pipeline_classes() -> List[Type]:
     return _find_sklearn_classes_to_cover(
         from_modules=pipeline_modules,
         subclass_of=_BaseComposition,
-        excluding=PIPELINE_COVERAGE_EXCLUDES,
+        excluding=PIPELINE_COVERAGE_EXCLUSIONS,
     )
 
 
@@ -125,10 +119,10 @@ def sklearn_transformer_classes() -> List[Type]:
     """ Return all classes that are 'just' transformers, not learners or pipelines."""
     transformer_mixin_classes = [
         cls
-        for cls in list_classes(
+        for cls in iterate_classes(
             from_modules=find_all_submodules(sklearn),
             matching=".*",
-            excluding=TRANSFORMER_COVERAGE_EXCLUDES,
+            excluding=TRANSFORMER_COVERAGE_EXCLUSIONS,
         )
         if issubclass(cls, TransformerMixin)
     ]
