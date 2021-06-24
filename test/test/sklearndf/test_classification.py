@@ -8,12 +8,12 @@ from sklearn.multioutput import ClassifierChain, MultiOutputClassifier
 
 import sklearndf.classification as classification
 from sklearndf import ClassifierDF
-from test.sklearndf import check_expected_not_fitted_error, list_classes
+from test.sklearndf import check_expected_not_fitted_error, iterate_classes
 
-CLASSIFIERS_TO_TEST = list_classes(
+CLASSIFIERS_TO_TEST = iterate_classes(
     from_modules=classification,
     matching=r".*DF",
-    excluding=[ClassifierDF.__name__, r".*WrapperDF"],
+    excluding=[ClassifierDF.__name__, r".*WrapperDF", r"^_"],
 )
 
 

@@ -10,6 +10,12 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import Normalizer
 
 import sklearndf.transformation
+from ... import check_sklearn_version
+from .. import (
+    check_expected_not_fitted_error,
+    get_sklearndf_wrapper_class,
+    iterate_classes,
+)
 from sklearndf import TransformerDF
 from sklearndf.classification import RandomForestClassifierDF
 from sklearndf.transformation import (
@@ -23,27 +29,28 @@ from sklearndf.transformation import (
     SparseCoderDF,
 )
 from sklearndf.transformation.extra import OutlierRemoverDF
-from test import check_sklearn_version
-from test.sklearndf import (
-    check_expected_not_fitted_error,
-    get_sklearndf_wrapper_class,
-    list_classes,
-)
 
-TRANSFORMERS_TO_TEST = list_classes(
+TRANSFORMER_EXCLUSIONS = [
+    TransformerDF.__name__,
+    OneHotEncoderDF.__name__,
+    SelectFromModelDF.__name__,
+    SparseCoderDF.__name__,
+    ColumnTransformerDF.__name__,
+    KBinsDiscretizerDF.__name__,
+    RFECVDF.__name__,
+    RFEDF.__name__,
+    r".*WrapperDF",
+]
+
+if check_sklearn_version(minimum="0.24"):
+    from sklearndf.transformation import SequentialFeatureSelectorDF
+
+    TRANSFORMER_EXCLUSIONS.append(SequentialFeatureSelectorDF.__name__)
+
+TRANSFORMERS_TO_TEST = iterate_classes(
     from_modules=sklearndf.transformation,
     matching=r".*DF",
-    excluding=[
-        TransformerDF.__name__,
-        OneHotEncoderDF.__name__,
-        SelectFromModelDF.__name__,
-        SparseCoderDF.__name__,
-        ColumnTransformerDF.__name__,
-        KBinsDiscretizerDF.__name__,
-        RFECVDF.__name__,
-        RFEDF.__name__,
-        r".*WrapperDF",
-    ],
+    excluding=TRANSFORMER_EXCLUSIONS,
 )
 
 
@@ -83,10 +90,15 @@ def test_special_wrapped_constructors() -> None:
 
     RFEDF(estimator=rf)
 
+    if check_sklearn_version(minimum="0.24"):
+        from sklearndf.transformation import SequentialFeatureSelectorDF
+
+        SequentialFeatureSelectorDF(estimator=rf)
+
 
 @pytest.mark.parametrize(
     argnames="sklearn_cls",
-    argvalues=list_classes(
+    argvalues=iterate_classes(
         from_modules=sklearn.preprocessing,
         matching=r".*PowerTransformer|QuantileTransformer|.*Scaler",
     ),
