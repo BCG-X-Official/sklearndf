@@ -34,6 +34,7 @@ from sklearn.feature_selection import (
     SelectFwe,
     SelectKBest,
     SelectPercentile,
+    SequentialFeatureSelector,
     VarianceThreshold,
 )
 from sklearn.impute import MissingIndicator, SimpleImputer
@@ -41,6 +42,7 @@ from sklearn.impute._iterative import IterativeImputer
 from sklearn.kernel_approximation import (
     AdditiveChi2Sampler,
     Nystroem,
+    PolynomialCountSketch,
     RBFSampler,
     SkewedChi2Sampler,
 )
@@ -127,6 +129,7 @@ __all__ = [
     "OrdinalEncoderDF",
     "PCADF",
     "PLSSVDDF",
+    "PolynomialCountSketchDF",
     "PolynomialFeaturesDF",
     "PowerTransformerDF",
     "QuantileTransformerDF",
@@ -140,6 +143,7 @@ __all__ = [
     "SelectFweDF",
     "SelectKBestDF",
     "SelectPercentileDF",
+    "SequentialFeatureSelectorDF",
     "SimpleImputerDF",
     "SkewedChi2SamplerDF",
     "SparseCoderDF",
@@ -413,6 +417,10 @@ SkewedChi2SamplerDF = make_df_transformer(
     SkewedChi2Sampler, base_wrapper=NComponentsDimensionalityReductionWrapperDF
 )
 
+PolynomialCountSketchDF = make_df_transformer(
+    PolynomialCountSketch, base_wrapper=NComponentsDimensionalityReductionWrapperDF
+)
+
 
 #
 # feature_selection
@@ -448,6 +456,9 @@ GenericUnivariateSelectDF = make_df_transformer(
     GenericUnivariateSelect, base_wrapper=FeatureSelectionWrapperDF
 )
 
+SequentialFeatureSelectorDF = make_df_transformer(
+    SequentialFeatureSelector, base_wrapper=FeatureSelectionWrapperDF
+)
 
 #
 # validate __all__
