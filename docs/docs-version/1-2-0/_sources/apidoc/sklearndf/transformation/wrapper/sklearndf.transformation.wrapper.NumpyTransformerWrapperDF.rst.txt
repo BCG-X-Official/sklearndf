@@ -1,0 +1,47 @@
+sklearndf.transformation.wrapper.NumpyTransformerWrapperDF
+==========================================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: NumpyTransformerWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~NumpyTransformerWrapperDF.clone
+      ~NumpyTransformerWrapperDF.fit
+      ~NumpyTransformerWrapperDF.fit_transform
+      ~NumpyTransformerWrapperDF.from_fitted
+      ~NumpyTransformerWrapperDF.get_params
+      ~NumpyTransformerWrapperDF.inverse_transform
+      ~NumpyTransformerWrapperDF.set_params
+      ~NumpyTransformerWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~NumpyTransformerWrapperDF.COL_FEATURE_IN
+      ~NumpyTransformerWrapperDF.COL_FEATURE_OUT
+      ~NumpyTransformerWrapperDF.feature_names_in_
+      ~NumpyTransformerWrapperDF.feature_names_original_
+      ~NumpyTransformerWrapperDF.feature_names_out_
+      ~NumpyTransformerWrapperDF.is_fitted
+      ~NumpyTransformerWrapperDF.n_outputs_
+      ~NumpyTransformerWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

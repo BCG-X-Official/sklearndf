@@ -1,0 +1,47 @@
+sklearndf.transformation.NeighborhoodComponentsAnalysisDF
+=========================================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: NeighborhoodComponentsAnalysisDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~NeighborhoodComponentsAnalysisDF.clone
+      ~NeighborhoodComponentsAnalysisDF.fit
+      ~NeighborhoodComponentsAnalysisDF.fit_transform
+      ~NeighborhoodComponentsAnalysisDF.from_fitted
+      ~NeighborhoodComponentsAnalysisDF.get_params
+      ~NeighborhoodComponentsAnalysisDF.inverse_transform
+      ~NeighborhoodComponentsAnalysisDF.set_params
+      ~NeighborhoodComponentsAnalysisDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~NeighborhoodComponentsAnalysisDF.COL_FEATURE_IN
+      ~NeighborhoodComponentsAnalysisDF.COL_FEATURE_OUT
+      ~NeighborhoodComponentsAnalysisDF.feature_names_in_
+      ~NeighborhoodComponentsAnalysisDF.feature_names_original_
+      ~NeighborhoodComponentsAnalysisDF.feature_names_out_
+      ~NeighborhoodComponentsAnalysisDF.is_fitted
+      ~NeighborhoodComponentsAnalysisDF.n_outputs_
+      ~NeighborhoodComponentsAnalysisDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions
