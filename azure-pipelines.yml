@@ -11,13 +11,13 @@ pr:
 # set the build name
 name: $[ variables['branchName'] ]
 
-# run tests and full conda/tox build matrix every night at 4am
+# run tests and full conda/tox build matrix every night at 3am
 schedules:
-- cron: "0 4 * * 1-5"
+- cron: "0 3 * * 1-5"
   displayName: Nightly full build
   branches:
     include:
-    - 1.1.x
+    - 1.2.x
 
 resources:
   repositories:
