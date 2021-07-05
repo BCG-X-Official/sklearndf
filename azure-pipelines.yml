@@ -34,7 +34,7 @@ variables:
   source_is_develop_branch: $[ or(startsWith(variables['branchName'], 'develop'), startsWith(variables['branchName'], 'dev/')) ]
   is_scheduled: $[ eq(variables['Build.Reason'], 'Schedule') ]
   project_name: sklearndf
-  project_root: sklearndf
+  project_root: $(project_name)
   package_name: sklearndf
   sshPublicKey: $(sshPublicKey_sklearndf)
 
@@ -204,8 +204,8 @@ stages:
             versionSpec: '$(FACET_V_PYTHON_BUILD)'
           displayName: 'Use Python $(FACET_V_PYTHON_BUILD)'
 
-        - checkout: self
         - checkout: pytools
+        - checkout: self
 
         - script: dir $(Build.SourcesDirectory)
 
@@ -291,8 +291,8 @@ stages:
             versionSpec: '$(FACET_V_PYTHON_BUILD)'
           displayName: 'Use Python $(FACET_V_PYTHON_BUILD)'
 
-        - checkout: self
         - checkout: pytools
+        - checkout: self
 
         - script: dir $(Build.SourcesDirectory)
 
@@ -387,8 +387,8 @@ stages:
               versionSpec: '3.7.*'
             displayName: 'use Python 3.7'
 
-          - checkout: self
           - checkout: pytools
+          - checkout: self
 
           - task: Bash@3
             env:
@@ -452,8 +452,8 @@ stages:
               versionSpec: '3.7.*'
             displayName: 'use Python 3.7'
 
-          - checkout: self
           - checkout: pytools
+          - checkout: self
 
           - task: Bash@3
             inputs:
@@ -579,8 +579,8 @@ stages:
             sshKeySecureFile: 'deploy_docs_$(project_name)'
           displayName: 'Install the deploy SSH key'
 
-        - checkout: self
         - checkout: pytools
+        - checkout: self
 
         - script: dir $(Build.SourcesDirectory)
 
