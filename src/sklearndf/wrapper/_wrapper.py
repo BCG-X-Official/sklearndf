@@ -148,14 +148,18 @@ class EstimatorWrapperDF(
         if fitted_delegate_context is None:
             # create a new delegate estimator with the given parameters
             # noinspection PyProtectedMember
-            self._native_estimator = type(self).__wrapped__(*args, **kwargs)
+            _native_estimator = type(self).__wrapped__(*args, **kwargs)
             self._reset_fit()
         else:
             (
-                self._native_estimator,
+                _native_estimator,
                 self._features_in,
                 self._n_outputs,
             ) = fitted_delegate_context
+
+        self._native_estimator = _native_estimator
+        self._estimator_type = getattr(_native_estimator, "_estimator_type", None)
+        self._pairwise = getattr(_native_estimator, "_pairwise", None)
 
         self._validate_delegate_estimator()
 
