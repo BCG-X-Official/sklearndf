@@ -67,7 +67,7 @@ def iris_dataset() -> Bunch:
 
 
 @pytest.fixture
-def iris_df(iris_dataset: Bunch, iris_target_name) -> pd.DataFrame:
+def iris_df(iris_dataset: Bunch, iris_target_name: str) -> pd.DataFrame:
     #  convert sklearn iris data set to data frame
     return pd.DataFrame(
         data=np.c_[iris_dataset.data, iris_dataset.target],
