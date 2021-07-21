@@ -279,7 +279,10 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
 
     # noinspection PyPep8Naming
     def fit_transform(
-        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params: Any
+        self,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        **fit_params: Any,
     ) -> pd.DataFrame:
         """
         Fit this transformer using the given inputs, then transform the inputs.
