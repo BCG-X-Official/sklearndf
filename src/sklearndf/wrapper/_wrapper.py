@@ -290,7 +290,7 @@ class EstimatorWrapperDF(
                 df_name="X argument", df=X, expected_columns=self.feature_names_in_
             )
         if y is not None and not isinstance(y, (pd.Series, pd.DataFrame)):
-            raise TypeError("arg y must be None, or a pandas Series or DataFrame")
+            raise TypeError("arg y must be None, or a pandas series or data frame")
 
     @staticmethod
     def _verify_df(
