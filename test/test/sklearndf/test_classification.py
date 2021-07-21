@@ -35,8 +35,8 @@ CLASSIFIER_INIT_PARAMETERS = {
     },
     "StackingClassifierDF": {
         "estimators": (
-            ("Forest", classification.RandomForestClassifierDF()),
-            ("SVC", classification.SVCDF()),
+            ("Forest", classification.RandomForestClassifierDF(max_depth=5)),
+            ("Logit", classification.LogisticRegressionCVDF()),
             ("AdaBoost", classification.AdaBoostClassifierDF()),
         )
     },
