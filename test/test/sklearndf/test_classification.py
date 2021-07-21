@@ -119,7 +119,7 @@ def test_wrapped_fit_predict(
                 assert len(prediction) == len(iris_target_sr)
                 assert prediction.shape == (len(iris_target_sr), len(classes))
                 # check correct labels are set as columns
-                assert classes == set(prediction.columns)
+                assert set(prediction.columns) == classes
         else:
             with pytest.raises(NotImplementedError):
                 method(X=iris_features)
