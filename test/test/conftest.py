@@ -40,7 +40,7 @@ def boston_df(boston_target: str) -> pd.DataFrame:
 
     return pd.DataFrame(
         data=np.c_[boston.data, boston.target],
-        columns=[*boston.feature_names, boston_target],
+        columns=[*map(str, boston.feature_names), boston_target],
     )
 
 
@@ -71,7 +71,7 @@ def iris_df(iris_dataset: Bunch, iris_target_name) -> pd.DataFrame:
     #  convert sklearn iris data set to data frame
     return pd.DataFrame(
         data=np.c_[iris_dataset.data, iris_dataset.target],
-        columns=[*iris_dataset.feature_names, iris_target_name],
+        columns=[*map(str, iris_dataset.feature_names), iris_target_name],
     )
 
 
