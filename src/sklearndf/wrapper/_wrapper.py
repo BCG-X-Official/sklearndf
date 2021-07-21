@@ -703,9 +703,8 @@ class ClassifierWrapperDF(
         if classes is None:
             classes = getattr(self.native_estimator, "classes_", None)
 
-        if isinstance(y, pd.DataFrame) or isinstance(y, pd.Series):
-            # if we already have a series or data frame, return it unchanged
-            return y
+        if isinstance(y, pd.DataFrame):
+            return y.set_axis(classes, axis=1, inplace=False)
         elif isinstance(y, np.ndarray):
             if len(y) == len(X):
                 # predictions of probabilities are usually provided as a NumPy array
