@@ -36,6 +36,7 @@ from weakref import WeakValueDictionary
 
 import numpy as np
 import pandas as pd
+import sklearn.utils.metaestimators as sklearn_meta
 from sklearn.base import (
     BaseEstimator,
     ClassifierMixin,
@@ -756,11 +757,20 @@ class MetaEstimatorWrapperDF(
 
     def _validate_delegate_estimator(self) -> None:
         def _unwrap_estimator(estimator: BaseEstimator) -> BaseEstimator:
-            return (
+            native_estimator = (
                 estimator.native_estimator
-                if isinstance(estimator, EstimatorDF)
+                if isinstance(estimator, EstimatorWrapperDF)
                 else estimator
             )
+            # noinspection PyProtectedMember
+            if isinstance(
+                native_estimator, (EstimatorDF, sklearn_meta._BaseComposition)
+            ) or not isinstance(native_estimator, (RegressorMixin, ClassifierMixin)):
+                raise TypeError(
+                    "sklearndf meta-estimators only accept simple regressors and "
+                    f"classifiers, but got: {type(estimator).__name__}"
+                )
+            return cast(BaseEstimator, native_estimator)
 
         delegate_estimator = self.native_estimator
 

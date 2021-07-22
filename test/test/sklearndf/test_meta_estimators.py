@@ -1,23 +1,70 @@
 import logging
 
 import pandas as pd
+import pytest
+from sklearn.impute import SimpleImputer
 
 from sklearndf.classification import (
+    ClassifierChainDF,
     LogisticRegressionCVDF,
     LogisticRegressionDF,
     RandomForestClassifierDF,
     StackingClassifierDF,
+    VotingClassifierDF,
 )
-from sklearndf.pipeline import PipelineDF
+from sklearndf.pipeline import ClassifierPipelineDF, PipelineDF, RegressorPipelineDF
 from sklearndf.regression import (
     ElasticNetDF,
     LinearRegressionDF,
+    MultiOutputRegressorDF,
+    RandomForestRegressorDF,
     RidgeCVDF,
     StackingRegressorDF,
 )
 from sklearndf.transformation import ColumnTransformerDF, StandardScalerDF
 
 log = logging.getLogger(__name__)
+
+
+def test_meta_estimators() -> None:
+    VotingClassifierDF(estimators=[("rf", RandomForestClassifierDF())])
+
+    with pytest.raises(
+        TypeError,
+        match=(
+            "sklearndf meta-estimators only accept simple regressors and classifiers, "
+            "but got: ClassifierPipelineDF"
+        ),
+    ):
+        VotingClassifierDF(
+            estimators=[
+                ("rf", ClassifierPipelineDF(classifier=RandomForestClassifierDF()))
+            ]
+        )
+
+    MultiOutputRegressorDF(estimator=RandomForestRegressorDF())
+
+    with pytest.raises(
+        TypeError,
+        match=(
+            "sklearndf meta-estimators only accept simple regressors and classifiers, "
+            "but got: RegressorPipelineDF"
+        ),
+    ):
+        MultiOutputRegressorDF(
+            estimator=RegressorPipelineDF(regressor=RandomForestRegressorDF())
+        )
+
+    ClassifierChainDF(base_estimator=RandomForestClassifierDF())
+
+    with pytest.raises(
+        TypeError,
+        match=(
+            "sklearndf meta-estimators only accept simple regressors and classifiers, "
+            "but got: SimpleImputer"
+        ),
+    ):
+        ClassifierChainDF(base_estimator=SimpleImputer())
 
 
 def test_stacking_regressor(
