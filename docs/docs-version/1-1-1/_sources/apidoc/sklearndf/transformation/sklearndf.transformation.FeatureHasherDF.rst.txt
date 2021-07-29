@@ -1,0 +1,47 @@
+sklearndf.transformation.FeatureHasherDF
+========================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: FeatureHasherDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~FeatureHasherDF.clone
+      ~FeatureHasherDF.fit
+      ~FeatureHasherDF.fit_transform
+      ~FeatureHasherDF.from_fitted
+      ~FeatureHasherDF.get_params
+      ~FeatureHasherDF.inverse_transform
+      ~FeatureHasherDF.set_params
+      ~FeatureHasherDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~FeatureHasherDF.COL_FEATURE_IN
+      ~FeatureHasherDF.COL_FEATURE_OUT
+      ~FeatureHasherDF.feature_names_in_
+      ~FeatureHasherDF.feature_names_original_
+      ~FeatureHasherDF.feature_names_out_
+      ~FeatureHasherDF.is_fitted
+      ~FeatureHasherDF.n_outputs_
+      ~FeatureHasherDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

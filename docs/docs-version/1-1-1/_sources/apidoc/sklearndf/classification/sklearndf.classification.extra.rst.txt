@@ -1,0 +1,37 @@
+sklearndf.classification.extra
+==============================
+
+.. automodule:: sklearndf.classification.extra
+   :no-imported-members:
+
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: extra
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      LGBMClassifierDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

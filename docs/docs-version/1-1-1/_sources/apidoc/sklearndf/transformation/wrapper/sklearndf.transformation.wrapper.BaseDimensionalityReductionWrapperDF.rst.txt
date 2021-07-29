@@ -1,0 +1,47 @@
+sklearndf.transformation.wrapper.BaseDimensionalityReductionWrapperDF
+=====================================================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: BaseDimensionalityReductionWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~BaseDimensionalityReductionWrapperDF.clone
+      ~BaseDimensionalityReductionWrapperDF.fit
+      ~BaseDimensionalityReductionWrapperDF.fit_transform
+      ~BaseDimensionalityReductionWrapperDF.from_fitted
+      ~BaseDimensionalityReductionWrapperDF.get_params
+      ~BaseDimensionalityReductionWrapperDF.inverse_transform
+      ~BaseDimensionalityReductionWrapperDF.set_params
+      ~BaseDimensionalityReductionWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~BaseDimensionalityReductionWrapperDF.COL_FEATURE_IN
+      ~BaseDimensionalityReductionWrapperDF.COL_FEATURE_OUT
+      ~BaseDimensionalityReductionWrapperDF.feature_names_in_
+      ~BaseDimensionalityReductionWrapperDF.feature_names_original_
+      ~BaseDimensionalityReductionWrapperDF.feature_names_out_
+      ~BaseDimensionalityReductionWrapperDF.is_fitted
+      ~BaseDimensionalityReductionWrapperDF.n_outputs_
+      ~BaseDimensionalityReductionWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions
