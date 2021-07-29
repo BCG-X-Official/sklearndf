@@ -4,6 +4,16 @@ Release Notes
 *sklearndf* 1.1
 ---------------
 
+1.1.1
+~~~~~
+
+This release addresses compatibility issues with meta-estimators.
+
+- FIX: support complex DF estimators inside :class:`.StackingEstimatorDF`
+- FIX: raise an exception if a base estimator is not supported by one of sklearndf's
+  implementations for DF meta-estimators
+
+
 1.1.0
 ~~~~~
 
