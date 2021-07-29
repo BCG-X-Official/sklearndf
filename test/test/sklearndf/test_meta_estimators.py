@@ -4,12 +4,12 @@ import pandas as pd
 import pytest
 from sklearn.impute import SimpleImputer
 
+from sklearndf import __sklearn_0_22__, __sklearn_version__
 from sklearndf.classification import (
     ClassifierChainDF,
     LogisticRegressionCVDF,
     LogisticRegressionDF,
     RandomForestClassifierDF,
-    StackingClassifierDF,
     VotingClassifierDF,
 )
 from sklearndf.pipeline import ClassifierPipelineDF, PipelineDF, RegressorPipelineDF
@@ -19,7 +19,6 @@ from sklearndf.regression import (
     MultiOutputRegressorDF,
     RandomForestRegressorDF,
     RidgeCVDF,
-    StackingRegressorDF,
 )
 from sklearndf.transformation import ColumnTransformerDF, StandardScalerDF
 
@@ -67,9 +66,14 @@ def test_meta_estimators() -> None:
         ClassifierChainDF(base_estimator=SimpleImputer())
 
 
+@pytest.mark.skipif(
+    condition=__sklearn_version__ < __sklearn_0_22__,
+    reason="stacking estimators are not implemented by current version of sklearn",
+)
 def test_stacking_regressor(
     boston_features: pd.DataFrame, boston_target_sr: pd.Series
 ) -> None:
+    from sklearndf.regression import StackingRegressorDF
 
     # basic building blocks
     model1 = LinearRegressionDF()
@@ -129,9 +133,14 @@ def test_stacking_regressor(
     ]
 
 
+@pytest.mark.skipif(
+    condition=__sklearn_version__ < __sklearn_0_22__,
+    reason="stacking estimators are not implemented by current version of sklearn",
+)
 def test_stacking_classifier(
     iris_features: pd.DataFrame, iris_target_sr: pd.Series
 ) -> None:
+    from sklearndf.classification import StackingClassifierDF
 
     # basic building blocks
     model1 = LogisticRegressionCVDF()
