@@ -12,6 +12,7 @@ from sklearn.isotonic import IsotonicRegression
 
 from pytools.api import AllTracker
 
+from sklearndf import LearnerDF
 from sklearndf.transformation.wrapper import ColumnPreservingTransformerWrapperDF
 from sklearndf.wrapper import (
     MetaEstimatorWrapperDF,
@@ -74,7 +75,11 @@ class StackingRegressorWrapperDF(
     :class:`sklearn.ensemble._stacking._BaseStacking`.
     """
 
-    pass
+    @staticmethod
+    def _make_default_final_estimator() -> LearnerDF:
+        from sklearndf.regression import RidgeCVDF
+
+        return RidgeCVDF()
 
 
 class RegressorTransformerWrapperDF(
