@@ -159,8 +159,6 @@ class EstimatorWrapperDF(
             ) = fitted_delegate_context
 
         self._native_estimator = _native_estimator
-        self._estimator_type = getattr(_native_estimator, "_estimator_type", None)
-        self._pairwise = getattr(_native_estimator, "_pairwise", None)
 
         self._validate_delegate_estimator()
 
@@ -900,8 +898,6 @@ class _StackableLearnerDF(LearnerDF, Generic[T_LearnerDF]):
 
     def __init__(self, delegate: T_LearnerDF) -> None:
         self.delegate = delegate
-        self._estimator_type = getattr(delegate, "_estimator_type", None)
-        self._pairwise = getattr(delegate, "_pairwise", None)
 
     @property
     def is_fitted(self) -> bool:

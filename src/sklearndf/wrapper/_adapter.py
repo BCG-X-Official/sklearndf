@@ -82,8 +82,6 @@ class EstimatorNPDF(
         super().__init__()
         self.delegate = delegate
         self.column_names = column_names
-        self._estimator_type = getattr(delegate, "_estimator_type", None)
-        self._pairwise = getattr(delegate, "_pairwise", None)
 
     @property
     def is_fitted(self) -> bool:
