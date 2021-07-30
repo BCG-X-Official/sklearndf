@@ -10,7 +10,14 @@ import pandas as pd
 
 from pytools.api import AllTracker, inheritdoc
 
-from sklearndf import ClassifierDF, EstimatorDF, RegressorDF, TransformerDF
+from sklearndf import (
+    ClassifierDF,
+    EstimatorDF,
+    RegressorDF,
+    TransformerDF,
+    __sklearn_0_24__,
+    __sklearn_version__,
+)
 
 log = logging.getLogger(__name__)
 
@@ -77,7 +84,8 @@ class EstimatorNPDF(
         self.delegate = delegate
         self.column_names = column_names
         self._estimator_type = getattr(delegate, "_estimator_type", None)
-        self._pairwise = getattr(delegate, "_pairwise", None)
+        if __sklearn_version__ < __sklearn_0_24__:
+            self._pairwise = getattr(delegate, "_pairwise", None)
 
     @property
     def is_fitted(self) -> bool:

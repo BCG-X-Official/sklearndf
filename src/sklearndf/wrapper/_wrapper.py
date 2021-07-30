@@ -49,7 +49,15 @@ from pytools.api import AllTracker, inheritdoc, public_module_prefix
 from pytools.meta import compose_meta
 
 from ._adapter import EstimatorNPDF
-from sklearndf import ClassifierDF, EstimatorDF, LearnerDF, RegressorDF, TransformerDF
+from sklearndf import (
+    ClassifierDF,
+    EstimatorDF,
+    LearnerDF,
+    RegressorDF,
+    TransformerDF,
+    __sklearn_0_24__,
+    __sklearn_version__,
+)
 
 log = logging.getLogger(__name__)
 
@@ -160,7 +168,9 @@ class EstimatorWrapperDF(
 
         self._native_estimator = _native_estimator
         self._estimator_type = getattr(_native_estimator, "_estimator_type", None)
-        self._pairwise = getattr(_native_estimator, "_pairwise", None)
+
+        if __sklearn_version__ < __sklearn_0_24__:
+            self._pairwise = getattr(_native_estimator, "_pairwise", None)
 
         self._validate_delegate_estimator()
 
@@ -891,7 +901,8 @@ class _StackableLearnerDF(ClassifierDF, RegressorDF, LearnerDF):
     def __init__(self, delegate: Union[ClassifierDF, RegressorDF, LearnerDF]) -> None:
         self.delegate = delegate
         self._estimator_type = getattr(delegate, "_estimator_type", None)
-        self._pairwise = getattr(delegate, "_pairwise", None)
+        if __sklearn_version__ < __sklearn_0_24__:
+            self._pairwise = getattr(delegate, "_pairwise", None)
 
     @property
     def is_fitted(self) -> bool:
