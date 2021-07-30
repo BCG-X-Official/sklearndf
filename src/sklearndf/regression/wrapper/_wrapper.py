@@ -4,7 +4,7 @@ Core implementation of :mod:`sklearndf.regression.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Any, Generic, Optional, TypeVar, Union
+from typing import Any, Callable, Generic, Optional, Sequence, TypeVar, Union
 
 import pandas as pd
 from sklearn.base import RegressorMixin
@@ -12,7 +12,7 @@ from sklearn.isotonic import IsotonicRegression
 
 from pytools.api import AllTracker
 
-from sklearndf import LearnerDF
+from sklearndf import LearnerDF, RegressorDF
 from sklearndf.transformation.wrapper import ColumnPreservingTransformerWrapperDF
 from sklearndf.wrapper import (
     MetaEstimatorWrapperDF,
@@ -64,6 +64,13 @@ class MetaRegressorWrapperDF(
     pass
 
 
+# noinspection PyProtectedMember
+from ...wrapper._adapter import RegressorNPDF as _RegressorNPDF
+
+# noinspection PyProtectedMember
+from ...wrapper._wrapper import _StackableRegressorDF
+
+
 class StackingRegressorWrapperDF(
     StackingEstimatorWrapperDF[T_NativeRegressor],
     RegressorWrapperDF,
@@ -80,6 +87,14 @@ class StackingRegressorWrapperDF(
         from sklearndf.regression import RidgeCVDF
 
         return RidgeCVDF()
+
+    def _make_stackable_learner_df(self, learner: LearnerDF) -> _StackableRegressorDF:
+        return _StackableRegressorDF(learner)
+
+    def _make_learner_np_df(
+        self, delegate: RegressorDF, column_names: Callable[[], Sequence[str]]
+    ) -> _RegressorNPDF:
+        return _RegressorNPDF(delegate, column_names)
 
 
 class RegressorTransformerWrapperDF(
