@@ -1,0 +1,49 @@
+sklearndf.classification.MultinomialNBDF
+========================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: MultinomialNBDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MultinomialNBDF.clone
+      ~MultinomialNBDF.decision_function
+      ~MultinomialNBDF.fit
+      ~MultinomialNBDF.fit_predict
+      ~MultinomialNBDF.from_fitted
+      ~MultinomialNBDF.get_params
+      ~MultinomialNBDF.predict
+      ~MultinomialNBDF.predict_log_proba
+      ~MultinomialNBDF.predict_proba
+      ~MultinomialNBDF.score
+      ~MultinomialNBDF.set_params
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MultinomialNBDF.COL_FEATURE_IN
+      ~MultinomialNBDF.COL_PREDICTION
+      ~MultinomialNBDF.classes_
+      ~MultinomialNBDF.feature_names_in_
+      ~MultinomialNBDF.is_fitted
+      ~MultinomialNBDF.n_outputs_
+      ~MultinomialNBDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

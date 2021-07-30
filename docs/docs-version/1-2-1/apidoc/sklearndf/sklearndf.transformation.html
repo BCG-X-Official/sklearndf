@@ -1,0 +1,749 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearndf.transformation &#8212; sklearndf  documentation</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/gamma.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/gamma.js"></script>
+    <script src="../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="sklearndf.transformation.AdditiveChi2SamplerDF" href="transformation/sklearndf.transformation.AdditiveChi2SamplerDF.html" />
+    <link rel="prev" title="sklearndf.regression.wrapper.StackingRegressorWrapperDF" href="regression/wrapper/sklearndf.regression.wrapper.StackingRegressorWrapperDF.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../index.html">
+    
+      <img src="../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../getting_started/getting_started.html">Getting started</a>
+        </li>
+        
+        <li class="nav-item active">
+            <a class="nav-link" href="../sklearndf.html">API reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../contribution_guide.html">Development Guidelines</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../faqs.html">FAQ</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../release_notes.html">Release Notes</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+          
+            
+                <li class="">
+                    <a href="sklearndf.ClassifierDF.html">sklearndf.ClassifierDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.EstimatorDF.html">sklearndf.EstimatorDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.LearnerDF.html">sklearndf.LearnerDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.RegressorDF.html">sklearndf.RegressorDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.TransformerDF.html">sklearndf.TransformerDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.classification.html">sklearndf.classification</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.pipeline.html">sklearndf.pipeline</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.regression.html">sklearndf.regression</a>
+                </li>
+            
+          
+            
+  
+                <li class="active">
+                    <a href="">sklearndf.transformation</a>
+                    <ul>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.AdditiveChi2SamplerDF.html">sklearndf.transformation.AdditiveChi2SamplerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.BernoulliRBMDF.html">sklearndf.transformation.BernoulliRBMDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.BinarizerDF.html">sklearndf.transformation.BinarizerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.ColumnTransformerDF.html">sklearndf.transformation.ColumnTransformerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.DictVectorizerDF.html">sklearndf.transformation.DictVectorizerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.DictionaryLearningDF.html">sklearndf.transformation.DictionaryLearningDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.FactorAnalysisDF.html">sklearndf.transformation.FactorAnalysisDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.FastICADF.html">sklearndf.transformation.FastICADF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.FeatureAgglomerationDF.html">sklearndf.transformation.FeatureAgglomerationDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.FeatureHasherDF.html">sklearndf.transformation.FeatureHasherDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.FunctionTransformerDF.html">sklearndf.transformation.FunctionTransformerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.GaussianRandomProjectionDF.html">sklearndf.transformation.GaussianRandomProjectionDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.GenericUnivariateSelectDF.html">sklearndf.transformation.GenericUnivariateSelectDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.HashingVectorizerDF.html">sklearndf.transformation.HashingVectorizerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.IncrementalPCADF.html">sklearndf.transformation.IncrementalPCADF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.IsomapDF.html">sklearndf.transformation.IsomapDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.IterativeImputerDF.html">sklearndf.transformation.IterativeImputerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.KBinsDiscretizerDF.html">sklearndf.transformation.KBinsDiscretizerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.KNNImputerDF.html">sklearndf.transformation.KNNImputerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.KernelCentererDF.html">sklearndf.transformation.KernelCentererDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.KernelPCADF.html">sklearndf.transformation.KernelPCADF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.LabelBinarizerDF.html">sklearndf.transformation.LabelBinarizerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.LabelEncoderDF.html">sklearndf.transformation.LabelEncoderDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.LatentDirichletAllocationDF.html">sklearndf.transformation.LatentDirichletAllocationDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.LocallyLinearEmbeddingDF.html">sklearndf.transformation.LocallyLinearEmbeddingDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.MaxAbsScalerDF.html">sklearndf.transformation.MaxAbsScalerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.MinMaxScalerDF.html">sklearndf.transformation.MinMaxScalerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.MiniBatchDictionaryLearningDF.html">sklearndf.transformation.MiniBatchDictionaryLearningDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.MiniBatchSparsePCADF.html">sklearndf.transformation.MiniBatchSparsePCADF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.MissingIndicatorDF.html">sklearndf.transformation.MissingIndicatorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.MultiLabelBinarizerDF.html">sklearndf.transformation.MultiLabelBinarizerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.NMFDF.html">sklearndf.transformation.NMFDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.NeighborhoodComponentsAnalysisDF.html">sklearndf.transformation.NeighborhoodComponentsAnalysisDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.NormalizerDF.html">sklearndf.transformation.NormalizerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.NystroemDF.html">sklearndf.transformation.NystroemDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.OneHotEncoderDF.html">sklearndf.transformation.OneHotEncoderDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.OrdinalEncoderDF.html">sklearndf.transformation.OrdinalEncoderDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.PCADF.html">sklearndf.transformation.PCADF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.PLSSVDDF.html">sklearndf.transformation.PLSSVDDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.PolynomialCountSketchDF.html">sklearndf.transformation.PolynomialCountSketchDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.PolynomialFeaturesDF.html">sklearndf.transformation.PolynomialFeaturesDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.PowerTransformerDF.html">sklearndf.transformation.PowerTransformerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.QuantileTransformerDF.html">sklearndf.transformation.QuantileTransformerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.RBFSamplerDF.html">sklearndf.transformation.RBFSamplerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.RFECVDF.html">sklearndf.transformation.RFECVDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.RFEDF.html">sklearndf.transformation.RFEDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.RobustScalerDF.html">sklearndf.transformation.RobustScalerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.SelectFdrDF.html">sklearndf.transformation.SelectFdrDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.SelectFprDF.html">sklearndf.transformation.SelectFprDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.SelectFromModelDF.html">sklearndf.transformation.SelectFromModelDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.SelectFweDF.html">sklearndf.transformation.SelectFweDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.SelectKBestDF.html">sklearndf.transformation.SelectKBestDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.SelectPercentileDF.html">sklearndf.transformation.SelectPercentileDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.SequentialFeatureSelectorDF.html">sklearndf.transformation.SequentialFeatureSelectorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.SimpleImputerDF.html">sklearndf.transformation.SimpleImputerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.SkewedChi2SamplerDF.html">sklearndf.transformation.SkewedChi2SamplerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.SparseCoderDF.html">sklearndf.transformation.SparseCoderDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.SparsePCADF.html">sklearndf.transformation.SparsePCADF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.SparseRandomProjectionDF.html">sklearndf.transformation.SparseRandomProjectionDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.StandardScalerDF.html">sklearndf.transformation.StandardScalerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.TfidfTransformerDF.html">sklearndf.transformation.TfidfTransformerDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.TruncatedSVDDF.html">sklearndf.transformation.TruncatedSVDDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.VarianceThresholdDF.html">sklearndf.transformation.VarianceThresholdDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.extra.html">sklearndf.transformation.extra</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="transformation/sklearndf.transformation.wrapper.html">sklearndf.transformation.wrapper</a>
+                        </li>
+                    
+                    </ul>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.wrapper.html">sklearndf.wrapper</a>
+                </li>
+            
+          
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#classes" class="nav-link">Classes</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#submodules" class="nav-link">Submodules</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="module-sklearndf.transformation">
+<span id="sklearndf-transformation"></span><h1>sklearndf.transformation<a class="headerlink" href="#module-sklearndf.transformation" title="Permalink to this headline">¶</a></h1>
+<p>Extended versions of all Scikit-Learn transformers with enhanced E2E support for data
+frames.</p>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.AdditiveChi2SamplerDF.html#sklearndf.transformation.AdditiveChi2SamplerDF" title="sklearndf.transformation.AdditiveChi2SamplerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AdditiveChi2SamplerDF</span></code></a></p></td>
+<td><p>Approximate feature map for additive chi2 kernel.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.BernoulliRBMDF.html#sklearndf.transformation.BernoulliRBMDF" title="sklearndf.transformation.BernoulliRBMDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BernoulliRBMDF</span></code></a></p></td>
+<td><p>Bernoulli Restricted Boltzmann Machine (RBM).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.BinarizerDF.html#sklearndf.transformation.BinarizerDF" title="sklearndf.transformation.BinarizerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BinarizerDF</span></code></a></p></td>
+<td><p>Binarize data (set feature values to 0 or 1) according to a threshold.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.ColumnTransformerDF.html#sklearndf.transformation.ColumnTransformerDF" title="sklearndf.transformation.ColumnTransformerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColumnTransformerDF</span></code></a></p></td>
+<td><p>Applies transformers to columns of an array or pandas DataFrame.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.DictVectorizerDF.html#sklearndf.transformation.DictVectorizerDF" title="sklearndf.transformation.DictVectorizerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DictVectorizerDF</span></code></a></p></td>
+<td><p>Transforms lists of feature-value mappings to vectors.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.DictionaryLearningDF.html#sklearndf.transformation.DictionaryLearningDF" title="sklearndf.transformation.DictionaryLearningDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DictionaryLearningDF</span></code></a></p></td>
+<td><p>Dictionary learning</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.FactorAnalysisDF.html#sklearndf.transformation.FactorAnalysisDF" title="sklearndf.transformation.FactorAnalysisDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FactorAnalysisDF</span></code></a></p></td>
+<td><p>Factor Analysis (FA).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.FastICADF.html#sklearndf.transformation.FastICADF" title="sklearndf.transformation.FastICADF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FastICADF</span></code></a></p></td>
+<td><p>FastICA: a fast algorithm for Independent Component Analysis.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.FeatureAgglomerationDF.html#sklearndf.transformation.FeatureAgglomerationDF" title="sklearndf.transformation.FeatureAgglomerationDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureAgglomerationDF</span></code></a></p></td>
+<td><p>Agglomerate features.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.FeatureHasherDF.html#sklearndf.transformation.FeatureHasherDF" title="sklearndf.transformation.FeatureHasherDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureHasherDF</span></code></a></p></td>
+<td><p>Implements feature hashing, aka the hashing trick.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.FunctionTransformerDF.html#sklearndf.transformation.FunctionTransformerDF" title="sklearndf.transformation.FunctionTransformerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FunctionTransformerDF</span></code></a></p></td>
+<td><p>Constructs a transformer from an arbitrary callable.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.GaussianRandomProjectionDF.html#sklearndf.transformation.GaussianRandomProjectionDF" title="sklearndf.transformation.GaussianRandomProjectionDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GaussianRandomProjectionDF</span></code></a></p></td>
+<td><p>Reduce dimensionality through Gaussian random projection.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.GenericUnivariateSelectDF.html#sklearndf.transformation.GenericUnivariateSelectDF" title="sklearndf.transformation.GenericUnivariateSelectDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GenericUnivariateSelectDF</span></code></a></p></td>
+<td><p>Univariate feature selector with configurable strategy.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.HashingVectorizerDF.html#sklearndf.transformation.HashingVectorizerDF" title="sklearndf.transformation.HashingVectorizerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HashingVectorizerDF</span></code></a></p></td>
+<td><p>Convert a collection of text documents to a matrix of token occurrences</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.IncrementalPCADF.html#sklearndf.transformation.IncrementalPCADF" title="sklearndf.transformation.IncrementalPCADF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncrementalPCADF</span></code></a></p></td>
+<td><p>Incremental principal components analysis (IPCA).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.IsomapDF.html#sklearndf.transformation.IsomapDF" title="sklearndf.transformation.IsomapDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IsomapDF</span></code></a></p></td>
+<td><p>Isomap Embedding</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.IterativeImputerDF.html#sklearndf.transformation.IterativeImputerDF" title="sklearndf.transformation.IterativeImputerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IterativeImputerDF</span></code></a></p></td>
+<td><p>Multivariate imputer that estimates each feature from all the others.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.KBinsDiscretizerDF.html#sklearndf.transformation.KBinsDiscretizerDF" title="sklearndf.transformation.KBinsDiscretizerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KBinsDiscretizerDF</span></code></a></p></td>
+<td><p>Bin continuous data into intervals.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.KNNImputerDF.html#sklearndf.transformation.KNNImputerDF" title="sklearndf.transformation.KNNImputerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KNNImputerDF</span></code></a></p></td>
+<td><p>Imputation for completing missing values using k-Nearest Neighbors.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.KernelCentererDF.html#sklearndf.transformation.KernelCentererDF" title="sklearndf.transformation.KernelCentererDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KernelCentererDF</span></code></a></p></td>
+<td><p>Center a kernel matrix.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.KernelPCADF.html#sklearndf.transformation.KernelPCADF" title="sklearndf.transformation.KernelPCADF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KernelPCADF</span></code></a></p></td>
+<td><p>Kernel Principal component analysis (KPCA).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.LabelBinarizerDF.html#sklearndf.transformation.LabelBinarizerDF" title="sklearndf.transformation.LabelBinarizerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LabelBinarizerDF</span></code></a></p></td>
+<td><p>Binarize labels in a one-vs-all fashion.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.LabelEncoderDF.html#sklearndf.transformation.LabelEncoderDF" title="sklearndf.transformation.LabelEncoderDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LabelEncoderDF</span></code></a></p></td>
+<td><p>Encode target labels with value between 0 and n_classes-1.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.LatentDirichletAllocationDF.html#sklearndf.transformation.LatentDirichletAllocationDF" title="sklearndf.transformation.LatentDirichletAllocationDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LatentDirichletAllocationDF</span></code></a></p></td>
+<td><p>Latent Dirichlet Allocation with online variational Bayes algorithm</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.LocallyLinearEmbeddingDF.html#sklearndf.transformation.LocallyLinearEmbeddingDF" title="sklearndf.transformation.LocallyLinearEmbeddingDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LocallyLinearEmbeddingDF</span></code></a></p></td>
+<td><p>Locally Linear Embedding</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.MaxAbsScalerDF.html#sklearndf.transformation.MaxAbsScalerDF" title="sklearndf.transformation.MaxAbsScalerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaxAbsScalerDF</span></code></a></p></td>
+<td><p>Scale each feature by its maximum absolute value.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.MinMaxScalerDF.html#sklearndf.transformation.MinMaxScalerDF" title="sklearndf.transformation.MinMaxScalerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MinMaxScalerDF</span></code></a></p></td>
+<td><p>Transform features by scaling each feature to a given range.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.MiniBatchDictionaryLearningDF.html#sklearndf.transformation.MiniBatchDictionaryLearningDF" title="sklearndf.transformation.MiniBatchDictionaryLearningDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MiniBatchDictionaryLearningDF</span></code></a></p></td>
+<td><p>Mini-batch dictionary learning</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.MiniBatchSparsePCADF.html#sklearndf.transformation.MiniBatchSparsePCADF" title="sklearndf.transformation.MiniBatchSparsePCADF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MiniBatchSparsePCADF</span></code></a></p></td>
+<td><p>Mini-batch Sparse Principal Components Analysis</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.MissingIndicatorDF.html#sklearndf.transformation.MissingIndicatorDF" title="sklearndf.transformation.MissingIndicatorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MissingIndicatorDF</span></code></a></p></td>
+<td><p>Binary indicators for missing values.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.MultiLabelBinarizerDF.html#sklearndf.transformation.MultiLabelBinarizerDF" title="sklearndf.transformation.MultiLabelBinarizerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiLabelBinarizerDF</span></code></a></p></td>
+<td><p>Transform between iterable of iterables and a multilabel format.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.NMFDF.html#sklearndf.transformation.NMFDF" title="sklearndf.transformation.NMFDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NMFDF</span></code></a></p></td>
+<td><p>Non-Negative Matrix Factorization (NMF).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.NeighborhoodComponentsAnalysisDF.html#sklearndf.transformation.NeighborhoodComponentsAnalysisDF" title="sklearndf.transformation.NeighborhoodComponentsAnalysisDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NeighborhoodComponentsAnalysisDF</span></code></a></p></td>
+<td><p>Neighborhood Components Analysis</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.NormalizerDF.html#sklearndf.transformation.NormalizerDF" title="sklearndf.transformation.NormalizerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NormalizerDF</span></code></a></p></td>
+<td><p>Normalize samples individually to unit norm.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.NystroemDF.html#sklearndf.transformation.NystroemDF" title="sklearndf.transformation.NystroemDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NystroemDF</span></code></a></p></td>
+<td><p>Approximate a kernel map using a subset of the training data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.OneHotEncoderDF.html#sklearndf.transformation.OneHotEncoderDF" title="sklearndf.transformation.OneHotEncoderDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OneHotEncoderDF</span></code></a></p></td>
+<td><p>Encode categorical features as a one-hot numeric array.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.OrdinalEncoderDF.html#sklearndf.transformation.OrdinalEncoderDF" title="sklearndf.transformation.OrdinalEncoderDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrdinalEncoderDF</span></code></a></p></td>
+<td><p>Encode categorical features as an integer array.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.PCADF.html#sklearndf.transformation.PCADF" title="sklearndf.transformation.PCADF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PCADF</span></code></a></p></td>
+<td><p>Principal component analysis (PCA).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.PLSSVDDF.html#sklearndf.transformation.PLSSVDDF" title="sklearndf.transformation.PLSSVDDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PLSSVDDF</span></code></a></p></td>
+<td><p>Partial Least Square SVD.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.PolynomialCountSketchDF.html#sklearndf.transformation.PolynomialCountSketchDF" title="sklearndf.transformation.PolynomialCountSketchDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PolynomialCountSketchDF</span></code></a></p></td>
+<td><p>Polynomial kernel approximation via Tensor Sketch.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.PolynomialFeaturesDF.html#sklearndf.transformation.PolynomialFeaturesDF" title="sklearndf.transformation.PolynomialFeaturesDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PolynomialFeaturesDF</span></code></a></p></td>
+<td><p>Generate polynomial and interaction features.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.PowerTransformerDF.html#sklearndf.transformation.PowerTransformerDF" title="sklearndf.transformation.PowerTransformerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PowerTransformerDF</span></code></a></p></td>
+<td><p>Apply a power transform featurewise to make data more Gaussian-like.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.QuantileTransformerDF.html#sklearndf.transformation.QuantileTransformerDF" title="sklearndf.transformation.QuantileTransformerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QuantileTransformerDF</span></code></a></p></td>
+<td><p>Transform features using quantiles information.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.RBFSamplerDF.html#sklearndf.transformation.RBFSamplerDF" title="sklearndf.transformation.RBFSamplerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RBFSamplerDF</span></code></a></p></td>
+<td><p>Approximates feature map of an RBF kernel by Monte Carlo approximation of its Fourier transform.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.RFECVDF.html#sklearndf.transformation.RFECVDF" title="sklearndf.transformation.RFECVDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RFECVDF</span></code></a></p></td>
+<td><p>Feature ranking with recursive feature elimination and cross-validated selection of the best number of features.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.RFEDF.html#sklearndf.transformation.RFEDF" title="sklearndf.transformation.RFEDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RFEDF</span></code></a></p></td>
+<td><p>Feature ranking with recursive feature elimination.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.RobustScalerDF.html#sklearndf.transformation.RobustScalerDF" title="sklearndf.transformation.RobustScalerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RobustScalerDF</span></code></a></p></td>
+<td><p>Scale features using statistics that are robust to outliers.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.SelectFdrDF.html#sklearndf.transformation.SelectFdrDF" title="sklearndf.transformation.SelectFdrDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SelectFdrDF</span></code></a></p></td>
+<td><p>Filter: Select the p-values for an estimated false discovery rate</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.SelectFprDF.html#sklearndf.transformation.SelectFprDF" title="sklearndf.transformation.SelectFprDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SelectFprDF</span></code></a></p></td>
+<td><p>Filter: Select the pvalues below alpha based on a FPR test.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.SelectFromModelDF.html#sklearndf.transformation.SelectFromModelDF" title="sklearndf.transformation.SelectFromModelDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SelectFromModelDF</span></code></a></p></td>
+<td><p>Meta-transformer for selecting features based on importance weights.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.SelectFweDF.html#sklearndf.transformation.SelectFweDF" title="sklearndf.transformation.SelectFweDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SelectFweDF</span></code></a></p></td>
+<td><p>Filter: Select the p-values corresponding to Family-wise error rate</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.SelectKBestDF.html#sklearndf.transformation.SelectKBestDF" title="sklearndf.transformation.SelectKBestDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SelectKBestDF</span></code></a></p></td>
+<td><p>Select features according to the k highest scores.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.SelectPercentileDF.html#sklearndf.transformation.SelectPercentileDF" title="sklearndf.transformation.SelectPercentileDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SelectPercentileDF</span></code></a></p></td>
+<td><p>Select features according to a percentile of the highest scores.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.SequentialFeatureSelectorDF.html#sklearndf.transformation.SequentialFeatureSelectorDF" title="sklearndf.transformation.SequentialFeatureSelectorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SequentialFeatureSelectorDF</span></code></a></p></td>
+<td><p>Transformer that performs Sequential Feature Selection.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.SimpleImputerDF.html#sklearndf.transformation.SimpleImputerDF" title="sklearndf.transformation.SimpleImputerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SimpleImputerDF</span></code></a></p></td>
+<td><p>Imputation transformer for completing missing values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.SkewedChi2SamplerDF.html#sklearndf.transformation.SkewedChi2SamplerDF" title="sklearndf.transformation.SkewedChi2SamplerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SkewedChi2SamplerDF</span></code></a></p></td>
+<td><p>Approximates feature map of the “skewed chi-squared” kernel by Monte Carlo approximation of its Fourier transform.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.SparseCoderDF.html#sklearndf.transformation.SparseCoderDF" title="sklearndf.transformation.SparseCoderDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SparseCoderDF</span></code></a></p></td>
+<td><p>Sparse coding</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.SparsePCADF.html#sklearndf.transformation.SparsePCADF" title="sklearndf.transformation.SparsePCADF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SparsePCADF</span></code></a></p></td>
+<td><p>Sparse Principal Components Analysis (SparsePCA).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.SparseRandomProjectionDF.html#sklearndf.transformation.SparseRandomProjectionDF" title="sklearndf.transformation.SparseRandomProjectionDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SparseRandomProjectionDF</span></code></a></p></td>
+<td><p>Reduce dimensionality through sparse random projection.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.StandardScalerDF.html#sklearndf.transformation.StandardScalerDF" title="sklearndf.transformation.StandardScalerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StandardScalerDF</span></code></a></p></td>
+<td><p>Standardize features by removing the mean and scaling to unit variance</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.TfidfTransformerDF.html#sklearndf.transformation.TfidfTransformerDF" title="sklearndf.transformation.TfidfTransformerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TfidfTransformerDF</span></code></a></p></td>
+<td><p>Transform a count matrix to a normalized tf or tf-idf representation</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.TruncatedSVDDF.html#sklearndf.transformation.TruncatedSVDDF" title="sklearndf.transformation.TruncatedSVDDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TruncatedSVDDF</span></code></a></p></td>
+<td><p>Dimensionality reduction using truncated SVD (aka LSA).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.VarianceThresholdDF.html#sklearndf.transformation.VarianceThresholdDF" title="sklearndf.transformation.VarianceThresholdDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VarianceThresholdDF</span></code></a></p></td>
+<td><p>Feature selector that removes all low-variance features.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.extra.html#module-sklearndf.transformation.extra" title="sklearndf.transformation.extra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearndf.transformation.extra</span></code></a></p></td>
+<td><p>Additional 3rd party transformers that implement the Scikit-Learn interface.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.wrapper.html#module-sklearndf.transformation.wrapper" title="sklearndf.transformation.wrapper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearndf.transformation.wrapper</span></code></a></p></td>
+<td><p>Wrapper classes to enhance the functionality of native transformers conforming with the scikit-learn API.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='left-prev' id="prev-link" href="regression/wrapper/sklearndf.regression.wrapper.StackingRegressorWrapperDF.html" title="previous page">sklearndf.regression.wrapper.StackingRegressorWrapperDF</a>
+    <a class='right-next' id="next-link" href="transformation/sklearndf.transformation.AdditiveChi2SamplerDF.html" title="next page">sklearndf.transformation.AdditiveChi2SamplerDF</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2021, Boston Consulting Group (BCG).<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
