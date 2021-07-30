@@ -14,6 +14,7 @@ from sklearn.multioutput import ClassifierChain, MultiOutputClassifier
 
 from pytools.api import AllTracker
 
+from sklearndf import LearnerDF
 from sklearndf.transformation.wrapper import NComponentsDimensionalityReductionWrapperDF
 from sklearndf.wrapper import (
     ClassifierWrapperDF,
@@ -157,7 +158,19 @@ class StackingClassifierWrapperDF(
     :class:`sklearn.ensemble._stacking._BaseStacking`.
     """
 
-    pass
+    @staticmethod
+    def _make_default_final_estimator() -> LearnerDF:
+        from sklearndf.classification import LogisticRegressionDF
+
+        return LogisticRegressionDF()
+
+    def _get_estimators_features_out(self) -> List[str]:
+        classes = self.native_estimator.classes_
+        names = super()._get_estimators_features_out()
+        if len(classes) > 2:
+            return [f"{name}_{c}" for name in names for c in classes]
+        else:
+            return names
 
 
 #

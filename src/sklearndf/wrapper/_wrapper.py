@@ -36,6 +36,7 @@ from weakref import WeakValueDictionary
 
 import numpy as np
 import pandas as pd
+import sklearn.utils.metaestimators as sklearn_meta
 from sklearn.base import (
     BaseEstimator,
     ClassifierMixin,
@@ -47,7 +48,16 @@ from sklearn.base import (
 from pytools.api import AllTracker, inheritdoc, public_module_prefix
 from pytools.meta import compose_meta
 
-from sklearndf import ClassifierDF, EstimatorDF, LearnerDF, RegressorDF, TransformerDF
+from ._adapter import EstimatorNPDF
+from sklearndf import (
+    ClassifierDF,
+    EstimatorDF,
+    LearnerDF,
+    RegressorDF,
+    TransformerDF,
+    __sklearn_0_24__,
+    __sklearn_version__,
+)
 
 log = logging.getLogger(__name__)
 
@@ -147,14 +157,20 @@ class EstimatorWrapperDF(
         if fitted_delegate_context is None:
             # create a new delegate estimator with the given parameters
             # noinspection PyProtectedMember
-            self._native_estimator = type(self).__wrapped__(*args, **kwargs)
+            _native_estimator = type(self).__wrapped__(*args, **kwargs)
             self._reset_fit()
         else:
             (
-                self._native_estimator,
+                _native_estimator,
                 self._features_in,
                 self._n_outputs,
             ) = fitted_delegate_context
+
+        self._native_estimator = _native_estimator
+        self._estimator_type = getattr(_native_estimator, "_estimator_type", None)
+
+        if __sklearn_version__ < __sklearn_0_24__:
+            self._pairwise = getattr(_native_estimator, "_pairwise", None)
 
         self._validate_delegate_estimator()
 
@@ -285,7 +301,7 @@ class EstimatorWrapperDF(
                 df_name="X argument", df=X, expected_columns=self.feature_names_in_
             )
         if y is not None and not isinstance(y, (pd.Series, pd.DataFrame)):
-            raise TypeError("arg y must be None, or a pandas Series or DataFrame")
+            raise TypeError("arg y must be None, or a pandas series or data frame")
 
     @staticmethod
     def _verify_df(
@@ -702,9 +718,8 @@ class ClassifierWrapperDF(
         if classes is None:
             classes = getattr(self.native_estimator, "classes_", None)
 
-        if isinstance(y, pd.DataFrame) or isinstance(y, pd.Series):
-            # if we already have a series or data frame, return it unchanged
-            return y
+        if isinstance(y, pd.DataFrame):
+            return y.set_axis(classes, axis=1, inplace=False)
         elif isinstance(y, np.ndarray):
             if len(y) == len(X):
                 # predictions of probabilities are usually provided as a NumPy array
@@ -752,11 +767,20 @@ class MetaEstimatorWrapperDF(
 
     def _validate_delegate_estimator(self) -> None:
         def _unwrap_estimator(estimator: BaseEstimator) -> BaseEstimator:
-            return (
+            native_estimator = (
                 estimator.native_estimator
-                if isinstance(estimator, EstimatorDF)
+                if isinstance(estimator, EstimatorWrapperDF)
                 else estimator
             )
+            # noinspection PyProtectedMember
+            if isinstance(
+                native_estimator, (EstimatorDF, sklearn_meta._BaseComposition)
+            ) or not isinstance(native_estimator, (RegressorMixin, ClassifierMixin)):
+                raise TypeError(
+                    "sklearndf meta-estimators only accept simple regressors and "
+                    f"classifiers, but got: {type(estimator).__name__}"
+                )
+            return cast(BaseEstimator, native_estimator)
 
         delegate_estimator = self.native_estimator
 
@@ -780,51 +804,198 @@ class MetaEstimatorWrapperDF(
 #
 
 
+# noinspection PyPep8Naming
+@inheritdoc(match="""[see superclass]""")
 class StackingEstimatorWrapperDF(
-    EstimatorWrapperDF[T_NativeEstimator],
+    LearnerWrapperDF[T_NativeLearner],
     # note: MetaEstimatorMixin is the first public class in the mro of _BaseStacking
     # MetaEstimatorMixin <-- _BaseHeterogeneousEnsemble <-- _BaseStacking
     MetaEstimatorMixin,
-    Generic[T_NativeEstimator],
+    Generic[T_NativeLearner],
     metaclass=ABCMeta,
 ):
     """
-    Abstract base class wrapping around estimators implementing
-    :class:`sklearn.ensemble._stacking._BaseStacking`. The stacking estimator will call
-    the methods of the embedded estimator using a modified copy of the `X` and `y`
-    parameters, so we need to make sure that these are converted back to data frames.
+    Abstract base class of wrappers for estimators implementing
+    :class:`sklearn.ensemble._stacking._BaseStacking`.
 
-    This class covers the following cases used in sklearn:
-    - one (optional) inner estimator in attribute `final_estimator`
-    - multiple stacked estimators in attribute `estimators`, as name estimator pairs
+    The stacking estimator will delegate to embedded estimators; this wrapper ensures
+    the required conversions from and to numpy arrays as the native stacking estimator
+    invokes the embedded estimators.
     """
 
-    def _validate_delegate_estimator(self) -> None:
-        def _unwrap_estimator(estimator: BaseEstimator) -> Optional[BaseEstimator]:
-            if estimator is None:
-                return None
-            else:
-                return (
-                    estimator.native_estimator
-                    if isinstance(estimator, EstimatorDF)
-                    else estimator
+    def fit(
+        self: T_Self,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        **fit_params: Any,
+    ) -> T_Self:
+        """[see superclass]"""
+
+        self: StackingEstimatorWrapperDF
+
+        class _ColumnNameFn:
+            # noinspection PyMethodParameters
+            def __call__(self_) -> Sequence[str]:
+                return self._get_final_estimator_features_in()
+
+            def __deepcopy__(self, memo=None) -> Any:
+                # prevent a deep copy of this callable, to preserve reference to
+                # stacking estimator being fitted
+                return self
+
+        native = self.native_estimator
+        estimators = native.estimators
+        final_estimator = native.final_estimator
+
+        try:
+            native.estimators = [
+                (
+                    name,
+                    _StackableLearnerDF(estimator)
+                    if isinstance(estimator, LearnerDF)
+                    else estimator,
                 )
-
-        delegate_estimator = self.native_estimator
-
-        # note: as final_estimator is optional, _unwrap_estimator will return None
-        #       attribute "named_estimators_" is constructed based off estimators
-
-        if hasattr(delegate_estimator, "final_estimator"):
-            delegate_estimator.final_estimator = _unwrap_estimator(
-                delegate_estimator.final_estimator
+                for name, estimator in native.estimators
+            ]
+            native.final_estimator = EstimatorNPDF(
+                native.final_estimator or self._make_default_final_estimator(),
+                column_names=_ColumnNameFn(),
             )
 
-        if hasattr(delegate_estimator, "estimators"):
-            delegate_estimator.estimators = [
-                (name, _unwrap_estimator(estimator))
-                for name, estimator in delegate_estimator.estimators
-            ]
+            return super().fit(X, y, **fit_params)
+
+        finally:
+            native.estimators = estimators
+            native.final_estimator = final_estimator
+
+    def fit_predict(
+        self, X: pd.DataFrame, y: pd.Series, **fit_params: Any
+    ) -> Union[pd.Series, pd.DataFrame]:
+        """[see superclass]"""
+        self.final_estimator.column_names = self._get_final_estimator_features_in
+
+        return super().fit_predict(X, y, **fit_params)
+
+    def _get_estimators_features_out(self) -> List[str]:
+        return [name for name, estimator in self.estimators if estimator != "drop"]
+
+    def _get_final_estimator_features_in(self) -> List[str]:
+        names = self._get_estimators_features_out()
+        if self.passthrough:
+            return [*names, *self.estimators_[0].feature_names_in_]
+        else:
+            return names
+
+
+# noinspection PyPep8Naming
+@inheritdoc(match="""[see superclass]""")
+class _StackableLearnerDF(ClassifierDF, RegressorDF, LearnerDF):
+    """
+    Returns numpy arrays from all prediction functions, instead of pandas series or
+    data frames.
+
+    For use in stacking estimators that forward the predictions of multiple learners to
+    one final learner.
+    """
+
+    def __init__(self, delegate: Union[ClassifierDF, RegressorDF, LearnerDF]) -> None:
+        self.delegate = delegate
+        self._estimator_type = getattr(delegate, "_estimator_type", None)
+        if __sklearn_version__ < __sklearn_0_24__:
+            self._pairwise = getattr(delegate, "_pairwise", None)
+
+    @property
+    def is_fitted(self) -> bool:
+        """[see superclass]"""
+        return self.delegate.is_fitted
+
+    @property
+    def classes_(self) -> Sequence[Any]:
+        """[see superclass]"""
+        return self.delegate.classes_
+
+    def fit(
+        self: T_Self, X: pd.DataFrame, y: np.ndarray = None, **fit_params: Any
+    ) -> T_Self:
+        """[see superclass]"""
+        self: _StackableLearnerDF
+
+        self.delegate.fit(X, self._convert_y_to_series(X, y), **fit_params)
+        return self
+
+    def predict(self, X: pd.DataFrame, **predict_params: Any) -> np.ndarray:
+        """[see superclass]"""
+        return self.delegate.predict(X, **predict_params).values
+
+    def fit_predict(
+        self, X: pd.DataFrame, y: np.ndarray, **fit_params: Any
+    ) -> np.ndarray:
+        """[see superclass]"""
+        return self.delegate.fit_predict(
+            X, self._convert_y_to_series(X, y), **fit_params
+        ).values
+
+    def predict_proba(
+        self, X: pd.DataFrame, **predict_params: Any
+    ) -> Union[np.ndarray, List[np.ndarray]]:
+        """[see superclass]"""
+        return self._convert_prediction_to_numpy(
+            self.delegate.predict_proba(X, **predict_params)
+        )
+
+    def predict_log_proba(
+        self, X: pd.DataFrame, **predict_params: Any
+    ) -> Union[np.ndarray, List[np.ndarray]]:
+        """[see superclass]"""
+        return self._convert_prediction_to_numpy(
+            self.delegate.predict_log_proba(X, **predict_params)
+        )
+
+    def decision_function(self, X: pd.DataFrame, **predict_params: Any) -> np.ndarray:
+        """[see superclass]"""
+        return self.delegate.decision_function(X, **predict_params).values
+
+    def score(
+        self, X: pd.DataFrame, y: np.ndarray, sample_weight: Optional[pd.Series] = None
+    ) -> float:
+        """[see superclass]"""
+        return self.delegate.score(X, self._convert_y_to_series(X, y), sample_weight)
+
+    def _get_features_in(self) -> pd.Index:
+        return self.delegate._get_features_in()
+
+    def _get_n_outputs(self) -> int:
+        return self.delegate._get_n_outputs()
+
+    @staticmethod
+    def _convert_y_to_series(
+        X: pd.DataFrame, y: Optional[np.ndarray]
+    ) -> Optional[pd.Series]:
+        if y is None:
+            return y
+        if not isinstance(y, np.ndarray):
+            raise TypeError(
+                f"expected numpy array for arg y but got a {type(y).__name__}"
+            )
+        if y.ndim != 1:
+            raise TypeError(
+                f"expected 1-d numpy array for arg y but got a {y.ndim}-d array"
+            )
+        if len(y) != len(X):
+            raise ValueError(
+                "args X and y have different lengths: "
+                f"len(X)={len(X)} and len(y)={len(y)}"
+            )
+        return pd.Series(y, index=X.index)
+
+    @staticmethod
+    def _convert_prediction_to_numpy(
+        prediction: Union[pd.DataFrame, List[pd.DataFrame]]
+    ) -> Union[np.ndarray, List[np.ndarray]]:
+        if isinstance(prediction, list):
+            return [proba.values for proba in prediction]
+        else:
+            return prediction.values
 
 
 #

@@ -3,7 +3,7 @@ package:
   version: {{ environ.get('FACET_BUILD_SKLEARNDF_VERSION') }}
 
 source:
-  git_url: {{FACET_PATH}}/sklearndf
+  git_url: ../
 
 build:
   noarch: python
