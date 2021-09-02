@@ -59,8 +59,10 @@ TRANSFORMERS_TO_TEST = iterate_classes(
 def test_data() -> pd.DataFrame:
     return pd.DataFrame(
         data={
-            "c0": [0, 1, 2.5, 3, 4, 5.2, 6, 7, 8, 9],
+            "c0": [0.0, 1.0, 2.5, 3.0, 4.0, 5.2, 6.0, 7.0, 8.0, 9.0],
             "c1": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+            "c2": [2.5, 3.0, 4.0, 5.2, 6.0, 7.0, 8.0, 9.0, 0.0, 4.0],
+            "c3": ["f", "g", "h", "i", "j", "a", "b", "c", "d", "e"],
         }
     )
 
