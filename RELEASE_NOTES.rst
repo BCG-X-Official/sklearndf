@@ -4,6 +4,15 @@ Release Notes
 *sklearndf* 1.2
 ---------------
 
+1.2.2
+~~~~~
+
+This release comprises bugfixes and minor code tweaks.
+
+- FIX: accept `"passthrough"` as value for arg `remainder` of
+  :class:`.ColumnTransformerDF`
+
+
 1.2.1
 ~~~~~
 
