@@ -2,6 +2,7 @@ from typing import List, Type
 
 import pandas as pd
 import pytest
+from sklearn.base import is_regressor
 from sklearn.multioutput import MultiOutputRegressor, RegressorChain
 
 import sklearndf.regression
@@ -48,6 +49,8 @@ def test_wrapped_fit_predict(
     regressor: RegressorDF = sklearndf_cls(
         **DEFAULT_REGRESSOR_PARAMETERS.get(sklearndf_cls.__name__, {})
     )
+
+    assert is_regressor(regressor)
 
     check_expected_not_fitted_error(estimator=regressor)
 

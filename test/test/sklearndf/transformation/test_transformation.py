@@ -5,17 +5,24 @@ import pandas as pd
 import pytest
 import sklearn
 from pandas.testing import assert_frame_equal
-from sklearn.base import BaseEstimator
+from sklearn.base import BaseEstimator, is_classifier, is_regressor
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import Normalizer
 
 import sklearndf.transformation
-from sklearndf import TransformerDF
+from ... import check_sklearn_version
+from ...sklearndf import (
+    check_expected_not_fitted_error,
+    get_sklearndf_wrapper_class,
+    list_classes,
+)
+from sklearndf import ClassifierDF, RegressorDF, TransformerDF
 from sklearndf.classification import RandomForestClassifierDF
 from sklearndf.transformation import (
     RFECVDF,
     RFEDF,
     ColumnTransformerDF,
+    FeatureAgglomerationDF,
     KBinsDiscretizerDF,
     NormalizerDF,
     OneHotEncoderDF,
@@ -23,12 +30,7 @@ from sklearndf.transformation import (
     SparseCoderDF,
 )
 from sklearndf.transformation.extra import OutlierRemoverDF
-from test import check_sklearn_version
-from test.sklearndf import (
-    check_expected_not_fitted_error,
-    get_sklearndf_wrapper_class,
-    list_classes,
-)
+from sklearndf.wrapper import TransformerWrapperDF
 
 TRANSFORMERS_TO_TEST = list_classes(
     from_modules=sklearndf.transformation,
@@ -59,7 +61,22 @@ def test_data() -> pd.DataFrame:
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=TRANSFORMERS_TO_TEST)
 def test_wrapped_constructor(sklearndf_cls: Type[TransformerDF]) -> None:
-    sklearndf_cls()
+    transformer_df: TransformerDF = sklearndf_cls()
+
+    if isinstance(transformer_df, RegressorDF):
+        assert is_regressor(transformer_df)
+        assert not is_classifier(transformer_df)
+    elif isinstance(transformer_df, ClassifierDF):
+        assert is_classifier(transformer_df)
+        assert not is_regressor(transformer_df)
+    elif isinstance(transformer_df, TransformerWrapperDF):
+        if isinstance(transformer_df, FeatureAgglomerationDF):
+            assert transformer_df._estimator_type == "clusterer"
+        else:
+            # noinspection PyUnresolvedReferences
+            assert transformer_df._estimator_type is None
+    else:
+        assert getattr(transformer_df, "_estimator_type", None) is None
 
 
 def test_special_wrapped_constructors() -> None:
