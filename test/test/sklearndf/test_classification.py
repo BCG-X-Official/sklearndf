@@ -44,15 +44,6 @@ CLASSIFIER_INIT_PARAMETERS = {
 
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST)
-def test_wrapped_constructor(sklearndf_cls: Type[ClassifierDF]) -> None:
-    """ Test standard constructor of wrapped sklearn classifiers """
-    # noinspection PyArgumentList
-    _: ClassifierDF = sklearndf_cls(
-        **CLASSIFIER_INIT_PARAMETERS.get(sklearndf_cls.__name__, {})
-    )
-
-
-@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST)
 def test_wrapped_fit_predict(
     sklearndf_cls: Type[ClassifierDF],
     iris_features: pd.DataFrame,

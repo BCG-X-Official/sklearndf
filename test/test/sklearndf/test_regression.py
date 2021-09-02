@@ -38,14 +38,6 @@ DEFAULT_REGRESSOR_PARAMETERS = {
 
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST)
-def test_wrapped_constructor(sklearndf_cls: Type) -> None:
-    """ Test standard constructor of wrapped sklearn regressors """
-    _: RegressorDF = sklearndf_cls(
-        **DEFAULT_REGRESSOR_PARAMETERS.get(sklearndf_cls.__name__, {})
-    )
-
-
-@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST)
 def test_wrapped_fit_predict(
     sklearndf_cls: Type,
     boston_features: pd.DataFrame,
