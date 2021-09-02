@@ -12,7 +12,6 @@ import pandas as pd
 from sklearn.base import TransformerMixin
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import MissingIndicator, SimpleImputer
-from sklearn.impute._iterative import IterativeImputer
 from sklearn.kernel_approximation import AdditiveChi2Sampler
 from sklearn.manifold import Isomap
 from sklearn.preprocessing import KBinsDiscretizer, OneHotEncoder, PolynomialFeatures
@@ -54,6 +53,10 @@ T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
 # Once we drop support for sklearn 0.21, _BaseImputer can be used instead.
 # The following TypeVar helps to annotate availability of "add_indicator" and
 # "missing_values" attributes on an imputer instance for ImputerWrapperDF below
+
+# noinspection PyProtectedMember
+from sklearn.impute._iterative import IterativeImputer
+
 T_Imputer = TypeVar("T_Imputer", SimpleImputer, IterativeImputer)
 
 
@@ -345,7 +348,7 @@ class ImputerWrapperDF(TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
             nan_mask = np.all(delegate_estimator._mask_fit_X, axis=0)
 
         # the imputed columns are all ingoing columns, except the ones that were dropped
-        imputed_columns = self.feature_names_in_.delete(np.argwhere(nan_mask))
+        imputed_columns = self.feature_names_in_.delete(np.argwhere(nan_mask).tolist())
         features_original = pd.Series(
             index=imputed_columns, data=imputed_columns.values
         )
