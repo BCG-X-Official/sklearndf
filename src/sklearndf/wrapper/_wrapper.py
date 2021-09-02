@@ -524,9 +524,14 @@ class TransformerWrapperDF(
 
     # noinspection PyPep8Naming
     def _inverse_transform(self, X: pd.DataFrame) -> np.ndarray:
-        return self.native_estimator.inverse_transform(
-            self._convert_X_for_delegate(X, inverse=True)
-        )
+        try:
+            inverse_transform_fn = self.native_estimator.inverse_transform
+        except AttributeError:
+            raise NotImplementedError(
+                f"{type(self).__name__} does not implement method inverse_transform()"
+            )
+
+        return inverse_transform_fn(self._convert_X_for_delegate(X, inverse=True))
 
 
 @inheritdoc(match="[see superclass]")
