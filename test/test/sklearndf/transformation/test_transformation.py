@@ -139,7 +139,7 @@ def test_various_transformers(
 
 def test_column_transformer(test_data: pd.DataFrame) -> None:
     numeric_columns: List[str] = test_data.select_dtypes(include=float).columns.tolist()
-    assert numeric_columns == ["c0", "c1"]
+    assert numeric_columns == ["c0", "c2"]
 
     feature_names_in_expected = test_data.columns.rename("feature_in")
 
