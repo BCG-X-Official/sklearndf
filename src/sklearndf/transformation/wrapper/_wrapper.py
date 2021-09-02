@@ -81,7 +81,9 @@ class NumpyTransformerWrapperDF(
     """
 
     # noinspection PyPep8Naming
-    def _convert_X_for_delegate(self, X: pd.DataFrame) -> Any:
+    def _convert_X_for_delegate(
+        self, X: pd.DataFrame, *, inverse: Optional[bool] = None
+    ) -> Any:
         return super()._convert_X_for_delegate(X).values
 
     def _convert_y_for_delegate(

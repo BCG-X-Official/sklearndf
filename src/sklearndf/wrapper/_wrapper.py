@@ -292,14 +292,26 @@ class EstimatorWrapperDF(
 
     # noinspection PyPep8Naming
     def _check_parameter_types(
-        self, X: pd.DataFrame, y: Optional[Union[pd.Series, pd.DataFrame]]
+        self,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]],
+        *,
+        expected_columns: pd.Index = None,
     ) -> None:
         if not isinstance(X, pd.DataFrame):
             raise TypeError("arg X must be a DataFrame")
+
         if self.is_fitted:
             EstimatorWrapperDF._verify_df(
-                df_name="X argument", df=X, expected_columns=self.feature_names_in_
+                df_name="X argument",
+                df=X,
+                expected_columns=(
+                    self.feature_names_in_
+                    if expected_columns is None
+                    else expected_columns
+                ),
             )
+
         if y is not None and not isinstance(y, (pd.Series, pd.DataFrame)):
             raise TypeError("arg y must be None, or a pandas series or data frame")
 
@@ -448,7 +460,7 @@ class TransformerWrapperDF(
     # noinspection PyPep8Naming
     def inverse_transform(self, X: pd.DataFrame) -> pd.DataFrame:
         """[see superclass]"""
-        self._check_parameter_types(X, None)
+        self._check_parameter_types(X, None, expected_columns=self.feature_names_out_)
 
         transformed = self._inverse_transform(X)
 
@@ -462,6 +474,22 @@ class TransformerWrapperDF(
             super()._reset_fit()
         finally:
             self._features_original = None
+
+    # noinspection PyPep8Naming
+    def _convert_X_for_delegate(
+        self, X: pd.DataFrame, *, inverse: Optional[bool] = None
+    ) -> Any:
+        if inverse:
+            # when converting X for an inverse transform, ensure the data frame is
+            # aligned with the output features, and convert the data frame to a
+            # numpy array
+            features_out = self.feature_names_out_
+            if X.columns.is_(features_out):
+                return X.values
+            else:
+                return X.reindex(columns=features_out, copy=False).values
+        else:
+            return super()._convert_X_for_delegate(X)
 
     @staticmethod
     def _transformed_to_df(
@@ -496,8 +524,9 @@ class TransformerWrapperDF(
 
     # noinspection PyPep8Naming
     def _inverse_transform(self, X: pd.DataFrame) -> np.ndarray:
-        # noinspection PyUnresolvedReferences
-        return self.native_estimator.inverse_transform(self._convert_X_for_delegate(X))
+        return self.native_estimator.inverse_transform(
+            self._convert_X_for_delegate(X, inverse=True)
+        )
 
 
 @inheritdoc(match="[see superclass]")

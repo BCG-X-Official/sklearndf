@@ -103,16 +103,24 @@ class IsotonicRegressionWrapperDF(
     """
 
     # noinspection PyPep8Naming
-    def _check_parameter_types(self, X: pd.DataFrame, y: Optional[pd.Series]) -> None:
-        super()._check_parameter_types(X=X, y=y)
+    def _check_parameter_types(
+        self,
+        X: pd.DataFrame,
+        y: Optional[pd.Series],
+        *,
+        expected_columns: pd.Index = None,
+    ) -> None:
+        super()._check_parameter_types(X, y, expected_columns=expected_columns)
         if X.shape[1] != 1:
             raise ValueError(
                 f"arg X expected to have exactly 1 column but has {X.shape[1]} columns"
             )
 
     # noinspection PyPep8Naming
-    def _convert_X_for_delegate(self, X: pd.DataFrame) -> Any:
-        return super()._convert_X_for_delegate(X).iloc[:, 0].values
+    def _convert_X_for_delegate(
+        self, X: pd.DataFrame, *, inverse: Optional[bool] = None
+    ) -> Any:
+        return super().iloc[:, 0].values
 
     def _convert_y_for_delegate(
         self, y: Optional[Union[pd.Series, pd.DataFrame]]
