@@ -448,8 +448,6 @@ class TransformerWrapperDF(
     # noinspection PyPep8Naming
     def inverse_transform(self, X: pd.DataFrame) -> pd.DataFrame:
         """[see superclass]"""
-        self._reset_fit()
-
         self._check_parameter_types(X, None)
 
         transformed = self._inverse_transform(X)
