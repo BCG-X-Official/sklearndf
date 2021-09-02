@@ -92,11 +92,6 @@ class PipelineWrapperDF(
         """
         return self.native_estimator.steps
 
-    @property
-    def _estimator_type(self) -> str:
-        # noinspection PyProtectedMember
-        return self.native_estimator._estimator_type
-
     def __len__(self) -> int:
         """The number of steps of the pipeline."""
         return len(self.native_estimator.steps)

@@ -180,6 +180,14 @@ class EstimatorWrapperDF(
         """
         return self._native_estimator
 
+    @property
+    def _estimator_type(self) -> Optional[str]:
+        try:
+            # noinspection PyProtectedMember
+            return self.native_estimator._estimator_type
+        except AttributeError:
+            return None
+
     @classmethod
     def from_fitted(
         cls: Type[T_EstimatorWrapperDF],
