@@ -4,6 +4,16 @@ Release Notes
 *sklearndf* 1.1
 ---------------
 
+1.1.2
+~~~~~
+
+This release improves compatibility with scikit-learn and fixes bugs.
+
+- API: add full support for the
+  `_estimator_type <https://scikit-learn.org/stable/glossary.html#term-_estimator_type>`__
+  attribute
+
+
 1.1.1
 ~~~~~
 
