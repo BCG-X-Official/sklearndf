@@ -13,7 +13,7 @@ The wrappers also implement the additional column attributes introduced by `skle
 
 import inspect
 import logging
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 from functools import update_wrapper
 from typing import (
     Any,
@@ -48,7 +48,7 @@ from sklearn.base import (
 from pytools.api import AllTracker, inheritdoc, public_module_prefix
 from pytools.meta import compose_meta
 
-from ._adapter import EstimatorNPDF
+from ._adapter import LearnerNPDF
 from sklearndf import ClassifierDF, EstimatorDF, LearnerDF, RegressorDF, TransformerDF
 
 log = logging.getLogger(__name__)
@@ -81,12 +81,12 @@ T_NativeLearner = TypeVar("T_NativeLearner", RegressorMixin, ClassifierMixin)
 T_NativeRegressor = TypeVar("T_NativeRegressor", bound=RegressorMixin)
 T_NativeClassifier = TypeVar("T_NativeClassifier", bound=ClassifierMixin)
 
-# noinspection PyTypeChecker
 T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="EstimatorWrapperDF")
 T_TransformerWrapperDF = TypeVar("T_TransformerWrapperDF", bound="TransformerWrapperDF")
 T_RegressorWrapperDF = TypeVar("T_RegressorWrapperDF", bound="RegressorWrapperDF")
 T_ClassifierWrapperDF = TypeVar("T_ClassifierWrapperDF", bound="ClassifierWrapperDF")
 
+T_LearnerDF = TypeVar("T_LearnerDF", bound="LearnerDF")
 
 #
 # Ensure all symbols introduced below are included in __all__
@@ -159,8 +159,6 @@ class EstimatorWrapperDF(
             ) = fitted_delegate_context
 
         self._native_estimator = _native_estimator
-        self._estimator_type = getattr(_native_estimator, "_estimator_type", None)
-        self._pairwise = getattr(_native_estimator, "_pairwise", None)
 
         self._validate_delegate_estimator()
 
@@ -181,6 +179,14 @@ class EstimatorWrapperDF(
         The native estimator that this wrapper delegates to.
         """
         return self._native_estimator
+
+    @property
+    def _estimator_type(self) -> Optional[str]:
+        try:
+            # noinspection PyProtectedMember
+            return self.native_estimator._estimator_type
+        except AttributeError:
+            return None
 
     @classmethod
     def from_fitted(
@@ -896,22 +902,22 @@ class StackingEstimatorWrapperDF(
                 # stacking estimator being fitted
                 return self
 
-        native = self.native_estimator
-        estimators = native.estimators
-        final_estimator = native.final_estimator
+        native: T_NativeEstimator = self.native_estimator
+        estimators: Sequence[Tuple[str, BaseEstimator]] = native.estimators
+        final_estimator: BaseEstimator = native.final_estimator
 
         try:
             native.estimators = [
                 (
                     name,
-                    _StackableLearnerDF(estimator)
+                    self._make_stackable_learner_df(estimator)
                     if isinstance(estimator, LearnerDF)
                     else estimator,
                 )
                 for name, estimator in native.estimators
             ]
-            native.final_estimator = EstimatorNPDF(
-                native.final_estimator or self._make_default_final_estimator(),
+            native.final_estimator = self._make_learner_np_df(
+                delegate=native.final_estimator or self._make_default_final_estimator(),
                 column_names=_ColumnNameFn(),
             )
 
@@ -929,6 +935,16 @@ class StackingEstimatorWrapperDF(
 
         return super().fit_predict(X, y, **fit_params)
 
+    @abstractmethod
+    def _make_stackable_learner_df(self, learner: LearnerDF) -> "_StackableLearnerDF":
+        pass
+
+    @abstractmethod
+    def _make_learner_np_df(
+        self, delegate: LearnerDF, column_names: Callable[[], Sequence[str]]
+    ) -> LearnerNPDF:
+        pass
+
     def _get_estimators_features_out(self) -> List[str]:
         return [name for name, estimator in self.estimators if estimator != "drop"]
 
@@ -942,7 +958,7 @@ class StackingEstimatorWrapperDF(
 
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
-class _StackableLearnerDF(ClassifierDF, RegressorDF, LearnerDF):
+class _StackableLearnerDF(LearnerDF, Generic[T_LearnerDF]):
     """
     Returns numpy arrays from all prediction functions, instead of pandas series or
     data frames.
@@ -951,20 +967,13 @@ class _StackableLearnerDF(ClassifierDF, RegressorDF, LearnerDF):
     one final learner.
     """
 
-    def __init__(self, delegate: Union[ClassifierDF, RegressorDF, LearnerDF]) -> None:
+    def __init__(self, delegate: T_LearnerDF) -> None:
         self.delegate = delegate
-        self._estimator_type = getattr(delegate, "_estimator_type", None)
-        self._pairwise = getattr(delegate, "_pairwise", None)
 
     @property
     def is_fitted(self) -> bool:
         """[see superclass]"""
         return self.delegate.is_fitted
-
-    @property
-    def classes_(self) -> Sequence[Any]:
-        """[see superclass]"""
-        return self.delegate.classes_
 
     def fit(
         self: T_Self, X: pd.DataFrame, y: np.ndarray = None, **fit_params: Any
@@ -986,26 +995,6 @@ class _StackableLearnerDF(ClassifierDF, RegressorDF, LearnerDF):
         return self.delegate.fit_predict(
             X, self._convert_y_to_series(X, y), **fit_params
         ).values
-
-    def predict_proba(
-        self, X: pd.DataFrame, **predict_params: Any
-    ) -> Union[np.ndarray, List[np.ndarray]]:
-        """[see superclass]"""
-        return self._convert_prediction_to_numpy(
-            self.delegate.predict_proba(X, **predict_params)
-        )
-
-    def predict_log_proba(
-        self, X: pd.DataFrame, **predict_params: Any
-    ) -> Union[np.ndarray, List[np.ndarray]]:
-        """[see superclass]"""
-        return self._convert_prediction_to_numpy(
-            self.delegate.predict_log_proba(X, **predict_params)
-        )
-
-    def decision_function(self, X: pd.DataFrame, **predict_params: Any) -> np.ndarray:
-        """[see superclass]"""
-        return self.delegate.decision_function(X, **predict_params).values
 
     def score(
         self, X: pd.DataFrame, y: np.ndarray, sample_weight: Optional[pd.Series] = None
@@ -1048,6 +1037,42 @@ class _StackableLearnerDF(ClassifierDF, RegressorDF, LearnerDF):
             return [proba.values for proba in prediction]
         else:
             return prediction.values
+
+
+# noinspection PyPep8Naming
+@inheritdoc(match="""[see superclass]""")
+class _StackableClassifierDF(_StackableLearnerDF[ClassifierDF], ClassifierDF):
+    """[see superclass]"""
+
+    @property
+    def classes_(self) -> Sequence[Any]:
+        """[see superclass]"""
+        return self.delegate.classes_
+
+    def predict_proba(
+        self, X: pd.DataFrame, **predict_params: Any
+    ) -> Union[np.ndarray, List[np.ndarray]]:
+        """[see superclass]"""
+        return self._convert_prediction_to_numpy(
+            self.delegate.predict_proba(X, **predict_params)
+        )
+
+    def predict_log_proba(
+        self, X: pd.DataFrame, **predict_params: Any
+    ) -> Union[np.ndarray, List[np.ndarray]]:
+        """[see superclass]"""
+        return self._convert_prediction_to_numpy(
+            self.delegate.predict_log_proba(X, **predict_params)
+        )
+
+    def decision_function(self, X: pd.DataFrame, **predict_params: Any) -> np.ndarray:
+        """[see superclass]"""
+        return self.delegate.decision_function(X, **predict_params).values
+
+
+@inheritdoc(match="""[see superclass]""")
+class _StackableRegressorDF(_StackableLearnerDF[RegressorDF], RegressorDF):
+    """[see superclass]"""
 
 
 #
@@ -1397,6 +1422,7 @@ def _make_alias(
         )
         function.__doc__ = f"See :meth:`{full_name}`"
         return function
+
     elif inspect.isdatadescriptor(delegate):
         # noinspection PyShadowingNames
         return property(
@@ -1405,6 +1431,7 @@ def _make_alias(
             fdel=lambda self: delegate.__delete__(self._native_estimator),
             doc=f"See documentation of :class:`{class_name}`.",
         )
+
     else:
         return None
 
