@@ -51,25 +51,25 @@ def sklearn_delegate_classes(
     }
 
 
-def list_classes(
+def iterate_classes(
     from_modules: Union[Module, Iterable[Module]],
     matching: str,
     excluding: Optional[Union[str, Iterable[str]]] = None,
-) -> List[Type[EstimatorWrapperDF]]:
+) -> Iterable[Type[EstimatorWrapperDF]]:
     """ Helper to return all classes with matching name from Python module(s) """
 
     if not isinstance(from_modules, Iterable):
         from_modules = (from_modules,)
 
-    if isinstance(excluding, Iterable):
+    if excluding and not isinstance(excluding, str):
         excluding = "|".join(f"({exclude_pattern})" for exclude_pattern in excluding)
 
-    return [
+    return (
         m
         for m in find_all_classes(*from_modules)
         if re.match(matching, m.__name__)
         and not (excluding and re.match(excluding, m.__name__))
-    ]
+    )
 
 
 def get_sklearndf_wrapper_class(
@@ -118,9 +118,9 @@ def check_expected_not_fitted_error(estimator: EstimatorDF):
             except Exception as sklearn_exception:
                 assert repr(sklearndf_exception) == repr(sklearn_exception), (
                     "sklearndf raised a different error as sklearn"
-                    f" for {_estimator.__class__.__name__}:"
+                    f" for {_estimator.__class__.__name__}:\n"
                     f"sklearndf: {repr(sklearndf_exception)} \n"
-                    f"sklearn: {repr(sklearn_exception)}"
+                    f"sklearn:   {repr(sklearn_exception)}"
                 )
 
     if isinstance(estimator, LearnerDF):

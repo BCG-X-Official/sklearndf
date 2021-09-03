@@ -14,15 +14,14 @@ dist-name = "sklearndf"
 license = "Apache Software License v2.0"
 
 requires = [
-    # direct requirements of sklearndf
     "boruta         ~=0.3",
-    "gamma-pytools  ~=1.1",
+    "gamma-pytools  ~=1.2",
     "lightgbm       ~=3.0",
-    "numpy          >=1.16,<1.21a",
-    "packaging      ==20.*",
-    "pandas         >=0.24,<2a",
-    "scikit-learn   >=0.21,<0.24a",
-    "scipy          >=1.2,<1.6a",
+    "numpy          >=1.16,<2a",  # cannot use ~= due to conda bug
+    "packaging      >=20",
+    "pandas         >=0.24,<2a",  # cannot use ~= due to conda bug
+    "scikit-learn   >=0.21,<0.25a",
+    "scipy          ~=1.2",
 ]
 
 requires-python = ">=3.6,<4a"
@@ -70,12 +69,12 @@ Repository = "https://github.com/BCG-Gamma/sklearndf"
 [build.matrix.min]
 # direct requirements of sklearndf
 boruta         = "~=0.3.0"
-gamma-pytools  = "~=1.1.0"
+gamma-pytools  = "~=1.2.0"
 lightgbm       = "~=3.0.0"
 numpy          = ">=1.16.6,<1.17a"  # cannot use ~= due to conda bug
 pandas         = "~=0.24.2"
 packaging      = "~=20.9"
-python         = ">=3.6.8,<3.7a"  # cannot use ~= due to conda bug
+python         = ">=3.6.8,<3.7a"    # cannot use ~= due to conda bug
 scikit-learn   = "~=0.21.0"
 scipy          = "~=1.2.1"
 # additional minimum requirements of gamma-pytools
@@ -86,18 +85,18 @@ typing_inspect = "~=0.4.0"
 [build.matrix.max]
 # direct requirements of sklearndf
 boruta         = "~=0.3"
-gamma-pytools  = "~=1.1"
+gamma-pytools  = "~=1.2"
 lightgbm       = "~=3.2"
 numpy          = ">=1.20,<2a"  # cannot use ~= due to conda bug
-packaging      = "~=20.9"
+packaging      = ">=20"
 pandas         = "~=1.2"
-python         = ">=3.8,<4a"  # cannot use ~= due to conda bug
-scikit-learn   = "~=0.23.2"
-scipy          = "~=1.5.3"
+python         = ">=3.8,<4a"   # cannot use ~= due to conda bug
+scikit-learn   = "~=0.24.2"
+scipy          = "~=1.6"
 # additional maximum requirements of gamma-pytools
 joblib         = "~=1.0"
-matplotlib     = "~=3.3"
-typing_inspect = "~=0.6.0"
+matplotlib     = "~=3.4"
+typing_inspect = "~=0.7"
 
 [tool.black]
 # quiet = "True"

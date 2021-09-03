@@ -1,9 +1,9 @@
 trigger:
-  - 1.1.x
+  - 1.2.x
   - release/*
 
 pr:
-  - 1.1.x
+  - 1.2.x
   - release/*
 
 # set the build name
@@ -23,7 +23,7 @@ resources:
       type: github
       endpoint: BCG-Gamma
       name: BCG-Gamma/pytools
-      ref: 1.1.x
+      ref: 1.2.x
 
 variables:
   ${{ if not(startsWith(variables['Build.SourceBranch'], 'refs/pull/')) }}:

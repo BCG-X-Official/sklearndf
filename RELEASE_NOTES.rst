@@ -1,8 +1,45 @@
 Release Notes
 =============
 
+*sklearndf* 1.2
+---------------
+
+1.2.2
+~~~~~
+
+This is a maintenance release to catch up with *sklearndf* 1.1.2.
+
+
+1.2.1
+~~~~~
+
+This is a maintenance release to catch up with *sklearndf* 1.1.1.
+
+
+1.2.0
+~~~~~
+
+This release adds support for `scikit-learn 0.24 <https://scikit-learn.org/0.24/>`_.
+
+- API: add `DF` adaptations for classes introduced by scikit-learn 0.24:
+  :class:`.PolynomialCountSketchDF` and :class:`.SequentialFeatureSelectorDF`
+
+
 *sklearndf* 1.1
 ---------------
+
+1.1.2
+~~~~~
+
+This release improves compatibility with scikit-learn and fixes bugs.
+
+- API: add full support for the
+  `_estimator_type <https://scikit-learn.org/stable/glossary.html#term-_estimator_type>`__
+  attribute
+- FIX: do not reset transformers when calling :meth:`.TransformerDF.inverse_transform`
+- FIX: accept `"passthrough"` as value for arg `remainder` of
+  :class:`.ColumnTransformerDF`
+
 
 1.1.1
 ~~~~~
@@ -10,7 +47,7 @@ Release Notes
 This release addresses compatibility issues with meta-estimators.
 
 - FIX: support complex DF estimators inside :class:`.StackingEstimatorDF`
-- FIX: raise an exception if a base estimator is not supported by one of sklearndf's
+- FIX: raise an exception if a base estimator is not supported by one of *sklearndf*'s
   implementations for DF meta-estimators
 
 

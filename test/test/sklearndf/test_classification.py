@@ -4,16 +4,17 @@ from typing import Type
 import numpy as np
 import pandas as pd
 import pytest
+from sklearn.base import is_classifier
 from sklearn.multioutput import ClassifierChain, MultiOutputClassifier
 
 import sklearndf.classification as classification
 from sklearndf import ClassifierDF
-from test.sklearndf import check_expected_not_fitted_error, list_classes
+from test.sklearndf import check_expected_not_fitted_error, iterate_classes
 
-CLASSIFIERS_TO_TEST = list_classes(
+CLASSIFIERS_TO_TEST = iterate_classes(
     from_modules=classification,
     matching=r".*DF",
-    excluding=[ClassifierDF.__name__, r".*WrapperDF"],
+    excluding=[ClassifierDF.__name__, r".*WrapperDF", r"^_"],
 )
 
 
@@ -44,15 +45,6 @@ CLASSIFIER_INIT_PARAMETERS = {
 
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST)
-def test_wrapped_constructor(sklearndf_cls: Type[ClassifierDF]) -> None:
-    """ Test standard constructor of wrapped sklearn classifiers """
-    # noinspection PyArgumentList
-    _: ClassifierDF = sklearndf_cls(
-        **CLASSIFIER_INIT_PARAMETERS.get(sklearndf_cls.__name__, {})
-    )
-
-
-@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST)
 def test_wrapped_fit_predict(
     sklearndf_cls: Type[ClassifierDF],
     iris_features: pd.DataFrame,
@@ -65,6 +57,8 @@ def test_wrapped_fit_predict(
     classifier: ClassifierDF = sklearndf_cls(
         **CLASSIFIER_INIT_PARAMETERS.get(sklearndf_cls.__name__, {})
     )
+
+    assert is_classifier(classifier)
 
     is_chain = isinstance(classifier.native_estimator, ClassifierChain)
 

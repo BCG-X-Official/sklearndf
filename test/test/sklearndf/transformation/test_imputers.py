@@ -8,12 +8,12 @@ import pytest
 
 import sklearndf.transformation
 from sklearndf import TransformerDF
-from test.sklearndf import list_classes
+from test.sklearndf import iterate_classes
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-IMPUTERS_TO_TEST = list_classes(
+IMPUTERS_TO_TEST = iterate_classes(
     from_modules=sklearndf.transformation, matching=r".*Imputer.*DF", excluding=[]
 )
 

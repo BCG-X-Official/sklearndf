@@ -2,6 +2,7 @@ from typing import List, Type
 
 import pandas as pd
 import pytest
+from sklearn.base import is_regressor
 from sklearn.multioutput import MultiOutputRegressor, RegressorChain
 
 import sklearndf.regression
@@ -13,9 +14,9 @@ from sklearndf.regression import (
     RandomForestRegressorDF,
 )
 from sklearndf.wrapper import EstimatorWrapperDF
-from test.sklearndf import check_expected_not_fitted_error, list_classes
+from test.sklearndf import check_expected_not_fitted_error, iterate_classes
 
-REGRESSORS_TO_TEST: List[Type[EstimatorWrapperDF]] = list_classes(
+REGRESSORS_TO_TEST: List[Type[EstimatorWrapperDF]] = iterate_classes(
     from_modules=sklearndf.regression,
     matching=r".*DF",
     excluding=[RegressorDF.__name__, TransformerDF.__name__, r".*WrapperDF"],
@@ -38,14 +39,6 @@ DEFAULT_REGRESSOR_PARAMETERS = {
 
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST)
-def test_wrapped_constructor(sklearndf_cls: Type) -> None:
-    """ Test standard constructor of wrapped sklearn regressors """
-    _: RegressorDF = sklearndf_cls(
-        **DEFAULT_REGRESSOR_PARAMETERS.get(sklearndf_cls.__name__, {})
-    )
-
-
-@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST)
 def test_wrapped_fit_predict(
     sklearndf_cls: Type,
     boston_features: pd.DataFrame,
@@ -56,6 +49,8 @@ def test_wrapped_fit_predict(
     regressor: RegressorDF = sklearndf_cls(
         **DEFAULT_REGRESSOR_PARAMETERS.get(sklearndf_cls.__name__, {})
     )
+
+    assert is_regressor(regressor)
 
     check_expected_not_fitted_error(estimator=regressor)
 
