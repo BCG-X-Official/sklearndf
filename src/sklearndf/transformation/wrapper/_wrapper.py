@@ -4,7 +4,6 @@ Core implementation of :mod:`sklearndf.transformation.wrapper`
 
 import logging
 from abc import ABCMeta, abstractmethod
-from functools import reduce
 from typing import Any, Generic, List, Optional, TypeVar, Union
 
 import numpy as np
@@ -12,7 +11,6 @@ import pandas as pd
 from sklearn.base import TransformerMixin
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import MissingIndicator, SimpleImputer
-from sklearn.impute._iterative import IterativeImputer
 from sklearn.kernel_approximation import AdditiveChi2Sampler
 from sklearn.manifold import Isomap
 from sklearn.preprocessing import KBinsDiscretizer, OneHotEncoder, PolynomialFeatures
@@ -54,6 +52,10 @@ T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
 # Once we drop support for sklearn 0.21, _BaseImputer can be used instead.
 # The following TypeVar helps to annotate availability of "add_indicator" and
 # "missing_values" attributes on an imputer instance for ImputerWrapperDF below
+
+# noinspection PyProtectedMember
+from sklearn.impute._iterative import IterativeImputer
+
 T_Imputer = TypeVar("T_Imputer", SimpleImputer, IterativeImputer)
 
 
@@ -81,14 +83,20 @@ class NumpyTransformerWrapperDF(
     """
 
     # noinspection PyPep8Naming
-    def _convert_X_for_delegate(self, X: pd.DataFrame) -> Any:
-        return super()._convert_X_for_delegate(X).values
+    def _adjust_X_type_for_delegate(
+        self, X: pd.DataFrame, *, to_numpy: Optional[bool] = None
+    ) -> np.ndarray:
+        assert to_numpy is not False, "X must be converted to a numpy array"
+        return super()._adjust_X_type_for_delegate(X, to_numpy=True)
 
-    def _convert_y_for_delegate(
-        self, y: Optional[Union[pd.Series, pd.DataFrame]]
-    ) -> Any:
-        y = super()._convert_y_for_delegate(y)
-        return None if y is None else y.values
+    def _adjust_y_type_for_delegate(
+        self,
+        y: Optional[Union[pd.Series, pd.DataFrame]],
+        *,
+        to_numpy: Optional[bool] = None,
+    ) -> Optional[np.ndarray]:
+        assert to_numpy is not False, "y must be converted to a numpy array"
+        return super()._adjust_y_type_for_delegate(y, to_numpy=True)
 
 
 class ColumnSubsetTransformerWrapperDF(
@@ -259,7 +267,10 @@ class ColumnTransformerWrapperDF(
     def _validate_delegate_estimator(self) -> None:
         column_transformer: ColumnTransformer = self.native_estimator
 
-        if column_transformer.remainder != ColumnTransformerWrapperDF.__DROP:
+        if (
+            column_transformer.remainder
+            not in ColumnTransformerWrapperDF.__SPECIAL_TRANSFORMERS
+        ):
             raise ValueError(
                 f"unsupported value for arg remainder: ({column_transformer.remainder})"
             )
@@ -291,20 +302,29 @@ class ColumnTransformerWrapperDF(
         values the corresponding input column names.
         """
 
-        return reduce(
-            lambda x, y: x.append(y),
-            (
-                (
-                    pd.Series(index=columns, data=columns)
-                    if df_transformer == ColumnTransformerWrapperDF.__PASSTHROUGH
-                    else df_transformer.feature_names_original_
-                )
+        def _features_original(df_transformer: TransformerDF, columns: List[Any]):
+            if df_transformer == ColumnTransformerWrapperDF.__PASSTHROUGH:
+                # we may get positional indices for columns selected by the
+                # 'passthrough' transformer, and in that case so need to look up the
+                # associated column names
+                if all(isinstance(column, int) for column in columns):
+                    column_names = self._get_features_in()[columns]
+                else:
+                    column_names = columns
+                return pd.Series(index=column_names, data=column_names)
+
+            else:
+                return df_transformer.feature_names_original_
+
+        return pd.concat(
+            [
+                _features_original(df_transformer, columns)
                 for _, df_transformer, columns in self.native_estimator.transformers_
                 if (
                     len(columns) > 0
                     and df_transformer != ColumnTransformerWrapperDF.__DROP
                 )
-            ),
+            ]
         )
 
 
@@ -343,7 +363,7 @@ class ImputerWrapperDF(TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
             nan_mask = np.all(delegate_estimator._mask_fit_X, axis=0)
 
         # the imputed columns are all ingoing columns, except the ones that were dropped
-        imputed_columns = self.feature_names_in_.delete(np.argwhere(nan_mask))
+        imputed_columns = self.feature_names_in_.delete(np.argwhere(nan_mask).tolist())
         features_original = pd.Series(
             index=imputed_columns, data=imputed_columns.values
         )

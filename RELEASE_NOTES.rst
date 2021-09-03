@@ -22,6 +22,19 @@ This release adds support for `scikit-learn 0.24 <https://scikit-learn.org/0.24/
 *sklearndf* 1.1
 ---------------
 
+1.1.2
+~~~~~
+
+This release improves compatibility with scikit-learn and fixes bugs.
+
+- API: add full support for the
+  `_estimator_type <https://scikit-learn.org/stable/glossary.html#term-_estimator_type>`__
+  attribute
+- FIX: do not reset transformers when calling :meth:`.TransformerDF.inverse_transform`
+- FIX: accept `"passthrough"` as value for arg `remainder` of
+  :class:`.ColumnTransformerDF`
+
+
 1.1.1
 ~~~~~
 

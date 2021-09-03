@@ -118,9 +118,9 @@ def check_expected_not_fitted_error(estimator: EstimatorDF):
             except Exception as sklearn_exception:
                 assert repr(sklearndf_exception) == repr(sklearn_exception), (
                     "sklearndf raised a different error as sklearn"
-                    f" for {_estimator.__class__.__name__}:"
+                    f" for {_estimator.__class__.__name__}:\n"
                     f"sklearndf: {repr(sklearndf_exception)} \n"
-                    f"sklearn: {repr(sklearn_exception)}"
+                    f"sklearn:   {repr(sklearn_exception)}"
                 )
 
     if isinstance(estimator, LearnerDF):
