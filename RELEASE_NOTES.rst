@@ -7,10 +7,7 @@ Release Notes
 1.2.2
 ~~~~~
 
-This release comprises bugfixes and minor code tweaks.
-
-- FIX: accept `"passthrough"` as value for arg `remainder` of
-  :class:`.ColumnTransformerDF`
+This is a maintenance release to catch up with *sklearndf* 1.1.2.
 
 
 1.2.1
