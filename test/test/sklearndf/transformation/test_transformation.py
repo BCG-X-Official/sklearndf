@@ -18,7 +18,13 @@ from ...sklearndf import (
     get_sklearndf_wrapper_class,
     iterate_classes,
 )
-from sklearndf import ClassifierDF, RegressorDF, TransformerDF
+from sklearndf import (
+    ClassifierDF,
+    RegressorDF,
+    TransformerDF,
+    __sklearn_0_24__,
+    __sklearn_version__,
+)
 from sklearndf.classification import RandomForestClassifierDF
 from sklearndf.transformation import (
     RFECVDF,
@@ -275,6 +281,12 @@ def test_simple_imputer_df() -> None:
 
     transformed_df = imputer_df.fit_transform(X=x_df)
     assert_frame_equal(transformed_df, transformed_df_expected)
+
+    # test inverse transform
+
+    if __sklearn_version__ >= __sklearn_0_24__:
+        inverse_transformed_df = imputer_df.inverse_transform(X=transformed_df)
+        assert_frame_equal(inverse_transformed_df, x_df)
 
 
 @pytest.fixture
