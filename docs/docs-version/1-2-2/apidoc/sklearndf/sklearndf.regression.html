@@ -1,0 +1,686 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearndf.regression &#8212; sklearndf  documentation</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/gamma.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/gamma.js"></script>
+    <script src="../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="sklearndf.regression.ARDRegressionDF" href="regression/sklearndf.regression.ARDRegressionDF.html" />
+    <link rel="prev" title="sklearndf.pipeline.wrapper.PipelineWrapperDF" href="pipeline/wrapper/sklearndf.pipeline.wrapper.PipelineWrapperDF.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../index.html">
+    
+      <img src="../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../getting_started/getting_started.html">Getting started</a>
+        </li>
+        
+        <li class="nav-item active">
+            <a class="nav-link" href="../sklearndf.html">API reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../contribution_guide.html">Development Guidelines</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../faqs.html">FAQ</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../release_notes.html">Release Notes</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+          
+            
+                <li class="">
+                    <a href="sklearndf.ClassifierDF.html">sklearndf.ClassifierDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.EstimatorDF.html">sklearndf.EstimatorDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.LearnerDF.html">sklearndf.LearnerDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.RegressorDF.html">sklearndf.RegressorDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.TransformerDF.html">sklearndf.TransformerDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.classification.html">sklearndf.classification</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.pipeline.html">sklearndf.pipeline</a>
+                </li>
+            
+          
+            
+  
+                <li class="active">
+                    <a href="">sklearndf.regression</a>
+                    <ul>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.ARDRegressionDF.html">sklearndf.regression.ARDRegressionDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.AdaBoostRegressorDF.html">sklearndf.regression.AdaBoostRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.BaggingRegressorDF.html">sklearndf.regression.BaggingRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.BayesianRidgeDF.html">sklearndf.regression.BayesianRidgeDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.CCADF.html">sklearndf.regression.CCADF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.DecisionTreeRegressorDF.html">sklearndf.regression.DecisionTreeRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.DummyRegressorDF.html">sklearndf.regression.DummyRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.ElasticNetCVDF.html">sklearndf.regression.ElasticNetCVDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.ElasticNetDF.html">sklearndf.regression.ElasticNetDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.ExtraTreeRegressorDF.html">sklearndf.regression.ExtraTreeRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.ExtraTreesRegressorDF.html">sklearndf.regression.ExtraTreesRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.GammaRegressorDF.html">sklearndf.regression.GammaRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.GaussianProcessRegressorDF.html">sklearndf.regression.GaussianProcessRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.GeneralizedLinearRegressorDF.html">sklearndf.regression.GeneralizedLinearRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.GradientBoostingRegressorDF.html">sklearndf.regression.GradientBoostingRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.HuberRegressorDF.html">sklearndf.regression.HuberRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.IsotonicRegressionDF.html">sklearndf.regression.IsotonicRegressionDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.KNeighborsRegressorDF.html">sklearndf.regression.KNeighborsRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.KernelRidgeDF.html">sklearndf.regression.KernelRidgeDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.LarsCVDF.html">sklearndf.regression.LarsCVDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.LarsDF.html">sklearndf.regression.LarsDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.LassoCVDF.html">sklearndf.regression.LassoCVDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.LassoDF.html">sklearndf.regression.LassoDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.LassoLarsCVDF.html">sklearndf.regression.LassoLarsCVDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.LassoLarsDF.html">sklearndf.regression.LassoLarsDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.LassoLarsICDF.html">sklearndf.regression.LassoLarsICDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.LinearRegressionDF.html">sklearndf.regression.LinearRegressionDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.LinearSVRDF.html">sklearndf.regression.LinearSVRDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.MLPRegressorDF.html">sklearndf.regression.MLPRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.MultiOutputRegressorDF.html">sklearndf.regression.MultiOutputRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.MultiTaskElasticNetCVDF.html">sklearndf.regression.MultiTaskElasticNetCVDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.MultiTaskElasticNetDF.html">sklearndf.regression.MultiTaskElasticNetDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.MultiTaskLassoCVDF.html">sklearndf.regression.MultiTaskLassoCVDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.MultiTaskLassoDF.html">sklearndf.regression.MultiTaskLassoDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.NuSVRDF.html">sklearndf.regression.NuSVRDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.OrthogonalMatchingPursuitCVDF.html">sklearndf.regression.OrthogonalMatchingPursuitCVDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.OrthogonalMatchingPursuitDF.html">sklearndf.regression.OrthogonalMatchingPursuitDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.PLSCanonicalDF.html">sklearndf.regression.PLSCanonicalDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.PLSRegressionDF.html">sklearndf.regression.PLSRegressionDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.PassiveAggressiveRegressorDF.html">sklearndf.regression.PassiveAggressiveRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.PoissonRegressorDF.html">sklearndf.regression.PoissonRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.RANSACRegressorDF.html">sklearndf.regression.RANSACRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.RadiusNeighborsRegressorDF.html">sklearndf.regression.RadiusNeighborsRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.RandomForestRegressorDF.html">sklearndf.regression.RandomForestRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.RegressorChainDF.html">sklearndf.regression.RegressorChainDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.RidgeCVDF.html">sklearndf.regression.RidgeCVDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.RidgeDF.html">sklearndf.regression.RidgeDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.SGDRegressorDF.html">sklearndf.regression.SGDRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.SVRDF.html">sklearndf.regression.SVRDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.StackingRegressorDF.html">sklearndf.regression.StackingRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.TheilSenRegressorDF.html">sklearndf.regression.TheilSenRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.TransformedTargetRegressorDF.html">sklearndf.regression.TransformedTargetRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.TweedieRegressorDF.html">sklearndf.regression.TweedieRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.VotingRegressorDF.html">sklearndf.regression.VotingRegressorDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.extra.html">sklearndf.regression.extra</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="regression/sklearndf.regression.wrapper.html">sklearndf.regression.wrapper</a>
+                        </li>
+                    
+                    </ul>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.transformation.html">sklearndf.transformation</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.wrapper.html">sklearndf.wrapper</a>
+                </li>
+            
+          
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#classes" class="nav-link">Classes</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#submodules" class="nav-link">Submodules</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="module-sklearndf.regression">
+<span id="sklearndf-regression"></span><h1>sklearndf.regression<a class="headerlink" href="#module-sklearndf.regression" title="Permalink to this headline">¶</a></h1>
+<p>Extended versions of all Scikit-Learn regressors with enhanced E2E support for data
+frames.</p>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.ARDRegressionDF.html#sklearndf.regression.ARDRegressionDF" title="sklearndf.regression.ARDRegressionDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ARDRegressionDF</span></code></a></p></td>
+<td><p>Bayesian ARD regression.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.AdaBoostRegressorDF.html#sklearndf.regression.AdaBoostRegressorDF" title="sklearndf.regression.AdaBoostRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AdaBoostRegressorDF</span></code></a></p></td>
+<td><p>An AdaBoost regressor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.BaggingRegressorDF.html#sklearndf.regression.BaggingRegressorDF" title="sklearndf.regression.BaggingRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaggingRegressorDF</span></code></a></p></td>
+<td><p>A Bagging regressor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.BayesianRidgeDF.html#sklearndf.regression.BayesianRidgeDF" title="sklearndf.regression.BayesianRidgeDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BayesianRidgeDF</span></code></a></p></td>
+<td><p>Bayesian ridge regression.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.CCADF.html#sklearndf.regression.CCADF" title="sklearndf.regression.CCADF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CCADF</span></code></a></p></td>
+<td><p>Canonical Correlation Analysis, also known as “Mode B” PLS.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.DecisionTreeRegressorDF.html#sklearndf.regression.DecisionTreeRegressorDF" title="sklearndf.regression.DecisionTreeRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DecisionTreeRegressorDF</span></code></a></p></td>
+<td><p>A decision tree regressor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.DummyRegressorDF.html#sklearndf.regression.DummyRegressorDF" title="sklearndf.regression.DummyRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DummyRegressorDF</span></code></a></p></td>
+<td><p>DummyRegressor is a regressor that makes predictions using simple rules.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.ElasticNetCVDF.html#sklearndf.regression.ElasticNetCVDF" title="sklearndf.regression.ElasticNetCVDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElasticNetCVDF</span></code></a></p></td>
+<td><p>Elastic Net model with iterative fitting along a regularization path.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.ElasticNetDF.html#sklearndf.regression.ElasticNetDF" title="sklearndf.regression.ElasticNetDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ElasticNetDF</span></code></a></p></td>
+<td><p>Linear regression with combined L1 and L2 priors as regularizer.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.ExtraTreeRegressorDF.html#sklearndf.regression.ExtraTreeRegressorDF" title="sklearndf.regression.ExtraTreeRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExtraTreeRegressorDF</span></code></a></p></td>
+<td><p>An extremely randomized tree regressor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.ExtraTreesRegressorDF.html#sklearndf.regression.ExtraTreesRegressorDF" title="sklearndf.regression.ExtraTreesRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExtraTreesRegressorDF</span></code></a></p></td>
+<td><p>An extra-trees regressor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.GammaRegressorDF.html#sklearndf.regression.GammaRegressorDF" title="sklearndf.regression.GammaRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GammaRegressorDF</span></code></a></p></td>
+<td><p>Generalized Linear Model with a Gamma distribution.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.GaussianProcessRegressorDF.html#sklearndf.regression.GaussianProcessRegressorDF" title="sklearndf.regression.GaussianProcessRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GaussianProcessRegressorDF</span></code></a></p></td>
+<td><p>Gaussian process regression (GPR).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.GeneralizedLinearRegressorDF.html#sklearndf.regression.GeneralizedLinearRegressorDF" title="sklearndf.regression.GeneralizedLinearRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GeneralizedLinearRegressorDF</span></code></a></p></td>
+<td><p>Regression via a penalized Generalized Linear Model (GLM).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.GradientBoostingRegressorDF.html#sklearndf.regression.GradientBoostingRegressorDF" title="sklearndf.regression.GradientBoostingRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GradientBoostingRegressorDF</span></code></a></p></td>
+<td><p>Gradient Boosting for regression.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.HuberRegressorDF.html#sklearndf.regression.HuberRegressorDF" title="sklearndf.regression.HuberRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HuberRegressorDF</span></code></a></p></td>
+<td><p>Linear regression model that is robust to outliers.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.IsotonicRegressionDF.html#sklearndf.regression.IsotonicRegressionDF" title="sklearndf.regression.IsotonicRegressionDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IsotonicRegressionDF</span></code></a></p></td>
+<td><p>Isotonic regression model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.KNeighborsRegressorDF.html#sklearndf.regression.KNeighborsRegressorDF" title="sklearndf.regression.KNeighborsRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KNeighborsRegressorDF</span></code></a></p></td>
+<td><p>Regression based on k-nearest neighbors.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.KernelRidgeDF.html#sklearndf.regression.KernelRidgeDF" title="sklearndf.regression.KernelRidgeDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KernelRidgeDF</span></code></a></p></td>
+<td><p>Kernel ridge regression.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.LarsCVDF.html#sklearndf.regression.LarsCVDF" title="sklearndf.regression.LarsCVDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LarsCVDF</span></code></a></p></td>
+<td><p>Cross-validated Least Angle Regression model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.LarsDF.html#sklearndf.regression.LarsDF" title="sklearndf.regression.LarsDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LarsDF</span></code></a></p></td>
+<td><p>Least Angle Regression model a.k.a.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.LassoCVDF.html#sklearndf.regression.LassoCVDF" title="sklearndf.regression.LassoCVDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LassoCVDF</span></code></a></p></td>
+<td><p>Lasso linear model with iterative fitting along a regularization path.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.LassoDF.html#sklearndf.regression.LassoDF" title="sklearndf.regression.LassoDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LassoDF</span></code></a></p></td>
+<td><p>Linear Model trained with L1 prior as regularizer (aka the Lasso)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.LassoLarsCVDF.html#sklearndf.regression.LassoLarsCVDF" title="sklearndf.regression.LassoLarsCVDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LassoLarsCVDF</span></code></a></p></td>
+<td><p>Cross-validated Lasso, using the LARS algorithm.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.LassoLarsDF.html#sklearndf.regression.LassoLarsDF" title="sklearndf.regression.LassoLarsDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LassoLarsDF</span></code></a></p></td>
+<td><p>Lasso model fit with Least Angle Regression a.k.a.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.LassoLarsICDF.html#sklearndf.regression.LassoLarsICDF" title="sklearndf.regression.LassoLarsICDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LassoLarsICDF</span></code></a></p></td>
+<td><p>Lasso model fit with Lars using BIC or AIC for model selection</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.LinearRegressionDF.html#sklearndf.regression.LinearRegressionDF" title="sklearndf.regression.LinearRegressionDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LinearRegressionDF</span></code></a></p></td>
+<td><p>Ordinary least squares Linear Regression.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.LinearSVRDF.html#sklearndf.regression.LinearSVRDF" title="sklearndf.regression.LinearSVRDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LinearSVRDF</span></code></a></p></td>
+<td><p>Linear Support Vector Regression.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.MLPRegressorDF.html#sklearndf.regression.MLPRegressorDF" title="sklearndf.regression.MLPRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MLPRegressorDF</span></code></a></p></td>
+<td><p>Multi-layer Perceptron regressor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.MultiOutputRegressorDF.html#sklearndf.regression.MultiOutputRegressorDF" title="sklearndf.regression.MultiOutputRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiOutputRegressorDF</span></code></a></p></td>
+<td><p>Multi target regression</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.MultiTaskElasticNetCVDF.html#sklearndf.regression.MultiTaskElasticNetCVDF" title="sklearndf.regression.MultiTaskElasticNetCVDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiTaskElasticNetCVDF</span></code></a></p></td>
+<td><p>Multi-task L1/L2 ElasticNet with built-in cross-validation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.MultiTaskElasticNetDF.html#sklearndf.regression.MultiTaskElasticNetDF" title="sklearndf.regression.MultiTaskElasticNetDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiTaskElasticNetDF</span></code></a></p></td>
+<td><p>Multi-task ElasticNet model trained with L1/L2 mixed-norm as regularizer.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.MultiTaskLassoCVDF.html#sklearndf.regression.MultiTaskLassoCVDF" title="sklearndf.regression.MultiTaskLassoCVDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiTaskLassoCVDF</span></code></a></p></td>
+<td><p>Multi-task Lasso model trained with L1/L2 mixed-norm as regularizer.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.MultiTaskLassoDF.html#sklearndf.regression.MultiTaskLassoDF" title="sklearndf.regression.MultiTaskLassoDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiTaskLassoDF</span></code></a></p></td>
+<td><p>Multi-task Lasso model trained with L1/L2 mixed-norm as regularizer.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.NuSVRDF.html#sklearndf.regression.NuSVRDF" title="sklearndf.regression.NuSVRDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NuSVRDF</span></code></a></p></td>
+<td><p>Nu Support Vector Regression.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.OrthogonalMatchingPursuitCVDF.html#sklearndf.regression.OrthogonalMatchingPursuitCVDF" title="sklearndf.regression.OrthogonalMatchingPursuitCVDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrthogonalMatchingPursuitCVDF</span></code></a></p></td>
+<td><p>Cross-validated Orthogonal Matching Pursuit model (OMP).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.OrthogonalMatchingPursuitDF.html#sklearndf.regression.OrthogonalMatchingPursuitDF" title="sklearndf.regression.OrthogonalMatchingPursuitDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrthogonalMatchingPursuitDF</span></code></a></p></td>
+<td><p>Orthogonal Matching Pursuit model (OMP).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.PLSCanonicalDF.html#sklearndf.regression.PLSCanonicalDF" title="sklearndf.regression.PLSCanonicalDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PLSCanonicalDF</span></code></a></p></td>
+<td><p>Partial Least Squares transformer and regressor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.PLSRegressionDF.html#sklearndf.regression.PLSRegressionDF" title="sklearndf.regression.PLSRegressionDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PLSRegressionDF</span></code></a></p></td>
+<td><p>PLS regression</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.PassiveAggressiveRegressorDF.html#sklearndf.regression.PassiveAggressiveRegressorDF" title="sklearndf.regression.PassiveAggressiveRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PassiveAggressiveRegressorDF</span></code></a></p></td>
+<td><p>Passive Aggressive Regressor</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.PoissonRegressorDF.html#sklearndf.regression.PoissonRegressorDF" title="sklearndf.regression.PoissonRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PoissonRegressorDF</span></code></a></p></td>
+<td><p>Generalized Linear Model with a Poisson distribution.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.RANSACRegressorDF.html#sklearndf.regression.RANSACRegressorDF" title="sklearndf.regression.RANSACRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RANSACRegressorDF</span></code></a></p></td>
+<td><p>RANSAC (RANdom SAmple Consensus) algorithm.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.RadiusNeighborsRegressorDF.html#sklearndf.regression.RadiusNeighborsRegressorDF" title="sklearndf.regression.RadiusNeighborsRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RadiusNeighborsRegressorDF</span></code></a></p></td>
+<td><p>Regression based on neighbors within a fixed radius.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.RandomForestRegressorDF.html#sklearndf.regression.RandomForestRegressorDF" title="sklearndf.regression.RandomForestRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RandomForestRegressorDF</span></code></a></p></td>
+<td><p>A random forest regressor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.RegressorChainDF.html#sklearndf.regression.RegressorChainDF" title="sklearndf.regression.RegressorChainDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressorChainDF</span></code></a></p></td>
+<td><p>A multi-label model that arranges regressions into a chain.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.RidgeCVDF.html#sklearndf.regression.RidgeCVDF" title="sklearndf.regression.RidgeCVDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RidgeCVDF</span></code></a></p></td>
+<td><p>Ridge regression with built-in cross-validation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.RidgeDF.html#sklearndf.regression.RidgeDF" title="sklearndf.regression.RidgeDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RidgeDF</span></code></a></p></td>
+<td><p>Linear least squares with l2 regularization.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.SGDRegressorDF.html#sklearndf.regression.SGDRegressorDF" title="sklearndf.regression.SGDRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SGDRegressorDF</span></code></a></p></td>
+<td><p>Linear model fitted by minimizing a regularized empirical loss with SGD</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.SVRDF.html#sklearndf.regression.SVRDF" title="sklearndf.regression.SVRDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SVRDF</span></code></a></p></td>
+<td><p>Epsilon-Support Vector Regression.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.StackingRegressorDF.html#sklearndf.regression.StackingRegressorDF" title="sklearndf.regression.StackingRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StackingRegressorDF</span></code></a></p></td>
+<td><p>Stack of estimators with a final regressor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.TheilSenRegressorDF.html#sklearndf.regression.TheilSenRegressorDF" title="sklearndf.regression.TheilSenRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TheilSenRegressorDF</span></code></a></p></td>
+<td><p>Theil-Sen Estimator: robust multivariate regression model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.TransformedTargetRegressorDF.html#sklearndf.regression.TransformedTargetRegressorDF" title="sklearndf.regression.TransformedTargetRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TransformedTargetRegressorDF</span></code></a></p></td>
+<td><p>Meta-estimator to regress on a transformed target.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.TweedieRegressorDF.html#sklearndf.regression.TweedieRegressorDF" title="sklearndf.regression.TweedieRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TweedieRegressorDF</span></code></a></p></td>
+<td><p>Generalized Linear Model with a Tweedie distribution.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.VotingRegressorDF.html#sklearndf.regression.VotingRegressorDF" title="sklearndf.regression.VotingRegressorDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VotingRegressorDF</span></code></a></p></td>
+<td><p>Prediction voting regressor for unfitted estimators.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="regression/sklearndf.regression.extra.html#module-sklearndf.regression.extra" title="sklearndf.regression.extra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearndf.regression.extra</span></code></a></p></td>
+<td><p>Additional 3rd party regressors that implement the Scikit-Learn interface.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="regression/sklearndf.regression.wrapper.html#module-sklearndf.regression.wrapper" title="sklearndf.regression.wrapper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sklearndf.regression.wrapper</span></code></a></p></td>
+<td><p>Wrapper classes to enhance the functionality of native regressors conforming with the scikit-learn API.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='left-prev' id="prev-link" href="pipeline/wrapper/sklearndf.pipeline.wrapper.PipelineWrapperDF.html" title="previous page">sklearndf.pipeline.wrapper.PipelineWrapperDF</a>
+    <a class='right-next' id="next-link" href="regression/sklearndf.regression.ARDRegressionDF.html" title="next page">sklearndf.regression.ARDRegressionDF</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2021, Boston Consulting Group (BCG).<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

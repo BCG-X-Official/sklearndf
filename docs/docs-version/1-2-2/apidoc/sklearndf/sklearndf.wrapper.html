@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearndf.wrapper &#8212; sklearndf  documentation</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/gamma.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/gamma.js"></script>
+    <script src="../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="sklearndf.wrapper.ClassifierWrapperDF" href="wrapper/sklearndf.wrapper.ClassifierWrapperDF.html" />
+    <link rel="prev" title="sklearndf.transformation.wrapper.PolynomialFeaturesWrapperDF" href="transformation/wrapper/sklearndf.transformation.wrapper.PolynomialFeaturesWrapperDF.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../index.html">
+    
+      <img src="../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../getting_started/getting_started.html">Getting started</a>
+        </li>
+        
+        <li class="nav-item active">
+            <a class="nav-link" href="../sklearndf.html">API reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../contribution_guide.html">Development Guidelines</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../faqs.html">FAQ</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../release_notes.html">Release Notes</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+          
+            
+                <li class="">
+                    <a href="sklearndf.ClassifierDF.html">sklearndf.ClassifierDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.EstimatorDF.html">sklearndf.EstimatorDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.LearnerDF.html">sklearndf.LearnerDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.RegressorDF.html">sklearndf.RegressorDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.TransformerDF.html">sklearndf.TransformerDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.classification.html">sklearndf.classification</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.pipeline.html">sklearndf.pipeline</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.regression.html">sklearndf.regression</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="sklearndf.transformation.html">sklearndf.transformation</a>
+                </li>
+            
+          
+            
+  
+                <li class="active">
+                    <a href="">sklearndf.wrapper</a>
+                    <ul>
+                    
+                        <li class="">
+                            <a href="wrapper/sklearndf.wrapper.ClassifierWrapperDF.html">sklearndf.wrapper.ClassifierWrapperDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="wrapper/sklearndf.wrapper.EstimatorWrapperDF.html">sklearndf.wrapper.EstimatorWrapperDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="wrapper/sklearndf.wrapper.EstimatorWrapperDFMeta.html">sklearndf.wrapper.EstimatorWrapperDFMeta</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="wrapper/sklearndf.wrapper.LearnerWrapperDF.html">sklearndf.wrapper.LearnerWrapperDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="wrapper/sklearndf.wrapper.MetaEstimatorWrapperDF.html">sklearndf.wrapper.MetaEstimatorWrapperDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="wrapper/sklearndf.wrapper.RegressorWrapperDF.html">sklearndf.wrapper.RegressorWrapperDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="wrapper/sklearndf.wrapper.StackingEstimatorWrapperDF.html">sklearndf.wrapper.StackingEstimatorWrapperDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="wrapper/sklearndf.wrapper.TransformerWrapperDF.html">sklearndf.wrapper.TransformerWrapperDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="wrapper/sklearndf.wrapper.make_df_classifier.html">sklearndf.wrapper.make_df_classifier</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="wrapper/sklearndf.wrapper.make_df_estimator.html">sklearndf.wrapper.make_df_estimator</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="wrapper/sklearndf.wrapper.make_df_regressor.html">sklearndf.wrapper.make_df_regressor</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="wrapper/sklearndf.wrapper.make_df_transformer.html">sklearndf.wrapper.make_df_transformer</a>
+                        </li>
+                    
+                    </ul>
+                </li>
+            
+          
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#classes" class="nav-link">Classes</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#functions" class="nav-link">Functions</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="module-sklearndf.wrapper">
+<span id="sklearndf-wrapper"></span><h1>sklearndf.wrapper<a class="headerlink" href="#module-sklearndf.wrapper" title="Permalink to this headline">¶</a></h1>
+<p>Factory functions and wrapper class API for enhancing the functionality of native
+estimators conforming with the scikit-learn API.</p>
+<p>In many cases, creating a DF classifier or regressor is as simple as</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">RandomForestClassifierDF</span> <span class="o">=</span> <span class="n">make_df_classifier</span><span class="p">(</span><span class="n">RandomForestClassifier</span><span class="p">)</span>
+<span class="n">RandomForestRegressorDF</span> <span class="o">=</span> <span class="n">make_df_regressor</span><span class="p">(</span><span class="n">RandomForestRegressor</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more advanced examples, including the use of custom wrapper classes, see the many
+examples in modules
+<a class="reference internal" href="sklearndf.transformation.html#module-sklearndf.transformation" title="sklearndf.transformation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sklearndf.transformation</span></code></a>,
+<a class="reference internal" href="sklearndf.classification.html#module-sklearndf.classification" title="sklearndf.classification"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sklearndf.classification</span></code></a>, and
+<a class="reference internal" href="sklearndf.regression.html#module-sklearndf.regression" title="sklearndf.regression"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sklearndf.regression</span></code></a>.</p>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.wrapper.ClassifierWrapperDF.html#sklearndf.wrapper.ClassifierWrapperDF" title="sklearndf.wrapper.ClassifierWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClassifierWrapperDF</span></code></a></p></td>
+<td><p>Base class of DF wrappers for native classifiers conforming with the scikit-learn API.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.wrapper.EstimatorWrapperDF.html#sklearndf.wrapper.EstimatorWrapperDF" title="sklearndf.wrapper.EstimatorWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EstimatorWrapperDF</span></code></a></p></td>
+<td><p>Base class of DF wrappers for native estimators conforming with the scikit-learn API.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.wrapper.EstimatorWrapperDFMeta.html#sklearndf.wrapper.EstimatorWrapperDFMeta" title="sklearndf.wrapper.EstimatorWrapperDFMeta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EstimatorWrapperDFMeta</span></code></a></p></td>
+<td><p>Metaclass of DF wrappers, providing a reference to the type of the wrapped native estimator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.wrapper.LearnerWrapperDF.html#sklearndf.wrapper.LearnerWrapperDF" title="sklearndf.wrapper.LearnerWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LearnerWrapperDF</span></code></a></p></td>
+<td><p>Base class of DF wrappers for native learners conforming with the scikit-learn API.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.wrapper.MetaEstimatorWrapperDF.html#sklearndf.wrapper.MetaEstimatorWrapperDF" title="sklearndf.wrapper.MetaEstimatorWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MetaEstimatorWrapperDF</span></code></a></p></td>
+<td><p>Abstract base class of wrappers for estimators implementing <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.MetaEstimatorMixin</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.wrapper.RegressorWrapperDF.html#sklearndf.wrapper.RegressorWrapperDF" title="sklearndf.wrapper.RegressorWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RegressorWrapperDF</span></code></a></p></td>
+<td><p>Base class of DF wrappers for native regressors conforming with the scikit-learn API.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.wrapper.StackingEstimatorWrapperDF.html#sklearndf.wrapper.StackingEstimatorWrapperDF" title="sklearndf.wrapper.StackingEstimatorWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StackingEstimatorWrapperDF</span></code></a></p></td>
+<td><p>Abstract base class of wrappers for estimators implementing <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.ensemble._BaseStacking</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.wrapper.TransformerWrapperDF.html#sklearndf.wrapper.TransformerWrapperDF" title="sklearndf.wrapper.TransformerWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TransformerWrapperDF</span></code></a></p></td>
+<td><p>Base class of DF wrappers for native transformers conforming with the scikit-learn API.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.wrapper.make_df_classifier.html#sklearndf.wrapper.make_df_classifier" title="sklearndf.wrapper.make_df_classifier"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_df_classifier</span></code></a></p></td>
+<td><p>Create an augmented version of a given classifier that conforms with the scikit-learn API.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.wrapper.make_df_estimator.html#sklearndf.wrapper.make_df_estimator" title="sklearndf.wrapper.make_df_estimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_df_estimator</span></code></a></p></td>
+<td><p>Create an augmented version of a given estimator that conforms with the scikit-learn API.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.wrapper.make_df_regressor.html#sklearndf.wrapper.make_df_regressor" title="sklearndf.wrapper.make_df_regressor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_df_regressor</span></code></a></p></td>
+<td><p>Create an augmented version of a given regressor that conforms with the scikit-learn API.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.wrapper.make_df_transformer.html#sklearndf.wrapper.make_df_transformer" title="sklearndf.wrapper.make_df_transformer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_df_transformer</span></code></a></p></td>
+<td><p>Create an augmented version of a given transformer that conforms with the scikit-learn API.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='left-prev' id="prev-link" href="transformation/wrapper/sklearndf.transformation.wrapper.PolynomialFeaturesWrapperDF.html" title="previous page">sklearndf.transformation.wrapper.PolynomialFeaturesWrapperDF</a>
+    <a class='right-next' id="next-link" href="wrapper/sklearndf.wrapper.ClassifierWrapperDF.html" title="next page">sklearndf.wrapper.ClassifierWrapperDF</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2021, Boston Consulting Group (BCG).<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

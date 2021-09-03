@@ -1,0 +1,50 @@
+sklearndf.classification.GaussianNBDF
+=====================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: GaussianNBDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~GaussianNBDF.clone
+      ~GaussianNBDF.decision_function
+      ~GaussianNBDF.fit
+      ~GaussianNBDF.fit_predict
+      ~GaussianNBDF.from_fitted
+      ~GaussianNBDF.get_params
+      ~GaussianNBDF.partial_fit
+      ~GaussianNBDF.predict
+      ~GaussianNBDF.predict_log_proba
+      ~GaussianNBDF.predict_proba
+      ~GaussianNBDF.score
+      ~GaussianNBDF.set_params
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~GaussianNBDF.COL_FEATURE_IN
+      ~GaussianNBDF.COL_PREDICTION
+      ~GaussianNBDF.classes_
+      ~GaussianNBDF.feature_names_in_
+      ~GaussianNBDF.is_fitted
+      ~GaussianNBDF.n_outputs_
+      ~GaussianNBDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions
