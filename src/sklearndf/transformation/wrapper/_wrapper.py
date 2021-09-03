@@ -5,7 +5,7 @@ Core implementation of :mod:`sklearndf.transformation.wrapper`
 import logging
 from abc import ABCMeta, abstractmethod
 from functools import reduce
-from typing import Any, Generic, List, Optional, TypeVar, Union
+from typing import Generic, List, Optional, TypeVar, Union
 
 import numpy as np
 import pandas as pd
@@ -84,16 +84,20 @@ class NumpyTransformerWrapperDF(
     """
 
     # noinspection PyPep8Naming
-    def _convert_X_for_delegate(
-        self, X: pd.DataFrame, *, inverse: Optional[bool] = None
-    ) -> Any:
-        return super()._convert_X_for_delegate(X).values
+    def _adjust_X_type_for_delegate(
+        self, X: pd.DataFrame, *, to_numpy: Optional[bool] = None
+    ) -> np.ndarray:
+        assert to_numpy is not False, "X must be converted to a numpy array"
+        return super()._adjust_X_type_for_delegate(X, to_numpy=True)
 
-    def _convert_y_for_delegate(
-        self, y: Optional[Union[pd.Series, pd.DataFrame]]
-    ) -> Any:
-        y = super()._convert_y_for_delegate(y)
-        return None if y is None else y.values
+    def _adjust_y_type_for_delegate(
+        self,
+        y: Optional[Union[pd.Series, pd.DataFrame]],
+        *,
+        to_numpy: Optional[bool] = None,
+    ) -> Optional[np.ndarray]:
+        assert to_numpy is not False, "y must be converted to a numpy array"
+        return super()._adjust_y_type_for_delegate(y, to_numpy=True)
 
 
 class ColumnSubsetTransformerWrapperDF(
