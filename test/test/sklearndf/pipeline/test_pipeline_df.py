@@ -17,7 +17,7 @@ from numpy.testing import (
     assert_raises_regex,
 )
 from sklearn import clone
-from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.base import BaseEstimator, TransformerMixin, is_classifier, is_regressor
 from sklearn.feature_selection import f_classif
 
 from sklearndf.classification import SVCDF, LogisticRegressionDF
@@ -227,6 +227,10 @@ def test_pipeline_df__init() -> None:
         svc__a=None, svc__b=None, svc=clf, **pipe.get_params(deep=False)
     )
 
+    assert not is_classifier(pipe)
+    assert not is_regressor(pipe)
+    assert pipe._estimator_type is None
+
     # Check that params are set
     pipe.set_params(svc__a=0.1)
     assert clf.a == 0.1
@@ -238,6 +242,9 @@ def test_pipeline_df__init() -> None:
     clf = SVCDF()
     filter1 = SelectKBestDF(f_classif)
     pipe = PipelineDF([(step_anova, filter1), (step_svc, clf)])
+
+    # Check that the pipeline correctly detects that it is a classifier
+    assert is_classifier(pipe)
 
     # Check that estimators are not cloned on pipeline construction
     assert pipe.named_steps[step_anova] is filter1

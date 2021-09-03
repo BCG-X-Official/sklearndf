@@ -4,7 +4,7 @@ Core implementation of :mod:`sklearndf.classification.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Any, Generic, List, Optional, Sequence, TypeVar, Union
+from typing import Any, Callable, Generic, List, Optional, Sequence, TypeVar, Union
 
 import numpy as np
 import pandas as pd
@@ -14,7 +14,7 @@ from sklearn.multioutput import ClassifierChain, MultiOutputClassifier
 
 from pytools.api import AllTracker
 
-from sklearndf import LearnerDF
+from sklearndf import ClassifierDF, LearnerDF
 from sklearndf.transformation.wrapper import NComponentsDimensionalityReductionWrapperDF
 from sklearndf.wrapper import (
     ClassifierWrapperDF,
@@ -147,6 +147,13 @@ class ClassifierChainWrapperDF(
         )
 
 
+# noinspection PyProtectedMember
+from ...wrapper._adapter import ClassifierNPDF as _ClassifierNPDF
+
+# noinspection PyProtectedMember
+from ...wrapper._wrapper import _StackableClassifierDF
+
+
 class StackingClassifierWrapperDF(
     StackingEstimatorWrapperDF[T_NativeClassifier],
     ClassifierWrapperDF,
@@ -171,6 +178,16 @@ class StackingClassifierWrapperDF(
             return [f"{name}_{c}" for name in names for c in classes]
         else:
             return names
+
+    def _make_stackable_learner_df(
+        self, learner: ClassifierDF
+    ) -> _StackableClassifierDF:
+        return _StackableClassifierDF(learner)
+
+    def _make_learner_np_df(
+        self, delegate: ClassifierDF, column_names: Callable[[], Sequence[str]]
+    ) -> _ClassifierNPDF:
+        return _ClassifierNPDF(delegate, column_names)
 
 
 #

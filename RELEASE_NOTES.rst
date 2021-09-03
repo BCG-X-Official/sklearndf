@@ -4,6 +4,16 @@ Release Notes
 *sklearndf* 1.2
 ---------------
 
+1.2.2
+~~~~~
+
+This release makes small API tweaks, and catches up with *sklearndf* 1.1.2.
+
+- API: make type hints more specific in signatures for
+  :func:`.make_df_transformer`, :func:`.make_df_classifier`, and
+  :func:`.make_df_regressor`
+
+
 1.2.1
 ~~~~~
 
@@ -21,6 +31,19 @@ This release adds support for `scikit-learn 0.24 <https://scikit-learn.org/0.24/
 
 *sklearndf* 1.1
 ---------------
+
+1.1.2
+~~~~~
+
+This release improves compatibility with scikit-learn and fixes bugs.
+
+- API: add full support for the
+  `_estimator_type <https://scikit-learn.org/stable/glossary.html#term-_estimator_type>`__
+  attribute
+- FIX: do not reset transformers when calling :meth:`.TransformerDF.inverse_transform`
+- FIX: accept `"passthrough"` as value for arg `remainder` of
+  :class:`.ColumnTransformerDF`
+
 
 1.1.1
 ~~~~~
