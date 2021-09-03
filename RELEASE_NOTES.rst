@@ -7,7 +7,11 @@ Release Notes
 1.2.2
 ~~~~~
 
-This is a maintenance release to catch up with *sklearndf* 1.1.2.
+This release makes small API tweaks, and catches up with *sklearndf* 1.1.2.
+
+- API: make type hints more specific in signatures for
+  :func:`.make_df_transformer`, :func:`.make_df_classifier`, and
+  :func:`.make_df_regressor`
 
 
 1.2.1

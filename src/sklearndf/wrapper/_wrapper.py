@@ -1114,11 +1114,11 @@ def make_df_estimator(
 
 
 def make_df_transformer(
-    native_transformer: Type[T_NativeEstimator] = None,
+    native_transformer: Type[T_NativeTransformer] = None,
     *,
     name: Optional[str] = None,
-    base_wrapper: Type[EstimatorWrapperDF[T_NativeEstimator]],
-) -> Union[Type[EstimatorWrapperDF[T_NativeEstimator]], T_NativeEstimator]:
+    base_wrapper: Type[TransformerWrapperDF[T_NativeTransformer]],
+) -> Union[Type[TransformerWrapperDF[T_NativeTransformer]], T_NativeTransformer]:
     """
     Create an augmented version of a given transformer that conforms with the
     scikit-learn API.
@@ -1147,11 +1147,11 @@ def make_df_transformer(
 
 
 def make_df_classifier(
-    native_classifier: Type[T_NativeEstimator] = None,
+    native_classifier: Type[T_NativeClassifier] = None,
     *,
     name: Optional[str] = None,
-    base_wrapper: Optional[Type[EstimatorWrapperDF[T_NativeEstimator]]] = None,
-) -> Union[Type[EstimatorWrapperDF[T_NativeEstimator]], T_NativeEstimator]:
+    base_wrapper: Optional[Type[ClassifierWrapperDF[T_NativeClassifier]]] = None,
+) -> Union[Type[ClassifierWrapperDF[T_NativeClassifier]], T_NativeClassifier]:
     """
     Create an augmented version of a given classifier that conforms with the
     scikit-learn API.
@@ -1180,11 +1180,11 @@ def make_df_classifier(
 
 
 def make_df_regressor(
-    native_regressor: Type[T_NativeEstimator] = None,
+    native_regressor: Type[T_NativeRegressor] = None,
     *,
     name: Optional[str] = None,
-    base_wrapper: Optional[Type[EstimatorWrapperDF[T_NativeEstimator]]] = None,
-) -> Union[Type[EstimatorWrapperDF[T_NativeEstimator]], T_NativeEstimator]:
+    base_wrapper: Optional[Type[RegressorWrapperDF[T_NativeRegressor]]] = None,
+) -> Union[Type[RegressorWrapperDF[T_NativeRegressor]], T_NativeRegressor]:
     """
     Create an augmented version of a given regressor that conforms with the
     scikit-learn API.
