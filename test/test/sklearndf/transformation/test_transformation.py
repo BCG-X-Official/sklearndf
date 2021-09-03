@@ -1,4 +1,4 @@
-from typing import Type, cast
+from typing import List, Type, cast
 
 import numpy as np
 import pandas as pd
@@ -7,7 +7,7 @@ import sklearn
 from pandas.testing import assert_frame_equal
 from sklearn.base import BaseEstimator
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import Normalizer
+from sklearn.preprocessing import Normalizer, StandardScaler
 
 import sklearndf.transformation
 from sklearndf import TransformerDF
@@ -21,6 +21,7 @@ from sklearndf.transformation import (
     OneHotEncoderDF,
     SelectFromModelDF,
     SparseCoderDF,
+    StandardScalerDF,
 )
 from sklearndf.transformation.extra import OutlierRemoverDF
 from test import check_sklearn_version
@@ -51,8 +52,10 @@ TRANSFORMERS_TO_TEST = list_classes(
 def test_data() -> pd.DataFrame:
     return pd.DataFrame(
         data={
-            "c0": [0, 1, 2.5, 3, 4, 5.2, 6, 7, 8, 9],
+            "c0": [0.0, 1.0, 2.5, 3.0, 4.0, 5.2, 6.0, 7.0, 8.0, 9.0],
             "c1": ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+            "c2": [2.5, 3.0, 4.0, 5.2, 6.0, 7.0, 8.0, 9.0, 0.0, 4.0],
+            "c3": ["f", "g", "h", "i", "j", "a", "b", "c", "d", "e"],
         }
     )
 
@@ -120,6 +123,51 @@ def test_various_transformers(
         np.round(transformed_df["c0"].values, 1)
         == np.round(transformed_non_df.reshape(10), 1)
     )
+
+
+def test_column_transformer(test_data: pd.DataFrame) -> None:
+    numeric_columns: List[str] = test_data.select_dtypes(include=float).columns.tolist()
+    assert numeric_columns == ["c0", "c2"]
+
+    feature_names_in_expected = test_data.columns.rename("feature_in")
+
+    for remainder, output_names in [
+        ("drop", ["c0", "c2", "c3"]),
+        ("passthrough", ["c0", "c2", "c3", "c1"]),
+    ]:
+        feature_names_out_expected = pd.Index(output_names, name="feature_out")
+
+        # test fit-transform in connection with ColumnTransformer(DF)
+        tx_df = StandardScalerDF()
+        col_tx_df = ColumnTransformerDF(
+            transformers=[
+                ("tx", tx_df, numeric_columns),
+                ("keep", "passthrough", ["c3"]),
+            ],
+            remainder=remainder,
+        )
+        transformed_df = col_tx_df.fit_transform(X=test_data)
+
+        tx_native = StandardScaler()
+        col_tx_native = ColumnTransformer(
+            transformers=[
+                ("tx", tx_native, numeric_columns),
+                ("keep", "passthrough", ["c3"]),
+            ],
+            remainder=remainder,
+        )
+        transformed_native = col_tx_native.fit_transform(X=test_data)
+
+        assert_frame_equal(
+            transformed_df,
+            pd.DataFrame(transformed_native, columns=feature_names_out_expected),
+        )
+
+        assert col_tx_df.feature_names_in_.equals(feature_names_in_expected)
+        assert col_tx_df.feature_names_out_.equals(feature_names_out_expected)
+        assert col_tx_df.feature_names_original_.equals(
+            pd.Series(feature_names_out_expected, index=feature_names_out_expected)
+        )
 
 
 def test_normalizer_df() -> None:
