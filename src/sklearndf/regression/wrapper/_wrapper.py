@@ -4,8 +4,9 @@ Core implementation of :mod:`sklearndf.regression.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Any, Generic, Optional, TypeVar, Union
+from typing import Generic, Optional, TypeVar
 
+import numpy as np
 import pandas as pd
 from sklearn.base import RegressorMixin
 from sklearn.isotonic import IsotonicRegression
@@ -13,7 +14,10 @@ from sklearn.isotonic import IsotonicRegression
 from pytools.api import AllTracker
 
 from sklearndf import LearnerDF
-from sklearndf.transformation.wrapper import ColumnPreservingTransformerWrapperDF
+from sklearndf.transformation.wrapper import (
+    ColumnPreservingTransformerWrapperDF,
+    NumpyTransformerWrapperDF,
+)
 from sklearndf.wrapper import (
     MetaEstimatorWrapperDF,
     RegressorWrapperDF,
@@ -96,29 +100,33 @@ class RegressorTransformerWrapperDF(
 
 
 class IsotonicRegressionWrapperDF(
-    RegressorTransformerWrapperDF[IsotonicRegression], metaclass=ABCMeta
+    RegressorTransformerWrapperDF[IsotonicRegression],
+    NumpyTransformerWrapperDF,
+    metaclass=ABCMeta,
 ):
     """
     DF wrapper for :class:`sklearn.isotonic.IsotonicRegression`.
     """
 
     # noinspection PyPep8Naming
-    def _check_parameter_types(self, X: pd.DataFrame, y: Optional[pd.Series]) -> None:
-        super()._check_parameter_types(X=X, y=y)
+    def _check_parameter_types(
+        self,
+        X: pd.DataFrame,
+        y: Optional[pd.Series],
+        *,
+        expected_columns: pd.Index = None,
+    ) -> None:
+        super()._check_parameter_types(X, y, expected_columns=expected_columns)
         if X.shape[1] != 1:
             raise ValueError(
                 f"arg X expected to have exactly 1 column but has {X.shape[1]} columns"
             )
 
     # noinspection PyPep8Naming
-    def _convert_X_for_delegate(self, X: pd.DataFrame) -> Any:
-        return super()._convert_X_for_delegate(X).iloc[:, 0].values
-
-    def _convert_y_for_delegate(
-        self, y: Optional[Union[pd.Series, pd.DataFrame]]
-    ) -> Any:
-        y = super()._convert_y_for_delegate(y)
-        return None if y is None else y.values
+    def _adjust_X_type_for_delegate(
+        self, X: pd.DataFrame, *, to_numpy: Optional[bool] = None
+    ) -> np.ndarray:
+        return super()._adjust_X_type_for_delegate(X).ravel()
 
 
 #
