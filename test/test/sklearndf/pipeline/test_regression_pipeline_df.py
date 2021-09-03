@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import pytest
 from lightgbm import LGBMRegressor
+from sklearn.base import is_regressor
 from sklearn.preprocessing import OneHotEncoder
 
 from sklearndf.pipeline import RegressorPipelineDF
@@ -24,6 +25,8 @@ def test_regression_pipeline_df(
             ).columns,
         ),
     )
+
+    assert is_regressor(rpdf)
 
     rpdf.fit(X=boston_features, y=boston_target_sr)
     rpdf.predict(X=boston_features)
