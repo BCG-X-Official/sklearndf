@@ -4,6 +4,12 @@ Release Notes
 *sklearndf* 1.2
 ---------------
 
+1.2.2
+~~~~~
+
+This is a maintenance release to catch up with *sklearndf* 1.1.2.
+
+
 1.2.1
 ~~~~~
 
