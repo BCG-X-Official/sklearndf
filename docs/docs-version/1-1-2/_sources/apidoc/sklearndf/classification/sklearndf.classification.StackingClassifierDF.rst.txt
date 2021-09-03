@@ -1,0 +1,50 @@
+sklearndf.classification.StackingClassifierDF
+=============================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: StackingClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~StackingClassifierDF.clone
+      ~StackingClassifierDF.decision_function
+      ~StackingClassifierDF.fit
+      ~StackingClassifierDF.fit_predict
+      ~StackingClassifierDF.from_fitted
+      ~StackingClassifierDF.get_params
+      ~StackingClassifierDF.predict
+      ~StackingClassifierDF.predict_log_proba
+      ~StackingClassifierDF.predict_proba
+      ~StackingClassifierDF.score
+      ~StackingClassifierDF.set_params
+      ~StackingClassifierDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~StackingClassifierDF.COL_FEATURE_IN
+      ~StackingClassifierDF.COL_PREDICTION
+      ~StackingClassifierDF.classes_
+      ~StackingClassifierDF.feature_names_in_
+      ~StackingClassifierDF.is_fitted
+      ~StackingClassifierDF.n_outputs_
+      ~StackingClassifierDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

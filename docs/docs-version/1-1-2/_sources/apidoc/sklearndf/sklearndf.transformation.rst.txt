@@ -1,0 +1,109 @@
+sklearndf.transformation
+========================
+
+.. automodule:: sklearndf.transformation
+   :no-imported-members:
+
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: transformation
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      AdditiveChi2SamplerDF
+      BernoulliRBMDF
+      BinarizerDF
+      ColumnTransformerDF
+      DictVectorizerDF
+      DictionaryLearningDF
+      FactorAnalysisDF
+      FastICADF
+      FeatureAgglomerationDF
+      FeatureHasherDF
+      FunctionTransformerDF
+      GaussianRandomProjectionDF
+      GenericUnivariateSelectDF
+      HashingVectorizerDF
+      IncrementalPCADF
+      IsomapDF
+      IterativeImputerDF
+      KBinsDiscretizerDF
+      KNNImputerDF
+      KernelCentererDF
+      KernelPCADF
+      LabelBinarizerDF
+      LabelEncoderDF
+      LatentDirichletAllocationDF
+      LocallyLinearEmbeddingDF
+      MaxAbsScalerDF
+      MinMaxScalerDF
+      MiniBatchDictionaryLearningDF
+      MiniBatchSparsePCADF
+      MissingIndicatorDF
+      MultiLabelBinarizerDF
+      NMFDF
+      NeighborhoodComponentsAnalysisDF
+      NormalizerDF
+      NystroemDF
+      OneHotEncoderDF
+      OrdinalEncoderDF
+      PCADF
+      PLSSVDDF
+      PolynomialFeaturesDF
+      PowerTransformerDF
+      QuantileTransformerDF
+      RBFSamplerDF
+      RFECVDF
+      RFEDF
+      RobustScalerDF
+      SelectFdrDF
+      SelectFprDF
+      SelectFromModelDF
+      SelectFweDF
+      SelectKBestDF
+      SelectPercentileDF
+      SimpleImputerDF
+      SkewedChi2SamplerDF
+      SparseCoderDF
+      SparsePCADF
+      SparseRandomProjectionDF
+      StandardScalerDF
+      TfidfTransformerDF
+      TruncatedSVDDF
+      VarianceThresholdDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+
+==========
+Submodules
+==========
+.. autosummary::
+   :toctree: transformation
+   :template: custom-module-template.rst
+   :recursive:
+
+   sklearndf.transformation.extra
+   sklearndf.transformation.wrapper
+
