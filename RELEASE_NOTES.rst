@@ -3,13 +3,15 @@ Release Notes
 
 *sklearndf* 1.1
 ---------------
-DOC
+
 1.1.2
 ~~~~~
 
 This release comprises bugfixes and minor code tweaks.
 
 - FIX: do not reset transformers when calling :meth:`.TransformerDF.inverse_transform`
+- FIX: accept `"passthrough"` as value for arg `remainder` of
+  :class:`.ColumnTransformerDF`
 
 
 1.1.1

@@ -4,8 +4,7 @@ Core implementation of :mod:`sklearndf.transformation.wrapper`
 
 import logging
 from abc import ABCMeta, abstractmethod
-from functools import reduce
-from typing import Generic, List, Optional, TypeVar, Union
+from typing import Any, Generic, List, Optional, TypeVar, Union
 
 import numpy as np
 import pandas as pd
@@ -268,7 +267,10 @@ class ColumnTransformerWrapperDF(
     def _validate_delegate_estimator(self) -> None:
         column_transformer: ColumnTransformer = self.native_estimator
 
-        if column_transformer.remainder != ColumnTransformerWrapperDF.__DROP:
+        if (
+            column_transformer.remainder
+            not in ColumnTransformerWrapperDF.__SPECIAL_TRANSFORMERS
+        ):
             raise ValueError(
                 f"unsupported value for arg remainder: ({column_transformer.remainder})"
             )
@@ -300,20 +302,29 @@ class ColumnTransformerWrapperDF(
         values the corresponding input column names.
         """
 
-        return reduce(
-            lambda x, y: x.append(y),
-            (
-                (
-                    pd.Series(index=columns, data=columns)
-                    if df_transformer == ColumnTransformerWrapperDF.__PASSTHROUGH
-                    else df_transformer.feature_names_original_
-                )
+        def _features_original(df_transformer: TransformerDF, columns: List[Any]):
+            if df_transformer == ColumnTransformerWrapperDF.__PASSTHROUGH:
+                # we may get positional indices for columns selected by the
+                # 'passthrough' transformer, and in that case so need to look up the
+                # associated column names
+                if all(isinstance(column, int) for column in columns):
+                    column_names = self._get_features_in()[columns]
+                else:
+                    column_names = columns
+                return pd.Series(index=column_names, data=column_names)
+
+            else:
+                return df_transformer.feature_names_original_
+
+        return pd.concat(
+            [
+                _features_original(df_transformer, columns)
                 for _, df_transformer, columns in self.native_estimator.transformers_
                 if (
                     len(columns) > 0
                     and df_transformer != ColumnTransformerWrapperDF.__DROP
                 )
-            ),
+            ]
         )
 
 
