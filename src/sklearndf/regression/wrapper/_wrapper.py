@@ -4,7 +4,7 @@ Core implementation of :mod:`sklearndf.regression.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Any, Callable, Generic, Optional, Sequence, TypeVar, Union
+from typing import Callable, Generic, Optional, Sequence, TypeVar
 
 import numpy as np
 import pandas as pd
