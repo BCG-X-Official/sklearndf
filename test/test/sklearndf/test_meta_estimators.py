@@ -2,6 +2,7 @@ import logging
 
 import pandas as pd
 import pytest
+from sklearn.base import is_classifier, is_regressor
 from sklearn.impute import SimpleImputer
 
 from sklearndf import __sklearn_0_22__, __sklearn_version__
@@ -41,7 +42,8 @@ def test_meta_estimators() -> None:
             ]
         )
 
-    MultiOutputRegressorDF(estimator=RandomForestRegressorDF())
+    regressor = MultiOutputRegressorDF(estimator=RandomForestRegressorDF())
+    assert is_regressor(regressor)
 
     with pytest.raises(
         TypeError,
@@ -54,7 +56,8 @@ def test_meta_estimators() -> None:
             estimator=RegressorPipelineDF(regressor=RandomForestRegressorDF())
         )
 
-    ClassifierChainDF(base_estimator=RandomForestClassifierDF())
+    classifier = ClassifierChainDF(base_estimator=RandomForestClassifierDF())
+    assert is_classifier(classifier)
 
     with pytest.raises(
         TypeError,
@@ -102,6 +105,9 @@ def test_stacking_regressor(
             ),
         ]
     )
+
+    assert is_regressor(pipeline)
+
     pipeline.fit(boston_features, boston_target_sr)
     print(pipeline.predict(boston_features))
 
@@ -120,6 +126,9 @@ def test_stacking_regressor(
         ],
         final_estimator=RidgeCVDF(),
     )
+
+    assert is_regressor(stack_of_pipelines)
+
     stack_of_pipelines.fit(boston_features, boston_target_sr)
 
     pred = stack_of_pipelines.predict(boston_features)
@@ -168,8 +177,10 @@ def test_stacking_classifier(
             ),
         ]
     )
+
+    assert is_classifier(pipeline)
+
     pipeline.fit(iris_features, iris_target_sr)
-    print(pipeline.predict(iris_features))
 
     # Stack of Pipelines doesn't
     stack_of_pipelines = StackingClassifierDF(
@@ -187,6 +198,9 @@ def test_stacking_classifier(
         final_estimator=LogisticRegressionDF(),
         passthrough=True,
     )
+
+    assert is_classifier(pipeline)
+
     stack_of_pipelines.fit(iris_features, iris_target_sr)
 
     pred = stack_of_pipelines.predict_proba(iris_features)

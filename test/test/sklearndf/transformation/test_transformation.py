@@ -4,32 +4,37 @@ import numpy as np
 import pandas as pd
 import pytest
 import sklearn
+from numpy.testing import assert_array_equal
 from pandas.testing import assert_frame_equal
-from sklearn.base import BaseEstimator
+from sklearn.base import BaseEstimator, TransformerMixin, is_classifier, is_regressor
 from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import Normalizer, StandardScaler
 
 import sklearndf.transformation
 from ... import check_sklearn_version
-from .. import (
+from ...sklearndf import (
     check_expected_not_fitted_error,
     get_sklearndf_wrapper_class,
     iterate_classes,
 )
-from sklearndf import TransformerDF
+from sklearndf import ClassifierDF, RegressorDF, TransformerDF
 from sklearndf.classification import RandomForestClassifierDF
 from sklearndf.transformation import (
     RFECVDF,
     RFEDF,
     ColumnTransformerDF,
+    FeatureAgglomerationDF,
     KBinsDiscretizerDF,
     NormalizerDF,
     OneHotEncoderDF,
     SelectFromModelDF,
+    SimpleImputerDF,
     SparseCoderDF,
     StandardScalerDF,
 )
 from sklearndf.transformation.extra import OutlierRemoverDF
+from sklearndf.wrapper import TransformerWrapperDF
 
 TRANSFORMER_EXCLUSIONS = [
     TransformerDF.__name__,
@@ -69,7 +74,22 @@ def test_data() -> pd.DataFrame:
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=TRANSFORMERS_TO_TEST)
 def test_wrapped_constructor(sklearndf_cls: Type[TransformerDF]) -> None:
-    sklearndf_cls()
+    transformer_df: TransformerDF = sklearndf_cls()
+
+    if isinstance(transformer_df, RegressorDF):
+        assert is_regressor(transformer_df)
+        assert not is_classifier(transformer_df)
+    elif isinstance(transformer_df, ClassifierDF):
+        assert is_classifier(transformer_df)
+        assert not is_regressor(transformer_df)
+    elif isinstance(transformer_df, TransformerWrapperDF):
+        if isinstance(transformer_df, FeatureAgglomerationDF):
+            assert transformer_df._estimator_type == "clusterer"
+        else:
+            # noinspection PyUnresolvedReferences
+            assert transformer_df._estimator_type is None
+    else:
+        assert getattr(transformer_df, "_estimator_type", None) is None
 
 
 def test_special_wrapped_constructors() -> None:
@@ -106,34 +126,48 @@ def test_special_wrapped_constructors() -> None:
         matching=r".*PowerTransformer|QuantileTransformer|.*Scaler",
     ),
 )
-def test_various_transformers(
+def test_fit_transform(
     sklearn_cls: Type[BaseEstimator], test_data: pd.DataFrame
 ) -> None:
+    # we only need the numerical column of the test data
+    test_data = test_data.select_dtypes(include=float)
+
     # get the wrapped counterpart for sklearn:
     wrapper_class = get_sklearndf_wrapper_class(
         to_wrap=sklearn_cls, from_module=sklearndf.transformation
     )
+
+    assert issubclass(wrapper_class, TransformerDF)
+
     # initialize both kind of transformers
-    df_t = cast(TransformerDF, wrapper_class())
-    non_df_t = sklearn_cls()
+    transformer_native = cast(TransformerMixin, sklearn_cls())
+    transformer_df = cast(TransformerDF, wrapper_class())
 
     # for sklearn >=0.22 - check if not_fitted error is raised properly:
-    check_expected_not_fitted_error(estimator=df_t)
+    check_expected_not_fitted_error(estimator=transformer_df)
 
-    # test fit-transform on both in conjecture with ColumnTransformer(DF)
-    df_col_t = ColumnTransformerDF(transformers=[("t", df_t, ["c0"])], remainder="drop")
-    transformed_df = df_col_t.fit_transform(X=test_data)
+    # test fit followed by transform
 
-    assert isinstance(transformed_df, pd.DataFrame)
+    # noinspection PyUnresolvedReferences
+    transformed_native = transformer_native.fit(X=test_data).transform(X=test_data)
+    transformed_df = transformer_df.fit(X=test_data).transform(X=test_data)
 
-    non_df_col_t = ColumnTransformer(transformers=[("t", non_df_t, ["c0"])])
+    assert transformed_df.columns.equals(test_data.columns)
+    assert_array_equal(transformed_df.values, transformed_native)
 
-    transformed_non_df = non_df_col_t.fit_transform(X=test_data)
+    # test fit transform
 
-    assert "c0" in transformed_df.columns
-    assert np.all(
-        np.round(transformed_df["c0"].values, 1)
-        == np.round(transformed_non_df.reshape(10), 1)
+    transformed_native = transformer_native.fit_transform(X=test_data)
+    transformed_df = transformer_df.fit_transform(X=test_data)
+
+    assert transformed_df.columns.equals(test_data.columns)
+    assert_array_equal(transformed_df.values, transformed_native)
+
+    # test inverse transform
+
+    inverse_transformed_df = transformer_df.inverse_transform(X=transformed_df)
+    assert_frame_equal(
+        inverse_transformed_df, test_data.rename_axis(columns="feature_in")
     )
 
 
@@ -183,20 +217,64 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
 
 
 def test_normalizer_df() -> None:
-    x = [[4, 1, 2, 2], [1, 3, 9, 3], [5, 7, 5, 1]]
-    test_df = pd.DataFrame(x)
-    test_df.columns = ["a", "b", "c", "d"]
+    x = [[4.0, 1.0, 2.0, 2.0], [1.0, 3.0, 9.0, 3.0], [5.0, 7.0, 5.0, 1.0]]
+    test_df = pd.DataFrame(x, columns=pd.Index(["a", "b", "c", "d"], name="feature_in"))
 
     non_df_normalizer = Normalizer(norm="l2")
     df_normalizer = NormalizerDF(norm="l2")
 
-    transformed_non_df = non_df_normalizer.fit_transform(X=x)
-    transformed_df = df_normalizer.fit_transform(X=test_df)
+    transformed_non_df = pd.DataFrame(
+        non_df_normalizer.fit_transform(X=x),
+        columns=pd.Index(["a", "b", "c", "d"], name="feature_out"),
+    )
 
-    # check equal results:
-    assert np.array_equal(transformed_non_df, transformed_df.values)
-    # check columns are preserved:
-    assert np.all(transformed_df.columns == ["a", "b", "c", "d"])
+    # test fit_trannsform
+
+    transformed_df = df_normalizer.fit_transform(X=test_df)
+    assert_frame_equal(transformed_df, transformed_non_df)
+
+    # test transform
+
+    transformed_df = df_normalizer.transform(X=test_df)
+    assert_frame_equal(transformed_df, transformed_non_df)
+
+    # test inverse transform
+
+    with pytest.raises(
+        NotImplementedError,
+        match=r"^NormalizerDF does not implement method inverse_transform\(\)$",
+    ):
+        df_normalizer.inverse_transform(X=transformed_df)
+
+
+def test_simple_imputer_df() -> None:
+    x = np.array(
+        [[4.0, 1.0, 2.0, np.nan], [1.0, np.nan, 9.0, 3.0], [np.nan, np.nan, 5.0, 1.0]]
+    )
+    x_df = pd.DataFrame(x, columns=pd.Index(["a", "b", "c", "d"], name="feature_in"))
+
+    imputer_native = SimpleImputer(add_indicator=True)
+    imputer_df = SimpleImputerDF(add_indicator=True)
+
+    transformed_native = imputer_native.fit_transform(X=x)
+    transformed_df_expected = pd.DataFrame(
+        transformed_native,
+        columns=pd.Index(
+            ["a", "b", "c", "d", "a__missing", "b__missing", "d__missing"],
+            name="feature_out",
+        ),
+    )
+
+    # test fit and transform
+
+    assert_frame_equal(
+        imputer_df.fit(X=x_df).transform(X=x_df), transformed_df_expected
+    )
+
+    # test fit_trannsform
+
+    transformed_df = imputer_df.fit_transform(X=x_df)
+    assert_frame_equal(transformed_df, transformed_df_expected)
 
 
 @pytest.fixture

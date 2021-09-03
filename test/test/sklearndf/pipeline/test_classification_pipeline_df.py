@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import pytest
+from sklearn.base import is_classifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import OneHotEncoder
 
@@ -22,6 +23,8 @@ def test_classification_pipeline_df(
             one_hot_encode_columns=iris_features.select_dtypes(include=object).columns,
         ),
     )
+
+    assert is_classifier(cls_p_df)
 
     cls_p_df.fit(X=iris_features, y=iris_target_sr)
     cls_p_df.predict(X=iris_features)

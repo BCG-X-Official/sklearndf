@@ -13,7 +13,7 @@ The wrappers also implement the additional column attributes introduced by `skle
 
 import inspect
 import logging
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 from functools import update_wrapper
 from typing import (
     Any,
@@ -48,16 +48,8 @@ from sklearn.base import (
 from pytools.api import AllTracker, inheritdoc, public_module_prefix
 from pytools.meta import compose_meta
 
-from ._adapter import EstimatorNPDF
-from sklearndf import (
-    ClassifierDF,
-    EstimatorDF,
-    LearnerDF,
-    RegressorDF,
-    TransformerDF,
-    __sklearn_0_24__,
-    __sklearn_version__,
-)
+from ._adapter import LearnerNPDF
+from sklearndf import ClassifierDF, EstimatorDF, LearnerDF, RegressorDF, TransformerDF
 
 log = logging.getLogger(__name__)
 
@@ -89,12 +81,12 @@ T_NativeLearner = TypeVar("T_NativeLearner", RegressorMixin, ClassifierMixin)
 T_NativeRegressor = TypeVar("T_NativeRegressor", bound=RegressorMixin)
 T_NativeClassifier = TypeVar("T_NativeClassifier", bound=ClassifierMixin)
 
-# noinspection PyTypeChecker
 T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="EstimatorWrapperDF")
 T_TransformerWrapperDF = TypeVar("T_TransformerWrapperDF", bound="TransformerWrapperDF")
 T_RegressorWrapperDF = TypeVar("T_RegressorWrapperDF", bound="RegressorWrapperDF")
 T_ClassifierWrapperDF = TypeVar("T_ClassifierWrapperDF", bound="ClassifierWrapperDF")
 
+T_LearnerDF = TypeVar("T_LearnerDF", bound="LearnerDF")
 
 #
 # Ensure all symbols introduced below are included in __all__
@@ -167,10 +159,6 @@ class EstimatorWrapperDF(
             ) = fitted_delegate_context
 
         self._native_estimator = _native_estimator
-        self._estimator_type = getattr(_native_estimator, "_estimator_type", None)
-
-        if __sklearn_version__ < __sklearn_0_24__:
-            self._pairwise = getattr(_native_estimator, "_pairwise", None)
 
         self._validate_delegate_estimator()
 
@@ -191,6 +179,14 @@ class EstimatorWrapperDF(
         The native estimator that this wrapper delegates to.
         """
         return self._native_estimator
+
+    @property
+    def _estimator_type(self) -> Optional[str]:
+        try:
+            # noinspection PyProtectedMember
+            return self.native_estimator._estimator_type
+        except AttributeError:
+            return None
 
     @classmethod
     def from_fitted(
@@ -273,8 +269,8 @@ class EstimatorWrapperDF(
     ) -> T_NativeEstimator:
         # noinspection PyUnresolvedReferences
         return self._native_estimator.fit(
-            self._convert_X_for_delegate(X),
-            self._convert_y_for_delegate(y),
+            self._prepare_X_for_delegate(X),
+            self._prepare_y_for_delegate(y),
             **fit_params,
         )
 
@@ -292,14 +288,26 @@ class EstimatorWrapperDF(
 
     # noinspection PyPep8Naming
     def _check_parameter_types(
-        self, X: pd.DataFrame, y: Optional[Union[pd.Series, pd.DataFrame]]
+        self,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]],
+        *,
+        expected_columns: pd.Index = None,
     ) -> None:
         if not isinstance(X, pd.DataFrame):
             raise TypeError("arg X must be a DataFrame")
+
         if self.is_fitted:
             EstimatorWrapperDF._verify_df(
-                df_name="X argument", df=X, expected_columns=self.feature_names_in_
+                df_name="arg X",
+                df=X,
+                expected_columns=(
+                    self.feature_names_in_
+                    if expected_columns is None
+                    else expected_columns
+                ),
             )
+
         if y is not None and not isinstance(y, (pd.Series, pd.DataFrame)):
             raise TypeError("arg y must be None, or a pandas series or data frame")
 
@@ -343,8 +351,21 @@ class EstimatorWrapperDF(
             )
 
     # noinspection PyPep8Naming
-    def _convert_X_for_delegate(self, X: pd.DataFrame) -> Any:
+    def _prepare_X_for_delegate(self, X: pd.DataFrame) -> Any:
+        # convert X before passing it to the delegate estimator
+        return self._adjust_X_type_for_delegate(self._adjust_X_columns_for_delegate(X))
+
+    def _prepare_y_for_delegate(
+        self, y: Optional[Union[pd.Series, pd.DataFrame]]
+    ) -> Any:
+        return self._adjust_y_type_for_delegate(y)
+
+    # noinspection PyPep8Naming
+    def _adjust_X_columns_for_delegate(self, X: pd.DataFrame) -> pd.DataFrame:
+        # make sure columns of X are aligned with frame used to fit this estimator
+
         if not self.is_fitted:
+            # return X unchanged if estimator is not fitted yet
             return X
 
         features_in = self._get_features_in()
@@ -353,10 +374,21 @@ class EstimatorWrapperDF(
         else:
             return X.reindex(columns=features_in, copy=False)
 
-    def _convert_y_for_delegate(
-        self, y: Optional[Union[pd.Series, pd.DataFrame]]
+    # noinspection PyPep8Naming
+    def _adjust_X_type_for_delegate(
+        self, X: pd.DataFrame, *, to_numpy: Optional[bool] = None
     ) -> Any:
-        return y
+        # convert X before passing it to the delegate estimator
+        return X.values if to_numpy else X
+
+    def _adjust_y_type_for_delegate(
+        self,
+        y: Optional[Union[pd.Series, pd.DataFrame]],
+        *,
+        to_numpy: Optional[bool] = None,
+    ) -> Any:
+        # convert y before passing it to the delegate estimator
+        return y if y is None or not to_numpy else y.values
 
     def _make_verbose_exception(self, method: str, cause: Exception) -> Exception:
         verbose_message = f"{type(self).__name__}.{method}: {cause}"
@@ -448,9 +480,7 @@ class TransformerWrapperDF(
     # noinspection PyPep8Naming
     def inverse_transform(self, X: pd.DataFrame) -> pd.DataFrame:
         """[see superclass]"""
-        self._reset_fit()
-
-        self._check_parameter_types(X, None)
+        self._check_parameter_types(X, None, expected_columns=self.feature_names_out_)
 
         transformed = self._inverse_transform(X)
 
@@ -464,6 +494,29 @@ class TransformerWrapperDF(
             super()._reset_fit()
         finally:
             self._features_original = None
+
+    # noinspection PyPep8Naming
+    def _prepare_X_for_delegate(self, X: pd.DataFrame, *, inverse: bool = False) -> Any:
+        return self._adjust_X_type_for_delegate(
+            self._adjust_X_columns_for_delegate(X, inverse=inverse),
+            to_numpy=inverse or None,
+        )
+
+    # noinspection PyPep8Naming
+    def _adjust_X_columns_for_delegate(
+        self, X: pd.DataFrame, *, inverse: Optional[bool] = None
+    ) -> pd.DataFrame:
+        if inverse:
+            # when converting X for an inverse transform, ensure the data frame is
+            # aligned with the output features, and convert the data frame to a
+            # numpy array
+            features_out = self.feature_names_out_
+            if X.columns.is_(features_out):
+                return X
+            else:
+                return X.reindex(columns=features_out, copy=False)
+        else:
+            return super()._adjust_X_columns_for_delegate(X)
 
     @staticmethod
     def _transformed_to_df(
@@ -484,22 +537,28 @@ class TransformerWrapperDF(
     # noinspection PyPep8Naming
     def _transform(self, X: pd.DataFrame) -> np.ndarray:
         # noinspection PyUnresolvedReferences
-        return self.native_estimator.transform(self._convert_X_for_delegate(X))
+        return self.native_estimator.transform(self._prepare_X_for_delegate(X))
 
     # noinspection PyPep8Naming
     def _fit_transform(
         self, X: pd.DataFrame, y: Optional[pd.Series], **fit_params
     ) -> np.ndarray:
         return self.native_estimator.fit_transform(
-            self._convert_X_for_delegate(X),
-            self._convert_y_for_delegate(y),
+            self._prepare_X_for_delegate(X),
+            self._prepare_y_for_delegate(y),
             **fit_params,
         )
 
     # noinspection PyPep8Naming
     def _inverse_transform(self, X: pd.DataFrame) -> np.ndarray:
-        # noinspection PyUnresolvedReferences
-        return self.native_estimator.inverse_transform(self._convert_X_for_delegate(X))
+        try:
+            inverse_transform_fn = self.native_estimator.inverse_transform
+        except AttributeError:
+            raise NotImplementedError(
+                f"{type(self).__name__} does not implement method inverse_transform()"
+            )
+
+        return inverse_transform_fn(self._prepare_X_for_delegate(X, inverse=True))
 
 
 @inheritdoc(match="[see superclass]")
@@ -531,7 +590,7 @@ class LearnerWrapperDF(
         return self._prediction_to_series_or_frame(
             X,
             self.native_estimator.predict(
-                self._convert_X_for_delegate(X), **predict_params
+                self._prepare_X_for_delegate(X), **predict_params
             ),
         )
 
@@ -550,8 +609,8 @@ class LearnerWrapperDF(
             result = self._prediction_to_series_or_frame(
                 X,
                 self.native_estimator.fit_predict(
-                    self._convert_X_for_delegate(X),
-                    self._convert_y_for_delegate(y),
+                    self._prepare_X_for_delegate(X),
+                    self._prepare_y_for_delegate(y),
                     **fit_params,
                 ),
             )
@@ -578,8 +637,8 @@ class LearnerWrapperDF(
             raise TypeError("arg sample_weight must be None or a Series")
 
         return self.native_estimator.score(
-            self._convert_X_for_delegate(X),
-            self._convert_y_for_delegate(y),
+            self._prepare_X_for_delegate(X),
+            self._prepare_y_for_delegate(y),
             sample_weight,
         )
 
@@ -660,7 +719,7 @@ class ClassifierWrapperDF(
         return self._prediction_with_class_labels(
             X,
             self.native_estimator.predict_proba(
-                self._convert_X_for_delegate(X), **predict_params
+                self._prepare_X_for_delegate(X), **predict_params
             ),
         )
 
@@ -678,7 +737,7 @@ class ClassifierWrapperDF(
         return self._prediction_with_class_labels(
             X,
             self.native_estimator.predict_log_proba(
-                self._convert_X_for_delegate(X), **predict_params
+                self._prepare_X_for_delegate(X), **predict_params
             ),
         )
 
@@ -696,7 +755,7 @@ class ClassifierWrapperDF(
         return self._prediction_with_class_labels(
             X,
             self.native_estimator.decision_function(
-                self._convert_X_for_delegate(X), **predict_params
+                self._prepare_X_for_delegate(X), **predict_params
             ),
         )
 
@@ -843,22 +902,22 @@ class StackingEstimatorWrapperDF(
                 # stacking estimator being fitted
                 return self
 
-        native = self.native_estimator
-        estimators = native.estimators
-        final_estimator = native.final_estimator
+        native: T_NativeEstimator = self.native_estimator
+        estimators: Sequence[Tuple[str, BaseEstimator]] = native.estimators
+        final_estimator: BaseEstimator = native.final_estimator
 
         try:
             native.estimators = [
                 (
                     name,
-                    _StackableLearnerDF(estimator)
+                    self._make_stackable_learner_df(estimator)
                     if isinstance(estimator, LearnerDF)
                     else estimator,
                 )
                 for name, estimator in native.estimators
             ]
-            native.final_estimator = EstimatorNPDF(
-                native.final_estimator or self._make_default_final_estimator(),
+            native.final_estimator = self._make_learner_np_df(
+                delegate=native.final_estimator or self._make_default_final_estimator(),
                 column_names=_ColumnNameFn(),
             )
 
@@ -876,6 +935,16 @@ class StackingEstimatorWrapperDF(
 
         return super().fit_predict(X, y, **fit_params)
 
+    @abstractmethod
+    def _make_stackable_learner_df(self, learner: LearnerDF) -> "_StackableLearnerDF":
+        pass
+
+    @abstractmethod
+    def _make_learner_np_df(
+        self, delegate: LearnerDF, column_names: Callable[[], Sequence[str]]
+    ) -> LearnerNPDF:
+        pass
+
     def _get_estimators_features_out(self) -> List[str]:
         return [name for name, estimator in self.estimators if estimator != "drop"]
 
@@ -889,7 +958,7 @@ class StackingEstimatorWrapperDF(
 
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
-class _StackableLearnerDF(ClassifierDF, RegressorDF, LearnerDF):
+class _StackableLearnerDF(LearnerDF, Generic[T_LearnerDF]):
     """
     Returns numpy arrays from all prediction functions, instead of pandas series or
     data frames.
@@ -898,21 +967,13 @@ class _StackableLearnerDF(ClassifierDF, RegressorDF, LearnerDF):
     one final learner.
     """
 
-    def __init__(self, delegate: Union[ClassifierDF, RegressorDF, LearnerDF]) -> None:
+    def __init__(self, delegate: T_LearnerDF) -> None:
         self.delegate = delegate
-        self._estimator_type = getattr(delegate, "_estimator_type", None)
-        if __sklearn_version__ < __sklearn_0_24__:
-            self._pairwise = getattr(delegate, "_pairwise", None)
 
     @property
     def is_fitted(self) -> bool:
         """[see superclass]"""
         return self.delegate.is_fitted
-
-    @property
-    def classes_(self) -> Sequence[Any]:
-        """[see superclass]"""
-        return self.delegate.classes_
 
     def fit(
         self: T_Self, X: pd.DataFrame, y: np.ndarray = None, **fit_params: Any
@@ -934,26 +995,6 @@ class _StackableLearnerDF(ClassifierDF, RegressorDF, LearnerDF):
         return self.delegate.fit_predict(
             X, self._convert_y_to_series(X, y), **fit_params
         ).values
-
-    def predict_proba(
-        self, X: pd.DataFrame, **predict_params: Any
-    ) -> Union[np.ndarray, List[np.ndarray]]:
-        """[see superclass]"""
-        return self._convert_prediction_to_numpy(
-            self.delegate.predict_proba(X, **predict_params)
-        )
-
-    def predict_log_proba(
-        self, X: pd.DataFrame, **predict_params: Any
-    ) -> Union[np.ndarray, List[np.ndarray]]:
-        """[see superclass]"""
-        return self._convert_prediction_to_numpy(
-            self.delegate.predict_log_proba(X, **predict_params)
-        )
-
-    def decision_function(self, X: pd.DataFrame, **predict_params: Any) -> np.ndarray:
-        """[see superclass]"""
-        return self.delegate.decision_function(X, **predict_params).values
 
     def score(
         self, X: pd.DataFrame, y: np.ndarray, sample_weight: Optional[pd.Series] = None
@@ -996,6 +1037,42 @@ class _StackableLearnerDF(ClassifierDF, RegressorDF, LearnerDF):
             return [proba.values for proba in prediction]
         else:
             return prediction.values
+
+
+# noinspection PyPep8Naming
+@inheritdoc(match="""[see superclass]""")
+class _StackableClassifierDF(_StackableLearnerDF[ClassifierDF], ClassifierDF):
+    """[see superclass]"""
+
+    @property
+    def classes_(self) -> Sequence[Any]:
+        """[see superclass]"""
+        return self.delegate.classes_
+
+    def predict_proba(
+        self, X: pd.DataFrame, **predict_params: Any
+    ) -> Union[np.ndarray, List[np.ndarray]]:
+        """[see superclass]"""
+        return self._convert_prediction_to_numpy(
+            self.delegate.predict_proba(X, **predict_params)
+        )
+
+    def predict_log_proba(
+        self, X: pd.DataFrame, **predict_params: Any
+    ) -> Union[np.ndarray, List[np.ndarray]]:
+        """[see superclass]"""
+        return self._convert_prediction_to_numpy(
+            self.delegate.predict_log_proba(X, **predict_params)
+        )
+
+    def decision_function(self, X: pd.DataFrame, **predict_params: Any) -> np.ndarray:
+        """[see superclass]"""
+        return self.delegate.decision_function(X, **predict_params).values
+
+
+@inheritdoc(match="""[see superclass]""")
+class _StackableRegressorDF(_StackableLearnerDF[RegressorDF], RegressorDF):
+    """[see superclass]"""
 
 
 #
@@ -1345,6 +1422,7 @@ def _make_alias(
         )
         function.__doc__ = f"See :meth:`{full_name}`"
         return function
+
     elif inspect.isdatadescriptor(delegate):
         # noinspection PyShadowingNames
         return property(
@@ -1353,6 +1431,7 @@ def _make_alias(
             fdel=lambda self: delegate.__delete__(self._native_estimator),
             doc=f"See documentation of :class:`{class_name}`.",
         )
+
     else:
         return None
 
