@@ -470,7 +470,6 @@ stages:
                 prerelease=False
                 [[ $version == *dev* ]] && prerelease=True && echo "Development release identified"
                 [[ $version == *rc* ]] && prerelease=True && echo "Pre-release identified"
-                echo "prerelease=$prerelease"
                 echo "##vso[task.setvariable variable=current_version]$version"
                 echo "##vso[task.setvariable variable=is_prerelease]$prerelease"
             displayName: "Get package version"
