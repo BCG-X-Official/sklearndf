@@ -22,8 +22,8 @@ def test_package_version() -> None:
 
     log.info(f"Test package version – version set to: {dev_version}")
     assert re.match(
-        r"^(\d)+\.(\d)+\.(\d)+(rc\d+)?$", dev_version
-    ), "sklearndf.__version__ is not in MAJOR.MINOR.PATCH[rcN] format."
+        r"^(\d)+\.(\d)+\.((?:dev|rc)?\d+)?$", dev_version
+    ), "sklearndf.__version__ is not in MAJOR.MINOR.[dev|rc]PATCH format."
 
     releases_uri = "https://pypi.org/rss/project/sklearndf/releases.xml"
 
