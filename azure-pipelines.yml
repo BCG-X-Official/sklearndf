@@ -398,7 +398,7 @@ stages:
               condition: ne(variables.branchName, 'develop')
               script: |
                 set -eux
-                python -m pip install "toml==0.10.*"
+                python -m pip install toml~=0.10.2 packaging~=20.9
                 cd $(System.DefaultWorkingDirectory)/pytools
                 python <<EOF
                 from os import environ
@@ -461,7 +461,7 @@ stages:
               script: |
                 set -eux
                 echo "Getting version"
-                pip install packaging
+                pip install packaging~=20.9
                 cd $(System.DefaultWorkingDirectory)/$(project_root)/src
                 export PYTHONPATH=$(System.DefaultWorkingDirectory)/pytools/sphinx/base
                 version=$(python -c "import make_base; print(make_base.get_package_version())")
