@@ -30,8 +30,8 @@ variables:
     branchName: $[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]
   ${{ if startsWith(variables['Build.SourceBranch'], 'refs/pull/') }}:
     branchName: $[ replace(variables['System.PullRequest.SourceBranch'], 'refs/heads/', '') ]
-  source_is_release_branch: $[ startsWith(variables['branchName'], 'release') ]
-  source_is_develop_branch: $[ or(startsWith(variables['branchName'], 'develop'), startsWith(variables['branchName'], 'dev/')) ]
+  source_is_release_branch: $[ startsWith(variables['branchName'], 'release/') ]
+  source_is_develop_branch: $[ startsWith(variables['branchName'], 'dev/') ]
   is_scheduled: $[ eq(variables['Build.Reason'], 'Schedule') ]
   project_name: sklearndf
   project_root: $(project_name)
