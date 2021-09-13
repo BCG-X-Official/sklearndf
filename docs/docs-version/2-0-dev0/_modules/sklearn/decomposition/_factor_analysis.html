@@ -1,0 +1,601 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearn.decomposition._factor_analysis &#8212; sklearndf  documentation</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/gamma.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/gamma.js"></script>
+    <script src="../../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../../index.html">
+    
+      <img src="../../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../getting_started/getting_started.html">Getting started</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../apidoc/sklearndf.html">API reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../contribution_guide.html">Development Guidelines</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../faqs.html">FAQ</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../release_notes.html">Release Notes</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for sklearn.decomposition._factor_analysis</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Factor Analysis.</span>
+
+<span class="sd">A latent linear variable model.</span>
+
+<span class="sd">FactorAnalysis is similar to probabilistic PCA implemented by PCA.score</span>
+<span class="sd">While PCA assumes Gaussian noise with the same variance for each</span>
+<span class="sd">feature, the FactorAnalysis model assumes different variances for</span>
+<span class="sd">each of them.</span>
+
+<span class="sd">This implementation is based on David Barber&#39;s Book,</span>
+<span class="sd">Bayesian Reasoning and Machine Learning,</span>
+<span class="sd">http://www.cs.ucl.ac.uk/staff/d.barber/brml,</span>
+<span class="sd">Algorithm 21.1</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># Author: Christian Osendorfer &lt;osendorf@gmail.com&gt;</span>
+<span class="c1">#         Alexandre Gramfort &lt;alexandre.gramfort@inria.fr&gt;</span>
+<span class="c1">#         Denis A. Engemann &lt;denis-alexander.engemann@inria.fr&gt;</span>
+
+<span class="c1"># License: BSD3</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">log</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">linalg</span>
+
+
+<span class="kn">from</span> <span class="nn">..base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">check_random_state</span>
+<span class="kn">from</span> <span class="nn">..utils.extmath</span> <span class="kn">import</span> <span class="n">fast_logdet</span><span class="p">,</span> <span class="n">randomized_svd</span><span class="p">,</span> <span class="n">squared_norm</span>
+<span class="kn">from</span> <span class="nn">..utils.validation</span> <span class="kn">import</span> <span class="n">check_is_fitted</span><span class="p">,</span> <span class="n">_deprecate_positional_args</span>
+<span class="kn">from</span> <span class="nn">..exceptions</span> <span class="kn">import</span> <span class="n">ConvergenceWarning</span>
+
+
+<span class="k">class</span> <span class="nc">FactorAnalysis</span><span class="p">(</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Factor Analysis (FA).</span>
+
+<span class="sd">    A simple linear generative model with Gaussian latent variables.</span>
+
+<span class="sd">    The observations are assumed to be caused by a linear transformation of</span>
+<span class="sd">    lower dimensional latent factors and added Gaussian noise.</span>
+<span class="sd">    Without loss of generality the factors are distributed according to a</span>
+<span class="sd">    Gaussian with zero mean and unit covariance. The noise is also zero mean</span>
+<span class="sd">    and has an arbitrary diagonal covariance matrix.</span>
+
+<span class="sd">    If we would restrict the model further, by assuming that the Gaussian</span>
+<span class="sd">    noise is even isotropic (all diagonal entries are the same) we would obtain</span>
+<span class="sd">    :class:`PPCA`.</span>
+
+<span class="sd">    FactorAnalysis performs a maximum likelihood estimate of the so-called</span>
+<span class="sd">    `loading` matrix, the transformation of the latent variables to the</span>
+<span class="sd">    observed ones, using SVD based approach.</span>
+
+<span class="sd">    Read more in the :ref:`User Guide &lt;FA&gt;`.</span>
+
+<span class="sd">    .. versionadded:: 0.13</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_components : int, default=None</span>
+<span class="sd">        Dimensionality of latent space, the number of components</span>
+<span class="sd">        of ``X`` that are obtained after ``transform``.</span>
+<span class="sd">        If None, n_components is set to the number of features.</span>
+
+<span class="sd">    tol : float, defaul=1e-2</span>
+<span class="sd">        Stopping tolerance for log-likelihood increase.</span>
+
+<span class="sd">    copy : bool, default=True</span>
+<span class="sd">        Whether to make a copy of X. If ``False``, the input X gets overwritten</span>
+<span class="sd">        during fitting.</span>
+
+<span class="sd">    max_iter : int, default=1000</span>
+<span class="sd">        Maximum number of iterations.</span>
+
+<span class="sd">    noise_variance_init : ndarray of shape (n_features,), default=None</span>
+<span class="sd">        The initial guess of the noise variance for each feature.</span>
+<span class="sd">        If None, it defaults to np.ones(n_features).</span>
+
+<span class="sd">    svd_method : {&#39;lapack&#39;, &#39;randomized&#39;}, default=&#39;randomized&#39;</span>
+<span class="sd">        Which SVD method to use. If &#39;lapack&#39; use standard SVD from</span>
+<span class="sd">        scipy.linalg, if &#39;randomized&#39; use fast ``randomized_svd`` function.</span>
+<span class="sd">        Defaults to &#39;randomized&#39;. For most applications &#39;randomized&#39; will</span>
+<span class="sd">        be sufficiently precise while providing significant speed gains.</span>
+<span class="sd">        Accuracy can also be improved by setting higher values for</span>
+<span class="sd">        `iterated_power`. If this is not sufficient, for maximum precision</span>
+<span class="sd">        you should choose &#39;lapack&#39;.</span>
+
+<span class="sd">    iterated_power : int, default=3</span>
+<span class="sd">        Number of iterations for the power method. 3 by default. Only used</span>
+<span class="sd">        if ``svd_method`` equals &#39;randomized&#39;.</span>
+
+<span class="sd">    rotation : {&#39;varimax&#39;, &#39;quartimax&#39;}, default=None</span>
+<span class="sd">        If not None, apply the indicated rotation. Currently, varimax and</span>
+<span class="sd">        quartimax are implemented. See</span>
+<span class="sd">        `&quot;The varimax criterion for analytic rotation in factor analysis&quot;</span>
+<span class="sd">        &lt;https://link.springer.com/article/10.1007%2FBF02289233&gt;`_</span>
+<span class="sd">        H. F. Kaiser, 1958.</span>
+
+<span class="sd">        .. versionadded:: 0.24</span>
+
+<span class="sd">    random_state : int or RandomState instance, default=0</span>
+<span class="sd">        Only used when ``svd_method`` equals &#39;randomized&#39;. Pass an int for</span>
+<span class="sd">        reproducible results across multiple function calls.</span>
+<span class="sd">        See :term:`Glossary &lt;random_state&gt;`.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    components_ : ndarray of shape (n_components, n_features)</span>
+<span class="sd">        Components with maximum variance.</span>
+
+<span class="sd">    loglike_ : list of shape (n_iterations,)</span>
+<span class="sd">        The log likelihood at each iteration.</span>
+
+<span class="sd">    noise_variance_ : ndarray of shape (n_features,)</span>
+<span class="sd">        The estimated noise variance for each feature.</span>
+
+<span class="sd">    n_iter_ : int</span>
+<span class="sd">        Number of iterations run.</span>
+
+<span class="sd">    mean_ : ndarray of shape (n_features,)</span>
+<span class="sd">        Per-feature empirical mean, estimated from the training set.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.datasets import load_digits</span>
+<span class="sd">    &gt;&gt;&gt; from sklearn.decomposition import FactorAnalysis</span>
+<span class="sd">    &gt;&gt;&gt; X, _ = load_digits(return_X_y=True)</span>
+<span class="sd">    &gt;&gt;&gt; transformer = FactorAnalysis(n_components=7, random_state=0)</span>
+<span class="sd">    &gt;&gt;&gt; X_transformed = transformer.fit_transform(X)</span>
+<span class="sd">    &gt;&gt;&gt; X_transformed.shape</span>
+<span class="sd">    (1797, 7)</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    - David Barber, Bayesian Reasoning and Machine Learning,</span>
+<span class="sd">      Algorithm 21.1.</span>
+
+<span class="sd">    - Christopher M. Bishop: Pattern Recognition and Machine Learning,</span>
+<span class="sd">      Chapter 12.2.4.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    PCA: Principal component analysis is also a latent linear variable model</span>
+<span class="sd">        which however assumes equal noise variance for each feature.</span>
+<span class="sd">        This extra assumption makes probabilistic PCA faster as it can be</span>
+<span class="sd">        computed in closed form.</span>
+<span class="sd">    FastICA: Independent component analysis, a latent variable model with</span>
+<span class="sd">        non-Gaussian latent variables.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@_deprecate_positional_args</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                 <span class="n">noise_variance_init</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">svd_method</span><span class="o">=</span><span class="s1">&#39;randomized&#39;</span><span class="p">,</span>
+                 <span class="n">iterated_power</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">copy</span> <span class="o">=</span> <span class="n">copy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
+        <span class="k">if</span> <span class="n">svd_method</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;lapack&#39;</span><span class="p">,</span> <span class="s1">&#39;randomized&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;SVD method </span><span class="si">%s</span><span class="s1"> is not supported. Please consider&#39;</span>
+                             <span class="s1">&#39; the documentation&#39;</span> <span class="o">%</span> <span class="n">svd_method</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">svd_method</span> <span class="o">=</span> <span class="n">svd_method</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">noise_variance_init</span> <span class="o">=</span> <span class="n">noise_variance_init</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iterated_power</span> <span class="o">=</span> <span class="n">iterated_power</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rotation</span> <span class="o">=</span> <span class="n">rotation</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit the FactorAnalysis model to X using SVD based approach</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like of shape (n_samples, n_features)</span>
+<span class="sd">            Training data.</span>
+
+<span class="sd">        y : Ignored</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_data</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+        <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">n_components</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span>
+        <span class="k">if</span> <span class="n">n_components</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">n_components</span> <span class="o">=</span> <span class="n">n_features</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">X</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_</span>
+
+        <span class="c1"># some constant terms</span>
+        <span class="n">nsqrt</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span>
+        <span class="n">llconst</span> <span class="o">=</span> <span class="n">n_features</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">+</span> <span class="n">n_components</span>
+        <span class="n">var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_variance_init</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_features</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">noise_variance_init</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n_features</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;noise_variance_init dimension does not &quot;</span>
+                                 <span class="s2">&quot;with number of features : </span><span class="si">%d</span><span class="s2"> != </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span>
+                                 <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">noise_variance_init</span><span class="p">),</span> <span class="n">n_features</span><span class="p">))</span>
+            <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">noise_variance_init</span><span class="p">)</span>
+
+        <span class="n">loglike</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">old_ll</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="n">SMALL</span> <span class="o">=</span> <span class="mf">1e-12</span>
+
+        <span class="c1"># we&#39;ll modify svd outputs to return unexplained variance</span>
+        <span class="c1"># to allow for unified computation of loglikelihood</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">svd_method</span> <span class="o">==</span> <span class="s1">&#39;lapack&#39;</span><span class="p">:</span>
+            <span class="k">def</span> <span class="nf">my_svd</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span>
+                                      <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                      <span class="n">check_finite</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="n">n_components</span><span class="p">],</span> <span class="n">Vt</span><span class="p">[:</span><span class="n">n_components</span><span class="p">],</span>
+                        <span class="n">squared_norm</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">n_components</span><span class="p">:]))</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">svd_method</span> <span class="o">==</span> <span class="s1">&#39;randomized&#39;</span><span class="p">:</span>
+            <span class="n">random_state</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">my_svd</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">randomized_svd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">n_components</span><span class="p">,</span>
+                                          <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
+                                          <span class="n">n_iter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">iterated_power</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">s</span><span class="p">,</span> <span class="n">Vt</span><span class="p">,</span> <span class="n">squared_norm</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="n">squared_norm</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;SVD method </span><span class="si">%s</span><span class="s1"> is not supported. Please consider&#39;</span>
+                             <span class="s1">&#39; the documentation&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">svd_method</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">):</span>
+            <span class="c1"># SMALL helps numerics</span>
+            <span class="n">sqrt_psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span> <span class="o">+</span> <span class="n">SMALL</span>
+            <span class="n">s</span><span class="p">,</span> <span class="n">Vt</span><span class="p">,</span> <span class="n">unexp_var</span> <span class="o">=</span> <span class="n">my_svd</span><span class="p">(</span><span class="n">X</span> <span class="o">/</span> <span class="p">(</span><span class="n">sqrt_psi</span> <span class="o">*</span> <span class="n">nsqrt</span><span class="p">))</span>
+            <span class="n">s</span> <span class="o">**=</span> <span class="mi">2</span>
+            <span class="c1"># Use &#39;maximum&#39; here to avoid sqrt problems.</span>
+            <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">))[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">Vt</span>
+            <span class="k">del</span> <span class="n">Vt</span>
+            <span class="n">W</span> <span class="o">*=</span> <span class="n">sqrt_psi</span>
+
+            <span class="c1"># loglikelihood</span>
+            <span class="n">ll</span> <span class="o">=</span> <span class="n">llconst</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+            <span class="n">ll</span> <span class="o">+=</span> <span class="n">unexp_var</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">psi</span><span class="p">))</span>
+            <span class="n">ll</span> <span class="o">*=</span> <span class="o">-</span><span class="n">n_samples</span> <span class="o">/</span> <span class="mf">2.</span>
+            <span class="n">loglike</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ll</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">ll</span> <span class="o">-</span> <span class="n">old_ll</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">old_ll</span> <span class="o">=</span> <span class="n">ll</span>
+
+            <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">var</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">W</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">SMALL</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;FactorAnalysis did not converge.&#39;</span> <span class="o">+</span>
+                          <span class="s1">&#39; You might want&#39;</span> <span class="o">+</span>
+                          <span class="s1">&#39; to increase the number of iterations.&#39;</span><span class="p">,</span>
+                          <span class="n">ConvergenceWarning</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">components_</span> <span class="o">=</span> <span class="n">W</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">components_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rotate</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noise_variance_</span> <span class="o">=</span> <span class="n">psi</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loglike_</span> <span class="o">=</span> <span class="n">loglike</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_iter_</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Apply dimensionality reduction to X using the model.</span>
+
+<span class="sd">        Compute the expected mean of the latent variables.</span>
+<span class="sd">        See Barber, 21.2.33 (or Bishop, 12.66).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like of shape (n_samples, n_features)</span>
+<span class="sd">            Training data.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X_new : ndarray of shape (n_samples, n_components)</span>
+<span class="sd">            The latent variables of X.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_data</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">reset</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">Ih</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components_</span><span class="p">))</span>
+
+        <span class="n">X_transformed</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_</span>
+
+        <span class="n">Wpsi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">components_</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_variance_</span>
+        <span class="n">cov_z</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Ih</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Wpsi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">components_</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X_transformed</span><span class="p">,</span> <span class="n">Wpsi</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+        <span class="n">X_transformed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">cov_z</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">X_transformed</span>
+
+    <span class="k">def</span> <span class="nf">get_covariance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute data covariance with the FactorAnalysis model.</span>
+
+<span class="sd">        ``cov = components_.T * components_ + diag(noise_variance)``</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        cov : ndarray of shape (n_features, n_features)</span>
+<span class="sd">            Estimated covariance of data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components_</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">components_</span><span class="p">)</span>
+        <span class="n">cov</span><span class="o">.</span><span class="n">flat</span><span class="p">[::</span><span class="nb">len</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_variance_</span>  <span class="c1"># modify diag inplace</span>
+        <span class="k">return</span> <span class="n">cov</span>
+
+    <span class="k">def</span> <span class="nf">get_precision</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute data precision matrix with the FactorAnalysis model.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        precision : ndarray of shape (n_features, n_features)</span>
+<span class="sd">            Estimated precision of data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">n_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">components_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># handle corner cases first</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mf">1.</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_variance_</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">==</span> <span class="n">n_features</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_covariance</span><span class="p">())</span>
+
+        <span class="c1"># Get precision using matrix inversion lemma</span>
+        <span class="n">components_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">components_</span>
+        <span class="n">precision</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">components_</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_variance_</span><span class="p">,</span> <span class="n">components_</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+        <span class="n">precision</span><span class="o">.</span><span class="n">flat</span><span class="p">[::</span><span class="nb">len</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.</span>
+        <span class="n">precision</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">components_</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                           <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">precision</span><span class="p">),</span> <span class="n">components_</span><span class="p">))</span>
+        <span class="n">precision</span> <span class="o">/=</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_variance_</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+        <span class="n">precision</span> <span class="o">/=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">noise_variance_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">precision</span><span class="o">.</span><span class="n">flat</span><span class="p">[::</span><span class="nb">len</span><span class="p">(</span><span class="n">precision</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_variance_</span>
+        <span class="k">return</span> <span class="n">precision</span>
+
+    <span class="k">def</span> <span class="nf">score_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute the log-likelihood of each sample</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : ndarray of shape (n_samples, n_features)</span>
+<span class="sd">            The data</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ll : ndarray of shape (n_samples,)</span>
+<span class="sd">            Log-likelihood of each sample under the current model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_data</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">reset</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">Xr</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_</span>
+        <span class="n">precision</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_precision</span><span class="p">()</span>
+        <span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">log_like</span> <span class="o">=</span> <span class="o">-</span><span class="mf">.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">Xr</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Xr</span><span class="p">,</span> <span class="n">precision</span><span class="p">)))</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">log_like</span> <span class="o">-=</span> <span class="mf">.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_features</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+                          <span class="o">-</span> <span class="n">fast_logdet</span><span class="p">(</span><span class="n">precision</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">log_like</span>
+
+    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute the average log-likelihood of the samples</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : ndarray of shape (n_samples, n_features)</span>
+<span class="sd">            The data</span>
+
+<span class="sd">        y : Ignored</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ll : float</span>
+<span class="sd">            Average log-likelihood of the samples under the current model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">score_samples</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+        <span class="s2">&quot;Rotate the factor analysis solution.&quot;</span>
+        <span class="c1"># note that tol is not exposed</span>
+        <span class="n">implemented</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;varimax&quot;</span><span class="p">,</span> <span class="s2">&quot;quartimax&quot;</span><span class="p">)</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotation</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">implemented</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_ortho_rotation</span><span class="p">(</span><span class="n">components</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+                                   <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">)[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;method&#39; must be in </span><span class="si">%s</span><span class="s2">, not </span><span class="si">%s</span><span class="s2">&quot;</span>
+                             <span class="o">%</span> <span class="p">(</span><span class="n">implemented</span><span class="p">,</span> <span class="n">method</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_ortho_rotation</span><span class="p">(</span><span class="n">components</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;varimax&#39;</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return rotated components.&quot;&quot;&quot;</span>
+    <span class="n">nrow</span><span class="p">,</span> <span class="n">ncol</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">rotation_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">ncol</span><span class="p">)</span>
+    <span class="n">var</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+        <span class="n">comp_rot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">components</span><span class="p">,</span> <span class="n">rotation_matrix</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;varimax&quot;</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">comp_rot</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">((</span><span class="n">comp_rot</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">nrow</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;quartimax&quot;</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">u</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">components</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">comp_rot</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">tmp</span><span class="p">))</span>
+        <span class="n">rotation_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">var_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">var</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">var_new</span> <span class="o">&lt;</span> <span class="n">var</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">tol</span><span class="p">):</span>
+            <span class="k">break</span>
+        <span class="n">var</span> <span class="o">=</span> <span class="n">var_new</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">components</span><span class="p">,</span> <span class="n">rotation_matrix</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2021, Boston Consulting Group (BCG).<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
