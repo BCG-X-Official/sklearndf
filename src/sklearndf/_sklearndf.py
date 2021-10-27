@@ -10,6 +10,7 @@ import pandas as pd
 from sklearn.base import (
     BaseEstimator,
     ClassifierMixin,
+    ClusterMixin,
     RegressorMixin,
     TransformerMixin,
     clone,
@@ -30,6 +31,7 @@ __all__ = [
     "RegressorDF",
     "SupervisedLearnerDF",
     "TransformerDF",
+    "ClustererDF",
 ]
 
 #
@@ -507,6 +509,23 @@ class ClassifierDF(SupervisedLearnerDF, ClassifierMixin, metaclass=ABCMeta):
             for multi-output classifiers, a list of one observation/class data frames
             per output
         """
+
+
+class ClustererDF(LearnerDF, ClusterMixin, metaclass=ABCMeta):
+    """
+    Base class for augmented scikit-learn `clusterers`.
+
+    Provides enhanced support for data frames.
+    """
+
+    @property
+    @abstractmethod
+    def labels_(self) -> pd.Series:
+        """
+        A pandas series, mapping input dataframe that was used for fitting to the
+        specific cluster's label (decided by a clustering algorithm).
+        """
+        pass
 
 
 __tracker.validate()

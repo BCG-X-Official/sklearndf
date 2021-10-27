@@ -14,8 +14,8 @@ from sklearndf.transformation import OneHotEncoderDF
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger(__name__)
 
-# todo: Keep this up to date, consider impl. of cluster/manifold/neighbors
-UNSUPPORTED_SKLEARN_PACKAGES = [sklearn.cluster, sklearn.manifold, sklearn.neighbors]
+# todo: Keep this up to date, consider impl. of manifold/neighbors
+UNSUPPORTED_SKLEARN_PACKAGES = [sklearn.manifold, sklearn.neighbors]
 
 
 @pytest.fixture
