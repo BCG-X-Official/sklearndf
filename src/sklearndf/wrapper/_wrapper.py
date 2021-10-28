@@ -847,7 +847,7 @@ class ClustererWrapperDF(
 
     COL_LABELS = "labels"
 
-    def __init__(self, *args, **kwargs: Any) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.X_index: Optional[pd.Index] = None
 
@@ -1310,6 +1310,20 @@ def make_df_clusterer(
     """
     Create an augmented version of a given clusterer that conforms with the
     scikit-learn API.
+
+    The augmented version is realised as a wrapper class that
+
+    - implements enhanced functionality introduced by :class:`.ClustererDF`
+    - adopts all additional methods and attributes from the wrapped native clusterer
+    - delegates relevant method calls and attribute access to the native clusterer,
+      thus replicating the original clusterer's behaviour except for the enhanced
+      functionality introduced by :class:`.ClustererDF`
+
+    :param native_clusterer: the native clusterer to be augmented
+    :param name: the name of the resulting augmented clusterer, defaults to the name
+        of the native clusterer with "DF" appended
+    :param base_wrapper: the wrapper class used to create the augmented version
+    :return: the augmented clusterer class
     """
     return _wrap(
         native_estimator=native_clusterer,
