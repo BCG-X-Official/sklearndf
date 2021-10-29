@@ -1,10 +1,10 @@
 """
 Core implementation of :mod:`sklearndf`
 """
-
+import inspect
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import Any, List, Mapping, Optional, Sequence, TypeVar, Union, cast
+from typing import Any, Dict, List, Mapping, Optional, Sequence, TypeVar, Union, cast
 
 import pandas as pd
 from sklearn.base import (
@@ -14,8 +14,11 @@ from sklearn.base import (
     TransformerMixin,
     clone,
 )
+from sklearn.utils import is_scalar_nan
 
-from pytools.api import AllTracker
+from pytools.api import AllTracker, inheritdoc
+from pytools.expression import Expression, HasExpressionRepr, make_expression
+from pytools.expression.atomic import Id
 from pytools.fit import FittableMixin
 
 log = logging.getLogger(__name__)
@@ -31,6 +34,13 @@ T_EstimatorDF = TypeVar("T_EstimatorDF")
 
 
 #
+# Constants
+#
+
+UNDEFINED = object()
+
+
+#
 # Ensure all symbols introduced below are included in __all__
 #
 
@@ -42,7 +52,10 @@ __tracker = AllTracker(globals())
 #
 
 
-class EstimatorDF(BaseEstimator, FittableMixin[pd.DataFrame], metaclass=ABCMeta):
+@inheritdoc(match="""[see superclass]""")
+class EstimatorDF(
+    HasExpressionRepr, BaseEstimator, FittableMixin[pd.DataFrame], metaclass=ABCMeta
+):
     """
     Base class for augmented scikit-learn `estimators`.
 
@@ -147,6 +160,71 @@ class EstimatorDF(BaseEstimator, FittableMixin[pd.DataFrame], metaclass=ABCMeta)
     def _get_n_outputs(self) -> int:
         # get the number of outputs this estimator has been fitted to
         pass
+
+    def to_expression(self) -> Expression:
+        """[see superclass]"""
+
+        # create a dictionary with all parameters of the estimator, mapping them
+        # to their default values if defined (and otherwise to Signature.empty)
+        estimator_parameters = {
+            name: parameter.default
+            for name, parameter in inspect.signature(self.__init__).parameters.items()
+        }
+
+        def _kwarg_to_expression(name: str, value: Any) -> Optional[Expression]:
+            expression = make_expression(value)
+
+            # are we dealing with a default value?
+            default_value = estimator_parameters.get(name, UNDEFINED)
+
+            if (
+                (  # there is a parameter with the given name
+                    default_value is not UNDEFINED
+                )
+                and (  # the parameter has a default value
+                    default_value != inspect.Signature.empty
+                )
+                and (
+                    # if the value is an estimator ...
+                    not isinstance(value, BaseEstimator)
+                    # ... then it has the same class as the default value
+                    or value.__class__ == default_value.__class__
+                )
+                and (
+                    # both value and default value are np.nan ...
+                    (is_scalar_nan(value) and is_scalar_nan(default_value))
+                    or (
+                        # ... or both have the same expression.
+                        # We cannot compare for equality since we don't know
+                        # if the classes of the values implement this.
+                        # Therefore we compare the expressions but do this last,
+                        # as it might be computationally more costly in the
+                        # unlikely case that the default value is a very complex
+                        # object.
+                        expression.eq_(make_expression(default_value))
+                    )
+                )
+            ):
+                # we can confirm the given value is the default value - no need
+                # to include in the expression representation of this estimator
+                return None
+
+            else:
+                # custom value: we return the expression
+                return expression
+
+        kwarg_expressions: Dict[str, Optional[Expression]] = {
+            name: _kwarg_to_expression(name, value)
+            for name, value in self.get_params(deep=False).items()
+        }
+
+        return Id(type(self))(
+            **{
+                name: expression
+                for name, expression in kwarg_expressions.items()
+                if expression is not None
+            }
+        )
 
 
 class LearnerDF(EstimatorDF, metaclass=ABCMeta):
