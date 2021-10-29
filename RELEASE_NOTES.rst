@@ -1,6 +1,17 @@
 Release Notes
 =============
 
+*sklearndf* 2.0
+---------------
+
+2.0.0
+~~~~~
+
+- API: class :class:`.EstimatorDF` now implements the :class:`.HasExpressionRepr`
+  mixin, rendering estimator representations as :class:`.Expression` objects
+  to enable better formatting
+
+
 *sklearndf* 1.2
 ---------------
 
