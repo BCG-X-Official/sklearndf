@@ -189,7 +189,7 @@ class EstimatorDF(
                     or value.__class__ == default_value.__class__
                 )
                 and (
-                    # both value and default value are both are np.nan ...
+                    # both value and default value are np.nan ...
                     (is_scalar_nan(value) and is_scalar_nan(default_value))
                     or (
                         # ... or both have the same expression.
