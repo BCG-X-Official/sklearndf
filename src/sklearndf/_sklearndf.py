@@ -164,6 +164,8 @@ class EstimatorDF(
     def to_expression(self) -> Expression:
         """[see superclass]"""
 
+        # create a dictionary with all parameters of the estimator, mapping them
+        # to their default values if defined (and otherwise to Signature.empty)
         estimator_parameters = {
             name: parameter.default
             for name, parameter in inspect.signature(self.__init__).parameters.items()
