@@ -13,7 +13,7 @@ from sklearn.isotonic import IsotonicRegression
 
 from pytools.api import AllTracker
 
-from sklearndf import LearnerDF, RegressorDF
+from sklearndf import RegressorDF, SupervisedLearnerDF
 from sklearndf.transformation.wrapper import (
     ColumnPreservingTransformerWrapperDF,
     NumpyTransformerWrapperDF,
@@ -87,12 +87,14 @@ class StackingRegressorWrapperDF(
     """
 
     @staticmethod
-    def _make_default_final_estimator() -> LearnerDF:
+    def _make_default_final_estimator() -> SupervisedLearnerDF:
         from sklearndf.regression import RidgeCVDF
 
         return RidgeCVDF()
 
-    def _make_stackable_learner_df(self, learner: LearnerDF) -> _StackableRegressorDF:
+    def _make_stackable_learner_df(
+        self, learner: SupervisedLearnerDF
+    ) -> _StackableRegressorDF:
         return _StackableRegressorDF(learner)
 
     def _make_learner_np_df(

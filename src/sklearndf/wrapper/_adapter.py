@@ -10,7 +10,14 @@ import pandas as pd
 
 from pytools.api import AllTracker, inheritdoc
 
-from sklearndf import ClassifierDF, EstimatorDF, LearnerDF, RegressorDF, TransformerDF
+from sklearndf import (
+    ClassifierDF,
+    EstimatorDF,
+    LearnerDF,
+    RegressorDF,
+    SupervisedLearnerDF,
+    TransformerDF,
+)
 
 log = logging.getLogger(__name__)
 
@@ -18,6 +25,7 @@ __all__ = [
     "ClassifierNPDF",
     "EstimatorNPDF",
     "LearnerNPDF",
+    "SupervisedLearnerNPDF",
     "RegressorNPDF",
     "TransformerNPDF",
 ]
@@ -29,6 +37,9 @@ __all__ = [
 T_Self = TypeVar("T_Self")
 T_DelegateEstimatorDF = TypeVar("T_DelegateEstimatorDF", bound=EstimatorDF)
 T_DelegateLearnerDF = TypeVar("T_DelegateLearnerDF", bound=LearnerDF)
+T_DelegateSupervisedLearnerDF = TypeVar(
+    "T_DelegateSupervisedLearnerDF", bound=SupervisedLearnerDF
+)
 T_DelegateClassifierDF = TypeVar("T_DelegateClassifierDF", bound=ClassifierDF)
 T_DelegateRegressorDF = TypeVar("T_DelegateRegressorDF", bound=RegressorDF)
 T_DelegateTransformerDF = TypeVar("T_DelegateTransformerDF", bound=TransformerDF)
@@ -169,6 +180,16 @@ class LearnerNPDF(
             self._ensure_X_frame(X), self._ensure_y_series_or_frame(y), **fit_params
         )
 
+
+# noinspection PyPep8Naming
+@inheritdoc(match="""[see superclass]""")
+class SupervisedLearnerNPDF(
+    LearnerNPDF[T_DelegateSupervisedLearnerDF],
+    SupervisedLearnerDF,
+    Generic[T_DelegateSupervisedLearnerDF],
+):
+    """[see superclass]"""
+
     def score(
         self,
         X: Union[np.ndarray, pd.DataFrame],
@@ -186,7 +207,7 @@ class LearnerNPDF(
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
 class ClassifierNPDF(
-    LearnerNPDF[T_DelegateClassifierDF],
+    SupervisedLearnerNPDF[T_DelegateClassifierDF],
     ClassifierDF,
     Generic[T_DelegateClassifierDF],
 ):
@@ -229,7 +250,7 @@ class ClassifierNPDF(
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
 class RegressorNPDF(
-    LearnerNPDF[T_DelegateRegressorDF],
+    SupervisedLearnerNPDF[T_DelegateRegressorDF],
     RegressorDF,
     Generic[T_DelegateRegressorDF],
 ):
