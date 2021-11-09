@@ -40,6 +40,7 @@ import sklearn.utils.metaestimators as sklearn_meta
 from sklearn.base import (
     BaseEstimator,
     ClassifierMixin,
+    ClusterMixin,
     MetaEstimatorMixin,
     RegressorMixin,
     TransformerMixin,
@@ -48,8 +49,15 @@ from sklearn.base import (
 from pytools.api import AllTracker, inheritdoc, public_module_prefix
 from pytools.meta import compose_meta
 
-from ._adapter import LearnerNPDF
-from sklearndf import ClassifierDF, EstimatorDF, LearnerDF, RegressorDF, TransformerDF
+from ._adapter import SupervisedLearnerNPDF
+from sklearndf import (
+    ClassifierDF,
+    EstimatorDF,
+    LearnerDF,
+    RegressorDF,
+    SupervisedLearnerDF,
+    TransformerDF,
+)
 
 log = logging.getLogger(__name__)
 
@@ -58,6 +66,7 @@ __all__ = [
     "EstimatorWrapperDF",
     "EstimatorWrapperDFMeta",
     "LearnerWrapperDF",
+    "SupervisedLearnerWrapperDF",
     "MetaEstimatorWrapperDF",
     "RegressorWrapperDF",
     "StackingEstimatorWrapperDF",
@@ -77,7 +86,12 @@ T = TypeVar("T")
 T_Self = TypeVar("T_Self")
 T_NativeEstimator = TypeVar("T_NativeEstimator", bound=BaseEstimator)
 T_NativeTransformer = TypeVar("T_NativeTransformer", bound=TransformerMixin)
-T_NativeLearner = TypeVar("T_NativeLearner", RegressorMixin, ClassifierMixin)
+T_NativeSupervisedLearner = TypeVar(
+    "T_NativeSupervisedLearner", RegressorMixin, ClassifierMixin
+)
+T_NativeLearner = TypeVar(
+    "T_NativeLearner", RegressorMixin, ClassifierMixin, ClusterMixin
+)
 T_NativeRegressor = TypeVar("T_NativeRegressor", bound=RegressorMixin)
 T_NativeClassifier = TypeVar("T_NativeClassifier", bound=ClassifierMixin)
 
@@ -86,7 +100,7 @@ T_TransformerWrapperDF = TypeVar("T_TransformerWrapperDF", bound="TransformerWra
 T_RegressorWrapperDF = TypeVar("T_RegressorWrapperDF", bound="RegressorWrapperDF")
 T_ClassifierWrapperDF = TypeVar("T_ClassifierWrapperDF", bound="ClassifierWrapperDF")
 
-T_LearnerDF = TypeVar("T_LearnerDF", bound="LearnerDF")
+T_SupervisedLearnerDF = TypeVar("T_SupervisedLearnerDF", bound="SupervisedLearnerDF")
 
 #
 # Ensure all symbols introduced below are included in __all__
@@ -626,23 +640,6 @@ class LearnerWrapperDF(
         return result
 
     # noinspection PyPep8Naming
-    def score(
-        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
-    ) -> float:
-        """[see superclass]"""
-        self._check_parameter_types(X, y)
-        if y is None:
-            raise ValueError("arg y must not be None")
-        if sample_weight is not None and not isinstance(sample_weight, pd.Series):
-            raise TypeError("arg sample_weight must be None or a Series")
-
-        return self.native_estimator.score(
-            self._prepare_X_for_delegate(X),
-            self._prepare_y_for_delegate(y),
-            sample_weight,
-        )
-
-    # noinspection PyPep8Naming
     def _prediction_to_series_or_frame(
         self, X: pd.DataFrame, y: Union[np.ndarray, pd.Series, pd.DataFrame]
     ) -> Union[pd.Series, pd.DataFrame]:
@@ -668,9 +665,38 @@ class LearnerWrapperDF(
         )
 
 
+@inheritdoc(match="[see superclass]")
+class SupervisedLearnerWrapperDF(
+    SupervisedLearnerDF,
+    LearnerWrapperDF[T_NativeSupervisedLearner],
+    Generic[T_NativeSupervisedLearner],
+    metaclass=ABCMeta,
+):
+    """
+    ...
+    """
+
+    # noinspection PyPep8Naming
+    def score(
+        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+    ) -> float:
+        """[see superclass]"""
+        self._check_parameter_types(X, y)
+        if y is None:
+            raise ValueError("arg y must not be None")
+        if sample_weight is not None and not isinstance(sample_weight, pd.Series):
+            raise TypeError("arg sample_weight must be None or a Series")
+
+        return self.native_estimator.score(
+            self._prepare_X_for_delegate(X),
+            self._prepare_y_for_delegate(y),
+            sample_weight,
+        )
+
+
 class RegressorWrapperDF(
     RegressorDF,
-    LearnerWrapperDF[T_NativeRegressor],
+    SupervisedLearnerWrapperDF[T_NativeRegressor],
     Generic[T_NativeRegressor],
     metaclass=ABCMeta,
 ):
@@ -686,7 +712,7 @@ class RegressorWrapperDF(
 @inheritdoc(match="[see superclass]")
 class ClassifierWrapperDF(
     ClassifierDF,
-    LearnerWrapperDF[T_NativeClassifier],
+    SupervisedLearnerWrapperDF[T_NativeClassifier],
     Generic[T_NativeClassifier],
     metaclass=ABCMeta,
 ):
@@ -936,13 +962,15 @@ class StackingEstimatorWrapperDF(
         return super().fit_predict(X, y, **fit_params)
 
     @abstractmethod
-    def _make_stackable_learner_df(self, learner: LearnerDF) -> "_StackableLearnerDF":
+    def _make_stackable_learner_df(
+        self, learner: SupervisedLearnerDF
+    ) -> "_StackableSupervisedLearnerDF":
         pass
 
     @abstractmethod
     def _make_learner_np_df(
-        self, delegate: LearnerDF, column_names: Callable[[], Sequence[str]]
-    ) -> LearnerNPDF:
+        self, delegate: SupervisedLearnerDF, column_names: Callable[[], Sequence[str]]
+    ) -> SupervisedLearnerNPDF:
         pass
 
     def _get_estimators_features_out(self) -> List[str]:
@@ -958,7 +986,9 @@ class StackingEstimatorWrapperDF(
 
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
-class _StackableLearnerDF(LearnerDF, Generic[T_LearnerDF]):
+class _StackableSupervisedLearnerDF(
+    SupervisedLearnerDF, Generic[T_SupervisedLearnerDF]
+):
     """
     Returns numpy arrays from all prediction functions, instead of pandas series or
     data frames.
@@ -967,7 +997,7 @@ class _StackableLearnerDF(LearnerDF, Generic[T_LearnerDF]):
     one final learner.
     """
 
-    def __init__(self, delegate: T_LearnerDF) -> None:
+    def __init__(self, delegate: T_SupervisedLearnerDF) -> None:
         self.delegate = delegate
 
     @property
@@ -979,7 +1009,7 @@ class _StackableLearnerDF(LearnerDF, Generic[T_LearnerDF]):
         self: T_Self, X: pd.DataFrame, y: np.ndarray = None, **fit_params: Any
     ) -> T_Self:
         """[see superclass]"""
-        self: _StackableLearnerDF
+        self: _StackableSupervisedLearnerDF
 
         self.delegate.fit(X, self._convert_y_to_series(X, y), **fit_params)
         return self
@@ -1041,7 +1071,7 @@ class _StackableLearnerDF(LearnerDF, Generic[T_LearnerDF]):
 
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
-class _StackableClassifierDF(_StackableLearnerDF[ClassifierDF], ClassifierDF):
+class _StackableClassifierDF(_StackableSupervisedLearnerDF[ClassifierDF], ClassifierDF):
     """[see superclass]"""
 
     @property
@@ -1071,7 +1101,7 @@ class _StackableClassifierDF(_StackableLearnerDF[ClassifierDF], ClassifierDF):
 
 
 @inheritdoc(match="""[see superclass]""")
-class _StackableRegressorDF(_StackableLearnerDF[RegressorDF], RegressorDF):
+class _StackableRegressorDF(_StackableSupervisedLearnerDF[RegressorDF], RegressorDF):
     """[see superclass]"""
 
 

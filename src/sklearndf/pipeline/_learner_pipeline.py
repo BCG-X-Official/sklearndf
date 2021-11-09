@@ -10,15 +10,30 @@ import pandas as pd
 
 from pytools.api import AllTracker, inheritdoc
 
-from .. import ClassifierDF, EstimatorDF, LearnerDF, RegressorDF, TransformerDF
+from .. import (
+    ClassifierDF,
+    EstimatorDF,
+    LearnerDF,
+    RegressorDF,
+    SupervisedLearnerDF,
+    TransformerDF,
+)
 
 log = logging.getLogger(__name__)
 
-__all__ = ["LearnerPipelineDF", "RegressorPipelineDF", "ClassifierPipelineDF"]
+__all__ = [
+    "LearnerPipelineDF",
+    "SupervisedLearnerPipelineDF",
+    "RegressorPipelineDF",
+    "ClassifierPipelineDF",
+]
 
 T_Self = TypeVar("T_Self")
 T_FinalEstimatorDF = TypeVar("T_FinalEstimatorDF", bound=EstimatorDF)
 T_FinalLearnerDF = TypeVar("T_FinalLearnerDF", bound=LearnerDF)
+T_FinalSupervisedLearnerDF = TypeVar(
+    "T_FinalSupervisedLearnerDF", bound=SupervisedLearnerDF
+)
 T_FinalRegressorDF = TypeVar("T_FinalRegressorDF", bound=RegressorDF)
 T_FinalClassifierDF = TypeVar("T_FinalClassifierDF", bound=ClassifierDF)
 
@@ -212,6 +227,19 @@ class LearnerPipelineDF(
             self._pre_fit_transform(X, y, **fit_params), y, **fit_params
         )
 
+
+@inheritdoc(match="[see superclass]")
+class SupervisedLearnerPipelineDF(
+    LearnerPipelineDF[T_FinalSupervisedLearnerDF],
+    SupervisedLearnerDF,
+    Generic[T_FinalSupervisedLearnerDF],
+    metaclass=ABCMeta,
+):
+    """
+    A data frame enabled pipeline with an optional preprocessing step and a
+    mandatory supervised learner step.
+    """
+
     # noinspection PyPep8Naming
     def score(
         self,
@@ -230,7 +258,9 @@ class LearnerPipelineDF(
 
 @inheritdoc(match="[see superclass]")
 class RegressorPipelineDF(
-    LearnerPipelineDF[T_FinalRegressorDF], RegressorDF, Generic[T_FinalRegressorDF]
+    SupervisedLearnerPipelineDF[T_FinalRegressorDF],
+    RegressorDF,
+    Generic[T_FinalRegressorDF],
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
@@ -271,7 +301,9 @@ class RegressorPipelineDF(
 
 @inheritdoc(match="[see superclass]")
 class ClassifierPipelineDF(
-    LearnerPipelineDF[T_FinalClassifierDF], ClassifierDF, Generic[T_FinalClassifierDF]
+    SupervisedLearnerPipelineDF[T_FinalClassifierDF],
+    ClassifierDF,
+    Generic[T_FinalClassifierDF],
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a

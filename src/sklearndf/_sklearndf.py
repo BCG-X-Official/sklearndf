@@ -23,7 +23,14 @@ from pytools.fit import FittableMixin
 
 log = logging.getLogger(__name__)
 
-__all__ = ["EstimatorDF", "LearnerDF", "ClassifierDF", "RegressorDF", "TransformerDF"]
+__all__ = [
+    "EstimatorDF",
+    "LearnerDF",
+    "ClassifierDF",
+    "RegressorDF",
+    "SupervisedLearnerDF",
+    "TransformerDF",
+]
 
 #
 # type variables
@@ -272,6 +279,14 @@ class LearnerDF(EstimatorDF, metaclass=ABCMeta):
         """
         pass
 
+
+class SupervisedLearnerDF(LearnerDF, metaclass=ABCMeta):
+    """
+    Base class for augmented scikit-learn `supervised learners`.
+
+    Provides enhanced support for data frames.
+    """
+
     # noinspection PyPep8Naming
     @abstractmethod
     def score(
@@ -401,7 +416,7 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
         return self.feature_names_original_.index
 
 
-class RegressorDF(LearnerDF, RegressorMixin, metaclass=ABCMeta):
+class RegressorDF(SupervisedLearnerDF, RegressorMixin, metaclass=ABCMeta):
     """
     Base class for augmented scikit-learn `regressors`.
 
@@ -409,7 +424,7 @@ class RegressorDF(LearnerDF, RegressorMixin, metaclass=ABCMeta):
     """
 
 
-class ClassifierDF(LearnerDF, ClassifierMixin, metaclass=ABCMeta):
+class ClassifierDF(SupervisedLearnerDF, ClassifierMixin, metaclass=ABCMeta):
     """
     Base class for augmented scikit-learn `classifiers`.
 
