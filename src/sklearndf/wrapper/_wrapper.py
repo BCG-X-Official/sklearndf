@@ -614,37 +614,6 @@ class LearnerWrapperDF(
         )
 
     # noinspection PyPep8Naming
-    def fit_predict(
-        self, X: pd.DataFrame, y: pd.Series, **fit_params: Any
-    ) -> Union[pd.Series, pd.DataFrame]:
-        """[see superclass]"""
-
-        self._reset_fit()
-
-        try:
-            self._check_parameter_types(X, y)
-
-            # noinspection PyUnresolvedReferences
-            result = self._prediction_to_series_or_frame(
-                X,
-                self.native_estimator.fit_predict(
-                    self._prepare_X_for_delegate(X),
-                    self._prepare_y_for_delegate(y),
-                    **fit_params,
-                ),
-            )
-
-            self._post_fit(X, y, **fit_params)
-
-        except Exception as cause:
-            self._reset_fit()
-            raise self._make_verbose_exception(
-                self.fit_predict.__name__, cause
-            ) from cause
-
-        return result
-
-    # noinspection PyPep8Naming
     def _prediction_to_series_or_frame(
         self, X: pd.DataFrame, y: Union[np.ndarray, pd.Series, pd.DataFrame]
     ) -> Union[pd.Series, pd.DataFrame]:
@@ -849,7 +818,7 @@ class ClustererWrapperDF(
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.X_index: Optional[pd.Index] = None
+        self._x_index: Optional[pd.Index] = None
 
     @property
     def labels_(self) -> pd.Series:
@@ -857,30 +826,53 @@ class ClustererWrapperDF(
         self._ensure_fitted()
         raw_labels = self._native_estimator.labels_
 
-        return pd.Series(data=raw_labels, name=self.COL_LABELS, index=self.X_index)
+        return pd.Series(data=raw_labels, name=self.COL_LABELS, index=self._x_index)
 
-    def fit(
-        self: T_Self,
+    def _post_fit(
+        self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
-        **fit_params: Any,
-    ) -> T_Self:
-        """[see superclass]"""
+        **fit_params,
+    ) -> None:
+        super()._post_fit(X, y, **fit_params)
+        self._x_index = X.index
 
-        self: ClustererWrapperDF
-
-        self.X_index = X.index
-
-        return super().fit(X, y, **fit_params)
+    def _reset_fit(self) -> None:
+        super()._reset_fit()
+        self._x_index = None
 
     def fit_predict(
-        self, X: pd.DataFrame, y: pd.Series, **fit_params: Any
+        self,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        **fit_predict_params: Any,
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
 
-        self.X_index = X.index
+        self._reset_fit()
 
-        return super().fit_predict(X, y, **fit_params)
+        try:
+            self._check_parameter_types(X, y)
+
+            # noinspection PyUnresolvedReferences
+            result = self._prediction_to_series_or_frame(
+                X,
+                self.native_estimator.fit_predict(
+                    self._prepare_X_for_delegate(X),
+                    self._prepare_y_for_delegate(y),
+                    **fit_predict_params,
+                ),
+            )
+
+            self._post_fit(X, y, **fit_predict_params)
+
+        except Exception as cause:
+            self._reset_fit()
+            raise self._make_verbose_exception(
+                self.fit_predict.__name__, cause
+            ) from cause
+
+        return result
 
 
 #
@@ -1012,14 +1004,6 @@ class StackingEstimatorWrapperDF(
             native.estimators = estimators
             native.final_estimator = final_estimator
 
-    def fit_predict(
-        self, X: pd.DataFrame, y: pd.Series, **fit_params: Any
-    ) -> Union[pd.Series, pd.DataFrame]:
-        """[see superclass]"""
-        self.final_estimator.column_names = self._get_final_estimator_features_in
-
-        return super().fit_predict(X, y, **fit_params)
-
     @abstractmethod
     def _make_stackable_learner_df(
         self, learner: SupervisedLearnerDF
@@ -1076,14 +1060,6 @@ class _StackableSupervisedLearnerDF(
     def predict(self, X: pd.DataFrame, **predict_params: Any) -> np.ndarray:
         """[see superclass]"""
         return self.delegate.predict(X, **predict_params).values
-
-    def fit_predict(
-        self, X: pd.DataFrame, y: np.ndarray, **fit_params: Any
-    ) -> np.ndarray:
-        """[see superclass]"""
-        return self.delegate.fit_predict(
-            X, self._convert_y_to_series(X, y), **fit_params
-        ).values
 
     def score(
         self, X: pd.DataFrame, y: np.ndarray, sample_weight: Optional[pd.Series] = None

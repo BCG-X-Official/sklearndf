@@ -264,23 +264,6 @@ class LearnerDF(EstimatorDF, metaclass=ABCMeta):
         """
         pass
 
-    # noinspection PyPep8Naming
-    @abstractmethod
-    def fit_predict(
-        self, X: pd.DataFrame, y: pd.Series, **fit_params: Any
-    ) -> Union[pd.Series, pd.DataFrame]:
-        """
-        Fit this learner using the given inputs, then predict the outputs.
-
-        :param X: data frame with observations as rows and features as columns
-        :param y: a series or data frame with one or more outputs per observation
-        :param fit_params: optional keyword parameters as required by specific
-            learner implementations
-        :return: predictions per observation as a series, or as a data frame in case
-            of multiple outputs
-        """
-        pass
-
 
 class SupervisedLearnerDF(LearnerDF, metaclass=ABCMeta):
     """
@@ -522,8 +505,30 @@ class ClustererDF(LearnerDF, ClusterMixin, metaclass=ABCMeta):
     @abstractmethod
     def labels_(self) -> pd.Series:
         """
-        A pandas series, mapping input dataframe that was used for fitting to the
-        specific cluster's label (decided by a clustering algorithm).
+        A pandas series, mapping the input dataframe that was used for fitting
+        to a specific cluster's label (decided by a clustering algorithm).
+        Each observation's row index of the ingoing data frame is mapped to
+        the specific label.
+        """
+        pass
+
+    # noinspection PyPep8Naming
+    @abstractmethod
+    def fit_predict(
+        self,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        **fit_predict_params: Any,
+    ) -> Union[pd.Series, pd.DataFrame]:
+        """
+        Fit this clusterer using the given inputs, then predict the outputs.
+
+        :param X: data frame with observations as rows and features as columns
+        :param y: a series or data frame with one or more outputs per observation
+        :param fit_predict_params: optional keyword parameters as required by specific
+            clusterer implementations
+        :return: predictions per observation as a series, or as a data frame in case
+            of multiple outputs
         """
         pass
 

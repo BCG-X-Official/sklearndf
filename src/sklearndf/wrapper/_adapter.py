@@ -169,17 +169,6 @@ class LearnerNPDF(
         """[see superclass]"""
         return self.delegate.predict(self._ensure_X_frame(X), **predict_params)
 
-    def fit_predict(
-        self,
-        X: Union[np.ndarray, pd.DataFrame],
-        y: Union[np.ndarray, pd.Series],
-        **fit_params: Any,
-    ) -> Union[pd.Series, pd.DataFrame]:
-        """[see superclass]"""
-        return self.delegate.fit_predict(
-            self._ensure_X_frame(X), self._ensure_y_series_or_frame(y), **fit_params
-        )
-
 
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
