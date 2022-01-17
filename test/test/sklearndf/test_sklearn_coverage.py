@@ -1,7 +1,6 @@
 import itertools
 from typing import Dict, Iterable, List, Optional, Type, Union
 
-import pandas as pd
 import pytest
 import sklearn
 from sklearn.base import (
@@ -232,40 +231,3 @@ def test_clusterer_coverage(sklearn_clusterer_cls: Type[ClusterMixin]) -> None:
 
     if sklearn_clusterer_cls not in sklearn_classes:
         _check_unexpected_sklearn_class(sklearn_clusterer_cls)
-
-
-@pytest.mark.parametrize(
-    argnames="sklearn_clusterer_cls", argvalues=sklearn_clusterer_classes()
-)
-def test_clusterer_fit_predict_call(
-    iris_features: pd.DataFrame, sklearn_clusterer_cls: Type[ClusterMixin]
-) -> None:
-    """ Check if each sklearndf clusterer supports fit_predict method"""
-    sklearn_classes: Dict[
-        Type[BaseEstimator], Type[EstimatorDF]
-    ] = sklearn_delegate_classes(sklearndf.clustering)
-
-    clusterer_instance = sklearn_classes[sklearn_clusterer_cls]()
-
-    assert not clusterer_instance.is_fitted
-    result_prediction = clusterer_instance.fit_predict(iris_features)
-    assert type(result_prediction) == pd.Series
-    assert clusterer_instance.is_fitted
-
-
-@pytest.mark.parametrize(
-    argnames="sklearn_clusterer_cls", argvalues=sklearn_clusterer_classes()
-)
-def test_clusterer_fit_call(
-    iris_features: pd.DataFrame, sklearn_clusterer_cls: Type[ClusterMixin]
-) -> None:
-    """ Check if each sklearndf clusterer supports fit method"""
-    sklearn_classes: Dict[
-        Type[BaseEstimator], Type[EstimatorDF]
-    ] = sklearn_delegate_classes(sklearndf.clustering)
-
-    clusterer_instance = sklearn_classes[sklearn_clusterer_cls]()
-
-    assert not clusterer_instance.is_fitted
-    clusterer_instance.fit(iris_features)
-    assert clusterer_instance.is_fitted

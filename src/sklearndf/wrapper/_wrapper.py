@@ -828,19 +828,6 @@ class ClustererWrapperDF(
 
         return pd.Series(data=raw_labels, name=self.COL_LABELS, index=self._x_index)
 
-    def _post_fit(
-        self,
-        X: pd.DataFrame,
-        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
-        **fit_params,
-    ) -> None:
-        super()._post_fit(X, y, **fit_params)
-        self._x_index = X.index
-
-    def _reset_fit(self) -> None:
-        super()._reset_fit()
-        self._x_index = None
-
     def fit_predict(
         self,
         X: pd.DataFrame,
@@ -873,6 +860,19 @@ class ClustererWrapperDF(
             ) from cause
 
         return result
+
+    def _post_fit(
+        self,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        **fit_params,
+    ) -> None:
+        super()._post_fit(X, y, **fit_params)
+        self._x_index = X.index
+
+    def _reset_fit(self) -> None:
+        super()._reset_fit()
+        self._x_index = None
 
 
 #
