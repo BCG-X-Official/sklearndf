@@ -1,0 +1,46 @@
+sklearndf.regression.MultiTaskElasticNetDF
+==========================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: MultiTaskElasticNetDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MultiTaskElasticNetDF.clone
+      ~MultiTaskElasticNetDF.fit
+      ~MultiTaskElasticNetDF.fit_predict
+      ~MultiTaskElasticNetDF.from_fitted
+      ~MultiTaskElasticNetDF.get_params
+      ~MultiTaskElasticNetDF.predict
+      ~MultiTaskElasticNetDF.score
+      ~MultiTaskElasticNetDF.set_params
+      ~MultiTaskElasticNetDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MultiTaskElasticNetDF.COL_FEATURE_IN
+      ~MultiTaskElasticNetDF.COL_PREDICTION
+      ~MultiTaskElasticNetDF.feature_names_in_
+      ~MultiTaskElasticNetDF.is_fitted
+      ~MultiTaskElasticNetDF.n_outputs_
+      ~MultiTaskElasticNetDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,48 @@
+sklearndf.transformation.SparsePCADF
+====================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: SparsePCADF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SparsePCADF.clone
+      ~SparsePCADF.fit
+      ~SparsePCADF.fit_transform
+      ~SparsePCADF.from_fitted
+      ~SparsePCADF.get_params
+      ~SparsePCADF.inverse_transform
+      ~SparsePCADF.set_params
+      ~SparsePCADF.to_expression
+      ~SparsePCADF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~SparsePCADF.COL_FEATURE_IN
+      ~SparsePCADF.COL_FEATURE_OUT
+      ~SparsePCADF.feature_names_in_
+      ~SparsePCADF.feature_names_original_
+      ~SparsePCADF.feature_names_out_
+      ~SparsePCADF.is_fitted
+      ~SparsePCADF.n_outputs_
+      ~SparsePCADF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

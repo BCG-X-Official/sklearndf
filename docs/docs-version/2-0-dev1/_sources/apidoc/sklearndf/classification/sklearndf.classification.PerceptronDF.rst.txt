@@ -1,0 +1,50 @@
+sklearndf.classification.PerceptronDF
+=====================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: PerceptronDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PerceptronDF.clone
+      ~PerceptronDF.decision_function
+      ~PerceptronDF.fit
+      ~PerceptronDF.fit_predict
+      ~PerceptronDF.from_fitted
+      ~PerceptronDF.get_params
+      ~PerceptronDF.predict
+      ~PerceptronDF.predict_log_proba
+      ~PerceptronDF.predict_proba
+      ~PerceptronDF.score
+      ~PerceptronDF.set_params
+      ~PerceptronDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~PerceptronDF.COL_FEATURE_IN
+      ~PerceptronDF.COL_PREDICTION
+      ~PerceptronDF.classes_
+      ~PerceptronDF.feature_names_in_
+      ~PerceptronDF.is_fitted
+      ~PerceptronDF.n_outputs_
+      ~PerceptronDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

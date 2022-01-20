@@ -1,0 +1,46 @@
+sklearndf.regression.MultiOutputRegressorDF
+===========================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: MultiOutputRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MultiOutputRegressorDF.clone
+      ~MultiOutputRegressorDF.fit
+      ~MultiOutputRegressorDF.fit_predict
+      ~MultiOutputRegressorDF.from_fitted
+      ~MultiOutputRegressorDF.get_params
+      ~MultiOutputRegressorDF.predict
+      ~MultiOutputRegressorDF.score
+      ~MultiOutputRegressorDF.set_params
+      ~MultiOutputRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MultiOutputRegressorDF.COL_FEATURE_IN
+      ~MultiOutputRegressorDF.COL_PREDICTION
+      ~MultiOutputRegressorDF.feature_names_in_
+      ~MultiOutputRegressorDF.is_fitted
+      ~MultiOutputRegressorDF.n_outputs_
+      ~MultiOutputRegressorDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

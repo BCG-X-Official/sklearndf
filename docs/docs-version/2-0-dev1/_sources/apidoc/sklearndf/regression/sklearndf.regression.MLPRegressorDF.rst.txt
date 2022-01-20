@@ -1,0 +1,46 @@
+sklearndf.regression.MLPRegressorDF
+===================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: MLPRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MLPRegressorDF.clone
+      ~MLPRegressorDF.fit
+      ~MLPRegressorDF.fit_predict
+      ~MLPRegressorDF.from_fitted
+      ~MLPRegressorDF.get_params
+      ~MLPRegressorDF.predict
+      ~MLPRegressorDF.score
+      ~MLPRegressorDF.set_params
+      ~MLPRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MLPRegressorDF.COL_FEATURE_IN
+      ~MLPRegressorDF.COL_PREDICTION
+      ~MLPRegressorDF.feature_names_in_
+      ~MLPRegressorDF.is_fitted
+      ~MLPRegressorDF.n_outputs_
+      ~MLPRegressorDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,45 @@
+sklearndf.wrapper.StackingEstimatorWrapperDF
+============================================
+
+.. currentmodule:: sklearndf.wrapper
+
+.. autoclass:: StackingEstimatorWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~StackingEstimatorWrapperDF.clone
+      ~StackingEstimatorWrapperDF.fit
+      ~StackingEstimatorWrapperDF.fit_predict
+      ~StackingEstimatorWrapperDF.from_fitted
+      ~StackingEstimatorWrapperDF.get_params
+      ~StackingEstimatorWrapperDF.predict
+      ~StackingEstimatorWrapperDF.set_params
+      ~StackingEstimatorWrapperDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~StackingEstimatorWrapperDF.COL_FEATURE_IN
+      ~StackingEstimatorWrapperDF.COL_PREDICTION
+      ~StackingEstimatorWrapperDF.feature_names_in_
+      ~StackingEstimatorWrapperDF.is_fitted
+      ~StackingEstimatorWrapperDF.n_outputs_
+      ~StackingEstimatorWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

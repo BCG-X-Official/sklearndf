@@ -1,0 +1,49 @@
+sklearndf.transformation.RFEDF
+==============================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: RFEDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~RFEDF.clone
+      ~RFEDF.fit
+      ~RFEDF.fit_transform
+      ~RFEDF.from_fitted
+      ~RFEDF.get_params
+      ~RFEDF.inverse_transform
+      ~RFEDF.set_params
+      ~RFEDF.to_expression
+      ~RFEDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~RFEDF.COL_FEATURE_IN
+      ~RFEDF.COL_FEATURE_OUT
+      ~RFEDF.classes_
+      ~RFEDF.feature_names_in_
+      ~RFEDF.feature_names_original_
+      ~RFEDF.feature_names_out_
+      ~RFEDF.is_fitted
+      ~RFEDF.n_outputs_
+      ~RFEDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

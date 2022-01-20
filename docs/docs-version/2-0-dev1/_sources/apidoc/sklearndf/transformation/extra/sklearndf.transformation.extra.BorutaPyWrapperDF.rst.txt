@@ -1,0 +1,48 @@
+sklearndf.transformation.extra.BorutaPyWrapperDF
+================================================
+
+.. currentmodule:: sklearndf.transformation.extra
+
+.. autoclass:: BorutaPyWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~BorutaPyWrapperDF.clone
+      ~BorutaPyWrapperDF.fit
+      ~BorutaPyWrapperDF.fit_transform
+      ~BorutaPyWrapperDF.from_fitted
+      ~BorutaPyWrapperDF.get_params
+      ~BorutaPyWrapperDF.inverse_transform
+      ~BorutaPyWrapperDF.set_params
+      ~BorutaPyWrapperDF.to_expression
+      ~BorutaPyWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~BorutaPyWrapperDF.COL_FEATURE_IN
+      ~BorutaPyWrapperDF.COL_FEATURE_OUT
+      ~BorutaPyWrapperDF.feature_names_in_
+      ~BorutaPyWrapperDF.feature_names_original_
+      ~BorutaPyWrapperDF.feature_names_out_
+      ~BorutaPyWrapperDF.is_fitted
+      ~BorutaPyWrapperDF.n_outputs_
+      ~BorutaPyWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

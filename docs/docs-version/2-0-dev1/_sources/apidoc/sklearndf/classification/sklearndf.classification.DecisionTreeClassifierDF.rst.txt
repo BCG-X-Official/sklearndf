@@ -1,0 +1,50 @@
+sklearndf.classification.DecisionTreeClassifierDF
+=================================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: DecisionTreeClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~DecisionTreeClassifierDF.clone
+      ~DecisionTreeClassifierDF.decision_function
+      ~DecisionTreeClassifierDF.fit
+      ~DecisionTreeClassifierDF.fit_predict
+      ~DecisionTreeClassifierDF.from_fitted
+      ~DecisionTreeClassifierDF.get_params
+      ~DecisionTreeClassifierDF.predict
+      ~DecisionTreeClassifierDF.predict_log_proba
+      ~DecisionTreeClassifierDF.predict_proba
+      ~DecisionTreeClassifierDF.score
+      ~DecisionTreeClassifierDF.set_params
+      ~DecisionTreeClassifierDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~DecisionTreeClassifierDF.COL_FEATURE_IN
+      ~DecisionTreeClassifierDF.COL_PREDICTION
+      ~DecisionTreeClassifierDF.classes_
+      ~DecisionTreeClassifierDF.feature_names_in_
+      ~DecisionTreeClassifierDF.is_fitted
+      ~DecisionTreeClassifierDF.n_outputs_
+      ~DecisionTreeClassifierDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

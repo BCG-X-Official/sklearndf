@@ -1,0 +1,56 @@
+sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF
+====================================================================
+
+.. currentmodule:: sklearndf.classification.wrapper
+
+.. autoclass:: LinearDiscriminantAnalysisWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~LinearDiscriminantAnalysisWrapperDF.clone
+      ~LinearDiscriminantAnalysisWrapperDF.decision_function
+      ~LinearDiscriminantAnalysisWrapperDF.fit
+      ~LinearDiscriminantAnalysisWrapperDF.fit_predict
+      ~LinearDiscriminantAnalysisWrapperDF.fit_transform
+      ~LinearDiscriminantAnalysisWrapperDF.from_fitted
+      ~LinearDiscriminantAnalysisWrapperDF.get_params
+      ~LinearDiscriminantAnalysisWrapperDF.inverse_transform
+      ~LinearDiscriminantAnalysisWrapperDF.predict
+      ~LinearDiscriminantAnalysisWrapperDF.predict_log_proba
+      ~LinearDiscriminantAnalysisWrapperDF.predict_proba
+      ~LinearDiscriminantAnalysisWrapperDF.score
+      ~LinearDiscriminantAnalysisWrapperDF.set_params
+      ~LinearDiscriminantAnalysisWrapperDF.to_expression
+      ~LinearDiscriminantAnalysisWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~LinearDiscriminantAnalysisWrapperDF.COL_FEATURE_IN
+      ~LinearDiscriminantAnalysisWrapperDF.COL_FEATURE_OUT
+      ~LinearDiscriminantAnalysisWrapperDF.COL_PREDICTION
+      ~LinearDiscriminantAnalysisWrapperDF.classes_
+      ~LinearDiscriminantAnalysisWrapperDF.feature_names_in_
+      ~LinearDiscriminantAnalysisWrapperDF.feature_names_original_
+      ~LinearDiscriminantAnalysisWrapperDF.feature_names_out_
+      ~LinearDiscriminantAnalysisWrapperDF.is_fitted
+      ~LinearDiscriminantAnalysisWrapperDF.n_outputs_
+      ~LinearDiscriminantAnalysisWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

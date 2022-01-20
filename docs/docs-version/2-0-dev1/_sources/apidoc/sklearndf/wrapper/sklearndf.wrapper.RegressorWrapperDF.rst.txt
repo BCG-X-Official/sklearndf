@@ -1,0 +1,46 @@
+sklearndf.wrapper.RegressorWrapperDF
+====================================
+
+.. currentmodule:: sklearndf.wrapper
+
+.. autoclass:: RegressorWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~RegressorWrapperDF.clone
+      ~RegressorWrapperDF.fit
+      ~RegressorWrapperDF.fit_predict
+      ~RegressorWrapperDF.from_fitted
+      ~RegressorWrapperDF.get_params
+      ~RegressorWrapperDF.predict
+      ~RegressorWrapperDF.score
+      ~RegressorWrapperDF.set_params
+      ~RegressorWrapperDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~RegressorWrapperDF.COL_FEATURE_IN
+      ~RegressorWrapperDF.COL_PREDICTION
+      ~RegressorWrapperDF.feature_names_in_
+      ~RegressorWrapperDF.is_fitted
+      ~RegressorWrapperDF.n_outputs_
+      ~RegressorWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

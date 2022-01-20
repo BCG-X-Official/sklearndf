@@ -1,0 +1,48 @@
+sklearndf.transformation.wrapper.BaseMultipleInputsPerOutputTransformerWrapperDF
+================================================================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: BaseMultipleInputsPerOutputTransformerWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.clone
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.fit
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.fit_transform
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.from_fitted
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.get_params
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.inverse_transform
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.set_params
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.to_expression
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.COL_FEATURE_IN
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.COL_FEATURE_OUT
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.feature_names_in_
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.feature_names_original_
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.feature_names_out_
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.is_fitted
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.n_outputs_
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

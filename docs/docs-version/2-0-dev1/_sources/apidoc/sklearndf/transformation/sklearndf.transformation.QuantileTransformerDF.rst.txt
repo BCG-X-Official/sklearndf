@@ -1,0 +1,48 @@
+sklearndf.transformation.QuantileTransformerDF
+==============================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: QuantileTransformerDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~QuantileTransformerDF.clone
+      ~QuantileTransformerDF.fit
+      ~QuantileTransformerDF.fit_transform
+      ~QuantileTransformerDF.from_fitted
+      ~QuantileTransformerDF.get_params
+      ~QuantileTransformerDF.inverse_transform
+      ~QuantileTransformerDF.set_params
+      ~QuantileTransformerDF.to_expression
+      ~QuantileTransformerDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~QuantileTransformerDF.COL_FEATURE_IN
+      ~QuantileTransformerDF.COL_FEATURE_OUT
+      ~QuantileTransformerDF.feature_names_in_
+      ~QuantileTransformerDF.feature_names_original_
+      ~QuantileTransformerDF.feature_names_out_
+      ~QuantileTransformerDF.is_fitted
+      ~QuantileTransformerDF.n_outputs_
+      ~QuantileTransformerDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

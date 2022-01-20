@@ -1,0 +1,48 @@
+sklearndf.transformation.LocallyLinearEmbeddingDF
+=================================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: LocallyLinearEmbeddingDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~LocallyLinearEmbeddingDF.clone
+      ~LocallyLinearEmbeddingDF.fit
+      ~LocallyLinearEmbeddingDF.fit_transform
+      ~LocallyLinearEmbeddingDF.from_fitted
+      ~LocallyLinearEmbeddingDF.get_params
+      ~LocallyLinearEmbeddingDF.inverse_transform
+      ~LocallyLinearEmbeddingDF.set_params
+      ~LocallyLinearEmbeddingDF.to_expression
+      ~LocallyLinearEmbeddingDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~LocallyLinearEmbeddingDF.COL_FEATURE_IN
+      ~LocallyLinearEmbeddingDF.COL_FEATURE_OUT
+      ~LocallyLinearEmbeddingDF.feature_names_in_
+      ~LocallyLinearEmbeddingDF.feature_names_original_
+      ~LocallyLinearEmbeddingDF.feature_names_out_
+      ~LocallyLinearEmbeddingDF.is_fitted
+      ~LocallyLinearEmbeddingDF.n_outputs_
+      ~LocallyLinearEmbeddingDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

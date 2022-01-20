@@ -1,0 +1,46 @@
+sklearndf.regression.extra.LGBMRegressorDF
+==========================================
+
+.. currentmodule:: sklearndf.regression.extra
+
+.. autoclass:: LGBMRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~LGBMRegressorDF.clone
+      ~LGBMRegressorDF.fit
+      ~LGBMRegressorDF.fit_predict
+      ~LGBMRegressorDF.from_fitted
+      ~LGBMRegressorDF.get_params
+      ~LGBMRegressorDF.predict
+      ~LGBMRegressorDF.score
+      ~LGBMRegressorDF.set_params
+      ~LGBMRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~LGBMRegressorDF.COL_FEATURE_IN
+      ~LGBMRegressorDF.COL_PREDICTION
+      ~LGBMRegressorDF.feature_names_in_
+      ~LGBMRegressorDF.is_fitted
+      ~LGBMRegressorDF.n_outputs_
+      ~LGBMRegressorDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

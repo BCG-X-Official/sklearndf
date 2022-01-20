@@ -1,0 +1,52 @@
+sklearndf.regression.CCADF
+==========================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: CCADF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~CCADF.clone
+      ~CCADF.fit
+      ~CCADF.fit_predict
+      ~CCADF.fit_transform
+      ~CCADF.from_fitted
+      ~CCADF.get_params
+      ~CCADF.inverse_transform
+      ~CCADF.predict
+      ~CCADF.score
+      ~CCADF.set_params
+      ~CCADF.to_expression
+      ~CCADF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~CCADF.COL_FEATURE_IN
+      ~CCADF.COL_FEATURE_OUT
+      ~CCADF.COL_PREDICTION
+      ~CCADF.feature_names_in_
+      ~CCADF.feature_names_original_
+      ~CCADF.feature_names_out_
+      ~CCADF.is_fitted
+      ~CCADF.n_outputs_
+      ~CCADF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

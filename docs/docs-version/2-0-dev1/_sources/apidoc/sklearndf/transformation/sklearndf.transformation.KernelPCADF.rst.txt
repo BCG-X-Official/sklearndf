@@ -1,0 +1,48 @@
+sklearndf.transformation.KernelPCADF
+====================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: KernelPCADF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~KernelPCADF.clone
+      ~KernelPCADF.fit
+      ~KernelPCADF.fit_transform
+      ~KernelPCADF.from_fitted
+      ~KernelPCADF.get_params
+      ~KernelPCADF.inverse_transform
+      ~KernelPCADF.set_params
+      ~KernelPCADF.to_expression
+      ~KernelPCADF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~KernelPCADF.COL_FEATURE_IN
+      ~KernelPCADF.COL_FEATURE_OUT
+      ~KernelPCADF.feature_names_in_
+      ~KernelPCADF.feature_names_original_
+      ~KernelPCADF.feature_names_out_
+      ~KernelPCADF.is_fitted
+      ~KernelPCADF.n_outputs_
+      ~KernelPCADF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,48 @@
+sklearndf.transformation.SelectFweDF
+====================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: SelectFweDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SelectFweDF.clone
+      ~SelectFweDF.fit
+      ~SelectFweDF.fit_transform
+      ~SelectFweDF.from_fitted
+      ~SelectFweDF.get_params
+      ~SelectFweDF.inverse_transform
+      ~SelectFweDF.set_params
+      ~SelectFweDF.to_expression
+      ~SelectFweDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~SelectFweDF.COL_FEATURE_IN
+      ~SelectFweDF.COL_FEATURE_OUT
+      ~SelectFweDF.feature_names_in_
+      ~SelectFweDF.feature_names_original_
+      ~SelectFweDF.feature_names_out_
+      ~SelectFweDF.is_fitted
+      ~SelectFweDF.n_outputs_
+      ~SelectFweDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

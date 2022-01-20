@@ -1,0 +1,50 @@
+sklearndf.classification.LinearSVCDF
+====================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: LinearSVCDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~LinearSVCDF.clone
+      ~LinearSVCDF.decision_function
+      ~LinearSVCDF.fit
+      ~LinearSVCDF.fit_predict
+      ~LinearSVCDF.from_fitted
+      ~LinearSVCDF.get_params
+      ~LinearSVCDF.predict
+      ~LinearSVCDF.predict_log_proba
+      ~LinearSVCDF.predict_proba
+      ~LinearSVCDF.score
+      ~LinearSVCDF.set_params
+      ~LinearSVCDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~LinearSVCDF.COL_FEATURE_IN
+      ~LinearSVCDF.COL_PREDICTION
+      ~LinearSVCDF.classes_
+      ~LinearSVCDF.feature_names_in_
+      ~LinearSVCDF.is_fitted
+      ~LinearSVCDF.n_outputs_
+      ~LinearSVCDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

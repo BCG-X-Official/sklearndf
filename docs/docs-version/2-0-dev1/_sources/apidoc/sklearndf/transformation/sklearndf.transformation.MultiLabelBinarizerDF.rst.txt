@@ -1,0 +1,48 @@
+sklearndf.transformation.MultiLabelBinarizerDF
+==============================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: MultiLabelBinarizerDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MultiLabelBinarizerDF.clone
+      ~MultiLabelBinarizerDF.fit
+      ~MultiLabelBinarizerDF.fit_transform
+      ~MultiLabelBinarizerDF.from_fitted
+      ~MultiLabelBinarizerDF.get_params
+      ~MultiLabelBinarizerDF.inverse_transform
+      ~MultiLabelBinarizerDF.set_params
+      ~MultiLabelBinarizerDF.to_expression
+      ~MultiLabelBinarizerDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MultiLabelBinarizerDF.COL_FEATURE_IN
+      ~MultiLabelBinarizerDF.COL_FEATURE_OUT
+      ~MultiLabelBinarizerDF.feature_names_in_
+      ~MultiLabelBinarizerDF.feature_names_original_
+      ~MultiLabelBinarizerDF.feature_names_out_
+      ~MultiLabelBinarizerDF.is_fitted
+      ~MultiLabelBinarizerDF.n_outputs_
+      ~MultiLabelBinarizerDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

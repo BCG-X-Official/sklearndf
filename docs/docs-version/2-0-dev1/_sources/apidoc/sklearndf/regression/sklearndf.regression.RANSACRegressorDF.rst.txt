@@ -1,0 +1,46 @@
+sklearndf.regression.RANSACRegressorDF
+======================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: RANSACRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~RANSACRegressorDF.clone
+      ~RANSACRegressorDF.fit
+      ~RANSACRegressorDF.fit_predict
+      ~RANSACRegressorDF.from_fitted
+      ~RANSACRegressorDF.get_params
+      ~RANSACRegressorDF.predict
+      ~RANSACRegressorDF.score
+      ~RANSACRegressorDF.set_params
+      ~RANSACRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~RANSACRegressorDF.COL_FEATURE_IN
+      ~RANSACRegressorDF.COL_PREDICTION
+      ~RANSACRegressorDF.feature_names_in_
+      ~RANSACRegressorDF.is_fitted
+      ~RANSACRegressorDF.n_outputs_
+      ~RANSACRegressorDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

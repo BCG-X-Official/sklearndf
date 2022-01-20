@@ -1,0 +1,50 @@
+sklearndf.classification.CalibratedClassifierCVDF
+=================================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: CalibratedClassifierCVDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~CalibratedClassifierCVDF.clone
+      ~CalibratedClassifierCVDF.decision_function
+      ~CalibratedClassifierCVDF.fit
+      ~CalibratedClassifierCVDF.fit_predict
+      ~CalibratedClassifierCVDF.from_fitted
+      ~CalibratedClassifierCVDF.get_params
+      ~CalibratedClassifierCVDF.predict
+      ~CalibratedClassifierCVDF.predict_log_proba
+      ~CalibratedClassifierCVDF.predict_proba
+      ~CalibratedClassifierCVDF.score
+      ~CalibratedClassifierCVDF.set_params
+      ~CalibratedClassifierCVDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~CalibratedClassifierCVDF.COL_FEATURE_IN
+      ~CalibratedClassifierCVDF.COL_PREDICTION
+      ~CalibratedClassifierCVDF.classes_
+      ~CalibratedClassifierCVDF.feature_names_in_
+      ~CalibratedClassifierCVDF.is_fitted
+      ~CalibratedClassifierCVDF.n_outputs_
+      ~CalibratedClassifierCVDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

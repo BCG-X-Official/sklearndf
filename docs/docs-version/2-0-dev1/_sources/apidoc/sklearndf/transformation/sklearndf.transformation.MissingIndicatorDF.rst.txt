@@ -1,0 +1,48 @@
+sklearndf.transformation.MissingIndicatorDF
+===========================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: MissingIndicatorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MissingIndicatorDF.clone
+      ~MissingIndicatorDF.fit
+      ~MissingIndicatorDF.fit_transform
+      ~MissingIndicatorDF.from_fitted
+      ~MissingIndicatorDF.get_params
+      ~MissingIndicatorDF.inverse_transform
+      ~MissingIndicatorDF.set_params
+      ~MissingIndicatorDF.to_expression
+      ~MissingIndicatorDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MissingIndicatorDF.COL_FEATURE_IN
+      ~MissingIndicatorDF.COL_FEATURE_OUT
+      ~MissingIndicatorDF.feature_names_in_
+      ~MissingIndicatorDF.feature_names_original_
+      ~MissingIndicatorDF.feature_names_out_
+      ~MissingIndicatorDF.is_fitted
+      ~MissingIndicatorDF.n_outputs_
+      ~MissingIndicatorDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

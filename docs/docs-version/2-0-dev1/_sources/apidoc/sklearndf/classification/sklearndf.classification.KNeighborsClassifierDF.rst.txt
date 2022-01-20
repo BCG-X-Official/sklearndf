@@ -1,0 +1,50 @@
+sklearndf.classification.KNeighborsClassifierDF
+===============================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: KNeighborsClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~KNeighborsClassifierDF.clone
+      ~KNeighborsClassifierDF.decision_function
+      ~KNeighborsClassifierDF.fit
+      ~KNeighborsClassifierDF.fit_predict
+      ~KNeighborsClassifierDF.from_fitted
+      ~KNeighborsClassifierDF.get_params
+      ~KNeighborsClassifierDF.predict
+      ~KNeighborsClassifierDF.predict_log_proba
+      ~KNeighborsClassifierDF.predict_proba
+      ~KNeighborsClassifierDF.score
+      ~KNeighborsClassifierDF.set_params
+      ~KNeighborsClassifierDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~KNeighborsClassifierDF.COL_FEATURE_IN
+      ~KNeighborsClassifierDF.COL_PREDICTION
+      ~KNeighborsClassifierDF.classes_
+      ~KNeighborsClassifierDF.feature_names_in_
+      ~KNeighborsClassifierDF.is_fitted
+      ~KNeighborsClassifierDF.n_outputs_
+      ~KNeighborsClassifierDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

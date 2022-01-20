@@ -1,0 +1,48 @@
+sklearndf.transformation.PowerTransformerDF
+===========================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: PowerTransformerDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PowerTransformerDF.clone
+      ~PowerTransformerDF.fit
+      ~PowerTransformerDF.fit_transform
+      ~PowerTransformerDF.from_fitted
+      ~PowerTransformerDF.get_params
+      ~PowerTransformerDF.inverse_transform
+      ~PowerTransformerDF.set_params
+      ~PowerTransformerDF.to_expression
+      ~PowerTransformerDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~PowerTransformerDF.COL_FEATURE_IN
+      ~PowerTransformerDF.COL_FEATURE_OUT
+      ~PowerTransformerDF.feature_names_in_
+      ~PowerTransformerDF.feature_names_original_
+      ~PowerTransformerDF.feature_names_out_
+      ~PowerTransformerDF.is_fitted
+      ~PowerTransformerDF.n_outputs_
+      ~PowerTransformerDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

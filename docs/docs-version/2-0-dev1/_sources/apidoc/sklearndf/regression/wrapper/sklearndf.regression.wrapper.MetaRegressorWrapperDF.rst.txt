@@ -1,0 +1,46 @@
+sklearndf.regression.wrapper.MetaRegressorWrapperDF
+===================================================
+
+.. currentmodule:: sklearndf.regression.wrapper
+
+.. autoclass:: MetaRegressorWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MetaRegressorWrapperDF.clone
+      ~MetaRegressorWrapperDF.fit
+      ~MetaRegressorWrapperDF.fit_predict
+      ~MetaRegressorWrapperDF.from_fitted
+      ~MetaRegressorWrapperDF.get_params
+      ~MetaRegressorWrapperDF.predict
+      ~MetaRegressorWrapperDF.score
+      ~MetaRegressorWrapperDF.set_params
+      ~MetaRegressorWrapperDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MetaRegressorWrapperDF.COL_FEATURE_IN
+      ~MetaRegressorWrapperDF.COL_PREDICTION
+      ~MetaRegressorWrapperDF.feature_names_in_
+      ~MetaRegressorWrapperDF.is_fitted
+      ~MetaRegressorWrapperDF.n_outputs_
+      ~MetaRegressorWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions
