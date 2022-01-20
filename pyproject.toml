@@ -51,15 +51,15 @@ testing = [
     "isort ~= 5.5",
 ]
 docs = [
-    "sphinx ~= 3.4.0",
-    "sphinx-autodoc-typehints ~= 1.11.0",
-    "pydata-sphinx-theme ~= 0.4.0",
+    "sphinx ~= 4.2",
+    "sphinx-autodoc-typehints ~= 1.12",
+    "pydata-sphinx-theme ~= 0.7",
     "jinja2 ~= 2.11",
-    "nbsphinx ~= 0.7.0",
-    "jupyter ~= 1.0",
-    "docutils ~= 0.16.0",
+    "nbsphinx ~= 0.7.1",
+    "jupyter == 1",
+    "docutils ~= 0.17",
     "xlrd ~= 1.2",
-    "m2r ~= 0.2.0"
+    "m2r ~= 0.2"
 ]
 
 [tool.flit.metadata.urls]
@@ -69,7 +69,7 @@ Repository = "https://github.com/BCG-Gamma/sklearndf"
 [build.matrix.min]
 # direct requirements of sklearndf
 boruta         = "~=0.3.0"
-gamma-pytools  = "~=2.0.0dev0"
+gamma-pytools  = "~=2.0.dev1"
 lightgbm       = "~=3.0.0"
 numpy          = ">=1.16.6,<1.17a"  # cannot use ~= due to conda bug
 pandas         = "~=0.24.2"

@@ -9,34 +9,36 @@ from sklearn.base import BaseEstimator, is_classifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 
-import sklearndf
+from pytools.expression import freeze, make_expression
+from pytools.expression.atomic import Id
+
 from sklearndf.classification import SVCDF, DecisionTreeClassifierDF
 from sklearndf.pipeline import PipelineDF
 from sklearndf.transformation import OneHotEncoderDF
 from sklearndf.wrapper import make_df_estimator
 
 
-class _DummyEstimator(BaseEstimator):
+class DummyEstimator(BaseEstimator):
     def __init__(self, l1=0, empty=None) -> None:
         self.l1 = l1
         self.empty = empty
 
 
-class _DummyEstimator2(BaseEstimator):
+class DummyEstimator2(BaseEstimator):
     def __init__(self, a=None, b=None) -> None:
         self.a = a
         self.b = b
 
 
-class _DummyEstimator3(BaseEstimator):
+class DummyEstimator3(BaseEstimator):
     def __init__(self, c=0, d=None) -> None:
         self.c = c
         self.d = d
 
 
-_DummyEstimatorDF = make_df_estimator(_DummyEstimator)
-_DummyEstimator2DF = make_df_estimator(_DummyEstimator2)
-_DummyEstimator3DF = make_df_estimator(_DummyEstimator3)
+DummyEstimatorDF = make_df_estimator(DummyEstimator)
+DummyEstimator2DF = make_df_estimator(DummyEstimator2)
+DummyEstimator3DF = make_df_estimator(DummyEstimator3)
 
 
 def test_clone() -> None:
@@ -72,18 +74,18 @@ def test_clone_2() -> None:
 
 def test_clone_empty_array() -> None:
     # Regression test for cloning estimators with empty arrays
-    clf = _DummyEstimatorDF(empty=np.array([]))
+    clf = DummyEstimatorDF(empty=np.array([]))
     clf2 = clone(clf)
     assert_array_equal(clf.empty, clf2.empty)
 
-    clf = _DummyEstimatorDF(empty=sp.csr_matrix(np.array([[0]])))
+    clf = DummyEstimatorDF(empty=sp.csr_matrix(np.array([[0]])))
     clf2 = clone(clf)
     assert_array_equal(clf.empty.data, clf2.empty.data)
 
 
 def test_clone_nan() -> None:
     # Regression test for cloning estimators with default parameter as np.nan
-    clf = _DummyEstimatorDF(empty=np.nan)
+    clf = DummyEstimatorDF(empty=np.nan)
     clf2 = clone(clf)
 
     assert clf.empty is clf2.empty
@@ -96,7 +98,7 @@ def test_clone_sparse_matrices() -> None:
 
     for cls in sparse_matrix_classes:
         sparse_matrix = cls(np.eye(5))
-        clf = _DummyEstimatorDF(empty=sparse_matrix)
+        clf = DummyEstimatorDF(empty=sparse_matrix)
         clf_cloned = clone(clf)
         assert clf.empty.__class__ is clf_cloned.empty.__class__
         assert_array_equal(clf.empty.toarray(), clf_cloned.empty.toarray())
@@ -105,7 +107,7 @@ def test_clone_sparse_matrices() -> None:
 def test_clone_estimator_types() -> None:
     # Check that clone works for parameters that are types rather than
     # instances
-    clf = _DummyEstimatorDF(empty=_DummyEstimator)
+    clf = DummyEstimatorDF(empty=DummyEstimator)
     clf2 = clone(clf)
 
     assert clf.empty is clf2.empty
@@ -113,39 +115,32 @@ def test_clone_estimator_types() -> None:
 
 def test_repr() -> None:
     # Smoke test the repr of the base estimator.
-    my_estimator = _DummyEstimatorDF()
-    repr(my_estimator)
+    repr(DummyEstimatorDF())
 
-    if sklearndf.__sklearn_version__ < sklearndf.__sklearn_0_23__:
-        expected_repr = (
-            "_DummyEstimator2DF(a=_DummyEstimator3DF(c=None, d=None),\n"
-            "                   b=_DummyEstimator3DF(c=1, d=2))"
-        )
-        expected_len = 702
-    else:
-        expected_repr = (
-            "_DummyEstimator2DF(a=_DummyEstimator3DF(c=None), "
-            "b=_DummyEstimator3DF(c=1, d=2))"
-        )
-        expected_len = 675
-
-    estimator_1 = _DummyEstimator2DF(
-        _DummyEstimator3DF(c=None), _DummyEstimator3DF(c=1, d=2)
+    estimator = DummyEstimator2DF(
+        a=DummyEstimator3DF(c=None), b=DummyEstimator3DF(c=1, d=2)
     )
-    assert repr(estimator_1) == expected_repr
+    assert freeze(make_expression(estimator)) == freeze(
+        Id.DummyEstimator2DF(
+            a=Id.DummyEstimator3DF(c=None), b=Id.DummyEstimator3DF(c=1, d=2)
+        )
+    )
+    assert repr(estimator) == (
+        "DummyEstimator2DF(a=DummyEstimator3DF(c=None), "
+        "b=DummyEstimator3DF(c=1, d=2))"
+    )
 
-    estimator_2 = _DummyEstimator2DF(a=["long_params"] * 1000)
-    assert len(repr(estimator_2)) == expected_len
+    assert len(repr(DummyEstimator2DF(a=["long_params"] * 1000))) == 15021
 
 
 def test_str() -> None:
     # Smoke test the str of the base estimator
-    my_estimator = _DummyEstimatorDF()
+    my_estimator = DummyEstimatorDF()
     str(my_estimator)
 
 
 def test_get_params() -> None:
-    test = _DummyEstimator2DF(_DummyEstimator3DF(), _DummyEstimator3DF())
+    test = DummyEstimator2DF(DummyEstimator3DF(), DummyEstimator3DF())
 
     assert "a__d" in test.get_params(deep=True)
     assert "a__d" not in test.get_params(deep=False)

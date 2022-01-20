@@ -1,6 +1,22 @@
 Release Notes
 =============
 
+*sklearndf* 2.0
+---------------
+
+2.0.0
+~~~~~
+
+- API: :class:`.ClassifierDF` and :class:`.RegressorDF` get a new base class
+  :class:`.SupervisedLearnerDF`, which in turn is based on :class:`.LearnerDF`;
+  :class:`.SupervisedLearnerDF` implements method :meth:`~.SupervisedLearnerDF.score`,
+  which is no longer implemented by :class:`.LearnerDF`
+- API: new class :class:`.ClustererDF`, based on :class:`.LearnerDF`
+- API: class :class:`.EstimatorDF` now implements the :class:`.HasExpressionRepr`
+  mix-in, rendering estimator representations as :class:`.Expression` objects
+  to enable better formatting
+
+
 *sklearndf* 1.2
 ---------------
 
