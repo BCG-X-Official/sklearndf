@@ -17,5 +17,6 @@ __sklearn_version__ = __parse_version(__sklearn_version__)
 __sklearn_0_22__ = __parse_version("0.22")
 __sklearn_0_23__ = __parse_version("0.23")
 __sklearn_0_24__ = __parse_version("0.24")
+__sklearn_1_0__ = __parse_version("1.0")
 
 del __parse_version

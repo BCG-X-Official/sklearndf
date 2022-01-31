@@ -3,9 +3,11 @@ Core implementation of :mod:`sklearndf`
 """
 import inspect
 import logging
+import warnings
 from abc import ABCMeta, abstractmethod
 from typing import Any, Dict, List, Mapping, Optional, Sequence, TypeVar, Union, cast
 
+import numpy as np
 import pandas as pd
 from sklearn.base import (
     BaseEstimator,
@@ -115,7 +117,19 @@ class EstimatorDF(
         :raises AttributeError: if this estimator is not fitted
         """
         self._ensure_fitted()
-        return self._get_features_in().rename(self.COL_FEATURE_IN)
+        _feature_names = self._get_features_in().rename(self.COL_FEATURE_IN)
+        if self.native_estimator is not self and hasattr(
+            self.native_estimator, "feature_names_in_"
+        ):
+            _native_feature_names = self.native_estimator.feature_names_in_
+            if not np.array_equal(_feature_names.values, _native_feature_names):
+                warnings.warn(
+                    "Input feature names received from this estimator differ from"
+                    "names set in the embedded native estimator. Sklearndf "
+                    f"estimator has {_feature_names} while native sklearn "
+                    f"estimator has {_native_feature_names}"
+                )
+        return _feature_names
 
     @property
     def n_outputs_(self) -> int:

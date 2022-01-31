@@ -23,6 +23,7 @@ from sklearndf import (
     RegressorDF,
     TransformerDF,
     __sklearn_0_24__,
+    __sklearn_1_0__,
     __sklearn_version__,
 )
 from sklearndf.classification import RandomForestClassifierDF
@@ -176,6 +177,13 @@ def test_fit_transform(
         inverse_transformed_df, test_data.rename_axis(columns="feature_in")
     )
 
+    # test feature names in
+    if __sklearn_version__ >= __sklearn_1_0__:
+        assert_array_equal(
+            transformer_df.feature_names_in_.values,
+            transformer_native.feature_names_in_,
+        )
+
 
 def test_column_transformer(test_data: pd.DataFrame) -> None:
     numeric_columns: List[str] = test_data.select_dtypes(include=float).columns.tolist()
@@ -221,6 +229,11 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
             pd.Series(feature_names_out_expected, index=feature_names_out_expected)
         )
 
+        if __sklearn_version__ >= __sklearn_1_0__:
+            assert_array_equal(
+                col_tx_df.feature_names_in_.values, col_tx_native.feature_names_in_
+            )
+
 
 def test_normalizer_df() -> None:
     x = [[4.0, 1.0, 2.0, 2.0], [1.0, 3.0, 9.0, 3.0], [5.0, 7.0, 5.0, 1.0]]
@@ -262,7 +275,7 @@ def test_simple_imputer_df() -> None:
     imputer_native = SimpleImputer(add_indicator=True)
     imputer_df = SimpleImputerDF(add_indicator=True)
 
-    transformed_native = imputer_native.fit_transform(X=x)
+    transformed_native = imputer_native.fit_transform(X=x_df)
     transformed_df_expected = pd.DataFrame(
         transformed_native,
         columns=pd.Index(
@@ -287,6 +300,12 @@ def test_simple_imputer_df() -> None:
     if __sklearn_version__ >= __sklearn_0_24__:
         inverse_transformed_df = imputer_df.inverse_transform(X=transformed_df)
         assert_frame_equal(inverse_transformed_df, x_df)
+
+    # test feature name in
+    if __sklearn_version__ >= __sklearn_1_0__:
+        assert_array_equal(
+            imputer_df.feature_names_in_.values, imputer_native.feature_names_in_
+        )
 
 
 @pytest.fixture
