@@ -8,7 +8,7 @@ import logging
 
 from sklearn.preprocessing import SplineTransformer
 
-from .wrapper import PolynomialFeaturesWrapperDF
+from .wrapper import PolynomialTransformerWrapperDF
 from sklearndf.wrapper import make_df_transformer
 
 log = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 #
 
 SplineTransformerDF = make_df_transformer(
-    SplineTransformer, base_wrapper=PolynomialFeaturesWrapperDF
+    SplineTransformer, base_wrapper=PolynomialTransformerWrapperDF
 )
 
 

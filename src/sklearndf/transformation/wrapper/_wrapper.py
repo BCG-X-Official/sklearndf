@@ -37,7 +37,7 @@ __all__ = [
     "MissingIndicatorWrapperDF",
     "AdditiveChi2SamplerWrapperDF",
     "KBinsDiscretizerWrapperDF",
-    "PolynomialFeaturesWrapperDF",
+    "PolynomialTransformerWrapperDF",
     "OneHotEncoderWrapperDF",
 ]
 
@@ -419,12 +419,13 @@ class AdditiveChi2SamplerWrapperDF(
         return len(self._features_in) * (2 * self.native_estimator.sample_steps + 1)
 
 
-class PolynomialFeaturesWrapperDF(
+class PolynomialTransformerWrapperDF(
     BaseMultipleInputsPerOutputTransformerWrapperDF[PolynomialFeatures],
     metaclass=ABCMeta,
 ):
     """
-    DF wrapper for :class:`sklearn.preprocessing.PolynomialFeatures`.
+    DF wrapper for :class:`sklearn.preprocessing.PolynomialFeatures`
+    and :class:`sklearn.preprocessing.SplineTransformer`.
     """
 
     def _get_features_out(self) -> pd.Index:

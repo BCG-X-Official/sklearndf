@@ -117,19 +117,20 @@ class EstimatorDF(
         :raises AttributeError: if this estimator is not fitted
         """
         self._ensure_fitted()
-        _feature_names = self._get_features_in().rename(self.COL_FEATURE_IN)
+        _feature_names_in_ = self._get_features_in().rename(self.COL_FEATURE_IN)
         if self.native_estimator is not self and hasattr(
             self.native_estimator, "feature_names_in_"
         ):
             _native_feature_names = self.native_estimator.feature_names_in_
-            if not np.array_equal(_feature_names.values, _native_feature_names):
+            if not np.array_equal(_feature_names_in_.values, _native_feature_names):
                 warnings.warn(
                     "Input feature names received from this estimator differ from"
                     "names set in the embedded native estimator. Sklearndf "
-                    f"estimator has {_feature_names} while native sklearn "
-                    f"estimator has {_native_feature_names}"
+                    f"estimator has {_feature_names_in_} while native sklearn "
+                    f"estimator has {_native_feature_names}",
+                    stacklevel=2,
                 )
-        return _feature_names
+        return _feature_names_in_
 
     @property
     def n_outputs_(self) -> int:
