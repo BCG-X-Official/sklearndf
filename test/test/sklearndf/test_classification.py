@@ -44,6 +44,15 @@ CLASSIFIER_INIT_PARAMETERS = {
 }
 
 
+CLASSIFIERS_PARTIAL_FIT = [
+    classification.BernoulliNBDF,
+    classification.MultinomialNBDF,
+    classification.PerceptronDF,
+    classification.SGDClassifierDF,
+]
+# TODO classification.PassiveAggressiveClassifierDF
+
+
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST)
 def test_wrapped_fit_predict(
     sklearndf_cls: Type[ClassifierDF],
@@ -117,3 +126,23 @@ def test_wrapped_fit_predict(
         else:
             with pytest.raises(NotImplementedError):
                 method(X=iris_features)
+
+
+@pytest.mark.parametrize("sklearndf_cls", CLASSIFIERS_PARTIAL_FIT)
+def test_wrapped_partial_fit(
+    sklearndf_cls: Type[ClassifierDF],
+    iris_features: pd.DataFrame,
+    iris_target_sr: pd.Series,
+):
+
+    classes = iris_target_sr.unique()
+
+    classifier = sklearndf_cls()
+
+    with pytest.raises(
+        ValueError,
+        match="classes must be passed on the first call to partial_fit.",
+    ):
+        classifier.partial_fit(iris_features, iris_target_sr)
+
+    classifier.partial_fit(iris_features, iris_target_sr, classes)

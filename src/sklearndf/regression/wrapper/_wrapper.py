@@ -4,7 +4,7 @@ Core implementation of :mod:`sklearndf.regression.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Callable, Generic, Optional, Sequence, TypeVar
+from typing import Callable, Generic, Optional, Sequence, TypeVar, Union
 
 import numpy as np
 import pandas as pd
@@ -31,6 +31,7 @@ __all__ = [
     "MetaRegressorWrapperDF",
     "RegressorTransformerWrapperDF",
     "StackingRegressorWrapperDF",
+    "PartialFitRegressorWrapperDF",
 ]
 
 
@@ -144,6 +145,51 @@ class IsotonicRegressionWrapperDF(
         self, X: pd.DataFrame, *, to_numpy: Optional[bool] = None
     ) -> np.ndarray:
         return super()._adjust_X_type_for_delegate(X).ravel()
+
+
+class PartialFitRegressorWrapperDF(
+    RegressorWrapperDF,
+    Generic[T_NativeRegressor],
+    metaclass=ABCMeta,
+):
+    """
+    Abstract base class of DF wrappers for regressors implementing
+    :func:`sklearn.linear_model.BaseSGDRegressor.partial_fit`.
+    """
+
+    def partial_fit(
+        self,
+        X: pd.DataFrame,
+        y: Union[pd.Series, pd.DataFrame],
+        sample_weight: Optional[pd.Series] = None,
+    ):
+        """
+        Perform incremental fit on a batch of samples.
+        This method is meant to be called multiple times for subsets of training
+        data, which e.g. couldn't fit in the required memory in full. It can be
+        also used for online learning.
+
+        :param X: data frame with observations as rows and features as columns
+        :param y: a series or data frame with one or more outputs per observation
+        :param sample_weight: optional weights applied to individual samples
+        :return: ``self``
+        """
+        self._check_parameter_types(X, y)
+        self._partial_fit(X, y, sample_weight)
+
+        return self
+
+    def _partial_fit(
+        self,
+        X: pd.DataFrame,
+        y: Union[pd.Series, pd.DataFrame],
+        sample_weight: Optional[pd.Series],
+    ):
+        return self._native_estimator.partial_fit(
+            self._prepare_X_for_delegate(X),
+            self._prepare_y_for_delegate(y),
+            sample_weight,
+        )
 
 
 #

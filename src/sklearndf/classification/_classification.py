@@ -52,6 +52,7 @@ from .wrapper import (
     LinearDiscriminantAnalysisWrapperDF,
     MetaClassifierWrapperDF,
     MultiOutputClassifierWrapperDF,
+    PartialFitClassifierWrapperDF,
 )
 
 log = logging.getLogger(__name__)
@@ -176,9 +177,13 @@ QuadraticDiscriminantAnalysisDF = make_df_classifier(QuadraticDiscriminantAnalys
 
 
 GaussianNBDF = make_df_classifier(GaussianNB)
-MultinomialNBDF = make_df_classifier(MultinomialNB)
+MultinomialNBDF = make_df_classifier(
+    MultinomialNB, base_wrapper=PartialFitClassifierWrapperDF
+)
 ComplementNBDF = make_df_classifier(ComplementNB)
-BernoulliNBDF = make_df_classifier(BernoulliNB)
+BernoulliNBDF = make_df_classifier(
+    BernoulliNB, base_wrapper=PartialFitClassifierWrapperDF
+)
 
 
 #
@@ -213,9 +218,15 @@ GaussianProcessClassifierDF = make_df_classifier(GaussianProcessClassifier)
 
 LogisticRegressionDF = make_df_classifier(LogisticRegression)
 LogisticRegressionCVDF = make_df_classifier(LogisticRegressionCV)
-PassiveAggressiveClassifierDF = make_df_classifier(PassiveAggressiveClassifier)
-PerceptronDF = make_df_classifier(Perceptron)
-SGDClassifierDF = make_df_classifier(SGDClassifier)
+PassiveAggressiveClassifierDF = make_df_classifier(
+    PassiveAggressiveClassifier, base_wrapper=PartialFitClassifierWrapperDF
+)
+PerceptronDF = make_df_classifier(
+    Perceptron, base_wrapper=PartialFitClassifierWrapperDF
+)
+SGDClassifierDF = make_df_classifier(
+    SGDClassifier, base_wrapper=PartialFitClassifierWrapperDF
+)
 RidgeClassifierDF = make_df_classifier(RidgeClassifier)
 RidgeClassifierCVDF = make_df_classifier(RidgeClassifierCV)
 
