@@ -430,7 +430,7 @@ class PolynomialTransformerWrapperDF(
 
     def _get_features_out(self) -> pd.Index:
         return pd.Index(
-            data=self.native_estimator.get_feature_names(
+            data=self.native_estimator.get_feature_names_out(
                 input_features=self.feature_names_in_.astype(str)
             )
         )
@@ -452,7 +452,7 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
         # Remove 1st category column only of binary features if arg drop == 'if_binary'
 
         feature_names_out = pd.Index(
-            self.native_estimator.get_feature_names(self.feature_names_in_)
+            self.native_estimator.get_feature_names_out(self.feature_names_in_)
         )
 
         if self.drop == "first":
