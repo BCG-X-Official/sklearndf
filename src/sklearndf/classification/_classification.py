@@ -2,7 +2,9 @@
 Core implementation of :mod:`sklearndf.classification`
 """
 import logging
+from typing import Type, TypeVar
 
+from sklearn.base import ClassifierMixin
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.discriminant_analysis import (
     LinearDiscriminantAnalysis,
@@ -50,9 +52,10 @@ from ..wrapper import make_df_classifier
 from .wrapper import (
     ClassifierChainWrapperDF,
     LinearDiscriminantAnalysisWrapperDF,
+    MetaClassifierWrapperDF,
     MultiOutputClassifierWrapperDF,
 )
-from .wrapper._wrapper import MetaClassifierWrapperDF
+from sklearndf.wrapper import ClassifierWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -101,6 +104,14 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 
 
 #
+# Type constructors
+#
+
+T_NativeClassifier = TypeVar("T_NativeClassifier", bound=ClassifierMixin)
+T_Wrapper = Type[ClassifierWrapperDF[T_NativeClassifier]]
+
+
+#
 # Ensure all symbols introduced below are included in __all__
 #
 
@@ -116,23 +127,27 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 # Dummy
 #
 
-DummyClassifierDF = make_df_classifier(DummyClassifier)
+DummyClassifierDF: T_Wrapper[DummyClassifier] = make_df_classifier(DummyClassifier)
 
 
 #
 # neighbors
 #
 
-NearestCentroidDF = make_df_classifier(NearestCentroid)
-KNeighborsClassifierDF = make_df_classifier(KNeighborsClassifier)
-RadiusNeighborsClassifierDF = make_df_classifier(RadiusNeighborsClassifier)
+NearestCentroidDF: T_Wrapper[NearestCentroid] = make_df_classifier(NearestCentroid)
+KNeighborsClassifierDF: T_Wrapper[KNeighborsClassifier] = make_df_classifier(
+    KNeighborsClassifier
+)
+RadiusNeighborsClassifierDF: T_Wrapper[RadiusNeighborsClassifier] = make_df_classifier(
+    RadiusNeighborsClassifier
+)
 
 
 #
 # voting
 #
 
-VotingClassifierDF = make_df_classifier(
+VotingClassifierDF: T_Wrapper[VotingClassifier] = make_df_classifier(
     VotingClassifier, base_wrapper=MetaClassifierWrapperDF
 )
 
@@ -142,19 +157,33 @@ VotingClassifierDF = make_df_classifier(
 #
 
 
-RandomForestClassifierDF = make_df_classifier(RandomForestClassifier)
-ExtraTreesClassifierDF = make_df_classifier(ExtraTreesClassifier)
-GradientBoostingClassifierDF = make_df_classifier(GradientBoostingClassifier)
-AdaBoostClassifierDF = make_df_classifier(AdaBoostClassifier)
-BaggingClassifierDF = make_df_classifier(BaggingClassifier)
+RandomForestClassifierDF: T_Wrapper[RandomForestClassifier] = make_df_classifier(
+    RandomForestClassifier
+)
+ExtraTreesClassifierDF: T_Wrapper[ExtraTreesClassifier] = make_df_classifier(
+    ExtraTreesClassifier
+)
+GradientBoostingClassifierDF: T_Wrapper[
+    GradientBoostingClassifier
+] = make_df_classifier(GradientBoostingClassifier)
+AdaBoostClassifierDF: T_Wrapper[AdaBoostClassifier] = make_df_classifier(
+    AdaBoostClassifier
+)
+BaggingClassifierDF: T_Wrapper[BaggingClassifier] = make_df_classifier(
+    BaggingClassifier
+)
 
 
 #
 # tree
 #
 
-DecisionTreeClassifierDF = make_df_classifier(DecisionTreeClassifier)
-ExtraTreeClassifierDF = make_df_classifier(ExtraTreeClassifier)
+DecisionTreeClassifierDF: T_Wrapper[DecisionTreeClassifier] = make_df_classifier(
+    DecisionTreeClassifier
+)
+ExtraTreeClassifierDF: T_Wrapper[ExtraTreeClassifier] = make_df_classifier(
+    ExtraTreeClassifier
+)
 
 
 #
@@ -162,12 +191,16 @@ ExtraTreeClassifierDF = make_df_classifier(ExtraTreeClassifier)
 #
 
 
-LinearDiscriminantAnalysisDF = make_df_classifier(
+LinearDiscriminantAnalysisDF: T_Wrapper[
+    LinearDiscriminantAnalysis
+] = make_df_classifier(
     LinearDiscriminantAnalysis,
     base_wrapper=LinearDiscriminantAnalysisWrapperDF,
 )
 
-QuadraticDiscriminantAnalysisDF = make_df_classifier(QuadraticDiscriminantAnalysis)
+QuadraticDiscriminantAnalysisDF: T_Wrapper[
+    QuadraticDiscriminantAnalysis
+] = make_df_classifier(QuadraticDiscriminantAnalysis)
 
 
 #
@@ -175,17 +208,17 @@ QuadraticDiscriminantAnalysisDF = make_df_classifier(QuadraticDiscriminantAnalys
 #
 
 
-GaussianNBDF = make_df_classifier(GaussianNB)
-MultinomialNBDF = make_df_classifier(MultinomialNB)
-ComplementNBDF = make_df_classifier(ComplementNB)
-BernoulliNBDF = make_df_classifier(BernoulliNB)
+GaussianNBDF: T_Wrapper[GaussianNB] = make_df_classifier(GaussianNB)
+MultinomialNBDF: T_Wrapper[MultinomialNB] = make_df_classifier(MultinomialNB)
+ComplementNBDF: T_Wrapper[ComplementNB] = make_df_classifier(ComplementNB)
+BernoulliNBDF: T_Wrapper[BernoulliNB] = make_df_classifier(BernoulliNB)
 
 
 #
 # calibration
 #
 
-CalibratedClassifierCVDF = make_df_classifier(
+CalibratedClassifierCVDF: T_Wrapper[MetaClassifierWrapperDF] = make_df_classifier(
     CalibratedClassifierCV, base_wrapper=MetaClassifierWrapperDF
 )
 
@@ -194,16 +227,18 @@ CalibratedClassifierCVDF = make_df_classifier(
 # SVM
 #
 
-SVCDF = make_df_classifier(SVC)
-NuSVCDF = make_df_classifier(NuSVC)
-LinearSVCDF = make_df_classifier(LinearSVC)
+SVCDF: T_Wrapper[SVC] = make_df_classifier(SVC)
+NuSVCDF: T_Wrapper[NuSVC] = make_df_classifier(NuSVC)
+LinearSVCDF: T_Wrapper[LinearSVC] = make_df_classifier(LinearSVC)
 
 
 #
 # gaussian process
 #
 
-GaussianProcessClassifierDF = make_df_classifier(GaussianProcessClassifier)
+GaussianProcessClassifierDF: T_Wrapper[GaussianProcessClassifier] = make_df_classifier(
+    GaussianProcessClassifier
+)
 
 
 #
@@ -211,36 +246,44 @@ GaussianProcessClassifierDF = make_df_classifier(GaussianProcessClassifier)
 #
 
 
-LogisticRegressionDF = make_df_classifier(LogisticRegression)
-LogisticRegressionCVDF = make_df_classifier(LogisticRegressionCV)
-PassiveAggressiveClassifierDF = make_df_classifier(PassiveAggressiveClassifier)
-PerceptronDF = make_df_classifier(Perceptron)
-SGDClassifierDF = make_df_classifier(SGDClassifier)
-RidgeClassifierDF = make_df_classifier(RidgeClassifier)
-RidgeClassifierCVDF = make_df_classifier(RidgeClassifierCV)
+LogisticRegressionDF: T_Wrapper[LogisticRegression] = make_df_classifier(
+    LogisticRegression
+)
+LogisticRegressionCVDF: T_Wrapper[LogisticRegressionCV] = make_df_classifier(
+    LogisticRegressionCV
+)
+PassiveAggressiveClassifierDF: T_Wrapper[
+    PassiveAggressiveClassifier
+] = make_df_classifier(PassiveAggressiveClassifier)
+PerceptronDF: T_Wrapper[Perceptron] = make_df_classifier(Perceptron)
+SGDClassifierDF: T_Wrapper[SGDClassifier] = make_df_classifier(SGDClassifier)
+RidgeClassifierDF: T_Wrapper[RidgeClassifier] = make_df_classifier(RidgeClassifier)
+RidgeClassifierCVDF: T_Wrapper[RidgeClassifierCV] = make_df_classifier(
+    RidgeClassifierCV
+)
 
 
 #
 # semi-supervised
 #
 
-LabelPropagationDF = make_df_classifier(LabelPropagation)
-LabelSpreadingDF = make_df_classifier(LabelSpreading)
+LabelPropagationDF: T_Wrapper[LabelPropagation] = make_df_classifier(LabelPropagation)
+LabelSpreadingDF: T_Wrapper[LabelSpreading] = make_df_classifier(LabelSpreading)
 
 
 #
 # multi-class
 #
 
-OneVsRestClassifierDF = make_df_classifier(
+OneVsRestClassifierDF: T_Wrapper[OneVsRestClassifier] = make_df_classifier(
     OneVsRestClassifier, base_wrapper=MetaClassifierWrapperDF
 )
 
-OneVsOneClassifierDF = make_df_classifier(
+OneVsOneClassifierDF: T_Wrapper[OneVsOneClassifier] = make_df_classifier(
     OneVsOneClassifier, base_wrapper=MetaClassifierWrapperDF
 )
 
-OutputCodeClassifierDF = make_df_classifier(
+OutputCodeClassifierDF: T_Wrapper[OutputCodeClassifier] = make_df_classifier(
     OutputCodeClassifier, base_wrapper=MetaClassifierWrapperDF
 )
 
@@ -250,7 +293,7 @@ OutputCodeClassifierDF = make_df_classifier(
 #
 
 
-MultiOutputClassifierDF = make_df_classifier(
+MultiOutputClassifierDF: T_Wrapper[MultiOutputClassifier] = make_df_classifier(
     MultiOutputClassifier, base_wrapper=MultiOutputClassifierWrapperDF
 )
 
@@ -260,7 +303,7 @@ MultiOutputClassifierDF = make_df_classifier(
 #
 
 
-ClassifierChainDF = make_df_classifier(
+ClassifierChainDF: T_Wrapper[ClassifierChain] = make_df_classifier(
     ClassifierChain, base_wrapper=ClassifierChainWrapperDF
 )
 
@@ -269,7 +312,7 @@ ClassifierChainDF = make_df_classifier(
 # neural network
 #
 
-MLPClassifierDF = make_df_classifier(MLPClassifier)
+MLPClassifierDF: T_Wrapper[MLPClassifier] = make_df_classifier(MLPClassifier)
 
 
 #

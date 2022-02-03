@@ -132,13 +132,13 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
 
     # noinspection PyPep8Naming
     def fit(
-        self: T_Self,
+        self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         *,
         sample_weight: Optional[pd.Series] = None,
         **fit_params,
-    ) -> T_Self:
+    ) -> "_EstimatorPipelineDF":
         """
         Fit this pipeline using the given inputs.
 
@@ -150,7 +150,6 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
             estimator implementations
         :return: ``self``
         """
-        self: _EstimatorPipelineDF  # support type hinting in PyCharm
 
         X_preprocessed: pd.DataFrame = self._pre_fit_transform(X, y, **fit_params)
 

@@ -3,7 +3,7 @@ Core implementation of :mod:`sklearndf.transformation.extra`
 """
 
 import logging
-from typing import Any, Optional, TypeVar, Union
+from typing import Any, Optional, Type, TypeVar, Union
 
 import pandas as pd
 from boruta import BorutaPy
@@ -12,7 +12,7 @@ from sklearn.base import BaseEstimator
 from pytools.api import AllTracker, inheritdoc
 
 from ... import TransformerDF
-from ...wrapper import MetaEstimatorWrapperDF, make_df_transformer
+from ...wrapper import MetaEstimatorWrapperDF, TransformerWrapperDF, make_df_transformer
 from ..wrapper import ColumnSubsetTransformerWrapperDF, NumpyTransformerWrapperDF
 
 log = logging.getLogger(__name__)
@@ -65,11 +65,11 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
 
     # noinspection PyPep8Naming
     def fit(
-        self: T_Self,
+        self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
-    ) -> T_Self:
+    ) -> "OutlierRemoverDF":
         """
         Fit this transformer, establishing the thresholds for outlier removal.
 
@@ -78,8 +78,6 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
         :param fit_params: additional fit parameters (ignored)
         :return: ``self``
         """
-
-        self: OutlierRemoverDF  # support type hinting in PyCharm
 
         q1: pd.Series = X.quantile(q=0.25)
         q3: pd.Series = X.quantile(q=0.75)
@@ -138,7 +136,7 @@ class BorutaPyWrapperDF(
         return self.feature_names_in_[self.native_estimator.support_]
 
 
-BorutaDF = make_df_transformer(
+BorutaDF: Type[TransformerWrapperDF[BorutaPy]] = make_df_transformer(
     BorutaPy, name="BorutaDF", base_wrapper=BorutaPyWrapperDF
 )
 

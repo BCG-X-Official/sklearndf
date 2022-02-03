@@ -100,11 +100,11 @@ class EstimatorNPDF(
         return self.delegate.is_fitted
 
     def fit(
-        self: T_Self,
+        self,
         X: Union[np.ndarray, pd.DataFrame],
         y: Optional[Union[np.ndarray, pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
-    ) -> T_Self:
+    ) -> T_DelegateEstimatorDF:
         """[see superclass]"""
         return self.delegate.fit(
             self._ensure_X_frame(X), self._ensure_y_series_or_frame(y), **fit_params
@@ -117,7 +117,10 @@ class EstimatorNPDF(
         return self.delegate._get_n_outputs()
 
     def _ensure_X_frame(self, X: Union[np.ndarray, pd.DataFrame]) -> pd.DataFrame:
-        column_names = self.column_names()
+        if callable(self.column_names):
+            column_names = self.column_names()
+        else:
+            raise Exception("column_names is not callable")
         if isinstance(X, np.ndarray):
             if X.ndim != 2:
                 raise TypeError(

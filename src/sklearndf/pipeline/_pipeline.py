@@ -28,8 +28,12 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 #
 
 
-PipelineDF = make_df_estimator(Pipeline, base_wrapper=PipelineWrapperDF)
-FeatureUnionDF = make_df_transformer(FeatureUnion, base_wrapper=FeatureUnionWrapperDF)
+PipelineDF: PipelineWrapperDF = make_df_estimator(
+    Pipeline, base_wrapper=PipelineWrapperDF
+)
+FeatureUnionDF: FeatureUnionWrapperDF = make_df_transformer(
+    FeatureUnion, base_wrapper=FeatureUnionWrapperDF
+)
 
 
 #

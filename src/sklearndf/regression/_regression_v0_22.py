@@ -11,6 +11,7 @@ from sklearn.ensemble import StackingRegressor
 from pytools.api import AllTracker
 
 from ..wrapper import make_df_regressor
+from ._regression import T_Wrapper
 from .wrapper import StackingRegressorWrapperDF
 
 log = logging.getLogger(__name__)
@@ -37,7 +38,7 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 # Class definitions
 #
 
-StackingRegressorDF = make_df_regressor(
+StackingRegressorDF: T_Wrapper[StackingRegressor] = make_df_regressor(
     StackingRegressor, base_wrapper=StackingRegressorWrapperDF
 )
 

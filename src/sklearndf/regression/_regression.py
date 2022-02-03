@@ -2,7 +2,9 @@
 Core implementation of :mod:`sklearndf.regression`
 """
 import logging
+from typing import Type, TypeVar
 
+from sklearn.base import RegressorMixin
 from sklearn.compose import TransformedTargetRegressor
 from sklearn.cross_decomposition import CCA, PLSCanonical, PLSRegression
 from sklearn.dummy import DummyRegressor
@@ -58,6 +60,7 @@ from .wrapper import (
     MetaRegressorWrapperDF,
     RegressorTransformerWrapperDF,
 )
+from sklearndf.wrapper import RegressorWrapperDF
 
 # noinspection PyProtectedMember
 
@@ -119,6 +122,14 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 
 
 #
+# Type constructors
+#
+
+T_NativeRegressor = TypeVar("T_NativeRegressor", bound=RegressorMixin)
+T_Wrapper = Type[RegressorWrapperDF[T_NativeRegressor]]
+
+
+#
 # Ensure all symbols introduced below are included in __all__
 #
 
@@ -134,27 +145,27 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 # Dummy
 #
 
-DummyRegressorDF = make_df_regressor(DummyRegressor)
+DummyRegressorDF: T_Wrapper[DummyRegressor] = make_df_regressor(DummyRegressor)
 
 
 #
 # SVM
 #
 
-LinearSVRDF = make_df_regressor(LinearSVR)
-SVRDF = make_df_regressor(SVR)
-NuSVRDF = make_df_regressor(NuSVR)
+LinearSVRDF: T_Wrapper[LinearSVR] = make_df_regressor(LinearSVR)
+SVRDF: T_Wrapper[SVR] = make_df_regressor(SVR)
+NuSVRDF: T_Wrapper[NuSVR] = make_df_regressor(NuSVR)
 
 
 #
 # multi-output
 #
 
-MultiOutputRegressorDF = make_df_regressor(
+MultiOutputRegressorDF: T_Wrapper[MultiOutputRegressor] = make_df_regressor(
     MultiOutputRegressor, base_wrapper=MetaRegressorWrapperDF
 )
 
-RegressorChainDF = make_df_regressor(
+RegressorChainDF: T_Wrapper[RegressorChain] = make_df_regressor(
     RegressorChain, base_wrapper=MetaRegressorWrapperDF
 )
 
@@ -163,59 +174,79 @@ RegressorChainDF = make_df_regressor(
 # neighbors
 #
 
-KNeighborsRegressorDF = make_df_regressor(KNeighborsRegressor)
-RadiusNeighborsRegressorDF = make_df_regressor(RadiusNeighborsRegressor)
+KNeighborsRegressorDF: T_Wrapper[KNeighborsRegressor] = make_df_regressor(
+    KNeighborsRegressor
+)
+RadiusNeighborsRegressorDF: T_Wrapper[RadiusNeighborsRegressor] = make_df_regressor(
+    RadiusNeighborsRegressor
+)
 
 
 #
 # neural_network
 #
 
-MLPRegressorDF = make_df_regressor(MLPRegressor)
+MLPRegressorDF: T_Wrapper[MLPRegressor] = make_df_regressor(MLPRegressor)
 
 
 #
 # linear_model
 #
 
-LinearRegressionDF = make_df_regressor(LinearRegression)
-RidgeDF = make_df_regressor(Ridge)
-RidgeCVDF = make_df_regressor(RidgeCV)
-SGDRegressorDF = make_df_regressor(SGDRegressor)
-HuberRegressorDF = make_df_regressor(HuberRegressor)
-TheilSenRegressorDF = make_df_regressor(TheilSenRegressor)
-BayesianRidgeDF = make_df_regressor(BayesianRidge)
-ARDRegressionDF = make_df_regressor(ARDRegression)
-OrthogonalMatchingPursuitDF = make_df_regressor(OrthogonalMatchingPursuit)
-OrthogonalMatchingPursuitCVDF = make_df_regressor(OrthogonalMatchingPursuitCV)
-RANSACRegressorDF = make_df_regressor(RANSACRegressor)
-ElasticNetDF = make_df_regressor(ElasticNet)
-LassoCVDF = make_df_regressor(LassoCV)
-ElasticNetCVDF = make_df_regressor(ElasticNetCV)
-MultiTaskElasticNetCVDF = make_df_regressor(MultiTaskElasticNetCV)
-MultiTaskLassoCVDF = make_df_regressor(MultiTaskLassoCV)
-MultiTaskElasticNetDF = make_df_regressor(MultiTaskElasticNet)
-MultiTaskLassoDF = make_df_regressor(MultiTaskLasso)
-LassoDF = make_df_regressor(Lasso)
-PassiveAggressiveRegressorDF = make_df_regressor(PassiveAggressiveRegressor)
-LarsDF = make_df_regressor(Lars)
-LassoLarsDF = make_df_regressor(LassoLars)
-LassoLarsICDF = make_df_regressor(LassoLarsIC)
-LarsCVDF = make_df_regressor(LarsCV)
-LassoLarsCVDF = make_df_regressor(LassoLarsCV)
+LinearRegressionDF: T_Wrapper[LinearRegression] = make_df_regressor(LinearRegression)
+RidgeDF: T_Wrapper[Ridge] = make_df_regressor(Ridge)
+RidgeCVDF: T_Wrapper[RidgeCV] = make_df_regressor(RidgeCV)
+SGDRegressorDF: T_Wrapper[SGDRegressor] = make_df_regressor(SGDRegressor)
+HuberRegressorDF: T_Wrapper[HuberRegressor] = make_df_regressor(HuberRegressor)
+TheilSenRegressorDF: T_Wrapper[TheilSenRegressor] = make_df_regressor(TheilSenRegressor)
+BayesianRidgeDF: T_Wrapper[BayesianRidge] = make_df_regressor(BayesianRidge)
+ARDRegressionDF: T_Wrapper[ARDRegression] = make_df_regressor(ARDRegression)
+OrthogonalMatchingPursuitDF: T_Wrapper[OrthogonalMatchingPursuit] = make_df_regressor(
+    OrthogonalMatchingPursuit
+)
+OrthogonalMatchingPursuitCVDF: T_Wrapper[
+    OrthogonalMatchingPursuitCV
+] = make_df_regressor(OrthogonalMatchingPursuitCV)
+RANSACRegressorDF: T_Wrapper[RANSACRegressor] = make_df_regressor(RANSACRegressor)
+ElasticNetDF: T_Wrapper[ElasticNet] = make_df_regressor(ElasticNet)
+LassoCVDF: T_Wrapper[LassoCV] = make_df_regressor(LassoCV)
+ElasticNetCVDF: T_Wrapper[ElasticNetCV] = make_df_regressor(ElasticNetCV)
+MultiTaskElasticNetCVDF: T_Wrapper[MultiTaskElasticNetCV] = make_df_regressor(
+    MultiTaskElasticNetCV
+)
+MultiTaskLassoCVDF: T_Wrapper[MultiTaskLassoCV] = make_df_regressor(MultiTaskLassoCV)
+MultiTaskElasticNetDF: T_Wrapper[MultiTaskElasticNet] = make_df_regressor(
+    MultiTaskElasticNet
+)
+MultiTaskLassoDF: T_Wrapper[MultiTaskLasso] = make_df_regressor(MultiTaskLasso)
+LassoDF: T_Wrapper[Lasso] = make_df_regressor(Lasso)
+PassiveAggressiveRegressorDF: T_Wrapper[PassiveAggressiveRegressor] = make_df_regressor(
+    PassiveAggressiveRegressor
+)
+LarsDF: T_Wrapper[Lars] = make_df_regressor(Lars)
+LassoLarsDF: T_Wrapper[LassoLars] = make_df_regressor(LassoLars)
+LassoLarsICDF: T_Wrapper[LassoLarsIC] = make_df_regressor(LassoLarsIC)
+LarsCVDF: T_Wrapper[LarsCV] = make_df_regressor(LarsCV)
+LassoLarsCVDF: T_Wrapper[LassoLarsCV] = make_df_regressor(LassoLarsCV)
 
 
 #
 # ensemble
 #
 
-BaggingRegressorDF = make_df_regressor(BaggingRegressor)
-GradientBoostingRegressorDF = make_df_regressor(GradientBoostingRegressor)
-AdaBoostRegressorDF = make_df_regressor(AdaBoostRegressor)
-RandomForestRegressorDF = make_df_regressor(RandomForestRegressor)
-ExtraTreesRegressorDF = make_df_regressor(ExtraTreesRegressor)
+BaggingRegressorDF: T_Wrapper[BaggingRegressor] = make_df_regressor(BaggingRegressor)
+GradientBoostingRegressorDF: T_Wrapper[GradientBoostingRegressor] = make_df_regressor(
+    GradientBoostingRegressor
+)
+AdaBoostRegressorDF: T_Wrapper[AdaBoostRegressor] = make_df_regressor(AdaBoostRegressor)
+RandomForestRegressorDF: T_Wrapper[RandomForestRegressor] = make_df_regressor(
+    RandomForestRegressor
+)
+ExtraTreesRegressorDF: T_Wrapper[ExtraTreesRegressor] = make_df_regressor(
+    ExtraTreesRegressor
+)
 
-VotingRegressorDF = make_df_regressor(
+VotingRegressorDF: T_Wrapper[VotingRegressor] = make_df_regressor(
     VotingRegressor, base_wrapper=MetaRegressorWrapperDF
 )
 
@@ -224,14 +255,16 @@ VotingRegressorDF = make_df_regressor(
 # gaussian_process
 #
 
-GaussianProcessRegressorDF = make_df_regressor(GaussianProcessRegressor)
+GaussianProcessRegressorDF: T_Wrapper[GaussianProcessRegressor] = make_df_regressor(
+    GaussianProcessRegressor
+)
 
 
 #
 # isotonic
 #
 
-IsotonicRegressionDF = make_df_regressor(
+IsotonicRegressionDF: T_Wrapper[IsotonicRegression] = make_df_regressor(
     IsotonicRegression, base_wrapper=IsotonicRegressionWrapperDF
 )
 
@@ -240,22 +273,28 @@ IsotonicRegressionDF = make_df_regressor(
 # compose
 #
 
-TransformedTargetRegressorDF = make_df_regressor(TransformedTargetRegressor)
+TransformedTargetRegressorDF: T_Wrapper[TransformedTargetRegressor] = make_df_regressor(
+    TransformedTargetRegressor
+)
 
 
 #
 # kernel_ridge
 #
 
-KernelRidgeDF = make_df_regressor(KernelRidge)
+KernelRidgeDF: T_Wrapper[KernelRidge] = make_df_regressor(KernelRidge)
 
 
 #
 # tree
 #
 
-DecisionTreeRegressorDF = make_df_regressor(DecisionTreeRegressor)
-ExtraTreeRegressorDF = make_df_regressor(ExtraTreeRegressor)
+DecisionTreeRegressorDF: T_Wrapper[DecisionTreeRegressor] = make_df_regressor(
+    DecisionTreeRegressor
+)
+ExtraTreeRegressorDF: T_Wrapper[ExtraTreeRegressor] = make_df_regressor(
+    ExtraTreeRegressor
+)
 
 
 #
@@ -263,13 +302,15 @@ ExtraTreeRegressorDF = make_df_regressor(ExtraTreeRegressor)
 #
 
 
-CCADF = make_df_regressor(CCA, base_wrapper=RegressorTransformerWrapperDF)
+CCADF: T_Wrapper[CCA] = make_df_regressor(
+    CCA, base_wrapper=RegressorTransformerWrapperDF
+)
 
-PLSRegressionDF = make_df_regressor(
+PLSRegressionDF: T_Wrapper[PLSRegression] = make_df_regressor(
     PLSRegression, base_wrapper=RegressorTransformerWrapperDF
 )
 
-PLSCanonicalDF = make_df_regressor(
+PLSCanonicalDF: T_Wrapper[PLSCanonical] = make_df_regressor(
     PLSCanonical, base_wrapper=RegressorTransformerWrapperDF
 )
 

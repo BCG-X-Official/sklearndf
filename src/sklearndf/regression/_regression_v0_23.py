@@ -12,6 +12,7 @@ from sklearn.linear_model._glm import GeneralizedLinearRegressor
 from pytools.api import AllTracker
 
 from ..wrapper import make_df_regressor
+from ._regression import T_Wrapper
 
 # noinspection PyProtectedMember
 
@@ -44,10 +45,12 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 # Class definitions
 #
 
-PoissonRegressorDF = make_df_regressor(PoissonRegressor)
-GammaRegressorDF = make_df_regressor(GammaRegressor)
-TweedieRegressorDF = make_df_regressor(TweedieRegressor)
-GeneralizedLinearRegressorDF = make_df_regressor(GeneralizedLinearRegressor)
+PoissonRegressorDF: T_Wrapper[PoissonRegressor] = make_df_regressor(PoissonRegressor)
+GammaRegressorDF: T_Wrapper[GammaRegressor] = make_df_regressor(GammaRegressor)
+TweedieRegressorDF: T_Wrapper[TweedieRegressor] = make_df_regressor(TweedieRegressor)
+GeneralizedLinearRegressorDF: T_Wrapper[GeneralizedLinearRegressor] = make_df_regressor(
+    GeneralizedLinearRegressor
+)
 
 
 #

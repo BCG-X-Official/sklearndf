@@ -5,10 +5,11 @@ from sklearn 0.23 onwards
 
 
 import logging
+from typing import List
 
 log = logging.getLogger(__name__)
 
-__all__ = []
+__all__: List[str] = []
 
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
 

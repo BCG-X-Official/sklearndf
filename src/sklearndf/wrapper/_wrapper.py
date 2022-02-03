@@ -87,10 +87,10 @@ T_Self = TypeVar("T_Self")
 T_NativeEstimator = TypeVar("T_NativeEstimator", bound=BaseEstimator)
 T_NativeTransformer = TypeVar("T_NativeTransformer", bound=TransformerMixin)
 T_NativeSupervisedLearner = TypeVar(
-    "T_NativeSupervisedLearner", RegressorMixin, ClassifierMixin
+    "T_NativeSupervisedLearner", bound=Union[RegressorMixin, ClassifierMixin]
 )
 T_NativeLearner = TypeVar(
-    "T_NativeLearner", RegressorMixin, ClassifierMixin, ClusterMixin
+    "T_NativeLearner", bound=Union[RegressorMixin, ClassifierMixin, ClusterMixin]
 )
 T_NativeRegressor = TypeVar("T_NativeRegressor", bound=RegressorMixin)
 T_NativeClassifier = TypeVar("T_NativeClassifier", bound=ClassifierMixin)
@@ -114,7 +114,7 @@ __tracker = AllTracker(globals())
 #
 
 
-class EstimatorWrapperDFMeta(type):
+class EstimatorWrapperDFMeta(type, Generic[T_NativeEstimator]):
     """
     Metaclass of DF wrappers, providing a reference to the type of the wrapped native
     estimator.
@@ -154,6 +154,8 @@ class EstimatorWrapperDF(
             estimator
         """
         super().__init__()
+        self._features_in: Optional[pd.Index] = None
+        self._n_outputs: Optional[int] = None
 
         # check if a fitted estimator was passed by class method is_fitted
         fitted_delegate_context: Tuple[T_NativeEstimator, pd.Index, int] = kwargs.get(
@@ -233,23 +235,19 @@ class EstimatorWrapperDF(
         """[see superclass]"""
         return self._native_estimator.get_params(deep=deep)
 
-    def set_params(self: T_Self, **params: Any) -> T_Self:
+    def set_params(self, **params: Any) -> "EstimatorWrapperDF":
         """[see superclass]"""
-        self: EstimatorWrapperDF  # support type hinting in PyCharm
         self._native_estimator.set_params(**params)
         return self
 
     # noinspection PyPep8Naming
     def fit(
-        self: T_Self,
+        self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
-    ) -> T_Self:
+    ) -> "EstimatorWrapperDF":
         """[see superclass]"""
-
-        # support type hinting in PyCharm
-        self: EstimatorWrapperDF[T_NativeEstimator]
 
         self._reset_fit()
 
@@ -268,10 +266,16 @@ class EstimatorWrapperDF(
         pass
 
     def _get_features_in(self) -> pd.Index:
-        return self._features_in
+        if self._features_in is not None:
+            return self._features_in
+        else:
+            raise Exception("Estimator is not fitted")
 
     def _get_n_outputs(self) -> int:
-        return self._n_outputs
+        if self._n_outputs is not None:
+            return self._n_outputs
+        else:
+            raise Exception("Estimator is not fitted")
 
     def _reset_fit(self) -> None:
         self._features_in = None
@@ -445,8 +449,8 @@ class EstimatorWrapperDF(
 
 @inheritdoc(match="[see superclass]")
 class TransformerWrapperDF(
-    TransformerDF,
     EstimatorWrapperDF[T_NativeTransformer],
+    TransformerDF,
     Generic[T_NativeTransformer],
     metaclass=ABCMeta,
 ):
@@ -801,7 +805,7 @@ class ClassifierWrapperDF(
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
 
         if classes is None:
-            classes = getattr(self.native_estimator, "classes_", None)
+            classes = getattr(self.native_estimator, "classes_")
 
         if isinstance(y, pd.DataFrame):
             return y.set_axis(classes, axis=1, inplace=False)
@@ -909,14 +913,14 @@ class StackingEstimatorWrapperDF(
     """
 
     def fit(
-        self: T_Self,
+        self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
-    ) -> T_Self:
+    ) -> EstimatorWrapperDF:
         """[see superclass]"""
 
-        self: StackingEstimatorWrapperDF
+        # self: StackingEstimatorWrapperDF
 
         class _ColumnNameFn:
             # noinspection PyMethodParameters
@@ -928,7 +932,7 @@ class StackingEstimatorWrapperDF(
                 # stacking estimator being fitted
                 return self
 
-        native: T_NativeEstimator = self.native_estimator
+        native: T_NativeLearner = self.native_estimator
         estimators: Sequence[Tuple[str, BaseEstimator]] = native.estimators
         final_estimator: BaseEstimator = native.final_estimator
 
@@ -963,7 +967,7 @@ class StackingEstimatorWrapperDF(
 
     @abstractmethod
     def _make_stackable_learner_df(
-        self, learner: SupervisedLearnerDF
+        self, learner: SupervisedLearnerDF  # TODO ???
     ) -> "_StackableSupervisedLearnerDF":
         pass
 
@@ -1111,7 +1115,7 @@ class _StackableRegressorDF(_StackableSupervisedLearnerDF[RegressorDF], Regresso
 
 
 def make_df_estimator(
-    native_estimator: Type[T_NativeEstimator] = None,
+    native_estimator: Type[T_NativeEstimator],
     *,
     name: Optional[str] = None,
     base_wrapper: Optional[Type[EstimatorWrapperDF[T_NativeEstimator]]] = None,
@@ -1144,11 +1148,11 @@ def make_df_estimator(
 
 
 def make_df_transformer(
-    native_transformer: Type[T_NativeTransformer] = None,
+    native_transformer: Type[T_NativeTransformer],
     *,
     name: Optional[str] = None,
     base_wrapper: Type[TransformerWrapperDF[T_NativeTransformer]],
-) -> Union[Type[TransformerWrapperDF[T_NativeTransformer]], T_NativeTransformer]:
+) -> Type[TransformerWrapperDF[T_NativeTransformer]]:
     """
     Create an augmented version of a given transformer that conforms with the
     scikit-learn API.
@@ -1177,11 +1181,11 @@ def make_df_transformer(
 
 
 def make_df_classifier(
-    native_classifier: Type[T_NativeClassifier] = None,
+    native_classifier: Type[T_NativeClassifier],
     *,
     name: Optional[str] = None,
     base_wrapper: Optional[Type[ClassifierWrapperDF[T_NativeClassifier]]] = None,
-) -> Union[Type[ClassifierWrapperDF[T_NativeClassifier]], T_NativeClassifier]:
+) -> Type[ClassifierWrapperDF[T_NativeClassifier]]:
     """
     Create an augmented version of a given classifier that conforms with the
     scikit-learn API.
@@ -1210,11 +1214,11 @@ def make_df_classifier(
 
 
 def make_df_regressor(
-    native_regressor: Type[T_NativeRegressor] = None,
+    native_regressor: Type[T_NativeRegressor],
     *,
     name: Optional[str] = None,
     base_wrapper: Optional[Type[RegressorWrapperDF[T_NativeRegressor]]] = None,
-) -> Union[Type[RegressorWrapperDF[T_NativeRegressor]], T_NativeRegressor]:
+) -> Type[RegressorWrapperDF[T_NativeRegressor]]:
     """
     Create an augmented version of a given regressor that conforms with the
     scikit-learn API.
@@ -1252,13 +1256,13 @@ _df_wrapper_classes: Dict[str, Type[EstimatorWrapperDF]] = cast(
 
 
 def _wrap(
-    native_estimator: Type[T_NativeEstimator] = None,
+    native_estimator: Type[T_NativeEstimator],
     *,
     name: Optional[str] = None,
     base_wrapper: Optional[Type[EstimatorWrapperDF[T_NativeEstimator]]] = None,
-    native_estimator_bound: Optional[type] = None,
+    native_estimator_bound: Optional[Type] = None,
     base_wrapper_bound: Type[EstimatorWrapperDF],
-) -> Union[Type[EstimatorWrapperDF[T_NativeEstimator]], T_NativeEstimator]:
+) -> Type[EstimatorWrapperDF[T_NativeEstimator]]:
     """
     Class decorator wrapping a :class:`sklearn.base.BaseEstimator` in a
     :class:`EstimatorWrapperDF`.
@@ -1336,7 +1340,7 @@ def _make_df_wrapper_class(
         def __reduce__(
             self,
         ) -> Tuple[
-            Callable[[str], object],
+            Callable[[str, Type[BaseEstimator], Type[EstimatorWrapperDF]], object],
             Tuple[str, Type[BaseEstimator], Type[EstimatorWrapperDF]],
             Dict[str, Any],
         ]:
@@ -1432,7 +1436,7 @@ def _mirror_attributes(
 def _make_alias(
     module: str, class_: str, name: str, delegate_cls: type, delegate: T
 ) -> Optional[T]:
-    def _make_forwarder() -> callable:
+    def _make_forwarder() -> Callable:
         # noinspection PyShadowingNames
         def _forwarder(self, *args, **kwargs: Any) -> Any:
             return delegate(self._native_estimator, *args, **kwargs)
