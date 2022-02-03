@@ -12,6 +12,7 @@ from sklearndf.regression import (
     IsotonicRegressionDF,
     LinearRegressionDF,
     RandomForestRegressorDF,
+    SGDRegressorDF,
 )
 from sklearndf.wrapper import EstimatorWrapperDF
 from test.sklearndf import check_expected_not_fitted_error, iterate_classes
@@ -37,10 +38,15 @@ DEFAULT_REGRESSOR_PARAMETERS = {
     },
 }
 
+REGRESSORS_PARTIAL_FIT = [
+    SGDRegressorDF,
+    # TODO PassiveAggressiveRegressor
+]
+
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST)
 def test_wrapped_fit_predict(
-    sklearndf_cls: Type,
+    sklearndf_cls: Type[RegressorDF],
     boston_features: pd.DataFrame,
     boston_target_sr: pd.Series,
     boston_target_df: pd.DataFrame,
@@ -76,3 +82,15 @@ def test_wrapped_fit_predict(
     # test predictions data-type, length and values
     assert isinstance(predictions, (pd.Series, pd.DataFrame))
     assert len(predictions) == len(boston_target_sr)
+
+
+@pytest.mark.parametrize("sklearndf_cls", REGRESSORS_PARTIAL_FIT)
+def test_wrapped_partial_fit(
+    sklearndf_cls: Type[RegressorDF],
+    boston_features: pd.DataFrame,
+    boston_target_sr: pd.Series,
+):
+
+    regressor = sklearndf_cls()
+
+    regressor.partial_fit(boston_features, boston_target_sr)
