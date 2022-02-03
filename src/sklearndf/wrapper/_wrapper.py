@@ -1010,11 +1010,9 @@ class _StackableSupervisedLearnerDF(
         return self.delegate.is_fitted
 
     def fit(
-        self: T_Self, X: pd.DataFrame, y: np.ndarray = None, **fit_params: Any
-    ) -> T_Self:
+        self, X: pd.DataFrame, y: np.ndarray = None, **fit_params: Any
+    ) -> "_StackableSupervisedLearnerDF":
         """[see superclass]"""
-        self: _StackableSupervisedLearnerDF
-
         self.delegate.fit(X, self._convert_y_to_series(X, y), **fit_params)
         return self
 
@@ -1119,7 +1117,7 @@ def make_df_estimator(
     *,
     name: Optional[str] = None,
     base_wrapper: Optional[Type[EstimatorWrapperDF[T_NativeEstimator]]] = None,
-) -> Union[Type[EstimatorWrapperDF[T_NativeEstimator]], T_NativeEstimator]:
+) -> Type[EstimatorWrapperDF[T_NativeEstimator]]:
     """
     Create an augmented version of a given estimator that conforms with the
     scikit-learn API.

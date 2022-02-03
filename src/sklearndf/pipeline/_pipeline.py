@@ -3,12 +3,13 @@ Core implementation of :mod:`sklearndf.pipeline`
 """
 
 import logging
+from typing import Type
 
 from sklearn.pipeline import FeatureUnion, Pipeline
 
 from pytools.api import AllTracker
 
-from ..wrapper import make_df_estimator, make_df_transformer
+from ..wrapper import EstimatorWrapperDF, make_df_estimator, make_df_transformer
 from .wrapper import FeatureUnionWrapperDF, PipelineWrapperDF
 
 log = logging.getLogger(__name__)
@@ -28,10 +29,10 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 #
 
 
-PipelineDF: PipelineWrapperDF = make_df_estimator(
+PipelineDF: Type[EstimatorWrapperDF[Pipeline]] = make_df_estimator(
     Pipeline, base_wrapper=PipelineWrapperDF
 )
-FeatureUnionDF: FeatureUnionWrapperDF = make_df_transformer(
+FeatureUnionDF: Type[EstimatorWrapperDF[FeatureUnion]] = make_df_transformer(
     FeatureUnion, base_wrapper=FeatureUnionWrapperDF
 )
 

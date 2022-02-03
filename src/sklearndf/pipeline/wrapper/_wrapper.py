@@ -161,14 +161,15 @@ class PipelineWrapperDF(
             for _, df_transformer in self._transformer_steps()
         ]
 
+        _features_out: pd.Index
+        _features_original: Union[np.ndarray, ExtensionArray]
+
         if len(col_mappings) == 0:
-            _features_out: pd.Index = self.feature_names_in_
-            _features_original: Union[np.ndarray, ExtensionArray] = _features_out.values
+            _features_out = self.feature_names_in_
+            _features_original = _features_out.values
         else:
-            _features_out: pd.Index = col_mappings[-1].index
-            _features_original: Union[np.ndarray, ExtensionArray] = col_mappings[
-                -1
-            ].values
+            _features_out = col_mappings[-1].index
+            _features_original = col_mappings[-1].values
 
             # iterate backwards starting from the penultimate item
             for preceding_out_to_original_mapping in col_mappings[-2::-1]:
