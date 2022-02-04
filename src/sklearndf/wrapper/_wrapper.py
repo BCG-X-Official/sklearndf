@@ -1259,8 +1259,8 @@ def _wrap(
     name: Optional[str] = None,
     base_wrapper: Optional[Type[EstimatorWrapperDF[T_NativeEstimator]]] = None,
     native_estimator_bound: Optional[Type] = None,
-    base_wrapper_bound: Type[EstimatorWrapperDF],
-) -> Type[EstimatorWrapperDF[T_NativeEstimator]]:
+    base_wrapper_bound: Type[T_EstimatorWrapperDF],
+) -> Type[T_EstimatorWrapperDF]:
     """
     Class decorator wrapping a :class:`sklearn.base.BaseEstimator` in a
     :class:`EstimatorWrapperDF`.
