@@ -623,7 +623,7 @@ class LearnerWrapperDF(
         try:
             self._check_parameter_types(X, y)
 
-            # noinspection PyUnresolvedReferences
+            # noinspection PyArgumentList
             result = self._prediction_to_series_or_frame(
                 X,
                 self.native_estimator.fit_predict(
