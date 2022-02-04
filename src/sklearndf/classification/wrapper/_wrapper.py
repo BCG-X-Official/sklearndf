@@ -4,7 +4,17 @@ Core implementation of :mod:`sklearndf.classification.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Any, Callable, Generic, List, Optional, Sequence, TypeVar, Union
+from typing import (
+    Any,
+    Callable,
+    Generic,
+    List,
+    Optional,
+    Sequence,
+    TypeVar,
+    Union,
+    cast,
+)
 
 import numpy as np
 import pandas as pd
@@ -105,7 +115,7 @@ class MultiOutputClassifierWrapperDF(
         delegate_estimator = self.native_estimator
 
         # store the super() object as this is not available within a generator
-        sup = super()
+        sup = cast(ClassifierWrapperDF, super())
 
         # estimators attribute of abstract class MultiOutputEstimator
         # usually the delegate estimator will provide a list of estimators used

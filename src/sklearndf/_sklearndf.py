@@ -148,7 +148,7 @@ class EstimatorDF(
         :return: ``self``
         """
         # noinspection PyUnresolvedReferences
-        return super().set_params(**params)
+        return super().set_params(**params)  # type: ignore
 
     def clone(self: T_EstimatorDF) -> T_EstimatorDF:
         """
@@ -175,7 +175,9 @@ class EstimatorDF(
         # to their default values if defined (and otherwise to Signature.empty)
         estimator_parameters = {
             name: parameter.default
-            for name, parameter in inspect.signature(self.__init__).parameters.items()
+            for name, parameter in inspect.signature(
+                self.__init__  # type: ignore
+            ).parameters.items()
         }
 
         def _kwarg_to_expression(name: str, value: Any) -> Optional[Expression]:

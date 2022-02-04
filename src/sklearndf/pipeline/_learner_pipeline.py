@@ -28,7 +28,6 @@ __all__ = [
     "ClassifierPipelineDF",
 ]
 
-T_Self = TypeVar("T_Self")
 T_FinalEstimatorDF = TypeVar("T_FinalEstimatorDF", bound=EstimatorDF)
 T_FinalLearnerDF = TypeVar("T_FinalLearnerDF", bound=LearnerDF)
 T_FinalSupervisedLearnerDF = TypeVar(

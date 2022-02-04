@@ -16,6 +16,7 @@ from sklearn.manifold import Isomap
 from sklearn.preprocessing import KBinsDiscretizer, OneHotEncoder, PolynomialFeatures
 
 from pytools.api import AllTracker
+from pytools.fit import NotFittedError
 
 from ... import TransformerDF
 from ...wrapper import TransformerWrapperDF
@@ -339,9 +340,9 @@ class ImputerWrapperDF(TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
 
         nan_mask = []
 
-        def _nan_mask_from_statistics(stats: np.array):
+        def _nan_mask_from_statistics(stats: np.ndarray) -> List[bool]:
             if issubclass(stats.dtype.type, float):
-                na_mask = np.isnan(stats)
+                na_mask = np.isnan(stats).tolist()
             else:
                 na_mask = [
                     x is None or (isinstance(x, float) and np.isnan(x)) for x in stats
@@ -416,7 +417,10 @@ class AdditiveChi2SamplerWrapperDF(
 
     @property
     def _n_components_(self) -> int:
-        return len(self._features_in) * (2 * self.native_estimator.sample_steps + 1)
+        if self._features_in is not None:
+            return len(self._features_in) * (2 * self.native_estimator.sample_steps + 1)
+        else:
+            raise NotFittedError(f"{type(self).__name__} is not fitted")
 
 
 class PolynomialFeaturesWrapperDF(

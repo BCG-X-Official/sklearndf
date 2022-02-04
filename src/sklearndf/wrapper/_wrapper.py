@@ -47,6 +47,7 @@ from sklearn.base import (
 )
 
 from pytools.api import AllTracker, inheritdoc, public_module_prefix
+from pytools.fit import NotFittedError
 from pytools.meta import compose_meta
 
 from ._adapter import SupervisedLearnerNPDF
@@ -83,7 +84,6 @@ __all__ = [
 #
 
 T = TypeVar("T")
-T_Self = TypeVar("T_Self")
 T_NativeEstimator = TypeVar("T_NativeEstimator", bound=BaseEstimator)
 T_NativeTransformer = TypeVar("T_NativeTransformer", bound=TransformerMixin)
 T_NativeSupervisedLearner = TypeVar(
@@ -134,7 +134,7 @@ class EstimatorWrapperDFMeta(type, Generic[T_NativeEstimator]):
 class EstimatorWrapperDF(
     EstimatorDF,
     Generic[T_NativeEstimator],
-    metaclass=compose_meta(type(EstimatorDF), EstimatorWrapperDFMeta),
+    metaclass=compose_meta(type(EstimatorDF), EstimatorWrapperDFMeta),  # type: ignore
 ):
     """
     Base class of DF wrappers for native estimators conforming with the scikit-learn
@@ -182,7 +182,7 @@ class EstimatorWrapperDF(
         if not hasattr(cls, "__wrapped__"):
             raise TypeError(f"cannot instantiate abstract wrapper class {cls.__name__}")
         else:
-            return super().__new__(cls)
+            return super().__new__(cls)  # type: ignore
 
     @property
     def is_fitted(self) -> bool:
@@ -269,13 +269,13 @@ class EstimatorWrapperDF(
         if self._features_in is not None:
             return self._features_in
         else:
-            raise Exception("Estimator is not fitted")
+            raise NotFittedError(f"{type(self).__name__} is not fitted")
 
     def _get_n_outputs(self) -> int:
         if self._n_outputs is not None:
             return self._n_outputs
         else:
-            raise Exception("Estimator is not fitted")
+            raise NotFittedError(f"{type(self).__name__} is not fitted")
 
     def _reset_fit(self) -> None:
         self._features_in = None
@@ -967,7 +967,7 @@ class StackingEstimatorWrapperDF(
 
     @abstractmethod
     def _make_stackable_learner_df(
-        self, learner: SupervisedLearnerDF  # TODO ???
+        self, learner: SupervisedLearnerDF
     ) -> "_StackableSupervisedLearnerDF":
         pass
 
@@ -1329,7 +1329,7 @@ def _make_df_wrapper_class(
     base_wrapper: Type[T_EstimatorWrapperDF],
 ) -> Type[T_EstimatorWrapperDF]:
     # noinspection PyMissingOrEmptyDocstring
-    class WrapperDF(base_wrapper):
+    class WrapperDF(base_wrapper):  # type: ignore
         # we need to create this __init__ method in order to apply the signature
         # of the native estimator's __init__ method
         def __init__(self, *args, **kwargs: Any) -> None:
@@ -1432,9 +1432,13 @@ def _mirror_attributes(
 
 
 def _make_alias(
-    module: str, class_: str, name: str, delegate_cls: type, delegate: T
-) -> Optional[T]:
-    def _make_forwarder() -> Callable:
+    module: str,
+    class_: str,
+    name: str,
+    delegate_cls: type,
+    delegate: Union[Callable, Any],
+) -> Union[Callable, property, None]:
+    def _make_forwarder(delegate: Callable) -> Callable:
         # noinspection PyShadowingNames
         def _forwarder(self, *args, **kwargs: Any) -> Any:
             return delegate(self._native_estimator, *args, **kwargs)
@@ -1445,7 +1449,7 @@ def _make_alias(
     full_name = f"{class_name}.{name}"
 
     if inspect.isfunction(delegate):
-        function = _make_forwarder()
+        function = _make_forwarder(delegate)
         _update_wrapper(
             wrapper=function,
             wrapped=delegate,
@@ -1456,11 +1460,14 @@ def _make_alias(
         return function
 
     elif inspect.isdatadescriptor(delegate):
+        delegate_prop: property = cast(property, delegate)
         # noinspection PyShadowingNames
         return property(
-            fget=lambda self: delegate.__get__(self._native_estimator),
-            fset=lambda self, value: delegate.__set__(self._native_estimator, value),
-            fdel=lambda self: delegate.__delete__(self._native_estimator),
+            fget=lambda self: delegate_prop.__get__(self._native_estimator),
+            fset=lambda self, value: delegate_prop.__set__(
+                self._native_estimator, value
+            ),
+            fdel=lambda self: delegate_prop.__delete__(self._native_estimator),
             doc=f"See documentation of :class:`{class_name}`.",
         )
 

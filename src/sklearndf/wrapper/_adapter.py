@@ -34,7 +34,6 @@ __all__ = [
 # type variables
 #
 
-T_Self = TypeVar("T_Self")
 T_DelegateEstimatorDF = TypeVar("T_DelegateEstimatorDF", bound=EstimatorDF)
 T_DelegateLearnerDF = TypeVar("T_DelegateLearnerDF", bound=LearnerDF)
 T_DelegateSupervisedLearnerDF = TypeVar(
@@ -120,7 +119,7 @@ class EstimatorNPDF(
         if callable(self.column_names):
             column_names = self.column_names()
         else:
-            raise Exception("column_names is not callable")
+            raise TypeError("column_names is not callable")
         if isinstance(X, np.ndarray):
             if X.ndim != 2:
                 raise TypeError(
