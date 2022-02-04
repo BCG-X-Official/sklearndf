@@ -896,7 +896,7 @@ class MetaEstimatorWrapperDF(
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
 class StackingEstimatorWrapperDF(
-    LearnerWrapperDF[T_NativeLearner],
+    SupervisedLearnerWrapperDF[T_NativeLearner],
     # note: MetaEstimatorMixin is the first public class in the mro of _BaseStacking
     # MetaEstimatorMixin <-- _BaseHeterogeneousEnsemble <-- _BaseStacking
     MetaEstimatorMixin,
@@ -941,7 +941,7 @@ class StackingEstimatorWrapperDF(
                 (
                     name,
                     self._make_stackable_learner_df(estimator)
-                    if isinstance(estimator, LearnerDF)
+                    if isinstance(estimator, SupervisedLearnerDF)
                     else estimator,
                 )
                 for name, estimator in native.estimators
