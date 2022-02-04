@@ -3,15 +3,12 @@ Core implementation of :mod:`sklearndf.regression` loaded
 from sklearn 0.22 onwards
 """
 import logging
-from typing import TypeVar
 
-from sklearn.base import RegressorMixin
 from sklearn.ensemble import StackingRegressor
 
 from pytools.api import AllTracker
 
 from ..wrapper import make_df_regressor
-from ._regression import T_Wrapper
 from .wrapper import StackingRegressorWrapperDF
 
 log = logging.getLogger(__name__)
@@ -19,12 +16,6 @@ log = logging.getLogger(__name__)
 __all__ = ["StackingRegressorDF"]
 
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
-
-#
-# type variables
-#
-
-T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
 
 
 #
@@ -38,7 +29,7 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 # Class definitions
 #
 
-StackingRegressorDF: T_Wrapper[StackingRegressor] = make_df_regressor(
+StackingRegressorDF = make_df_regressor(
     StackingRegressor, base_wrapper=StackingRegressorWrapperDF
 )
 

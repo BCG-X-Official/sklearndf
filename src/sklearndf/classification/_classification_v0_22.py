@@ -10,7 +10,6 @@ from sklearn.naive_bayes import CategoricalNB
 from pytools.api import AllTracker
 
 from ..wrapper import make_df_classifier
-from ._classification import T_Wrapper
 from .wrapper import StackingClassifierWrapperDF
 
 log = logging.getLogger(__name__)
@@ -37,9 +36,9 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 # naive bayes
 #
 
-CategoricalNBDF: T_Wrapper[CategoricalNB] = make_df_classifier(CategoricalNB)
+CategoricalNBDF = make_df_classifier(CategoricalNB)
 
-StackingClassifierDF: T_Wrapper[StackingClassifier] = make_df_classifier(
+StackingClassifierDF = make_df_classifier(
     StackingClassifier, base_wrapper=StackingClassifierWrapperDF
 )
 
