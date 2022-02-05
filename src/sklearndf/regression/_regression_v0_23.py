@@ -43,8 +43,6 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 PoissonRegressorDF = make_df_regressor(PoissonRegressor)
 GammaRegressorDF = make_df_regressor(GammaRegressor)
 TweedieRegressorDF = make_df_regressor(TweedieRegressor)
-
-
 GeneralizedLinearRegressorDF = make_df_regressor(GeneralizedLinearRegressor)
 
 

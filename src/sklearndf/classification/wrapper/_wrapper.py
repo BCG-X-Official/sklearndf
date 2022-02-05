@@ -115,27 +115,24 @@ class MultiOutputClassifierWrapperDF(
         delegate_estimator = self.native_estimator
 
         # store the super() object as this is not available within a generator
-        sup = cast(ClassifierWrapperDF, super())
+        _super = cast(ClassifierWrapperDF, super())
 
         # estimators attribute of abstract class MultiOutputEstimator
         # usually the delegate estimator will provide a list of estimators used
         # to predict each output. If present, use these estimators to get
         # individual class labels for each output; otherwise we cannot assign class
         # labels
-        if hasattr(delegate_estimator, "estimators_"):
-            return [
-                sup._prediction_with_class_labels(
-                    X=X, y=output, classes=getattr(estimator, "classes_", None)
-                )
-                for estimator, output in zip(
-                    getattr(delegate_estimator, "estimators_"), y
-                )
-            ]
-        else:
-            return [
-                sup._prediction_with_class_labels(X=X, y=output, classes=None)
-                for output in y
-            ]
+        try:
+            estimators = getattr(delegate_estimator, "estimators_")
+        except AttributeError:
+            return [_super._prediction_with_class_labels(X=X, y=output) for output in y]
+
+        return [
+            _super._prediction_with_class_labels(
+                X=X, y=output, classes=getattr(estimator, "classes_", None)
+            )
+            for estimator, output in zip(estimators, y)
+        ]
 
 
 class ClassifierChainWrapperDF(

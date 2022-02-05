@@ -28,6 +28,7 @@ __all__ = [
     "ClassifierPipelineDF",
 ]
 
+T_EstimatorPipelineDF = TypeVar("T_EstimatorPipelineDF", bound="_EstimatorPipelineDF")
 T_FinalEstimatorDF = TypeVar("T_FinalEstimatorDF", bound=EstimatorDF)
 T_FinalLearnerDF = TypeVar("T_FinalLearnerDF", bound=LearnerDF)
 T_FinalSupervisedLearnerDF = TypeVar(
@@ -131,13 +132,13 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
 
     # noinspection PyPep8Naming
     def fit(
-        self,
+        self: T_EstimatorPipelineDF,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         *,
         sample_weight: Optional[pd.Series] = None,
         **fit_params,
-    ) -> "_EstimatorPipelineDF":
+    ) -> T_EstimatorPipelineDF:
         """
         Fit this pipeline using the given inputs.
 

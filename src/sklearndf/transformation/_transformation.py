@@ -447,8 +447,7 @@ SelectFdrDF = make_df_transformer(SelectFdr, base_wrapper=FeatureSelectionWrappe
 SelectFweDF = make_df_transformer(SelectFwe, base_wrapper=FeatureSelectionWrapperDF)
 
 GenericUnivariateSelectDF = make_df_transformer(
-    GenericUnivariateSelect,
-    base_wrapper=FeatureSelectionWrapperDF,
+    GenericUnivariateSelect, base_wrapper=FeatureSelectionWrapperDF
 )
 
 
