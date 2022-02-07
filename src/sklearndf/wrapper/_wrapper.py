@@ -47,7 +47,6 @@ from sklearn.base import (
 )
 
 from pytools.api import AllTracker, inheritdoc, public_module_prefix
-from pytools.fit import NotFittedError
 from pytools.meta import compose_meta
 
 from ._adapter import SupervisedLearnerNPDF
@@ -266,16 +265,12 @@ class EstimatorWrapperDF(
         pass
 
     def _get_features_in(self) -> pd.Index:
-        if self._features_in is not None:
-            return self._features_in
-        else:
-            raise NotFittedError(f"{type(self).__name__} is not fitted")
+        assert self._features_in is not None, "estimator is fitted"
+        return self._features_in
 
     def _get_n_outputs(self) -> int:
-        if self._n_outputs is not None:
-            return self._n_outputs
-        else:
-            raise NotFittedError(f"{type(self).__name__} is not fitted")
+        assert self._n_outputs is not None, "estimator is fitted"
+        return self._n_outputs
 
     def _reset_fit(self) -> None:
         self._features_in = None
