@@ -84,11 +84,11 @@ __all__ = [
 T = TypeVar("T")
 T_NativeEstimator = TypeVar("T_NativeEstimator", bound=BaseEstimator)
 T_NativeTransformer = TypeVar("T_NativeTransformer", bound=TransformerMixin)
-T_NativeSupervisedLearner = TypeVar(
-    "T_NativeSupervisedLearner", bound=Union[RegressorMixin, ClassifierMixin]
-)
 T_NativeLearner = TypeVar(
     "T_NativeLearner", bound=Union[RegressorMixin, ClassifierMixin, ClusterMixin]
+)
+T_NativeSupervisedLearner = TypeVar(
+    "T_NativeSupervisedLearner", bound=Union[RegressorMixin, ClassifierMixin]
 )
 T_NativeRegressor = TypeVar("T_NativeRegressor", bound=RegressorMixin)
 T_NativeClassifier = TypeVar("T_NativeClassifier", bound=ClassifierMixin)
@@ -121,7 +121,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
     __wrapped__: Type[T_NativeEstimator]
 
     @property
-    def native_estimator_type(cls) -> Type[BaseEstimator]:
+    def native_estimator_type(cls) -> Type[T_NativeEstimator]:
         """
         The type of native estimator that instances of this wrapper class delegate to.
         """
