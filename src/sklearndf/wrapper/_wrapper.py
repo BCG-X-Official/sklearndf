@@ -95,10 +95,16 @@ T_NativeClassifier = TypeVar("T_NativeClassifier", bound=ClassifierMixin)
 
 T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="EstimatorWrapperDF")
 T_TransformerWrapperDF = TypeVar("T_TransformerWrapperDF", bound="TransformerWrapperDF")
+T_SupervisedLearnerDF = TypeVar("T_SupervisedLearnerDF", bound="SupervisedLearnerDF")
 T_RegressorWrapperDF = TypeVar("T_RegressorWrapperDF", bound="RegressorWrapperDF")
 T_ClassifierWrapperDF = TypeVar("T_ClassifierWrapperDF", bound="ClassifierWrapperDF")
 
-T_SupervisedLearnerDF = TypeVar("T_SupervisedLearnerDF", bound="SupervisedLearnerDF")
+T_StackableSupervisedLearnerDF = TypeVar(
+    "T_StackableSupervisedLearnerDF", bound="_StackableSupervisedLearnerDF"
+)
+T_StackingEstimatorWrapperDF = TypeVar(
+    "T_StackingEstimatorWrapperDF", bound="StackingEstimatorWrapperDF"
+)
 
 #
 # Ensure all symbols introduced below are included in __all__
@@ -180,7 +186,7 @@ class EstimatorWrapperDF(
         if not hasattr(cls, "__wrapped__"):
             raise TypeError(f"cannot instantiate abstract wrapper class {cls.__name__}")
         else:
-            return super().__new__(cls)  # type: ignore
+            return cast(Type[EstimatorDF], super()).__new__(cls)
 
     @property
     def is_fitted(self) -> bool:
@@ -240,11 +246,11 @@ class EstimatorWrapperDF(
 
     # noinspection PyPep8Naming
     def fit(
-        self,
+        self: T_EstimatorWrapperDF,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
-    ) -> "EstimatorWrapperDF":
+    ) -> T_EstimatorWrapperDF:
         """[see superclass]"""
 
         self._reset_fit()
@@ -794,7 +800,7 @@ class ClassifierWrapperDF(
     def _prediction_with_class_labels(
         self,
         X: pd.DataFrame,
-        y: Union[pd.Series, pd.DataFrame, list, np.ndarray],
+        y: Union[pd.DataFrame, np.ndarray],
         classes: Optional[Sequence[Any]] = None,
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
 
@@ -886,15 +892,14 @@ class MetaEstimatorWrapperDF(
 # Stacking Estimator wrappers
 #
 
-
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
 class StackingEstimatorWrapperDF(
-    SupervisedLearnerWrapperDF[T_NativeLearner],
+    SupervisedLearnerWrapperDF[T_NativeSupervisedLearner],
     # note: MetaEstimatorMixin is the first public class in the mro of _BaseStacking
     # MetaEstimatorMixin <-- _BaseHeterogeneousEnsemble <-- _BaseStacking
     MetaEstimatorMixin,
-    Generic[T_NativeLearner],
+    Generic[T_NativeSupervisedLearner],
     metaclass=ABCMeta,
 ):
     """
@@ -907,14 +912,12 @@ class StackingEstimatorWrapperDF(
     """
 
     def fit(
-        self,
+        self: T_StackingEstimatorWrapperDF,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
-    ) -> EstimatorWrapperDF:
+    ) -> T_StackingEstimatorWrapperDF:
         """[see superclass]"""
-
-        # self: StackingEstimatorWrapperDF
 
         class _ColumnNameFn:
             # noinspection PyMethodParameters
@@ -926,7 +929,7 @@ class StackingEstimatorWrapperDF(
                 # stacking estimator being fitted
                 return self
 
-        native: T_NativeLearner = self.native_estimator
+        native: T_NativeSupervisedLearner = self.native_estimator
         estimators: Sequence[Tuple[str, BaseEstimator]] = native.estimators
         final_estimator: BaseEstimator = native.final_estimator
 
@@ -1004,8 +1007,11 @@ class _StackableSupervisedLearnerDF(
         return self.delegate.is_fitted
 
     def fit(
-        self, X: pd.DataFrame, y: np.ndarray = None, **fit_params: Any
-    ) -> "_StackableSupervisedLearnerDF":
+        self: T_StackableSupervisedLearnerDF,
+        X: pd.DataFrame,
+        y: np.ndarray = None,
+        **fit_params: Any,
+    ) -> "T_StackableSupervisedLearnerDF":
         """[see superclass]"""
         self.delegate.fit(X, self._convert_y_to_series(X, y), **fit_params)
         return self
@@ -1333,7 +1339,7 @@ def _make_df_wrapper_class(
             self,
         ) -> Tuple[
             Callable[[str, Type[BaseEstimator], Type[EstimatorWrapperDF]], object],
-            Tuple[str, Type[BaseEstimator], Type[EstimatorWrapperDF]],
+            Tuple[str, Type[T_NativeEstimator], Type[T_EstimatorWrapperDF]],
             Dict[str, Any],
         ]:
             # pickling by default does not work for dynamically created classes,
