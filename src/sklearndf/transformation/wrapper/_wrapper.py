@@ -342,6 +342,7 @@ class ImputerWrapperDF(TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
         def _nan_mask_from_statistics(
             stats: np.ndarray,
         ) -> Union[List[bool], np.ndarray]:
+            na_mask: Union[List[bool], np.ndarray]
             if issubclass(stats.dtype.type, float):
                 na_mask = np.isnan(stats)
             else:
