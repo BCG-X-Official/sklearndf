@@ -805,7 +805,9 @@ class ClassifierWrapperDF(
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
 
         if classes is None:
-            classes = getattr(self.native_estimator, "classes_")
+            classes = getattr(self.native_estimator, "classes_", None)
+            if classes is None:
+                classes = pd.RangeIndex(self._get_n_outputs())
 
         if isinstance(y, pd.DataFrame):
             return y.set_axis(classes, axis=1, inplace=False)
