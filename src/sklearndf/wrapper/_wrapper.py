@@ -1427,9 +1427,6 @@ def _mirror_attributes(
         if alias is not None:
             setattr(wrapper, name, alias)
 
-        if alias is not None:
-            setattr(wrapper, name, alias)
-
 
 def _make_alias(
     module: str,
