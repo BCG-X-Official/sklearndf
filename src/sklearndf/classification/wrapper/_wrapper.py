@@ -122,17 +122,16 @@ class MultiOutputClassifierWrapperDF(
         # to predict each output. If present, use these estimators to get
         # individual class labels for each output; otherwise we cannot assign class
         # labels
-        try:
-            estimators = getattr(delegate_estimator, "estimators_")
-        except AttributeError:
+        estimators = getattr(delegate_estimator, "estimators_", None)
+        if estimators is None:
             return [_super._prediction_with_class_labels(X=X, y=output) for output in y]
-
-        return [
-            _super._prediction_with_class_labels(
-                X=X, y=output, classes=getattr(estimator, "classes_", None)
-            )
-            for estimator, output in zip(estimators, y)
-        ]
+        else:
+            return [
+                _super._prediction_with_class_labels(
+                    X=X, y=output, classes=getattr(estimator, "classes_", None)
+                )
+                for estimator, output in zip(estimators, y)
+            ]
 
 
 class ClassifierChainWrapperDF(
