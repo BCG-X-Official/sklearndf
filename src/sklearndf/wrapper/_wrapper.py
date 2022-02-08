@@ -47,7 +47,6 @@ from sklearn.base import (
 )
 
 from pytools.api import AllTracker, inheritdoc, public_module_prefix
-from pytools.meta import compose_meta
 
 from ._adapter import SupervisedLearnerNPDF
 from sklearndf import (
@@ -113,7 +112,7 @@ __tracker = AllTracker(globals())
 #
 
 
-class EstimatorWrapperDFMeta(type, Generic[T_NativeEstimator]):
+class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
     """
     Metaclass of DF wrappers, providing a reference to the type of the wrapped native
     estimator.
@@ -133,7 +132,7 @@ class EstimatorWrapperDFMeta(type, Generic[T_NativeEstimator]):
 class EstimatorWrapperDF(
     EstimatorDF,
     Generic[T_NativeEstimator],
-    metaclass=compose_meta(type(EstimatorDF), EstimatorWrapperDFMeta),  # type: ignore
+    metaclass=EstimatorWrapperDFMeta[T_NativeEstimator],  # type: ignore
 ):
     """
     Base class of DF wrappers for native estimators conforming with the scikit-learn
@@ -234,7 +233,7 @@ class EstimatorWrapperDF(
         """[see superclass]"""
         return self._native_estimator.get_params(deep=deep)
 
-    def set_params(self, **params: Any) -> "EstimatorWrapperDF":
+    def set_params(self: T_EstimatorWrapperDF, **params: Any) -> "T_EstimatorWrapperDF":
         """[see superclass]"""
         self._native_estimator.set_params(**params)
         return self
