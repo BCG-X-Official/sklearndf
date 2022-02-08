@@ -948,6 +948,8 @@ class StackingEstimatorWrapperDF(
                 column_names=_ColumnNameFn(),
             )
 
+            # suppress a false warning from PyCharm's type checker
+            # noinspection PyTypeChecker
             return super().fit(X, y, **fit_params)
 
         finally:
@@ -1330,9 +1332,9 @@ def _make_df_wrapper_class(
 ) -> Type[T_EstimatorWrapperDF]:
     # noinspection PyMissingOrEmptyDocstring
     class WrapperDF(base_wrapper):  # type: ignore
-        # we need to create this __init__ method in order to apply the signature
-        # of the native estimator's __init__ method
         def __init__(self, *args, **kwargs: Any) -> None:
+            # we need to create this __init__ method in order to apply the signature
+            # of the native estimator's __init__ method
             super().__init__(*args, **kwargs)
 
         def __reduce__(
