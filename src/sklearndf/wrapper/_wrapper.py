@@ -1121,7 +1121,10 @@ def make_df_estimator(
     *,
     name: Optional[str] = None,
     base_wrapper: Optional[Type[EstimatorWrapperDF[T_NativeEstimator]]] = None,
-) -> Type[EstimatorWrapperDF[T_NativeEstimator]]:
+    # The true return type is Type[EstimatorWrapperDF[T_NativeEstimator]],
+    # but we provide the union with T_NativeTransformer to enable better
+    # code completion in IDEs that derive attributes through static code inspection.
+) -> Union[Type[EstimatorWrapperDF[T_NativeEstimator]], T_NativeTransformer]:
     """
     Create an augmented version of a given estimator that conforms with the
     scikit-learn API.
@@ -1154,7 +1157,10 @@ def make_df_transformer(
     *,
     name: Optional[str] = None,
     base_wrapper: Type[TransformerWrapperDF[T_NativeTransformer]],
-) -> Type[TransformerWrapperDF[T_NativeTransformer]]:
+    # The true return type is Type[TransformerWrapperDF[T_NativeEstimator]],
+    # but we provide the union with T_NativeTransformer to enable better
+    # code completion in IDEs that derive attributes through static code inspection.
+) -> Union[Type[TransformerWrapperDF[T_NativeTransformer]], T_NativeTransformer]:
     """
     Create an augmented version of a given transformer that conforms with the
     scikit-learn API.
@@ -1187,7 +1193,10 @@ def make_df_classifier(
     *,
     name: Optional[str] = None,
     base_wrapper: Optional[Type[ClassifierWrapperDF[T_NativeClassifier]]] = None,
-) -> Type[ClassifierWrapperDF[T_NativeClassifier]]:
+    # The true return type is Type[ClassifierWrapperDF[T_NativeEstimator]],
+    # but we provide the union with T_NativeTransformer to enable better
+    # code completion in IDEs that derive attributes through static code inspection.
+) -> Union[Type[ClassifierWrapperDF[T_NativeClassifier]], T_NativeTransformer]:
     """
     Create an augmented version of a given classifier that conforms with the
     scikit-learn API.
@@ -1220,7 +1229,10 @@ def make_df_regressor(
     *,
     name: Optional[str] = None,
     base_wrapper: Optional[Type[RegressorWrapperDF[T_NativeRegressor]]] = None,
-) -> Type[RegressorWrapperDF[T_NativeRegressor]]:
+    # The true return type is Type[RegressorWrapperDF[T_NativeEstimator]],
+    # but we provide the union with T_NativeTransformer to enable better
+    # code completion in IDEs that derive attributes through static code inspection.
+) -> Union[Type[RegressorWrapperDF[T_NativeRegressor]], T_NativeTransformer]:
     """
     Create an augmented version of a given regressor that conforms with the
     scikit-learn API.
