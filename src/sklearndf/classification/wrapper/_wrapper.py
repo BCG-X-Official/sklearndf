@@ -4,7 +4,17 @@ Core implementation of :mod:`sklearndf.classification.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Any, Callable, Generic, List, Optional, Sequence, TypeVar, Union
+from typing import (
+    Any,
+    Callable,
+    Generic,
+    List,
+    Optional,
+    Sequence,
+    TypeVar,
+    Union,
+    cast,
+)
 
 import numpy as np
 import pandas as pd
@@ -105,26 +115,22 @@ class MultiOutputClassifierWrapperDF(
         delegate_estimator = self.native_estimator
 
         # store the super() object as this is not available within a generator
-        sup = super()
+        _super = cast(ClassifierWrapperDF, super())
 
         # estimators attribute of abstract class MultiOutputEstimator
         # usually the delegate estimator will provide a list of estimators used
         # to predict each output. If present, use these estimators to get
         # individual class labels for each output; otherwise we cannot assign class
         # labels
-        if hasattr(delegate_estimator, "estimators_"):
-            return [
-                sup._prediction_with_class_labels(
-                    X=X, y=output, classes=getattr(estimator, "classes_", None)
-                )
-                for estimator, output in zip(
-                    getattr(delegate_estimator, "estimators_"), y
-                )
-            ]
+        estimators = getattr(delegate_estimator, "estimators_", None)
+        if estimators is None:
+            return [_super._prediction_with_class_labels(X=X, y=output) for output in y]
         else:
             return [
-                sup._prediction_with_class_labels(X=X, y=output, classes=None)
-                for output in y
+                _super._prediction_with_class_labels(
+                    X=X, y=output, classes=getattr(estimator, "classes_", None)
+                )
+                for estimator, output in zip(estimators, y)
             ]
 
 

@@ -15,7 +15,7 @@ dependencies:
   - scikit-learn ~= 0.24.2
   - scipy ~= 1.6
   # build/test
-  - black ~= 21.8
+  - black ~= 22.1
   - conda-build ~= 3.20
   - conda-verify ~= 3.1
   - docutils ~= 0.17
@@ -23,6 +23,7 @@ dependencies:
   - isort ~= 5.5
   - jinja2 ~= 2.11
   - m2r ~= 0.2
+  - mypy ~= 0.931
   - pluggy ~= 0.13
   - pre-commit ~= 2.7
   - pydata-sphinx-theme ~= 0.7
