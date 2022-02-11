@@ -87,7 +87,7 @@ stages:
               versionSpec: '3.7.*'
             displayName: 'use Python 3.7'
           - script: |
-              python -m pip install mypy~=0.931
+              python -m pip install mypy~=0.931 numpy~=1.21
               python -m mypy src
             displayName: 'Run mypy'
 
