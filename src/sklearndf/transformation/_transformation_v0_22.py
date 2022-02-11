@@ -11,7 +11,7 @@ from sklearn.impute import KNNImputer
 from pytools.api import AllTracker
 
 from ..wrapper import make_df_transformer
-from .wrapper._wrapper import ImputerWrapperDF
+from .wrapper import ImputerWrapperDF
 
 log = logging.getLogger(__name__)
 

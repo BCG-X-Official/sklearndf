@@ -3,7 +3,6 @@ Core implementation of :mod:`sklearndf.transformation.extra`
 """
 
 import logging
-from typing import TypeVar
 
 import pandas as pd
 from boruta import BorutaPy
@@ -16,13 +15,6 @@ from ..wrapper import ColumnSubsetTransformerWrapperDF, NumpyTransformerWrapperD
 log = logging.getLogger(__name__)
 
 __all__ = ["BorutaPyWrapperDF", "BorutaDF"]
-
-
-#
-# type variables
-#
-
-T_Self = TypeVar("T_Self")
 
 
 #
