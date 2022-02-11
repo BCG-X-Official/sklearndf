@@ -342,16 +342,14 @@ class ImputerWrapperDF(TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
         def _nan_mask_from_statistics(
             stats: np.ndarray,
         ) -> Union[List[bool], np.ndarray]:
-            na_mask: Union[List[bool], np.ndarray]
             if issubclass(stats.dtype.type, float):
-                na_mask = np.isnan(stats)
+                return np.isnan(stats)
             else:
-                na_mask = [
+                return [
                     x is None or (isinstance(x, float) and np.isnan(x)) for x in stats
                 ]
-            return na_mask
 
-        # implementation for i.e. SimpleImputer
+        # implementation for SimpleImputer
         if hasattr(delegate_estimator, "statistics_"):
             nan_mask = _nan_mask_from_statistics(stats=delegate_estimator.statistics_)
 
@@ -360,7 +358,7 @@ class ImputerWrapperDF(TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
             initial_imputer: SimpleImputer = delegate_estimator.initial_imputer_
             nan_mask = _nan_mask_from_statistics(stats=initial_imputer.statistics_)
 
-        # implementation for i.e. KNNImputer
+        # implementation for KNNImputer
         elif hasattr(delegate_estimator, "_mask_fit_X"):
             # noinspection PyProtectedMember
             nan_mask = np.all(delegate_estimator._mask_fit_X, axis=0)
