@@ -337,18 +337,19 @@ class ImputerWrapperDF(TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
         # get the columns that were dropped during imputation
         delegate_estimator = self.native_estimator
 
-        nan_mask = []
+        nan_mask: Union[List[bool], np.ndarray] = []
 
-        def _nan_mask_from_statistics(stats: np.array):
+        def _nan_mask_from_statistics(
+            stats: np.ndarray,
+        ) -> Union[List[bool], np.ndarray]:
             if issubclass(stats.dtype.type, float):
-                na_mask = np.isnan(stats)
+                return np.isnan(stats)
             else:
-                na_mask = [
+                return [
                     x is None or (isinstance(x, float) and np.isnan(x)) for x in stats
                 ]
-            return na_mask
 
-        # implementation for i.e. SimpleImputer
+        # implementation for SimpleImputer
         if hasattr(delegate_estimator, "statistics_"):
             nan_mask = _nan_mask_from_statistics(stats=delegate_estimator.statistics_)
 
@@ -357,7 +358,7 @@ class ImputerWrapperDF(TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
             initial_imputer: SimpleImputer = delegate_estimator.initial_imputer_
             nan_mask = _nan_mask_from_statistics(stats=initial_imputer.statistics_)
 
-        # implementation for i.e. KNNImputer
+        # implementation for KNNImputer
         elif hasattr(delegate_estimator, "_mask_fit_X"):
             # noinspection PyProtectedMember
             nan_mask = np.all(delegate_estimator._mask_fit_X, axis=0)
@@ -416,6 +417,7 @@ class AdditiveChi2SamplerWrapperDF(
 
     @property
     def _n_components_(self) -> int:
+        assert self._features_in is not None, "estimator is fitted"
         return len(self._features_in) * (2 * self.native_estimator.sample_steps + 1)
 
 

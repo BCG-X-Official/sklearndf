@@ -10,7 +10,7 @@ from sklearn.naive_bayes import CategoricalNB
 from pytools.api import AllTracker
 
 from ..wrapper import make_df_classifier
-from .wrapper._wrapper import StackingClassifierWrapperDF
+from .wrapper import StackingClassifierWrapperDF
 
 log = logging.getLogger(__name__)
 

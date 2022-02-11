@@ -37,6 +37,8 @@ from sklearn.feature_selection import (
     VarianceThreshold,
 )
 from sklearn.impute import MissingIndicator, SimpleImputer
+
+# noinspection PyProtectedMember
 from sklearn.impute._iterative import IterativeImputer
 from sklearn.kernel_approximation import (
     AdditiveChi2Sampler,
