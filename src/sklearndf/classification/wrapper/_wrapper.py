@@ -47,6 +47,9 @@ __all__ = [
 # Type variables
 #
 
+T_PartialFitClassifierWrapperDF = TypeVar(
+    "T_PartialFitClassifierWrapperDF", bound="PartialFitClassifierWrapperDF"
+)
 T_NativeClassifier = TypeVar("T_NativeClassifier", bound=ClassifierMixin)
 
 
@@ -208,12 +211,12 @@ class PartialFitClassifierWrapperDF(
     """
 
     def partial_fit(
-        self,
+        self: T_PartialFitClassifierWrapperDF,
         X: pd.DataFrame,
         y: Union[pd.Series, pd.DataFrame],
         classes: Optional[Sequence[Any]] = None,
         sample_weight: Optional[pd.Series] = None,
-    ):
+    ) -> T_PartialFitClassifierWrapperDF:
         """
         Perform incremental fit on a batch of samples.
         This method is meant to be called multiple times for subsets of training
@@ -228,7 +231,7 @@ class PartialFitClassifierWrapperDF(
         :return: ``self``
         """
         self._check_parameter_types(X, y)
-        self._partial_fit(X, y, classes, sample_weight)
+        self._partial_fit(X, y, classes=classes, sample_weight=sample_weight)
 
         return self
 
@@ -236,14 +239,16 @@ class PartialFitClassifierWrapperDF(
         self,
         X: pd.DataFrame,
         y: Union[pd.Series, pd.DataFrame],
-        classes: Optional[Sequence[Any]],
-        sample_weight: Optional[pd.Series],
+        **partial_fit_params: Optional[Any],
     ):
         return self._native_estimator.partial_fit(
             self._prepare_X_for_delegate(X),
             self._prepare_y_for_delegate(y),
-            classes,
-            sample_weight,
+            **{
+                arg: value
+                for arg, value in partial_fit_params.items()
+                if value is not None
+            },
         )
 
 

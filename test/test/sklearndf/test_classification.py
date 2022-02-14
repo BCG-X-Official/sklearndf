@@ -49,8 +49,8 @@ CLASSIFIERS_PARTIAL_FIT = [
     classification.MultinomialNBDF,
     classification.PerceptronDF,
     classification.SGDClassifierDF,
+    classification.PassiveAggressiveClassifierDF,
 ]
-# TODO classification.PassiveAggressiveClassifierDF
 
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST)

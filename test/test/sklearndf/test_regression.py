@@ -11,6 +11,7 @@ from sklearndf.regression import (
     SVRDF,
     IsotonicRegressionDF,
     LinearRegressionDF,
+    PassiveAggressiveRegressorDF,
     RandomForestRegressorDF,
     SGDRegressorDF,
 )
@@ -40,7 +41,7 @@ DEFAULT_REGRESSOR_PARAMETERS = {
 
 REGRESSORS_PARTIAL_FIT = [
     SGDRegressorDF,
-    # TODO PassiveAggressiveRegressor
+    PassiveAggressiveRegressorDF,
 ]
 
 

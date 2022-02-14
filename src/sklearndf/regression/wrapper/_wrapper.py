@@ -4,7 +4,7 @@ Core implementation of :mod:`sklearndf.regression.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Callable, Generic, Optional, Sequence, TypeVar, Union
+from typing import Any, Callable, Generic, Optional, Sequence, TypeVar, Union
 
 import numpy as np
 import pandas as pd
@@ -39,6 +39,9 @@ __all__ = [
 # type variables
 #
 
+T_PartialFitRegressorWrapperDF = TypeVar(
+    "T_PartialFitRegressorWrapperDF", bound="PartialFitRegressorWrapperDF"
+)
 T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
 T_NativeRegressor = TypeVar("T_NativeRegressor", bound=RegressorMixin)
 
@@ -158,11 +161,11 @@ class PartialFitRegressorWrapperDF(
     """
 
     def partial_fit(
-        self,
+        self: T_PartialFitRegressorWrapperDF,
         X: pd.DataFrame,
         y: Union[pd.Series, pd.DataFrame],
         sample_weight: Optional[pd.Series] = None,
-    ):
+    ) -> T_PartialFitRegressorWrapperDF:
         """
         Perform incremental fit on a batch of samples.
         This method is meant to be called multiple times for subsets of training
@@ -175,7 +178,7 @@ class PartialFitRegressorWrapperDF(
         :return: ``self``
         """
         self._check_parameter_types(X, y)
-        self._partial_fit(X, y, sample_weight)
+        self._partial_fit(X, y, sample_weight=sample_weight)
 
         return self
 
@@ -183,12 +186,16 @@ class PartialFitRegressorWrapperDF(
         self,
         X: pd.DataFrame,
         y: Union[pd.Series, pd.DataFrame],
-        sample_weight: Optional[pd.Series],
+        **partial_fit_params: Optional[Any],
     ):
         return self._native_estimator.partial_fit(
             self._prepare_X_for_delegate(X),
             self._prepare_y_for_delegate(y),
-            sample_weight,
+            **{
+                arg: value
+                for arg, value in partial_fit_params.items()
+                if value is not None
+            },
         )
 
 
