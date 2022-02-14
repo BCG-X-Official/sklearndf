@@ -24,6 +24,7 @@ CLASSIFIER_INIT_PARAMETERS = {
     },
     "ClassifierChainDF": {"base_estimator": classification.RandomForestClassifierDF()},
     "MultiOutputClassifierDF": {"estimator": classification.RandomForestClassifierDF()},
+    "MultiOutputClassifierDF_partial_fit": {"estimator": classification.PerceptronDF()},
     "OneVsOneClassifierDF": {"estimator": classification.RandomForestClassifierDF()},
     "OneVsRestClassifierDF": {"estimator": classification.RandomForestClassifierDF()},
     "OutputCodeClassifierDF": {"estimator": classification.RandomForestClassifierDF()},
@@ -50,6 +51,10 @@ CLASSIFIERS_PARTIAL_FIT = [
     classification.PerceptronDF,
     classification.SGDClassifierDF,
     classification.PassiveAggressiveClassifierDF,
+    classification.CategoricalNBDF,
+    classification.GaussianNBDF,
+    classification.ComplementNBDF,
+    classification.MultiOutputClassifierDF,
 ]
 
 
@@ -133,16 +138,25 @@ def test_wrapped_partial_fit(
     sklearndf_cls: Type[ClassifierDF],
     iris_features: pd.DataFrame,
     iris_target_sr: pd.Series,
+    iris_targets_df: pd.DataFrame,
 ):
 
-    classes = iris_target_sr.unique()
+    classifier: ClassifierDF = sklearndf_cls(
+        **CLASSIFIER_INIT_PARAMETERS.get(f"{sklearndf_cls.__name__}_partial_fit", {})
+    )
 
-    classifier = sklearndf_cls()
+    is_multi_output = isinstance(classifier.native_estimator, MultiOutputClassifier)
+    if is_multi_output:
+        classes = iris_targets_df.apply(lambda col: col.unique()).transpose().values
+        iris_target = iris_targets_df
+    else:
+        classes = iris_target_sr.unique()
+        iris_target = iris_target_sr
 
     with pytest.raises(
         ValueError,
         match="classes must be passed on the first call to partial_fit.",
     ):
-        classifier.partial_fit(iris_features, iris_target_sr)
+        classifier.partial_fit(iris_features, iris_target)
 
-    classifier.partial_fit(iris_features, iris_target_sr, classes)
+    classifier.partial_fit(iris_features, iris_target, classes)

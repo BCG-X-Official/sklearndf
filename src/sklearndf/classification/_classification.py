@@ -176,11 +176,15 @@ QuadraticDiscriminantAnalysisDF = make_df_classifier(QuadraticDiscriminantAnalys
 #
 
 
-GaussianNBDF = make_df_classifier(GaussianNB)
+GaussianNBDF = make_df_classifier(
+    GaussianNB, base_wrapper=PartialFitClassifierWrapperDF
+)
 MultinomialNBDF = make_df_classifier(
     MultinomialNB, base_wrapper=PartialFitClassifierWrapperDF
 )
-ComplementNBDF = make_df_classifier(ComplementNB)
+ComplementNBDF = make_df_classifier(
+    ComplementNB, base_wrapper=PartialFitClassifierWrapperDF
+)
 BernoulliNBDF = make_df_classifier(
     BernoulliNB, base_wrapper=PartialFitClassifierWrapperDF
 )
@@ -280,7 +284,9 @@ ClassifierChainDF = make_df_classifier(
 # neural network
 #
 
-MLPClassifierDF = make_df_classifier(MLPClassifier)
+MLPClassifierDF = make_df_classifier(
+    MLPClassifier, base_wrapper=PartialFitClassifierWrapperDF
+)
 
 
 #

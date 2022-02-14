@@ -11,6 +11,8 @@ from sklearndf.regression import (
     SVRDF,
     IsotonicRegressionDF,
     LinearRegressionDF,
+    MLPRegressorDF,
+    MultiOutputRegressorDF,
     PassiveAggressiveRegressorDF,
     RandomForestRegressorDF,
     SGDRegressorDF,
@@ -26,6 +28,7 @@ REGRESSORS_TO_TEST: List[Type[EstimatorWrapperDF]] = iterate_classes(
 
 DEFAULT_REGRESSOR_PARAMETERS = {
     "MultiOutputRegressorDF": {"estimator": RandomForestRegressorDF()},
+    "MultiOutputRegressorDF_partial_fit": {"estimator": SGDRegressorDF()},
     "RegressorChainDF": {"base_estimator": RandomForestRegressorDF()},
     "VotingRegressorDF": {
         "estimators": [("rfr", RandomForestRegressorDF()), ("svr", SVRDF())]
@@ -42,6 +45,8 @@ DEFAULT_REGRESSOR_PARAMETERS = {
 REGRESSORS_PARTIAL_FIT = [
     SGDRegressorDF,
     PassiveAggressiveRegressorDF,
+    MultiOutputRegressorDF,
+    MLPRegressorDF,
 ]
 
 
@@ -90,8 +95,14 @@ def test_wrapped_partial_fit(
     sklearndf_cls: Type[RegressorDF],
     boston_features: pd.DataFrame,
     boston_target_sr: pd.Series,
+    boston_target_df: pd.DataFrame,
 ):
 
-    regressor = sklearndf_cls()
+    regressor = sklearndf_cls(
+        **DEFAULT_REGRESSOR_PARAMETERS.get(f"{sklearndf_cls.__name__}_partial_fit", {})
+    )
 
-    regressor.partial_fit(boston_features, boston_target_sr)
+    is_multi_output = isinstance(regressor.native_estimator, MultiOutputRegressor)
+    boston_target = boston_target_df if is_multi_output else boston_target_sr
+
+    regressor.partial_fit(boston_features, boston_target)

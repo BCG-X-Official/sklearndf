@@ -56,6 +56,7 @@ from ..wrapper import make_df_regressor
 from .wrapper import (
     IsotonicRegressionWrapperDF,
     MetaRegressorWrapperDF,
+    MultiOutputRegressorWrapperDF,
     PartialFitRegressorWrapperDF,
     RegressorTransformerWrapperDF,
 )
@@ -152,7 +153,7 @@ NuSVRDF = make_df_regressor(NuSVR)
 #
 
 MultiOutputRegressorDF = make_df_regressor(
-    MultiOutputRegressor, base_wrapper=MetaRegressorWrapperDF
+    MultiOutputRegressor, base_wrapper=MultiOutputRegressorWrapperDF
 )
 
 RegressorChainDF = make_df_regressor(
@@ -172,7 +173,9 @@ RadiusNeighborsRegressorDF = make_df_regressor(RadiusNeighborsRegressor)
 # neural_network
 #
 
-MLPRegressorDF = make_df_regressor(MLPRegressor)
+MLPRegressorDF = make_df_regressor(
+    MLPRegressor, base_wrapper=PartialFitRegressorWrapperDF
+)
 
 
 #
