@@ -1,7 +1,7 @@
 import re
 import sys
 from distutils import version
-from typing import Any, Dict, Iterable, List, Optional, Set, Type, Union
+from typing import Any, Dict, Iterable, Optional, Set, Type, Union
 
 import pandas as pd
 import sklearn

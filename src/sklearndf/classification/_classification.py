@@ -50,9 +50,9 @@ from ..wrapper import make_df_classifier
 from .wrapper import (
     ClassifierChainWrapperDF,
     LinearDiscriminantAnalysisWrapperDF,
+    MetaClassifierWrapperDF,
     MultiOutputClassifierWrapperDF,
 )
-from .wrapper._wrapper import MetaClassifierWrapperDF
 
 log = logging.getLogger(__name__)
 
