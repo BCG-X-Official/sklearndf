@@ -822,8 +822,8 @@ class ClustererWrapperDF(
 
     COL_LABELS = "labels"
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        super().__init__(*args, **kwargs)
+    def __init__(self) -> None:
+        super().__init__()
         self._x_index: Optional[pd.Index] = None
 
     @property
@@ -847,7 +847,10 @@ class ClustererWrapperDF(
         try:
             self._check_parameter_types(X, y)
 
-            # noinspection PyUnresolvedReferences
+            # Ignore a PyCharm warning that is caused by scikit-learn incorrectly
+            # omitting optional arguments from the abstract method declaration
+            # of ClassifierMixin.fit_predict():
+            # noinspection PyArgumentList
             result = self._prediction_to_series_or_frame(
                 X,
                 self.native_estimator.fit_predict(

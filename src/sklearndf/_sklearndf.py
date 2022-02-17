@@ -506,10 +506,7 @@ class ClustererDF(LearnerDF, ClusterMixin, metaclass=ABCMeta):
     @abstractmethod
     def labels_(self) -> pd.Series:
         """
-        A pandas series, mapping the input dataframe that was used for fitting
-        to a specific cluster's label (decided by a clustering algorithm).
-        Each observation's row index of the ingoing data frame is mapped to
-        the specific label.
+        A pandas series, mapping the index of the input data frame to cluster labels.
         """
         pass
 
@@ -522,14 +519,14 @@ class ClustererDF(LearnerDF, ClusterMixin, metaclass=ABCMeta):
         **fit_predict_params: Any,
     ) -> Union[pd.Series, pd.DataFrame]:
         """
-        Fit this clusterer using the given inputs, then predict the outputs.
+        Fit this clusterer using the given inputs, then predict the cluster labels.
 
         :param X: data frame with observations as rows and features as columns
         :param y: a series or data frame with one or more outputs per observation
         :param fit_predict_params: optional keyword parameters as required by specific
             clusterer implementations
-        :return: predictions per observation as a series, or as a data frame in case
-            of multiple outputs
+        :return: predicted cluster labels for all observations as a series,
+            or as a data frame in case of multiple outputs
         """
         pass
 

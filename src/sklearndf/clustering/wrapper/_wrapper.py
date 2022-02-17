@@ -46,21 +46,26 @@ class KMeansBaseWrapperDF(
     DF wrapper for KMeans-like algorithms, e.g., :class:`sklearn.cluster.KMeans`.
     """
 
+    #: the name of the index representing clusters
+    IDX_CLUSTER = "cluster"
+
     @property
     def cluster_centers_(self) -> pd.DataFrame:
         """
-        The data frame containing cluster centers designated by a clustering algorithm.
-        In the resulting data frame each row is a cluster center decided by KMeans and
-        columns are the same as input data frame used for training.
+        The cluster centers as a data frame, with clusters as rows and feature values
+        as columns.
         """
-        COL_CLUSTER = "cluster"
 
         self._ensure_fitted()
-        raw_cluster_centers = self._native_estimator.cluster_centers_
 
+        raw_cluster_centers = self._native_estimator.cluster_centers_
         return pd.DataFrame(
-            data=raw_cluster_centers, columns=self.feature_names_in_
-        ).rename_axis(index=COL_CLUSTER)
+            raw_cluster_centers,
+            columns=self.feature_names_in_,
+            index=pd.RangeIndex(
+                len(raw_cluster_centers), name=KMeansBaseWrapperDF.IDX_CLUSTER
+            ),
+        )
 
 
 #
