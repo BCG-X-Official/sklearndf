@@ -138,7 +138,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
 class EstimatorWrapperDF(
     EstimatorDF,
     Generic[T_NativeEstimator],
-    metaclass=EstimatorWrapperDFMeta[T_NativeEstimator],  # type: ignore
+    metaclass=EstimatorWrapperDFMeta,
 ):
     """
     Base class of DF wrappers for native estimators conforming with the scikit-learn
