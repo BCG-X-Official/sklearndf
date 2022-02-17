@@ -136,9 +136,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator], metaclass=ABCM
 
 @inheritdoc(match="[see superclass]")
 class EstimatorWrapperDF(
-    EstimatorDF,
-    Generic[T_NativeEstimator],
-    metaclass=EstimatorWrapperDFMeta,
+    EstimatorDF, Generic[T_NativeEstimator], metaclass=EstimatorWrapperDFMeta
 ):
     """
     Base class of DF wrappers for native estimators conforming with the scikit-learn
