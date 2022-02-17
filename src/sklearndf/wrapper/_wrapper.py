@@ -822,8 +822,9 @@ class ClustererWrapperDF(
 
     COL_LABELS = "labels"
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        """[see superclass]"""
+        super().__init__(*args, **kwargs)
         self._x_index: Optional[pd.Index] = None
 
     @property
