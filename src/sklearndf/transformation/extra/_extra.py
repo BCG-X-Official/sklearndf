@@ -3,7 +3,7 @@ Core implementation of :mod:`sklearndf.transformation.extra`
 """
 
 import logging
-from typing import Any, Optional, TypeVar, Union
+from typing import Any, Optional, Union
 
 import pandas as pd
 from boruta import BorutaPy
@@ -18,13 +18,6 @@ from ..wrapper import ColumnSubsetTransformerWrapperDF, NumpyTransformerWrapperD
 log = logging.getLogger(__name__)
 
 __all__ = ["OutlierRemoverDF", "BorutaPyWrapperDF", "BorutaDF"]
-
-
-#
-# type variables
-#
-
-T_Self = TypeVar("T_Self")
 
 
 #
@@ -65,11 +58,11 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
 
     # noinspection PyPep8Naming
     def fit(
-        self: T_Self,
+        self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
-    ) -> T_Self:
+    ) -> "OutlierRemoverDF":
         """
         Fit this transformer, establishing the thresholds for outlier removal.
 
@@ -78,8 +71,6 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
         :param fit_params: additional fit parameters (ignored)
         :return: ``self``
         """
-
-        self: OutlierRemoverDF  # support type hinting in PyCharm
 
         q1: pd.Series = X.quantile(q=0.25)
         q3: pd.Series = X.quantile(q=0.75)

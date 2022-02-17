@@ -34,7 +34,6 @@ __all__ = [
 # type variables
 #
 
-T_Self = TypeVar("T_Self")
 T_DelegateEstimatorDF = TypeVar("T_DelegateEstimatorDF", bound=EstimatorDF)
 T_DelegateLearnerDF = TypeVar("T_DelegateLearnerDF", bound=LearnerDF)
 T_DelegateSupervisedLearnerDF = TypeVar(
@@ -43,6 +42,7 @@ T_DelegateSupervisedLearnerDF = TypeVar(
 T_DelegateClassifierDF = TypeVar("T_DelegateClassifierDF", bound=ClassifierDF)
 T_DelegateRegressorDF = TypeVar("T_DelegateRegressorDF", bound=RegressorDF)
 T_DelegateTransformerDF = TypeVar("T_DelegateTransformerDF", bound=TransformerDF)
+T_EstimatorNPDF = TypeVar("T_EstimatorNPDF", bound="EstimatorNPDF")
 
 #
 # Ensure all symbols introduced below are included in __all__
@@ -100,15 +100,16 @@ class EstimatorNPDF(
         return self.delegate.is_fitted
 
     def fit(
-        self: T_Self,
+        self: T_EstimatorNPDF,
         X: Union[np.ndarray, pd.DataFrame],
         y: Optional[Union[np.ndarray, pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
-    ) -> T_Self:
+    ) -> T_EstimatorNPDF:
         """[see superclass]"""
-        return self.delegate.fit(
+        self.delegate.fit(
             self._ensure_X_frame(X), self._ensure_y_series_or_frame(y), **fit_params
         )
+        return self
 
     def _get_features_in(self) -> pd.Index:
         return self.delegate._get_features_in()
@@ -117,7 +118,10 @@ class EstimatorNPDF(
         return self.delegate._get_n_outputs()
 
     def _ensure_X_frame(self, X: Union[np.ndarray, pd.DataFrame]) -> pd.DataFrame:
-        column_names = self.column_names()
+        column_names = self.column_names
+        if callable(column_names):
+            column_names = column_names()
+
         if isinstance(X, np.ndarray):
             if X.ndim != 2:
                 raise TypeError(

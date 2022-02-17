@@ -79,6 +79,17 @@ stages:
               python -m pip install flake8==3.9.0 flake8-comprehensions flake8-import-order
               python -m flake8 --config tox.ini -v .
             displayName: 'Run flake8'
+      - job:
+        displayName: 'mypy'
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.7.*'
+            displayName: 'use Python 3.7'
+          - script: |
+              python -m pip install mypy~=0.931 numpy~=1.21
+              python -m mypy src
+            displayName: 'Run mypy'
 
   # detect whether the build config (pyproject.toml) was changed -> then we must run a build test
   - stage: detect_build_config_changes
@@ -213,7 +224,7 @@ stages:
         - script: dir $(Build.SourcesDirectory)
 
         - script: |
-            conda install -y -c anaconda conda-build~=3.20.5 conda-verify toml=0.10.* flit=3.0.* packaging~=20.9
+            conda install -y -c anaconda conda-build~=3.21 conda-verify toml=0.10.* flit=3.0.* packaging~=20.9
           displayName: 'Install conda-build, flit, toml'
           condition: eq(variables['BUILD_SYSTEM'], 'conda')
 
@@ -300,7 +311,7 @@ stages:
         - script: dir $(Build.SourcesDirectory)
 
         - script: |
-            conda install -y -c anaconda conda-build~=3.20.5 conda-verify toml=0.10.* flit=3.0.* packaging~=20.9
+            conda install -y -c anaconda conda-build~=3.21 conda-verify toml=0.10.* flit=3.0.* packaging~=20.9
           displayName: 'Install conda-build, flit, toml'
           condition: eq(variables['BUILD_SYSTEM'], 'conda')
 
