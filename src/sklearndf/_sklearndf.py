@@ -123,10 +123,10 @@ class EstimatorDF(
             _feature_names_in_native_ = self.native_estimator.feature_names_in_
             if not np.array_equal(_feature_names_in_.values, _feature_names_in_native_):
                 warnings.warn(
-                    "conflicting input feature names:"
-                    "the input features recorded by this estimator are "
-                    f"{_feature_names_in_}, but the input feature names recorded by the"
-                    f"wrapped native estimator are {_feature_names_in_native_}",
+                    "conflicting input feature names: "
+                    "the input feature names recorded by this estimator are "
+                    f"{_feature_names_in_}, but the input feature names recorded by "
+                    f"the wrapped native estimator are {_feature_names_in_native_}",
                     stacklevel=2,
                 )
         return _feature_names_in_
