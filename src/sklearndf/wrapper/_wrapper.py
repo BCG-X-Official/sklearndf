@@ -118,7 +118,7 @@ __tracker = AllTracker(globals())
 #
 
 
-class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
+class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator], metaclass=ABCMeta):
     """
     Metaclass of DF wrappers, providing a reference to the type of the wrapped native
     estimator.
