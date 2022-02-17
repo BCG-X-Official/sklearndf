@@ -1,6 +1,6 @@
 """
-Wrapper classes to enhance the functionality of native regressors conforming with the
-scikit-learn API.
+Wrapper classes for `scikit-learn` regressors, providing enhanced support for data
+frames.
 """
 
 from ._wrapper import *

@@ -49,9 +49,8 @@ class KMeansBaseWrapperDF(
     @property
     def cluster_centers_(self) -> pd.DataFrame:
         """
-        The data frame containing cluster centers designated by a clustering algorithm.
-        In the resulting data frame each row is a cluster center decided by KMeans and
-        columns are the same as input data frame used for training.
+        The cluster centers as a data frame, with clusters as rows and feature values
+        as columns.
         """
         COL_CLUSTER = "cluster"
 
