@@ -19,6 +19,7 @@ from pytools.api import AllTracker
 
 from ... import TransformerDF
 from ...wrapper import TransformerWrapperDF
+from .. import __sklearn_1_0__, __sklearn_version__
 
 log = logging.getLogger(__name__)
 
@@ -431,11 +432,15 @@ class PolynomialTransformerWrapperDF(
     """
 
     def _get_features_out(self) -> pd.Index:
-        return pd.Index(
-            data=self.native_estimator.get_feature_names_out(
+        if __sklearn_version__ >= __sklearn_1_0__:
+            data = self.native_estimator.get_feature_names_out(
                 input_features=self.feature_names_in_.astype(str)
             )
-        )
+        else:
+            data = self.native_estimator.get_feature_names(
+                input_features=self.feature_names_in_.astype(str)
+            )
+        return pd.Index(data=data)
 
 
 class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCMeta):
@@ -453,9 +458,14 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
         # Remove 1st category column if argument drop == 'first'
         # Remove 1st category column only of binary features if arg drop == 'if_binary'
 
-        feature_names_out = pd.Index(
-            self.native_estimator.get_feature_names_out(self.feature_names_in_)
-        )
+        if __sklearn_version__ >= __sklearn_1_0__:
+            feature_names_out = pd.Index(
+                self.native_estimator.get_feature_names_out(self.feature_names_in_)
+            )
+        else:
+            feature_names_out = pd.Index(
+                self.native_estimator.get_feature_names(self.feature_names_in_)
+            )
 
         if self.drop == "first":
             feature_names_in = [
