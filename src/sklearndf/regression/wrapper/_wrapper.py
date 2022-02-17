@@ -81,7 +81,7 @@ class PartialFitRegressorWrapperDF(
 ):
     """
     Abstract base class of DF wrappers for regressors implementing
-    :func:`sklearn.linear_model.BaseSGDRegressor.partial_fit`.
+    method ``partial_fit()``.
     """
 
     def partial_fit(
@@ -92,8 +92,9 @@ class PartialFitRegressorWrapperDF(
     ) -> T_PartialFitRegressorWrapperDF:
         """
         Perform incremental fit on a batch of samples.
+
         This method is meant to be called multiple times for subsets of training
-        data, which e.g. couldn't fit in the required memory in full. It can be
+        data which, e.g., couldn't fit in the required memory in full. It can be
         also used for online learning.
 
         :param X: data frame with observations as rows and features as columns
@@ -128,7 +129,7 @@ class MultiOutputRegressorWrapperDF(
     PartialFitRegressorWrapperDF[MultiOutputRegressor],
 ):
     """
-    Abstract base class for multi-output regressor.
+    Abstract base class of DF wrappers for multi-output regressors.
     """
 
     pass
