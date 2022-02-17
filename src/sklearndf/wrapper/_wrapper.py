@@ -58,15 +58,6 @@ from sklearndf import (
     TransformerDF,
 )
 
-try:
-    # required by python 3.6
-    from typing import GenericMeta  # type: ignore
-except ImportError:
-    # in python 3.7+, Generics as supported as metaclasses
-    class GenericMeta(type):  # type: ignore
-        pass
-
-
 log = logging.getLogger(__name__)
 
 __all__ = [
@@ -127,7 +118,7 @@ __tracker = AllTracker(globals())
 #
 
 
-class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator], GenericMeta):
+class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
     """
     Metaclass of DF wrappers, providing a reference to the type of the wrapped native
     estimator.
