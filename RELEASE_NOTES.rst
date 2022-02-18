@@ -15,6 +15,7 @@ Release Notes
 - API: class :class:`.EstimatorDF` now implements the :class:`.HasExpressionRepr`
   mix-in, rendering estimator representations as :class:`.Expression` objects
   to enable better formatting
+- API: add data frame support for method ``partial_fit()``
 
 
 *sklearndf* 1.2
