@@ -11,7 +11,11 @@ from sklearndf.regression import (
     SVRDF,
     IsotonicRegressionDF,
     LinearRegressionDF,
+    MLPRegressorDF,
+    MultiOutputRegressorDF,
+    PassiveAggressiveRegressorDF,
     RandomForestRegressorDF,
+    SGDRegressorDF,
 )
 from sklearndf.wrapper import EstimatorWrapperDF
 from test.sklearndf import check_expected_not_fitted_error, iterate_classes
@@ -24,6 +28,7 @@ REGRESSORS_TO_TEST: List[Type[EstimatorWrapperDF]] = iterate_classes(
 
 DEFAULT_REGRESSOR_PARAMETERS = {
     "MultiOutputRegressorDF": {"estimator": RandomForestRegressorDF()},
+    "MultiOutputRegressorDF_partial_fit": {"estimator": SGDRegressorDF()},
     "RegressorChainDF": {"base_estimator": RandomForestRegressorDF()},
     "VotingRegressorDF": {
         "estimators": [("rfr", RandomForestRegressorDF()), ("svr", SVRDF())]
@@ -37,10 +42,17 @@ DEFAULT_REGRESSOR_PARAMETERS = {
     },
 }
 
+REGRESSORS_PARTIAL_FIT = [
+    SGDRegressorDF,
+    PassiveAggressiveRegressorDF,
+    MultiOutputRegressorDF,
+    MLPRegressorDF,
+]
+
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST)
 def test_wrapped_fit_predict(
-    sklearndf_cls: Type,
+    sklearndf_cls: Type[RegressorDF],
     boston_features: pd.DataFrame,
     boston_target_sr: pd.Series,
     boston_target_df: pd.DataFrame,
@@ -76,3 +88,21 @@ def test_wrapped_fit_predict(
     # test predictions data-type, length and values
     assert isinstance(predictions, (pd.Series, pd.DataFrame))
     assert len(predictions) == len(boston_target_sr)
+
+
+@pytest.mark.parametrize("sklearndf_cls", REGRESSORS_PARTIAL_FIT)
+def test_wrapped_partial_fit(
+    sklearndf_cls: Type[RegressorDF],
+    boston_features: pd.DataFrame,
+    boston_target_sr: pd.Series,
+    boston_target_df: pd.DataFrame,
+):
+
+    regressor = sklearndf_cls(
+        **DEFAULT_REGRESSOR_PARAMETERS.get(f"{sklearndf_cls.__name__}_partial_fit", {})
+    )
+
+    is_multi_output = isinstance(regressor.native_estimator, MultiOutputRegressor)
+    boston_target = boston_target_df if is_multi_output else boston_target_sr
+
+    regressor.partial_fit(boston_features, boston_target)

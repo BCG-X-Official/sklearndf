@@ -6,12 +6,14 @@ import sklearn
 from sklearn.base import (
     BaseEstimator,
     ClassifierMixin,
+    ClusterMixin,
     RegressorMixin,
     TransformerMixin,
 )
 from sklearn.utils.metaestimators import _BaseComposition
 
 import sklearndf.classification
+import sklearndf.clustering
 import sklearndf.pipeline
 import sklearndf.regression
 import sklearndf.transformation
@@ -57,10 +59,21 @@ TRANSFORMER_COVERAGE_EXCLUSIONS = {
     *GENERAL_COVERAGE_EXCLUSIONS,
     # class "Imputer" was deprecated in 0.20 and removed in 0.22
     "Imputer",
+    # class "AgglomerationTransform" is just a mix-in class and
+    # isn't meant to be used directly
+    "AgglomerationTransform",
 }
 
 
 PIPELINE_COVERAGE_EXCLUSIONS = GENERAL_COVERAGE_EXCLUSIONS
+
+
+CLUSTERER_COVERAGE_EXCLUSIONS = {
+    *GENERAL_COVERAGE_EXCLUSIONS,
+    # class "FeatureAgglomeration" is already included via Transformers
+    "FeatureAgglomeration",
+}
+
 
 UNSUPPORTED_SKLEARN_CLASSES = {
     sklearn_class.__name__
@@ -132,9 +145,18 @@ def sklearn_transformer_classes() -> List[Type]:
         .difference(sklearn_classifier_classes())
         .difference(sklearn_regressor_classes())
         .difference(sklearn_pipeline_classes())
+        .difference(sklearn_clusterer_classes())
     )
 
     return transformer_classes
+
+
+def sklearn_clusterer_classes() -> List[Type]:
+    return _find_sklearn_classes_to_cover(
+        from_modules=find_all_submodules(sklearn),
+        subclass_of=ClusterMixin,
+        excluding=CLUSTERER_COVERAGE_EXCLUSIONS,
+    )
 
 
 def _check_unexpected_sklearn_class(cls: Type) -> None:
@@ -196,3 +218,16 @@ def test_pipeline_coverage(sklearn_pipeline_cls: Type) -> None:
 
     if sklearn_pipeline_cls not in sklearn_classes:
         _check_unexpected_sklearn_class(sklearn_pipeline_cls)
+
+
+@pytest.mark.parametrize(
+    argnames="sklearn_clusterer_cls", argvalues=sklearn_clusterer_classes()
+)
+def test_clusterer_coverage(sklearn_clusterer_cls: Type[ClusterMixin]) -> None:
+    """ Check if each sklearn clusterer has a wrapped sklearndf counterpart. """
+    sklearn_classes: Dict[
+        Type[BaseEstimator], Type[EstimatorDF]
+    ] = sklearn_delegate_classes(sklearndf.clustering)
+
+    if sklearn_clusterer_cls not in sklearn_classes:
+        _check_unexpected_sklearn_class(sklearn_clusterer_cls)

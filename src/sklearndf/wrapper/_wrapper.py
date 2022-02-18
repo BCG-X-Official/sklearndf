@@ -51,6 +51,7 @@ from pytools.api import AllTracker, inheritdoc, public_module_prefix
 from ._adapter import SupervisedLearnerNPDF
 from sklearndf import (
     ClassifierDF,
+    ClustererDF,
     EstimatorDF,
     LearnerDF,
     RegressorDF,
@@ -68,12 +69,14 @@ __all__ = [
     "SupervisedLearnerWrapperDF",
     "MetaEstimatorWrapperDF",
     "RegressorWrapperDF",
+    "ClustererWrapperDF",
     "StackingEstimatorWrapperDF",
     "TransformerWrapperDF",
     "make_df_classifier",
     "make_df_estimator",
     "make_df_regressor",
     "make_df_transformer",
+    "make_df_clusterer",
 ]
 
 
@@ -92,12 +95,14 @@ T_NativeSupervisedLearner = TypeVar(
 )
 T_NativeRegressor = TypeVar("T_NativeRegressor", bound=RegressorMixin)
 T_NativeClassifier = TypeVar("T_NativeClassifier", bound=ClassifierMixin)
+T_NativeClusterer = TypeVar("T_NativeClusterer", bound=ClusterMixin)
 
 T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="EstimatorWrapperDF")
 T_TransformerWrapperDF = TypeVar("T_TransformerWrapperDF", bound="TransformerWrapperDF")
 T_SupervisedLearnerDF = TypeVar("T_SupervisedLearnerDF", bound="SupervisedLearnerDF")
 T_RegressorWrapperDF = TypeVar("T_RegressorWrapperDF", bound="RegressorWrapperDF")
 T_ClassifierWrapperDF = TypeVar("T_ClassifierWrapperDF", bound="ClassifierWrapperDF")
+T_ClustererWrapperDF = TypeVar("T_ClustererWrapperDF", bound="ClustererWrapperDF")
 
 T_StackableSupervisedLearnerDF = TypeVar(
     "T_StackableSupervisedLearnerDF", bound="_StackableSupervisedLearnerDF"
@@ -611,37 +616,6 @@ class LearnerWrapperDF(
         )
 
     # noinspection PyPep8Naming
-    def fit_predict(
-        self, X: pd.DataFrame, y: pd.Series, **fit_params: Any
-    ) -> Union[pd.Series, pd.DataFrame]:
-        """[see superclass]"""
-
-        self._reset_fit()
-
-        try:
-            self._check_parameter_types(X, y)
-
-            # noinspection PyArgumentList
-            result = self._prediction_to_series_or_frame(
-                X,
-                self.native_estimator.fit_predict(
-                    self._prepare_X_for_delegate(X),
-                    self._prepare_y_for_delegate(y),
-                    **fit_params,
-                ),
-            )
-
-            self._post_fit(X, y, **fit_params)
-
-        except Exception as cause:
-            self._reset_fit()
-            raise self._make_verbose_exception(
-                self.fit_predict.__name__, cause
-            ) from cause
-
-        return result
-
-    # noinspection PyPep8Naming
     def _prediction_to_series_or_frame(
         self, X: pd.DataFrame, y: Union[np.ndarray, pd.Series, pd.DataFrame]
     ) -> Union[pd.Series, pd.DataFrame]:
@@ -828,6 +802,87 @@ class ClassifierWrapperDF(
             raise TypeError(f"unexpected type or prediction result: {type(y).__name__}")
 
 
+# noinspection PyPep8Naming
+@inheritdoc(match="[see superclass]")
+class ClustererWrapperDF(
+    ClustererDF,
+    LearnerWrapperDF[T_NativeClusterer],
+    Generic[T_NativeClusterer],
+    metaclass=ABCMeta,
+):
+    """
+    Base class of DF wrappers for native clusterers conforming with the scikit-learn
+    API.
+
+    Clusterer wrapper classes should be created using function
+    :func:`.make_df_clusterer`.
+    """
+
+    COL_LABELS = "labels"
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        """[see superclass]"""
+        super().__init__(*args, **kwargs)
+        self._x_index: Optional[pd.Index] = None
+
+    @property
+    def labels_(self) -> pd.Series:
+        """[see superclass]"""
+        self._ensure_fitted()
+        raw_labels = self._native_estimator.labels_
+
+        return pd.Series(data=raw_labels, name=self.COL_LABELS, index=self._x_index)
+
+    def fit_predict(
+        self,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        **fit_predict_params: Any,
+    ) -> Union[pd.Series, pd.DataFrame]:
+        """[see superclass]"""
+
+        self._reset_fit()
+
+        try:
+            self._check_parameter_types(X, y)
+
+            # Ignore a PyCharm warning that is caused by scikit-learn incorrectly
+            # omitting optional arguments from the abstract method declaration
+            # of ClassifierMixin.fit_predict():
+            # noinspection PyArgumentList
+            result = self._prediction_to_series_or_frame(
+                X,
+                self.native_estimator.fit_predict(
+                    self._prepare_X_for_delegate(X),
+                    self._prepare_y_for_delegate(y),
+                    **fit_predict_params,
+                ),
+            )
+
+            self._post_fit(X, y, **fit_predict_params)
+
+        except Exception as cause:
+            self._reset_fit()
+            raise self._make_verbose_exception(
+                self.fit_predict.__name__, cause
+            ) from cause
+
+        return result
+
+    def _post_fit(
+        self,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        **fit_params,
+    ) -> None:
+        super()._post_fit(X, y, **fit_params)
+        self._x_index = X.index
+
+    def _reset_fit(self) -> None:
+        super()._reset_fit()
+        self._x_index = None
+
+
 #
 # Meta estimator wrappers
 #
@@ -956,14 +1011,6 @@ class StackingEstimatorWrapperDF(
             native.estimators = estimators
             native.final_estimator = final_estimator
 
-    def fit_predict(
-        self, X: pd.DataFrame, y: pd.Series, **fit_params: Any
-    ) -> Union[pd.Series, pd.DataFrame]:
-        """[see superclass]"""
-        self.final_estimator.column_names = self._get_final_estimator_features_in
-
-        return super().fit_predict(X, y, **fit_params)
-
     @abstractmethod
     def _make_stackable_learner_df(
         self, learner: SupervisedLearnerDF
@@ -1021,14 +1068,6 @@ class _StackableSupervisedLearnerDF(
     def predict(self, X: pd.DataFrame, **predict_params: Any) -> np.ndarray:
         """[see superclass]"""
         return self.delegate.predict(X, **predict_params).values
-
-    def fit_predict(
-        self, X: pd.DataFrame, y: np.ndarray, **fit_params: Any
-    ) -> np.ndarray:
-        """[see superclass]"""
-        return self.delegate.fit_predict(
-            X, self._convert_y_to_series(X, y), **fit_params
-        ).values
 
     def score(
         self, X: pd.DataFrame, y: np.ndarray, sample_weight: Optional[pd.Series] = None
@@ -1192,7 +1231,7 @@ def make_df_classifier(
     name: Optional[str] = None,
     base_wrapper: Optional[Type[ClassifierWrapperDF[T_NativeClassifier]]] = None,
     # The true return type is Type[ClassifierWrapperDF[T_NativeEstimator]],
-    # but we provide the union with T_NativeTransformer to enable better
+    # but we provide the union with T_NativeClassifier to enable better
     # code completion in IDEs that derive attributes through static code inspection.
 ) -> Union[Type[ClassifierWrapperDF[T_NativeClassifier]], T_NativeTransformer]:
     """
@@ -1228,7 +1267,7 @@ def make_df_regressor(
     name: Optional[str] = None,
     base_wrapper: Optional[Type[RegressorWrapperDF[T_NativeRegressor]]] = None,
     # The true return type is Type[RegressorWrapperDF[T_NativeEstimator]],
-    # but we provide the union with T_NativeTransformer to enable better
+    # but we provide the union with T_NativeRegressor to enable better
     # code completion in IDEs that derive attributes through static code inspection.
 ) -> Union[Type[RegressorWrapperDF[T_NativeRegressor]], T_NativeTransformer]:
     """
@@ -1255,6 +1294,42 @@ def make_df_regressor(
         base_wrapper=base_wrapper,
         native_estimator_bound=RegressorMixin,
         base_wrapper_bound=RegressorWrapperDF,
+    )
+
+
+def make_df_clusterer(
+    native_clusterer: Type[T_NativeClusterer],
+    *,
+    name: Optional[str] = None,
+    base_wrapper: Optional[Type[ClustererWrapperDF[T_NativeClusterer]]] = None,
+    # The true return type is Type[ClustererWrapperDF[T_NativeEstimator]],
+    # but we provide the union with T_NativeClusterer to enable better
+    # code completion in IDEs that derive attributes through static code inspection.
+) -> Union[Type[ClustererWrapperDF[T_NativeClusterer]], T_NativeClusterer]:
+    """
+    Create an augmented version of a given clusterer that conforms with the
+    scikit-learn API.
+
+    The augmented version is realised as a wrapper class that
+
+    - implements enhanced functionality introduced by :class:`.ClustererDF`
+    - adopts all additional methods and attributes from the wrapped native clusterer
+    - delegates relevant method calls and attribute access to the native clusterer,
+      thus replicating the original clusterer's behaviour except for the enhanced
+      functionality introduced by :class:`.ClustererDF`
+
+    :param native_clusterer: the native clusterer to be augmented
+    :param name: the name of the resulting augmented clusterer, defaults to the name
+        of the native clusterer with "DF" appended
+    :param base_wrapper: the wrapper class used to create the augmented version
+    :return: the augmented clusterer class
+    """
+    return _wrap(
+        native_estimator=native_clusterer,
+        name=name,
+        base_wrapper=base_wrapper,
+        native_estimator_bound=ClusterMixin,
+        base_wrapper_bound=ClustererWrapperDF,
     )
 
 
