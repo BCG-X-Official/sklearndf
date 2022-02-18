@@ -70,8 +70,6 @@ PIPELINE_COVERAGE_EXCLUSIONS = GENERAL_COVERAGE_EXCLUSIONS
 
 CLUSTERER_COVERAGE_EXCLUSIONS = {
     *GENERAL_COVERAGE_EXCLUSIONS,
-    # class "FeatureAgglomeration" is already included via Transformers
-    "FeatureAgglomeration",
 }
 
 
