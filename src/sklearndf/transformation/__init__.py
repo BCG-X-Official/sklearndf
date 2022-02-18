@@ -1,5 +1,5 @@
 """
-Extended versions of all Scikit-Learn transformers with enhanced E2E support for data
+Extended versions of all `scikit-learn` transformers with enhanced support for data
 frames.
 """
 

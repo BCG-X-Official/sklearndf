@@ -1,5 +1,5 @@
 """
-Extended versions of all Scikit-Learn regressors with enhanced E2E support for data
+Extended versions of all `scikit-learn` regressors with enhanced support for data
 frames.
 """
 from .. import __sklearn_0_22__, __sklearn_0_23__, __sklearn_version__

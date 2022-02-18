@@ -14,7 +14,8 @@ def test_doc() -> None:
                 f"(?:{pattern})"
                 for pattern in (
                     # generated classes, except in the '.extra' subpackages
-                    r"(?:classification|regression|transformation)\.(?!extra\.).*",
+                    r"(?:classification|clustering|regression|transformation)"
+                    r"\.(?!extra\.).*",
                     # LGBM estimators in the '.extra' packages
                     r"(?:classification|regression)\.extra\.LGBM.*",
                     # BorutaDF
