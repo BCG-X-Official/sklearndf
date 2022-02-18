@@ -1,5 +1,5 @@
 """
-Extended versions of all Scikit-Learn pipelines with enhanced E2E support for data
+Extended versions of all `scikit-learn` pipelines with enhanced support for data
 frames.
 """
 from ._learner_pipeline import *
