@@ -22,6 +22,7 @@ dependencies:
   - flit = 3.0.*
   - isort ~= 5.5
   - jinja2 ~= 2.11
+  - markupsafe < 2.1  # markupsafe 2.1 breaks support for jinja2
   - m2r = 0.2.*
   - pluggy ~= 0.13
   - pre-commit ~= 2.7
