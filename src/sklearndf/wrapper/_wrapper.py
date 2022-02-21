@@ -13,6 +13,7 @@ The wrappers also implement the additional column attributes introduced by `skle
 
 import inspect
 import logging
+import warnings
 from abc import ABCMeta, abstractmethod
 from functools import update_wrapper
 from typing import (
@@ -465,6 +466,18 @@ class TransformerWrapperDF(
     :func:`.make_df_transformer`.
     """
 
+    @property
+    def feature_names_out_(self) -> pd.Index:
+        feature_names_out = super().feature_names_out_
+        self._check_feature_names_out(feature_names_out)
+        return feature_names_out
+
+    @property
+    def feature_names_original_(self) -> pd.Series:
+        feature_names_original_ = super().feature_names_original_
+        self._check_feature_names_out(feature_names_original_.index)
+        return feature_names_original_
+
     # noinspection PyPep8Naming
     def transform(self, X: pd.DataFrame) -> pd.DataFrame:
         """[see superclass]"""
@@ -508,6 +521,20 @@ class TransformerWrapperDF(
         return self._transformed_to_df(
             transformed=transformed, index=X.index, columns=self.feature_names_in_
         )
+
+    def _check_feature_names_out(self, wrapper_feature_names_out):
+        try:
+            native_feature_names_out = self.native_estimator.get_feature_names_out()
+            if not np.all(native_feature_names_out == wrapper_feature_names_out):
+                warnings.warn(
+                    "conflicting output feature names: "
+                    "the output feature names recorded by this transformer are "
+                    f"{wrapper_feature_names_out} but the input feature names recorded "
+                    f"by the wrapped native transformer are {native_feature_names_out}",
+                    stacklevel=2,
+                )
+        except AttributeError:
+            pass
 
     def _reset_fit(self) -> None:
         try:

@@ -177,11 +177,19 @@ def test_fit_transform(
         inverse_transformed_df, test_data.rename_axis(columns="feature_in")
     )
 
-    # test feature names in
+    # test feature names in and out
     if __sklearn_version__ >= __sklearn_1_0__:
         assert_array_equal(
             transformer_df.feature_names_in_.values,
             transformer_native.feature_names_in_,
+        )
+        assert_array_equal(
+            transformer_df.feature_names_out_.values,
+            transformer_native.get_feature_names_out(),
+        )
+        assert_array_equal(
+            transformer_df.feature_names_original_.index.values,
+            transformer_native.get_feature_names_out(),
         )
 
 
@@ -190,12 +198,24 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
     assert numeric_columns == ["c0", "c2"]
 
     feature_names_in_expected = test_data.columns.rename("feature_in")
+    verbose_feature_names_out_dict = {
+        "c0": "tx__c0",
+        "c1": "remainder__c1",
+        "c2": "tx__c2",
+        "c3": "keep__c3",
+    }
 
-    for remainder, output_names in [
+    for remainder, names in [
         ("drop", ["c0", "c2", "c3"]),
         ("passthrough", ["c0", "c2", "c3", "c1"]),
     ]:
-        feature_names_out_expected = pd.Index(output_names, name="feature_out")
+        if __sklearn_version__ >= __sklearn_1_0__:
+            feature_names_out_expected = pd.Index(
+                [verbose_feature_names_out_dict[name] for name in names],
+                name="feature_out",
+            )
+        else:
+            feature_names_out_expected = pd.Index(names, name="feature_out")
 
         # test fit-transform in connection with ColumnTransformer(DF)
         tx_df = StandardScalerDF()
@@ -226,7 +246,7 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
         assert col_tx_df.feature_names_in_.equals(feature_names_in_expected)
         assert col_tx_df.feature_names_out_.equals(feature_names_out_expected)
         assert col_tx_df.feature_names_original_.equals(
-            pd.Series(feature_names_out_expected, index=feature_names_out_expected)
+            pd.Series(names, index=feature_names_out_expected)
         )
 
         if __sklearn_version__ >= __sklearn_1_0__:

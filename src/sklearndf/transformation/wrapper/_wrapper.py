@@ -303,24 +303,37 @@ class ColumnTransformerWrapperDF(
         values the corresponding input column names.
         """
 
-        def _features_original(df_transformer: TransformerDF, columns: List[Any]):
+        verbose_feature_names_out = getattr(
+            self.native_estimator, "verbose_feature_names_out", None
+        )
+
+        def _features_original(
+            name: str, df_transformer: TransformerDF, columns: List[Any]
+        ):
             if df_transformer == ColumnTransformerWrapperDF.__PASSTHROUGH:
                 # we may get positional indices for columns selected by the
                 # 'passthrough' transformer, and in that case so need to look up the
                 # associated column names
                 if all(isinstance(column, int) for column in columns):
-                    column_names = self._get_features_in()[columns]
+                    input_column_names = self._get_features_in()[columns]
                 else:
-                    column_names = columns
-                return pd.Series(index=column_names, data=column_names)
-
+                    input_column_names = columns
             else:
-                return df_transformer.feature_names_original_
+                input_column_names = df_transformer.feature_names_original_.values
+
+            if verbose_feature_names_out:
+                output_column_names = [
+                    f"{name}__{column}" for column in input_column_names
+                ]
+            else:
+                output_column_names = input_column_names
+
+            return pd.Series(index=output_column_names, data=input_column_names)
 
         return pd.concat(
             [
-                _features_original(df_transformer, columns)
-                for _, df_transformer, columns in self.native_estimator.transformers_
+                _features_original(name, df_transformer, columns)
+                for name, df_transformer, columns in self.native_estimator.transformers_
                 if (
                     len(columns) > 0
                     and df_transformer != ColumnTransformerWrapperDF.__DROP
