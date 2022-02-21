@@ -23,7 +23,6 @@ requirements:
   run:
     - boruta_py{{ environ.get('FACET_V_BORUTA') }}
     - gamma-pytools{{ environ.get('FACET_V_GAMMA_PYTOOLS') }}
-    - lightgbm{{ environ.get('FACET_V_LIGHTGBM') }}
     - numpy{{ environ.get('FACET_V_NUMPY') }}
     - packaging{{ environ.get('FACET_V_PACKAGING') }}
     - pandas{{ environ.get('FACET_V_PANDAS') }}
