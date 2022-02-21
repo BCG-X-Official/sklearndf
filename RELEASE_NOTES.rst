@@ -32,10 +32,16 @@ This release adds support for `scikit-learn 0.24 <https://scikit-learn.org/0.24/
 *sklearndf* 1.1
 ---------------
 
+1.1.3
+~~~~~
+
+This release relaxes package dependencies to support any `numpy` version 1.`x` from 1.16
+
+
 1.1.2
 ~~~~~
 
-This release improves compatibility with scikit-learn and fixes bugs.
+This release improves compatibility with `scikit-learn` and fixes bugs.
 
 - API: add full support for the
   `_estimator_type <https://scikit-learn.org/stable/glossary.html#term-_estimator_type>`__
@@ -51,7 +57,7 @@ This release improves compatibility with scikit-learn and fixes bugs.
 This release addresses compatibility issues with meta-estimators.
 
 - FIX: support complex DF estimators inside :class:`.StackingEstimatorDF`
-- FIX: raise an exception if a base estimator is not supported by one of *sklearndf*'s
+- FIX: raise an exception if a base estimator is not supported by one of `sklearndf`'s
   implementations for DF meta-estimators
 
 
@@ -83,7 +89,7 @@ fixes.
   DF estimators
 - FIX: support ``"passthrough"`` transformer in :class:`.ColumnTransformerDF`
 - FIX: support ``drop`` parameter in :class:`.OneHotEncoderDF`
-- BUILD: add support for numpy 1.20
+- BUILD: add support for `numpy` 1.20
 - BUILD: updates and changes to the CI/CD pipeline
 
 
