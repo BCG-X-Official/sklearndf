@@ -18,10 +18,11 @@ requires = [
     "boruta         ~=0.3",
     "gamma-pytools  ~=1.1",
     "lightgbm       ~=3.0",
-    "numpy          >=1.16,<1.21a",
+    "numpy          >=1.16,<2a",
     "packaging      ==20.*",
     "pandas         >=0.24,<2a",
     "scikit-learn   >=0.21,<0.24a",
+    # scipy 1.6 conflicts with scikit-learn versions before 0.24, so we demand <1.6a
     "scipy          >=1.2,<1.6a",
 ]
 
@@ -90,7 +91,7 @@ gamma-pytools  = "~=1.1"
 lightgbm       = "~=3.2"
 numpy          = ">=1.20,<2a"  # cannot use ~= due to conda bug
 packaging      = "~=20.9"
-pandas         = "~=1.2"
+pandas         = "~=1.4"
 python         = ">=3.8,<4a"  # cannot use ~= due to conda bug
 scikit-learn   = "~=0.23.2"
 scipy          = "~=1.5.3"
