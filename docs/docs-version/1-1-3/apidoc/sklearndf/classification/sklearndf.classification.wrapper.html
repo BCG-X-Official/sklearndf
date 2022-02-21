@@ -1,0 +1,462 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearndf.classification.wrapper &#8212; sklearndf  documentation</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/gamma.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/gamma.js"></script>
+    <script src="../../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="sklearndf.classification.wrapper.ClassifierChainWrapperDF" href="wrapper/sklearndf.classification.wrapper.ClassifierChainWrapperDF.html" />
+    <link rel="prev" title="sklearndf.classification.extra.LGBMClassifierDF" href="extra/sklearndf.classification.extra.LGBMClassifierDF.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../../index.html">
+    
+      <img src="../../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../getting_started/getting_started.html">Getting started</a>
+        </li>
+        
+        <li class="nav-item active">
+            <a class="nav-link" href="../../sklearndf.html">API reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../contribution_guide.html">Development Guidelines</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../faqs.html">FAQ</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../release_notes.html">Release Notes</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+          
+            
+                <li class="">
+                    <a href="../sklearndf.ClassifierDF.html">sklearndf.ClassifierDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="../sklearndf.EstimatorDF.html">sklearndf.EstimatorDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="../sklearndf.LearnerDF.html">sklearndf.LearnerDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="../sklearndf.RegressorDF.html">sklearndf.RegressorDF</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="../sklearndf.TransformerDF.html">sklearndf.TransformerDF</a>
+                </li>
+            
+          
+            
+  
+                <li class="active">
+                    <a href="../sklearndf.classification.html">sklearndf.classification</a>
+                    <ul>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.AdaBoostClassifierDF.html">sklearndf.classification.AdaBoostClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.BaggingClassifierDF.html">sklearndf.classification.BaggingClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.BernoulliNBDF.html">sklearndf.classification.BernoulliNBDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.CalibratedClassifierCVDF.html">sklearndf.classification.CalibratedClassifierCVDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.CategoricalNBDF.html">sklearndf.classification.CategoricalNBDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.ClassifierChainDF.html">sklearndf.classification.ClassifierChainDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.ComplementNBDF.html">sklearndf.classification.ComplementNBDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.DecisionTreeClassifierDF.html">sklearndf.classification.DecisionTreeClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.DummyClassifierDF.html">sklearndf.classification.DummyClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.ExtraTreeClassifierDF.html">sklearndf.classification.ExtraTreeClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.ExtraTreesClassifierDF.html">sklearndf.classification.ExtraTreesClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.GaussianNBDF.html">sklearndf.classification.GaussianNBDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.GaussianProcessClassifierDF.html">sklearndf.classification.GaussianProcessClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.GradientBoostingClassifierDF.html">sklearndf.classification.GradientBoostingClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.KNeighborsClassifierDF.html">sklearndf.classification.KNeighborsClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.LabelPropagationDF.html">sklearndf.classification.LabelPropagationDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.LabelSpreadingDF.html">sklearndf.classification.LabelSpreadingDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.LinearDiscriminantAnalysisDF.html">sklearndf.classification.LinearDiscriminantAnalysisDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.LinearSVCDF.html">sklearndf.classification.LinearSVCDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.LogisticRegressionCVDF.html">sklearndf.classification.LogisticRegressionCVDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.LogisticRegressionDF.html">sklearndf.classification.LogisticRegressionDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.MLPClassifierDF.html">sklearndf.classification.MLPClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.MultiOutputClassifierDF.html">sklearndf.classification.MultiOutputClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.MultinomialNBDF.html">sklearndf.classification.MultinomialNBDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.NearestCentroidDF.html">sklearndf.classification.NearestCentroidDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.NuSVCDF.html">sklearndf.classification.NuSVCDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.OneVsOneClassifierDF.html">sklearndf.classification.OneVsOneClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.OneVsRestClassifierDF.html">sklearndf.classification.OneVsRestClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.OutputCodeClassifierDF.html">sklearndf.classification.OutputCodeClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.PassiveAggressiveClassifierDF.html">sklearndf.classification.PassiveAggressiveClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.PerceptronDF.html">sklearndf.classification.PerceptronDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.QuadraticDiscriminantAnalysisDF.html">sklearndf.classification.QuadraticDiscriminantAnalysisDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.RadiusNeighborsClassifierDF.html">sklearndf.classification.RadiusNeighborsClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.RandomForestClassifierDF.html">sklearndf.classification.RandomForestClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.RidgeClassifierCVDF.html">sklearndf.classification.RidgeClassifierCVDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.RidgeClassifierDF.html">sklearndf.classification.RidgeClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.SGDClassifierDF.html">sklearndf.classification.SGDClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.SVCDF.html">sklearndf.classification.SVCDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.StackingClassifierDF.html">sklearndf.classification.StackingClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.VotingClassifierDF.html">sklearndf.classification.VotingClassifierDF</a>
+                        </li>
+                    
+                        <li class="">
+                            <a href="sklearndf.classification.extra.html">sklearndf.classification.extra</a>
+                        </li>
+                    
+                        <li class="active">
+                            <a href="">sklearndf.classification.wrapper</a>
+                        </li>
+                    
+                    </ul>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="../sklearndf.pipeline.html">sklearndf.pipeline</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="../sklearndf.regression.html">sklearndf.regression</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="../sklearndf.transformation.html">sklearndf.transformation</a>
+                </li>
+            
+          
+            
+                <li class="">
+                    <a href="../sklearndf.wrapper.html">sklearndf.wrapper</a>
+                </li>
+            
+          
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#classes" class="nav-link">Classes</a>
+        </li>
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="module-sklearndf.classification.wrapper">
+<span id="sklearndf-classification-wrapper"></span><h1>sklearndf.classification.wrapper<a class="headerlink" href="#module-sklearndf.classification.wrapper" title="Permalink to this headline">¶</a></h1>
+<p>Wrapper classes to enhance the functionality of native classifiers conforming with the
+scikit-learn API.</p>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<table class="longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.classification.wrapper.ClassifierChainWrapperDF.html#sklearndf.classification.wrapper.ClassifierChainWrapperDF" title="sklearndf.classification.wrapper.ClassifierChainWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClassifierChainWrapperDF</span></code></a></p></td>
+<td><p>DF wrapper for <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.multioutput.ClassifierChain.html#sklearn.multioutput.ClassifierChain" title="(in scikit-learn v1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.multioutput.ClassifierChain</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF.html#sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF" title="sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LinearDiscriminantAnalysisWrapperDF</span></code></a></p></td>
+<td><p>DF wrapper for <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="(in scikit-learn v1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.discriminant_analysis.LinearDiscriminantAnalysis</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.classification.wrapper.MetaClassifierWrapperDF.html#sklearndf.classification.wrapper.MetaClassifierWrapperDF" title="sklearndf.classification.wrapper.MetaClassifierWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MetaClassifierWrapperDF</span></code></a></p></td>
+<td><p>Abstract base class of DF wrappers for classifiers implementing <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.MetaEstimatorMixin</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.classification.wrapper.MultiOutputClassifierWrapperDF.html#sklearndf.classification.wrapper.MultiOutputClassifierWrapperDF" title="sklearndf.classification.wrapper.MultiOutputClassifierWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiOutputClassifierWrapperDF</span></code></a></p></td>
+<td><p>DF wrapper for <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.multioutput.MultiOutputClassifier.html#sklearn.multioutput.MultiOutputClassifier" title="(in scikit-learn v1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.multioutput.MultiOutputClassifier</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.classification.wrapper.StackingClassifierWrapperDF.html#sklearndf.classification.wrapper.StackingClassifierWrapperDF" title="sklearndf.classification.wrapper.StackingClassifierWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StackingClassifierWrapperDF</span></code></a></p></td>
+<td><p>Abstract base class of DF wrappers for classifiers implementing <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.ensemble._BaseStacking</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+    <a class='left-prev' id="prev-link" href="extra/sklearndf.classification.extra.LGBMClassifierDF.html" title="previous page">sklearndf.classification.extra.LGBMClassifierDF</a>
+    <a class='right-next' id="next-link" href="wrapper/sklearndf.classification.wrapper.ClassifierChainWrapperDF.html" title="next page">sklearndf.classification.wrapper.ClassifierChainWrapperDF</a>
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2021, Boston Consulting Group (BCG).<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

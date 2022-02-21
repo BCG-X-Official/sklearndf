@@ -1,0 +1,38 @@
+sklearndf.pipeline.wrapper
+==========================
+
+.. automodule:: sklearndf.pipeline.wrapper
+   :no-imported-members:
+
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: wrapper
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      FeatureUnionWrapperDF
+      PipelineWrapperDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

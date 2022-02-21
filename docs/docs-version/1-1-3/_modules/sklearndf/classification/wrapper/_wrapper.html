@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearndf.classification.wrapper._wrapper &#8212; sklearndf  documentation</title>
+    
+  <link rel="stylesheet" href="../../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/gamma.css" />
+    
+  <link rel="preload" as="script" href="../../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/gamma.js"></script>
+    <script src="../../../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main">
+<div class="container-xl">
+
+    <a class="navbar-brand" href="../../../../index.html">
+    
+      <img src="../../../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo" />
+    
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar-menu" class="col-lg-9 collapse navbar-collapse">
+      <ul id="navbar-main-elements" class="navbar-nav mr-auto">
+        
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../../getting_started/getting_started.html">Getting started</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../../apidoc/sklearndf.html">API reference</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../../tutorials.html">Tutorials</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../../contribution_guide.html">Development Guidelines</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../../faqs.html">FAQ</a>
+        </li>
+        
+        <li class="nav-item ">
+            <a class="nav-link" href="../../../../release_notes.html">Release Notes</a>
+        </li>
+        
+        
+      </ul>
+
+
+      
+
+      <ul class="navbar-nav">
+        
+        
+      </ul>
+    </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+
+    <div class="bd-toc-item active">
+    
+  
+    <ul class="nav bd-sidenav">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+  
+  </nav>
+          </div>
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+              
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+    </ul>
+</nav>
+
+
+              
+          </div>
+          
+
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for sklearndf.classification.wrapper._wrapper</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Core implementation of :mod:`sklearndf.classification.wrapper`</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">ClassifierMixin</span>
+<span class="kn">from</span> <span class="nn">sklearn.discriminant_analysis</span> <span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span>
+<span class="kn">from</span> <span class="nn">sklearn.multioutput</span> <span class="kn">import</span> <span class="n">ClassifierChain</span><span class="p">,</span> <span class="n">MultiOutputClassifier</span>
+
+<span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span>
+
+<span class="kn">from</span> <span class="nn">sklearndf</span> <span class="kn">import</span> <span class="n">ClassifierDF</span><span class="p">,</span> <span class="n">LearnerDF</span>
+<span class="kn">from</span> <span class="nn">sklearndf.transformation.wrapper</span> <span class="kn">import</span> <span class="n">NComponentsDimensionalityReductionWrapperDF</span>
+<span class="kn">from</span> <span class="nn">sklearndf.wrapper</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">,</span>
+    <span class="n">MetaEstimatorWrapperDF</span><span class="p">,</span>
+    <span class="n">StackingEstimatorWrapperDF</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;ClassifierChainWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LinearDiscriminantAnalysisWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MetaClassifierWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MultiOutputClassifierWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;StackingClassifierWrapperDF&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1">#</span>
+<span class="c1"># Type variables</span>
+<span class="c1">#</span>
+
+<span class="n">T_NativeClassifier</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_NativeClassifier&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">ClassifierMixin</span><span class="p">)</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Ensure all symbols introduced below are included in __all__</span>
+<span class="c1">#</span>
+
+<span class="n">__tracker</span> <span class="o">=</span> <span class="n">AllTracker</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Wrapper classes</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="LinearDiscriminantAnalysisWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/classification/wrapper/sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF.html#sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">LinearDiscriminantAnalysisWrapperDF</span><span class="p">(</span>
+    <span class="n">NComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">LinearDiscriminantAnalysis</span><span class="p">],</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">LinearDiscriminantAnalysis</span><span class="p">],</span>
+    <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DF wrapper for</span>
+<span class="sd">    :class:`sklearn.discriminant_analysis.LinearDiscriminantAnalysis`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="MetaClassifierWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/classification/wrapper/sklearndf.classification.wrapper.MetaClassifierWrapperDF.html#sklearndf.classification.wrapper.MetaClassifierWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">MetaClassifierWrapperDF</span><span class="p">(</span>
+    <span class="n">MetaEstimatorWrapperDF</span><span class="p">[</span><span class="n">T_NativeClassifier</span><span class="p">],</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">,</span>
+    <span class="n">Generic</span><span class="p">[</span><span class="n">T_NativeClassifier</span><span class="p">],</span>
+    <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract base class of DF wrappers for classifiers implementing</span>
+<span class="sd">    :class:`sklearn.base.MetaEstimatorMixin`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="MultiOutputClassifierWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/classification/wrapper/sklearndf.classification.wrapper.MultiOutputClassifierWrapperDF.html#sklearndf.classification.wrapper.MultiOutputClassifierWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">MultiOutputClassifierWrapperDF</span><span class="p">(</span>
+    <span class="n">MetaClassifierWrapperDF</span><span class="p">[</span><span class="n">MultiOutputClassifier</span><span class="p">],</span>
+    <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DF wrapper for :class:`sklearn.multioutput.MultiOutputClassifier`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_prediction_with_class_labels</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+        <span class="n">classes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]:</span>
+
+        <span class="c1"># if we have a multi-output classifier, prediction of probabilities</span>
+        <span class="c1"># yields a list of NumPy arrays</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;prediction of multi-output classifier expected to be a list of NumPy &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;arrays, but got type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">delegate_estimator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span>
+
+        <span class="c1"># store the super() object as this is not available within a generator</span>
+        <span class="n">sup</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span>
+
+        <span class="c1"># estimators attribute of abstract class MultiOutputEstimator</span>
+        <span class="c1"># usually the delegate estimator will provide a list of estimators used</span>
+        <span class="c1"># to predict each output. If present, use these estimators to get</span>
+        <span class="c1"># individual class labels for each output; otherwise we cannot assign class</span>
+        <span class="c1"># labels</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">delegate_estimator</span><span class="p">,</span> <span class="s2">&quot;estimators_&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span>
+                <span class="n">sup</span><span class="o">.</span><span class="n">_prediction_with_class_labels</span><span class="p">(</span>
+                    <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="nb">getattr</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="s2">&quot;classes_&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">estimator</span><span class="p">,</span> <span class="n">output</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+                    <span class="nb">getattr</span><span class="p">(</span><span class="n">delegate_estimator</span><span class="p">,</span> <span class="s2">&quot;estimators_&quot;</span><span class="p">),</span> <span class="n">y</span>
+                <span class="p">)</span>
+            <span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span>
+                <span class="n">sup</span><span class="o">.</span><span class="n">_prediction_with_class_labels</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">y</span>
+            <span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="ClassifierChainWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/classification/wrapper/sklearndf.classification.wrapper.ClassifierChainWrapperDF.html#sklearndf.classification.wrapper.ClassifierChainWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">ClassifierChainWrapperDF</span><span class="p">(</span>
+    <span class="n">MetaClassifierWrapperDF</span><span class="p">[</span><span class="n">ClassifierChain</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DF wrapper for :class:`sklearn.multioutput.ClassifierChain`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_prediction_with_class_labels</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+        <span class="n">classes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]:</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_prediction_with_class_labels</span><span class="p">(</span>
+            <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_outputs_</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<span class="c1"># noinspection PyProtectedMember</span>
+<span class="kn">from</span> <span class="nn">...wrapper._adapter</span> <span class="kn">import</span> <span class="n">ClassifierNPDF</span> <span class="k">as</span> <span class="n">_ClassifierNPDF</span>
+
+<span class="c1"># noinspection PyProtectedMember</span>
+<span class="kn">from</span> <span class="nn">...wrapper._wrapper</span> <span class="kn">import</span> <span class="n">_StackableClassifierDF</span>
+
+
+<div class="viewcode-block" id="StackingClassifierWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/classification/wrapper/sklearndf.classification.wrapper.StackingClassifierWrapperDF.html#sklearndf.classification.wrapper.StackingClassifierWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">StackingClassifierWrapperDF</span><span class="p">(</span>
+    <span class="n">StackingEstimatorWrapperDF</span><span class="p">[</span><span class="n">T_NativeClassifier</span><span class="p">],</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">,</span>
+    <span class="n">Generic</span><span class="p">[</span><span class="n">T_NativeClassifier</span><span class="p">],</span>
+    <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract base class of DF wrappers for classifiers implementing</span>
+<span class="sd">    :class:`sklearn.ensemble._stacking._BaseStacking`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_make_default_final_estimator</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">LearnerDF</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">sklearndf.classification</span> <span class="kn">import</span> <span class="n">LogisticRegressionDF</span>
+
+        <span class="k">return</span> <span class="n">LogisticRegressionDF</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_estimators_features_out</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">classes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">classes_</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_estimators_features_out</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">names</span>
+
+    <span class="k">def</span> <span class="nf">_make_stackable_learner_df</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">learner</span><span class="p">:</span> <span class="n">ClassifierDF</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_StackableClassifierDF</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_StackableClassifierDF</span><span class="p">(</span><span class="n">learner</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_make_learner_np_df</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">delegate</span><span class="p">:</span> <span class="n">ClassifierDF</span><span class="p">,</span> <span class="n">column_names</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_ClassifierNPDF</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_ClassifierNPDF</span><span class="p">(</span><span class="n">delegate</span><span class="p">,</span> <span class="n">column_names</span><span class="p">)</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># Validate __all__</span>
+<span class="c1">#</span>
+
+<span class="n">__tracker</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+</pre></div>
+
+              </div>
+              
+              
+              <div class='prev-next-bottom'>
+                
+
+              </div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+
+    
+  <script src="../../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    <p>
+          &copy; Copyright 2021, Boston Consulting Group (BCG).<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
