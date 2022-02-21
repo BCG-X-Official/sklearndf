@@ -15,6 +15,7 @@ Release Notes
 - API: class :class:`.EstimatorDF` now implements the :class:`.HasExpressionRepr`
   mix-in, rendering estimator representations as :class:`.Expression` objects
   to enable better formatting
+- API: add data frame support for method ``partial_fit()``
 - API: :class:`.OutlierRemoverDF` is removed from available transformers
 - API: `lightgbm` is no longer a dependency. :class:`LGBMClassifier` and
   :class:`LGBMRegressor` are available only if package is installed by a user

@@ -12,6 +12,7 @@ from pytools.api import AllTracker, inheritdoc
 
 from .. import (
     ClassifierDF,
+    ClustererDF,
     EstimatorDF,
     LearnerDF,
     RegressorDF,
@@ -26,6 +27,7 @@ __all__ = [
     "SupervisedLearnerPipelineDF",
     "RegressorPipelineDF",
     "ClassifierPipelineDF",
+    "ClustererPipelineDF",
 ]
 
 T_EstimatorPipelineDF = TypeVar("T_EstimatorPipelineDF", bound="_EstimatorPipelineDF")
@@ -36,6 +38,7 @@ T_FinalSupervisedLearnerDF = TypeVar(
 )
 T_FinalRegressorDF = TypeVar("T_FinalRegressorDF", bound=RegressorDF)
 T_FinalClassifierDF = TypeVar("T_FinalClassifierDF", bound=ClassifierDF)
+T_FinalClustererDF = TypeVar("T_FinalClustererDF", bound=ClustererDF)
 
 
 #
@@ -217,15 +220,6 @@ class LearnerPipelineDF(
         """[see superclass]"""
         return self.final_estimator.predict(self._pre_transform(X), **predict_params)
 
-    # noinspection PyPep8Naming
-    def fit_predict(
-        self, X: pd.DataFrame, y: pd.Series, **fit_params: Any
-    ) -> Union[pd.Series, pd.DataFrame]:
-        """[see superclass]"""
-        return self.final_estimator.fit_predict(
-            self._pre_fit_transform(X, y, **fit_params), y, **fit_params
-        )
-
 
 @inheritdoc(match="[see superclass]")
 class SupervisedLearnerPipelineDF(
@@ -367,6 +361,64 @@ class ClassifierPipelineDF(
         """[see superclass]"""
         return self.classifier.decision_function(
             self._pre_transform(X), **predict_params
+        )
+
+
+@inheritdoc(match="[see superclass]")
+class ClustererPipelineDF(
+    LearnerPipelineDF[T_FinalClustererDF],
+    ClustererDF,
+    Generic[T_FinalClustererDF],
+):
+    """
+    A data frame enabled pipeline with an optional preprocessing step and a
+    mandatory clustering step.
+    """
+
+    def __init__(
+        self,
+        *,
+        preprocessing: Optional[TransformerDF] = None,
+        clusterer: T_FinalClustererDF,
+    ) -> None:
+        """
+        :param preprocessing: the preprocessing step in the pipeline (default: ``None``)
+        :param clusterer: the clusterer used in the pipeline
+        :type clusterer: :class:`.ClustererDF`
+        """
+        super().__init__(preprocessing=preprocessing)
+
+        if not isinstance(clusterer, ClustererDF):
+            raise TypeError(
+                f"arg predictor expected to be a {ClustererDF.__name__} but is a "
+                f"{type(clusterer).__name__}"
+            )
+        self.clusterer = clusterer
+
+    @property
+    def final_estimator(self) -> T_FinalClustererDF:
+        """[see superclass]"""
+        return self.clusterer
+
+    @property
+    def final_estimator_name(self) -> str:
+        """[see superclass]"""
+        return "clusterer"
+
+    @property
+    def labels_(self) -> pd.Series:
+        """[see superclass]"""
+        return self.final_estimator.labels_
+
+    def fit_predict(
+        self,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        **fit_predict_params: Any,
+    ) -> Union[pd.Series, pd.DataFrame]:
+        """[see superclass]"""
+        return self.clusterer.fit_predict(
+            self._pre_transform(X), y, **fit_predict_params
         )
 
 
