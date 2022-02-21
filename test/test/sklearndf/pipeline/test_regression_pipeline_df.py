@@ -1,12 +1,12 @@
 import numpy as np
 import pandas as pd
 import pytest
-from lightgbm import LGBMRegressor
 from sklearn.base import is_regressor
+from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import OneHotEncoder
 
 from sklearndf.pipeline import RegressorPipelineDF
-from sklearndf.regression.extra import LGBMRegressorDF
+from sklearndf.regression import LinearRegressionDF
 from test.sklearndf.pipeline import make_simple_transformer
 
 
@@ -15,7 +15,7 @@ def test_regression_pipeline_df(
 ) -> None:
 
     rpdf = RegressorPipelineDF(
-        regressor=LGBMRegressorDF(),
+        regressor=LinearRegressionDF(),
         preprocessing=make_simple_transformer(
             impute_median_columns=boston_features.select_dtypes(
                 include=np.number
@@ -34,4 +34,4 @@ def test_regression_pipeline_df(
     # test type check within constructor
     with pytest.raises(TypeError):
         # noinspection PyTypeChecker
-        RegressorPipelineDF(regressor=LGBMRegressor(), preprocessing=OneHotEncoder())
+        RegressorPipelineDF(regressor=LinearRegression(), preprocessing=OneHotEncoder())
