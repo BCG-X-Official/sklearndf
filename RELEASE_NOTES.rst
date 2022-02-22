@@ -7,7 +7,8 @@ Release Notes
 1.1.3
 ~~~~~
 
-This release relaxes package dependencies to support any `numpy` version 1.`x` from 1.16
+This release relaxes package dependencies to support any `numpy` version `1.x` from
+1.16.
 
 
 1.1.2
