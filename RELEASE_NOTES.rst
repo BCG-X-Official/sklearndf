@@ -4,6 +4,15 @@ Release Notes
 *sklearndf* 1.2
 ---------------
 
+This release adds support for `scikit-learn 0.24 <https://scikit-learn.org/0.24/>`_.
+
+
+1.2.3
+~~~~~
+
+This release catches up with *sklearndf* 1.1.3.
+
+
 1.2.2
 ~~~~~
 
@@ -22,8 +31,6 @@ This is a maintenance release to catch up with *sklearndf* 1.1.1.
 
 1.2.0
 ~~~~~
-
-This release adds support for `scikit-learn 0.24 <https://scikit-learn.org/0.24/>`_.
 
 - API: add `DF` adaptations for classes introduced by scikit-learn 0.24:
   :class:`.PolynomialCountSketchDF` and :class:`.SequentialFeatureSelectorDF`
