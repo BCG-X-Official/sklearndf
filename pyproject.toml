@@ -48,6 +48,7 @@ testing = [
     "flake8 ~= 3.8",
     "flake8-comprehensions ~= 3.2",
     "isort ~= 5.5",
+    "lightgbm ~=3.0.0",
 ]
 docs = [
     "sphinx ~= 4.2",
@@ -69,6 +70,7 @@ Repository = "https://github.com/BCG-Gamma/sklearndf"
 # direct requirements of sklearndf
 boruta         = "~=0.3.0"
 gamma-pytools  = "~=2.0.dev1"
+lightgbm       = "~=3.0.0"
 numpy          = ">=1.16.6,<1.17a"  # cannot use ~= due to conda bug
 pandas         = "~=0.24.2"
 packaging      = "~=20.9"
@@ -84,6 +86,7 @@ typing_inspect = "~=0.4.0"
 # direct requirements of sklearndf
 boruta         = "~=0.3"
 gamma-pytools  = ">=2dev0,<3a"
+lightgbm       = "~=3.2"
 numpy          = ">=1.20,<2a"  # cannot use ~= due to conda bug
 packaging      = ">=20"
 pandas         = "~=1.2"

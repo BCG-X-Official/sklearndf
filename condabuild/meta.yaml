@@ -41,6 +41,7 @@ test:
     - sklearndf.transformation.extra
   requires:
     - pytest=5.2.*
+    - lightgbm {{ environ.get('FACET_V_LIGHTGBM') }}
   commands:
     - conda list
     - python -c 'import sklearndf;
