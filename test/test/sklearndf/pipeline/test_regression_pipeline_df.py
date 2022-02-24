@@ -3,11 +3,9 @@ import pandas as pd
 import pytest
 from lightgbm import LGBMRegressor
 from sklearn.base import is_regressor
-from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import OneHotEncoder
 
 from sklearndf.pipeline import RegressorPipelineDF
-from sklearndf.regression import LinearRegressionDF
 from sklearndf.regression.extra import LGBMRegressorDF
 from test.sklearndf.pipeline import make_simple_transformer
 
