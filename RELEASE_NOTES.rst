@@ -10,7 +10,7 @@ This release adds support for `scikit-learn 0.24 <https://scikit-learn.org/0.24/
 1.2.3
 ~~~~~
 
-This release catches up with *sklearndf* 1.1.3.
+This is a maintenance release to catch up with *sklearndf* 1.1.3.
 
 
 1.2.2
