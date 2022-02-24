@@ -2,7 +2,6 @@
 Core implementation of :mod:`sklearndf.regression.extra`
 """
 import logging
-import sys
 import warnings
 
 from pytools.api import AllTracker
@@ -27,7 +26,7 @@ try:
 
     __all__.append("LGBMRegressorDF")
 except ImportError:
-    pass
+    LGBMRegressor = None
 
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
 
@@ -43,7 +42,7 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 # Class definitions
 #
 
-if "lightgbm" in sys.modules:
+if LGBMRegressor:
     LGBMRegressorDF = make_df_regressor(LGBMRegressor)
 
 
