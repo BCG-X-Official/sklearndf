@@ -74,7 +74,7 @@ lightgbm       = "~=3.0.0"
 numpy          = "==1.16.6"  # cannot use ~= due to conda bug
 pandas         = "~=0.24.2"
 packaging      = "~=20.9"
-python         = ">=3.7,<3.8a"    # cannot use ~= due to conda bug
+python         = ">=3.7.12,<3.8a"    # cannot use ~= due to conda bug
 scikit-learn   = "~=0.21.0"
 scipy          = "~=1.2.1"
 # additional minimum requirements of gamma-pytools
