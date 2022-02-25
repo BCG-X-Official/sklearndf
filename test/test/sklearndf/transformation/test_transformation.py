@@ -27,11 +27,11 @@ from sklearndf import (
     __sklearn_version__,
 )
 from sklearndf.classification import RandomForestClassifierDF
+from sklearndf.clustering import FeatureAgglomerationDF
 from sklearndf.transformation import (
     RFECVDF,
     RFEDF,
     ColumnTransformerDF,
-    FeatureAgglomerationDF,
     KBinsDiscretizerDF,
     NormalizerDF,
     OneHotEncoderDF,
@@ -65,6 +65,7 @@ TRANSFORMERS_TO_TEST = iterate_classes(
     matching=r".*DF",
     excluding=TRANSFORMER_EXCLUSIONS,
 )
+TRANSFORMERS_TO_TEST.append(FeatureAgglomerationDF)
 
 
 @pytest.fixture

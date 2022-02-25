@@ -4,7 +4,6 @@ Core implementation of :mod:`sklearndf.transformation`
 
 import logging
 
-from sklearn.cluster import FeatureAgglomeration
 from sklearn.compose import ColumnTransformer
 from sklearn.cross_decomposition import PLSSVD
 from sklearn.decomposition import (
@@ -99,7 +98,6 @@ __all__ = [
     "DictionaryLearningDF",
     "FactorAnalysisDF",
     "FastICADF",
-    "FeatureAgglomerationDF",
     "FeatureHasherDF",
     "FunctionTransformerDF",
     "GaussianRandomProjectionDF",
@@ -166,16 +164,6 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 #
 # Class definitions
 #
-
-#
-# cluster
-#
-
-
-FeatureAgglomerationDF = make_df_transformer(
-    FeatureAgglomeration, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
-
 
 #
 # compose

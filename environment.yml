@@ -6,22 +6,23 @@ dependencies:
   # run
   - boruta_py ~= 0.3
   - gamma-pytools >= 2dev0, <3a
-  - joblib = 1.*
+  - joblib ~= 1.1
   - lightgbm ~= 3.2
   - matplotlib ~= 3.3
-  - numpy ~= 1.16
-  - pandas ~= 1.2
+  - numpy ~= 1.22
+  - pandas ~= 1.4
   - python ~= 3.8
   - scikit-learn ~= 1.0.2
   - scipy ~= 1.6
   # build/test
   - black ~= 22.1
-  - conda-build ~= 3.20
+  - conda-build ~= 3.21
   - conda-verify ~= 3.1
   - docutils ~= 0.17
   - flit = 3
   - isort ~= 5.5
   - jinja2 ~= 2.11
+  - markupsafe < 2.1  # markupsafe 2.1 breaks support for jinja2
   - m2r ~= 0.2
   - mypy ~= 0.931
   - pluggy ~= 0.13
