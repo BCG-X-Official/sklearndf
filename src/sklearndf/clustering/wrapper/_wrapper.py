@@ -7,16 +7,18 @@ from abc import ABCMeta
 from typing import Generic, TypeVar
 
 import pandas as pd
-from sklearn.cluster import KMeans, MiniBatchKMeans
+from sklearn.cluster import FeatureAgglomeration, KMeans, MiniBatchKMeans
 
 from pytools.api import AllTracker
 
+from sklearndf.transformation.wrapper import ColumnPreservingTransformerWrapperDF
 from sklearndf.wrapper import ClustererWrapperDF
 
 log = logging.getLogger(__name__)
 
 __all__ = [
     "KMeansBaseWrapperDF",
+    "FeatureAgglomerationWrapperDF",
 ]
 
 #
@@ -66,6 +68,18 @@ class KMeansBaseWrapperDF(
                 len(raw_cluster_centers), name=KMeansBaseWrapperDF.IDX_CLUSTER
             ),
         )
+
+
+class FeatureAgglomerationWrapperDF(
+    ClustererWrapperDF[FeatureAgglomeration],
+    ColumnPreservingTransformerWrapperDF[FeatureAgglomeration],
+    metaclass=ABCMeta,
+):
+    """
+    DF wrapper for FeatureAgglomeration that combines clusterer and transformer.
+    """
+
+    pass
 
 
 #

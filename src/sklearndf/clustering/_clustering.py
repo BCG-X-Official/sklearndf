@@ -9,6 +9,7 @@ from sklearn.cluster import (
     AffinityPropagation,
     AgglomerativeClustering,
     Birch,
+    FeatureAgglomeration,
     KMeans,
     MeanShift,
     MiniBatchKMeans,
@@ -18,7 +19,7 @@ from sklearn.cluster import (
 from pytools.api import AllTracker
 
 from ..wrapper import make_df_clusterer
-from .wrapper import KMeansBaseWrapperDF
+from .wrapper import FeatureAgglomerationWrapperDF, KMeansBaseWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -27,6 +28,7 @@ __all__ = [
     "AgglomerativeClusteringDF",
     "BirchDF",
     "DBSCANDF",
+    "FeatureAgglomerationDF",
     "KMeansDF",
     "MiniBatchKMeansDF",
     "MeanShiftDF",
@@ -57,7 +59,9 @@ MiniBatchKMeansDF = make_df_clusterer(MiniBatchKMeans, base_wrapper=KMeansBaseWr
 MeanShiftDF = make_df_clusterer(MeanShift)
 OPTICSDF = make_df_clusterer(OPTICS)
 SpectralClusteringDF = make_df_clusterer(SpectralClustering)
-
+FeatureAgglomerationDF = make_df_clusterer(
+    FeatureAgglomeration, base_wrapper=FeatureAgglomerationWrapperDF
+)
 
 #
 # Validate __all__
