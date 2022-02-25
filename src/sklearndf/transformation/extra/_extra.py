@@ -1,6 +1,7 @@
 """
 Core implementation of :mod:`sklearndf.transformation.extra`
 """
+from __future__ import annotations
 
 import logging
 from typing import Any, Optional, Union
@@ -62,7 +63,7 @@ class OutlierRemoverDF(TransformerDF, BaseEstimator):
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
-    ) -> "OutlierRemoverDF":
+    ) -> OutlierRemoverDF:
         """
         Fit this transformer, establishing the thresholds for outlier removal.
 

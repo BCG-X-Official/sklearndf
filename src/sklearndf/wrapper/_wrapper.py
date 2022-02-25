@@ -10,6 +10,7 @@ The wrappers also implement the additional column attributes introduced by `skle
 :meth:`~EstimatorDF.feature_names_in_`, :meth:`~TransformerDF.feature_names_out_`, and
 :meth:`~TransformerDF.feature_names_original_`.
 """
+from __future__ import annotations
 
 import inspect
 import logging
@@ -244,7 +245,7 @@ class EstimatorWrapperDF(
         """[see superclass]"""
         return self._native_estimator.get_params(deep=deep)
 
-    def set_params(self: T_EstimatorWrapperDF, **params: Any) -> "T_EstimatorWrapperDF":
+    def set_params(self: T_EstimatorWrapperDF, **params: Any) -> T_EstimatorWrapperDF:
         """[see superclass]"""
         self._native_estimator.set_params(**params)
         return self
@@ -1016,7 +1017,7 @@ class StackingEstimatorWrapperDF(
     @abstractmethod
     def _make_stackable_learner_df(
         self, learner: SupervisedLearnerDF
-    ) -> "_StackableSupervisedLearnerDF":
+    ) -> _StackableSupervisedLearnerDF:
         pass
 
     @abstractmethod
@@ -1062,7 +1063,7 @@ class _StackableSupervisedLearnerDF(
         X: pd.DataFrame,
         y: np.ndarray = None,
         **fit_params: Any,
-    ) -> "T_StackableSupervisedLearnerDF":
+    ) -> T_StackableSupervisedLearnerDF:
         """[see superclass]"""
         self.delegate.fit(X, self._convert_y_to_series(X, y), **fit_params)
         return self
