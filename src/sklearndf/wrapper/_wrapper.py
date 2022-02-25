@@ -10,8 +10,6 @@ The wrappers also implement the additional column attributes introduced by `skle
 :meth:`~EstimatorDF.feature_names_in_`, :meth:`~TransformerDF.feature_names_out_`, and
 :meth:`~TransformerDF.feature_names_original_`.
 """
-from __future__ import annotations
-
 import inspect
 import logging
 from abc import ABCMeta, abstractmethod
@@ -1017,7 +1015,7 @@ class StackingEstimatorWrapperDF(
     @abstractmethod
     def _make_stackable_learner_df(
         self, learner: SupervisedLearnerDF
-    ) -> _StackableSupervisedLearnerDF:
+    ) -> "_StackableSupervisedLearnerDF":
         pass
 
     @abstractmethod
