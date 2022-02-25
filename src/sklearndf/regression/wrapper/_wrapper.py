@@ -44,7 +44,6 @@ __all__ = [
 T_PartialFitRegressorWrapperDF = TypeVar(
     "T_PartialFitRegressorWrapperDF", bound="PartialFitRegressorWrapperDF"
 )
-T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
 T_NativeRegressor = TypeVar("T_NativeRegressor", bound=RegressorMixin)
 
 
@@ -171,9 +170,9 @@ class StackingRegressorWrapperDF(
 
 
 class RegressorTransformerWrapperDF(
-    RegressorWrapperDF[T_Regressor],
-    ColumnPreservingTransformerWrapperDF[T_Regressor],
-    Generic[T_Regressor],
+    RegressorWrapperDF[T_NativeRegressor],
+    ColumnPreservingTransformerWrapperDF[T_NativeRegressor],
+    Generic[T_NativeRegressor],
     metaclass=ABCMeta,
 ):
     """
