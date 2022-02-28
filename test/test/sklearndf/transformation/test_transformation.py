@@ -39,7 +39,6 @@ from sklearndf.transformation import (
     SparseCoderDF,
     StandardScalerDF,
 )
-from sklearndf.transformation.extra import OutlierRemoverDF
 from sklearndf.wrapper import TransformerWrapperDF
 
 TRANSFORMER_EXCLUSIONS = [
@@ -300,20 +299,6 @@ def df_outlier() -> pd.DataFrame:
             "c3": [0, 1, 2, 3, 10],
         }
     )
-
-
-def test_outlier_remover(df_outlier: pd.DataFrame) -> None:
-    outlier_remover = OutlierRemoverDF(iqr_multiple=2)
-    df_transformed = outlier_remover.fit_transform(df_outlier)
-    df_transformed_expected = pd.DataFrame(
-        data={
-            "c0": [0, 1, 2, 3, 4],
-            "c1": [np.nan, 0, 0, 0, np.nan],
-            "c2": [np.nan, 0, 1, 2, 3],
-            "c3": [0, 1, 2, 3, np.nan],
-        }
-    )
-    assert_frame_equal(df_transformed, df_transformed_expected)
 
 
 def test_one_hot_encoding() -> None:
