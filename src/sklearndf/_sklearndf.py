@@ -3,11 +3,9 @@ Core implementation of :mod:`sklearndf`
 """
 import inspect
 import logging
-import warnings
 from abc import ABCMeta, abstractmethod
 from typing import Any, Dict, List, Mapping, Optional, Sequence, TypeVar, Union, cast
 
-import numpy as np
 import pandas as pd
 from sklearn.base import (
     BaseEstimator,
@@ -108,30 +106,6 @@ class EstimatorDF(
         :return: ``self``
         """
         pass
-
-    @property
-    def feature_names_in_(self) -> pd.Index:
-        """
-        The pandas column index with the names of the features used to fit this
-        estimator.
-
-        :raises AttributeError: if this estimator is not fitted
-        """
-        self._ensure_fitted()
-        _feature_names_in_ = self._get_features_in().rename(self.COL_FEATURE_IN)
-        if self.native_estimator is not self and hasattr(
-            self.native_estimator, "feature_names_in_"
-        ):
-            _feature_names_in_native_ = self.native_estimator.feature_names_in_
-            if not np.array_equal(_feature_names_in_.values, _feature_names_in_native_):
-                warnings.warn(
-                    "conflicting input feature names: "
-                    "the input feature names recorded by this estimator are "
-                    f"{_feature_names_in_}, but the input feature names recorded by "
-                    f"the wrapped native estimator are {_feature_names_in_native_}",
-                    stacklevel=2,
-                )
-        return _feature_names_in_
 
     @property
     def n_outputs_(self) -> int:

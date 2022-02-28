@@ -205,6 +205,28 @@ class EstimatorWrapperDF(
         return self._native_estimator
 
     @property
+    def feature_names_in_(self) -> pd.Index:
+        """
+        The pandas column index with the names of the features used to fit this
+        estimator.
+
+        :raises AttributeError: if this estimator is not fitted
+        """
+        self._ensure_fitted()
+        _feature_names_in_ = self._get_features_in().rename(self.COL_FEATURE_IN)
+        if hasattr(self.native_estimator, "feature_names_in_"):
+            _feature_names_in_native_ = self.native_estimator.feature_names_in_
+            if not np.array_equal(_feature_names_in_.values, _feature_names_in_native_):
+                warnings.warn(
+                    "conflicting input feature names: "
+                    "the input feature names recorded by this estimator are "
+                    f"{_feature_names_in_}, but the input feature names recorded by "
+                    f"the wrapped native estimator are {_feature_names_in_native_}",
+                    stacklevel=2,
+                )
+        return _feature_names_in_
+
+    @property
     def _estimator_type(self) -> Optional[str]:
         try:
             # noinspection PyProtectedMember
@@ -1081,6 +1103,11 @@ class _StackableSupervisedLearnerDF(
     def is_fitted(self) -> bool:
         """[see superclass]"""
         return self.delegate.is_fitted
+
+    @property
+    def feature_names_in_(self) -> pd.Index:
+        """[see superclass]"""
+        return self.delegate._get_features_in()
 
     def fit(
         self: T_StackableSupervisedLearnerDF,
