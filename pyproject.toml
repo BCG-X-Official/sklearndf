@@ -16,7 +16,6 @@ license = "Apache Software License v2.0"
 requires = [
     "boruta         ~=0.3",
     "gamma-pytools  ~=2.0dev0",
-    "lightgbm       ~=3.0",
     "numpy          >=1.16,<2a",  # cannot use ~= due to conda bug
     "packaging      >=20",
     "pandas         >=0.24,<2a",  # cannot use ~= due to conda bug
@@ -49,6 +48,7 @@ testing = [
     "flake8 ~= 3.8",
     "flake8-comprehensions ~= 3.2",
     "isort ~= 5.5",
+    "lightgbm ~=3.0.0",
 ]
 docs = [
     "sphinx ~= 4.2",
