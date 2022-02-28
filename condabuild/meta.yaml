@@ -15,15 +15,10 @@ requirements:
     - python        {{ environ.get('FACET_V_PYTHON', '=3.8.*') }}
     - numpy         {{ environ.get('FACET_V_NUMPY', '>=1.11.*') }}
     - flit>=3.0.*
-# note: sklearndf.__init__ already needs pytools, pandas & sklearn:
-    - pandas        {{ environ.get('FACET_V_PANDAS') }}
-    - scikit-learn  {{ environ.get('FACET_V_SCIKIT_LEARN') }}
-    - gamma-pytools {{ environ.get('FACET_V_GAMMA_PYTOOLS') }}
     - packaging>=20
   run:
     - boruta_py     {{ environ.get('FACET_V_BORUTA') }}
     - gamma-pytools {{ environ.get('FACET_V_GAMMA_PYTOOLS') }}
-    - lightgbm      {{ environ.get('FACET_V_LIGHTGBM') }}
     - numpy         {{ environ.get('FACET_V_NUMPY') }}
     - packaging     {{ environ.get('FACET_V_PACKAGING') }}
     - pandas        {{ environ.get('FACET_V_PANDAS') }}
@@ -42,6 +37,8 @@ test:
     - sklearndf.transformation.extra
   requires:
     - pytest=5.2.*
+    # optional libraries of sklearndf, needed for testing
+    - lightgbm {{ environ.get('FACET_V_LIGHTGBM') }}
     # additional requirements of gamma-pytools
     - joblib          {{ environ.get('FACET_V_JOBLIB') }}
     - matplotlib-base {{ environ.get('FACET_V_MATPLOTLIB') }}

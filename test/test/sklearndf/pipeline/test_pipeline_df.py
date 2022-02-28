@@ -2,6 +2,8 @@
 Test module for PipelineDF inspired by:
 https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/tests/test_pipeline.py
 """
+from __future__ import annotations
+
 import shutil
 import time
 from tempfile import mkdtemp
@@ -54,13 +56,13 @@ class NoTransformer(NoFit):
     """
 
     # noinspection PyPep8Naming
-    def fit(self, X, y=None, **fit_params: Any) -> "NoTransformer":
+    def fit(self, X, y=None, **fit_params: Any) -> NoTransformer:
         return self
 
     def get_params(self, deep: bool = False) -> Dict[str, Any]:
         return {"a": self.a, "b": self.b}
 
-    def set_params(self, **params: Dict[str, Any]) -> "NoTransformer":
+    def set_params(self, **params: Dict[str, Any]) -> NoTransformer:
         self.a = params["a"]
         return self
 
@@ -88,7 +90,7 @@ class DummyTransformer(Transformer):
         super().__init__(a, b)
 
     # noinspection PyPep8Naming,PyAttributeOutsideInit
-    def fit(self, X, y=None, **fit_params: Any) -> "DummyTransformer":
+    def fit(self, X, y=None, **fit_params: Any) -> DummyTransformer:
         self.means_: np.ndarray = np.mean(X, axis=0)
         # store timestamp to figure out whether the result of 'fit' has been
         # cached or not

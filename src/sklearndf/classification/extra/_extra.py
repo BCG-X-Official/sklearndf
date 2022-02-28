@@ -15,11 +15,19 @@ warnings.filterwarnings("ignore", message=r"Starting from version 2\.2\.1")
 warnings.filterwarnings(
     "ignore", message=r"Usage of np\.ndarray subset \(sliced data\) is not recommended"
 )
-from lightgbm.sklearn import LGBMClassifier
 
 log = logging.getLogger(__name__)
 
-__all__ = ["LGBMClassifierDF"]
+__all__ = []
+
+try:
+    # import lightgbm classes only if installed
+    from lightgbm.sklearn import LGBMClassifier
+
+    __all__.append("LGBMClassifierDF")
+except ImportError:
+    LGBMClassifier = None
+
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
 
 
@@ -34,7 +42,8 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 # Class definitions
 #
 
-LGBMClassifierDF = make_df_classifier(LGBMClassifier)
+if LGBMClassifier:
+    LGBMClassifierDF = make_df_classifier(LGBMClassifier)
 
 
 #
