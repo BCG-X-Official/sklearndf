@@ -8,7 +8,7 @@ from sklearn.base import is_classifier
 from sklearn.multioutput import ClassifierChain, MultiOutputClassifier
 
 import sklearndf.classification as classification
-from sklearndf import ClassifierDF
+from sklearndf import ClassifierDF, __sklearn_0_22__, __sklearn_version__
 from test.sklearndf import check_expected_not_fitted_error, iterate_classes
 
 CLASSIFIERS_TO_TEST = iterate_classes(
@@ -51,11 +51,12 @@ CLASSIFIERS_PARTIAL_FIT = [
     classification.PerceptronDF,
     classification.SGDClassifierDF,
     classification.PassiveAggressiveClassifierDF,
-    classification.CategoricalNBDF,
     classification.GaussianNBDF,
     classification.ComplementNBDF,
     classification.MultiOutputClassifierDF,
 ]
+if __sklearn_version__ >= __sklearn_0_22__:
+    CLASSIFIERS_PARTIAL_FIT.append(classification.CategoricalNBDF)
 
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST)

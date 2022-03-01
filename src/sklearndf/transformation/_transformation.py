@@ -84,7 +84,7 @@ from .wrapper import (
     MissingIndicatorWrapperDF,
     NComponentsDimensionalityReductionWrapperDF,
     OneHotEncoderWrapperDF,
-    PolynomialFeaturesWrapperDF,
+    PolynomialTransformerWrapperDF,
 )
 
 log = logging.getLogger(__name__)
@@ -257,7 +257,7 @@ RobustScalerDF = make_df_transformer(
 )
 
 PolynomialFeaturesDF = make_df_transformer(
-    PolynomialFeatures, base_wrapper=PolynomialFeaturesWrapperDF
+    PolynomialFeatures, base_wrapper=PolynomialTransformerWrapperDF
 )
 
 NormalizerDF = make_df_transformer(

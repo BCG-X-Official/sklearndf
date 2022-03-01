@@ -12,6 +12,7 @@ The wrappers also implement the additional column attributes introduced by `skle
 """
 import inspect
 import logging
+import warnings
 from abc import ABCMeta, abstractmethod
 from functools import update_wrapper
 from typing import (
@@ -140,9 +141,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
 
 @inheritdoc(match="[see superclass]")
 class EstimatorWrapperDF(
-    EstimatorDF,
-    Generic[T_NativeEstimator],
-    metaclass=EstimatorWrapperDFMeta[T_NativeEstimator],  # type: ignore
+    EstimatorDF, Generic[T_NativeEstimator], metaclass=EstimatorWrapperDFMeta
 ):
     """
     Base class of DF wrappers for native estimators conforming with the scikit-learn
@@ -203,6 +202,37 @@ class EstimatorWrapperDF(
         The native estimator that this wrapper delegates to.
         """
         return self._native_estimator
+
+    @property
+    def feature_names_in_(self) -> pd.Index:
+        """[see superclass]"""
+        return self._check_feature_names_in(
+            super().feature_names_in_, warning_stacklevel=2
+        )
+
+    def _check_feature_names_in(
+        self, wrapper_feature_names_in: pd.Index, *, warning_stacklevel: int
+    ) -> pd.Index:
+        # Check that the given feature names are the same as the ingoing feature names
+        # recorded by the native estimator, if present. Issue a warning if the feature
+        # names differ.
+        # Return the same feature names that were passed to this method.
+        try:
+            _feature_names_in_native_ = self.native_estimator.feature_names_in_
+        except AttributeError:
+            return wrapper_feature_names_in
+
+        if not np.array_equal(
+            wrapper_feature_names_in.values, _feature_names_in_native_
+        ):
+            warnings.warn(
+                "conflicting input feature names: "
+                "the input feature names recorded by this estimator are "
+                f"{wrapper_feature_names_in}, but the input feature names recorded by "
+                f"the wrapped native estimator are {_feature_names_in_native_}",
+                stacklevel=warning_stacklevel + 1,
+            )
+        return wrapper_feature_names_in
 
     @property
     def _estimator_type(self) -> Optional[str]:
@@ -466,6 +496,22 @@ class TransformerWrapperDF(
     :func:`.make_df_transformer`.
     """
 
+    @property
+    def feature_names_out_(self) -> pd.Index:
+        """[see superclass]"""
+        return self._check_feature_names_out(
+            super().feature_names_out_, warning_stacklevel=2
+        )
+
+    @property
+    def feature_names_original_(self) -> pd.Series:
+        """[see superclass]"""
+        feature_names_original_ = super().feature_names_original_
+        self._check_feature_names_out(
+            feature_names_original_.index, warning_stacklevel=2
+        )
+        return feature_names_original_
+
     # noinspection PyPep8Naming
     def transform(self, X: pd.DataFrame) -> pd.DataFrame:
         """[see superclass]"""
@@ -509,6 +555,23 @@ class TransformerWrapperDF(
         return self._transformed_to_df(
             transformed=transformed, index=X.index, columns=self.feature_names_in_
         )
+
+    def _check_feature_names_out(
+        self, wrapper_feature_names_out: pd.Index, *, warning_stacklevel: int
+    ) -> pd.Index:
+        try:
+            native_feature_names_out = self.native_estimator.get_feature_names_out()
+        except AttributeError:
+            return wrapper_feature_names_out
+        if not np.all(native_feature_names_out == wrapper_feature_names_out):
+            warnings.warn(
+                "conflicting output feature names: "
+                "the output feature names recorded by this transformer are "
+                f"{wrapper_feature_names_out} but the input feature names recorded "
+                f"by the wrapped native transformer are {native_feature_names_out}",
+                stacklevel=warning_stacklevel + 1,
+            )
+        return wrapper_feature_names_out
 
     def _reset_fit(self) -> None:
         try:
