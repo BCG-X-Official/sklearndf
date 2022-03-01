@@ -32,4 +32,4 @@ repos:
     hooks:
       - id: mypy
         files: src/
-        additional_dependencies: [ numpy>=1.22 ]
+        additional_dependencies: [ numpy>=1.22, gamma-pytools>=2.0.dev4 ]
