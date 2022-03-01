@@ -108,6 +108,17 @@ class EstimatorDF(
         pass
 
     @property
+    def feature_names_in_(self) -> pd.Index:
+        """
+        The pandas column index with the names of the features used to fit this
+        estimator.
+
+        :raises AttributeError: if this estimator is not fitted
+        """
+        self._ensure_fitted()
+        return self._get_features_in().rename(self.COL_FEATURE_IN)
+
+    @property
     def n_outputs_(self) -> int:
         """
         The number of outputs used to fit this estimator.

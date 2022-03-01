@@ -183,10 +183,12 @@ def test_fit_transform(
             transformer_df.feature_names_in_.values,
             transformer_native.feature_names_in_,
         )
+        # noinspection PyUnresolvedReferences
         assert_array_equal(
             transformer_df.feature_names_out_.values,
             transformer_native.get_feature_names_out(),
         )
+        # noinspection PyUnresolvedReferences
         assert_array_equal(
             transformer_df.feature_names_original_.index.values,
             transformer_native.get_feature_names_out(),
@@ -198,24 +200,12 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
     assert numeric_columns == ["c0", "c2"]
 
     feature_names_in_expected = test_data.columns.rename("feature_in")
-    verbose_feature_names_out_dict = {
-        "c0": "tx__c0",
-        "c1": "remainder__c1",
-        "c2": "tx__c2",
-        "c3": "keep__c3",
-    }
 
-    for remainder, names in [
-        ("drop", ["c0", "c2", "c3"]),
-        ("passthrough", ["c0", "c2", "c3", "c1"]),
-    ]:
-        if __sklearn_version__ >= __sklearn_1_0__:
-            feature_names_out_expected = pd.Index(
-                [verbose_feature_names_out_dict[name] for name in names],
-                name="feature_out",
-            )
-        else:
-            feature_names_out_expected = pd.Index(names, name="feature_out")
+    # noinspection PyShadowingNames
+    def _test_transformer(
+        remainder: str, names_in: List[str], names_out: List[str], **transformer_args
+    ) -> None:
+        feature_names_out_expected = pd.Index(names_out, name="feature_out")
 
         # test fit-transform in connection with ColumnTransformer(DF)
         tx_df = StandardScalerDF()
@@ -225,6 +215,7 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
                 ("keep", "passthrough", ["c3"]),
             ],
             remainder=remainder,
+            **transformer_args,
         )
         transformed_df = col_tx_df.fit_transform(X=test_data)
 
@@ -235,6 +226,7 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
                 ("keep", "passthrough", ["c3"]),
             ],
             remainder=remainder,
+            **transformer_args,
         )
         transformed_native = col_tx_native.fit_transform(X=test_data)
 
@@ -246,12 +238,47 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
         assert col_tx_df.feature_names_in_.equals(feature_names_in_expected)
         assert col_tx_df.feature_names_out_.equals(feature_names_out_expected)
         assert col_tx_df.feature_names_original_.equals(
-            pd.Series(names, index=feature_names_out_expected)
+            pd.Series(names_in, index=feature_names_out_expected)
         )
 
         if __sklearn_version__ >= __sklearn_1_0__:
+            # noinspection PyUnresolvedReferences
             assert_array_equal(
                 col_tx_df.feature_names_in_.values, col_tx_native.feature_names_in_
+            )
+
+    for remainder, names, names_verbose in [
+        (
+            "drop",
+            ["c0", "c2", "c3"],
+            ["tx__c0", "tx__c2", "keep__c3"],
+        ),
+        (
+            "passthrough",
+            ["c0", "c2", "c3", "c1"],
+            ["tx__c0", "tx__c2", "keep__c3", "remainder__c1"],
+        ),
+    ]:
+        if __sklearn_version__ < __sklearn_1_0__:
+            _test_transformer(remainder=remainder, names_in=names, names_out=names)
+        else:
+            # As of scikit-learn 1.0, column transformers have a new boolean parameter
+            # verbose_feature_names_out. We test once with verbosity disabled, once
+            # with verbosity enabled, and once with the default (enabled).
+            _test_transformer(
+                remainder=remainder,
+                names_in=names,
+                names_out=names,
+                verbose_feature_names_out=False,
+            )
+            _test_transformer(
+                remainder=remainder,
+                names_in=names,
+                names_out=names_verbose,
+                verbose_feature_names_out=True,
+            )
+            _test_transformer(
+                remainder=remainder, names_in=names, names_out=names_verbose
             )
 
 

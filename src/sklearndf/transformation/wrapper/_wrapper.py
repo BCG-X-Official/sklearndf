@@ -4,7 +4,7 @@ Core implementation of :mod:`sklearndf.transformation.wrapper`
 
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import Any, Generic, List, Optional, TypeVar, Union
+from typing import Callable, Generic, Iterable, List, Optional, Sequence, TypeVar, Union
 
 import numpy as np
 import pandas as pd
@@ -303,37 +303,61 @@ class ColumnTransformerWrapperDF(
         values the corresponding input column names.
         """
 
-        verbose_feature_names_out = getattr(
-            self.native_estimator, "verbose_feature_names_out", None
+        # If True, get_feature_names_out will prefix all feature names with the name of
+        # the transformer that generated that feature
+        verbose_feature_names_out: bool = getattr(
+            self.native_estimator, "verbose_feature_names_out", False
         )
 
+        # noinspection PyShadowingNames
         def _features_original(
-            name: str, df_transformer: TransformerDF, columns: List[Any]
-        ):
+            transformer_name: str,
+            df_transformer: Union[TransformerDF, str],
+            columns: Iterable,
+        ) -> pd.Series:
+            input_column_names: np.ndarray
+            output_column_names: np.ndarray
+
             if df_transformer == ColumnTransformerWrapperDF.__PASSTHROUGH:
                 # we may get positional indices for columns selected by the
                 # 'passthrough' transformer, and in that case so need to look up the
                 # associated column names
                 if all(isinstance(column, int) for column in columns):
-                    input_column_names = self._get_features_in()[columns]
+                    output_column_names = self._get_features_in().to_numpy()[columns]
                 else:
-                    input_column_names = columns
+                    output_column_names = np.array(columns)
+                input_column_names = output_column_names
+
             else:
-                input_column_names = df_transformer.feature_names_original_.values
+                assert isinstance(df_transformer, TransformerDF), (
+                    "expected TransformerDF but got a "
+                    f"{type(df_transformer).__name__}: {df_transformer!r}"
+                )
+                feature_names_original_: pd.Series = (
+                    df_transformer.feature_names_original_
+                )
+                if verbose_feature_names_out:
+                    input_column_names = feature_names_original_.to_numpy()
+                    output_column_names = feature_names_original_.index.to_numpy()
+                else:
+                    return feature_names_original_
 
             if verbose_feature_names_out:
-                output_column_names = [
-                    f"{name}__{column}" for column in input_column_names
-                ]
-            else:
-                output_column_names = input_column_names
+                output_column_names = np.array(
+                    [f"{transformer_name}__{column}" for column in output_column_names]
+                )
 
             return pd.Series(index=output_column_names, data=input_column_names)
 
+        transformer_name: str
+        df_transformer: Union[TransformerDF, str]
+        columns: Union[Sequence, np.ndarray]
         return pd.concat(
             [
-                _features_original(name, df_transformer, columns)
-                for name, df_transformer, columns in self.native_estimator.transformers_
+                _features_original(transformer_name, df_transformer, columns)
+                for transformer_name, df_transformer, columns in (
+                    self.native_estimator.transformers_
+                )
                 if (
                     len(columns) > 0
                     and df_transformer != ColumnTransformerWrapperDF.__DROP
@@ -445,18 +469,10 @@ class PolynomialTransformerWrapperDF(
     """
 
     def _get_features_out(self) -> pd.Index:
-        if __sklearn_version__ >= __sklearn_1_0__:
-            return pd.Index(
-                self.native_estimator.get_feature_names_out(
-                    input_features=self.feature_names_in_.astype(str)
-                )
-            )
-        else:
-            return pd.Index(
-                self.native_estimator.get_feature_names(
-                    input_features=self.feature_names_in_.astype(str)
-                )
-            )
+        return _get_native_feature_names_out(
+            feature_names_in_=self.feature_names_in_,
+            native_estimator=self.native_estimator,
+        )
 
 
 class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCMeta):
@@ -474,45 +490,39 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
         # Remove 1st category column if argument drop == 'first'
         # Remove 1st category column only of binary features if arg drop == 'if_binary'
 
-        if __sklearn_version__ >= __sklearn_1_0__:
-            feature_names_out = pd.Index(
-                self.native_estimator.get_feature_names_out(
-                    input_features=self.feature_names_in_
-                )
-            )
-        else:
-            feature_names_out = pd.Index(
-                self.native_estimator.get_feature_names(
-                    input_features=self.feature_names_in_
-                )
-            )
+        native_estimator: OneHotEncoder = self.native_estimator
+        feature_names_in: pd.Index = self.feature_names_in_
+
+        feature_names_out = _get_native_feature_names_out(
+            feature_names_in_=feature_names_in, native_estimator=native_estimator
+        )
 
         if self.drop == "first":
-            feature_names_in = [
+            feature_names_in_mapped = [
                 column_original
                 for column_original, category in zip(
-                    self.feature_names_in_, self.native_estimator.categories_
+                    feature_names_in, native_estimator.categories_
                 )
                 for _ in range(len(category) - 1)
             ]
         elif self.drop == "if_binary":
-            feature_names_in = [
+            feature_names_in_mapped = [
                 column_original
                 for column_original, category in zip(
-                    self.feature_names_in_, self.native_estimator.categories_
+                    feature_names_in, native_estimator.categories_
                 )
                 for _ in (range(1) if len(category) == 2 else category)
             ]
         else:
-            feature_names_in = [
+            feature_names_in_mapped = [
                 column_original
                 for column_original, category in zip(
-                    self.feature_names_in_, self.native_estimator.categories_
+                    feature_names_in, native_estimator.categories_
                 )
                 for _ in category
             ]
 
-        return pd.Series(index=feature_names_out, data=feature_names_in)
+        return pd.Series(index=feature_names_out, data=feature_names_in_mapped)
 
 
 class KBinsDiscretizerWrapperDF(
@@ -559,6 +569,28 @@ class KBinsDiscretizerWrapperDF(
             raise ValueError(
                 f"unexpected value for property encode={self.native_estimator.encode}"
             )
+
+
+#
+# Helper functions
+#
+
+
+def _get_native_feature_names_out(
+    feature_names_in_: pd.Index, native_estimator: TransformerMixin
+) -> pd.Index:
+    # get the output feature names from a native transformer implementing
+    # method get_feature_names() (sklearn 0.x) or get_feature_names_out() (sklearn 1.x)
+
+    get_feature_names_out_fn: Callable[[np.ndarray], np.ndarray]
+    if __sklearn_version__ >= __sklearn_1_0__:
+        # noinspection PyUnresolvedReferences
+        get_feature_names_out_fn = native_estimator.get_feature_names_out
+    else:
+        # noinspection PyUnresolvedReferences
+        get_feature_names_out_fn = native_estimator.get_feature_names
+
+    return pd.Index(get_feature_names_out_fn(feature_names_in_.to_numpy().astype(str)))
 
 
 #

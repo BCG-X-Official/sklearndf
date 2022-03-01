@@ -99,11 +99,6 @@ class EstimatorNPDF(
         """[see superclass]"""
         return self.delegate.is_fitted
 
-    @property
-    def feature_names_in_(self) -> pd.Index:
-        """[see superclass]"""
-        return self.delegate._get_features_in()
-
     def fit(
         self: T_EstimatorNPDF,
         X: Union[np.ndarray, pd.DataFrame],

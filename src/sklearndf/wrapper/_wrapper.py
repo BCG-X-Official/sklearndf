@@ -205,25 +205,34 @@ class EstimatorWrapperDF(
 
     @property
     def feature_names_in_(self) -> pd.Index:
-        """
-        The pandas column index with the names of the features used to fit this
-        estimator.
+        """[see superclass]"""
+        return self._check_feature_names_in(
+            super().feature_names_in_, warning_stacklevel=2
+        )
 
-        :raises AttributeError: if this estimator is not fitted
-        """
-        self._ensure_fitted()
-        _feature_names_in_ = self._get_features_in().rename(self.COL_FEATURE_IN)
-        if hasattr(self.native_estimator, "feature_names_in_"):
+    def _check_feature_names_in(
+        self, wrapper_feature_names_in: pd.Index, *, warning_stacklevel: int
+    ) -> pd.Index:
+        # Check that the given feature names are the same as the ingoing feature names
+        # recorded by the native estimator, if present. Issue a warning if the feature
+        # names differ.
+        # Return the same feature names that were passed to this method.
+        try:
             _feature_names_in_native_ = self.native_estimator.feature_names_in_
-            if not np.array_equal(_feature_names_in_.values, _feature_names_in_native_):
-                warnings.warn(
-                    "conflicting input feature names: "
-                    "the input feature names recorded by this estimator are "
-                    f"{_feature_names_in_}, but the input feature names recorded by "
-                    f"the wrapped native estimator are {_feature_names_in_native_}",
-                    stacklevel=2,
-                )
-        return _feature_names_in_
+        except AttributeError:
+            return wrapper_feature_names_in
+
+        if not np.array_equal(
+            wrapper_feature_names_in.values, _feature_names_in_native_
+        ):
+            warnings.warn(
+                "conflicting input feature names: "
+                "the input feature names recorded by this estimator are "
+                f"{wrapper_feature_names_in}, but the input feature names recorded by "
+                f"the wrapped native estimator are {_feature_names_in_native_}",
+                stacklevel=warning_stacklevel + 1,
+            )
+        return wrapper_feature_names_in
 
     @property
     def _estimator_type(self) -> Optional[str]:
@@ -489,14 +498,18 @@ class TransformerWrapperDF(
 
     @property
     def feature_names_out_(self) -> pd.Index:
-        feature_names_out = super().feature_names_out_
-        self._check_feature_names_out(feature_names_out)
-        return feature_names_out
+        """[see superclass]"""
+        return self._check_feature_names_out(
+            super().feature_names_out_, warning_stacklevel=2
+        )
 
     @property
     def feature_names_original_(self) -> pd.Series:
+        """[see superclass]"""
         feature_names_original_ = super().feature_names_original_
-        self._check_feature_names_out(feature_names_original_.index)
+        self._check_feature_names_out(
+            feature_names_original_.index, warning_stacklevel=2
+        )
         return feature_names_original_
 
     # noinspection PyPep8Naming
@@ -543,19 +556,22 @@ class TransformerWrapperDF(
             transformed=transformed, index=X.index, columns=self.feature_names_in_
         )
 
-    def _check_feature_names_out(self, wrapper_feature_names_out):
+    def _check_feature_names_out(
+        self, wrapper_feature_names_out: pd.Index, *, warning_stacklevel: int
+    ) -> pd.Index:
         try:
             native_feature_names_out = self.native_estimator.get_feature_names_out()
-            if not np.all(native_feature_names_out == wrapper_feature_names_out):
-                warnings.warn(
-                    "conflicting output feature names: "
-                    "the output feature names recorded by this transformer are "
-                    f"{wrapper_feature_names_out} but the input feature names recorded "
-                    f"by the wrapped native transformer are {native_feature_names_out}",
-                    stacklevel=2,
-                )
         except AttributeError:
-            pass
+            return wrapper_feature_names_out
+        if not np.all(native_feature_names_out == wrapper_feature_names_out):
+            warnings.warn(
+                "conflicting output feature names: "
+                "the output feature names recorded by this transformer are "
+                f"{wrapper_feature_names_out} but the input feature names recorded "
+                f"by the wrapped native transformer are {native_feature_names_out}",
+                stacklevel=warning_stacklevel + 1,
+            )
+        return wrapper_feature_names_out
 
     def _reset_fit(self) -> None:
         try:
@@ -1102,11 +1118,6 @@ class _StackableSupervisedLearnerDF(
     def is_fitted(self) -> bool:
         """[see superclass]"""
         return self.delegate.is_fitted
-
-    @property
-    def feature_names_in_(self) -> pd.Index:
-        """[see superclass]"""
-        return self.delegate._get_features_in()
 
     def fit(
         self: T_StackableSupervisedLearnerDF,
