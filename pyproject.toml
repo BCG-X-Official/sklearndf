@@ -16,15 +16,14 @@ license = "Apache Software License v2.0"
 requires = [
     "boruta         ~=0.3",
     "gamma-pytools  ~=2.0dev0",
-    "lightgbm       ~=3.0",
     "numpy          >=1.16,<2a",  # cannot use ~= due to conda bug
     "packaging      >=20",
     "pandas         >=0.24,<2a",  # cannot use ~= due to conda bug
-    "scikit-learn   >=0.21,<0.25a",
+    "scikit-learn   >=0.21,<1.1a",
     "scipy          ~=1.2",
 ]
 
-requires-python = ">=3.6,<4a"
+requires-python = ">=3.7,<4a"
 
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -36,9 +35,9 @@ classifiers = [
     "Operating System :: Unix",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
     "Topic :: Scientific/Engineering",
 ]
 
@@ -49,6 +48,7 @@ testing = [
     "flake8 ~= 3.8",
     "flake8-comprehensions ~= 3.2",
     "isort ~= 5.5",
+    "lightgbm ~=3.0.0",
 ]
 docs = [
     "sphinx ~= 4.2",
@@ -69,12 +69,12 @@ Repository = "https://github.com/BCG-Gamma/sklearndf"
 [build.matrix.min]
 # direct requirements of sklearndf
 boruta         = "~=0.3.0"
-gamma-pytools  = "~=2.0.dev1"
+gamma-pytools  = "~=2.0.dev2"
 lightgbm       = "~=3.0.0"
-numpy          = ">=1.16.6,<1.17a"  # cannot use ~= due to conda bug
+numpy          = "==1.16.6"  # cannot use ~= due to conda bug
 pandas         = "~=0.24.2"
 packaging      = "~=20.9"
-python         = ">=3.6.8,<3.7a"    # cannot use ~= due to conda bug
+python         = ">=3.7.12,<3.8a"    # cannot use ~= due to conda bug
 scikit-learn   = "~=0.21.0"
 scipy          = "~=1.2.1"
 # additional minimum requirements of gamma-pytools
@@ -85,13 +85,13 @@ typing_inspect = "~=0.4.0"
 [build.matrix.max]
 # direct requirements of sklearndf
 boruta         = "~=0.3"
-gamma-pytools  = ">=2dev0,<3a"
+gamma-pytools  = "~=2.0.dev2"
 lightgbm       = "~=3.2"
 numpy          = ">=1.20,<2a"  # cannot use ~= due to conda bug
 packaging      = ">=20"
-pandas         = "~=1.2"
-python         = ">=3.8,<4a"   # cannot use ~= due to conda bug
-scikit-learn   = "~=0.24.2"
+pandas         = "~=1.4"
+python         = ">=3.8.10,<4a"   # cannot use ~= due to conda bug
+scikit-learn   = "~=1.0.2"
 scipy          = "~=1.6"
 # additional maximum requirements of gamma-pytools
 joblib         = "~=1.0"

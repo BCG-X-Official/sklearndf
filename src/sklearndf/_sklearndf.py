@@ -10,6 +10,7 @@ import pandas as pd
 from sklearn.base import (
     BaseEstimator,
     ClassifierMixin,
+    ClusterMixin,
     RegressorMixin,
     TransformerMixin,
     clone,
@@ -30,13 +31,13 @@ __all__ = [
     "RegressorDF",
     "SupervisedLearnerDF",
     "TransformerDF",
+    "ClustererDF",
 ]
 
 #
 # type variables
 #
 
-T_Self = TypeVar("T_Self")
 T_EstimatorDF = TypeVar("T_EstimatorDF")
 
 
@@ -90,11 +91,11 @@ class EstimatorDF(
     # noinspection PyPep8Naming
     @abstractmethod
     def fit(
-        self: T_Self,
+        self: T_EstimatorDF,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
-    ) -> T_Self:
+    ) -> T_EstimatorDF:
         """
         Fit this estimator using the given inputs.
 
@@ -138,7 +139,7 @@ class EstimatorDF(
         # noinspection PyUnresolvedReferences
         return super().get_params(deep=deep)
 
-    def set_params(self: T_Self, **params: Any) -> T_Self:
+    def set_params(self: T_EstimatorDF, **params: Any) -> T_EstimatorDF:
         """
         Set the parameters of this estimator.
 
@@ -148,7 +149,7 @@ class EstimatorDF(
         :return: ``self``
         """
         # noinspection PyUnresolvedReferences
-        return super().set_params(**params)
+        return super().set_params(**params)  # type: ignore
 
     def clone(self: T_EstimatorDF) -> T_EstimatorDF:
         """
@@ -175,7 +176,9 @@ class EstimatorDF(
         # to their default values if defined (and otherwise to Signature.empty)
         estimator_parameters = {
             name: parameter.default
-            for name, parameter in inspect.signature(self.__init__).parameters.items()
+            for name, parameter in inspect.signature(
+                self.__init__  # type: ignore
+            ).parameters.items()
         }
 
         def _kwarg_to_expression(name: str, value: Any) -> Optional[Expression]:
@@ -256,23 +259,6 @@ class LearnerDF(EstimatorDF, metaclass=ABCMeta):
 
         :param X: input data frame with observations as rows and features as columns
         :param predict_params: optional keyword parameters as required by specific
-            learner implementations
-        :return: predictions per observation as a series, or as a data frame in case
-            of multiple outputs
-        """
-        pass
-
-    # noinspection PyPep8Naming
-    @abstractmethod
-    def fit_predict(
-        self, X: pd.DataFrame, y: pd.Series, **fit_params: Any
-    ) -> Union[pd.Series, pd.DataFrame]:
-        """
-        Fit this learner using the given inputs, then predict the outputs.
-
-        :param X: data frame with observations as rows and features as columns
-        :param y: a series or data frame with one or more outputs per observation
-        :param fit_params: optional keyword parameters as required by specific
             learner implementations
         :return: predictions per observation as a series, or as a data frame in case
             of multiple outputs
@@ -507,6 +493,42 @@ class ClassifierDF(SupervisedLearnerDF, ClassifierMixin, metaclass=ABCMeta):
             for multi-output classifiers, a list of one observation/class data frames
             per output
         """
+
+
+class ClustererDF(LearnerDF, ClusterMixin, metaclass=ABCMeta):
+    """
+    Base class for augmented scikit-learn `clusterers`.
+
+    Provides enhanced support for data frames.
+    """
+
+    @property
+    @abstractmethod
+    def labels_(self) -> pd.Series:
+        """
+        A pandas series, mapping the index of the input data frame to cluster labels.
+        """
+        pass
+
+    # noinspection PyPep8Naming
+    @abstractmethod
+    def fit_predict(
+        self,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        **fit_predict_params: Any,
+    ) -> Union[pd.Series, pd.DataFrame]:
+        """
+        Fit this clusterer using the given inputs, then predict the cluster labels.
+
+        :param X: data frame with observations as rows and features as columns
+        :param y: a series or data frame with one or more outputs per observation
+        :param fit_predict_params: optional keyword parameters as required by specific
+            clusterer implementations
+        :return: predicted cluster labels for all observations as a series,
+            or as a data frame in case of multiple outputs
+        """
+        pass
 
 
 __tracker.validate()

@@ -4,7 +4,17 @@ Core implementation of :mod:`sklearndf.classification.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Any, Callable, Generic, List, Optional, Sequence, TypeVar, Union
+from typing import (
+    Any,
+    Callable,
+    Generic,
+    List,
+    Optional,
+    Sequence,
+    TypeVar,
+    Union,
+    cast,
+)
 
 import numpy as np
 import pandas as pd
@@ -30,12 +40,16 @@ __all__ = [
     "MetaClassifierWrapperDF",
     "MultiOutputClassifierWrapperDF",
     "StackingClassifierWrapperDF",
+    "PartialFitClassifierWrapperDF",
 ]
 
 #
 # Type variables
 #
 
+T_PartialFitClassifierWrapperDF = TypeVar(
+    "T_PartialFitClassifierWrapperDF", bound="PartialFitClassifierWrapperDF"
+)
 T_NativeClassifier = TypeVar("T_NativeClassifier", bound=ClassifierMixin)
 
 
@@ -78,8 +92,62 @@ class MetaClassifierWrapperDF(
     pass
 
 
+class PartialFitClassifierWrapperDF(
+    ClassifierWrapperDF,
+    Generic[T_NativeClassifier],
+    metaclass=ABCMeta,
+):
+    """
+    Abstract base class of DF wrappers for classifiers implementing
+    method ``partial_fit()``.
+    """
+
+    def partial_fit(
+        self: T_PartialFitClassifierWrapperDF,
+        X: pd.DataFrame,
+        y: Union[pd.Series, pd.DataFrame],
+        classes: Optional[Sequence[Any]] = None,
+        sample_weight: Optional[pd.Series] = None,
+    ) -> T_PartialFitClassifierWrapperDF:
+        """
+        Perform incremental fit on a batch of samples.
+
+        This method is meant to be called multiple times for subsets of training
+        data which, e.g., couldn't fit in the required memory in full. It can be
+        also used for online learning.
+
+        :param X: data frame with observations as rows and features as columns
+        :param y: a series or data frame with one or more outputs per observation
+        :param classes: all classes present across all calls to ``partial_fit``;
+            only required for the first call of this method
+        :param sample_weight: optional weights applied to individual samples
+        :return: ``self``
+        """
+        self._check_parameter_types(X, y)
+        self._partial_fit(X, y, classes=classes, sample_weight=sample_weight)
+
+        return self
+
+    def _partial_fit(
+        self,
+        X: pd.DataFrame,
+        y: Union[pd.Series, pd.DataFrame],
+        **partial_fit_params: Optional[Any],
+    ):
+        return self._native_estimator.partial_fit(
+            self._prepare_X_for_delegate(X),
+            self._prepare_y_for_delegate(y),
+            **{
+                arg: value
+                for arg, value in partial_fit_params.items()
+                if value is not None
+            },
+        )
+
+
 class MultiOutputClassifierWrapperDF(
     MetaClassifierWrapperDF[MultiOutputClassifier],
+    PartialFitClassifierWrapperDF[MultiOutputClassifier],
     metaclass=ABCMeta,
 ):
     """
@@ -105,26 +173,22 @@ class MultiOutputClassifierWrapperDF(
         delegate_estimator = self.native_estimator
 
         # store the super() object as this is not available within a generator
-        sup = super()
+        _super = cast(ClassifierWrapperDF, super())
 
         # estimators attribute of abstract class MultiOutputEstimator
         # usually the delegate estimator will provide a list of estimators used
         # to predict each output. If present, use these estimators to get
         # individual class labels for each output; otherwise we cannot assign class
         # labels
-        if hasattr(delegate_estimator, "estimators_"):
-            return [
-                sup._prediction_with_class_labels(
-                    X=X, y=output, classes=getattr(estimator, "classes_", None)
-                )
-                for estimator, output in zip(
-                    getattr(delegate_estimator, "estimators_"), y
-                )
-            ]
+        estimators = getattr(delegate_estimator, "estimators_", None)
+        if estimators is None:
+            return [_super._prediction_with_class_labels(X=X, y=output) for output in y]
         else:
             return [
-                sup._prediction_with_class_labels(X=X, y=output, classes=None)
-                for output in y
+                _super._prediction_with_class_labels(
+                    X=X, y=output, classes=getattr(estimator, "classes_", None)
+                )
+                for estimator, output in zip(estimators, y)
             ]
 
 

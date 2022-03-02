@@ -50,9 +50,10 @@ from ..wrapper import make_df_classifier
 from .wrapper import (
     ClassifierChainWrapperDF,
     LinearDiscriminantAnalysisWrapperDF,
+    MetaClassifierWrapperDF,
     MultiOutputClassifierWrapperDF,
+    PartialFitClassifierWrapperDF,
 )
-from .wrapper._wrapper import MetaClassifierWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -175,10 +176,18 @@ QuadraticDiscriminantAnalysisDF = make_df_classifier(QuadraticDiscriminantAnalys
 #
 
 
-GaussianNBDF = make_df_classifier(GaussianNB)
-MultinomialNBDF = make_df_classifier(MultinomialNB)
-ComplementNBDF = make_df_classifier(ComplementNB)
-BernoulliNBDF = make_df_classifier(BernoulliNB)
+GaussianNBDF = make_df_classifier(
+    GaussianNB, base_wrapper=PartialFitClassifierWrapperDF
+)
+MultinomialNBDF = make_df_classifier(
+    MultinomialNB, base_wrapper=PartialFitClassifierWrapperDF
+)
+ComplementNBDF = make_df_classifier(
+    ComplementNB, base_wrapper=PartialFitClassifierWrapperDF
+)
+BernoulliNBDF = make_df_classifier(
+    BernoulliNB, base_wrapper=PartialFitClassifierWrapperDF
+)
 
 
 #
@@ -213,9 +222,15 @@ GaussianProcessClassifierDF = make_df_classifier(GaussianProcessClassifier)
 
 LogisticRegressionDF = make_df_classifier(LogisticRegression)
 LogisticRegressionCVDF = make_df_classifier(LogisticRegressionCV)
-PassiveAggressiveClassifierDF = make_df_classifier(PassiveAggressiveClassifier)
-PerceptronDF = make_df_classifier(Perceptron)
-SGDClassifierDF = make_df_classifier(SGDClassifier)
+PassiveAggressiveClassifierDF = make_df_classifier(
+    PassiveAggressiveClassifier, base_wrapper=PartialFitClassifierWrapperDF
+)
+PerceptronDF = make_df_classifier(
+    Perceptron, base_wrapper=PartialFitClassifierWrapperDF
+)
+SGDClassifierDF = make_df_classifier(
+    SGDClassifier, base_wrapper=PartialFitClassifierWrapperDF
+)
 RidgeClassifierDF = make_df_classifier(RidgeClassifier)
 RidgeClassifierCVDF = make_df_classifier(RidgeClassifierCV)
 
@@ -269,7 +284,9 @@ ClassifierChainDF = make_df_classifier(
 # neural network
 #
 
-MLPClassifierDF = make_df_classifier(MLPClassifier)
+MLPClassifierDF = make_df_classifier(
+    MLPClassifier, base_wrapper=PartialFitClassifierWrapperDF
+)
 
 
 #

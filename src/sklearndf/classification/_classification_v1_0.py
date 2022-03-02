@@ -1,16 +1,18 @@
 """
 Additional implementation of :mod:`sklearndf.classification` loaded
-from sklearn 0.23 onwards
+from sklearn 1.0 onwards
 """
-
 import logging
-from typing import List
+
+from sklearn.ensemble import HistGradientBoostingClassifier
 
 from pytools.api import AllTracker
 
+from ..wrapper import make_df_classifier
+
 log = logging.getLogger(__name__)
 
-__all__: List[str] = []
+__all__ = ["HistGradientBoostingClassifierDF"]
 
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
 
@@ -19,18 +21,21 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 # Ensure all symbols introduced below are included in __all__
 #
 
-__tracker = AllTracker(globals())
+__tracker = AllTracker(globals(), allow_imported_definitions=True)
 
 
 #
-# Class definitions
+# ensemble
 #
 
+HistGradientBoostingClassifierDF = make_df_classifier(HistGradientBoostingClassifier)
 
-# todo: add classification implementations for sklearn 0.23
-
+#
+# validate __all__
+#
 
 __tracker.validate()
+
 
 #
 # validate that __all__ comprises all symbols ending in "DF", and no others

@@ -3,9 +3,7 @@ Core implementation of :mod:`sklearndf.regression` loaded
 from sklearn 0.22 onwards
 """
 import logging
-from typing import TypeVar
 
-from sklearn.base import RegressorMixin
 from sklearn.ensemble import StackingRegressor
 
 from pytools.api import AllTracker
@@ -18,12 +16,6 @@ log = logging.getLogger(__name__)
 __all__ = ["StackingRegressorDF"]
 
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
-
-#
-# type variables
-#
-
-T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
 
 
 #

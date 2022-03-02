@@ -4,12 +4,13 @@ Core implementation of :mod:`sklearndf.regression.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Callable, Generic, Optional, Sequence, TypeVar
+from typing import Any, Callable, Generic, Optional, Sequence, TypeVar, Union
 
 import numpy as np
 import pandas as pd
 from sklearn.base import RegressorMixin
 from sklearn.isotonic import IsotonicRegression
+from sklearn.multioutput import MultiOutputRegressor
 
 from pytools.api import AllTracker
 
@@ -31,6 +32,8 @@ __all__ = [
     "MetaRegressorWrapperDF",
     "RegressorTransformerWrapperDF",
     "StackingRegressorWrapperDF",
+    "PartialFitRegressorWrapperDF",
+    "MultiOutputRegressorWrapperDF",
 ]
 
 
@@ -38,7 +41,9 @@ __all__ = [
 # type variables
 #
 
-T_Regressor = TypeVar("T_Regressor", bound=RegressorMixin)
+T_PartialFitRegressorWrapperDF = TypeVar(
+    "T_PartialFitRegressorWrapperDF", bound="PartialFitRegressorWrapperDF"
+)
 T_NativeRegressor = TypeVar("T_NativeRegressor", bound=RegressorMixin)
 
 
@@ -63,6 +68,67 @@ class MetaRegressorWrapperDF(
     """
     Abstract base class of DF wrappers for regressors implementing
     :class:`sklearn.base.MetaEstimatorMixin`.
+    """
+
+    pass
+
+
+class PartialFitRegressorWrapperDF(
+    RegressorWrapperDF,
+    Generic[T_NativeRegressor],
+    metaclass=ABCMeta,
+):
+    """
+    Abstract base class of DF wrappers for regressors implementing
+    method ``partial_fit()``.
+    """
+
+    def partial_fit(
+        self: T_PartialFitRegressorWrapperDF,
+        X: pd.DataFrame,
+        y: Union[pd.Series, pd.DataFrame],
+        sample_weight: Optional[pd.Series] = None,
+    ) -> T_PartialFitRegressorWrapperDF:
+        """
+        Perform incremental fit on a batch of samples.
+
+        This method is meant to be called multiple times for subsets of training
+        data which, e.g., couldn't fit in the required memory in full. It can be
+        also used for online learning.
+
+        :param X: data frame with observations as rows and features as columns
+        :param y: a series or data frame with one or more outputs per observation
+        :param sample_weight: optional weights applied to individual samples
+        :return: ``self``
+        """
+        self._check_parameter_types(X, y)
+        self._partial_fit(X, y, sample_weight=sample_weight)
+
+        return self
+
+    def _partial_fit(
+        self,
+        X: pd.DataFrame,
+        y: Union[pd.Series, pd.DataFrame],
+        **partial_fit_params: Optional[Any],
+    ):
+        return self._native_estimator.partial_fit(
+            self._prepare_X_for_delegate(X),
+            self._prepare_y_for_delegate(y),
+            **{
+                arg: value
+                for arg, value in partial_fit_params.items()
+                if value is not None
+            },
+        )
+
+
+class MultiOutputRegressorWrapperDF(
+    MetaRegressorWrapperDF[MultiOutputRegressor],
+    PartialFitRegressorWrapperDF[MultiOutputRegressor],
+):
+    """
+    Abstract base class of DF wrappers for multi-output regressors.
     """
 
     pass
@@ -104,9 +170,9 @@ class StackingRegressorWrapperDF(
 
 
 class RegressorTransformerWrapperDF(
-    RegressorWrapperDF[T_Regressor],
-    ColumnPreservingTransformerWrapperDF[T_Regressor],
-    Generic[T_Regressor],
+    RegressorWrapperDF[T_NativeRegressor],
+    ColumnPreservingTransformerWrapperDF[T_NativeRegressor],
+    Generic[T_NativeRegressor],
     metaclass=ABCMeta,
 ):
     """

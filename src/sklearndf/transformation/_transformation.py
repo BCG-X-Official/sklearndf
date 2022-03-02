@@ -4,7 +4,6 @@ Core implementation of :mod:`sklearndf.transformation`
 
 import logging
 
-from sklearn.cluster import FeatureAgglomeration
 from sklearn.compose import ColumnTransformer
 from sklearn.cross_decomposition import PLSSVD
 from sklearn.decomposition import (
@@ -37,6 +36,8 @@ from sklearn.feature_selection import (
     VarianceThreshold,
 )
 from sklearn.impute import MissingIndicator, SimpleImputer
+
+# noinspection PyProtectedMember
 from sklearn.impute._iterative import IterativeImputer
 from sklearn.kernel_approximation import (
     AdditiveChi2Sampler,
@@ -83,7 +84,7 @@ from .wrapper import (
     MissingIndicatorWrapperDF,
     NComponentsDimensionalityReductionWrapperDF,
     OneHotEncoderWrapperDF,
-    PolynomialFeaturesWrapperDF,
+    PolynomialTransformerWrapperDF,
 )
 
 log = logging.getLogger(__name__)
@@ -97,7 +98,6 @@ __all__ = [
     "DictionaryLearningDF",
     "FactorAnalysisDF",
     "FastICADF",
-    "FeatureAgglomerationDF",
     "FeatureHasherDF",
     "FunctionTransformerDF",
     "GaussianRandomProjectionDF",
@@ -164,16 +164,6 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 #
 # Class definitions
 #
-
-#
-# cluster
-#
-
-
-FeatureAgglomerationDF = make_df_transformer(
-    FeatureAgglomeration, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
-
 
 #
 # compose
@@ -267,7 +257,7 @@ RobustScalerDF = make_df_transformer(
 )
 
 PolynomialFeaturesDF = make_df_transformer(
-    PolynomialFeatures, base_wrapper=PolynomialFeaturesWrapperDF
+    PolynomialFeatures, base_wrapper=PolynomialTransformerWrapperDF
 )
 
 NormalizerDF = make_df_transformer(

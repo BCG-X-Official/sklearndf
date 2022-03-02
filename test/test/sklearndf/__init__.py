@@ -55,7 +55,7 @@ def iterate_classes(
     from_modules: Union[Module, Iterable[Module]],
     matching: str,
     excluding: Optional[Union[str, Iterable[str]]] = None,
-) -> Iterable[Type[EstimatorWrapperDF]]:
+) -> List[Type[EstimatorWrapperDF]]:
     """ Helper to return all classes with matching name from Python module(s) """
 
     if not isinstance(from_modules, Iterable):
@@ -64,12 +64,12 @@ def iterate_classes(
     if excluding and not isinstance(excluding, str):
         excluding = "|".join(f"({exclude_pattern})" for exclude_pattern in excluding)
 
-    return (
+    return [
         m
         for m in find_all_classes(*from_modules)
         if re.match(matching, m.__name__)
         and not (excluding and re.match(excluding, m.__name__))
-    )
+    ]
 
 
 def get_sklearndf_wrapper_class(

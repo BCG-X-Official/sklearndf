@@ -8,7 +8,7 @@ from sklearn.base import is_classifier
 from sklearn.multioutput import ClassifierChain, MultiOutputClassifier
 
 import sklearndf.classification as classification
-from sklearndf import ClassifierDF
+from sklearndf import ClassifierDF, __sklearn_0_22__, __sklearn_version__
 from test.sklearndf import check_expected_not_fitted_error, iterate_classes
 
 CLASSIFIERS_TO_TEST = iterate_classes(
@@ -24,6 +24,7 @@ CLASSIFIER_INIT_PARAMETERS = {
     },
     "ClassifierChainDF": {"base_estimator": classification.RandomForestClassifierDF()},
     "MultiOutputClassifierDF": {"estimator": classification.RandomForestClassifierDF()},
+    "MultiOutputClassifierDF_partial_fit": {"estimator": classification.PerceptronDF()},
     "OneVsOneClassifierDF": {"estimator": classification.RandomForestClassifierDF()},
     "OneVsRestClassifierDF": {"estimator": classification.RandomForestClassifierDF()},
     "OutputCodeClassifierDF": {"estimator": classification.RandomForestClassifierDF()},
@@ -42,6 +43,20 @@ CLASSIFIER_INIT_PARAMETERS = {
         )
     },
 }
+
+
+CLASSIFIERS_PARTIAL_FIT = [
+    classification.BernoulliNBDF,
+    classification.MultinomialNBDF,
+    classification.PerceptronDF,
+    classification.SGDClassifierDF,
+    classification.PassiveAggressiveClassifierDF,
+    classification.GaussianNBDF,
+    classification.ComplementNBDF,
+    classification.MultiOutputClassifierDF,
+]
+if __sklearn_version__ >= __sklearn_0_22__:
+    CLASSIFIERS_PARTIAL_FIT.append(classification.CategoricalNBDF)
 
 
 @pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST)
@@ -117,3 +132,32 @@ def test_wrapped_fit_predict(
         else:
             with pytest.raises(NotImplementedError):
                 method(X=iris_features)
+
+
+@pytest.mark.parametrize("sklearndf_cls", CLASSIFIERS_PARTIAL_FIT)
+def test_wrapped_partial_fit(
+    sklearndf_cls: Type[ClassifierDF],
+    iris_features: pd.DataFrame,
+    iris_target_sr: pd.Series,
+    iris_targets_df: pd.DataFrame,
+):
+
+    classifier: ClassifierDF = sklearndf_cls(
+        **CLASSIFIER_INIT_PARAMETERS.get(f"{sklearndf_cls.__name__}_partial_fit", {})
+    )
+
+    is_multi_output = isinstance(classifier.native_estimator, MultiOutputClassifier)
+    if is_multi_output:
+        classes = iris_targets_df.apply(lambda col: col.unique()).transpose().values
+        iris_target = iris_targets_df
+    else:
+        classes = iris_target_sr.unique()
+        iris_target = iris_target_sr
+
+    with pytest.raises(
+        ValueError,
+        match="classes must be passed on the first call to partial_fit.",
+    ):
+        classifier.partial_fit(iris_features, iris_target)
+
+    classifier.partial_fit(iris_features, iris_target, classes)
