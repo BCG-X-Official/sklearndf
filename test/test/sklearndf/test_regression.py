@@ -57,7 +57,7 @@ def test_wrapped_fit_predict(
     boston_target_sr: pd.Series,
     boston_target_df: pd.DataFrame,
 ) -> None:
-    """ Test fit & predict of wrapped sklearn regressors """
+    """Test fit & predict of wrapped sklearn regressors"""
     regressor: RegressorDF = sklearndf_cls(
         **DEFAULT_REGRESSOR_PARAMETERS.get(sklearndf_cls.__name__, {})
     )
