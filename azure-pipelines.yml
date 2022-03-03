@@ -87,7 +87,7 @@ stages:
               versionSpec: '3.8.*'
             displayName: 'use Python 3.8'
           - script: |
-              python -m pip install mypy~=0.931 numpy~=1.21 "gamma-pytools>=2.0.dev4,<3a"
+              python -m pip install mypy~=0.931 numpy~=1.21 "gamma-pytools>=2.0.dev5,<3a"
               python -m mypy src
             displayName: 'Run mypy'
 
