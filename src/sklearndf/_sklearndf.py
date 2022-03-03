@@ -65,7 +65,7 @@ class EstimatorDF(
     HasExpressionRepr, BaseEstimator, FittableMixin[pd.DataFrame], metaclass=ABCMeta
 ):
     """
-    Base class for augmented scikit-learn `estimators`.
+    Base class for augmented `scikit-learn` estimators.
 
     Provides enhanced support for data frames.
     """
@@ -239,7 +239,7 @@ class EstimatorDF(
 
 class LearnerDF(EstimatorDF, metaclass=ABCMeta):
     """
-    Base class for augmented scikit-learn `learners`.
+    Base class for augmented `scikit-learn` learners.
 
     Provides enhanced support for data frames.
     """
@@ -293,7 +293,7 @@ class SupervisedLearnerDF(LearnerDF, metaclass=ABCMeta):
 
 class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
     """
-    Base class for augmented scikit-learn `transformers`.
+    Base class for augmented `scikit-learn` transformers.
 
     Provides enhanced support for data frames.
     """
@@ -404,7 +404,7 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
 
 class RegressorDF(SupervisedLearnerDF, RegressorMixin, metaclass=ABCMeta):
     """
-    Base class for augmented scikit-learn `regressors`.
+    Base class for augmented `scikit-learn` regressors.
 
     Provides enhanced support for data frames.
     """
@@ -412,7 +412,7 @@ class RegressorDF(SupervisedLearnerDF, RegressorMixin, metaclass=ABCMeta):
 
 class ClassifierDF(SupervisedLearnerDF, ClassifierMixin, metaclass=ABCMeta):
     """
-    Base class for augmented scikit-learn `classifiers`.
+    Base class for augmented `scikit-learn` classifiers.
 
     Provides enhanced support for data frames.
     """
