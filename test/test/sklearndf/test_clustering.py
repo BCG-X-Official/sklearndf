@@ -21,7 +21,7 @@ CLUSTERERS_WITH_AGGLOMERATION = CLUSTERERS_TO_TEST + [FeatureAgglomerationDF]
 def test_clusterer_fit_predict_call(
     iris_features: pd.DataFrame, sklearn_clusterer_cls: Type
 ) -> None:
-    """ Check if each sklearndf clusterer supports fit_predict method"""
+    """Check if each sklearndf clusterer supports fit_predict method"""
 
     clusterer_instance = sklearn_clusterer_cls()
 
@@ -37,7 +37,7 @@ def test_clusterer_fit_predict_call(
 def test_clusterer_fit_call(
     iris_features: pd.DataFrame, sklearn_clusterer_cls: Type
 ) -> None:
-    """ Check if each sklearndf clusterer supports fit method"""
+    """Check if each sklearndf clusterer supports fit method"""
 
     clusterer_instance = sklearn_clusterer_cls()
 

@@ -203,7 +203,7 @@ def test_pipeline_df_memory(
 
 
 def test_pipeline_df__init() -> None:
-    """ Test the various init parameters of the pipeline. """
+    """Test the various init parameters of the pipeline."""
 
     assert_raises(TypeError, PipelineDF)
     # Check that we can't instantiate pipelines with objects without fit
@@ -282,7 +282,7 @@ def test_pipeline_df__init() -> None:
 
 
 def test_pipeline_df_raise_set_params_error() -> None:
-    """ Test pipeline raises set params error message for nested models. """
+    """Test pipeline raises set params error message for nested models."""
     pipe = PipelineDF([("cls", LinearRegressionDF())])
 
     assert_raises_regex(

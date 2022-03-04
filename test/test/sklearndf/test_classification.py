@@ -67,7 +67,7 @@ def test_wrapped_fit_predict(
     iris_targets_df: pd.DataFrame,
     iris_targets_binary_df: pd.DataFrame,
 ) -> None:
-    """ Test fit & predict & predict[_log]_proba of wrapped sklearn classifiers """
+    """Test fit & predict & predict[_log]_proba of wrapped sklearn classifiers"""
     # noinspection PyArgumentList
     classifier: ClassifierDF = sklearndf_cls(
         **CLASSIFIER_INIT_PARAMETERS.get(sklearndf_cls.__name__, {})
