@@ -206,6 +206,7 @@ class ClassifierChainWrapperDF(
         y: Union[pd.Series, pd.DataFrame, list, np.ndarray],
         classes: Optional[Sequence[Any]] = None,
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
+        # todo: infer actual class names
         return super()._prediction_with_class_labels(
             X=X, y=y, classes=range(self.n_outputs_)
         )

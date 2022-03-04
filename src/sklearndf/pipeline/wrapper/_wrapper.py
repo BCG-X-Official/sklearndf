@@ -44,7 +44,7 @@ class PipelineWrapperDF(
     metaclass=ABCMeta,
 ):
     """
-    DF wrapper for scikit-learn :class:`~sklearn.pipeline.Pipeline`.
+    DF wrapper for `scikit-learn` class :class:`~sklearn.pipeline.Pipeline`.
     """
 
     #: Placeholder that can be used in place of an estimator to designate a pipeline
@@ -202,8 +202,7 @@ class PipelineWrapperDF(
 
 class FeatureUnionWrapperDF(TransformerWrapperDF[FeatureUnion], metaclass=ABCMeta):
     """
-    DF wrapper for scikit-learn
-    :class:`~sklearn.pipeline.FeatureUnion`.
+    DF wrapper for `scikit-learn` class :class:`~sklearn.pipeline.FeatureUnion`.
     """
 
     @staticmethod
