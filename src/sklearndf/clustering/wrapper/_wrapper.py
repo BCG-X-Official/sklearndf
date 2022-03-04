@@ -58,7 +58,7 @@ class KMeansBaseWrapperDF(
         as columns.
         """
 
-        self._ensure_fitted()
+        self.ensure_fitted()
 
         raw_cluster_centers = self._native_estimator.cluster_centers_
         return pd.DataFrame(

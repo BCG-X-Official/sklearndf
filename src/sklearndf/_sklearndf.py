@@ -20,7 +20,7 @@ from sklearn.utils import is_scalar_nan
 from pytools.api import AllTracker, inheritdoc
 from pytools.expression import Expression, HasExpressionRepr, make_expression
 from pytools.expression.atomic import Id
-from pytools.fit import FittableMixin
+from pytools.fit import NotFittedError
 
 log = logging.getLogger(__name__)
 
@@ -61,9 +61,7 @@ __tracker = AllTracker(globals())
 
 
 @inheritdoc(match="""[see superclass]""")
-class EstimatorDF(
-    HasExpressionRepr, BaseEstimator, FittableMixin[pd.DataFrame], metaclass=ABCMeta
-):
+class EstimatorDF(HasExpressionRepr, BaseEstimator, metaclass=ABCMeta):
     """
     Base class for augmented `scikit-learn` estimators.
 
@@ -108,6 +106,23 @@ class EstimatorDF(
         pass
 
     @property
+    @abstractmethod
+    def is_fitted(self) -> bool:
+        """
+        ``True`` if this object is fitted, ``False`` otherwise.
+        """
+        pass
+
+    def ensure_fitted(self) -> None:
+        """
+        Raise a :class:`.NotFittedError` if this object is not fitted.
+
+        :raise NotFittedError: this object is not fitted
+        """
+        if not self.is_fitted:
+            raise NotFittedError(f"{type(self).__name__} is not fitted")
+
+    @property
     def feature_names_in_(self) -> pd.Index:
         """
         The pandas column index with the names of the features used to fit this
@@ -115,7 +130,7 @@ class EstimatorDF(
 
         :raises AttributeError: if this estimator is not fitted
         """
-        self._ensure_fitted()
+        self.ensure_fitted()
         return self._get_features_in().rename(self.COL_FEATURE_IN)
 
     @property
@@ -125,7 +140,7 @@ class EstimatorDF(
 
         :raises AttributeError: if this estimator is not fitted
         """
-        self._ensure_fitted()
+        self.ensure_fitted()
         return self._get_n_outputs()
 
     def get_params(self, deep: bool = True) -> Mapping[str, Any]:
@@ -322,7 +337,7 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
         The index of the resulting series consists of the names of the output features;
         the corresponding values are the names of the original input features.
         """
-        self._ensure_fitted()
+        self.ensure_fitted()
         if self._features_original is None:
             self._features_original = (
                 self._get_features_original()
@@ -337,7 +352,7 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
         A pandas column index with the names of the features produced by this
         transformer
         """
-        self._ensure_fitted()
+        self.ensure_fitted()
         return self._get_features_out().rename(self.COL_FEATURE_OUT)
 
     # noinspection PyPep8Naming

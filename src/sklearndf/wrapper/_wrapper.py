@@ -767,7 +767,7 @@ class ClassifierWrapperDF(
     @property
     def classes_(self) -> Sequence[Any]:
         """[see superclass]"""
-        self._ensure_fitted()
+        self.ensure_fitted()
         # noinspection PyUnresolvedReferences
         return self._native_estimator.classes_
 
@@ -892,7 +892,7 @@ class ClustererWrapperDF(
     @property
     def labels_(self) -> pd.Series:
         """[see superclass]"""
-        self._ensure_fitted()
+        self.ensure_fitted()
         raw_labels = self._native_estimator.labels_
 
         return pd.Series(data=raw_labels, name=self.COL_LABELS, index=self._x_index)
