@@ -1,6 +1,6 @@
 """
 Factory functions and wrapper class API for enhancing the functionality of native
-estimators conforming with the scikit-learn API.
+estimators conforming with the `scikit-learn` API.
 
 In many cases, creating a DF classifier or regressor is as simple as
 
