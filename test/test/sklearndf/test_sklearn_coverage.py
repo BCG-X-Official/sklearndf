@@ -127,7 +127,7 @@ def sklearn_pipeline_classes() -> List[Type]:
 
 
 def sklearn_transformer_classes() -> List[Type]:
-    """ Return all classes that are 'just' transformers, not learners or pipelines."""
+    """Return all classes that are 'just' transformers, not learners or pipelines."""
     transformer_mixin_classes = [
         cls
         for cls in iterate_classes(
@@ -169,7 +169,7 @@ def _check_unexpected_sklearn_class(cls: Type) -> None:
     argnames="sklearn_classifier_cls", argvalues=sklearn_classifier_classes()
 )
 def test_classifier_coverage(sklearn_classifier_cls: Type[ClassifierMixin]) -> None:
-    """ Check if each sklearn classifier has a wrapped sklearndf counterpart. """
+    """Check if each sklearn classifier has a wrapped sklearndf counterpart."""
     sklearn_classes: Dict[
         Type[BaseEstimator], Type[EstimatorDF]
     ] = sklearn_delegate_classes(sklearndf.classification)
@@ -182,7 +182,7 @@ def test_classifier_coverage(sklearn_classifier_cls: Type[ClassifierMixin]) -> N
     argnames="sklearn_regressor_cls", argvalues=sklearn_regressor_classes()
 )
 def test_regressor_coverage(sklearn_regressor_cls: Type[RegressorMixin]) -> None:
-    """ Check if each sklearn regressor has a wrapped sklearndf counterpart. """
+    """Check if each sklearn regressor has a wrapped sklearndf counterpart."""
     sklearn_classes: Dict[
         Type[BaseEstimator], Type[EstimatorDF]
     ] = sklearn_delegate_classes(sklearndf.regression)
@@ -195,7 +195,7 @@ def test_regressor_coverage(sklearn_regressor_cls: Type[RegressorMixin]) -> None
     argnames="sklearn_transformer_cls", argvalues=sklearn_transformer_classes()
 )
 def test_transformer_coverage(sklearn_transformer_cls: Type[TransformerMixin]) -> None:
-    """ Check if each sklearn transformer has a wrapped sklearndf counterpart. """
+    """Check if each sklearn transformer has a wrapped sklearndf counterpart."""
 
     sklearn_classes: Dict[
         Type[BaseEstimator], Type[EstimatorDF]
@@ -222,7 +222,7 @@ def test_pipeline_coverage(sklearn_pipeline_cls: Type) -> None:
     argnames="sklearn_clusterer_cls", argvalues=sklearn_clusterer_classes()
 )
 def test_clusterer_coverage(sklearn_clusterer_cls: Type[ClusterMixin]) -> None:
-    """ Check if each sklearn clusterer has a wrapped sklearndf counterpart. """
+    """Check if each sklearn clusterer has a wrapped sklearndf counterpart."""
     sklearn_classes: Dict[
         Type[BaseEstimator], Type[EstimatorDF]
     ] = sklearn_delegate_classes(sklearndf.clustering)

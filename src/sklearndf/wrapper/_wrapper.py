@@ -1,7 +1,7 @@
 """
-Wrappers around native scikit-learn estimators.
+Wrappers around native `scikit-learn` estimators.
 
-`sklearndf` wrappers accept and return data frames (while scikit-learn transformers
+`sklearndf` wrappers accept and return data frames (while `scikit-learn` transformers
 usually return a numpy arrays, and may not accept data frames as input).
 Otherwise the wrappers are designed to precisely mirror the API and behavior of the
 native estimators they wrap.
@@ -144,7 +144,7 @@ class EstimatorWrapperDF(
     EstimatorDF, Generic[T_NativeEstimator], metaclass=EstimatorWrapperDFMeta
 ):
     """
-    Base class of DF wrappers for native estimators conforming with the scikit-learn
+    Base class of DF wrappers for native estimators conforming with the `scikit-learn`
     API.
 
     Estimator wrapper classes should be created using function
@@ -489,7 +489,7 @@ class TransformerWrapperDF(
     metaclass=ABCMeta,
 ):
     """
-    Base class of DF wrappers for native transformers conforming with the scikit-learn
+    Base class of DF wrappers for native transformers conforming with the `scikit-learn`
     API.
 
     Transformer wrapper classes should be created using function
@@ -654,7 +654,7 @@ class LearnerWrapperDF(
     metaclass=ABCMeta,
 ):
     """
-    Base class of DF wrappers for native learners conforming with the scikit-learn
+    Base class of DF wrappers for native learners conforming with the `scikit-learn`
     API.
     """
 
@@ -741,7 +741,7 @@ class RegressorWrapperDF(
     metaclass=ABCMeta,
 ):
     """
-    Base class of DF wrappers for native regressors conforming with the scikit-learn
+    Base class of DF wrappers for native regressors conforming with the `scikit-learn`
     API.
 
     Regressor wrapper classes should be created using function
@@ -757,7 +757,7 @@ class ClassifierWrapperDF(
     metaclass=ABCMeta,
 ):
     """
-    Base class of DF wrappers for native classifiers conforming with the scikit-learn
+    Base class of DF wrappers for native classifiers conforming with the `scikit-learn`
     API.
 
     Classifier wrapper classes should be created using function
@@ -767,7 +767,7 @@ class ClassifierWrapperDF(
     @property
     def classes_(self) -> Sequence[Any]:
         """[see superclass]"""
-        self._ensure_fitted()
+        self.ensure_fitted()
         # noinspection PyUnresolvedReferences
         return self._native_estimator.classes_
 
@@ -892,7 +892,7 @@ class ClustererWrapperDF(
     @property
     def labels_(self) -> pd.Series:
         """[see superclass]"""
-        self._ensure_fitted()
+        self.ensure_fitted()
         raw_labels = self._native_estimator.labels_
 
         return pd.Series(data=raw_labels, name=self.COL_LABELS, index=self._x_index)
@@ -1228,7 +1228,7 @@ def make_df_estimator(
 ) -> Union[Type[EstimatorWrapperDF[T_NativeEstimator]], T_NativeTransformer]:
     """
     Create an augmented version of a given estimator that conforms with the
-    scikit-learn API.
+    `scikit-learn` API.
 
     The augmented version is realised as a wrapper class that
 
@@ -1264,7 +1264,7 @@ def make_df_transformer(
 ) -> Union[Type[TransformerWrapperDF[T_NativeTransformer]], T_NativeTransformer]:
     """
     Create an augmented version of a given transformer that conforms with the
-    scikit-learn API.
+    `scikit-learn` API.
 
     The augmented version is realised as a wrapper class that
 
@@ -1300,7 +1300,7 @@ def make_df_classifier(
 ) -> Union[Type[ClassifierWrapperDF[T_NativeClassifier]], T_NativeTransformer]:
     """
     Create an augmented version of a given classifier that conforms with the
-    scikit-learn API.
+    `scikit-learn` API.
 
     The augmented version is realised as a wrapper class that
 
@@ -1336,7 +1336,7 @@ def make_df_regressor(
 ) -> Union[Type[RegressorWrapperDF[T_NativeRegressor]], T_NativeTransformer]:
     """
     Create an augmented version of a given regressor that conforms with the
-    scikit-learn API.
+    `scikit-learn` API.
 
     The augmented version is realised as a wrapper class that
 
@@ -1418,7 +1418,7 @@ def _wrap(
     Class decorator wrapping a :class:`sklearn.base.BaseEstimator` in a
     :class:`EstimatorWrapperDF`.
 
-    :param native_estimator: the native scikit-learn estimator class to wrap; must
+    :param native_estimator: the native `scikit-learn` estimator class to wrap; must
         be a subclass of :class:`~sklearn.base.BaseEstimator`
     :param name: name of the resulting class
     :param base_wrapper: optional parameter indicating the

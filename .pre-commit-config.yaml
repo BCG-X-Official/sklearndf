@@ -5,7 +5,7 @@ repos:
       - id: isort
 
   - repo: https://github.com/psf/black
-    rev: 20.8b1
+    rev: 22.1.0
     hooks:
       - id: black
         language_version: python3
@@ -32,3 +32,6 @@ repos:
     hooks:
       - id: mypy
         files: src/
+        additional_dependencies:
+          - numpy>=1.22
+          - gamma-pytools>=2.0.dev5,<3a

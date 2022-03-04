@@ -14,7 +14,7 @@ Module: type = Any
 
 
 def find_all_classes(*modules: Module) -> Set[Type[EstimatorWrapperDF]]:
-    """ Finds all Class members in given module/modules. """
+    """Finds all Class members in given module/modules."""
     types: Set[Type[EstimatorWrapperDF]] = set()
 
     def _add_classes_from_module(_m: Module) -> None:
@@ -30,7 +30,7 @@ def find_all_classes(*modules: Module) -> Set[Type[EstimatorWrapperDF]]:
 
 
 def find_all_submodules(parent_module: Module) -> Set[Module]:
-    """ Finds all submodules for a parent module. """
+    """Finds all submodules for a parent module."""
     parent_name = f"{parent_module.__name__}."
     return {
         module
@@ -42,7 +42,7 @@ def find_all_submodules(parent_module: Module) -> Set[Module]:
 def sklearn_delegate_classes(
     module: Module,
 ) -> Dict[Type[BaseEstimator], Type[EstimatorWrapperDF]]:
-    """ Creates a dictionary mapping from sklearndf -> sklearn classes. """
+    """Creates a dictionary mapping from sklearndf -> sklearn classes."""
     return {
         df_class.__wrapped__: df_class
         for df_class in find_all_classes(module)
@@ -56,7 +56,7 @@ def iterate_classes(
     matching: str,
     excluding: Optional[Union[str, Iterable[str]]] = None,
 ) -> List[Type[EstimatorWrapperDF]]:
-    """ Helper to return all classes with matching name from Python module(s) """
+    """Helper to return all classes with matching name from Python module(s)"""
 
     if not isinstance(from_modules, Iterable):
         from_modules = (from_modules,)
@@ -75,7 +75,7 @@ def iterate_classes(
 def get_sklearndf_wrapper_class(
     to_wrap: Type[BaseEstimator], from_module=None
 ) -> Type[EstimatorWrapperDF]:
-    """ Helper to return the wrapped counterpart for a sklearn class """
+    """Helper to return the wrapped counterpart for a sklearn class"""
     try:
         return sklearn_delegate_classes(from_module)[to_wrap]
 
@@ -86,7 +86,7 @@ def get_sklearndf_wrapper_class(
 
 
 def check_expected_not_fitted_error(estimator: EstimatorDF):
-    """ Check if transformers & learners raise NotFittedError (since sklearn 0.22)"""
+    """Check if transformers & learners raise NotFittedError (since sklearn 0.22)"""
     if version.LooseVersion(sklearn.__version__) <= "0.21":
         return
 

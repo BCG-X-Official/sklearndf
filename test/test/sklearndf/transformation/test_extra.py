@@ -9,7 +9,7 @@ from sklearndf.transformation.extra import BorutaDF
 
 
 def test_boruta_df() -> None:
-    """ Test basic functionality of BorutaDF with both sklearn & sklearndf predictor """
+    """Test basic functionality of BorutaDF with both sklearn & sklearndf predictor"""
     df = pd.DataFrame(data=np.random.randn(100, 5), columns=list("abcde"))
     x = df.iloc[:, :-1]
     y = df.iloc[:, -1]
@@ -22,7 +22,7 @@ def test_boruta_df() -> None:
 
 
 def test_boruta_pipeline(boston_df: pd.DataFrame, boston_target: str) -> None:
-    """ test a pipeline with on the boston dataset """
+    """Test a pipeline with on the boston dataset"""
 
     boruta_selector = PipelineDF(
         steps=[

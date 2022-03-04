@@ -1,7 +1,7 @@
 """
-DataFrame support and feature traceability for scikit-learn.
+Data frame support and feature traceability for `scikit-learn`.
 
-`sklearndf` augments more than 150 scikit-learn estimators for
+`sklearndf` augments more than 150 `scikit-learn` estimators for
 native support of data frames, while leaving the original API intact.
 """
 
@@ -10,7 +10,7 @@ from sklearn import __version__ as __sklearn_version__
 
 from ._sklearndf import *
 
-__version__ = "2.0.dev2"
+__version__ = "2.0.dev3"
 
 __sklearn_version__ = __parse_version(__sklearn_version__)
 __sklearn_0_22__ = __parse_version("0.22")
