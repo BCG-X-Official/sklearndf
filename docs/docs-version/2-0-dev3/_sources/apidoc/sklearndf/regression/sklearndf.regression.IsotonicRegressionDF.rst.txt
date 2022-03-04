@@ -1,0 +1,52 @@
+sklearndf.regression.IsotonicRegressionDF
+=========================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: IsotonicRegressionDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~IsotonicRegressionDF.clone
+      ~IsotonicRegressionDF.ensure_fitted
+      ~IsotonicRegressionDF.fit
+      ~IsotonicRegressionDF.fit_transform
+      ~IsotonicRegressionDF.from_fitted
+      ~IsotonicRegressionDF.get_params
+      ~IsotonicRegressionDF.inverse_transform
+      ~IsotonicRegressionDF.predict
+      ~IsotonicRegressionDF.score
+      ~IsotonicRegressionDF.set_params
+      ~IsotonicRegressionDF.to_expression
+      ~IsotonicRegressionDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~IsotonicRegressionDF.COL_FEATURE_IN
+      ~IsotonicRegressionDF.COL_FEATURE_OUT
+      ~IsotonicRegressionDF.COL_PREDICTION
+      ~IsotonicRegressionDF.feature_names_in_
+      ~IsotonicRegressionDF.feature_names_original_
+      ~IsotonicRegressionDF.feature_names_out_
+      ~IsotonicRegressionDF.is_fitted
+      ~IsotonicRegressionDF.n_outputs_
+      ~IsotonicRegressionDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

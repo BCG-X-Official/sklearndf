@@ -1,0 +1,49 @@
+sklearndf.transformation.wrapper.AdditiveChi2SamplerWrapperDF
+=============================================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: AdditiveChi2SamplerWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~AdditiveChi2SamplerWrapperDF.clone
+      ~AdditiveChi2SamplerWrapperDF.ensure_fitted
+      ~AdditiveChi2SamplerWrapperDF.fit
+      ~AdditiveChi2SamplerWrapperDF.fit_transform
+      ~AdditiveChi2SamplerWrapperDF.from_fitted
+      ~AdditiveChi2SamplerWrapperDF.get_params
+      ~AdditiveChi2SamplerWrapperDF.inverse_transform
+      ~AdditiveChi2SamplerWrapperDF.set_params
+      ~AdditiveChi2SamplerWrapperDF.to_expression
+      ~AdditiveChi2SamplerWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~AdditiveChi2SamplerWrapperDF.COL_FEATURE_IN
+      ~AdditiveChi2SamplerWrapperDF.COL_FEATURE_OUT
+      ~AdditiveChi2SamplerWrapperDF.feature_names_in_
+      ~AdditiveChi2SamplerWrapperDF.feature_names_original_
+      ~AdditiveChi2SamplerWrapperDF.feature_names_out_
+      ~AdditiveChi2SamplerWrapperDF.is_fitted
+      ~AdditiveChi2SamplerWrapperDF.n_outputs_
+      ~AdditiveChi2SamplerWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

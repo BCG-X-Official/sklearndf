@@ -1,0 +1,49 @@
+sklearndf.transformation.PolynomialCountSketchDF
+================================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: PolynomialCountSketchDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PolynomialCountSketchDF.clone
+      ~PolynomialCountSketchDF.ensure_fitted
+      ~PolynomialCountSketchDF.fit
+      ~PolynomialCountSketchDF.fit_transform
+      ~PolynomialCountSketchDF.from_fitted
+      ~PolynomialCountSketchDF.get_params
+      ~PolynomialCountSketchDF.inverse_transform
+      ~PolynomialCountSketchDF.set_params
+      ~PolynomialCountSketchDF.to_expression
+      ~PolynomialCountSketchDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~PolynomialCountSketchDF.COL_FEATURE_IN
+      ~PolynomialCountSketchDF.COL_FEATURE_OUT
+      ~PolynomialCountSketchDF.feature_names_in_
+      ~PolynomialCountSketchDF.feature_names_original_
+      ~PolynomialCountSketchDF.feature_names_out_
+      ~PolynomialCountSketchDF.is_fitted
+      ~PolynomialCountSketchDF.n_outputs_
+      ~PolynomialCountSketchDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

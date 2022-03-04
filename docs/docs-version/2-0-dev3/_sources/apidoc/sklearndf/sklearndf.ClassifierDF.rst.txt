@@ -1,0 +1,48 @@
+sklearndf.ClassifierDF
+======================
+
+.. currentmodule:: sklearndf
+
+.. autoclass:: ClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ClassifierDF.clone
+      ~ClassifierDF.decision_function
+      ~ClassifierDF.ensure_fitted
+      ~ClassifierDF.fit
+      ~ClassifierDF.get_params
+      ~ClassifierDF.predict
+      ~ClassifierDF.predict_log_proba
+      ~ClassifierDF.predict_proba
+      ~ClassifierDF.score
+      ~ClassifierDF.set_params
+      ~ClassifierDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ClassifierDF.COL_FEATURE_IN
+      ~ClassifierDF.classes_
+      ~ClassifierDF.feature_names_in_
+      ~ClassifierDF.is_fitted
+      ~ClassifierDF.n_outputs_
+      ~ClassifierDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

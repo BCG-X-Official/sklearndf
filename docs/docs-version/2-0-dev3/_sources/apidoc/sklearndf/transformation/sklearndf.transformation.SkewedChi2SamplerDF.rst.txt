@@ -1,0 +1,49 @@
+sklearndf.transformation.SkewedChi2SamplerDF
+============================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: SkewedChi2SamplerDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SkewedChi2SamplerDF.clone
+      ~SkewedChi2SamplerDF.ensure_fitted
+      ~SkewedChi2SamplerDF.fit
+      ~SkewedChi2SamplerDF.fit_transform
+      ~SkewedChi2SamplerDF.from_fitted
+      ~SkewedChi2SamplerDF.get_params
+      ~SkewedChi2SamplerDF.inverse_transform
+      ~SkewedChi2SamplerDF.set_params
+      ~SkewedChi2SamplerDF.to_expression
+      ~SkewedChi2SamplerDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~SkewedChi2SamplerDF.COL_FEATURE_IN
+      ~SkewedChi2SamplerDF.COL_FEATURE_OUT
+      ~SkewedChi2SamplerDF.feature_names_in_
+      ~SkewedChi2SamplerDF.feature_names_original_
+      ~SkewedChi2SamplerDF.feature_names_out_
+      ~SkewedChi2SamplerDF.is_fitted
+      ~SkewedChi2SamplerDF.n_outputs_
+      ~SkewedChi2SamplerDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

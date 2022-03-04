@@ -1,0 +1,61 @@
+sklearndf
+=========
+
+.. automodule:: sklearndf
+   :no-imported-members:
+
+   
+   .. include:: ../_templates/api_landing.rst
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: sklearndf
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      ClassifierDF
+      ClustererDF
+      EstimatorDF
+      LearnerDF
+      RegressorDF
+      SupervisedLearnerDF
+      TransformerDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+
+==========
+Submodules
+==========
+.. autosummary::
+   :toctree: sklearndf
+   :template: custom-module-template.rst
+   :recursive:
+
+   sklearndf.classification
+   sklearndf.clustering
+   sklearndf.pipeline
+   sklearndf.regression
+   sklearndf.transformation
+   sklearndf.wrapper
+

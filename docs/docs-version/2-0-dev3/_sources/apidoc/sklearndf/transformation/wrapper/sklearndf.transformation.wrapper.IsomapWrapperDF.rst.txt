@@ -1,0 +1,49 @@
+sklearndf.transformation.wrapper.IsomapWrapperDF
+================================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: IsomapWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~IsomapWrapperDF.clone
+      ~IsomapWrapperDF.ensure_fitted
+      ~IsomapWrapperDF.fit
+      ~IsomapWrapperDF.fit_transform
+      ~IsomapWrapperDF.from_fitted
+      ~IsomapWrapperDF.get_params
+      ~IsomapWrapperDF.inverse_transform
+      ~IsomapWrapperDF.set_params
+      ~IsomapWrapperDF.to_expression
+      ~IsomapWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~IsomapWrapperDF.COL_FEATURE_IN
+      ~IsomapWrapperDF.COL_FEATURE_OUT
+      ~IsomapWrapperDF.feature_names_in_
+      ~IsomapWrapperDF.feature_names_original_
+      ~IsomapWrapperDF.feature_names_out_
+      ~IsomapWrapperDF.is_fitted
+      ~IsomapWrapperDF.n_outputs_
+      ~IsomapWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

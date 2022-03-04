@@ -1,0 +1,57 @@
+sklearndf.clustering
+====================
+
+.. automodule:: sklearndf.clustering
+   :no-imported-members:
+
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: clustering
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      AffinityPropagationDF
+      AgglomerativeClusteringDF
+      BirchDF
+      DBSCANDF
+      FeatureAgglomerationDF
+      KMeansDF
+      MeanShiftDF
+      MiniBatchKMeansDF
+      OPTICSDF
+      SpectralClusteringDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+
+==========
+Submodules
+==========
+.. autosummary::
+   :toctree: clustering
+   :template: custom-module-template.rst
+   :recursive:
+
+   sklearndf.clustering.wrapper
+

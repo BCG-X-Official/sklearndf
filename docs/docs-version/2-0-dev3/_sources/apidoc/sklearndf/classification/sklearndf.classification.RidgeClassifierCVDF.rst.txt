@@ -1,0 +1,50 @@
+sklearndf.classification.RidgeClassifierCVDF
+============================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: RidgeClassifierCVDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~RidgeClassifierCVDF.clone
+      ~RidgeClassifierCVDF.decision_function
+      ~RidgeClassifierCVDF.ensure_fitted
+      ~RidgeClassifierCVDF.fit
+      ~RidgeClassifierCVDF.from_fitted
+      ~RidgeClassifierCVDF.get_params
+      ~RidgeClassifierCVDF.predict
+      ~RidgeClassifierCVDF.predict_log_proba
+      ~RidgeClassifierCVDF.predict_proba
+      ~RidgeClassifierCVDF.score
+      ~RidgeClassifierCVDF.set_params
+      ~RidgeClassifierCVDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~RidgeClassifierCVDF.COL_FEATURE_IN
+      ~RidgeClassifierCVDF.COL_PREDICTION
+      ~RidgeClassifierCVDF.classes_
+      ~RidgeClassifierCVDF.feature_names_in_
+      ~RidgeClassifierCVDF.is_fitted
+      ~RidgeClassifierCVDF.n_outputs_
+      ~RidgeClassifierCVDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

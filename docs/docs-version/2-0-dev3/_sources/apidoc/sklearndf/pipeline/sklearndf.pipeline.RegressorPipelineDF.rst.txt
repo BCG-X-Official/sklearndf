@@ -1,0 +1,50 @@
+sklearndf.pipeline.RegressorPipelineDF
+======================================
+
+.. currentmodule:: sklearndf.pipeline
+
+.. autoclass:: RegressorPipelineDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~RegressorPipelineDF.clone
+      ~RegressorPipelineDF.ensure_fitted
+      ~RegressorPipelineDF.fit
+      ~RegressorPipelineDF.get_params
+      ~RegressorPipelineDF.predict
+      ~RegressorPipelineDF.score
+      ~RegressorPipelineDF.set_params
+      ~RegressorPipelineDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~RegressorPipelineDF.COL_FEATURE_IN
+      ~RegressorPipelineDF.feature_names_in_
+      ~RegressorPipelineDF.feature_names_original_
+      ~RegressorPipelineDF.feature_names_out_
+      ~RegressorPipelineDF.final_estimator
+      ~RegressorPipelineDF.final_estimator_name
+      ~RegressorPipelineDF.is_fitted
+      ~RegressorPipelineDF.n_outputs_
+      ~RegressorPipelineDF.native_estimator
+      ~RegressorPipelineDF.preprocessing
+      ~RegressorPipelineDF.preprocessing_name
+   
+   
+
+   .. rubric:: Definitions

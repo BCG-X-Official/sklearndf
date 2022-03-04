@@ -1,0 +1,3484 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>&lt;no title&gt; &#8212; sklearndf  documentation</title>
+    
+    <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  
+    
+    <link rel="stylesheet"
+      href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+    
+      
+  
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/pydata-sphinx-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/gamma.css" />
+    
+    <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/gamma.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Development Guidelines" href="../contribution_guide.html" />
+    <link rel="prev" title="Tutorials" href="../tutorials.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../index.html">
+  <img src="../_static/gamma_sklearndf_logo.png" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../getting_started/getting_started.html">
+  Getting started
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../apidoc/sklearndf.html">
+  API reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../tutorials.html">
+  Tutorials
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../contribution_guide.html">
+  Development Guidelines
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../faqs.html">
+  FAQ
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../release_notes.html">
+  Release Notes
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <dl>
+<dt>{</dt><dd><dl>
+<dt>“cells”: [</dt><dd><dl>
+<dt>{</dt><dd><p>“cell_type”: “code”,
+“execution_count”: 4,
+“metadata”: {</p>
+<blockquote>
+<div><p>“delete_for_interactive”: true,
+“nbsphinx”: “hidden”</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“name”: “stdout”,
+“output_type”: “stream”,
+“text”: [</p>
+<blockquote>
+<div><p>“working dir is ‘C:\Projects\facet\sklearndf’n”,
+“added <cite>C:\Projects\facet\pytools\src</cite> to python pathsn”,
+“added <cite>C:\Projects\facet\sklearndf\src</cite> to python pathsn”</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“# this cell’s metadata containsn”,
+“# &quot;nbsphinx&quot;: &quot;hidden&quot; so it is hidden by nbsphinxn”,
+“n”,
+“def _ignore_warnings():n”,
+”    # ignore irrelevant warnings that would affect the output of this tutorial notebookn”,
+”    n”,
+”    # ignore a useless LGBM warningn”,
+”    import warningsn”,
+”    warnings.filterwarnings(&quot;ignore&quot;, category=UserWarning, message=r&quot;.*Xcode_8\.3\.3&quot;)n”,
+“n”,
+“_ignore_warnings()n”,
+“n”,
+“del _ignore_warnings”</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-26T08:31:08.171058Z”,
+“start_time”: “2019-07-26T08:31:08.167059Z”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“# Scikit-learn and data framesn”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><p>“raw_mimetype”: “text/restructuredtext”</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“The <cite>sklearndf</cite> package enhances scikit-learn for advanced support of data frames.n”,
+“n”,
+“It addresses a common issue with scikit-learn: the outputs of transformers are numpy arrays, even when the input is a data frame. However, to inspect a model it is essential to keep track of the feature names.n”,
+“n”,
+“<cite>sklearndf</cite> enhances scikit-learn’s estimators to:n”,
+“n”,
+“- return data frames as results of transformations, preserving feature names as the column indexn”,
+“- add additional estimator properties to enable tracing a feature name back to its original input feature; this is especially useful for transformers that create new features (e.g., one-hot encode), and for pipelines that include such transformers n”,
+“n”,
+“Using <cite>sklearndf</cite> is very simple: Append <cite>DF</cite> at the end of scikit-learn class names and you will get enhanced data frame support.”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 2,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:53:38.950751Z”,
+“start_time”: “2019-07-30T18:53:36.816398Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“name”: “stderr”,
+“output_type”: “stream”,
+“text”: [</p>
+<blockquote>
+<div><p>“C:\Anaconda3\envs\facet-develop\lib\site-packages\sklearn\utils\deprecation.py:143: FutureWarning: The sklearn.linear_model.stochastic_gradient module is  deprecated in version 0.22 and will be removed in version 0.24. The corresponding classes / functions should instead be imported from sklearn.linear_model. Anything that cannot be imported from sklearn.linear_model is now part of the private API.n”,
+”  warnings.warn(message, FutureWarning)n”</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“import pandas as pdn”,
+“n”,
+“from sklearn.compose import ColumnTransformern”,
+“from sklearn.datasets import fetch_openmln”,
+“from sklearn.impute import SimpleImputern”,
+“from sklearn.model_selection import train_test_splitn”,
+“from sklearn.pipeline import Pipelinen”,
+“from sklearn.preprocessing import OneHotEncodern”,
+“n”,
+“from sklearndf.classification import RandomForestClassifierDFn”,
+“from sklearndf.pipeline import PipelineDF, RegressorPipelineDFn”,
+“from sklearndf.regression import RandomForestRegressorDFn”,
+“from sklearndf.regression.extra import LGBMRegressorDFn”,
+“from sklearndf.transformation import ColumnTransformerDF, OneHotEncoderDF, SimpleImputerDFn”,
+“from sklearndf.transformation.extra import BorutaDF”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“We load our data:”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 5,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:53:38.991698Z”,
+“start_time”: “2019-07-30T18:53:38.953342Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [],
+“source”: [</p>
+<blockquote>
+<div><p>“housing_features_df, housing_target_sr = fetch_openml(data_id=42165, return_X_y=True, as_frame=True)n”,
+“housing_features_df = housing_features_df.drop([&quot;Id&quot;, &quot;YrSold&quot;, &quot;MoSold&quot;, &quot;MSSubClass&quot;, &quot;MiscVal&quot;], axis=1)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“The data set includes categorical features, e.g., garage types:”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 6,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:53:39.002353Z”,
+“start_time”: “2019-07-30T18:53:38.993328Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“array([‘Attchd’, ‘Detchd’, ‘BuiltIn’, ‘CarPort’, None, ‘Basment’,n”,
+”       ‘2Types’], dtype=object)”</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 6,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“housing_features_df[&quot;GarageType&quot;].unique()”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-26T13:42:19.065036Z”,
+“start_time”: “2019-07-26T13:42:19.058033Z”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“Let us build a preprocessing pipeline which:n”,
+“n”,
+“- for categorical variables fills missing values with the string ‘nan’ and then one-hot encodesn”,
+“- for numerical values fills missing values using median values”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 7,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:53:39.044336Z”,
+“start_time”: “2019-07-30T18:53:39.019314Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“(Index([‘MSZoning’, ‘Street’, ‘Alley’, ‘LotShape’, ‘LandContour’, ‘Utilities’,n”,
+”        ‘LotConfig’, ‘LandSlope’, ‘Neighborhood’, ‘Condition1’, ‘Condition2’,n”,
+”        ‘BldgType’, ‘HouseStyle’, ‘RoofStyle’, ‘RoofMatl’, ‘Exterior1st’,n”,
+”        ‘Exterior2nd’, ‘MasVnrType’, ‘ExterQual’, ‘ExterCond’, ‘Foundation’,n”,
+”        ‘BsmtQual’, ‘BsmtCond’, ‘BsmtExposure’, ‘BsmtFinType1’, ‘BsmtFinType2’,n”,
+”        ‘Heating’, ‘HeatingQC’, ‘CentralAir’, ‘Electrical’, ‘KitchenQual’,n”,
+”        ‘Functional’, ‘FireplaceQu’, ‘GarageType’, ‘GarageFinish’, ‘GarageQual’,n”,
+”        ‘GarageCond’, ‘PavedDrive’, ‘PoolQC’, ‘Fence’, ‘MiscFeature’,n”,
+”        ‘SaleType’, ‘SaleCondition’],n”,
+”       dtype=’object’),n”,
+” Index([‘LotFrontage’, ‘LotArea’, ‘OverallQual’, ‘OverallCond’, ‘YearBuilt’,n”,
+”        ‘YearRemodAdd’, ‘MasVnrArea’, ‘BsmtFinSF1’, ‘BsmtFinSF2’, ‘BsmtUnfSF’,n”,
+”        ‘TotalBsmtSF’, ‘1stFlrSF’, ‘2ndFlrSF’, ‘LowQualFinSF’, ‘GrLivArea’,n”,
+”        ‘BsmtFullBath’, ‘BsmtHalfBath’, ‘FullBath’, ‘HalfBath’, ‘BedroomAbvGr’,n”,
+”        ‘KitchenAbvGr’, ‘TotRmsAbvGrd’, ‘Fireplaces’, ‘GarageYrBlt’,n”,
+”        ‘GarageCars’, ‘GarageArea’, ‘WoodDeckSF’, ‘OpenPorchSF’,n”,
+”        ‘EnclosedPorch’, ‘3SsnPorch’, ‘ScreenPorch’, ‘PoolArea’],n”,
+”       dtype=’object’))”</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 7,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“categorical_features = housing_features_df.select_dtypes(object).columnsn”,
+“numerical_features = housing_features_df.select_dtypes(pd.np.number).columnsn”,
+“n”,
+“categorical_features, numerical_features”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“# Contrasting a scikit-learn and sklearndf pipeline”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## A scikit-learn pipeline”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“We first build the preprocessing pipeline with native scikit-learn transformers.n”,
+“This is achievable with a few lines of code; however does not allow us to keep track of feature names. “</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 8,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:53:39.055313Z”,
+“start_time”: “2019-07-30T18:53:39.047314Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [],
+“source”: [</p>
+<blockquote>
+<div><p>“preprocessing_numeric = SimpleImputer(strategy=&quot;median&quot;, add_indicator=True)n”,
+“n”,
+“preprocessing_categorical = Pipeline(n”,
+”    steps=[n”,
+”        (‘imputer’, SimpleImputer(missing_values=None, strategy=’constant’, fill_value=’&lt;unknown&gt;’)),n”,
+”        (‘one-hot’, OneHotEncoder(sparse=False))n”,
+”    ]n”,
+“)n”,
+“n”,
+“preprocessing = ColumnTransformer(n”,
+”    transformers=[n”,
+”        (‘numeric’, preprocessing_numeric, numerical_features),n”,
+”        (‘categorical’, preprocessing_categorical, categorical_features),n”,
+”    ]n”,
+“)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 9,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:53:39.134309Z”,
+“start_time”: “2019-07-30T18:53:39.082355Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“array([[6.500e+01, 8.450e+03, 7.000e+00, …, 0.000e+00, 1.000e+00,n”,
+”        0.000e+00],n”,
+”       [8.000e+01, 9.600e+03, 6.000e+00, …, 0.000e+00, 1.000e+00,n”,
+”        0.000e+00],n”,
+”       [6.800e+01, 1.125e+04, 7.000e+00, …, 0.000e+00, 1.000e+00,n”,
+”        0.000e+00],n”,
+”       …,n”,
+”       [6.600e+01, 9.042e+03, 7.000e+00, …, 0.000e+00, 1.000e+00,n”,
+”        0.000e+00],n”,
+”       [6.800e+01, 9.717e+03, 5.000e+00, …, 0.000e+00, 1.000e+00,n”,
+”        0.000e+00],n”,
+”       [7.500e+01, 9.937e+03, 5.000e+00, …, 0.000e+00, 1.000e+00,n”,
+”        0.000e+00]])”</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 9,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“preprocessing.fit_transform(X=housing_features_df, y=housing_target_sr)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><p>“raw_mimetype”: “text/restructuredtext”</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“The strength of <cite>sklearndf</cite> is to maintain the scikit-learn conventions and expressivity, and to also preserve dataframes, hence keeping track of the feature names.”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## An sklearndf pipeline”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><p>“raw_mimetype”: “text/restructuredtext”</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“The convention in <cite>sklearndf</cite> is to append <cite>DF</cite> at the end of each corresponding scikit-learn class. n”,
+“For instance, to reproduce the above example, we write:”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 10,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:53:39.153308Z”,
+“start_time”: “2019-07-30T18:53:39.145308Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [],
+“source”: [</p>
+<blockquote>
+<div><p>“preprocessing_numeric_df = SimpleImputerDF(strategy=&quot;median&quot;, add_indicator=True)n”,
+“n”,
+“preprocessing_categorical_df = PipelineDF(n”,
+”    steps=[n”,
+”        (‘imputer’, SimpleImputerDF(missing_values=None, strategy=’constant’, fill_value=’&lt;unknown&gt;’)),n”,
+”        (‘one-hot’, OneHotEncoderDF(sparse=False, handle_unknown=&quot;ignore&quot;))n”,
+”    ]n”,
+“)n”,
+“n”,
+“preprocessing_df = ColumnTransformerDF(n”,
+”    transformers=[n”,
+”        (‘categorical’, preprocessing_categorical_df, categorical_features),n”,
+”        (‘numeric’, preprocessing_numeric_df, numerical_features),n”,
+”    ]n”,
+“)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 11,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:53:39.249358Z”,
+“start_time”: “2019-07-30T18:53:39.180306Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/html”: [</dt><dd><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;feature_out&lt;/th&gt;n”,
+”      &lt;th&gt;MSZoning_C (all)&lt;/th&gt;n”,
+”      &lt;th&gt;MSZoning_FV&lt;/th&gt;n”,
+”      &lt;th&gt;MSZoning_RH&lt;/th&gt;n”,
+”      &lt;th&gt;MSZoning_RL&lt;/th&gt;n”,
+”      &lt;th&gt;MSZoning_RM&lt;/th&gt;n”,
+”      &lt;th&gt;Street_Grvl&lt;/th&gt;n”,
+”      &lt;th&gt;Street_Pave&lt;/th&gt;n”,
+”      &lt;th&gt;Alley_&amp;lt;unknown&amp;gt;&lt;/th&gt;n”,
+”      &lt;th&gt;Alley_Grvl&lt;/th&gt;n”,
+”      &lt;th&gt;Alley_Pave&lt;/th&gt;n”,
+”      &lt;th&gt;…&lt;/th&gt;n”,
+”      &lt;th&gt;GarageArea&lt;/th&gt;n”,
+”      &lt;th&gt;WoodDeckSF&lt;/th&gt;n”,
+”      &lt;th&gt;OpenPorchSF&lt;/th&gt;n”,
+”      &lt;th&gt;EnclosedPorch&lt;/th&gt;n”,
+”      &lt;th&gt;3SsnPorch&lt;/th&gt;n”,
+”      &lt;th&gt;ScreenPorch&lt;/th&gt;n”,
+”      &lt;th&gt;PoolArea&lt;/th&gt;n”,
+”      &lt;th&gt;LotFrontage__missing&lt;/th&gt;n”,
+”      &lt;th&gt;MasVnrArea__missing&lt;/th&gt;n”,
+”      &lt;th&gt;GarageYrBlt__missing&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;…&lt;/td&gt;n”,
+”      &lt;td&gt;548.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;61.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;…&lt;/td&gt;n”,
+”      &lt;td&gt;460.0&lt;/td&gt;n”,
+”      &lt;td&gt;298.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;…&lt;/td&gt;n”,
+”      &lt;td&gt;608.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;42.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;…&lt;/td&gt;n”,
+”      &lt;td&gt;642.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;35.0&lt;/td&gt;n”,
+”      &lt;td&gt;272.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;4&lt;/th&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;…&lt;/td&gt;n”,
+”      &lt;td&gt;836.0&lt;/td&gt;n”,
+”      &lt;td&gt;192.0&lt;/td&gt;n”,
+”      &lt;td&gt;84.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;p&gt;5 rows × 303 columns&lt;/p&gt;n”,
+“&lt;/div&gt;”</p>
+</dd>
+</dl>
+<p>],
+“text/plain”: [</p>
+<blockquote>
+<div><p>“feature_out  MSZoning_C (all)  MSZoning_FV  MSZoning_RH  MSZoning_RL  \n”,
+“0                         0.0          0.0          0.0          1.0   n”,
+“1                         0.0          0.0          0.0          1.0   n”,
+“2                         0.0          0.0          0.0          1.0   n”,
+“3                         0.0          0.0          0.0          1.0   n”,
+“4                         0.0          0.0          0.0          1.0   n”,
+“n”,
+“feature_out  MSZoning_RM  Street_Grvl  Street_Pave  Alley_&lt;unknown&gt;  \n”,
+“0                    0.0          0.0          1.0              1.0   n”,
+“1                    0.0          0.0          1.0              1.0   n”,
+“2                    0.0          0.0          1.0              1.0   n”,
+“3                    0.0          0.0          1.0              1.0   n”,
+“4                    0.0          0.0          1.0              1.0   n”,
+“n”,
+“feature_out  Alley_Grvl  Alley_Pave  …  GarageArea  WoodDeckSF  OpenPorchSF  \n”,
+“0                   0.0         0.0  …       548.0         0.0         61.0   n”,
+“1                   0.0         0.0  …       460.0       298.0          0.0   n”,
+“2                   0.0         0.0  …       608.0         0.0         42.0   n”,
+“3                   0.0         0.0  …       642.0         0.0         35.0   n”,
+“4                   0.0         0.0  …       836.0       192.0         84.0   n”,
+“n”,
+“feature_out  EnclosedPorch  3SsnPorch  ScreenPorch  PoolArea  \n”,
+“0                      0.0        0.0          0.0       0.0   n”,
+“1                      0.0        0.0          0.0       0.0   n”,
+“2                      0.0        0.0          0.0       0.0   n”,
+“3                    272.0        0.0          0.0       0.0   n”,
+“4                      0.0        0.0          0.0       0.0   n”,
+“n”,
+“feature_out  LotFrontage__missing  MasVnrArea__missing  GarageYrBlt__missing  n”,
+“0                             0.0                  0.0                   0.0  n”,
+“1                             0.0                  0.0                   0.0  n”,
+“2                             0.0                  0.0                   0.0  n”,
+“3                             0.0                  0.0                   0.0  n”,
+“4                             0.0                  0.0                   0.0  n”,
+“n”,
+“[5 rows x 303 columns]”</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 11,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“transformed_df = preprocessing_df.fit_transform(X=housing_features_df, y=housing_target_sr)n”,
+“transformed_df.head()”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><p>“raw_mimetype”: “text/restructuredtext”</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“The <cite>sklearndf.transformation.ColumnTransformerDF.feature_names_original_</cite> attribute returns a series mapping the output columns (the series’ index) to the input columns (the series’ values):”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 12,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:54:35.436833Z”,
+“start_time”: “2019-07-30T18:54:35.431830Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/html”: [</dt><dd><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;feature_in&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;feature_out&lt;/th&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;MSZoning_C (all)&lt;/th&gt;n”,
+”      &lt;td&gt;MSZoning&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;MSZoning_FV&lt;/th&gt;n”,
+”      &lt;td&gt;MSZoning&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;MSZoning_RH&lt;/th&gt;n”,
+”      &lt;td&gt;MSZoning&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;MSZoning_RL&lt;/th&gt;n”,
+”      &lt;td&gt;MSZoning&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;MSZoning_RM&lt;/th&gt;n”,
+”      &lt;td&gt;MSZoning&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;Street_Grvl&lt;/th&gt;n”,
+”      &lt;td&gt;Street&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;Street_Pave&lt;/th&gt;n”,
+”      &lt;td&gt;Street&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;Alley_&amp;lt;unknown&amp;gt;&lt;/th&gt;n”,
+”      &lt;td&gt;Alley&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;Alley_Grvl&lt;/th&gt;n”,
+”      &lt;td&gt;Alley&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;Alley_Pave&lt;/th&gt;n”,
+”      &lt;td&gt;Alley&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</dd>
+</dl>
+<p>],
+“text/plain”: [</p>
+<blockquote>
+<div><p>”                 feature_inn”,
+“feature_out                n”,
+“MSZoning_C (all)   MSZoningn”,
+“MSZoning_FV        MSZoningn”,
+“MSZoning_RH        MSZoningn”,
+“MSZoning_RL        MSZoningn”,
+“MSZoning_RM        MSZoningn”,
+“Street_Grvl          Streetn”,
+“Street_Pave          Streetn”,
+“Alley_&lt;unknown&gt;       Alleyn”,
+“Alley_Grvl            Alleyn”,
+“Alley_Pave            Alley”</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 12,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“<a href="#id1"><span class="problematic" id="id2">preprocessing_df.feature_names_original_</span></a>.to_frame().head(10)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“You can therefore easily select all output features generated from a given input feature:”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 13,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:54:47.270660Z”,
+“start_time”: “2019-07-30T18:54:47.254638Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/html”: [</dt><dd><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;feature_out&lt;/th&gt;n”,
+”      &lt;th&gt;GarageType_2Types&lt;/th&gt;n”,
+”      &lt;th&gt;GarageType_&amp;lt;unknown&amp;gt;&lt;/th&gt;n”,
+”      &lt;th&gt;GarageType_Attchd&lt;/th&gt;n”,
+”      &lt;th&gt;GarageType_Basment&lt;/th&gt;n”,
+”      &lt;th&gt;GarageType_BuiltIn&lt;/th&gt;n”,
+”      &lt;th&gt;GarageType_CarPort&lt;/th&gt;n”,
+”      &lt;th&gt;GarageType_Detchd&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;0&lt;/th&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1&lt;/th&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2&lt;/th&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;3&lt;/th&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;4&lt;/th&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;1.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”      &lt;td&gt;0.0&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</dd>
+</dl>
+<p>],
+“text/plain”: [</p>
+<blockquote>
+<div><p>“feature_out  GarageType_2Types  GarageType_&lt;unknown&gt;  GarageType_Attchd  \n”,
+“0                          0.0                   0.0                1.0   n”,
+“1                          0.0                   0.0                1.0   n”,
+“2                          0.0                   0.0                1.0   n”,
+“3                          0.0                   0.0                0.0   n”,
+“4                          0.0                   0.0                1.0   n”,
+“n”,
+“feature_out  GarageType_Basment  GarageType_BuiltIn  GarageType_CarPort  \n”,
+“0                           0.0                 0.0                 0.0   n”,
+“1                           0.0                 0.0                 0.0   n”,
+“2                           0.0                 0.0                 0.0   n”,
+“3                           0.0                 0.0                 0.0   n”,
+“4                           0.0                 0.0                 0.0   n”,
+“n”,
+“feature_out  GarageType_Detchd  n”,
+“0                          0.0  n”,
+“1                          0.0  n”,
+“2                          0.0  n”,
+“3                          1.0  n”,
+“4                          0.0  “</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 13,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“garage_type_derivatives = <a href="#id3"><span class="problematic" id="id4">preprocessing_df.feature_names_original_</span></a> == &quot;GarageType&quot;n”,
+“n”,
+“transformed_df.loc[:, garage_type_derivatives].head()”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“# Supervised learners”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-26T08:36:43.003042Z”,
+“start_time”: “2019-07-26T08:36:42.733047Z”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“## Regressors”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“As for transformers, scikit-learn regressors and classifiers have a <cite>sklearndf</cite> sibling obtained by appending <cite>DF</cite> to the class name, and the API remains the same. The result of any predict and decision function will be returned as a pandas series (single output) or data frame (class probabilities or multi-output).n”,
+“n”,
+“For a random forest regressor we get:”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 14,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:54:49.180964Z”,
+“start_time”: “2019-07-30T18:54:48.757981Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“0.8638857401761125”</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 14,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“# a simplified features vector (we will use a pipeline for more sophisticated pre-processing further down)n”,
+“numerical_features_df = housing_features_df.loc[:, numerical_features].fillna(0)n”,
+“n”,
+“df_numerical_train, df_numerical_test, y_train, y_test = train_test_split(n”,
+”    numerical_features_df,n”,
+”    housing_target_sr,n”,
+”    random_state=42n”,
+“)n”,
+“n”,
+“random_forest_regressor_df = RandomForestRegressorDF(n”,
+”    n_estimators=100,n”,
+”    max_depth=5,n”,
+”    random_state=42,n”,
+”    n_jobs=-3n”,
+“)n”,
+“n”,
+“random_forest_regressor_df.fit(X=df_numerical_train, y=y_train)n”,
+“random_forest_regressor_df.score(X=df_numerical_test, y=y_test)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 15,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/html”: [</dt><dd><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;prediction&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;892&lt;/th&gt;n”,
+”      &lt;td&gt;138678.817934&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1105&lt;/th&gt;n”,
+”      &lt;td&gt;305008.808241&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;413&lt;/th&gt;n”,
+”      &lt;td&gt;133420.810780&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;522&lt;/th&gt;n”,
+”      &lt;td&gt;171533.659061&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1036&lt;/th&gt;n”,
+”      &lt;td&gt;307214.384636&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;614&lt;/th&gt;n”,
+”      &lt;td&gt;88023.125186&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;218&lt;/th&gt;n”,
+”      &lt;td&gt;198144.411028&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1160&lt;/th&gt;n”,
+”      &lt;td&gt;167850.680826&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;649&lt;/th&gt;n”,
+”      &lt;td&gt;88023.125186&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;887&lt;/th&gt;n”,
+”      &lt;td&gt;126950.121597&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</dd>
+</dl>
+<p>],
+“text/plain”: [</p>
+<blockquote>
+<div><p>”         predictionn”,
+“892   138678.817934n”,
+“1105  305008.808241n”,
+“413   133420.810780n”,
+“522   171533.659061n”,
+“1036  307214.384636n”,
+“614    88023.125186n”,
+“218   198144.411028n”,
+“1160  167850.680826n”,
+“649    88023.125186n”,
+“887   126950.121597”</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 15,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“random_forest_regressor_df.predict(df_numerical_test.iloc[:10]).to_frame()”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 16,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:54:49.188965Z”,
+“start_time”: “2019-07-30T18:54:49.182965Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“{‘bootstrap’: True,n”,
+” ‘ccp_alpha’: 0.0,n”,
+” ‘criterion’: ‘mse’,n”,
+” ‘max_depth’: 5,n”,
+” ‘max_features’: ‘auto’,n”,
+” ‘max_leaf_nodes’: None,n”,
+” ‘max_samples’: None,n”,
+” ‘min_impurity_decrease’: 0.0,n”,
+” ‘min_impurity_split’: None,n”,
+” ‘min_samples_leaf’: 1,n”,
+” ‘min_samples_split’: 2,n”,
+” ‘min_weight_fraction_leaf’: 0.0,n”,
+” ‘n_estimators’: 100,n”,
+” ‘n_jobs’: -3,n”,
+” ‘oob_score’: False,n”,
+” ‘random_state’: 42,n”,
+” ‘verbose’: 0,n”,
+” ‘warm_start’: False}”</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 16,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“random_forest_regressor_df.get_params()”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 17,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:54:49.443565Z”,
+“start_time”: “2019-07-30T18:54:49.431562Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“RandomForestRegressorDF(bootstrap=True, ccp_alpha=0.0, criterion=’mse’,n”,
+”                        max_depth=7, max_features=’auto’, max_leaf_nodes=None,n”,
+”                        max_samples=None, min_impurity_decrease=0.0,n”,
+”                        min_impurity_split=None, min_samples_leaf=1,n”,
+”                        min_samples_split=2, min_weight_fraction_leaf=0.0,n”,
+”                        n_jobs=-3, oob_score=False, random_state=42, verbose=0,n”,
+”                        warm_start=False)”</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 17,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“random_forest_regressor_df.set_params(max_depth=7)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><p>“raw_mimetype”: “text/restructuredtext”</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“The underlying scikit-learn regressor is stored in the <cite>native_estimator</cite> attribute:”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 18,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:54:49.895830Z”,
+“start_time”: “2019-07-30T18:54:49.889831Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“RandomForestRegressor(max_depth=7, n_jobs=-3, random_state=42)”</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 18,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“random_forest_regressor_df.native_estimator”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><p>“raw_mimetype”: “text/restructuredtext”</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“Property <cite>is_fitted</cite> tells if the regressor is fitted, and – for fitted estimators – property <cite>feature_names_in_</cite> returns the names of the ingoing features as a pandas index.”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 19,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:54:50.523346Z”,
+“start_time”: “2019-07-30T18:54:50.518398Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“True”</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 19,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“random_forest_regressor_df.is_fitted”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 20,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:54:50.349489Z”,
+“start_time”: “2019-07-30T18:54:50.345466Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“Index([‘LotFrontage’, ‘LotArea’, ‘OverallQual’, ‘OverallCond’, ‘YearBuilt’,n”,
+”       ‘YearRemodAdd’, ‘MasVnrArea’, ‘BsmtFinSF1’, ‘BsmtFinSF2’, ‘BsmtUnfSF’,n”,
+”       ‘TotalBsmtSF’, ‘1stFlrSF’, ‘2ndFlrSF’, ‘LowQualFinSF’, ‘GrLivArea’,n”,
+”       ‘BsmtFullBath’, ‘BsmtHalfBath’, ‘FullBath’, ‘HalfBath’, ‘BedroomAbvGr’,n”,
+”       ‘KitchenAbvGr’, ‘TotRmsAbvGrd’, ‘Fireplaces’, ‘GarageYrBlt’,n”,
+”       ‘GarageCars’, ‘GarageArea’, ‘WoodDeckSF’, ‘OpenPorchSF’,n”,
+”       ‘EnclosedPorch’, ‘3SsnPorch’, ‘ScreenPorch’, ‘PoolArea’],n”,
+”      dtype=’object’, name=’feature_in’)”</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 20,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“<a href="#id5"><span class="problematic" id="id6">random_forest_regressor_df.feature_names_in_</span></a>”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## Classifiersn”,
+“n”,
+“Classifiers follow the same logic:”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 21,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:54:50.833368Z”,
+“start_time”: “2019-07-30T18:54:50.826362Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [],
+“source”: [</p>
+<blockquote>
+<div><p>“# we create for house prices house below 100k, below 200k, and above 200k for multi-label classificationn”,
+“y_classes = housing_target_sr.apply(lambda x: ‘&gt;=200k’ if x &gt;= 200000 else ‘&gt;=100k’ if x &gt;= 100000 else ‘&lt;100k’)n”,
+“n”,
+“df_numerical_train, df_numerical_test, y_classification_train, y_classification_test = train_test_split(n”,
+”    numerical_features_df,n”,
+”    y_classes,n”,
+”    random_state=42n”,
+“)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 22,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:54:51.432224Z”,
+“start_time”: “2019-07-30T18:54:51.341154Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“0.8767123287671232”</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 22,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“random_forest_classifier_df = RandomForestClassifierDF(n”,
+”    n_estimators=100,n”,
+”    max_depth=5,n”,
+”    random_state=42,n”,
+”    n_jobs=-3n”,
+“)n”,
+“random_forest_classifier_df.fit(df_numerical_train, y_classification_train)n”,
+“random_forest_classifier_df.score(df_numerical_test, y_classification_test)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 23,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/html”: [</dt><dd><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;prediction&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;892&lt;/th&gt;n”,
+”      &lt;td&gt;&amp;gt;=100k&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1105&lt;/th&gt;n”,
+”      &lt;td&gt;&amp;gt;=200k&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;413&lt;/th&gt;n”,
+”      &lt;td&gt;&amp;gt;=100k&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;522&lt;/th&gt;n”,
+”      &lt;td&gt;&amp;gt;=100k&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1036&lt;/th&gt;n”,
+”      &lt;td&gt;&amp;gt;=200k&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;614&lt;/th&gt;n”,
+”      &lt;td&gt;&amp;lt;100k&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;218&lt;/th&gt;n”,
+”      &lt;td&gt;&amp;gt;=100k&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1160&lt;/th&gt;n”,
+”      &lt;td&gt;&amp;gt;=100k&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;649&lt;/th&gt;n”,
+”      &lt;td&gt;&amp;lt;100k&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;887&lt;/th&gt;n”,
+”      &lt;td&gt;&amp;gt;=100k&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</dd>
+</dl>
+<p>],
+“text/plain”: [</p>
+<blockquote>
+<div><p>”     predictionn”,
+“892      &gt;=100kn”,
+“1105     &gt;=200kn”,
+“413      &gt;=100kn”,
+“522      &gt;=100kn”,
+“1036     &gt;=200kn”,
+“614       &lt;100kn”,
+“218      &gt;=100kn”,
+“1160     &gt;=100kn”,
+“649       &lt;100kn”,
+“887      &gt;=100k”</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 23,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“random_forest_classifier_df.predict(df_numerical_test.iloc[:10]).to_frame()”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 24,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/html”: [</dt><dd><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;&amp;lt;100k&lt;/th&gt;n”,
+”      &lt;th&gt;&amp;gt;=100k&lt;/th&gt;n”,
+”      &lt;th&gt;&amp;gt;=200k&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;892&lt;/th&gt;n”,
+”      &lt;td&gt;0.056555&lt;/td&gt;n”,
+”      &lt;td&gt;0.905298&lt;/td&gt;n”,
+”      &lt;td&gt;0.038148&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1105&lt;/th&gt;n”,
+”      &lt;td&gt;0.001141&lt;/td&gt;n”,
+”      &lt;td&gt;0.091114&lt;/td&gt;n”,
+”      &lt;td&gt;0.907745&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;413&lt;/th&gt;n”,
+”      &lt;td&gt;0.104472&lt;/td&gt;n”,
+”      &lt;td&gt;0.860927&lt;/td&gt;n”,
+”      &lt;td&gt;0.034602&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;522&lt;/th&gt;n”,
+”      &lt;td&gt;0.047416&lt;/td&gt;n”,
+”      &lt;td&gt;0.814917&lt;/td&gt;n”,
+”      &lt;td&gt;0.137667&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1036&lt;/th&gt;n”,
+”      &lt;td&gt;0.000812&lt;/td&gt;n”,
+”      &lt;td&gt;0.081764&lt;/td&gt;n”,
+”      &lt;td&gt;0.917424&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;614&lt;/th&gt;n”,
+”      &lt;td&gt;0.795575&lt;/td&gt;n”,
+”      &lt;td&gt;0.201516&lt;/td&gt;n”,
+”      &lt;td&gt;0.002909&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;218&lt;/th&gt;n”,
+”      &lt;td&gt;0.023440&lt;/td&gt;n”,
+”      &lt;td&gt;0.569006&lt;/td&gt;n”,
+”      &lt;td&gt;0.407554&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1160&lt;/th&gt;n”,
+”      &lt;td&gt;0.055070&lt;/td&gt;n”,
+”      &lt;td&gt;0.899930&lt;/td&gt;n”,
+”      &lt;td&gt;0.045000&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;649&lt;/th&gt;n”,
+”      &lt;td&gt;0.810701&lt;/td&gt;n”,
+”      &lt;td&gt;0.186019&lt;/td&gt;n”,
+”      &lt;td&gt;0.003280&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;887&lt;/th&gt;n”,
+”      &lt;td&gt;0.066446&lt;/td&gt;n”,
+”      &lt;td&gt;0.896820&lt;/td&gt;n”,
+”      &lt;td&gt;0.036734&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</dd>
+</dl>
+<p>],
+“text/plain”: [</p>
+<blockquote>
+<div><p>”         &lt;100k    &gt;=100k    &gt;=200kn”,
+“892   0.056555  0.905298  0.038148n”,
+“1105  0.001141  0.091114  0.907745n”,
+“413   0.104472  0.860927  0.034602n”,
+“522   0.047416  0.814917  0.137667n”,
+“1036  0.000812  0.081764  0.917424n”,
+“614   0.795575  0.201516  0.002909n”,
+“218   0.023440  0.569006  0.407554n”,
+“1160  0.055070  0.899930  0.045000n”,
+“649   0.810701  0.186019  0.003280n”,
+“887   0.066446  0.896820  0.036734”</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 24,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“random_forest_classifier_df.predict_proba(df_numerical_test.iloc[:10])”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 25,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/html”: [</dt><dd><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;&amp;lt;100k&lt;/th&gt;n”,
+”      &lt;th&gt;&amp;gt;=100k&lt;/th&gt;n”,
+”      &lt;th&gt;&amp;gt;=200k&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;892&lt;/th&gt;n”,
+”      &lt;td&gt;-2.872548&lt;/td&gt;n”,
+”      &lt;td&gt;-0.099491&lt;/td&gt;n”,
+”      &lt;td&gt;-3.266291&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1105&lt;/th&gt;n”,
+”      &lt;td&gt;-6.775823&lt;/td&gt;n”,
+”      &lt;td&gt;-2.395643&lt;/td&gt;n”,
+”      &lt;td&gt;-0.096792&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;413&lt;/th&gt;n”,
+”      &lt;td&gt;-2.258840&lt;/td&gt;n”,
+”      &lt;td&gt;-0.149746&lt;/td&gt;n”,
+”      &lt;td&gt;-3.363852&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;522&lt;/th&gt;n”,
+”      &lt;td&gt;-3.048800&lt;/td&gt;n”,
+”      &lt;td&gt;-0.204669&lt;/td&gt;n”,
+”      &lt;td&gt;-1.982916&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1036&lt;/th&gt;n”,
+”      &lt;td&gt;-7.116299&lt;/td&gt;n”,
+”      &lt;td&gt;-2.503917&lt;/td&gt;n”,
+”      &lt;td&gt;-0.086185&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;614&lt;/th&gt;n”,
+”      &lt;td&gt;-0.228690&lt;/td&gt;n”,
+”      &lt;td&gt;-1.601889&lt;/td&gt;n”,
+”      &lt;td&gt;-5.839849&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;218&lt;/th&gt;n”,
+”      &lt;td&gt;-3.753297&lt;/td&gt;n”,
+”      &lt;td&gt;-0.563864&lt;/td&gt;n”,
+”      &lt;td&gt;-0.897583&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1160&lt;/th&gt;n”,
+”      &lt;td&gt;-2.899155&lt;/td&gt;n”,
+”      &lt;td&gt;-0.105438&lt;/td&gt;n”,
+”      &lt;td&gt;-3.101087&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;649&lt;/th&gt;n”,
+”      &lt;td&gt;-0.209856&lt;/td&gt;n”,
+”      &lt;td&gt;-1.681904&lt;/td&gt;n”,
+”      &lt;td&gt;-5.720017&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;887&lt;/th&gt;n”,
+”      &lt;td&gt;-2.711371&lt;/td&gt;n”,
+”      &lt;td&gt;-0.108900&lt;/td&gt;n”,
+”      &lt;td&gt;-3.304040&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</dd>
+</dl>
+<p>],
+“text/plain”: [</p>
+<blockquote>
+<div><p>”         &lt;100k    &gt;=100k    &gt;=200kn”,
+“892  -2.872548 -0.099491 -3.266291n”,
+“1105 -6.775823 -2.395643 -0.096792n”,
+“413  -2.258840 -0.149746 -3.363852n”,
+“522  -3.048800 -0.204669 -1.982916n”,
+“1036 -7.116299 -2.503917 -0.086185n”,
+“614  -0.228690 -1.601889 -5.839849n”,
+“218  -3.753297 -0.563864 -0.897583n”,
+“1160 -2.899155 -0.105438 -3.101087n”,
+“649  -0.209856 -1.681904 -5.720017n”,
+“887  -2.711371 -0.108900 -3.304040”</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 25,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“random_forest_classifier_df.predict_log_proba(df_numerical_test.iloc[:10])”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## Pipeline”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-26T08:37:37.633663Z”,
+“start_time”: “2019-07-26T08:37:37.618669Z”</p>
+</dd>
+</dl>
+<p>},
+“raw_mimetype”: “text/restructuredtext”</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“We can combine the above steps to build a full predictive pipeline. <cite>sklearndf</cite> provides two useful, specialised pipeline objects for this, <cite>RegressorPipelineDF</cite> and <cite>ClassifierPipelineDF</cite>. Both implement a special two-step pipeline with one preprocessing step and one prediction step, while staying compatible with the general sklearn pipeline idiom.”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 26,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:54:51.520150Z”,
+“start_time”: “2019-07-30T18:54:51.513148Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [],
+“source”: [</p>
+<blockquote>
+<div><p>“pipeline_df = RegressorPipelineDF(n”,
+”    preprocessing=preprocessing_df,n”,
+”    regressor=RandomForestRegressorDF(n”,
+”        n_estimators=1000,n”,
+”        max_features=2/3,n”,
+”        max_depth=7,n”,
+”        random_state=42,n”,
+”        n_jobs=-3n”,
+”    )n”,
+“)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 27,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:54:51.874135Z”,
+“start_time”: “2019-07-30T18:54:51.522150Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“0.8892115754403426”</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 27,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“df_train, df_test, y_train, y_test = train_test_split(housing_features_df, housing_target_sr, random_state=42)n”,
+“pipeline_df.fit(df_train, y_train)n”,
+“pipeline_df.score(df_test, y_test)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“# Extras”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><p>“raw_mimetype”: “text/restructuredtext”</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“<cite>sklearndf</cite> also provides some additional estimators developed by Gamma or third parties, which are useful additions to the scikit-learn repertoire, and which follow the scikit-learn idiom. These are provided in <cite>.extra</cite> modules, such asn”,
+“n”,
+“- <cite>sklearndf.regression.extra.LGBMRegressorDF</cite>n”,
+“- <cite>sklearndf.transformation.extra.BorutaDF</cite>n”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## LightGBM regressor”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 28,
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“ExecuteTime”: {</dt><dd><p>“end_time”: “2019-07-30T18:54:52.046129Z”,
+“start_time”: “2019-07-30T18:54:51.876135Z”</p>
+</dd>
+</dl>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><p>“is_executing”: false</p>
+</div></blockquote>
+<p>},
+“scrolled”: true</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/html”: [</dt><dd><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;prediction&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;892&lt;/th&gt;n”,
+”      &lt;td&gt;139447.461334&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1105&lt;/th&gt;n”,
+”      &lt;td&gt;288031.725712&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;413&lt;/th&gt;n”,
+”      &lt;td&gt;124917.506705&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;522&lt;/th&gt;n”,
+”      &lt;td&gt;167320.406141&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1036&lt;/th&gt;n”,
+”      &lt;td&gt;315868.109901&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;614&lt;/th&gt;n”,
+”      &lt;td&gt;77154.764703&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;218&lt;/th&gt;n”,
+”      &lt;td&gt;223173.451376&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1160&lt;/th&gt;n”,
+”      &lt;td&gt;149507.513568&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;649&lt;/th&gt;n”,
+”      &lt;td&gt;76728.165603&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;887&lt;/th&gt;n”,
+”      &lt;td&gt;136832.195002&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</dd>
+</dl>
+<p>],
+“text/plain”: [</p>
+<blockquote>
+<div><p>”         predictionn”,
+“892   139447.461334n”,
+“1105  288031.725712n”,
+“413   124917.506705n”,
+“522   167320.406141n”,
+“1036  315868.109901n”,
+“614    77154.764703n”,
+“218   223173.451376n”,
+“1160  149507.513568n”,
+“649    76728.165603n”,
+“887   136832.195002”</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 28,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“lgbm_df = LGBMRegressorDF(n_estimators=100, max_depth=8)n”,
+“lgbm_df.fit(df_numerical_train, y_train)n”,
+“lgbm_df.predict(df_numerical_test.iloc[:10]).to_frame()”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“## Boruta”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><p>“raw_mimetype”: “text/restructuredtext”</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“[Boruta](<a class="reference external" href="https://www.jstatsoft.org/article/view/v036i11">https://www.jstatsoft.org/article/view/v036i11</a>) is a smart feature selection method to eliminate all features whose predictive power is not better than random noise.n”,
+“n”,
+“The <cite>sklearndf.transformation.extra.BorutaDF</cite> transformer provides easy access to this powerful method. The basis of this is a tree-based learner, usually a random forest.n”,
+“n”,
+“For the random forest, we rely on default parameters but set the maximum tree depth to 5 (for Boruta, setting a depth between 3 and 7 is highly recommended and depends on the number of features and expected complexity of the feature/target interactions). The number of trees is automatically managed by the Boruta feature selector (argument <code class="docutils literal notranslate"><span class="pre">n_estimators=\&quot;auto\&quot;</span></code>).n”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 29,
+“metadata”: {},
+“outputs”: [],
+“source”: [</p>
+<blockquote>
+<div><p>“boruta_pipeline = PipelineDF(n”,
+”    steps=[n”,
+”        (‘preprocess’, preprocessing_df),n”,
+”        (‘boruta’, BorutaDF(n”,
+”            estimator=RandomForestRegressorDF(max_depth=5, n_jobs=-3), n”,
+”            n_estimators=&quot;auto&quot;, n”,
+”            random_state=42,n”,
+”            verbose=2n”,
+”        )),n”,
+”    ]n”,
+“)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 30,
+“metadata”: {</p>
+<blockquote>
+<div><p>“scrolled”: true</p>
+</div></blockquote>
+<p>},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><p>“name”: “stdout”,
+“output_type”: “stream”,
+“text”: [</p>
+<blockquote>
+<div><p>“Iteration: t1 / 100n”,
+“Confirmed: t0n”,
+“Tentative: t303n”,
+“Rejected: t0n”,
+“Iteration: t2 / 100n”,
+“Confirmed: t0n”,
+“Tentative: t303n”,
+“Rejected: t0n”,
+“Iteration: t3 / 100n”,
+“Confirmed: t0n”,
+“Tentative: t303n”,
+“Rejected: t0n”,
+“Iteration: t4 / 100n”,
+“Confirmed: t0n”,
+“Tentative: t303n”,
+“Rejected: t0n”,
+“Iteration: t5 / 100n”,
+“Confirmed: t0n”,
+“Tentative: t303n”,
+“Rejected: t0n”,
+“Iteration: t6 / 100n”,
+“Confirmed: t0n”,
+“Tentative: t303n”,
+“Rejected: t0n”,
+“Iteration: t7 / 100n”,
+“Confirmed: t0n”,
+“Tentative: t303n”,
+“Rejected: t0n”,
+“Iteration: t8 / 100n”,
+“Confirmed: t0n”,
+“Tentative: t29n”,
+“Rejected: t274n”,
+“Iteration: t9 / 100n”,
+“Confirmed: t12n”,
+“Tentative: t17n”,
+“Rejected: t274n”,
+“Iteration: t10 / 100n”,
+“Confirmed: t12n”,
+“Tentative: t17n”,
+“Rejected: t274n”,
+“Iteration: t11 / 100n”,
+“Confirmed: t12n”,
+“Tentative: t17n”,
+“Rejected: t274n”,
+“Iteration: t12 / 100n”,
+“Confirmed: t13n”,
+“Tentative: t14n”,
+“Rejected: t276n”,
+“Iteration: t13 / 100n”,
+“Confirmed: t13n”,
+“Tentative: t14n”,
+“Rejected: t276n”,
+“Iteration: t14 / 100n”,
+“Confirmed: t13n”,
+“Tentative: t14n”,
+“Rejected: t276n”,
+“Iteration: t15 / 100n”,
+“Confirmed: t13n”,
+“Tentative: t14n”,
+“Rejected: t276n”,
+“Iteration: t16 / 100n”,
+“Confirmed: t13n”,
+“Tentative: t12n”,
+“Rejected: t278n”,
+“Iteration: t17 / 100n”,
+“Confirmed: t13n”,
+“Tentative: t12n”,
+“Rejected: t278n”,
+“Iteration: t18 / 100n”,
+“Confirmed: t13n”,
+“Tentative: t12n”,
+“Rejected: t278n”,
+“Iteration: t19 / 100n”,
+“Confirmed: t14n”,
+“Tentative: t11n”,
+“Rejected: t278n”,
+“Iteration: t20 / 100n”,
+“Confirmed: t14n”,
+“Tentative: t10n”,
+“Rejected: t279n”,
+“Iteration: t21 / 100n”,
+“Confirmed: t14n”,
+“Tentative: t10n”,
+“Rejected: t279n”,
+“Iteration: t22 / 100n”,
+“Confirmed: t14n”,
+“Tentative: t10n”,
+“Rejected: t279n”,
+“Iteration: t23 / 100n”,
+“Confirmed: t14n”,
+“Tentative: t9n”,
+“Rejected: t280n”,
+“Iteration: t24 / 100n”,
+“Confirmed: t14n”,
+“Tentative: t9n”,
+“Rejected: t280n”,
+“Iteration: t25 / 100n”,
+“Confirmed: t14n”,
+“Tentative: t9n”,
+“Rejected: t280n”,
+“Iteration: t26 / 100n”,
+“Confirmed: t14n”,
+“Tentative: t9n”,
+“Rejected: t280n”,
+“Iteration: t27 / 100n”,
+“Confirmed: t14n”,
+“Tentative: t9n”,
+“Rejected: t280n”,
+“Iteration: t28 / 100n”,
+“Confirmed: t14n”,
+“Tentative: t9n”,
+“Rejected: t280n”,
+“Iteration: t29 / 100n”,
+“Confirmed: t14n”,
+“Tentative: t7n”,
+“Rejected: t282n”,
+“Iteration: t30 / 100n”,
+“Confirmed: t14n”,
+“Tentative: t7n”,
+“Rejected: t282n”,
+“Iteration: t31 / 100n”,
+“Confirmed: t14n”,
+“Tentative: t7n”,
+“Rejected: t282n”,
+“Iteration: t32 / 100n”,
+“Confirmed: t14n”,
+“Tentative: t7n”,
+“Rejected: t282n”,
+“Iteration: t33 / 100n”,
+“Confirmed: t14n”,
+“Tentative: t7n”,
+“Rejected: t282n”,
+“Iteration: t34 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t6n”,
+“Rejected: t282n”,
+“Iteration: t35 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t6n”,
+“Rejected: t282n”,
+“Iteration: t36 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t6n”,
+“Rejected: t282n”,
+“Iteration: t37 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t5n”,
+“Rejected: t283n”,
+“Iteration: t38 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t5n”,
+“Rejected: t283n”,
+“Iteration: t39 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t5n”,
+“Rejected: t283n”,
+“Iteration: t40 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t5n”,
+“Rejected: t283n”,
+“Iteration: t41 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t5n”,
+“Rejected: t283n”,
+“Iteration: t42 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t5n”,
+“Rejected: t283n”,
+“Iteration: t43 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t5n”,
+“Rejected: t283n”,
+“Iteration: t44 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t5n”,
+“Rejected: t283n”,
+“Iteration: t45 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t5n”,
+“Rejected: t283n”,
+“Iteration: t46 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t5n”,
+“Rejected: t283n”,
+“Iteration: t47 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t5n”,
+“Rejected: t283n”,
+“Iteration: t48 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t5n”,
+“Rejected: t283n”,
+“Iteration: t49 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t5n”,
+“Rejected: t283n”,
+“Iteration: t50 / 100n”,
+“Confirmed: t15n”,
+“Tentative: t5n”,
+“Rejected: t283n”,
+“Iteration: t51 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t52 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t53 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t54 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t55 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t56 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t57 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t58 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t59 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t60 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t61 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t62 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t63 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t64 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t65 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t66 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t67 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t68 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t69 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t70 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t71 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t72 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t73 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t74 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t75 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t76 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t77 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t78 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t79 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t80 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t81 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t82 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t83 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t84 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t85 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t86 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t87 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t88 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t89 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t90 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t91 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t92 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t93 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t94 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t95 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t96 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t97 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t98 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“Iteration: t99 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t4n”,
+“Rejected: t283n”,
+“n”,
+“n”,
+“BorutaPy finished running.n”,
+“n”,
+“Iteration: t100 / 100n”,
+“Confirmed: t16n”,
+“Tentative: t3n”,
+“Rejected: t283n”</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+{</p>
+<blockquote>
+<div><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“PipelineDF(memory=None,n”,
+”           steps=[(‘preprocess’,n”,
+”                   ColumnTransformerDF(n_jobs=None, remainder=’drop’,n”,
+”                                       sparse_threshold=0.3,n”,
+”                                       transformer_weights=None,n”,
+”                                       transformers=[(‘categorical’,n”,
+”                                                      PipelineDF(memory=None,n”,
+”                                                                 steps=[(‘imputer’,n”,
+”                                                                         SimpleImputerDF(add_indicator=False,n”,
+”                                                                                         copy=True,n”,
+”                                                                                         fill_value=’&lt;unknown&gt;’,n”,
+”                                                                                         missing_values=None,n”,
+”                                                                                         strategy=’constant’)),n”,
+”                                                                        (‘one-hot’,n”,
+”                                                                         OneHotEncoderDF(cat…n”,
+”       ‘GarageCars’, ‘GarageArea’, ‘WoodDeckSF’, ‘OpenPorchSF’,n”,
+”       ‘EnclosedPorch’, ‘3SsnPorch’, ‘ScreenPorch’, ‘PoolArea’],n”,
+”      dtype=’object’))],n”,
+”                                       verbose=False)),n”,
+”                  (‘boruta’,n”,
+”                   BorutaDF(estimator=RandomForestRegressor(max_depth=5,n”,
+”                                                            n_estimators=126,n”,
+”                                                            n_jobs=-3,n”,
+”                                                            random_state=&lt;mtrand.RandomState object at 0x0000011AF63B5278&gt;),n”,
+”                            n_estimators=’auto’,n”,
+”                            random_state=&lt;mtrand.RandomState object at 0x0000011AF63B5278&gt;,n”,
+”                            verbose=2))],n”,
+”           verbose=False)”</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 30,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“boruta_pipeline.fit(X=housing_features_df, y=housing_target_sr)”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“Boruta is implemented as natively an sklearn transformer; its output features are all features that passed the Boruta test.”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 31,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“[‘BsmtQual_Ex’,n”,
+” ‘LotFrontage’,n”,
+” ‘LotArea’,n”,
+” ‘OverallQual’,n”,
+” ‘YearBuilt’,n”,
+” ‘YearRemodAdd’,n”,
+” ‘MasVnrArea’,n”,
+” ‘BsmtFinSF1’,n”,
+” ‘TotalBsmtSF’,n”,
+” ‘1stFlrSF’,n”,
+” ‘2ndFlrSF’,n”,
+” ‘GrLivArea’,n”,
+” ‘FullBath’,n”,
+” ‘TotRmsAbvGrd’,n”,
+” ‘GarageCars’,n”,
+” ‘GarageArea’]”</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 31,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“<a href="#id7"><span class="problematic" id="id8">boruta_pipeline.feature_names_out_</span></a>.to_list()”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {</p>
+<blockquote>
+<div><p>“raw_mimetype”: “text/restructuredtext”</p>
+</div></blockquote>
+<p>},
+“source”: [</p>
+<blockquote>
+<div><p>“<cite>sklearndf</cite> allows us to trace outgoing features back to the original features from which they were derived, using the <cite>sklearndf.TransformerDF.features_original_</cite> property. This is useful here as we want to know which features to eliminate before putting them into the pipeline.n”,
+“n”,
+“In our example, feature <cite>BsmtQual_Ex</cite> is a derivative of feature <cite>BsmtQual</cite>, obtained through one-hot encoding: “</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 32,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/html”: [</dt><dd><p>“&lt;div&gt;n”,
+“&lt;style scoped&gt;n”,
+”    .dataframe tbody tr th:only-of-type {n”,
+”        vertical-align: middle;n”,
+”    }n”,
+“n”,
+”    .dataframe tbody tr th {n”,
+”        vertical-align: top;n”,
+”    }n”,
+“n”,
+”    .dataframe thead th {n”,
+”        text-align: right;n”,
+”    }n”,
+“&lt;/style&gt;n”,
+“&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;n”,
+”  &lt;thead&gt;n”,
+”    &lt;tr style=&quot;text-align: right;&quot;&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”      &lt;th&gt;feature_in&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;feature_out&lt;/th&gt;n”,
+”      &lt;th&gt;&lt;/th&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/thead&gt;n”,
+”  &lt;tbody&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;BsmtQual_Ex&lt;/th&gt;n”,
+”      &lt;td&gt;BsmtQual&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;LotFrontage&lt;/th&gt;n”,
+”      &lt;td&gt;LotFrontage&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;LotArea&lt;/th&gt;n”,
+”      &lt;td&gt;LotArea&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;OverallQual&lt;/th&gt;n”,
+”      &lt;td&gt;OverallQual&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;YearBuilt&lt;/th&gt;n”,
+”      &lt;td&gt;YearBuilt&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;YearRemodAdd&lt;/th&gt;n”,
+”      &lt;td&gt;YearRemodAdd&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;MasVnrArea&lt;/th&gt;n”,
+”      &lt;td&gt;MasVnrArea&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;BsmtFinSF1&lt;/th&gt;n”,
+”      &lt;td&gt;BsmtFinSF1&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;TotalBsmtSF&lt;/th&gt;n”,
+”      &lt;td&gt;TotalBsmtSF&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;1stFlrSF&lt;/th&gt;n”,
+”      &lt;td&gt;1stFlrSF&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;2ndFlrSF&lt;/th&gt;n”,
+”      &lt;td&gt;2ndFlrSF&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;GrLivArea&lt;/th&gt;n”,
+”      &lt;td&gt;GrLivArea&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;FullBath&lt;/th&gt;n”,
+”      &lt;td&gt;FullBath&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;TotRmsAbvGrd&lt;/th&gt;n”,
+”      &lt;td&gt;TotRmsAbvGrd&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;GarageCars&lt;/th&gt;n”,
+”      &lt;td&gt;GarageCars&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”    &lt;tr&gt;n”,
+”      &lt;th&gt;GarageArea&lt;/th&gt;n”,
+”      &lt;td&gt;GarageArea&lt;/td&gt;n”,
+”    &lt;/tr&gt;n”,
+”  &lt;/tbody&gt;n”,
+“&lt;/table&gt;n”,
+“&lt;/div&gt;”</p>
+</dd>
+</dl>
+<p>],
+“text/plain”: [</p>
+<blockquote>
+<div><p>”                feature_inn”,
+“feature_out               n”,
+“BsmtQual_Ex       BsmtQualn”,
+“LotFrontage    LotFrontagen”,
+“LotArea            LotArean”,
+“OverallQual    OverallQualn”,
+“YearBuilt        YearBuiltn”,
+“YearRemodAdd  YearRemodAddn”,
+“MasVnrArea      MasVnrArean”,
+“BsmtFinSF1      BsmtFinSF1n”,
+“TotalBsmtSF    TotalBsmtSFn”,
+“1stFlrSF          1stFlrSFn”,
+“2ndFlrSF          2ndFlrSFn”,
+“GrLivArea        GrLivArean”,
+“FullBath          FullBathn”,
+“TotRmsAbvGrd  TotRmsAbvGrdn”,
+“GarageCars      GarageCarsn”,
+“GarageArea      GarageArea”</p>
+</div></blockquote>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 32,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“<a href="#id9"><span class="problematic" id="id10">boruta_pipeline.feature_names_original_</span></a>.to_frame()”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “markdown”,
+“metadata”: {},
+“source”: [</p>
+<blockquote>
+<div><p>“So, to obtain all features we want to select from the original data set, we can select the unique ingoing features from the original feature mapping:”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>},
+{</p>
+<blockquote>
+<div><p>“cell_type”: “code”,
+“execution_count”: 33,
+“metadata”: {},
+“outputs”: [</p>
+<blockquote>
+<div><dl>
+<dt>{</dt><dd><dl>
+<dt>“data”: {</dt><dd><dl class="simple">
+<dt>“text/plain”: [</dt><dd><p>“array([‘BsmtQual’, ‘LotFrontage’, ‘LotArea’, ‘OverallQual’, ‘YearBuilt’,n”,
+”       ‘YearRemodAdd’, ‘MasVnrArea’, ‘BsmtFinSF1’, ‘TotalBsmtSF’,n”,
+”       ‘1stFlrSF’, ‘2ndFlrSF’, ‘GrLivArea’, ‘FullBath’, ‘TotRmsAbvGrd’,n”,
+”       ‘GarageCars’, ‘GarageArea’], dtype=object)”</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>},
+“execution_count”: 33,
+“metadata”: {},
+“output_type”: “execute_result”</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>],
+“source”: [</p>
+<blockquote>
+<div><p>“<a href="#id11"><span class="problematic" id="id12">boruta_pipeline.feature_names_original_</span></a>.unique()”</p>
+</div></blockquote>
+<p>]</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>],
+“metadata”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“kernelspec”: {</dt><dd><p>“display_name”: “Python 3”,
+“language”: “python”,
+“name”: “python3”</p>
+</dd>
+</dl>
+<p>},
+“language_info”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“codemirror_mode”: {</dt><dd><p>“name”: “ipython”,
+“version”: 3</p>
+</dd>
+</dl>
+<p>},
+“file_extension”: “.py”,
+“mimetype”: “text/x-python”,
+“name”: “python”,
+“nbconvert_exporter”: “python”,
+“pygments_lexer”: “ipython3”,
+“version”: “3.8.6”</p>
+</div></blockquote>
+<p>},
+“pycharm”: {</p>
+<blockquote>
+<div><dl>
+<dt>“stem_cell”: {</dt><dd><p>“cell_type”: “raw”,
+“metadata”: {</p>
+<blockquote>
+<div><p>“collapsed”: false</p>
+</div></blockquote>
+<p>},
+“source”: []</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>},
+“toc”: {</p>
+<blockquote>
+<div><p>“base_numbering”: 1,
+“nav_menu”: {},
+“number_sections”: true,
+“sideBar”: true,
+“skip_h1_title”: false,
+“title_cell”: “Table of Contents”,
+“title_sidebar”: “Contents”,
+“toc_cell”: false,
+“toc_position”: {</p>
+<blockquote>
+<div><p>“height”: “calc(100% - 180px)”,
+“left”: “10px”,
+“top”: “150px”,
+“width”: “165px”</p>
+</div></blockquote>
+<p>},
+“toc_section_display”: true,
+“toc_window_display”: false</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>},
+“nbformat”: 4,
+“nbformat_minor”: 2</p>
+</dd>
+</dl>
+<p>}</p>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../tutorials.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Tutorials</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../contribution_guide.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Development Guidelines</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+    <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, Boston Consulting Group (BCG).<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

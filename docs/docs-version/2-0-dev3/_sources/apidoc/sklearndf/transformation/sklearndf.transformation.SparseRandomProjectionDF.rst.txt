@@ -1,0 +1,49 @@
+sklearndf.transformation.SparseRandomProjectionDF
+=================================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: SparseRandomProjectionDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SparseRandomProjectionDF.clone
+      ~SparseRandomProjectionDF.ensure_fitted
+      ~SparseRandomProjectionDF.fit
+      ~SparseRandomProjectionDF.fit_transform
+      ~SparseRandomProjectionDF.from_fitted
+      ~SparseRandomProjectionDF.get_params
+      ~SparseRandomProjectionDF.inverse_transform
+      ~SparseRandomProjectionDF.set_params
+      ~SparseRandomProjectionDF.to_expression
+      ~SparseRandomProjectionDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~SparseRandomProjectionDF.COL_FEATURE_IN
+      ~SparseRandomProjectionDF.COL_FEATURE_OUT
+      ~SparseRandomProjectionDF.feature_names_in_
+      ~SparseRandomProjectionDF.feature_names_original_
+      ~SparseRandomProjectionDF.feature_names_out_
+      ~SparseRandomProjectionDF.is_fitted
+      ~SparseRandomProjectionDF.n_outputs_
+      ~SparseRandomProjectionDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

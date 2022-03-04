@@ -1,0 +1,50 @@
+sklearndf.classification.BaggingClassifierDF
+============================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: BaggingClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~BaggingClassifierDF.clone
+      ~BaggingClassifierDF.decision_function
+      ~BaggingClassifierDF.ensure_fitted
+      ~BaggingClassifierDF.fit
+      ~BaggingClassifierDF.from_fitted
+      ~BaggingClassifierDF.get_params
+      ~BaggingClassifierDF.predict
+      ~BaggingClassifierDF.predict_log_proba
+      ~BaggingClassifierDF.predict_proba
+      ~BaggingClassifierDF.score
+      ~BaggingClassifierDF.set_params
+      ~BaggingClassifierDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~BaggingClassifierDF.COL_FEATURE_IN
+      ~BaggingClassifierDF.COL_PREDICTION
+      ~BaggingClassifierDF.classes_
+      ~BaggingClassifierDF.feature_names_in_
+      ~BaggingClassifierDF.is_fitted
+      ~BaggingClassifierDF.n_outputs_
+      ~BaggingClassifierDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,56 @@
+sklearndf.classification.LinearDiscriminantAnalysisDF
+=====================================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: LinearDiscriminantAnalysisDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~LinearDiscriminantAnalysisDF.clone
+      ~LinearDiscriminantAnalysisDF.decision_function
+      ~LinearDiscriminantAnalysisDF.ensure_fitted
+      ~LinearDiscriminantAnalysisDF.fit
+      ~LinearDiscriminantAnalysisDF.fit_transform
+      ~LinearDiscriminantAnalysisDF.from_fitted
+      ~LinearDiscriminantAnalysisDF.get_params
+      ~LinearDiscriminantAnalysisDF.inverse_transform
+      ~LinearDiscriminantAnalysisDF.predict
+      ~LinearDiscriminantAnalysisDF.predict_log_proba
+      ~LinearDiscriminantAnalysisDF.predict_proba
+      ~LinearDiscriminantAnalysisDF.score
+      ~LinearDiscriminantAnalysisDF.set_params
+      ~LinearDiscriminantAnalysisDF.to_expression
+      ~LinearDiscriminantAnalysisDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~LinearDiscriminantAnalysisDF.COL_FEATURE_IN
+      ~LinearDiscriminantAnalysisDF.COL_FEATURE_OUT
+      ~LinearDiscriminantAnalysisDF.COL_PREDICTION
+      ~LinearDiscriminantAnalysisDF.classes_
+      ~LinearDiscriminantAnalysisDF.feature_names_in_
+      ~LinearDiscriminantAnalysisDF.feature_names_original_
+      ~LinearDiscriminantAnalysisDF.feature_names_out_
+      ~LinearDiscriminantAnalysisDF.is_fitted
+      ~LinearDiscriminantAnalysisDF.n_outputs_
+      ~LinearDiscriminantAnalysisDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

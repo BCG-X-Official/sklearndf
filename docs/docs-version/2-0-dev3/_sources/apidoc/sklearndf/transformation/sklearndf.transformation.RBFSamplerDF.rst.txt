@@ -1,0 +1,49 @@
+sklearndf.transformation.RBFSamplerDF
+=====================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: RBFSamplerDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~RBFSamplerDF.clone
+      ~RBFSamplerDF.ensure_fitted
+      ~RBFSamplerDF.fit
+      ~RBFSamplerDF.fit_transform
+      ~RBFSamplerDF.from_fitted
+      ~RBFSamplerDF.get_params
+      ~RBFSamplerDF.inverse_transform
+      ~RBFSamplerDF.set_params
+      ~RBFSamplerDF.to_expression
+      ~RBFSamplerDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~RBFSamplerDF.COL_FEATURE_IN
+      ~RBFSamplerDF.COL_FEATURE_OUT
+      ~RBFSamplerDF.feature_names_in_
+      ~RBFSamplerDF.feature_names_original_
+      ~RBFSamplerDF.feature_names_out_
+      ~RBFSamplerDF.is_fitted
+      ~RBFSamplerDF.n_outputs_
+      ~RBFSamplerDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

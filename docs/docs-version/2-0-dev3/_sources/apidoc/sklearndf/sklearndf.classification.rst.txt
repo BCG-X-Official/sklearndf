@@ -1,0 +1,89 @@
+sklearndf.classification
+========================
+
+.. automodule:: sklearndf.classification
+   :no-imported-members:
+
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: classification
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      AdaBoostClassifierDF
+      BaggingClassifierDF
+      BernoulliNBDF
+      CalibratedClassifierCVDF
+      CategoricalNBDF
+      ClassifierChainDF
+      ComplementNBDF
+      DecisionTreeClassifierDF
+      DummyClassifierDF
+      ExtraTreeClassifierDF
+      ExtraTreesClassifierDF
+      GaussianNBDF
+      GaussianProcessClassifierDF
+      GradientBoostingClassifierDF
+      HistGradientBoostingClassifierDF
+      KNeighborsClassifierDF
+      LabelPropagationDF
+      LabelSpreadingDF
+      LinearDiscriminantAnalysisDF
+      LinearSVCDF
+      LogisticRegressionCVDF
+      LogisticRegressionDF
+      MLPClassifierDF
+      MultiOutputClassifierDF
+      MultinomialNBDF
+      NearestCentroidDF
+      NuSVCDF
+      OneVsOneClassifierDF
+      OneVsRestClassifierDF
+      OutputCodeClassifierDF
+      PassiveAggressiveClassifierDF
+      PerceptronDF
+      QuadraticDiscriminantAnalysisDF
+      RadiusNeighborsClassifierDF
+      RandomForestClassifierDF
+      RidgeClassifierCVDF
+      RidgeClassifierDF
+      SGDClassifierDF
+      SVCDF
+      StackingClassifierDF
+      VotingClassifierDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+
+==========
+Submodules
+==========
+.. autosummary::
+   :toctree: classification
+   :template: custom-module-template.rst
+   :recursive:
+
+   sklearndf.classification.extra
+   sklearndf.classification.wrapper
+

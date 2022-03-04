@@ -1,0 +1,50 @@
+sklearndf.classification.wrapper.MetaClassifierWrapperDF
+========================================================
+
+.. currentmodule:: sklearndf.classification.wrapper
+
+.. autoclass:: MetaClassifierWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MetaClassifierWrapperDF.clone
+      ~MetaClassifierWrapperDF.decision_function
+      ~MetaClassifierWrapperDF.ensure_fitted
+      ~MetaClassifierWrapperDF.fit
+      ~MetaClassifierWrapperDF.from_fitted
+      ~MetaClassifierWrapperDF.get_params
+      ~MetaClassifierWrapperDF.predict
+      ~MetaClassifierWrapperDF.predict_log_proba
+      ~MetaClassifierWrapperDF.predict_proba
+      ~MetaClassifierWrapperDF.score
+      ~MetaClassifierWrapperDF.set_params
+      ~MetaClassifierWrapperDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MetaClassifierWrapperDF.COL_FEATURE_IN
+      ~MetaClassifierWrapperDF.COL_PREDICTION
+      ~MetaClassifierWrapperDF.classes_
+      ~MetaClassifierWrapperDF.feature_names_in_
+      ~MetaClassifierWrapperDF.is_fitted
+      ~MetaClassifierWrapperDF.n_outputs_
+      ~MetaClassifierWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

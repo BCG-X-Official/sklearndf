@@ -1,0 +1,50 @@
+sklearndf.transformation.IsomapDF
+=================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: IsomapDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~IsomapDF.clone
+      ~IsomapDF.ensure_fitted
+      ~IsomapDF.fit
+      ~IsomapDF.fit_transform
+      ~IsomapDF.from_fitted
+      ~IsomapDF.get_params
+      ~IsomapDF.inverse_transform
+      ~IsomapDF.reconstruction_error
+      ~IsomapDF.set_params
+      ~IsomapDF.to_expression
+      ~IsomapDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~IsomapDF.COL_FEATURE_IN
+      ~IsomapDF.COL_FEATURE_OUT
+      ~IsomapDF.feature_names_in_
+      ~IsomapDF.feature_names_original_
+      ~IsomapDF.feature_names_out_
+      ~IsomapDF.is_fitted
+      ~IsomapDF.n_outputs_
+      ~IsomapDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

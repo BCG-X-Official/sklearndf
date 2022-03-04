@@ -1,0 +1,49 @@
+sklearndf.transformation.wrapper.NComponentsDimensionalityReductionWrapperDF
+============================================================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: NComponentsDimensionalityReductionWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~NComponentsDimensionalityReductionWrapperDF.clone
+      ~NComponentsDimensionalityReductionWrapperDF.ensure_fitted
+      ~NComponentsDimensionalityReductionWrapperDF.fit
+      ~NComponentsDimensionalityReductionWrapperDF.fit_transform
+      ~NComponentsDimensionalityReductionWrapperDF.from_fitted
+      ~NComponentsDimensionalityReductionWrapperDF.get_params
+      ~NComponentsDimensionalityReductionWrapperDF.inverse_transform
+      ~NComponentsDimensionalityReductionWrapperDF.set_params
+      ~NComponentsDimensionalityReductionWrapperDF.to_expression
+      ~NComponentsDimensionalityReductionWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~NComponentsDimensionalityReductionWrapperDF.COL_FEATURE_IN
+      ~NComponentsDimensionalityReductionWrapperDF.COL_FEATURE_OUT
+      ~NComponentsDimensionalityReductionWrapperDF.feature_names_in_
+      ~NComponentsDimensionalityReductionWrapperDF.feature_names_original_
+      ~NComponentsDimensionalityReductionWrapperDF.feature_names_out_
+      ~NComponentsDimensionalityReductionWrapperDF.is_fitted
+      ~NComponentsDimensionalityReductionWrapperDF.n_outputs_
+      ~NComponentsDimensionalityReductionWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,48 @@
+sklearndf.wrapper.ClustererWrapperDF
+====================================
+
+.. currentmodule:: sklearndf.wrapper
+
+.. autoclass:: ClustererWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ClustererWrapperDF.clone
+      ~ClustererWrapperDF.ensure_fitted
+      ~ClustererWrapperDF.fit
+      ~ClustererWrapperDF.fit_predict
+      ~ClustererWrapperDF.from_fitted
+      ~ClustererWrapperDF.get_params
+      ~ClustererWrapperDF.predict
+      ~ClustererWrapperDF.set_params
+      ~ClustererWrapperDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ClustererWrapperDF.COL_FEATURE_IN
+      ~ClustererWrapperDF.COL_LABELS
+      ~ClustererWrapperDF.COL_PREDICTION
+      ~ClustererWrapperDF.feature_names_in_
+      ~ClustererWrapperDF.is_fitted
+      ~ClustererWrapperDF.labels_
+      ~ClustererWrapperDF.n_outputs_
+      ~ClustererWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

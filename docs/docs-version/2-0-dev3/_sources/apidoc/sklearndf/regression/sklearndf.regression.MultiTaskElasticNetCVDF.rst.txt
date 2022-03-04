@@ -1,0 +1,46 @@
+sklearndf.regression.MultiTaskElasticNetCVDF
+============================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: MultiTaskElasticNetCVDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MultiTaskElasticNetCVDF.clone
+      ~MultiTaskElasticNetCVDF.ensure_fitted
+      ~MultiTaskElasticNetCVDF.fit
+      ~MultiTaskElasticNetCVDF.from_fitted
+      ~MultiTaskElasticNetCVDF.get_params
+      ~MultiTaskElasticNetCVDF.predict
+      ~MultiTaskElasticNetCVDF.score
+      ~MultiTaskElasticNetCVDF.set_params
+      ~MultiTaskElasticNetCVDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MultiTaskElasticNetCVDF.COL_FEATURE_IN
+      ~MultiTaskElasticNetCVDF.COL_PREDICTION
+      ~MultiTaskElasticNetCVDF.feature_names_in_
+      ~MultiTaskElasticNetCVDF.is_fitted
+      ~MultiTaskElasticNetCVDF.n_outputs_
+      ~MultiTaskElasticNetCVDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

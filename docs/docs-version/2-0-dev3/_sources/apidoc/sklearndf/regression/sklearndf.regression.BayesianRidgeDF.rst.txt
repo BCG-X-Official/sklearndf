@@ -1,0 +1,46 @@
+sklearndf.regression.BayesianRidgeDF
+====================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: BayesianRidgeDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~BayesianRidgeDF.clone
+      ~BayesianRidgeDF.ensure_fitted
+      ~BayesianRidgeDF.fit
+      ~BayesianRidgeDF.from_fitted
+      ~BayesianRidgeDF.get_params
+      ~BayesianRidgeDF.predict
+      ~BayesianRidgeDF.score
+      ~BayesianRidgeDF.set_params
+      ~BayesianRidgeDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~BayesianRidgeDF.COL_FEATURE_IN
+      ~BayesianRidgeDF.COL_PREDICTION
+      ~BayesianRidgeDF.feature_names_in_
+      ~BayesianRidgeDF.is_fitted
+      ~BayesianRidgeDF.n_outputs_
+      ~BayesianRidgeDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

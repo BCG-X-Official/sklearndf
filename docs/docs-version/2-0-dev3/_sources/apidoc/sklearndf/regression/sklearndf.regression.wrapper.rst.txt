@@ -1,0 +1,42 @@
+sklearndf.regression.wrapper
+============================
+
+.. automodule:: sklearndf.regression.wrapper
+   :no-imported-members:
+
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: wrapper
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      IsotonicRegressionWrapperDF
+      MetaRegressorWrapperDF
+      MultiOutputRegressorWrapperDF
+      PartialFitRegressorWrapperDF
+      RegressorTransformerWrapperDF
+      StackingRegressorWrapperDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
