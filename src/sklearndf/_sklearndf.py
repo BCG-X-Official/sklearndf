@@ -115,7 +115,7 @@ class EstimatorDF(
 
         :raises AttributeError: if this estimator is not fitted
         """
-        self._ensure_fitted()
+        self.ensure_fitted()
         return self._get_features_in().rename(self.COL_FEATURE_IN)
 
     @property
@@ -125,7 +125,7 @@ class EstimatorDF(
 
         :raises AttributeError: if this estimator is not fitted
         """
-        self._ensure_fitted()
+        self.ensure_fitted()
         return self._get_n_outputs()
 
     def get_params(self, deep: bool = True) -> Mapping[str, Any]:
@@ -322,7 +322,7 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
         The index of the resulting series consists of the names of the output features;
         the corresponding values are the names of the original input features.
         """
-        self._ensure_fitted()
+        self.ensure_fitted()
         if self._features_original is None:
             self._features_original = (
                 self._get_features_original()
@@ -337,7 +337,7 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
         A pandas column index with the names of the features produced by this
         transformer
         """
-        self._ensure_fitted()
+        self.ensure_fitted()
         return self._get_features_out().rename(self.COL_FEATURE_OUT)
 
     # noinspection PyPep8Naming
