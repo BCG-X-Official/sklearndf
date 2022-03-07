@@ -16,7 +16,7 @@ license = "Apache Software License v2.0"
 requires = [
     "boruta         ~=0.3",
     "gamma-pytools  ~=2.0dev0",
-    "numpy          >=1.16,<2a",  # cannot use ~= due to conda bug
+    "numpy          >=1.17,<2a",  # cannot use ~= due to conda bug
     "packaging      >=20",
     "pandas         >=0.24,<2a",  # cannot use ~= due to conda bug
     "scikit-learn   >=0.21,<1.1a",
@@ -51,11 +51,11 @@ testing = [
     "lightgbm ~=3.0.0",
 ]
 docs = [
-    "sphinx ~= 4.2",
+    "sphinx ~= 4.4",
     "sphinx-autodoc-typehints ~= 1.12",
     "pydata-sphinx-theme ~= 0.7",
     "jinja2 ~= 2.11",
-    "nbsphinx ~= 0.7.1",
+    "nbsphinx ~= 0.8.8",
     "jupyter == 1",
     "docutils ~= 0.17",
     "xlrd ~= 1.2",
@@ -69,16 +69,16 @@ Repository = "https://github.com/BCG-Gamma/sklearndf"
 [build.matrix.min]
 # direct requirements of sklearndf
 boruta         = "~=0.3.0"
-gamma-pytools  = "~=2.0.dev2"
+gamma-pytools  = "~=2.0.dev6"
 lightgbm       = "~=3.0.0"
 numpy          = "==1.16.6"  # cannot use ~= due to conda bug
 pandas         = "~=0.24.2"
 packaging      = "~=20.9"
 python         = ">=3.7.12,<3.8a"    # cannot use ~= due to conda bug
-scikit-learn   = "~=0.21.0"
+scikit-learn   = "~=0.21.3"
 scipy          = "~=1.2.1"
 # additional minimum requirements of gamma-pytools
-joblib         = "~=0.14.0"
+joblib         = "~=0.14.1"
 matplotlib     = "~=3.0.3"
 typing_inspect = "~=0.4.0"
 
@@ -86,7 +86,7 @@ typing_inspect = "~=0.4.0"
 # direct requirements of sklearndf
 boruta         = "~=0.3"
 gamma-pytools  = "~=2.0.dev2"
-lightgbm       = "~=3.2"
+lightgbm       = "~=3.3"
 numpy          = ">=1.20,<2a"  # cannot use ~= due to conda bug
 packaging      = ">=20"
 pandas         = "~=1.4"
@@ -94,8 +94,8 @@ python         = ">=3.8.10,<4a"   # cannot use ~= due to conda bug
 scikit-learn   = "~=1.0.2"
 scipy          = "~=1.6"
 # additional maximum requirements of gamma-pytools
-joblib         = "~=1.0"
-matplotlib     = "~=3.4"
+joblib         = "~=1.1"
+matplotlib     = "~=3.5"
 typing_inspect = "~=0.7"
 
 [tool.black]
