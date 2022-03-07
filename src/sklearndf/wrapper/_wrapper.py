@@ -1591,10 +1591,10 @@ def _make_alias(
     delegate_cls: type,
     delegate: Union[Callable, Any],
 ) -> Union[Callable, property, None]:
-    def _make_forwarder(delegate: Callable) -> Callable:
+    def _make_forwarder(_delegate: Callable) -> Callable:
         # noinspection PyShadowingNames
         def _forwarder(self, *args, **kwargs: Any) -> Any:
-            return delegate(self._native_estimator, *args, **kwargs)
+            return _delegate(self._native_estimator, *args, **kwargs)
 
         return _forwarder
 
