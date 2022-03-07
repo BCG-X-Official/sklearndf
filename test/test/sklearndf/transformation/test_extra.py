@@ -9,7 +9,7 @@ from sklearndf.transformation.extra import BorutaDF
 
 
 def test_boruta_df() -> None:
-    """Test basic functionality of BorutaDF with both sklearn & sklearndf predictor"""
+    """Test basic functionality of BorutaDF with both sklearn and sklearndf predictor"""
     df = pd.DataFrame(data=np.random.randn(100, 5), columns=list("abcde"))
     x = df.iloc[:, :-1]
     y = df.iloc[:, -1]
