@@ -71,7 +71,7 @@ Repository = "https://github.com/BCG-Gamma/sklearndf"
 boruta         = "~=0.3.0"
 gamma-pytools  = "~=2.0dev7"
 lightgbm       = "~=3.0.0"
-numpy          = "==1.16.6"  # cannot use ~= due to conda bug
+numpy          = "==1.17.5"  # cannot use ~= due to conda bug
 packaging      = "~=20.9"
 pandas         = "~=0.24.2"
 python         = ">=3.7.12,<3.8a"    # cannot use ~= due to conda bug
