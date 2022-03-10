@@ -15,7 +15,7 @@ license = "Apache Software License v2.0"
 
 requires = [
     "boruta         ~=0.3",
-    "gamma-pytools  ~=2.0dev0",
+    "gamma-pytools  >=2.0.dev8,<3a",
     "numpy          >=1.17,<2a",  # cannot use ~= due to conda bug
     "packaging      >=20",
     "pandas         >=0.24,<2a",  # cannot use ~= due to conda bug
@@ -69,14 +69,14 @@ Repository = "https://github.com/BCG-Gamma/sklearndf"
 [build.matrix.min]
 # direct requirements of sklearndf
 boruta         = "~=0.3.0"
-gamma-pytools  = "~=2.0.dev6"
+gamma-pytools  = "~=2.0.dev8"
 lightgbm       = "~=3.0.0"
-numpy          = "==1.16.6"  # cannot use ~= due to conda bug
-pandas         = "~=0.24.2"
+numpy          = "==1.17.5"  # cannot use ~= due to conda bug
 packaging      = "~=20.9"
+pandas         = "~=0.24.2"
 python         = ">=3.7.12,<3.8a"    # cannot use ~= due to conda bug
+scipy          = "~=1.2.3"
 scikit-learn   = "~=0.21.3"
-scipy          = "~=1.2.1"
 # additional minimum requirements of gamma-pytools
 joblib         = "~=0.14.1"
 matplotlib     = "~=3.0.3"
@@ -85,7 +85,7 @@ typing_inspect = "~=0.4.0"
 [build.matrix.max]
 # direct requirements of sklearndf
 boruta         = "~=0.3"
-gamma-pytools  = "~=2.0.dev2"
+gamma-pytools  = ">=2.0.dev8,<3a"
 lightgbm       = "~=3.3"
 numpy          = ">=1.20,<2a"  # cannot use ~= due to conda bug
 packaging      = ">=20"

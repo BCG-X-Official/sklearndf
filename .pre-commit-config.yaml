@@ -34,4 +34,4 @@ repos:
         files: src/
         additional_dependencies:
           - numpy>=1.22
-          - gamma-pytools>=2dev6,<3a
+          - gamma-pytools>=2.0.dev8,<3a
