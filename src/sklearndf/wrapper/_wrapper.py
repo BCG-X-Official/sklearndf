@@ -131,7 +131,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
     estimator.
     """
 
-    __wrapped__: Type[T_NativeEstimator]
+    __native_class__: Type[T_NativeEstimator]
 
     def __new__(
         mcs: Type[EstimatorWrapperDFMeta],
@@ -155,7 +155,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
         )
 
         if native is not None:
-            cls.__wrapped__ = native
+            cls.__native_class__ = native
             cls.__init__ = _make_init(cls)  # type: ignore
 
             _mirror_attributes(
@@ -175,6 +175,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
                 df_estimator_type=cls,
                 sklearn_native_estimator_type=native,
             )
+
         return cls
 
     @property
@@ -182,7 +183,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
         """
         The type of native estimator that instances of this wrapper class delegate to.
         """
-        return cls.__wrapped__
+        return cls.__native_class__
 
 
 def _make_init(cls: type) -> Callable[..., None]:
@@ -227,7 +228,7 @@ class EstimatorWrapperDF(
         if fitted_delegate_context is None:
             # create a new delegate estimator with the given parameters
             # noinspection PyProtectedMember
-            _native_estimator = type(self).__wrapped__(*args, **kwargs)
+            _native_estimator = type(self).__native_class__(*args, **kwargs)
             self._reset_fit()
         else:
             (
@@ -241,7 +242,7 @@ class EstimatorWrapperDF(
         self._validate_delegate_estimator()
 
     def __new__(cls: Type[T], *args, **kwargs: Any) -> T:
-        if not hasattr(cls, "__wrapped__"):
+        if not hasattr(cls, "__native_class__"):
             raise TypeError(
                 f"cannot instantiate wrapper class {cls.__name__}: "
                 "need to specify class argument 'native' in class definition"
@@ -1579,7 +1580,7 @@ def _make_df_wrapper_class(
     WrapperDF.__name__ = WrapperDF.__qualname__ = name
 
     # add link to the wrapped class, for use in python module 'inspect'
-    WrapperDF.__wrapped__ = native_estimator
+    WrapperDF.__native_class__ = native_estimator
 
     # set the module to this module's name
     WrapperDF.__module__ = __name__
