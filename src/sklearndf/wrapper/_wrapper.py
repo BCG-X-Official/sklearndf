@@ -1369,7 +1369,7 @@ def make_df_classifier(
     # The true return type is Type[ClassifierWrapperDF[T_NativeEstimator]],
     # but we provide the union with T_NativeClassifier to enable better
     # code completion in IDEs that derive attributes through static code inspection.
-) -> Union[Type[ClassifierWrapperDF[T_NativeClassifier]], T_NativeTransformer]:
+) -> Union[Type[ClassifierWrapperDF[T_NativeClassifier]], T_NativeClassifier]:
     """
     Create an augmented version of a given classifier that conforms with the
     `scikit-learn` API.
@@ -1405,7 +1405,7 @@ def make_df_regressor(
     # The true return type is Type[RegressorWrapperDF[T_NativeEstimator]],
     # but we provide the union with T_NativeRegressor to enable better
     # code completion in IDEs that derive attributes through static code inspection.
-) -> Union[Type[RegressorWrapperDF[T_NativeRegressor]], T_NativeTransformer]:
+) -> Union[Type[RegressorWrapperDF[T_NativeRegressor]], T_NativeRegressor]:
     """
     Create an augmented version of a given regressor that conforms with the
     `scikit-learn` API.
