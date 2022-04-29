@@ -27,7 +27,6 @@ from sklearndf.pipeline import PipelineDF
 from sklearndf.regression import DummyRegressorDF, LassoDF, LinearRegressionDF
 from sklearndf.transformation import SelectKBestDF, SimpleImputerDF
 from sklearndf.transformation.wrapper import ColumnPreservingTransformerWrapperDF
-from sklearndf.wrapper import make_df_estimator, make_df_transformer
 
 
 def test_set_params_nested_pipeline_df() -> None:
@@ -98,14 +97,16 @@ class DummyTransformer(Transformer):
         return self
 
 
-DummyTransformerDF = make_df_transformer(
-    DummyTransformer, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
+class DummyTransformerDF(
+    ColumnPreservingTransformerWrapperDF, DummyTransformer, native=DummyTransformer
+):
+    """dummy transformer"""
 
 
-NoTransformerDF = make_df_estimator(
-    NoTransformer, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
+class NoTransformerDF(
+    ColumnPreservingTransformerWrapperDF, NoTransformer, native=NoTransformer
+):
+    """not a transformer"""
 
 
 def test_pipeline_df_memory(

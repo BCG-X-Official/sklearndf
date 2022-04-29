@@ -6,7 +6,7 @@ import warnings
 
 from pytools.api import AllTracker
 
-from ...wrapper import make_df_regressor
+from ...wrapper import RegressorWrapperDF
 
 # since we install LGBM via conda, the warning about the Clang compiler is irrelevant
 warnings.filterwarnings("ignore", message=r"Starting from version 2\.2\.1")
@@ -24,7 +24,6 @@ try:
     # import lightgbm classes only if installed
     from lightgbm.sklearn import LGBMRegressor
 
-    __all__.append("LGBMRegressorDF")
 except ImportError:
     LGBMRegressor = None
 
@@ -43,7 +42,11 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 #
 
 if LGBMRegressor:
-    LGBMRegressorDF = make_df_regressor(LGBMRegressor)
+
+    class LGBMRegressorDF(RegressorWrapperDF, LGBMRegressor, native=LGBMRegressor):
+        """Stub for DF wrapper of class ``LGBMRegressorDF``"""
+
+    __all__.append(LGBMRegressorDF.__name__)
 
 
 #

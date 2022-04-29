@@ -15,7 +15,7 @@ from pytools.expression.atomic import Id
 from sklearndf.classification import SVCDF, DecisionTreeClassifierDF
 from sklearndf.pipeline import PipelineDF
 from sklearndf.transformation import OneHotEncoderDF
-from sklearndf.wrapper import make_df_estimator
+from sklearndf.wrapper import EstimatorWrapperDF
 
 
 class DummyEstimator(BaseEstimator):
@@ -36,9 +36,16 @@ class DummyEstimator3(BaseEstimator):
         self.d = d
 
 
-DummyEstimatorDF = make_df_estimator(DummyEstimator)
-DummyEstimator2DF = make_df_estimator(DummyEstimator2)
-DummyEstimator3DF = make_df_estimator(DummyEstimator3)
+class DummyEstimatorDF(EstimatorWrapperDF, DummyEstimator, native=DummyEstimator):
+    """A trivial estimator."""
+
+
+class DummyEstimator2DF(EstimatorWrapperDF, DummyEstimator2, native=DummyEstimator2):
+    """A trivial estimator."""
+
+
+class DummyEstimator3DF(EstimatorWrapperDF, DummyEstimator3, native=DummyEstimator3):
+    """A trivial estimator."""
 
 
 def test_clone() -> None:
