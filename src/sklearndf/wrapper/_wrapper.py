@@ -149,12 +149,11 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
                     f"base class of class {name} to enable static code inspection"
                 )
 
-        cls = cast(
-            Type[EstimatorWrapperDF[T_NativeEstimator]],
-            super().__new__(mcs, name, bases, namespace),
-        )
+        cls = super().__new__(mcs, name, bases, namespace)
 
         if native is not None:
+            cls = cast(Type[EstimatorWrapperDF[T_NativeEstimator]], cls)
+
             cls.__native_class__ = native
             cls.__init__ = _make_init(cls)  # type: ignore
 

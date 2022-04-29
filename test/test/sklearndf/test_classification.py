@@ -110,7 +110,7 @@ def test_wrapped_fit_predict(
 
     # test predict_proba & predict_log_proba:
     for method_name in ["predict_proba", "predict_log_proba"]:
-        method = getattr(classifier, method_name, None)
+        method = getattr(classifier, method_name)
 
         if hasattr(classifier.native_estimator, method_name):
             predictions = method(X=iris_features)

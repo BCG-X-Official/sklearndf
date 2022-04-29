@@ -1,4 +1,5 @@
 import itertools
+from types import ModuleType
 from typing import Dict, Iterable, List, Optional, Type, Union
 
 import pytest
@@ -21,8 +22,6 @@ from .. import check_sklearn_version
 from ..conftest import UNSUPPORTED_SKLEARN_PACKAGES
 from ..sklearndf import find_all_submodules, iterate_classes, sklearn_delegate_classes
 from sklearndf import EstimatorDF
-
-Module = type(sklearn)
 
 GENERAL_COVERAGE_EXCLUSIONS = {
     # exclude all private classes:
@@ -85,7 +84,7 @@ UNSUPPORTED_SKLEARN_CLASSES = {
 
 
 def _find_sklearn_classes_to_cover(
-    from_modules: Union[Module, Iterable[Module]],
+    from_modules: Union[(ModuleType), Iterable[ModuleType]],
     subclass_of: Type,
     excluding: Optional[Union[str, Iterable[str]]] = None,
 ) -> List[Type]:

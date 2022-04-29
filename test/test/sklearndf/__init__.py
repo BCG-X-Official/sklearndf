@@ -1,26 +1,30 @@
 import re
 import sys
-from distutils import version
-from typing import Any, Dict, Iterable, List, Optional, Set, Type, Union
+from types import ModuleType
+from typing import Dict, Iterable, List, Optional, Set, Type, Union
 
 import pandas as pd
 import sklearn
 from sklearn.base import BaseEstimator
 
-from sklearndf import EstimatorDF, LearnerDF, TransformerDF
+from sklearndf import (
+    EstimatorDF,
+    LearnerDF,
+    TransformerDF,
+    __sklearn_0_22__,
+    __sklearn_version__,
+)
 from sklearndf.wrapper import EstimatorWrapperDF
 
-Module: type = Any
 
-
-def find_all_classes(*modules: Module) -> Set[Type[EstimatorWrapperDF]]:
+def find_all_classes(*modules: ModuleType) -> Set[Type[EstimatorWrapperDF]]:
     """Finds all Class members in given module/modules."""
     types: Set[Type[EstimatorWrapperDF]] = set()
 
-    def _add_classes_from_module(_m: Module) -> None:
-        for member in vars(module).values():
+    def _add_classes_from_module(_m: ModuleType) -> None:
+        member: Type[EstimatorWrapperDF]
+        for member in vars(_m).values():
             if isinstance(member, type):
-                member: Type[EstimatorWrapperDF]
                 types.add(member)
 
     for module in modules:
@@ -29,7 +33,7 @@ def find_all_classes(*modules: Module) -> Set[Type[EstimatorWrapperDF]]:
     return types
 
 
-def find_all_submodules(parent_module: Module) -> Set[Module]:
+def find_all_submodules(parent_module: ModuleType) -> Set[ModuleType]:
     """Finds all submodules for a parent module."""
     parent_name = f"{parent_module.__name__}."
     return {
@@ -40,19 +44,23 @@ def find_all_submodules(parent_module: Module) -> Set[Module]:
 
 
 def sklearn_delegate_classes(
-    module: Module,
+    module: ModuleType,
 ) -> Dict[Type[BaseEstimator], Type[EstimatorWrapperDF]]:
-    """Creates a dictionary mapping from sklearndf -> sklearn classes."""
+    """
+    Create a dictionary mapping sklearn classes to their corresponding sklearndf
+    classes.
+    """
     return {
-        df_class.__wrapped__: df_class
+        df_class.__native_class__: df_class
         for df_class in find_all_classes(module)
         # we only consider non-abstract wrapper classes wrapping a specific native class
-        if issubclass(df_class, EstimatorWrapperDF) and hasattr(df_class, "__wrapped__")
+        if issubclass(df_class, EstimatorWrapperDF)
+        and hasattr(df_class, "__native_class__")
     }
 
 
 def iterate_classes(
-    from_modules: Union[Module, Iterable[Module]],
+    from_modules: Union[ModuleType, Iterable[ModuleType]],
     matching: str,
     excluding: Optional[Union[str, Iterable[str]]] = None,
 ) -> List[Type[EstimatorWrapperDF]]:
@@ -61,14 +69,14 @@ def iterate_classes(
     if not isinstance(from_modules, Iterable):
         from_modules = (from_modules,)
 
-    if excluding and not isinstance(excluding, str):
+    if excluding is not None and not isinstance(excluding, str):
         excluding = "|".join(f"({exclude_pattern})" for exclude_pattern in excluding)
 
     return [
         m
         for m in find_all_classes(*from_modules)
         if re.match(matching, m.__name__)
-        and not (excluding and re.match(excluding, m.__name__))
+        and ((excluding is None) or not re.match(excluding, m.__name__))
     ]
 
 
@@ -87,7 +95,7 @@ def get_sklearndf_wrapper_class(
 
 def check_expected_not_fitted_error(estimator: EstimatorDF):
     """Check if transformers & learners raise NotFittedError (since sklearn 0.22)"""
-    if version.LooseVersion(sklearn.__version__) <= "0.21":
+    if __sklearn_version__ < __sklearn_0_22__:
         return
 
     test_x = pd.DataFrame(data=list(range(10)))

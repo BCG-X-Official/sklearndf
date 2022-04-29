@@ -36,15 +36,21 @@ class DummyEstimator3(BaseEstimator):
         self.d = d
 
 
-class DummyEstimatorDF(EstimatorWrapperDF, DummyEstimator, native=DummyEstimator):
+class DummyEstimatorDF(  # type: ignore
+    EstimatorWrapperDF, DummyEstimator, native=DummyEstimator
+):
     """A trivial estimator."""
 
 
-class DummyEstimator2DF(EstimatorWrapperDF, DummyEstimator2, native=DummyEstimator2):
+class DummyEstimator2DF(  # type: ignore
+    EstimatorWrapperDF, DummyEstimator2, native=DummyEstimator2
+):
     """A trivial estimator."""
 
 
-class DummyEstimator3DF(EstimatorWrapperDF, DummyEstimator3, native=DummyEstimator3):
+class DummyEstimator3DF(  # type: ignore
+    EstimatorWrapperDF, DummyEstimator3, native=DummyEstimator3
+):
     """A trivial estimator."""
 
 
@@ -55,7 +61,7 @@ def test_clone() -> None:
     # and check that the obtained copy is a correct deep copy.
 
     encoder = OneHotEncoderDF(drop="first", sparse=False)
-    new_encoder = clone(encoder)
+    new_encoder = encoder.clone()
     assert encoder is not new_encoder
     assert encoder.get_params() == new_encoder.get_params()
 
