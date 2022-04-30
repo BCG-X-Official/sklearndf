@@ -149,33 +149,33 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
                     f"base class of class {name} to enable static code inspection"
                 )
 
-        cls = super().__new__(mcs, name, bases, namespace)
+        cls = cast(EstimatorWrapperDFMeta, super().__new__(mcs, name, bases, namespace))
+        if native is None:
+            return cls
 
-        if native is not None:
-            cls = cast(Type[EstimatorWrapperDF[T_NativeEstimator]], cls)
+        wrapper_cls = cast(Type[EstimatorWrapperDF[T_NativeEstimator]], cls)
+        wrapper_cls.__native_class__ = native
+        setattr(wrapper_cls, "__init__", _make_init(wrapper_cls))
 
-            cls.__native_class__ = native
-            cls.__init__ = _make_init(cls)  # type: ignore
+        _mirror_attributes(
+            wrapper=wrapper_cls,
+            native_estimator=native,
+            wrapper_module=native.__module__,
+        )
+        # adopt the initializer signature of the wrapped sklearn estimator
+        _update_wrapper(
+            wrapper=wrapper_cls.__init__,
+            wrapped=native.__init__,
+            wrapper_module=native.__module__,
+            wrapper_parent=name,
+        )
+        # adopt the class docstring of the wrapped sklearn estimator …
+        _update_class_docstring(
+            df_estimator_type=wrapper_cls,
+            sklearn_native_estimator_type=native,
+        )
 
-            _mirror_attributes(
-                wrapper=cls,
-                native_estimator=native,
-                wrapper_module=native.__module__,
-            )
-            # adopt the initializer signature of the wrapped sklearn estimator
-            _update_wrapper(
-                wrapper=cls.__init__,
-                wrapped=native.__init__,
-                wrapper_module=native.__module__,
-                wrapper_parent=name,
-            )
-            # adopt the class docstring of the wrapped sklearn estimator …
-            _update_class_docstring(
-                df_estimator_type=cls,
-                sklearn_native_estimator_type=native,
-            )
-
-        return cls
+        return wrapper_cls
 
     @property
     def native_estimator_type(cls) -> Type[T_NativeEstimator]:
@@ -1184,6 +1184,7 @@ class _StackableSupervisedLearnerDF(
     """
 
     def __init__(self, delegate: T_SupervisedLearnerDF) -> None:
+        super().__init__()
         self.delegate = delegate
 
     @property

@@ -18,7 +18,7 @@ warnings.filterwarnings(
 
 log = logging.getLogger(__name__)
 
-__all__ = []
+__all__ = ["LGBMRegressorDF"]
 
 try:
     # import lightgbm classes only if installed
@@ -46,7 +46,8 @@ if LGBMRegressor:
     class LGBMRegressorDF(RegressorWrapperDF, LGBMRegressor, native=LGBMRegressor):
         """Stub for DF wrapper of class ``LGBMRegressorDF``"""
 
-    __all__.append(LGBMRegressorDF.__name__)
+else:
+    __all__.remove("LGBMRegressorDF")
 
 
 #
