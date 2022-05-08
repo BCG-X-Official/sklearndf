@@ -28,6 +28,14 @@ try:
 except ImportError:
     LGBMRegressor = None
 
+try:
+    # import xgboost classes only installed
+    from xgboost import XGBRegressor
+
+    __all__.append("XGBRegressorDF")
+except ImportError:
+    XGBRegressor = None
+
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
 
 
@@ -45,6 +53,8 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 if LGBMRegressor:
     LGBMRegressorDF = make_df_regressor(LGBMRegressor)
 
+if XGBRegressor:
+    XGBRegressorDF = make_df_regressor(XGBRegressor)
 
 #
 # validate __all__

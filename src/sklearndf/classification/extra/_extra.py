@@ -28,6 +28,14 @@ try:
 except ImportError:
     LGBMClassifier = None
 
+try:
+    # import xgboost classes only installed
+    from xgboost import XGBClassifier
+
+    __all__.append("XGBClassifierDF")
+except ImportError:
+    XGBClassifier = None
+
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
 
 
@@ -45,6 +53,8 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 if LGBMClassifier:
     LGBMClassifierDF = make_df_classifier(LGBMClassifier)
 
+if XGBClassifier:
+    XGBClassifierDF = make_df_classifier(XGBClassifier)
 
 #
 # validate that __all__ comprises all symbols ending in "DF", and no others
