@@ -353,6 +353,7 @@ class EstimatorWrapperDF(
         return self
 
     def _validate_delegate_estimator(self) -> None:
+        # no validation required by default; to be overloaded as needed
         pass
 
     def _get_features_in(self) -> pd.Index:
@@ -386,9 +387,12 @@ class EstimatorWrapperDF(
         **fit_params,
     ) -> None:
         self._features_in = X.columns.rename(self.COL_FEATURE_IN)
-        self._n_outputs = (
-            0 if y is None else 1 if isinstance(y, pd.Series) else y.shape[1]
-        )
+        if y is None:
+            self._n_outputs = 0
+        elif isinstance(y, pd.Series):
+            self._n_outputs = 1
+        else:
+            self._n_outputs = y.shape[1]
 
     # noinspection PyPep8Naming
     def _check_parameter_types(
@@ -749,10 +753,10 @@ class LearnerWrapperDF(
                     # n_outputs)
                     return pd.DataFrame(data=y, index=X.index)
             raise TypeError(
-                f"Unexpected shape of numpy array returned as prediction:" f" {y.shape}"
+                f"unexpected shape of numpy array returned as prediction: {y.shape}"
             )
         raise TypeError(
-            f"unexpected data type returned as prediction: " f"{type(y).__name__}"
+            f"unexpected data type returned as prediction: {type(y).__name__}"
         )
 
 
@@ -1316,12 +1320,6 @@ def _make_alias(
     delegate_cls: type,
     delegate: Union[Callable, Any],
 ) -> Union[Callable, property, None]:
-    def _make_forwarder(delegate: Callable) -> Callable:
-        # noinspection PyShadowingNames
-        def _forwarder(self, *args, **kwargs: Any) -> Any:
-            return delegate(self._native_estimator, *args, **kwargs)
-
-        return _forwarder
 
     class_name = _full_name(cls=delegate_cls)
     full_name = f"{class_name}.{name}"
@@ -1351,6 +1349,14 @@ def _make_alias(
 
     else:
         return None
+
+
+def _make_forwarder(delegate: Callable) -> Callable:
+    # noinspection PyShadowingNames
+    def _forwarder(self, *args, **kwargs: Any) -> Any:
+        return delegate(self._native_estimator, *args, **kwargs)
+
+    return _forwarder
 
 
 def _update_wrapper(
