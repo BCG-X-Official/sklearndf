@@ -270,18 +270,16 @@ class EstimatorWrapperDF(
         # names differ.
         # Return the same feature names that were passed to this method.
         try:
-            _feature_names_in_native_ = self.native_estimator.feature_names_in_
+            feature_names_in_native = self.native_estimator.feature_names_in_
         except AttributeError:
             return wrapper_feature_names_in
 
-        if not np.array_equal(
-            wrapper_feature_names_in.values, _feature_names_in_native_
-        ):
+        if not np.array_equal(wrapper_feature_names_in.values, feature_names_in_native):
             warnings.warn(
                 "conflicting input feature names: "
                 "the input feature names recorded by this estimator are "
                 f"{wrapper_feature_names_in}, but the input feature names recorded by "
-                f"the wrapped native estimator are {_feature_names_in_native_}",
+                f"the wrapped native estimator are {feature_names_in_native}",
                 stacklevel=warning_stacklevel + 1,
             )
         return wrapper_feature_names_in
