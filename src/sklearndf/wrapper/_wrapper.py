@@ -125,6 +125,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
     estimator.
     """
 
+    #: the native class wrapped by the DF wrapper class
     __native_class__: Type[T_NativeEstimator]
 
     def __new__(
@@ -195,9 +196,6 @@ class EstimatorWrapperDF(
     """
     Base class of DF wrappers for native estimators conforming with the `scikit-learn`
     API.
-
-    Estimator wrapper classes should be created using function
-    :func:`.make_df_estimator`.
     """
 
     __ARG_FITTED_DELEGATE_CONTEXT = "__EstimatorWrapperDF_fitted"
@@ -545,9 +543,6 @@ class TransformerWrapperDF(
     """
     Base class of DF wrappers for native transformers conforming with the `scikit-learn`
     API.
-
-    Transformer wrapper classes should be created using function
-    :func:`.make_df_transformer`.
     """
 
     @property
@@ -797,9 +792,6 @@ class RegressorWrapperDF(
     """
     Base class of DF wrappers for native regressors conforming with the `scikit-learn`
     API.
-
-    Regressor wrapper classes should be created using function
-    :func:`.make_df_regressor`.
     """
 
     # noinspection PyPep8Naming
@@ -820,9 +812,6 @@ class ClassifierWrapperDF(
     """
     Base class of DF wrappers for native classifiers conforming with the `scikit-learn`
     API.
-
-    Classifier wrapper classes should be created using function
-    :func:`.make_df_classifier`.
     """
 
     @property
@@ -945,9 +934,6 @@ class ClustererWrapperDF(
     """
     Base class of DF wrappers for native clusterers conforming with the scikit-learn
     API.
-
-    Clusterer wrapper classes should be created using function
-    :func:`.make_df_clusterer`.
     """
 
     COL_LABELS = "labels"
