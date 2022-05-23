@@ -20,7 +20,7 @@ requires = [
     "packaging      >=20",
     "pandas         >=0.24,<2a",  # cannot use ~= due to conda bug
     "scikit-learn   >=0.21,<1.1a",
-    "scipy          ~=1.2",
+    "scipy          ~=1.4",
 ]
 
 requires-python = ">=3.7,<4a"
@@ -75,7 +75,7 @@ numpy          = "==1.17.5"  # cannot use ~= due to conda bug
 packaging      = "~=20.9"
 pandas         = "~=0.24.2"
 python         = ">=3.7.12,<3.8a"    # cannot use ~= due to conda bug
-scipy          = "~=1.2.3"
+scipy          = "~=1.4.1"
 scikit-learn   = "~=0.21.3"
 # additional minimum requirements of gamma-pytools
 joblib         = "~=0.14.1"
@@ -92,7 +92,7 @@ packaging      = ">=20"
 pandas         = "~=1.4"
 python         = ">=3.8.10,<4a"   # cannot use ~= due to conda bug
 scikit-learn   = "~=1.0.2"
-scipy          = "~=1.6"
+scipy          = "~=1.8"
 # additional maximum requirements of gamma-pytools
 joblib         = "~=1.1"
 matplotlib     = "~=3.5"
