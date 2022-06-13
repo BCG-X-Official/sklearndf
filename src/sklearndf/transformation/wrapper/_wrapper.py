@@ -151,7 +151,7 @@ class BaseMultipleInputsPerOutputTransformerWrapperDF(
         pass
 
     def _get_features_original(self) -> pd.Series:
-        raise NotImplementedError(
+        raise TypeError(
             f"{type(self.native_estimator).__name__} transformers map multiple "
             "inputs to individual output columns; current sklearndf implementation "
             "only supports many-to-1 mappings from output columns to input columns"

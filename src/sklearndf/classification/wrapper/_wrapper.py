@@ -66,8 +66,8 @@ __tracker = AllTracker(globals())
 
 
 class LinearDiscriminantAnalysisWrapperDF(
-    NComponentsDimensionalityReductionWrapperDF[LinearDiscriminantAnalysis],
     ClassifierWrapperDF[LinearDiscriminantAnalysis],
+    NComponentsDimensionalityReductionWrapperDF[LinearDiscriminantAnalysis],
     metaclass=ABCMeta,
 ):
     """
@@ -79,8 +79,8 @@ class LinearDiscriminantAnalysisWrapperDF(
 
 
 class MetaClassifierWrapperDF(
-    MetaEstimatorWrapperDF[T_NativeClassifier],
     ClassifierWrapperDF,
+    MetaEstimatorWrapperDF[T_NativeClassifier],
     Generic[T_NativeClassifier],
     metaclass=ABCMeta,
 ):
@@ -102,6 +102,7 @@ class PartialFitClassifierWrapperDF(
     method ``partial_fit()``.
     """
 
+    # noinspection PyPep8Naming
     def partial_fit(
         self: T_PartialFitClassifierWrapperDF,
         X: pd.DataFrame,
@@ -128,6 +129,7 @@ class PartialFitClassifierWrapperDF(
 
         return self
 
+    # noinspection PyPep8Naming
     def _partial_fit(
         self,
         X: pd.DataFrame,
@@ -193,7 +195,9 @@ class MultiOutputClassifierWrapperDF(
 
 
 class ClassifierChainWrapperDF(
-    MetaClassifierWrapperDF[ClassifierChain], metaclass=ABCMeta
+    MetaEstimatorWrapperDF[ClassifierChain],
+    ClassifierWrapperDF,
+    metaclass=ABCMeta,
 ):
     """
     DF wrapper for :class:`sklearn.multioutput.ClassifierChain`.
@@ -220,8 +224,8 @@ from ...wrapper._wrapper import _StackableClassifierDF
 
 
 class StackingClassifierWrapperDF(
-    StackingEstimatorWrapperDF[T_NativeClassifier],
     ClassifierWrapperDF,
+    StackingEstimatorWrapperDF[T_NativeClassifier],
     Generic[T_NativeClassifier],
     metaclass=ABCMeta,
 ):

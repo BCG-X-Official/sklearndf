@@ -8,7 +8,7 @@ from sklearn.ensemble import HistGradientBoostingClassifier
 
 from pytools.api import AllTracker
 
-from ..wrapper import make_df_classifier
+from ..wrapper import ClassifierWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -28,7 +28,14 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 # ensemble
 #
 
-HistGradientBoostingClassifierDF = make_df_classifier(HistGradientBoostingClassifier)
+
+class HistGradientBoostingClassifierDF(
+    ClassifierWrapperDF,
+    HistGradientBoostingClassifier,
+    native=HistGradientBoostingClassifier,
+):
+    """Stub for DF wrapper of class ``HistGradientBoostingClassifier``"""
+
 
 #
 # validate __all__

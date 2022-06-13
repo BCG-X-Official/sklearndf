@@ -46,7 +46,7 @@ from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
 
 from pytools.api import AllTracker
 
-from ..wrapper import make_df_classifier
+from ..wrapper import ClassifierWrapperDF, MetaEstimatorWrapperDF
 from .wrapper import (
     ClassifierChainWrapperDF,
     LinearDiscriminantAnalysisWrapperDF,
@@ -117,25 +117,41 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 # Dummy
 #
 
-DummyClassifierDF = make_df_classifier(DummyClassifier)
+
+class DummyClassifierDF(ClassifierWrapperDF, DummyClassifier, native=DummyClassifier):
+    """Stub for DF wrapper of class ``DummyClassifier``"""
 
 
 #
 # neighbors
 #
 
-NearestCentroidDF = make_df_classifier(NearestCentroid)
-KNeighborsClassifierDF = make_df_classifier(KNeighborsClassifier)
-RadiusNeighborsClassifierDF = make_df_classifier(RadiusNeighborsClassifier)
+
+class NearestCentroidDF(ClassifierWrapperDF, NearestCentroid, native=NearestCentroid):
+    """Stub for DF wrapper of class ``NearestCentroid``"""
+
+
+class KNeighborsClassifierDF(
+    ClassifierWrapperDF, KNeighborsClassifier, native=KNeighborsClassifier
+):
+    """Stub for DF wrapper of class ``KNeighborsClassifier``"""
+
+
+class RadiusNeighborsClassifierDF(
+    ClassifierWrapperDF, RadiusNeighborsClassifier, native=RadiusNeighborsClassifier
+):
+    """Stub for DF wrapper of class ``RadiusNeighborsClassifier``"""
 
 
 #
 # voting
 #
 
-VotingClassifierDF = make_df_classifier(
-    VotingClassifier, base_wrapper=MetaClassifierWrapperDF
-)
+
+class VotingClassifierDF(
+    MetaClassifierWrapperDF, VotingClassifier, native=VotingClassifier
+):
+    """Stub for DF wrapper of class ``VotingClassifier``"""
 
 
 #
@@ -143,19 +159,54 @@ VotingClassifierDF = make_df_classifier(
 #
 
 
-RandomForestClassifierDF = make_df_classifier(RandomForestClassifier)
-ExtraTreesClassifierDF = make_df_classifier(ExtraTreesClassifier)
-GradientBoostingClassifierDF = make_df_classifier(GradientBoostingClassifier)
-AdaBoostClassifierDF = make_df_classifier(AdaBoostClassifier)
-BaggingClassifierDF = make_df_classifier(BaggingClassifier)
+class RandomForestClassifierDF(
+    ClassifierWrapperDF, RandomForestClassifier, native=RandomForestClassifier
+):
+    """Stub for DF wrapper of class ``RandomForestClassifier``"""
+
+
+class ExtraTreesClassifierDF(
+    ClassifierWrapperDF, ExtraTreesClassifier, native=ExtraTreesClassifier
+):
+    """Stub for DF wrapper of class ``ExtraTreesClassifier``"""
+
+
+class GradientBoostingClassifierDF(
+    ClassifierWrapperDF, GradientBoostingClassifier, native=GradientBoostingClassifier
+):
+    """Stub for DF wrapper of class ``GradientBoostingClassifier``"""
+
+    def _make_estimator(self, append=True):
+        pass
+
+
+class AdaBoostClassifierDF(
+    ClassifierWrapperDF, AdaBoostClassifier, native=AdaBoostClassifier
+):
+    """Stub for DF wrapper of class ``AdaBoostClassifier``"""
+
+
+class BaggingClassifierDF(
+    ClassifierWrapperDF, BaggingClassifier, native=BaggingClassifier
+):
+    """Stub for DF wrapper of class ``BaggingClassifier``"""
 
 
 #
 # tree
 #
 
-DecisionTreeClassifierDF = make_df_classifier(DecisionTreeClassifier)
-ExtraTreeClassifierDF = make_df_classifier(ExtraTreeClassifier)
+
+class DecisionTreeClassifierDF(
+    ClassifierWrapperDF, DecisionTreeClassifier, native=DecisionTreeClassifier
+):
+    """Stub for DF wrapper of class ``DecisionTreeClassifier``"""
+
+
+class ExtraTreeClassifierDF(
+    ClassifierWrapperDF, ExtraTreeClassifier, native=ExtraTreeClassifier
+):
+    """Stub for DF wrapper of class ``ExtraTreeClassifier``"""
 
 
 #
@@ -163,12 +214,20 @@ ExtraTreeClassifierDF = make_df_classifier(ExtraTreeClassifier)
 #
 
 
-LinearDiscriminantAnalysisDF = make_df_classifier(
+class LinearDiscriminantAnalysisDF(
+    LinearDiscriminantAnalysisWrapperDF,
     LinearDiscriminantAnalysis,
-    base_wrapper=LinearDiscriminantAnalysisWrapperDF,
-)
+    native=LinearDiscriminantAnalysis,
+):
+    """Stub for DF wrapper of class ``LinearDiscriminantAnalysis``"""
 
-QuadraticDiscriminantAnalysisDF = make_df_classifier(QuadraticDiscriminantAnalysis)
+
+class QuadraticDiscriminantAnalysisDF(
+    ClassifierWrapperDF,
+    QuadraticDiscriminantAnalysis,
+    native=QuadraticDiscriminantAnalysis,
+):
+    """Stub for DF wrapper of class ``QuadraticDiscriminantAnalysis``"""
 
 
 #
@@ -176,43 +235,61 @@ QuadraticDiscriminantAnalysisDF = make_df_classifier(QuadraticDiscriminantAnalys
 #
 
 
-GaussianNBDF = make_df_classifier(
-    GaussianNB, base_wrapper=PartialFitClassifierWrapperDF
-)
-MultinomialNBDF = make_df_classifier(
-    MultinomialNB, base_wrapper=PartialFitClassifierWrapperDF
-)
-ComplementNBDF = make_df_classifier(
-    ComplementNB, base_wrapper=PartialFitClassifierWrapperDF
-)
-BernoulliNBDF = make_df_classifier(
-    BernoulliNB, base_wrapper=PartialFitClassifierWrapperDF
-)
+class GaussianNBDF(PartialFitClassifierWrapperDF, GaussianNB, native=GaussianNB):
+    """Stub for DF wrapper of class ``GaussianNB``"""
+
+
+class MultinomialNBDF(
+    PartialFitClassifierWrapperDF, MultinomialNB, native=MultinomialNB
+):
+    """Stub for DF wrapper of class ``MultinomialNB``"""
+
+
+class ComplementNBDF(PartialFitClassifierWrapperDF, ComplementNB, native=ComplementNB):
+    """Stub for DF wrapper of class ``ComplementNB``"""
+
+
+class BernoulliNBDF(PartialFitClassifierWrapperDF, BernoulliNB, native=BernoulliNB):
+    """Stub for DF wrapper of class ``BernoulliNB``"""
 
 
 #
 # calibration
 #
 
-CalibratedClassifierCVDF = make_df_classifier(
-    CalibratedClassifierCV, base_wrapper=MetaClassifierWrapperDF
-)
+
+class CalibratedClassifierCVDF(
+    MetaClassifierWrapperDF, CalibratedClassifierCV, native=CalibratedClassifierCV
+):
+    """Stub for DF wrapper of class ``CalibratedClassifierCV``"""
 
 
 #
 # SVM
 #
 
-SVCDF = make_df_classifier(SVC)
-NuSVCDF = make_df_classifier(NuSVC)
-LinearSVCDF = make_df_classifier(LinearSVC)
+
+class SVCDF(ClassifierWrapperDF, SVC, native=SVC):
+    """Stub for DF wrapper of class ``SVC``"""
+
+
+class NuSVCDF(ClassifierWrapperDF, NuSVC, native=NuSVC):
+    """Stub for DF wrapper of class ``NuSVC``"""
+
+
+class LinearSVCDF(ClassifierWrapperDF, LinearSVC, native=LinearSVC):
+    """Stub for DF wrapper of class ``LinearSVC``"""
 
 
 #
 # gaussian process
 #
 
-GaussianProcessClassifierDF = make_df_classifier(GaussianProcessClassifier)
+
+class GaussianProcessClassifierDF(
+    ClassifierWrapperDF, GaussianProcessClassifier, native=GaussianProcessClassifier
+):
+    """Stub for DF wrapper of class ``GaussianProcessClassifier``"""
 
 
 #
@@ -220,44 +297,88 @@ GaussianProcessClassifierDF = make_df_classifier(GaussianProcessClassifier)
 #
 
 
-LogisticRegressionDF = make_df_classifier(LogisticRegression)
-LogisticRegressionCVDF = make_df_classifier(LogisticRegressionCV)
-PassiveAggressiveClassifierDF = make_df_classifier(
-    PassiveAggressiveClassifier, base_wrapper=PartialFitClassifierWrapperDF
-)
-PerceptronDF = make_df_classifier(
-    Perceptron, base_wrapper=PartialFitClassifierWrapperDF
-)
-SGDClassifierDF = make_df_classifier(
-    SGDClassifier, base_wrapper=PartialFitClassifierWrapperDF
-)
-RidgeClassifierDF = make_df_classifier(RidgeClassifier)
-RidgeClassifierCVDF = make_df_classifier(RidgeClassifierCV)
+class LogisticRegressionDF(
+    ClassifierWrapperDF, LogisticRegression, native=LogisticRegression
+):
+    """Stub for DF wrapper of class ``LogisticRegression``"""
+
+
+class LogisticRegressionCVDF(
+    ClassifierWrapperDF, LogisticRegressionCV, native=LogisticRegressionCV
+):
+    """Stub for DF wrapper of class ``LogisticRegressionCV``"""
+
+
+class PassiveAggressiveClassifierDF(
+    PartialFitClassifierWrapperDF,
+    PassiveAggressiveClassifier,
+    native=PassiveAggressiveClassifier,
+):
+    """Stub for DF wrapper of class ``PassiveAggressiveClassifier``"""
+
+
+class PerceptronDF(PartialFitClassifierWrapperDF, Perceptron, native=Perceptron):
+    """Stub for DF wrapper of class ``Perceptron``"""
+
+
+class SGDClassifierDF(
+    PartialFitClassifierWrapperDF, SGDClassifier, native=SGDClassifier
+):
+    """Stub for DF wrapper of class ``SGDClassifier``"""
+
+
+class RidgeClassifierDF(ClassifierWrapperDF, RidgeClassifier, native=RidgeClassifier):
+    """Stub for DF wrapper of class ``RidgeClassifier``"""
+
+
+class RidgeClassifierCVDF(
+    ClassifierWrapperDF, RidgeClassifierCV, native=RidgeClassifierCV
+):
+    """Stub for DF wrapper of class ``RidgeClassifierCV``"""
 
 
 #
 # semi-supervised
 #
 
-LabelPropagationDF = make_df_classifier(LabelPropagation)
-LabelSpreadingDF = make_df_classifier(LabelSpreading)
+
+class LabelPropagationDF(
+    ClassifierWrapperDF, LabelPropagation, native=LabelPropagation
+):
+    """Stub for DF wrapper of class ``LabelPropagation``"""
+
+
+class LabelSpreadingDF(ClassifierWrapperDF, LabelSpreading, native=LabelSpreading):
+    """Stub for DF wrapper of class ``LabelSpreading``"""
 
 
 #
 # multi-class
 #
 
-OneVsRestClassifierDF = make_df_classifier(
-    OneVsRestClassifier, base_wrapper=MetaClassifierWrapperDF
-)
 
-OneVsOneClassifierDF = make_df_classifier(
-    OneVsOneClassifier, base_wrapper=MetaClassifierWrapperDF
-)
+class OneVsRestClassifierDF(
+    MetaClassifierWrapperDF, OneVsRestClassifier, native=OneVsRestClassifier
+):
+    """Stub for DF wrapper of class ``OneVsRestClassifier``"""
 
-OutputCodeClassifierDF = make_df_classifier(
-    OutputCodeClassifier, base_wrapper=MetaClassifierWrapperDF
-)
+
+class OneVsOneClassifierDF(
+    ClassifierWrapperDF,
+    MetaEstimatorWrapperDF,
+    OneVsOneClassifier,
+    native=OneVsOneClassifier,
+):
+    """Stub for DF wrapper of class ``OneVsOneClassifier``"""
+
+
+class OutputCodeClassifierDF(
+    ClassifierWrapperDF,
+    MetaEstimatorWrapperDF,
+    OutputCodeClassifier,
+    native=OutputCodeClassifier,
+):
+    """Stub for DF wrapper of class ``OutputCodeClassifier``"""
 
 
 #
@@ -265,9 +386,10 @@ OutputCodeClassifierDF = make_df_classifier(
 #
 
 
-MultiOutputClassifierDF = make_df_classifier(
-    MultiOutputClassifier, base_wrapper=MultiOutputClassifierWrapperDF
-)
+class MultiOutputClassifierDF(
+    MultiOutputClassifierWrapperDF, MultiOutputClassifier, native=MultiOutputClassifier
+):
+    """Stub for DF wrapper of class ``MultiOutputClassifier``"""
 
 
 #
@@ -275,18 +397,21 @@ MultiOutputClassifierDF = make_df_classifier(
 #
 
 
-ClassifierChainDF = make_df_classifier(
-    ClassifierChain, base_wrapper=ClassifierChainWrapperDF
-)
+class ClassifierChainDF(
+    ClassifierChainWrapperDF, ClassifierChain, native=ClassifierChain
+):
+    """Stub for DF wrapper of class ``ClassifierChain``"""
 
 
 #
 # neural network
 #
 
-MLPClassifierDF = make_df_classifier(
-    MLPClassifier, base_wrapper=PartialFitClassifierWrapperDF
-)
+
+class MLPClassifierDF(
+    PartialFitClassifierWrapperDF, MLPClassifier, native=MLPClassifier
+):
+    """Stub for DF wrapper of class ``MLPClassifier``"""
 
 
 #

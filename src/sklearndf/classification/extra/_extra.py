@@ -6,7 +6,7 @@ import warnings
 
 from pytools.api import AllTracker
 
-from ...wrapper import make_df_classifier
+from ...wrapper import RegressorWrapperDF
 
 # since we install LGBM via conda, the warning about the Clang compiler is irrelevant
 warnings.filterwarnings("ignore", message=r"Starting from version 2\.2\.1")
@@ -18,13 +18,11 @@ warnings.filterwarnings(
 
 log = logging.getLogger(__name__)
 
-__all__ = []
+__all__ = ["LGBMClassifierDF"]
 
 try:
     # import lightgbm classes only if installed
     from lightgbm.sklearn import LGBMClassifier
-
-    __all__.append("LGBMClassifierDF")
 except ImportError:
     LGBMClassifier = None
 
@@ -43,7 +41,12 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 #
 
 if LGBMClassifier:
-    LGBMClassifierDF = make_df_classifier(LGBMClassifier)
+
+    class LGBMClassifierDF(RegressorWrapperDF, LGBMClassifier, native=LGBMClassifier):
+        """Stub for DF wrapper of class ``LGBMClassifierDF``"""
+
+else:
+    __all__.remove("LGBMClassifierDF")
 
 
 #
