@@ -1298,41 +1298,50 @@ def _mirror_attributes(
 
 
 def _make_alias(
-    module: str,
-    class_: str,
-    name: str,
-    delegate_cls: type,
-    delegate: Union[Callable, Any],
+    module: str, class_: str, name: str, delegate_cls: type, delegate: Any
 ) -> Union[Callable, property, None]:
-
-    class_name = _full_name(cls=delegate_cls)
-    full_name = f"{class_name}.{name}"
-
     if inspect.isfunction(delegate):
-        function = _make_forwarder(delegate)
-        _update_wrapper(
-            wrapper=function,
-            wrapped=delegate,
-            wrapper_module=module,
-            wrapper_parent=class_,
+        return _make_method_alias(
+            module=module,
+            class_=class_,
+            name=name,
+            delegate_cls=delegate_cls,
+            delegate_method=delegate,
         )
-        function.__doc__ = f"See :meth:`{full_name}`"
-        return function
-
     elif inspect.isdatadescriptor(delegate):
-        delegate_prop: property = cast(property, delegate)
-        # noinspection PyShadowingNames
-        return property(
-            fget=lambda self: delegate_prop.__get__(self._native_estimator),
-            fset=lambda self, value: delegate_prop.__set__(
-                self._native_estimator, value
-            ),
-            fdel=lambda self: delegate_prop.__delete__(self._native_estimator),
-            doc=f"See documentation of :class:`{class_name}`.",
+        return _make_descriptor_alias(
+            delegate_cls=delegate_cls, delegate_descriptor=delegate
         )
-
     else:
         return None
+
+
+def _make_method_alias(
+    module: str, class_: str, name: str, delegate_cls: type, delegate_method: Callable
+) -> Callable:
+    function = _make_forwarder(delegate_method)
+    _update_wrapper(
+        wrapper=function,
+        wrapped=delegate_method,
+        wrapper_module=module,
+        wrapper_parent=class_,
+    )
+    class_name = _full_class_name(cls=delegate_cls)
+    function.__doc__ = f"See :meth:`{class_name}.{name}`"
+    return function
+
+
+def _make_descriptor_alias(delegate_cls: type, delegate_descriptor: Any) -> property:
+    class_name = _full_class_name(cls=delegate_cls)
+    # noinspection PyShadowingNames
+    return property(
+        fget=lambda self: delegate_descriptor.__get__(self._native_estimator),
+        fset=lambda self, value: delegate_descriptor.__set__(
+            self._native_estimator, value
+        ),
+        fdel=lambda self: delegate_descriptor.__delete__(self._native_estimator),
+        doc=f"See documentation of :class:`{class_name}`.",
+    )
 
 
 def _make_forwarder(delegate: Callable) -> Callable:
@@ -1380,7 +1389,7 @@ def _update_class_docstring(
             # empty line and we already have tag lines: stop here
             break
 
-    estimator_name = _full_name(cls=sklearn_native_estimator_type)
+    estimator_name = _full_class_name(cls=sklearn_native_estimator_type)
 
     df_estimator_type.__doc__ = "\n".join(
         [
@@ -1397,7 +1406,7 @@ def _update_class_docstring(
     )
 
 
-def _full_name(cls: type):
+def _full_class_name(cls: type):
     # get the full name of the class, including the module prefix
 
     try:
