@@ -71,7 +71,6 @@ from sklearn.random_projection import GaussianRandomProjection, SparseRandomProj
 
 from pytools.api import AllTracker
 
-from ..wrapper import make_df_transformer
 from .wrapper import (
     AdditiveChi2SamplerWrapperDF,
     ColumnPreservingTransformerWrapperDF,
@@ -170,9 +169,10 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 #
 
 
-ColumnTransformerDF = make_df_transformer(
-    ColumnTransformer, base_wrapper=ColumnTransformerWrapperDF
-)
+class ColumnTransformerDF(
+    ColumnTransformerWrapperDF, ColumnTransformer, native=ColumnTransformer
+):
+    """Stub for DF wrapper of class ``ColumnTransformer``"""
 
 
 #
@@ -180,25 +180,32 @@ ColumnTransformerDF = make_df_transformer(
 #
 
 
-PLSSVDDF = make_df_transformer(
-    PLSSVD, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
+class PLSSVDDF(ColumnPreservingTransformerWrapperDF, PLSSVD, native=PLSSVD):
+    """Stub for DF wrapper of class ``PLSSVD``"""
 
-FeatureHasherDF = make_df_transformer(
-    FeatureHasher, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
 
-DictVectorizerDF = make_df_transformer(
-    DictVectorizer, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
+class FeatureHasherDF(
+    ColumnPreservingTransformerWrapperDF, FeatureHasher, native=FeatureHasher
+):
+    """Stub for DF wrapper of class ``FeatureHasher``"""
 
-HashingVectorizerDF = make_df_transformer(
-    HashingVectorizer, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
 
-TfidfTransformerDF = make_df_transformer(
-    TfidfTransformer, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
+class DictVectorizerDF(
+    ColumnPreservingTransformerWrapperDF, DictVectorizer, native=DictVectorizer
+):
+    """Stub for DF wrapper of class ``DictVectorizer``"""
+
+
+class HashingVectorizerDF(
+    ColumnPreservingTransformerWrapperDF, HashingVectorizer, native=HashingVectorizer
+):
+    """Stub for DF wrapper of class ``HashingVectorizer``"""
+
+
+class TfidfTransformerDF(
+    ColumnPreservingTransformerWrapperDF, TfidfTransformer, native=TfidfTransformer
+):
+    """Stub for DF wrapper of class ``TfidfTransformer``"""
 
 
 #
@@ -208,31 +215,41 @@ TfidfTransformerDF = make_df_transformer(
 # we cannot move this to package _wrapper as it references MissingIndicatorDF
 
 
-SimpleImputerDF = make_df_transformer(SimpleImputer, base_wrapper=ImputerWrapperDF)
+class SimpleImputerDF(ImputerWrapperDF, SimpleImputer, native=SimpleImputer):
+    """Stub for DF wrapper of class ``SimpleImputer``"""
 
-MissingIndicatorDF = make_df_transformer(
-    MissingIndicator, base_wrapper=MissingIndicatorWrapperDF
-)
 
-IterativeImputerDF = make_df_transformer(
-    IterativeImputer, base_wrapper=ImputerWrapperDF
-)
+class MissingIndicatorDF(
+    MissingIndicatorWrapperDF, MissingIndicator, native=MissingIndicator
+):
+    """Stub for DF wrapper of class ``MissingIndicator``"""
 
-IsomapDF = make_df_transformer(Isomap, base_wrapper=IsomapWrapperDF)
 
-AdditiveChi2SamplerDF = make_df_transformer(
-    AdditiveChi2Sampler, base_wrapper=AdditiveChi2SamplerWrapperDF
-)
+class IterativeImputerDF(ImputerWrapperDF, IterativeImputer, native=IterativeImputer):
+    """Stub for DF wrapper of class ``IterativeImputer``"""
+
+
+class IsomapDF(IsomapWrapperDF, Isomap, native=Isomap):
+    """Stub for DF wrapper of class ``Isomap``"""
+
+
+class AdditiveChi2SamplerDF(
+    AdditiveChi2SamplerWrapperDF, AdditiveChi2Sampler, native=AdditiveChi2Sampler
+):
+    """Stub for DF wrapper of class ``AdditiveChi2Sampler``"""
 
 
 #
 # neighbors
 #
 
-NeighborhoodComponentsAnalysisDF = make_df_transformer(
+
+class NeighborhoodComponentsAnalysisDF(
+    ColumnPreservingTransformerWrapperDF,
     NeighborhoodComponentsAnalysis,
-    base_wrapper=ColumnPreservingTransformerWrapperDF,
-)
+    native=NeighborhoodComponentsAnalysis,
+):
+    """Stub for DF wrapper of class ``NeighborhoodComponentsAnalysis``"""
 
 
 #
@@ -240,73 +257,106 @@ NeighborhoodComponentsAnalysisDF = make_df_transformer(
 #
 
 
-MinMaxScalerDF = make_df_transformer(
-    MinMaxScaler, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
+class MinMaxScalerDF(
+    ColumnPreservingTransformerWrapperDF, MinMaxScaler, native=MinMaxScaler
+):
+    """Stub for DF wrapper of class ``MinMaxScaler``"""
 
-StandardScalerDF = make_df_transformer(
-    StandardScaler, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
 
-MaxAbsScalerDF = make_df_transformer(
-    MaxAbsScaler, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
+class StandardScalerDF(
+    ColumnPreservingTransformerWrapperDF, StandardScaler, native=StandardScaler
+):
+    """Stub for DF wrapper of class ``StandardScaler``"""
 
-RobustScalerDF = make_df_transformer(
-    RobustScaler, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
 
-PolynomialFeaturesDF = make_df_transformer(
-    PolynomialFeatures, base_wrapper=PolynomialTransformerWrapperDF
-)
+class MaxAbsScalerDF(
+    ColumnPreservingTransformerWrapperDF, MaxAbsScaler, native=MaxAbsScaler
+):
+    """Stub for DF wrapper of class ``MaxAbsScaler``"""
 
-NormalizerDF = make_df_transformer(
-    Normalizer, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
 
-BinarizerDF = make_df_transformer(
-    Binarizer, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
+class RobustScalerDF(
+    ColumnPreservingTransformerWrapperDF, RobustScaler, native=RobustScaler
+):
+    """Stub for DF wrapper of class ``RobustScaler``"""
 
-KernelCentererDF = make_df_transformer(
-    KernelCenterer, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
 
-QuantileTransformerDF = make_df_transformer(
-    QuantileTransformer, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
+class PolynomialFeaturesDF(
+    PolynomialTransformerWrapperDF, PolynomialFeatures, native=PolynomialFeatures
+):
+    """Stub for DF wrapper of class ``PolynomialFeatures``"""
 
-PowerTransformerDF = make_df_transformer(
-    PowerTransformer, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
 
-FunctionTransformerDF = make_df_transformer(
-    FunctionTransformer, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
+class NormalizerDF(ColumnPreservingTransformerWrapperDF, Normalizer, native=Normalizer):
+    """Stub for DF wrapper of class ``Normalizer``"""
 
-LabelEncoderDF = make_df_transformer(
-    LabelEncoder, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
 
-LabelBinarizerDF = make_df_transformer(
-    LabelBinarizer, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
+class BinarizerDF(ColumnPreservingTransformerWrapperDF, Binarizer, native=Binarizer):
+    """Stub for DF wrapper of class ``Binarizer``"""
 
-MultiLabelBinarizerDF = make_df_transformer(
-    MultiLabelBinarizer, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
 
-OneHotEncoderDF = make_df_transformer(
-    OneHotEncoder, base_wrapper=OneHotEncoderWrapperDF
-)
+class KernelCentererDF(
+    ColumnPreservingTransformerWrapperDF, KernelCenterer, native=KernelCenterer
+):
+    """Stub for DF wrapper of class ``KernelCenterer``"""
 
-OrdinalEncoderDF = make_df_transformer(
-    OrdinalEncoder, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
 
-KBinsDiscretizerDF = make_df_transformer(
-    KBinsDiscretizer, base_wrapper=KBinsDiscretizerWrapperDF
-)
+class QuantileTransformerDF(
+    ColumnPreservingTransformerWrapperDF,
+    QuantileTransformer,
+    native=QuantileTransformer,
+):
+    """Stub for DF wrapper of class ``QuantileTransformer``"""
+
+
+class PowerTransformerDF(
+    ColumnPreservingTransformerWrapperDF, PowerTransformer, native=PowerTransformer
+):
+    """Stub for DF wrapper of class ``PowerTransformer``"""
+
+
+class FunctionTransformerDF(
+    ColumnPreservingTransformerWrapperDF,
+    FunctionTransformer,
+    native=FunctionTransformer,
+):
+    """Stub for DF wrapper of class ``FunctionTransformer``"""
+
+
+class LabelEncoderDF(
+    ColumnPreservingTransformerWrapperDF, LabelEncoder, native=LabelEncoder
+):
+    """Stub for DF wrapper of class ``LabelEncoder``"""
+
+
+class LabelBinarizerDF(
+    ColumnPreservingTransformerWrapperDF, LabelBinarizer, native=LabelBinarizer
+):
+    """Stub for DF wrapper of class ``LabelBinarizer``"""
+
+
+class MultiLabelBinarizerDF(
+    ColumnPreservingTransformerWrapperDF,
+    MultiLabelBinarizer,
+    native=MultiLabelBinarizer,
+):
+    """Stub for DF wrapper of class ``MultiLabelBinarizer``"""
+
+
+class OneHotEncoderDF(OneHotEncoderWrapperDF, OneHotEncoder, native=OneHotEncoder):
+    """Stub for DF wrapper of class ``OneHotEncoder``"""
+
+
+class OrdinalEncoderDF(
+    ColumnPreservingTransformerWrapperDF, OrdinalEncoder, native=OrdinalEncoder
+):
+    """Stub for DF wrapper of class ``OrdinalEncoder``"""
+
+
+class KBinsDiscretizerDF(
+    KBinsDiscretizerWrapperDF, KBinsDiscretizer, native=KBinsDiscretizer
+):
+    """Stub for DF wrapper of class ``KBinsDiscretizer``"""
 
 
 #
@@ -314,68 +364,101 @@ KBinsDiscretizerDF = make_df_transformer(
 # Implemented through ComponentsDimensionalityReductionWrapperDF
 #
 
-BernoulliRBMDF = make_df_transformer(
-    BernoulliRBM, base_wrapper=ComponentsDimensionalityReductionWrapperDF
-)
 
-DictionaryLearningDF = make_df_transformer(
-    DictionaryLearning, base_wrapper=ComponentsDimensionalityReductionWrapperDF
-)
+class BernoulliRBMDF(
+    ComponentsDimensionalityReductionWrapperDF, BernoulliRBM, native=BernoulliRBM
+):
+    """Stub for DF wrapper of class ``BernoulliRBM``"""
 
-FactorAnalysisDF = make_df_transformer(
-    FactorAnalysis, base_wrapper=ComponentsDimensionalityReductionWrapperDF
-)
 
-FastICADF = make_df_transformer(
-    FastICA, base_wrapper=ComponentsDimensionalityReductionWrapperDF
-)
+class DictionaryLearningDF(
+    ComponentsDimensionalityReductionWrapperDF,
+    DictionaryLearning,
+    native=DictionaryLearning,
+):
+    """Stub for DF wrapper of class ``DictionaryLearning``"""
 
-GaussianRandomProjectionDF = make_df_transformer(
+
+class FactorAnalysisDF(
+    ComponentsDimensionalityReductionWrapperDF, FactorAnalysis, native=FactorAnalysis
+):
+    """Stub for DF wrapper of class ``FactorAnalysis``"""
+
+
+class FastICADF(ComponentsDimensionalityReductionWrapperDF, FastICA, native=FastICA):
+    """Stub for DF wrapper of class ``FastICA``"""
+
+
+class GaussianRandomProjectionDF(
+    ComponentsDimensionalityReductionWrapperDF,
     GaussianRandomProjection,
-    base_wrapper=ComponentsDimensionalityReductionWrapperDF,
-)
+    native=GaussianRandomProjection,
+):
+    """Stub for DF wrapper of class ``GaussianRandomProjection``"""
 
-IncrementalPCADF = make_df_transformer(
-    IncrementalPCA, base_wrapper=ComponentsDimensionalityReductionWrapperDF
-)
 
-LatentDirichletAllocationDF = make_df_transformer(
+class IncrementalPCADF(
+    ComponentsDimensionalityReductionWrapperDF, IncrementalPCA, native=IncrementalPCA
+):
+    """Stub for DF wrapper of class ``IncrementalPCA``"""
+
+
+class LatentDirichletAllocationDF(
+    ComponentsDimensionalityReductionWrapperDF,
     LatentDirichletAllocation,
-    base_wrapper=ComponentsDimensionalityReductionWrapperDF,
-)
+    native=LatentDirichletAllocation,
+):
+    """Stub for DF wrapper of class ``LatentDirichletAllocation``"""
 
-MiniBatchDictionaryLearningDF = make_df_transformer(
+
+class MiniBatchDictionaryLearningDF(
+    ComponentsDimensionalityReductionWrapperDF,
     MiniBatchDictionaryLearning,
-    base_wrapper=ComponentsDimensionalityReductionWrapperDF,
-)
+    native=MiniBatchDictionaryLearning,
+):
+    """Stub for DF wrapper of class ``MiniBatchDictionaryLearning``"""
 
-MiniBatchSparsePCADF = make_df_transformer(
-    MiniBatchSparsePCA, base_wrapper=ComponentsDimensionalityReductionWrapperDF
-)
 
-NMFDF = make_df_transformer(
-    NMF, base_wrapper=ComponentsDimensionalityReductionWrapperDF
-)
+class MiniBatchSparsePCADF(
+    ComponentsDimensionalityReductionWrapperDF,
+    MiniBatchSparsePCA,
+    native=MiniBatchSparsePCA,
+):
+    """Stub for DF wrapper of class ``MiniBatchSparsePCA``"""
 
-PCADF = make_df_transformer(
-    PCA, base_wrapper=NComponentsDimensionalityReductionWrapperDF
-)
 
-SparseCoderDF = make_df_transformer(
-    SparseCoder, base_wrapper=ComponentsDimensionalityReductionWrapperDF
-)
+class NMFDF(ComponentsDimensionalityReductionWrapperDF, NMF, native=NMF):
+    """Stub for DF wrapper of class ``NMF``"""
 
-SparsePCADF = make_df_transformer(
-    SparsePCA, base_wrapper=ComponentsDimensionalityReductionWrapperDF
-)
 
-SparseRandomProjectionDF = make_df_transformer(
-    SparseRandomProjection, base_wrapper=ComponentsDimensionalityReductionWrapperDF
-)
+class PCADF(NComponentsDimensionalityReductionWrapperDF, PCA, native=PCA):
+    """Stub for DF wrapper of class ``PCA``"""
 
-TruncatedSVDDF = make_df_transformer(
-    TruncatedSVD, base_wrapper=ComponentsDimensionalityReductionWrapperDF
-)
+
+class SparseCoderDF(
+    ComponentsDimensionalityReductionWrapperDF, SparseCoder, native=SparseCoder
+):
+    """Stub for DF wrapper of class ``SparseCoder``"""
+
+
+class SparsePCADF(
+    ComponentsDimensionalityReductionWrapperDF, SparsePCA, native=SparsePCA
+):
+    """Stub for DF wrapper of class ``SparsePCA``"""
+
+
+class SparseRandomProjectionDF(
+    ComponentsDimensionalityReductionWrapperDF,
+    SparseRandomProjection,
+    native=SparseRandomProjection,
+):
+    """Stub for DF wrapper of class ``SparseRandomProjection``"""
+
+
+class TruncatedSVDDF(
+    ComponentsDimensionalityReductionWrapperDF, TruncatedSVD, native=TruncatedSVD
+):
+    """Stub for DF wrapper of class ``TruncatedSVD``"""
 
 
 #
@@ -383,25 +466,39 @@ TruncatedSVDDF = make_df_transformer(
 # Implemented through NComponentsDimensionalityReductionWrapperDF
 #
 
-KernelPCADF = make_df_transformer(
-    KernelPCA, base_wrapper=NComponentsDimensionalityReductionWrapperDF
-)
 
-LocallyLinearEmbeddingDF = make_df_transformer(
-    LocallyLinearEmbedding, base_wrapper=NComponentsDimensionalityReductionWrapperDF
-)
+class KernelPCADF(
+    NComponentsDimensionalityReductionWrapperDF, KernelPCA, native=KernelPCA
+):
+    """Stub for DF wrapper of class ``KernelPCA``"""
 
-NystroemDF = make_df_transformer(
-    Nystroem, base_wrapper=NComponentsDimensionalityReductionWrapperDF
-)
 
-RBFSamplerDF = make_df_transformer(
-    RBFSampler, base_wrapper=NComponentsDimensionalityReductionWrapperDF
-)
+class LocallyLinearEmbeddingDF(
+    NComponentsDimensionalityReductionWrapperDF,
+    LocallyLinearEmbedding,
+    native=LocallyLinearEmbedding,
+):
+    """Stub for DF wrapper of class ``LocallyLinearEmbedding``"""
 
-SkewedChi2SamplerDF = make_df_transformer(
-    SkewedChi2Sampler, base_wrapper=NComponentsDimensionalityReductionWrapperDF
-)
+
+class NystroemDF(
+    NComponentsDimensionalityReductionWrapperDF, Nystroem, native=Nystroem
+):
+    """Stub for DF wrapper of class ``Nystroem``"""
+
+
+class RBFSamplerDF(
+    NComponentsDimensionalityReductionWrapperDF, RBFSampler, native=RBFSampler
+):
+    """Stub for DF wrapper of class ``RBFSampler``"""
+
+
+class SkewedChi2SamplerDF(
+    NComponentsDimensionalityReductionWrapperDF,
+    SkewedChi2Sampler,
+    native=SkewedChi2Sampler,
+):
+    """Stub for DF wrapper of class ``SkewedChi2Sampler``"""
 
 
 #
@@ -410,33 +507,53 @@ SkewedChi2SamplerDF = make_df_transformer(
 # Transformers with a get_support method, implemented via FeatureSelectionWrapperDF
 #
 
-VarianceThresholdDF = make_df_transformer(
-    VarianceThreshold, base_wrapper=FeatureSelectionWrapperDF
-)
 
-RFEDF = make_df_transformer(RFE, base_wrapper=FeatureSelectionWrapperDF)
+class VarianceThresholdDF(
+    FeatureSelectionWrapperDF, VarianceThreshold, native=VarianceThreshold
+):
+    """Stub for DF wrapper of class ``VarianceThreshold``"""
 
-RFECVDF = make_df_transformer(RFECV, base_wrapper=FeatureSelectionWrapperDF)
 
-SelectFromModelDF = make_df_transformer(
-    SelectFromModel, base_wrapper=FeatureSelectionWrapperDF
-)
+class RFEDF(FeatureSelectionWrapperDF, RFE, native=RFE):
+    """Stub for DF wrapper of class ``RFE``"""
 
-SelectPercentileDF = make_df_transformer(
-    SelectPercentile, base_wrapper=FeatureSelectionWrapperDF
-)
 
-SelectKBestDF = make_df_transformer(SelectKBest, base_wrapper=FeatureSelectionWrapperDF)
+class RFECVDF(FeatureSelectionWrapperDF, RFECV, native=RFECV):
+    """Stub for DF wrapper of class ``RFECV``"""
 
-SelectFprDF = make_df_transformer(SelectFpr, base_wrapper=FeatureSelectionWrapperDF)
 
-SelectFdrDF = make_df_transformer(SelectFdr, base_wrapper=FeatureSelectionWrapperDF)
+class SelectFromModelDF(
+    FeatureSelectionWrapperDF, SelectFromModel, native=SelectFromModel
+):
+    """Stub for DF wrapper of class ``SelectFromModel``"""
 
-SelectFweDF = make_df_transformer(SelectFwe, base_wrapper=FeatureSelectionWrapperDF)
 
-GenericUnivariateSelectDF = make_df_transformer(
-    GenericUnivariateSelect, base_wrapper=FeatureSelectionWrapperDF
-)
+class SelectPercentileDF(
+    FeatureSelectionWrapperDF, SelectPercentile, native=SelectPercentile
+):
+    """Stub for DF wrapper of class ``SelectPercentile``"""
+
+
+class SelectKBestDF(FeatureSelectionWrapperDF, SelectKBest, native=SelectKBest):
+    """Stub for DF wrapper of class ``SelectKBest``"""
+
+
+class SelectFprDF(FeatureSelectionWrapperDF, SelectFpr, native=SelectFpr):
+    """Stub for DF wrapper of class ``SelectFpr``"""
+
+
+class SelectFdrDF(FeatureSelectionWrapperDF, SelectFdr, native=SelectFdr):
+    """Stub for DF wrapper of class ``SelectFdr``"""
+
+
+class SelectFweDF(FeatureSelectionWrapperDF, SelectFwe, native=SelectFwe):
+    """Stub for DF wrapper of class ``SelectFwe``"""
+
+
+class GenericUnivariateSelectDF(
+    FeatureSelectionWrapperDF, GenericUnivariateSelect, native=GenericUnivariateSelect
+):
+    """Stub for DF wrapper of class ``GenericUnivariateSelect``"""
 
 
 #

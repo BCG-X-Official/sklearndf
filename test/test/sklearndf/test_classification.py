@@ -1,5 +1,5 @@
 from itertools import chain
-from typing import Type
+from typing import Any, Dict, Type
 
 import numpy as np
 import pandas as pd
@@ -18,7 +18,7 @@ CLASSIFIERS_TO_TEST = iterate_classes(
 )
 
 
-CLASSIFIER_INIT_PARAMETERS = {
+CLASSIFIER_INIT_PARAMETERS: Dict[str, Dict[str, Any]] = {
     "CalibratedClassifierCVDF": {
         "base_estimator": classification.RandomForestClassifierDF()
     },
@@ -69,9 +69,10 @@ def test_wrapped_fit_predict(
 ) -> None:
     """Test fit & predict & predict[_log]_proba of wrapped sklearn classifiers"""
     # noinspection PyArgumentList
-    classifier: ClassifierDF = sklearndf_cls(
-        **CLASSIFIER_INIT_PARAMETERS.get(sklearndf_cls.__name__, {})
+    parameters: Dict[str, Any] = CLASSIFIER_INIT_PARAMETERS.get(
+        sklearndf_cls.__name__, {}
     )
+    classifier: ClassifierDF = sklearndf_cls(**parameters)
 
     assert is_classifier(classifier)
 
@@ -110,7 +111,7 @@ def test_wrapped_fit_predict(
 
     # test predict_proba & predict_log_proba:
     for method_name in ["predict_proba", "predict_log_proba"]:
-        method = getattr(classifier, method_name, None)
+        method = getattr(classifier, method_name)
 
         if hasattr(classifier.native_estimator, method_name):
             predictions = method(X=iris_features)

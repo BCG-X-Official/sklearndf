@@ -1,4 +1,4 @@
-from typing import List, Type
+from typing import Any, Dict, List, Type
 
 import pandas as pd
 import pytest
@@ -26,7 +26,7 @@ REGRESSORS_TO_TEST: List[Type[EstimatorWrapperDF]] = iterate_classes(
     excluding=[RegressorDF.__name__, TransformerDF.__name__, r".*WrapperDF"],
 )
 
-DEFAULT_REGRESSOR_PARAMETERS = {
+DEFAULT_REGRESSOR_PARAMETERS: Dict[str, Dict[str, Any]] = {
     "MultiOutputRegressorDF": {"estimator": RandomForestRegressorDF()},
     "MultiOutputRegressorDF_partial_fit": {"estimator": SGDRegressorDF()},
     "RegressorChainDF": {"base_estimator": RandomForestRegressorDF()},
@@ -58,9 +58,10 @@ def test_wrapped_fit_predict(
     boston_target_df: pd.DataFrame,
 ) -> None:
     """Test fit & predict of wrapped sklearn regressors"""
-    regressor: RegressorDF = sklearndf_cls(
-        **DEFAULT_REGRESSOR_PARAMETERS.get(sklearndf_cls.__name__, {})
+    parameters: Dict[str, Any] = DEFAULT_REGRESSOR_PARAMETERS.get(
+        sklearndf_cls.__name__, {}
     )
+    regressor: RegressorDF = sklearndf_cls(**parameters)
 
     assert is_regressor(regressor)
 

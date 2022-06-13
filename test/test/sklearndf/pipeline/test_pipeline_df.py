@@ -7,7 +7,7 @@ from __future__ import annotations
 import shutil
 import time
 from tempfile import mkdtemp
-from typing import Any, Dict, Mapping
+from typing import Any, Dict, Mapping, cast
 
 import joblib
 import numpy as np
@@ -27,7 +27,6 @@ from sklearndf.pipeline import PipelineDF
 from sklearndf.regression import DummyRegressorDF, LassoDF, LinearRegressionDF
 from sklearndf.transformation import SelectKBestDF, SimpleImputerDF
 from sklearndf.transformation.wrapper import ColumnPreservingTransformerWrapperDF
-from sklearndf.wrapper import make_df_estimator, make_df_transformer
 
 
 def test_set_params_nested_pipeline_df() -> None:
@@ -62,12 +61,12 @@ class NoTransformer(NoFit):
     def get_params(self, deep: bool = False) -> Dict[str, Any]:
         return {"a": self.a, "b": self.b}
 
-    def set_params(self, **params: Dict[str, Any]) -> NoTransformer:
-        self.a = params["a"]
+    def set_params(self, a: str = None, **params: Dict[str, Any]) -> NoTransformer:
+        self.a = a
         return self
 
 
-class NoInvTransformer(NoTransformer, TransformerMixin):
+class NoInvTransformer(TransformerMixin, NoTransformer):
     # noinspection PyPep8Naming
     def transform(self, X: np.ndarray) -> np.ndarray:
         return X
@@ -98,14 +97,16 @@ class DummyTransformer(Transformer):
         return self
 
 
-DummyTransformerDF = make_df_transformer(
-    DummyTransformer, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
+class DummyTransformerDF(  # type: ignore
+    ColumnPreservingTransformerWrapperDF, DummyTransformer, native=DummyTransformer
+):
+    """dummy transformer"""
 
 
-NoTransformerDF = make_df_estimator(
-    NoTransformer, base_wrapper=ColumnPreservingTransformerWrapperDF
-)
+class NoTransformerDF(  # type: ignore
+    ColumnPreservingTransformerWrapperDF, NoTransformer, native=NoTransformer
+):
+    """not a transformer"""
 
 
 def test_pipeline_df_memory(
@@ -238,7 +239,7 @@ def test_pipeline_df__init() -> None:
     assert clf.a == 0.1
     assert clf.b is None
     # Smoke test the repr:
-    repr(pipe)
+    _ = repr(pipe)
 
     # Test with two objects
     clf = SVCDF()
@@ -256,14 +257,14 @@ def test_pipeline_df__init() -> None:
     pipe.set_params(svc__C=0.1)
     assert clf.C == 0.1
     # Smoke test the repr:
-    repr(pipe)
+    _ = repr(pipe)
 
     # Check that params are not set when naming them wrong
     assert_raises(ValueError, pipe.set_params, anova__C=0.1)
 
     # Test clone
-    pipe2 = assert_no_warnings(clone, pipe)
-    assert not pipe.named_steps[step_svc] is pipe2.named_steps[step_svc]
+    pipe2 = cast(PipelineDF, assert_no_warnings(clone, pipe))
+    assert pipe.named_steps[step_svc] is not pipe2.named_steps[step_svc]
 
     # Check that apart from estimators, the parameters are the same
 

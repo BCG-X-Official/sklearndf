@@ -18,7 +18,7 @@ from sklearn.cluster import (
 
 from pytools.api import AllTracker
 
-from ..wrapper import make_df_clusterer
+from ..wrapper import ClustererWrapperDF
 from .wrapper import FeatureAgglomerationWrapperDF, KMeansBaseWrapperDF
 
 log = logging.getLogger(__name__)
@@ -50,18 +50,54 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 # Class definitions
 #
 
-AffinityPropagationDF = make_df_clusterer(AffinityPropagation)
-AgglomerativeClusteringDF = make_df_clusterer(AgglomerativeClustering)
-BirchDF = make_df_clusterer(Birch)
-DBSCANDF = make_df_clusterer(DBSCAN)
-KMeansDF = make_df_clusterer(KMeans, base_wrapper=KMeansBaseWrapperDF)
-MiniBatchKMeansDF = make_df_clusterer(MiniBatchKMeans, base_wrapper=KMeansBaseWrapperDF)
-MeanShiftDF = make_df_clusterer(MeanShift)
-OPTICSDF = make_df_clusterer(OPTICS)
-SpectralClusteringDF = make_df_clusterer(SpectralClustering)
-FeatureAgglomerationDF = make_df_clusterer(
-    FeatureAgglomeration, base_wrapper=FeatureAgglomerationWrapperDF
-)
+
+class AffinityPropagationDF(
+    ClustererWrapperDF, AffinityPropagation, native=AffinityPropagation
+):
+    """Stub for DF wrapper of class ``AffinityPropagation``"""
+
+
+class AgglomerativeClusteringDF(
+    ClustererWrapperDF, AgglomerativeClustering, native=AgglomerativeClustering
+):
+    """Stub for DF wrapper of class ``AgglomerativeClustering``"""
+
+
+class BirchDF(ClustererWrapperDF, Birch, native=Birch):
+    """Stub for DF wrapper of class ``Birch``"""
+
+
+class DBSCANDF(ClustererWrapperDF, DBSCAN, native=DBSCAN):
+    """Stub for DF wrapper of class ``DBSCAN``"""
+
+
+class KMeansDF(KMeansBaseWrapperDF, KMeans, native=KMeans):
+    """Stub for DF wrapper of class ``KMeans``"""
+
+
+class MiniBatchKMeansDF(KMeansBaseWrapperDF, MiniBatchKMeans, native=MiniBatchKMeans):
+    """Stub for DF wrapper of class ``MiniBatchKMeans``"""
+
+
+class MeanShiftDF(ClustererWrapperDF, MeanShift, native=MeanShift):
+    """Stub for DF wrapper of class ``MeanShift``"""
+
+
+class OPTICSDF(ClustererWrapperDF, OPTICS, native=OPTICS):
+    """Stub for DF wrapper of class ``OPTICS``"""
+
+
+class SpectralClusteringDF(
+    ClustererWrapperDF, SpectralClustering, native=SpectralClustering
+):
+    """Stub for DF wrapper of class ``SpectralClustering``"""
+
+
+class FeatureAgglomerationDF(
+    FeatureAgglomerationWrapperDF, FeatureAgglomeration, native=FeatureAgglomeration
+):
+    """Stub for DF wrapper of class ``FeatureAgglomeration``"""
+
 
 #
 # Validate __all__

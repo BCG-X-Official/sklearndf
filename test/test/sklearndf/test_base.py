@@ -15,7 +15,7 @@ from pytools.expression.atomic import Id
 from sklearndf.classification import SVCDF, DecisionTreeClassifierDF
 from sklearndf.pipeline import PipelineDF
 from sklearndf.transformation import OneHotEncoderDF
-from sklearndf.wrapper import make_df_estimator
+from sklearndf.wrapper import EstimatorWrapperDF
 
 
 class DummyEstimator(BaseEstimator):
@@ -36,9 +36,22 @@ class DummyEstimator3(BaseEstimator):
         self.d = d
 
 
-DummyEstimatorDF = make_df_estimator(DummyEstimator)
-DummyEstimator2DF = make_df_estimator(DummyEstimator2)
-DummyEstimator3DF = make_df_estimator(DummyEstimator3)
+class DummyEstimatorDF(  # type: ignore
+    EstimatorWrapperDF, DummyEstimator, native=DummyEstimator
+):
+    """A trivial estimator."""
+
+
+class DummyEstimator2DF(  # type: ignore
+    EstimatorWrapperDF, DummyEstimator2, native=DummyEstimator2
+):
+    """A trivial estimator."""
+
+
+class DummyEstimator3DF(  # type: ignore
+    EstimatorWrapperDF, DummyEstimator3, native=DummyEstimator3
+):
+    """A trivial estimator."""
 
 
 def test_clone() -> None:
@@ -48,7 +61,7 @@ def test_clone() -> None:
     # and check that the obtained copy is a correct deep copy.
 
     encoder = OneHotEncoderDF(drop="first", sparse=False)
-    new_encoder = clone(encoder)
+    new_encoder = encoder.clone()
     assert encoder is not new_encoder
     assert encoder.get_params() == new_encoder.get_params()
 
