@@ -1319,6 +1319,7 @@ def _make_alias(
 def _make_method_alias(
     module: str, class_: str, name: str, delegate_cls: type, delegate_method: Callable
 ) -> Callable:
+    # create a method that forwards calls to a native delegate estimator
     wrapper_method = _make_forwarder(delegate_method)
     _update_wrapper(
         wrapper=wrapper_method,
@@ -1332,8 +1333,8 @@ def _make_method_alias(
 
 
 def _make_descriptor_alias(delegate_cls: type, delegate_descriptor: Any) -> property:
+    # create a property that forwards attribute access to a native delegate estimator
     class_name = _full_class_name(cls=delegate_cls)
-    # noinspection PyShadowingNames
     return property(
         fget=lambda self: delegate_descriptor.__get__(self._native_estimator),
         fset=lambda self, value: delegate_descriptor.__set__(
