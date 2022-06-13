@@ -3,6 +3,7 @@ Core implementation of :mod:`sklearndf.regression`
 """
 import logging
 
+from sklearn.base import BaseEstimator
 from sklearn.compose import TransformedTargetRegressor
 from sklearn.cross_decomposition import CCA, PLSCanonical, PLSRegression
 from sklearn.dummy import DummyRegressor
@@ -52,7 +53,7 @@ from sklearn.tree import DecisionTreeRegressor, ExtraTreeRegressor
 
 from pytools.api import AllTracker
 
-from ..wrapper import make_df_regressor
+from ..wrapper import RegressorWrapperDF
 from .wrapper import (
     IsotonicRegressionWrapperDF,
     MetaRegressorWrapperDF,
@@ -136,134 +137,287 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 # Dummy
 #
 
-DummyRegressorDF = make_df_regressor(DummyRegressor)
+
+class DummyRegressorDF(RegressorWrapperDF, DummyRegressor, native=DummyRegressor):
+    """Stub for DF wrapper of class ``DummyRegressor``"""
 
 
 #
 # SVM
 #
 
-LinearSVRDF = make_df_regressor(LinearSVR)
-SVRDF = make_df_regressor(SVR)
-NuSVRDF = make_df_regressor(NuSVR)
+
+class LinearSVRDF(RegressorWrapperDF, LinearSVR, native=LinearSVR):
+    """Stub for DF wrapper of class ``LinearSVR``"""
+
+
+class SVRDF(RegressorWrapperDF, SVR, native=SVR):
+    """Stub for DF wrapper of class ``SVR``"""
+
+
+class NuSVRDF(RegressorWrapperDF, NuSVR, native=NuSVR):
+    """Stub for DF wrapper of class ``NuSVR``"""
 
 
 #
 # multi-output
 #
 
-MultiOutputRegressorDF = make_df_regressor(
-    MultiOutputRegressor, base_wrapper=MultiOutputRegressorWrapperDF
-)
 
-RegressorChainDF = make_df_regressor(
-    RegressorChain, base_wrapper=MetaRegressorWrapperDF
-)
+class MultiOutputRegressorDF(
+    MultiOutputRegressorWrapperDF, MultiOutputRegressor, native=MultiOutputRegressor
+):
+    """Stub for DF wrapper of class ``MultiOutputRegressor``"""
+
+
+class RegressorChainDF(MetaRegressorWrapperDF, RegressorChain, native=RegressorChain):
+    """Stub for DF wrapper of class ``RegressorChain``"""
 
 
 #
 # neighbors
 #
 
-KNeighborsRegressorDF = make_df_regressor(KNeighborsRegressor)
-RadiusNeighborsRegressorDF = make_df_regressor(RadiusNeighborsRegressor)
+
+class KNeighborsRegressorDF(
+    RegressorWrapperDF, KNeighborsRegressor, native=KNeighborsRegressor
+):
+    """Stub for DF wrapper of class ``KNeighborsRegressor``"""
+
+
+class RadiusNeighborsRegressorDF(
+    RegressorWrapperDF, RadiusNeighborsRegressor, native=RadiusNeighborsRegressor
+):
+    """Stub for DF wrapper of class ``RadiusNeighborsRegressor``"""
 
 
 #
 # neural_network
 #
 
-MLPRegressorDF = make_df_regressor(
-    MLPRegressor, base_wrapper=PartialFitRegressorWrapperDF
-)
+
+class MLPRegressorDF(PartialFitRegressorWrapperDF, MLPRegressor, native=MLPRegressor):
+    """Stub for DF wrapper of class ``MLPRegressor``"""
 
 
 #
 # linear_model
 #
 
-LinearRegressionDF = make_df_regressor(LinearRegression)
-RidgeDF = make_df_regressor(Ridge)
-RidgeCVDF = make_df_regressor(RidgeCV)
-SGDRegressorDF = make_df_regressor(
-    SGDRegressor, base_wrapper=PartialFitRegressorWrapperDF
-)
-HuberRegressorDF = make_df_regressor(HuberRegressor)
-TheilSenRegressorDF = make_df_regressor(TheilSenRegressor)
-BayesianRidgeDF = make_df_regressor(BayesianRidge)
-ARDRegressionDF = make_df_regressor(ARDRegression)
-OrthogonalMatchingPursuitDF = make_df_regressor(OrthogonalMatchingPursuit)
-OrthogonalMatchingPursuitCVDF = make_df_regressor(OrthogonalMatchingPursuitCV)
-RANSACRegressorDF = make_df_regressor(RANSACRegressor)
-ElasticNetDF = make_df_regressor(ElasticNet)
-LassoCVDF = make_df_regressor(LassoCV)
-ElasticNetCVDF = make_df_regressor(ElasticNetCV)
-MultiTaskElasticNetCVDF = make_df_regressor(MultiTaskElasticNetCV)
-MultiTaskLassoCVDF = make_df_regressor(MultiTaskLassoCV)
-MultiTaskElasticNetDF = make_df_regressor(MultiTaskElasticNet)
-MultiTaskLassoDF = make_df_regressor(MultiTaskLasso)
-LassoDF = make_df_regressor(Lasso)
-PassiveAggressiveRegressorDF = make_df_regressor(
-    PassiveAggressiveRegressor, base_wrapper=PartialFitRegressorWrapperDF
-)
-LarsDF = make_df_regressor(Lars)
-LassoLarsDF = make_df_regressor(LassoLars)
-LassoLarsICDF = make_df_regressor(LassoLarsIC)
-LarsCVDF = make_df_regressor(LarsCV)
-LassoLarsCVDF = make_df_regressor(LassoLarsCV)
+
+class LinearRegressionDF(RegressorWrapperDF, LinearRegression, native=LinearRegression):
+    """Stub for DF wrapper of class ``LinearRegression``"""
+
+
+class RidgeDF(RegressorWrapperDF, Ridge, native=Ridge):
+    """Stub for DF wrapper of class ``Ridge``"""
+
+
+class RidgeCVDF(RegressorWrapperDF, RidgeCV, native=RidgeCV):
+    """Stub for DF wrapper of class ``RidgeCV``"""
+
+
+class SGDRegressorDF(PartialFitRegressorWrapperDF, SGDRegressor, native=SGDRegressor):
+    """Stub for DF wrapper of class ``SGDRegressor``"""
+
+
+class HuberRegressorDF(RegressorWrapperDF, HuberRegressor, native=HuberRegressor):
+    """Stub for DF wrapper of class ``HuberRegressor``"""
+
+
+class TheilSenRegressorDF(
+    RegressorWrapperDF, TheilSenRegressor, native=TheilSenRegressor
+):
+    """Stub for DF wrapper of class ``TheilSenRegressor``"""
+
+
+class BayesianRidgeDF(RegressorWrapperDF, BayesianRidge, native=BayesianRidge):
+    """Stub for DF wrapper of class ``BayesianRidge``"""
+
+
+class ARDRegressionDF(RegressorWrapperDF, ARDRegression, native=ARDRegression):
+    """Stub for DF wrapper of class ``ARDRegression``"""
+
+
+class OrthogonalMatchingPursuitDF(
+    RegressorWrapperDF, OrthogonalMatchingPursuit, native=OrthogonalMatchingPursuit
+):
+    """Stub for DF wrapper of class ``OrthogonalMatchingPursuit``"""
+
+
+class OrthogonalMatchingPursuitCVDF(
+    RegressorWrapperDF, OrthogonalMatchingPursuitCV, native=OrthogonalMatchingPursuitCV
+):
+    """Stub for DF wrapper of class ``OrthogonalMatchingPursuitCV``"""
+
+
+class RANSACRegressorDF(RegressorWrapperDF, RANSACRegressor, native=RANSACRegressor):
+    """Stub for DF wrapper of class ``RANSACRegressor``"""
+
+
+class ElasticNetDF(RegressorWrapperDF, ElasticNet, native=ElasticNet):
+    """Stub for DF wrapper of class ``ElasticNet``"""
+
+
+class LassoCVDF(RegressorWrapperDF, LassoCV, native=LassoCV):
+    """Stub for DF wrapper of class ``LassoCV``"""
+
+
+class ElasticNetCVDF(RegressorWrapperDF, ElasticNetCV, native=ElasticNetCV):
+    """Stub for DF wrapper of class ``ElasticNetCV``"""
+
+
+class MultiTaskElasticNetCVDF(
+    RegressorWrapperDF, MultiTaskElasticNetCV, native=MultiTaskElasticNetCV
+):
+    """Stub for DF wrapper of class ``MultiTaskElasticNetCV``"""
+
+
+class MultiTaskLassoCVDF(RegressorWrapperDF, MultiTaskLassoCV, native=MultiTaskLassoCV):
+    """Stub for DF wrapper of class ``MultiTaskLassoCV``"""
+
+
+class MultiTaskElasticNetDF(
+    RegressorWrapperDF, MultiTaskElasticNet, native=MultiTaskElasticNet
+):
+    """Stub for DF wrapper of class ``MultiTaskElasticNet``"""
+
+
+class MultiTaskLassoDF(RegressorWrapperDF, MultiTaskLasso, native=MultiTaskLasso):
+    """Stub for DF wrapper of class ``MultiTaskLasso``"""
+
+
+class LassoDF(RegressorWrapperDF, Lasso, native=Lasso):
+    """Stub for DF wrapper of class ``Lasso``"""
+
+
+class PassiveAggressiveRegressorDF(
+    PartialFitRegressorWrapperDF,
+    PassiveAggressiveRegressor,
+    native=PassiveAggressiveRegressor,
+):
+    """Stub for DF wrapper of class ``PassiveAggressiveRegressor``"""
+
+
+class LarsDF(RegressorWrapperDF, Lars, native=Lars):
+    """Stub for DF wrapper of class ``Lars``"""
+
+
+class LassoLarsDF(RegressorWrapperDF, LassoLars, native=LassoLars):
+    """Stub for DF wrapper of class ``LassoLars``"""
+
+
+class LassoLarsICDF(RegressorWrapperDF, LassoLarsIC, native=LassoLarsIC):
+    """Stub for DF wrapper of class ``LassoLarsIC``"""
+
+
+class LarsCVDF(RegressorWrapperDF, LarsCV, native=LarsCV):
+    """Stub for DF wrapper of class ``LarsCV``"""
+
+
+class LassoLarsCVDF(RegressorWrapperDF, LassoLarsCV, native=LassoLarsCV):
+    """Stub for DF wrapper of class ``LassoLarsCV``"""
 
 
 #
 # ensemble
 #
 
-BaggingRegressorDF = make_df_regressor(BaggingRegressor)
-GradientBoostingRegressorDF = make_df_regressor(GradientBoostingRegressor)
-AdaBoostRegressorDF = make_df_regressor(AdaBoostRegressor)
-RandomForestRegressorDF = make_df_regressor(RandomForestRegressor)
-ExtraTreesRegressorDF = make_df_regressor(ExtraTreesRegressor)
 
-VotingRegressorDF = make_df_regressor(
-    VotingRegressor, base_wrapper=MetaRegressorWrapperDF
-)
+class BaggingRegressorDF(RegressorWrapperDF, BaggingRegressor, native=BaggingRegressor):
+    """Stub for DF wrapper of class ``BaggingRegressor``"""
+
+
+class GradientBoostingRegressorDF(
+    RegressorWrapperDF, GradientBoostingRegressor, native=GradientBoostingRegressor
+):
+    """Stub for DF wrapper of class ``GradientBoostingRegressor``"""
+
+    def _make_estimator(self, append=True) -> BaseEstimator:
+        return super()._make_estimator()
+
+
+class AdaBoostRegressorDF(
+    RegressorWrapperDF, AdaBoostRegressor, native=AdaBoostRegressor
+):
+    """Stub for DF wrapper of class ``AdaBoostRegressor``"""
+
+
+class RandomForestRegressorDF(
+    RegressorWrapperDF, RandomForestRegressor, native=RandomForestRegressor
+):
+    """Stub for DF wrapper of class ``RandomForestRegressor``"""
+
+
+class ExtraTreesRegressorDF(
+    RegressorWrapperDF, ExtraTreesRegressor, native=ExtraTreesRegressor
+):
+    """Stub for DF wrapper of class ``ExtraTreesRegressor``"""
+
+
+class VotingRegressorDF(
+    MetaRegressorWrapperDF, VotingRegressor, native=VotingRegressor
+):
+    """Stub for DF wrapper of class ``VotingRegressor``"""
 
 
 #
 # gaussian_process
 #
 
-GaussianProcessRegressorDF = make_df_regressor(GaussianProcessRegressor)
+
+class GaussianProcessRegressorDF(
+    RegressorWrapperDF, GaussianProcessRegressor, native=GaussianProcessRegressor
+):
+    """Stub for DF wrapper of class ``GaussianProcessRegressor``"""
 
 
 #
 # isotonic
 #
 
-IsotonicRegressionDF = make_df_regressor(
-    IsotonicRegression, base_wrapper=IsotonicRegressionWrapperDF
-)
+
+class IsotonicRegressionDF(
+    IsotonicRegressionWrapperDF, IsotonicRegression, native=IsotonicRegression
+):
+    """Stub for DF wrapper of class ``IsotonicRegression``"""
 
 
 #
 # compose
 #
 
-TransformedTargetRegressorDF = make_df_regressor(TransformedTargetRegressor)
+
+class TransformedTargetRegressorDF(
+    RegressorWrapperDF, TransformedTargetRegressor, native=TransformedTargetRegressor
+):
+    """Stub for DF wrapper of class ``TransformedTargetRegressor``"""
 
 
 #
 # kernel_ridge
 #
 
-KernelRidgeDF = make_df_regressor(KernelRidge)
+
+class KernelRidgeDF(RegressorWrapperDF, KernelRidge, native=KernelRidge):
+    """Stub for DF wrapper of class ``KernelRidge``"""
 
 
 #
 # tree
 #
 
-DecisionTreeRegressorDF = make_df_regressor(DecisionTreeRegressor)
-ExtraTreeRegressorDF = make_df_regressor(ExtraTreeRegressor)
+
+class DecisionTreeRegressorDF(
+    RegressorWrapperDF, DecisionTreeRegressor, native=DecisionTreeRegressor
+):
+    """Stub for DF wrapper of class ``DecisionTreeRegressor``"""
+
+
+class ExtraTreeRegressorDF(
+    RegressorWrapperDF, ExtraTreeRegressor, native=ExtraTreeRegressor
+):
+    """Stub for DF wrapper of class ``ExtraTreeRegressor``"""
 
 
 #
@@ -271,15 +425,18 @@ ExtraTreeRegressorDF = make_df_regressor(ExtraTreeRegressor)
 #
 
 
-CCADF = make_df_regressor(CCA, base_wrapper=RegressorTransformerWrapperDF)
+class CCADF(RegressorTransformerWrapperDF, CCA, native=CCA):
+    """Stub for DF wrapper of class ``CCA``"""
 
-PLSRegressionDF = make_df_regressor(
-    PLSRegression, base_wrapper=RegressorTransformerWrapperDF
-)
 
-PLSCanonicalDF = make_df_regressor(
-    PLSCanonical, base_wrapper=RegressorTransformerWrapperDF
-)
+class PLSRegressionDF(
+    RegressorTransformerWrapperDF, PLSRegression, native=PLSRegression
+):
+    """Stub for DF wrapper of class ``PLSRegression``"""
+
+
+class PLSCanonicalDF(RegressorTransformerWrapperDF, PLSCanonical, native=PLSCanonical):
+    """Stub for DF wrapper of class ``PLSCanonical``"""
 
 
 #

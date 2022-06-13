@@ -306,7 +306,7 @@ class SupervisedLearnerDF(LearnerDF, metaclass=ABCMeta):
         pass
 
 
-class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
+class TransformerDF(TransformerMixin, EstimatorDF, metaclass=ABCMeta):
     """
     Base class for augmented `scikit-learn` transformers.
 
@@ -417,15 +417,27 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
         return self.feature_names_original_.index
 
 
-class RegressorDF(SupervisedLearnerDF, RegressorMixin, metaclass=ABCMeta):
+class RegressorDF(RegressorMixin, SupervisedLearnerDF, metaclass=ABCMeta):
     """
     Base class for augmented `scikit-learn` regressors.
 
     Provides enhanced support for data frames.
     """
 
+    # noinspection PyPep8Naming
+    @abstractmethod
+    def score(
+        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+    ) -> float:
+        """[see SupervisedLearnerDF]"""
 
-class ClassifierDF(SupervisedLearnerDF, ClassifierMixin, metaclass=ABCMeta):
+    # we cannot get the docstring via the @inheritdoc mechanism because the
+    # ClassifierMixin and RegressorMixin implementations precede the
+    #
+    score.__doc__ = SupervisedLearnerDF.score.__doc__
+
+
+class ClassifierDF(ClassifierMixin, SupervisedLearnerDF, metaclass=ABCMeta):
     """
     Base class for augmented `scikit-learn` classifiers.
 
@@ -509,8 +521,20 @@ class ClassifierDF(SupervisedLearnerDF, ClassifierMixin, metaclass=ABCMeta):
             per output
         """
 
+    # noinspection PyPep8Naming
+    @abstractmethod
+    def score(
+        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+    ) -> float:
+        """[see SupervisedLearnerDF]"""
 
-class ClustererDF(LearnerDF, ClusterMixin, metaclass=ABCMeta):
+    # we cannot get the docstring via the @inheritdoc mechanism because the
+    # ClassifierMixin and RegressorMixin implementations precede the
+    #
+    score.__doc__ = SupervisedLearnerDF.score.__doc__
+
+
+class ClustererDF(ClusterMixin, LearnerDF, metaclass=ABCMeta):
     """
     Base class for augmented scikit-learn `clusterers`.
 

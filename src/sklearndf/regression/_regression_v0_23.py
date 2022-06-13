@@ -11,7 +11,7 @@ from sklearn.linear_model._glm import GeneralizedLinearRegressor
 
 from pytools.api import AllTracker
 
-from ..wrapper import make_df_regressor
+from ..wrapper import RegressorWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -40,10 +40,23 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 # Class definitions
 #
 
-PoissonRegressorDF = make_df_regressor(PoissonRegressor)
-GammaRegressorDF = make_df_regressor(GammaRegressor)
-TweedieRegressorDF = make_df_regressor(TweedieRegressor)
-GeneralizedLinearRegressorDF = make_df_regressor(GeneralizedLinearRegressor)
+
+class PoissonRegressorDF(RegressorWrapperDF, PoissonRegressor, native=PoissonRegressor):
+    """Stub for DF wrapper of class ``PoissonRegressor``"""
+
+
+class GammaRegressorDF(RegressorWrapperDF, GammaRegressor, native=GammaRegressor):
+    """Stub for DF wrapper of class ``GammaRegressor``"""
+
+
+class TweedieRegressorDF(RegressorWrapperDF, TweedieRegressor, native=TweedieRegressor):
+    """Stub for DF wrapper of class ``TweedieRegressor``"""
+
+
+class GeneralizedLinearRegressorDF(
+    RegressorWrapperDF, GeneralizedLinearRegressor, native=GeneralizedLinearRegressor
+):
+    """Stub for DF wrapper of class ``GeneralizedLinearRegressor``"""
 
 
 #

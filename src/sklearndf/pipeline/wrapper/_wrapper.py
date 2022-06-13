@@ -4,7 +4,7 @@ Core implementation of :mod:`sklearndf.pipeline.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Iterator, List, Sequence, Tuple, Union, cast
+from typing import Any, Dict, Iterator, List, Sequence, Tuple, Union, cast
 
 import numpy as np
 import pandas as pd
@@ -198,6 +198,16 @@ class PipelineWrapperDF(
                 return transformer.feature_names_out_
 
         return self.feature_names_in_
+
+    @property
+    def _estimator_type(self) -> str:
+        # noinspection PyProtectedMember
+        return self.native_estimator._estimator_type
+
+    def _more_tags(self) -> Dict[str, Any]:
+        return cast(
+            Dict[str, Any], getattr(self.native_estimator, "_more_tags", lambda: {})()
+        )
 
 
 class FeatureUnionWrapperDF(TransformerWrapperDF[FeatureUnion], metaclass=ABCMeta):

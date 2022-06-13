@@ -16,13 +16,19 @@ improvements, and is now subject to static type checking with :mod:`mypy`.
   :class:`.SupervisedLearnerDF` implements method :meth:`~.SupervisedLearnerDF.score`,
   which is no longer implemented by :class:`.LearnerDF`
 - API: new class :class:`.ClustererDF`, based on :class:`.LearnerDF`
-- API: class :class:`.EstimatorDF` now implements the :class:`.HasExpressionRepr`
-  mix-in, rendering estimator representations as :class:`.Expression` objects
-  to enable better formatting
+- API: class :class:`.EstimatorDF` now implements the
+  :class:`~pytools.expression.HasExpressionRepr` mix-in, rendering estimator
+  representations as :class:`~pytools.expression.Expression` objects to enable better
+  formatting
 - API: added data frame support for method ``partial_fit()``
 - API: eliminated ``OutlierRemoverDF``
-- API: removed dependency on package :mod:`lightgbm`; :class:`LGBMClassifier` and
-  :class:`LGBMRegressor` are still available if :mod:`lightgbm` is installed
+- API: removed dependency on package :mod:`lightgbm`; :class:`.LGBMClassifierDF` and
+  :class:`.LGBMRegressorDF` are still available if :mod:`lightgbm` is installed
+- API: wrapper classes are now created using proper class declarations to better conform
+  with Python type conventions checked by :mod:`mypy`; see :mod:`sklearndf.wrapper`
+  for details
+- API: remove functions ``make_df_estimator``, ``make_df_classifier``,
+  ``make_df_regressor``, and ``make_df_transformer`` which are now obsolete
 
 
 *sklearndf* 1.2
