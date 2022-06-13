@@ -18,7 +18,7 @@ warnings.filterwarnings(
 
 log = logging.getLogger(__name__)
 
-__all__ = ["LGBMClassifierDF"]
+__all__ = ["LGBMClassifierDF", "XGBClassifierDF"]
 
 try:
     # import lightgbm classes only if installed
@@ -27,10 +27,8 @@ except ImportError:
     LGBMClassifier = None
 
 try:
-    # import xgboost classes only installed
+    # import xgboost classes only if installed
     from xgboost import XGBClassifier
-
-    __all__.append("XGBClassifierDF")
 except ImportError:
     XGBClassifier = None
 
@@ -57,7 +55,12 @@ else:
     __all__.remove("LGBMClassifierDF")
 
 if XGBClassifier:
-    XGBClassifierDF = make_df_classifier(XGBClassifier)
+
+    class XGBClassifierDF(RegressorWrapperDF, XGBClassifier, native=XGBClassifier):
+        """Stub for DF wrapper of class ``XGBClassifierDF``"""
+
+else:
+    __all__.remove("XGBClassifierDF")
 
 #
 # validate that __all__ comprises all symbols ending in "DF", and no others
