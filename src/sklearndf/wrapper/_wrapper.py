@@ -1319,16 +1319,16 @@ def _make_alias(
 def _make_method_alias(
     module: str, class_: str, name: str, delegate_cls: type, delegate_method: Callable
 ) -> Callable:
-    function = _make_forwarder(delegate_method)
+    wrapper_method = _make_forwarder(delegate_method)
     _update_wrapper(
-        wrapper=function,
+        wrapper=wrapper_method,
         wrapped=delegate_method,
         wrapper_module=module,
         wrapper_parent=class_,
     )
     class_name = _full_class_name(cls=delegate_cls)
-    function.__doc__ = f"See :meth:`{class_name}.{name}`"
-    return function
+    wrapper_method.__doc__ = f"See :meth:`{class_name}.{name}`"
+    return wrapper_method
 
 
 def _make_descriptor_alias(delegate_cls: type, delegate_descriptor: Any) -> property:
@@ -1344,10 +1344,10 @@ def _make_descriptor_alias(delegate_cls: type, delegate_descriptor: Any) -> prop
     )
 
 
-def _make_forwarder(delegate: Callable) -> Callable:
+def _make_forwarder(delegate_method: Callable) -> Callable:
     # noinspection PyShadowingNames
-    def _forwarder(self, *args, **kwargs: Any) -> Any:
-        return delegate(self._native_estimator, *args, **kwargs)
+    def _forwarder(self: EstimatorWrapperDF, *args: Any, **kwargs: Any) -> Any:
+        return delegate_method(self._native_estimator, *args, **kwargs)
 
     return _forwarder
 
