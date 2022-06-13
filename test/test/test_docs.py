@@ -18,6 +18,8 @@ def test_doc() -> None:
                     r"\.(?!extra\.).*",
                     # LGBM estimators in the '.extra' packages
                     r"(?:classification|regression)\.extra\.LGBM.*",
+                    # XGBoost estimators in the '.extra' packages
+                    r"(?:classification|regression)\.extra\.XGB.*",
                     # BorutaDF
                     r"transformation\.extra\.BorutaDF.*",
                     # scikit-learn pipeline classes
