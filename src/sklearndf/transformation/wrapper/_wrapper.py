@@ -416,7 +416,9 @@ class ImputerWrapperDF(TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
                 features_in=self.feature_names_in_,
                 n_outputs=self.n_outputs_,
             )
-            return features_original.append(missing_indicator.feature_names_original_)
+            return pd.concat(
+                [features_original, missing_indicator.feature_names_original_]
+            )
         else:
             return features_original
 
