@@ -201,24 +201,24 @@ explain usage patterns.
   .. code-block:: python
 
     def f(x: int) -> float:
-        """
-        Do something.
+      """
+      Do something.
 
-        :param x: input value
-        :return: output value
-        """
+      :param x: input value
+      :return: output value
+      """
 
   but not
 
   .. code-block:: python
 
     def f(x: int) -> float:
-       """
-       Do something.
+      """
+      Do something.
 
-       :param int x: input value
-       :return float: output value
-       """
+      :param int x: input value
+      :return float: output value
+      """
 
 
 Sphinx Build
@@ -248,17 +248,17 @@ building and releasing *sklearndf* below.
 
 The ``sphinx`` folder in the root directory contains the following:
 
-- a ``make.py`` script for executing the documentation build via python.
+- a ``make.py`` script for executing the documentation build via python
 
 - a ``source`` directory containing predefined .rst files for the documentation build
-  and other required elements, see below for more details.
+  and other required elements (see below for more details)
 
 - a ``base`` folder which contains
 
   * the ``make_base.py`` and ``conf_base.py`` scripts with nearly all configuration for
-    ``make.py`` and ``conf.py``.
+    ``make.py`` and ``conf.py``
   * ``_static`` directory, containing logos, icons, javascript and css used for
-    *pytools* and other packages documentation builds.
+    *pytools* and other packages documentation builds
   * ``_templates`` directory, containing *autodoc* templates used in generating and
     formatting the modules and classes for the API documentation
 
@@ -268,31 +268,31 @@ The ``sphinx/source`` folder contains:
 - a ``conf.py`` script that is the
   `build configuration file <https://www.sphinx-doc.org/en/master/usage/configuration.html>`_
   needed to customize the input and output behavior of the Sphinx documentation build
-  (see below for further details).
+  (see below for further details)
 
 - a ``tutorials`` directory that contains all the notebooks (and supporting data) used in
   the documentation build. Note that as some notebooks take a little while to generate, the
   notebooks are currently committed with cell output. This may change in the future where
-  notebooks are run as part of the sphinx build.
+  notebooks are run as part of the sphinx build
 
-- the base ``.rst`` files used for the documentation build, which are:
+- the essential ``.rst`` files used for the documentation build, which are:
 
-  *	``index.rst``: definition of the high-level documentation structure which mainly
-    references the other rst files in this directory.
+  * ``index.rst``: definition of the high-level documentation structure which mainly
+    references the other ``.rst`` files in this directory
 
-  *	``contribution_guide.rst``: detailed information on building and releasing
+  * ``contribution_guide.rst``: detailed information on building and releasing
     *sklearndf*.
 
-  *	``faqs.rst``: contains guidance on bug reports/feature requests, how to contribute
-    and answers to frequently asked questions including small code snippets.
+  * ``faqs.rst``: contains guidance on bug reports/feature requests, how to contribute
+    and answers to frequently asked questions including small code snippets
 
   * ``api_landing.rst``: for placing any API landing page preamble for documentation
     as needed. This information will appear on the API landing page in the
     documentation build after the short description in ``src/__init__.py``. This file
-    is included in the documentation build via the ``custom-module-template.rst``.
+    is included in the documentation build via the ``custom-module-template.rst``
 
 - ``_static`` contains additional material used in the documentation build, in this
-  case, logos and icons.
+  case, logos and icons
 
 
 The two key scripts are ``make.py`` and ``conf.py``. The base configuration for the
@@ -322,7 +322,7 @@ the documentation build. In particular, this file highlights key extensions need
 the build process, of which some key ones are as follows:
 
 - `intersphinx <https://www.sphinx-doc.org/en/master/usage/extensions/intersphinx.html>`_
-  (external links to other documentations built with Sphinx: scikit-learn, numpy...)
+  (external links to other documentations built with Sphinx: matplotlib, numpy, ...)
 
 - `viewcode <https://www.sphinx-doc.org/en/master/usage/extensions/viewcode.html>`_
   to include source code in the documentation, and links to the source code from the objects documentation
@@ -424,10 +424,10 @@ Please note the following:
 - Build output will be stored in the ``dist/`` directory.
 - Some useful references for conda builds:
 
-    - `Conda build tutorial
-      <https://docs.conda.io/projects/conda-build/en/latest/user-guide/tutorials/building-conda-packages.html>`_
-    - `Conda build metadata reference
-      <https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html>`_
+  - `Conda build tutorial
+    <https://docs.conda.io/projects/conda-build/en/latest/user-guide/tutorials/building-conda-packages.html>`_
+  - `Conda build metadata reference
+    <https://docs.conda.io/projects/conda-build/en/latest/resources/define-metadata.html>`_
 
 Azure DevOps CI/CD
 ------------------
@@ -454,11 +454,11 @@ change and merge into develop before going any further.
 
 The release process has the following key steps:
 
-* Create a new release branch from the tag of the latest release named
+- Create a new release branch from the tag of the latest release named
   ``release/<version>`` where ``<version>`` is the version number of the new release
-* Create a new branch from the baseline branch (e.g., ``2.0.x``) named
+- Create a new branch from the baseline branch (e.g., ``2.0.x``) named
   ``dev/<version>`` where ``<version>`` is the version number of the new release
-* Opening a PR to merge ``dev/<version>`` onto ``release/<version>``.
+- Opening a PR to merge ``dev/<version>`` onto ``release/<version>``.
   This will automatically run all conda/pip build tests via
   Azure Pipelines prior to allowing to merge the PR.
   This will trigger automatic upload of artifacts (conda and pip
@@ -466,8 +466,9 @@ The release process has the following key steps:
   build is checked using `PyPI test <https://test.pypi.org/>`__ to ensure all
   metadata presents correctly. This is important as package versions in
   PyPI proper are immutable.
-* If everything passes and looks okay, merge the PR using a *merge commit*
-  (not squashing), this will trigger the release pipeline which will:
+- If everything passes and looks okay, merge the PR using a *merge commit*
+  (not squashing).
+  This will trigger the release pipeline which will:
 
   * Tag the release commit with version number as specified in ``src/__init__.py``
   * Create a release on GitHub for the new version, please check the `documentation
@@ -477,11 +478,11 @@ The release process has the following key steps:
     commits since the last release. Please note this can be manually edited to be more
     succinct afterwards
   * Attach build artifacts (conda and pip packages) to GitHub release
-
   * Upload build artifacts to conda/PyPI using ``anaconda upload`` and
-   ``flit publish``, respectively
-*  Remove any test versions for pip from PyPI test
-*  Merge ``release/<version>`` back onto the baseline branch from which
+    ``flit publish``, respectively
+
+-  Remove any test versions for pip from PyPI test
+-  Merge ``release/<version>`` back onto the baseline branch from which
    ``dev/<version>`` was branched
-*  Bump up version in ``src/__init__.py`` on the baseline branch to start work towards
+-  Bump up version in ``src/__init__.py`` on the baseline branch to start work towards
    the next release
