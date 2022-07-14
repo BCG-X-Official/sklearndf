@@ -66,6 +66,10 @@ docs = [
 Documentation = "https://bcg-gamma.github.io/sklearndf/"
 Repository = "https://github.com/BCG-Gamma/sklearndf"
 
+[build]
+# comma-separated list of packages to be built from source in pip min builds
+no-binary.min = ["matplotlib"]
+
 [build.matrix.min]
 # direct requirements of sklearndf
 boruta         = "~=0.3.0"
