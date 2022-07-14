@@ -134,6 +134,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
         bases: Tuple[type, ...],
         namespace: Dict[str, Any],
         native: Optional[T_NativeEstimator] = None,
+        **kwargs: Any,
     ) -> EstimatorWrapperDFMeta:
         if native is not None:
             if native in bases:
@@ -144,7 +145,11 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
                     f"base class of class {name} to enable static code inspection"
                 )
 
-        cls = cast(EstimatorWrapperDFMeta, super().__new__(mcs, name, bases, namespace))
+        # noinspection PyArgumentList
+        cls = cast(
+            EstimatorWrapperDFMeta,
+            super().__new__(mcs, name, bases, namespace, **kwargs),
+        )
         if native is None:
             return cls
 
