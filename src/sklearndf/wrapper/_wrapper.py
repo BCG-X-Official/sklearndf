@@ -1333,16 +1333,16 @@ def _make_df_wrapper_class(
     # mirror all attributes of the wrapped sklearn class, as long
     # as they are not inherited from the wrapper base class
     _mirror_attributes(
-        wrapper=WrapperDF,
+        wrapper_class=WrapperDF,
         native_estimator=native_estimator,
-        wrapper_module=native_estimator.__module__,
+        wrapper_module=WrapperDF.__module__,
     )
 
     # adopt the initializer signature of the wrapped sklearn estimator
     _update_wrapper(
         wrapper=WrapperDF.__init__,
         wrapped=native_estimator.__init__,
-        wrapper_module=native_estimator.__module__,
+        wrapper_module=WrapperDF.__module__,
         wrapper_parent=name,
     )
 
@@ -1372,13 +1372,13 @@ def _get_wrapper_instance(
 
 
 def _mirror_attributes(
-    wrapper: Type[EstimatorWrapperDF[T_NativeEstimator]],
+    wrapper_class: Type[EstimatorWrapperDF[T_NativeEstimator]],
     native_estimator: Type[T_NativeEstimator],
     wrapper_module: str,
 ) -> None:
 
-    wrapper_name = wrapper.__name__
-    wrapper_attributes: Set[str] = set(dir(wrapper))
+    wrapper_name = wrapper_class.__name__
+    wrapper_attributes: Set[str] = set(dir(wrapper_class))
 
     for name, member in vars(native_estimator).items():
 
@@ -1386,21 +1386,21 @@ def _mirror_attributes(
             continue
 
         alias = _make_alias(
-            module=wrapper_module,
-            class_=wrapper_name,
+            wrapper_module=wrapper_module,
+            wrapper_name=wrapper_name,
             name=name,
             delegate_cls=native_estimator,
             delegate=member,
         )
         if alias is not None:
-            setattr(wrapper, name, alias)
+            setattr(wrapper_class, name, alias)
 
         if alias is not None:
-            setattr(wrapper, name, alias)
+            setattr(wrapper_class, name, alias)
 
 
 def _make_alias(
-    module: str, class_: str, name: str, delegate_cls: type, delegate: T
+    wrapper_module: str, wrapper_name: str, name: str, delegate_cls: type, delegate: T
 ) -> Optional[T]:
     def _make_forwarder() -> callable:
         # noinspection PyShadowingNames
@@ -1417,8 +1417,8 @@ def _make_alias(
         _update_wrapper(
             wrapper=function,
             wrapped=delegate,
-            wrapper_module=module,
-            wrapper_parent=class_,
+            wrapper_module=wrapper_module,
+            wrapper_parent=wrapper_name,
         )
         function.__doc__ = f"See :meth:`{full_name}`"
         return function
