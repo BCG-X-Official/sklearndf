@@ -153,7 +153,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
         setattr(wrapper_cls, "__init__", _make_init(wrapper_cls))
 
         _mirror_attributes(
-            wrapper=wrapper_cls,
+            wrapper_class=wrapper_cls,
             native_estimator=native,
             wrapper_module=native.__module__,
         )
@@ -1303,8 +1303,8 @@ def _make_alias(
 ) -> Union[Callable, property, None]:
     if inspect.isfunction(delegate):
         return _make_method_alias(
-            module=wrapper_module,
-            class_=wrapper_name,
+            wrapper_module=wrapper_module,
+            wrapper_name=wrapper_name,
             name=name,
             delegate_cls=delegate_cls,
             delegate_method=delegate,
@@ -1318,7 +1318,11 @@ def _make_alias(
 
 
 def _make_method_alias(
-    wrapper_module: str, wrapper_name: str, name: str, delegate_cls: type, delegate_method: Callable
+    wrapper_module: str,
+    wrapper_name: str,
+    name: str,
+    delegate_cls: type,
+    delegate_method: Callable,
 ) -> Callable:
     # create a method that forwards calls to a native delegate estimator
     wrapper_method = _make_forwarder(delegate_method)
