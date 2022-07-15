@@ -18,7 +18,7 @@ warnings.filterwarnings(
 
 log = logging.getLogger(__name__)
 
-__all__ = ["LGBMRegressorDF"]
+__all__ = ["LGBMRegressorDF", "XGBRegressorDF"]
 
 try:
     # import lightgbm classes only if installed
@@ -26,6 +26,13 @@ try:
 
 except ImportError:
     LGBMRegressor = None
+
+try:
+    # import xgboost classes only if installed
+    from xgboost import XGBRegressor
+
+except ImportError:
+    XGBRegressor = None
 
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
 
@@ -49,6 +56,13 @@ if LGBMRegressor:
 else:
     __all__.remove("LGBMRegressorDF")
 
+if XGBRegressor:
+
+    class XGBRegressorDF(RegressorWrapperDF, XGBRegressor, native=XGBRegressor):
+        """Stub for DF wrapper of class ``XGBRegressorDF``"""
+
+else:
+    __all__.remove("XGBRegressorDF")
 
 #
 # validate __all__

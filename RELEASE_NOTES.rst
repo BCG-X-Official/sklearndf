@@ -22,8 +22,10 @@ improvements, and is now subject to static type checking with :mod:`mypy`.
   formatting
 - API: added data frame support for method ``partial_fit()``
 - API: eliminated ``OutlierRemoverDF``
-- API: removed dependency on package :mod:`lightgbm`; :class:`.LGBMClassifierDF` and
+- API: removed dependency on package :mod:`lightgbm`: :class:`.LGBMClassifierDF` and
   :class:`.LGBMRegressorDF` are still available if :mod:`lightgbm` is installed
+- API: added support for :mod:`xgboost`: :class:`.XGBClassifierDF` and
+  :class:`.XGBClassifierDF` are available if :mod:`xgboost` is installed
 - API: wrapper classes are now created using proper class declarations to better conform
   with Python type conventions checked by :mod:`mypy`; see :mod:`sklearndf.wrapper`
   for details
