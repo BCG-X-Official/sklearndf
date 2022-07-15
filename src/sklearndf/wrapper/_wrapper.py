@@ -1273,13 +1273,13 @@ class _StackableRegressorDF(_StackableSupervisedLearnerDF[RegressorDF], Regresso
 
 
 def _mirror_attributes(
-    wrapper: Type[EstimatorWrapperDF[T_NativeEstimator]],
+    wrapper_class: Type[EstimatorWrapperDF[T_NativeEstimator]],
     native_estimator: Type[T_NativeEstimator],
     wrapper_module: str,
 ) -> None:
 
-    wrapper_name = wrapper.__name__
-    wrapper_attributes: Set[str] = set(dir(wrapper))
+    wrapper_name = wrapper_class.__name__
+    wrapper_attributes: Set[str] = set(dir(wrapper_class))
 
     for name, member in vars(native_estimator).items():
 
@@ -1287,23 +1287,24 @@ def _mirror_attributes(
             continue
 
         alias = _make_alias(
-            module=wrapper_module,
-            class_=wrapper_name,
+            wrapper_module=wrapper_module,
+            wrapper_name=wrapper_name,
             name=name,
             delegate_cls=native_estimator,
             delegate=member,
         )
+
         if alias is not None:
-            setattr(wrapper, name, alias)
+            setattr(wrapper_class, name, alias)
 
 
 def _make_alias(
-    module: str, class_: str, name: str, delegate_cls: type, delegate: Any
+    wrapper_module: str, wrapper_name: str, name: str, delegate_cls: type, delegate: Any
 ) -> Union[Callable, property, None]:
     if inspect.isfunction(delegate):
         return _make_method_alias(
-            module=module,
-            class_=class_,
+            module=wrapper_module,
+            class_=wrapper_name,
             name=name,
             delegate_cls=delegate_cls,
             delegate_method=delegate,
@@ -1317,15 +1318,15 @@ def _make_alias(
 
 
 def _make_method_alias(
-    module: str, class_: str, name: str, delegate_cls: type, delegate_method: Callable
+    wrapper_module: str, wrapper_name: str, name: str, delegate_cls: type, delegate_method: Callable
 ) -> Callable:
     # create a method that forwards calls to a native delegate estimator
     wrapper_method = _make_forwarder(delegate_method)
     _update_wrapper(
         wrapper=wrapper_method,
         wrapped=delegate_method,
-        wrapper_module=module,
-        wrapper_parent=class_,
+        wrapper_module=wrapper_module,
+        wrapper_parent=wrapper_name,
     )
     class_name = _full_class_name(cls=delegate_cls)
     wrapper_method.__doc__ = f"See :meth:`{class_name}.{name}`"
