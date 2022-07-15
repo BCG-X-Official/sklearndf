@@ -39,6 +39,7 @@ test:
     - pytest ~= 7.1
     # optional libraries of sklearndf, needed for testing
     - lightgbm {{ environ.get('FACET_V_LIGHTGBM') }}
+    - xgboost  {{ environ.get('FACET_V_XGBOOST') }}
     # additional requirements of gamma-pytools
     - joblib          {{ environ.get('FACET_V_JOBLIB') }}
     - matplotlib-base {{ environ.get('FACET_V_MATPLOTLIB') }}
