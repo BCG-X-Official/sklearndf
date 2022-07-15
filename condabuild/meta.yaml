@@ -36,7 +36,7 @@ test:
     - sklearndf.transformation
     - sklearndf.transformation.extra
   requires:
-    - pytest=5.2.*
+    - pytest ~= 7.1
     # optional libraries of sklearndf, needed for testing
     - lightgbm {{ environ.get('FACET_V_LIGHTGBM') }}
     - xgboost  {{ environ.get('FACET_V_XGBOOST') }}
