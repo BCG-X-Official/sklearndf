@@ -35,4 +35,4 @@ repos:
         files: src|sphinx|test
         additional_dependencies:
           - numpy~=1.22
-          - gamma-pytools>=2.0.dev8,<3a
+          - gamma-pytools~=2.0,>=2.0.1
