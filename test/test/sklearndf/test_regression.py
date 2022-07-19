@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Type
 
 import pandas as pd
 import pytest
-from sklearn.base import is_regressor
+from sklearn.base import BaseEstimator, is_regressor
 from sklearn.multioutput import MultiOutputRegressor, RegressorChain
 
 import sklearndf.regression
@@ -20,7 +20,9 @@ from sklearndf.regression import (
 from sklearndf.wrapper import EstimatorWrapperDF
 from test.sklearndf import check_expected_not_fitted_error, iterate_classes
 
-REGRESSORS_TO_TEST: List[Type[EstimatorWrapperDF]] = iterate_classes(
+# noinspection PyTypeChecker
+# ignore false alert about module type
+REGRESSORS_TO_TEST: List[Type[EstimatorWrapperDF[BaseEstimator]]] = iterate_classes(
     from_modules=sklearndf.regression,
     matching=r".*DF",
     excluding=[RegressorDF.__name__, TransformerDF.__name__, r".*WrapperDF"],
@@ -50,7 +52,9 @@ REGRESSORS_PARTIAL_FIT = [
 ]
 
 
-@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST)
+@pytest.mark.parametrize(  # type: ignore
+    argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST
+)
 def test_wrapped_fit_predict(
     sklearndf_cls: Type[RegressorDF],
     boston_features: pd.DataFrame,
@@ -61,6 +65,8 @@ def test_wrapped_fit_predict(
     parameters: Dict[str, Any] = DEFAULT_REGRESSOR_PARAMETERS.get(
         sklearndf_cls.__name__, {}
     )
+
+    # noinspection PyArgumentList
     regressor: RegressorDF = sklearndf_cls(**parameters)
 
     assert is_regressor(regressor)
@@ -91,14 +97,17 @@ def test_wrapped_fit_predict(
     assert len(predictions) == len(boston_target_sr)
 
 
-@pytest.mark.parametrize("sklearndf_cls", REGRESSORS_PARTIAL_FIT)
+@pytest.mark.parametrize(  # type: ignore
+    argnames="sklearndf_cls", argvalues=REGRESSORS_PARTIAL_FIT
+)
 def test_wrapped_partial_fit(
     sklearndf_cls: Type[RegressorDF],
     boston_features: pd.DataFrame,
     boston_target_sr: pd.Series,
     boston_target_df: pd.DataFrame,
-):
+) -> None:
 
+    # noinspection PyArgumentList
     regressor = sklearndf_cls(
         **DEFAULT_REGRESSOR_PARAMETERS.get(f"{sklearndf_cls.__name__}_partial_fit", {})
     )

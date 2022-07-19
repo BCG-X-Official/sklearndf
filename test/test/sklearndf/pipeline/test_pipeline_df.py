@@ -11,6 +11,7 @@ from typing import Any, Dict, Mapping, cast
 
 import joblib
 import numpy as np
+import numpy.typing as npt
 import pandas as pd
 from numpy.testing import (
     assert_array_equal,
@@ -41,10 +42,12 @@ def test_set_params_nested_pipeline_df() -> None:
     estimator.set_params(a__steps=[("b", LogisticRegressionDF())], a__b__C=5)
 
 
-class NoFit(BaseEstimator):
+class NoFit(
+    BaseEstimator,  # type: ignore
+):
     """Small class to test parameter dispatching."""
 
-    def __init__(self, a: str = None, b: str = None) -> None:
+    def __init__(self, a: Any = None, b: Any = None) -> None:
         self.a = a
         self.b = b
 
@@ -55,42 +58,47 @@ class NoTransformer(NoFit):
     """
 
     # noinspection PyPep8Naming
-    def fit(self, X, y=None, **fit_params: Any) -> NoTransformer:
+    def fit(self, X: Any, y: Any = None, **fit_params: Any) -> NoTransformer:
         return self
 
     def get_params(self, deep: bool = False) -> Dict[str, Any]:
         return {"a": self.a, "b": self.b}
 
-    def set_params(self, a: str = None, **params: Dict[str, Any]) -> NoTransformer:
+    def set_params(self, a: Any = None, **params: Dict[str, Any]) -> NoTransformer:
         self.a = a
         return self
 
 
-class NoInvTransformer(TransformerMixin, NoTransformer):
+class NoInvTransformer(
+    TransformerMixin,  # type: ignore
+    NoTransformer,
+):
     # noinspection PyPep8Naming
-    def transform(self, X: np.ndarray) -> np.ndarray:
+    def transform(self, X: npt.NDArray[Any]) -> npt.NDArray[Any]:
         return X
 
 
 class Transformer(NoInvTransformer):
     # noinspection PyPep8Naming
-    def transform(self, X: np.ndarray) -> np.ndarray:
+    def transform(self, X: npt.NDArray[Any]) -> npt.NDArray[Any]:
         return X
 
     # noinspection PyPep8Naming,PyMethodMayBeStatic
-    def inverse_transform(self, X: np.ndarray) -> np.ndarray:
+    def inverse_transform(self, X: npt.NDArray[Any]) -> npt.NDArray[Any]:
         return X
 
 
 class DummyTransformer(Transformer):
     """Transformer which stores the column means"""
 
-    def __init__(self, a: str = None, b: str = None) -> None:
+    def __init__(self, a: Any = None, b: Any = None) -> None:
         super().__init__(a, b)
 
     # noinspection PyPep8Naming,PyAttributeOutsideInit
-    def fit(self, X, y=None, **fit_params: Any) -> DummyTransformer:
-        self.means_: np.ndarray = np.mean(X, axis=0)
+    def fit(
+        self, X: npt.NDArray[Any], y: Any = None, **fit_params: Any
+    ) -> DummyTransformer:
+        self.means_: npt.NDArray[Any] = np.mean(X, axis=0)
         # store timestamp to figure out whether the result of 'fit' has been
         # cached or not
         self.timestamp_: float = time.time()
@@ -98,13 +106,17 @@ class DummyTransformer(Transformer):
 
 
 class DummyTransformerDF(  # type: ignore
-    ColumnPreservingTransformerWrapperDF, DummyTransformer, native=DummyTransformer
+    ColumnPreservingTransformerWrapperDF[DummyTransformer],
+    DummyTransformer,
+    native=DummyTransformer,
 ):
     """dummy transformer"""
 
 
 class NoTransformerDF(  # type: ignore
-    ColumnPreservingTransformerWrapperDF, NoTransformer, native=NoTransformer
+    ColumnPreservingTransformerWrapperDF[NoTransformer],
+    NoTransformer,
+    native=NoTransformer,
 ):
     """not a transformer"""
 

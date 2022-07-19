@@ -37,13 +37,17 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 
 
 class CategoricalNBDF(
-    PartialFitClassifierWrapperDF, CategoricalNB, native=CategoricalNB
+    PartialFitClassifierWrapperDF[CategoricalNB],
+    CategoricalNB,  # type: ignore
+    native=CategoricalNB,
 ):
     """Stub for DF wrapper of class ``CategoricalNB``"""
 
 
 class StackingClassifierDF(
-    StackingClassifierWrapperDF, StackingClassifier, native=StackingClassifier
+    StackingClassifierWrapperDF[StackingClassifier],
+    StackingClassifier,  # type: ignore
+    native=StackingClassifier,
 ):
     """Stub for DF wrapper of class ``StackingClassifier``"""
 

@@ -50,7 +50,11 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 
 if LGBMRegressor:
 
-    class LGBMRegressorDF(RegressorWrapperDF, LGBMRegressor, native=LGBMRegressor):
+    class LGBMRegressorDF(
+        RegressorWrapperDF[LGBMRegressor],
+        LGBMRegressor,  # type: ignore
+        native=LGBMRegressor,
+    ):
         """Stub for DF wrapper of class ``LGBMRegressorDF``"""
 
 else:
@@ -58,7 +62,11 @@ else:
 
 if XGBRegressor:
 
-    class XGBRegressorDF(RegressorWrapperDF, XGBRegressor, native=XGBRegressor):
+    class XGBRegressorDF(
+        RegressorWrapperDF[XGBRegressor],
+        XGBRegressor,  # type: ignore
+        native=XGBRegressor,
+    ):
         """Stub for DF wrapper of class ``XGBRegressorDF``"""
 
 else:

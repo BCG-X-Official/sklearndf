@@ -4,8 +4,9 @@ GAMMA custom two-step pipelines
 
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import Any, Generic, List, Optional, Sequence, TypeVar, Union
+from typing import Any, Generic, List, Optional, TypeVar, Union
 
+import numpy.typing as npt
 import pandas as pd
 
 from pytools.api import AllTracker, inheritdoc
@@ -30,7 +31,9 @@ __all__ = [
     "ClustererPipelineDF",
 ]
 
-T_EstimatorPipelineDF = TypeVar("T_EstimatorPipelineDF", bound="_EstimatorPipelineDF")
+T_EstimatorPipelineDF = TypeVar(
+    "T_EstimatorPipelineDF", bound="_EstimatorPipelineDF[EstimatorDF]"
+)
 T_FinalEstimatorDF = TypeVar("T_FinalEstimatorDF", bound=EstimatorDF)
 T_FinalLearnerDF = TypeVar("T_FinalLearnerDF", bound=LearnerDF)
 T_FinalSupervisedLearnerDF = TypeVar(
@@ -140,7 +143,7 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         *,
         sample_weight: Optional[pd.Series] = None,
-        **fit_params,
+        **fit_params: Any,
     ) -> T_EstimatorPipelineDF:
         """
         Fit this pipeline using the given inputs.
@@ -154,13 +157,13 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
         :return: ``self``
         """
 
-        X_preprocessed: pd.DataFrame = self._pre_fit_transform(X, y, **fit_params)
+        x_preprocessed: pd.DataFrame = self._pre_fit_transform(X, y, **fit_params)
 
         if sample_weight is None:
-            self.final_estimator.fit(X_preprocessed, y, **fit_params)
+            self.final_estimator.fit(x_preprocessed, y, **fit_params)
         else:
             self.final_estimator.fit(
-                X_preprocessed, y, sample_weight=sample_weight, **fit_params
+                x_preprocessed, y, sample_weight=sample_weight, **fit_params
             )
 
         return self
@@ -193,7 +196,7 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
 
     # noinspection PyPep8Naming
     def _pre_fit_transform(
-        self, X: pd.DataFrame, y: pd.Series, **fit_params
+        self, X: pd.DataFrame, y: pd.Series, **fit_params: Any
     ) -> pd.DataFrame:
         if self.preprocessing is not None:
             return self.preprocessing.fit_transform(X, y, **fit_params)
@@ -334,7 +337,7 @@ class ClassifierPipelineDF(
         return "classifier"
 
     @property
-    def classes_(self) -> Sequence[Any]:
+    def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
         """[see superclass]"""
         return self.final_estimator.classes_
 

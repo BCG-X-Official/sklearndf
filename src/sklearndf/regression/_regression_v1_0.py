@@ -31,8 +31,8 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 
 
 class HistGradientBoostingRegressorDF(
-    RegressorWrapperDF,
-    HistGradientBoostingRegressor,
+    RegressorWrapperDF[HistGradientBoostingRegressor],
+    HistGradientBoostingRegressor,  # type: ignore
     native=HistGradientBoostingRegressor,
 ):
     """Stub for DF wrapper of class ``HistGradientBoostingRegressor``"""
@@ -44,7 +44,9 @@ class HistGradientBoostingRegressorDF(
 
 
 class QuantileRegressorDF(
-    RegressorWrapperDF, QuantileRegressor, native=QuantileRegressor
+    RegressorWrapperDF[QuantileRegressor],
+    QuantileRegressor,  # type: ignore
+    native=QuantileRegressor,
 ):
     """Stub for DF wrapper of class ``QuantileRegressor``"""
 

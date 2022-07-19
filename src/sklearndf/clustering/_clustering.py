@@ -52,49 +52,63 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 
 
 class AffinityPropagationDF(
-    ClustererWrapperDF, AffinityPropagation, native=AffinityPropagation
+    ClustererWrapperDF[AffinityPropagation],
+    AffinityPropagation,  # type: ignore
+    native=AffinityPropagation,
 ):
     """Stub for DF wrapper of class ``AffinityPropagation``"""
 
 
 class AgglomerativeClusteringDF(
-    ClustererWrapperDF, AgglomerativeClustering, native=AgglomerativeClustering
+    ClustererWrapperDF[AgglomerativeClustering],
+    AgglomerativeClustering,  # type: ignore
+    native=AgglomerativeClustering,
 ):
     """Stub for DF wrapper of class ``AgglomerativeClustering``"""
 
 
-class BirchDF(ClustererWrapperDF, Birch, native=Birch):
+class BirchDF(ClustererWrapperDF[Birch], Birch, native=Birch):  # type: ignore
     """Stub for DF wrapper of class ``Birch``"""
 
 
-class DBSCANDF(ClustererWrapperDF, DBSCAN, native=DBSCAN):
+class DBSCANDF(ClustererWrapperDF[DBSCAN], DBSCAN, native=DBSCAN):  # type: ignore
     """Stub for DF wrapper of class ``DBSCAN``"""
 
 
-class KMeansDF(KMeansBaseWrapperDF, KMeans, native=KMeans):
+class KMeansDF(KMeansBaseWrapperDF[KMeans], KMeans, native=KMeans):  # type: ignore
     """Stub for DF wrapper of class ``KMeans``"""
 
 
-class MiniBatchKMeansDF(KMeansBaseWrapperDF, MiniBatchKMeans, native=MiniBatchKMeans):
+class MiniBatchKMeansDF(
+    KMeansBaseWrapperDF[MiniBatchKMeans],
+    MiniBatchKMeans,  # type: ignore
+    native=MiniBatchKMeans,
+):
     """Stub for DF wrapper of class ``MiniBatchKMeans``"""
 
 
-class MeanShiftDF(ClustererWrapperDF, MeanShift, native=MeanShift):
+class MeanShiftDF(
+    ClustererWrapperDF[MeanShift], MeanShift, native=MeanShift  # type: ignore
+):
     """Stub for DF wrapper of class ``MeanShift``"""
 
 
-class OPTICSDF(ClustererWrapperDF, OPTICS, native=OPTICS):
+class OPTICSDF(ClustererWrapperDF[OPTICS], OPTICS, native=OPTICS):  # type: ignore
     """Stub for DF wrapper of class ``OPTICS``"""
 
 
 class SpectralClusteringDF(
-    ClustererWrapperDF, SpectralClustering, native=SpectralClustering
+    ClustererWrapperDF[SpectralClustering],
+    SpectralClustering,  # type: ignore
+    native=SpectralClustering,
 ):
     """Stub for DF wrapper of class ``SpectralClustering``"""
 
 
 class FeatureAgglomerationDF(
-    FeatureAgglomerationWrapperDF, FeatureAgglomeration, native=FeatureAgglomeration
+    FeatureAgglomerationWrapperDF,
+    FeatureAgglomeration,  # type: ignore
+    native=FeatureAgglomeration,
 ):
     """Stub for DF wrapper of class ``FeatureAgglomeration``"""
 
