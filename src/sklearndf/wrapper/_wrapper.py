@@ -1420,7 +1420,8 @@ def _full_class_name(cls: type):
     except AttributeError as e:
         raise RuntimeError(f"cannot get module for {cls}") from e
 
-    module_name = public_module_prefix(module_name)
+    if module_name != "__main__":
+        module_name = public_module_prefix(module_name)
 
     return f"{module_name}.{cls.__qualname__}"
 
