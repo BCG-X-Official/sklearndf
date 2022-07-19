@@ -54,7 +54,7 @@ from pytools.api import AllTracker, inheritdoc, public_module_prefix
 from ._adapter import SupervisedLearnerNPDF
 from sklearndf import (
     ClassifierDF,
-    ClustererDF,
+    ClusterDF,
     EstimatorDF,
     LearnerDF,
     RegressorDF,
@@ -66,7 +66,7 @@ log = logging.getLogger(__name__)
 
 __all__ = [
     "ClassifierWrapperDF",
-    "ClustererWrapperDF",
+    "ClusterWrapperDF",
     "EstimatorWrapperDF",
     "EstimatorWrapperDFMeta",
     "LearnerWrapperDF",
@@ -95,7 +95,7 @@ T_NativeSupervisedLearner = TypeVar(
 )
 T_NativeRegressor = TypeVar("T_NativeRegressor", bound=RegressorMixin)
 T_NativeClassifier = TypeVar("T_NativeClassifier", bound=ClassifierMixin)
-T_NativeClusterer = TypeVar("T_NativeClusterer", bound=ClusterMixin)
+T_NativeCluster = TypeVar("T_NativeCluster", bound=ClusterMixin)
 
 T_EstimatorWrapperDF = TypeVar(
     "T_EstimatorWrapperDF", bound="EstimatorWrapperDF[BaseEstimator]"
@@ -110,8 +110,8 @@ T_RegressorWrapperDF = TypeVar(
 T_ClassifierWrapperDF = TypeVar(
     "T_ClassifierWrapperDF", bound="ClassifierWrapperDF[ClassifierMixin]"
 )
-T_ClustererWrapperDF = TypeVar(
-    "T_ClustererWrapperDF", bound="ClustererWrapperDF[ClusterMixin]"
+T_ClusterWrapperDF = TypeVar(
+    "T_ClusterWrapperDF", bound="ClusterWrapperDF[ClusterMixin]"
 )
 
 T_StackableSupervisedLearnerDF = TypeVar(
@@ -986,10 +986,10 @@ class ClassifierWrapperDF(
 
 # noinspection PyPep8Naming
 @inheritdoc(match="[see superclass]")
-class ClustererWrapperDF(
-    ClustererDF,
-    LearnerWrapperDF[T_NativeClusterer],
-    Generic[T_NativeClusterer],
+class ClusterWrapperDF(
+    ClusterDF,
+    LearnerWrapperDF[T_NativeCluster],
+    Generic[T_NativeCluster],
     metaclass=ABCMeta,
 ):
     """

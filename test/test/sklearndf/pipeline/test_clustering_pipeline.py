@@ -5,7 +5,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import OneHotEncoder
 
 from sklearndf.clustering import KMeansDF
-from sklearndf.pipeline import ClustererPipelineDF
+from sklearndf.pipeline import ClusterPipelineDF
 from test.sklearndf.pipeline import make_simple_transformer
 
 
@@ -13,7 +13,7 @@ def test_clustering_pipeline_df(
     iris_features: pd.DataFrame, iris_target_sr: pd.DataFrame
 ) -> None:
 
-    cls_p_df = ClustererPipelineDF(
+    cls_p_df = ClusterPipelineDF(
         clusterer=KMeansDF(n_clusters=4),
         preprocessing=make_simple_transformer(
             impute_median_columns=iris_features.select_dtypes(
@@ -29,6 +29,4 @@ def test_clustering_pipeline_df(
     # test-type check within constructor:
     with pytest.raises(TypeError):
         # noinspection PyTypeChecker
-        ClustererPipelineDF(
-            clusterer=KMeans(n_clusters=4), preprocessing=OneHotEncoder()
-        )
+        ClusterPipelineDF(clusterer=KMeans(n_clusters=4), preprocessing=OneHotEncoder())
