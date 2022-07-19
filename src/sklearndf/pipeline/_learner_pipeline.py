@@ -13,7 +13,7 @@ from pytools.api import AllTracker, inheritdoc
 
 from .. import (
     ClassifierDF,
-    ClustererDF,
+    ClusterDF,
     EstimatorDF,
     LearnerDF,
     RegressorDF,
@@ -28,7 +28,7 @@ __all__ = [
     "SupervisedLearnerPipelineDF",
     "RegressorPipelineDF",
     "ClassifierPipelineDF",
-    "ClustererPipelineDF",
+    "ClusterPipelineDF",
 ]
 
 T_EstimatorPipelineDF = TypeVar(
@@ -41,7 +41,7 @@ T_FinalSupervisedLearnerDF = TypeVar(
 )
 T_FinalRegressorDF = TypeVar("T_FinalRegressorDF", bound=RegressorDF)
 T_FinalClassifierDF = TypeVar("T_FinalClassifierDF", bound=ClassifierDF)
-T_FinalClustererDF = TypeVar("T_FinalClustererDF", bound=ClustererDF)
+T_FinalClusterDF = TypeVar("T_FinalClusterDF", bound=ClusterDF)
 
 
 #
@@ -368,10 +368,10 @@ class ClassifierPipelineDF(
 
 
 @inheritdoc(match="[see superclass]")
-class ClustererPipelineDF(
-    LearnerPipelineDF[T_FinalClustererDF],
-    ClustererDF,
-    Generic[T_FinalClustererDF],
+class ClusterPipelineDF(
+    LearnerPipelineDF[T_FinalClusterDF],
+    ClusterDF,
+    Generic[T_FinalClusterDF],
 ):
     """
     A data frame enabled pipeline with an optional preprocessing step and a
@@ -382,31 +382,31 @@ class ClustererPipelineDF(
         self,
         *,
         preprocessing: Optional[TransformerDF] = None,
-        clusterer: T_FinalClustererDF,
+        clusterer: T_FinalClusterDF,
     ) -> None:
         """
         :param preprocessing: the preprocessing step in the pipeline (default: ``None``)
         :param clusterer: the clusterer used in the pipeline
-        :type clusterer: :class:`.ClustererDF`
+        :type clusterer: :class:`.ClusterDF`
         """
         super().__init__(preprocessing=preprocessing)
 
-        if not isinstance(clusterer, ClustererDF):
+        if not isinstance(clusterer, ClusterDF):
             raise TypeError(
-                f"arg predictor expected to be a {ClustererDF.__name__} but is a "
+                f"arg predictor expected to be a {ClusterDF.__name__} but is a "
                 f"{type(clusterer).__name__}"
             )
         self.clusterer = clusterer
 
     @property
-    def final_estimator(self) -> T_FinalClustererDF:
+    def final_estimator(self) -> T_FinalClusterDF:
         """[see superclass]"""
         return self.clusterer
 
     @property
     def final_estimator_name(self) -> str:
         """[see superclass]"""
-        return "clusterer"
+        return "cluster"
 
     @property
     def labels_(self) -> pd.Series:

@@ -18,7 +18,7 @@ from sklearn.cluster import (
 
 from pytools.api import AllTracker
 
-from ..wrapper import ClustererWrapperDF
+from ..wrapper import ClusterWrapperDF
 from .wrapper import FeatureAgglomerationWrapperDF, KMeansBaseWrapperDF
 
 log = logging.getLogger(__name__)
@@ -52,7 +52,7 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 
 
 class AffinityPropagationDF(
-    ClustererWrapperDF[AffinityPropagation],
+    ClusterWrapperDF[AffinityPropagation],
     AffinityPropagation,  # type: ignore
     native=AffinityPropagation,
 ):
@@ -60,18 +60,18 @@ class AffinityPropagationDF(
 
 
 class AgglomerativeClusteringDF(
-    ClustererWrapperDF[AgglomerativeClustering],
+    ClusterWrapperDF[AgglomerativeClustering],
     AgglomerativeClustering,  # type: ignore
     native=AgglomerativeClustering,
 ):
     """Stub for DF wrapper of class ``AgglomerativeClustering``"""
 
 
-class BirchDF(ClustererWrapperDF[Birch], Birch, native=Birch):  # type: ignore
+class BirchDF(ClusterWrapperDF[Birch], Birch, native=Birch):  # type: ignore
     """Stub for DF wrapper of class ``Birch``"""
 
 
-class DBSCANDF(ClustererWrapperDF[DBSCAN], DBSCAN, native=DBSCAN):  # type: ignore
+class DBSCANDF(ClusterWrapperDF[DBSCAN], DBSCAN, native=DBSCAN):  # type: ignore
     """Stub for DF wrapper of class ``DBSCAN``"""
 
 
@@ -88,17 +88,17 @@ class MiniBatchKMeansDF(
 
 
 class MeanShiftDF(
-    ClustererWrapperDF[MeanShift], MeanShift, native=MeanShift  # type: ignore
+    ClusterWrapperDF[MeanShift], MeanShift, native=MeanShift  # type: ignore
 ):
     """Stub for DF wrapper of class ``MeanShift``"""
 
 
-class OPTICSDF(ClustererWrapperDF[OPTICS], OPTICS, native=OPTICS):  # type: ignore
+class OPTICSDF(ClusterWrapperDF[OPTICS], OPTICS, native=OPTICS):  # type: ignore
     """Stub for DF wrapper of class ``OPTICS``"""
 
 
 class SpectralClusteringDF(
-    ClustererWrapperDF[SpectralClustering],
+    ClusterWrapperDF[SpectralClustering],
     SpectralClustering,  # type: ignore
     native=SpectralClustering,
 ):

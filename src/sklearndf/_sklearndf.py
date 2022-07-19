@@ -32,7 +32,7 @@ __all__ = [
     "RegressorDF",
     "SupervisedLearnerDF",
     "TransformerDF",
-    "ClustererDF",
+    "ClusterDF",
 ]
 
 #
@@ -551,7 +551,7 @@ class ClassifierDF(
     score.__doc__ = SupervisedLearnerDF.score.__doc__
 
 
-class ClustererDF(
+class ClusterDF(
     ClusterMixin,  # type: ignore
     LearnerDF,
     metaclass=ABCMeta,
