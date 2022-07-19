@@ -59,6 +59,7 @@ if check_sklearn_version(minimum="0.24"):
 
     TRANSFORMER_EXCLUSIONS.append(SequentialFeatureSelectorDF.__name__)
 
+# noinspection PyTypeChecker
 TRANSFORMERS_TO_TEST = iterate_classes(
     from_modules=sklearndf.transformation,
     matching=r".*DF",
@@ -142,6 +143,7 @@ def test_fit_transform(
     test_data = test_data.select_dtypes(include=float)
 
     # get the wrapped counterpart for sklearn:
+    # noinspection PyTypeChecker
     wrapper_class = get_sklearndf_wrapper_class(
         to_wrap=sklearn_cls, from_module=sklearndf.transformation
     )
@@ -181,6 +183,7 @@ def test_fit_transform(
 
     # test feature names in and out
     if __sklearn_version__ >= __sklearn_1_0__:
+        # noinspection PyUnresolvedReferences
         assert_array_equal(
             transformer_df.feature_names_in_.values,
             transformer_native.feature_names_in_,
@@ -355,6 +358,7 @@ def test_simple_imputer_df() -> None:
 
     # test feature name in
     if __sklearn_version__ >= __sklearn_1_0__:
+        # noinspection PyUnresolvedReferences
         assert_array_equal(
             imputer_df.feature_names_in_.values, imputer_native.feature_names_in_
         )

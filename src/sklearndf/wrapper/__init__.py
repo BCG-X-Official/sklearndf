@@ -47,7 +47,7 @@ construction.
 
 Most regressors, classifiers, and clusterers can be augmented using the
 :class:`.RegressorWrapperDF`, :class:`.ClassifierWrapperDF`, and
-:class:`.ClustererWrapperDF` wrappers, respectively.
+:class:`.ClusterWrapperDF` wrappers, respectively.
 
 More care must be taken to wrap transformer classes and some clusterer classes, which
 may require a more dedicated wrapper class to support the specific behaviour of the
