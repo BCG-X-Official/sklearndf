@@ -17,12 +17,14 @@ from sklearndf import (
 from sklearndf.wrapper import EstimatorWrapperDF
 
 
-def find_all_classes(*modules: ModuleType) -> Set[Type[EstimatorWrapperDF]]:
+def find_all_classes(
+    *modules: ModuleType,
+) -> Set[Type[EstimatorWrapperDF[BaseEstimator]]]:
     """Finds all Class members in given module/modules."""
-    types: Set[Type[EstimatorWrapperDF]] = set()
+    types: Set[Type[EstimatorWrapperDF[BaseEstimator]]] = set()
 
     def _add_classes_from_module(_m: ModuleType) -> None:
-        member: Type[EstimatorWrapperDF]
+        member: Type[EstimatorWrapperDF[BaseEstimator]]
         for member in vars(_m).values():
             if isinstance(member, type):
                 types.add(member)
@@ -45,7 +47,7 @@ def find_all_submodules(parent_module: ModuleType) -> Set[ModuleType]:
 
 def sklearn_delegate_classes(
     module: ModuleType,
-) -> Dict[Type[BaseEstimator], Type[EstimatorWrapperDF]]:
+) -> Dict[Type[BaseEstimator], Type[EstimatorWrapperDF[BaseEstimator]]]:
     """
     Create a dictionary mapping sklearn classes to their corresponding sklearndf
     classes.
@@ -63,7 +65,7 @@ def iterate_classes(
     from_modules: Union[ModuleType, Iterable[ModuleType]],
     matching: str,
     excluding: Optional[Union[str, Iterable[str]]] = None,
-) -> List[Type[EstimatorWrapperDF]]:
+) -> List[Type[EstimatorWrapperDF[BaseEstimator]]]:
     """Helper to return all classes with matching name from Python module(s)"""
 
     if not isinstance(from_modules, Iterable):
@@ -81,8 +83,8 @@ def iterate_classes(
 
 
 def get_sklearndf_wrapper_class(
-    to_wrap: Type[BaseEstimator], from_module=None
-) -> Type[EstimatorWrapperDF]:
+    to_wrap: Type[BaseEstimator], from_module: ModuleType
+) -> Type[EstimatorWrapperDF[BaseEstimator]]:
     """Helper to return the wrapped counterpart for a sklearn class"""
     try:
         return sklearn_delegate_classes(from_module)[to_wrap]
@@ -93,7 +95,7 @@ def get_sklearndf_wrapper_class(
         ) from cause
 
 
-def check_expected_not_fitted_error(estimator: EstimatorDF):
+def check_expected_not_fitted_error(estimator: EstimatorDF) -> None:
     """Check if transformers & learners raise NotFittedError (since sklearn 0.22)"""
     if __sklearn_version__ < __sklearn_0_22__:
         return

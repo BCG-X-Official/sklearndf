@@ -8,6 +8,7 @@ from sklearndf import ClustererDF
 from sklearndf.clustering import FeatureAgglomerationDF
 from test.sklearndf import iterate_classes
 
+# noinspection PyTypeChecker
 CLUSTERERS_TO_TEST = iterate_classes(
     from_modules=sklearndf.clustering,
     matching=r".*DF",
@@ -17,9 +18,11 @@ CLUSTERERS_TO_TEST = iterate_classes(
 CLUSTERERS_WITH_AGGLOMERATION = CLUSTERERS_TO_TEST + [FeatureAgglomerationDF]
 
 
-@pytest.mark.parametrize(argnames="sklearn_clusterer_cls", argvalues=CLUSTERERS_TO_TEST)
+@pytest.mark.parametrize(  # type: ignore
+    argnames="sklearn_clusterer_cls", argvalues=CLUSTERERS_TO_TEST
+)
 def test_clusterer_fit_predict_call(
-    iris_features: pd.DataFrame, sklearn_clusterer_cls: Type
+    iris_features: pd.DataFrame, sklearn_clusterer_cls: Type[ClustererDF]
 ) -> None:
     """Check if each sklearndf clusterer supports fit_predict method"""
 
@@ -31,11 +34,11 @@ def test_clusterer_fit_predict_call(
     assert clusterer_instance.is_fitted
 
 
-@pytest.mark.parametrize(
+@pytest.mark.parametrize(  # type: ignore
     argnames="sklearn_clusterer_cls", argvalues=CLUSTERERS_WITH_AGGLOMERATION
 )
 def test_clusterer_fit_call(
-    iris_features: pd.DataFrame, sklearn_clusterer_cls: Type
+    iris_features: pd.DataFrame, sklearn_clusterer_cls: Type[ClustererDF]
 ) -> None:
     """Check if each sklearndf clusterer supports fit method"""
 

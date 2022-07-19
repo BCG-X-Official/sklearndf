@@ -4,9 +4,9 @@ Core implementation of :mod:`sklearndf.regression.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Any, Callable, Generic, Optional, Sequence, TypeVar, Union
+from typing import Any, Callable, Generic, Optional, Sequence, TypeVar, Union, cast
 
-import numpy as np
+import numpy.typing as npt
 import pandas as pd
 from sklearn.base import RegressorMixin
 from sklearn.isotonic import IsotonicRegression
@@ -41,8 +41,10 @@ __all__ = [
 # type variables
 #
 
+T_DelegateRegressorDF = TypeVar("T_DelegateRegressorDF", bound=RegressorDF)
 T_PartialFitRegressorWrapperDF = TypeVar(
-    "T_PartialFitRegressorWrapperDF", bound="PartialFitRegressorWrapperDF"
+    "T_PartialFitRegressorWrapperDF",
+    bound="PartialFitRegressorWrapperDF[RegressorMixin]",
 )
 T_NativeRegressor = TypeVar("T_NativeRegressor", bound=RegressorMixin)
 
@@ -61,7 +63,7 @@ __tracker = AllTracker(globals())
 
 class MetaRegressorWrapperDF(
     MetaEstimatorWrapperDF[T_NativeRegressor],
-    RegressorWrapperDF,
+    RegressorWrapperDF[T_NativeRegressor],
     Generic[T_NativeRegressor],
     metaclass=ABCMeta,
 ):
@@ -74,7 +76,7 @@ class MetaRegressorWrapperDF(
 
 
 class PartialFitRegressorWrapperDF(
-    RegressorWrapperDF,
+    RegressorWrapperDF[T_NativeRegressor],
     Generic[T_NativeRegressor],
     metaclass=ABCMeta,
 ):
@@ -107,19 +109,22 @@ class PartialFitRegressorWrapperDF(
         return self
 
     def _partial_fit(
-        self,
+        self: T_PartialFitRegressorWrapperDF,
         X: pd.DataFrame,
         y: Union[pd.Series, pd.DataFrame],
         **partial_fit_params: Optional[Any],
-    ):
-        return self._native_estimator.partial_fit(
-            self._prepare_X_for_delegate(X),
-            self._prepare_y_for_delegate(y),
-            **{
-                arg: value
-                for arg, value in partial_fit_params.items()
-                if value is not None
-            },
+    ) -> T_PartialFitRegressorWrapperDF:
+        return cast(
+            T_PartialFitRegressorWrapperDF,
+            self._native_estimator.partial_fit(
+                self._prepare_X_for_delegate(X),
+                self._prepare_y_for_delegate(y),
+                **{
+                    arg: value
+                    for arg, value in partial_fit_params.items()
+                    if value is not None
+                },
+            ),
         )
 
 
@@ -143,7 +148,7 @@ from ...wrapper._wrapper import _StackableRegressorDF
 
 class StackingRegressorWrapperDF(
     StackingEstimatorWrapperDF[T_NativeRegressor],
-    RegressorWrapperDF,
+    RegressorWrapperDF[T_NativeRegressor],
     Generic[T_NativeRegressor],
     metaclass=ABCMeta,
 ):
@@ -164,8 +169,8 @@ class StackingRegressorWrapperDF(
         return _StackableRegressorDF(learner)
 
     def _make_learner_np_df(
-        self, delegate: RegressorDF, column_names: Callable[[], Sequence[str]]
-    ) -> _RegressorNPDF:
+        self, delegate: T_DelegateRegressorDF, column_names: Callable[[], Sequence[str]]
+    ) -> _RegressorNPDF[T_DelegateRegressorDF]:
         return _RegressorNPDF(delegate, column_names)
 
 
@@ -184,7 +189,7 @@ class RegressorTransformerWrapperDF(
 
 class IsotonicRegressionWrapperDF(
     RegressorTransformerWrapperDF[IsotonicRegression],
-    NumpyTransformerWrapperDF,
+    NumpyTransformerWrapperDF[IsotonicRegression],
     metaclass=ABCMeta,
 ):
     """
@@ -206,9 +211,7 @@ class IsotonicRegressionWrapperDF(
             )
 
     # noinspection PyPep8Naming
-    def _adjust_X_type_for_delegate(
-        self, X: pd.DataFrame, *, to_numpy: Optional[bool] = None
-    ) -> np.ndarray:
+    def _adjust_X_type_for_delegate(self, X: pd.DataFrame) -> npt.NDArray[Any]:
         return super()._adjust_X_type_for_delegate(X).ravel()
 
 

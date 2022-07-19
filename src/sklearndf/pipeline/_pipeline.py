@@ -27,11 +27,15 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 #
 
 
-class PipelineDF(PipelineWrapperDF, Pipeline, native=Pipeline):
+class PipelineDF(PipelineWrapperDF, Pipeline, native=Pipeline):  # type: ignore
     """Stub for DF wrapper of class ``Pipeline``"""
 
 
-class FeatureUnionDF(FeatureUnionWrapperDF, FeatureUnion, native=FeatureUnion):
+class FeatureUnionDF(
+    FeatureUnionWrapperDF,
+    FeatureUnion,  # type: ignore
+    native=FeatureUnion,
+):
     """Stub for DF wrapper of class ``FeatureUnion``"""
 
 

@@ -39,7 +39,7 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 # Ensure all symbols introduced below are included in __all__
 #
 
-__tracker = AllTracker(globals(), allow_imported_definitions=True)
+__tracker = AllTracker(globals())
 
 
 #
@@ -48,7 +48,11 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 
 if LGBMClassifier:
 
-    class LGBMClassifierDF(RegressorWrapperDF, LGBMClassifier, native=LGBMClassifier):
+    class LGBMClassifierDF(
+        RegressorWrapperDF[LGBMClassifier],
+        LGBMClassifier,  # type: ignore
+        native=LGBMClassifier,
+    ):
         """Stub for DF wrapper of class ``LGBMClassifierDF``"""
 
 else:
@@ -56,7 +60,11 @@ else:
 
 if XGBClassifier:
 
-    class XGBClassifierDF(RegressorWrapperDF, XGBClassifier, native=XGBClassifier):
+    class XGBClassifierDF(
+        RegressorWrapperDF[XGBClassifier],
+        XGBClassifier,  # type: ignore
+        native=XGBClassifier,
+    ):
         """Stub for DF wrapper of class ``XGBClassifierDF``"""
 
 else:

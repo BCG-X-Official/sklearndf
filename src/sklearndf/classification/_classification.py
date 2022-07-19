@@ -118,7 +118,11 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 #
 
 
-class DummyClassifierDF(ClassifierWrapperDF, DummyClassifier, native=DummyClassifier):
+class DummyClassifierDF(
+    ClassifierWrapperDF[DummyClassifier],
+    DummyClassifier,  # type: ignore
+    native=DummyClassifier,
+):
     """Stub for DF wrapper of class ``DummyClassifier``"""
 
 
@@ -127,18 +131,26 @@ class DummyClassifierDF(ClassifierWrapperDF, DummyClassifier, native=DummyClassi
 #
 
 
-class NearestCentroidDF(ClassifierWrapperDF, NearestCentroid, native=NearestCentroid):
+class NearestCentroidDF(
+    ClassifierWrapperDF[NearestCentroid],
+    NearestCentroid,  # type: ignore
+    native=NearestCentroid,
+):
     """Stub for DF wrapper of class ``NearestCentroid``"""
 
 
 class KNeighborsClassifierDF(
-    ClassifierWrapperDF, KNeighborsClassifier, native=KNeighborsClassifier
+    ClassifierWrapperDF[KNeighborsClassifier],
+    KNeighborsClassifier,  # type: ignore
+    native=KNeighborsClassifier,
 ):
     """Stub for DF wrapper of class ``KNeighborsClassifier``"""
 
 
 class RadiusNeighborsClassifierDF(
-    ClassifierWrapperDF, RadiusNeighborsClassifier, native=RadiusNeighborsClassifier
+    ClassifierWrapperDF[RadiusNeighborsClassifier],
+    RadiusNeighborsClassifier,  # type: ignore
+    native=RadiusNeighborsClassifier,
 ):
     """Stub for DF wrapper of class ``RadiusNeighborsClassifier``"""
 
@@ -149,7 +161,9 @@ class RadiusNeighborsClassifierDF(
 
 
 class VotingClassifierDF(
-    MetaClassifierWrapperDF, VotingClassifier, native=VotingClassifier
+    MetaClassifierWrapperDF[VotingClassifier],
+    VotingClassifier,  # type: ignore
+    native=VotingClassifier,
 ):
     """Stub for DF wrapper of class ``VotingClassifier``"""
 
@@ -160,34 +174,42 @@ class VotingClassifierDF(
 
 
 class RandomForestClassifierDF(
-    ClassifierWrapperDF, RandomForestClassifier, native=RandomForestClassifier
+    ClassifierWrapperDF[RandomForestClassifier],
+    RandomForestClassifier,  # type: ignore
+    native=RandomForestClassifier,
 ):
     """Stub for DF wrapper of class ``RandomForestClassifier``"""
 
 
 class ExtraTreesClassifierDF(
-    ClassifierWrapperDF, ExtraTreesClassifier, native=ExtraTreesClassifier
+    ClassifierWrapperDF[ExtraTreesClassifier],
+    ExtraTreesClassifier,  # type: ignore
+    native=ExtraTreesClassifier,
 ):
     """Stub for DF wrapper of class ``ExtraTreesClassifier``"""
 
 
+# noinspection PyAbstractClass
 class GradientBoostingClassifierDF(
-    ClassifierWrapperDF, GradientBoostingClassifier, native=GradientBoostingClassifier
+    ClassifierWrapperDF[GradientBoostingClassifier],
+    GradientBoostingClassifier,  # type: ignore
+    native=GradientBoostingClassifier,
 ):
     """Stub for DF wrapper of class ``GradientBoostingClassifier``"""
 
-    def _make_estimator(self, append=True):
-        pass
-
 
 class AdaBoostClassifierDF(
-    ClassifierWrapperDF, AdaBoostClassifier, native=AdaBoostClassifier
+    ClassifierWrapperDF[AdaBoostClassifier],
+    AdaBoostClassifier,  # type: ignore
+    native=AdaBoostClassifier,
 ):
     """Stub for DF wrapper of class ``AdaBoostClassifier``"""
 
 
 class BaggingClassifierDF(
-    ClassifierWrapperDF, BaggingClassifier, native=BaggingClassifier
+    ClassifierWrapperDF[BaggingClassifier],
+    BaggingClassifier,  # type: ignore
+    native=BaggingClassifier,
 ):
     """Stub for DF wrapper of class ``BaggingClassifier``"""
 
@@ -198,13 +220,17 @@ class BaggingClassifierDF(
 
 
 class DecisionTreeClassifierDF(
-    ClassifierWrapperDF, DecisionTreeClassifier, native=DecisionTreeClassifier
+    ClassifierWrapperDF[DecisionTreeClassifier],
+    DecisionTreeClassifier,  # type: ignore
+    native=DecisionTreeClassifier,
 ):
     """Stub for DF wrapper of class ``DecisionTreeClassifier``"""
 
 
 class ExtraTreeClassifierDF(
-    ClassifierWrapperDF, ExtraTreeClassifier, native=ExtraTreeClassifier
+    ClassifierWrapperDF[ExtraTreeClassifier],
+    ExtraTreeClassifier,  # type: ignore
+    native=ExtraTreeClassifier,
 ):
     """Stub for DF wrapper of class ``ExtraTreeClassifier``"""
 
@@ -216,15 +242,15 @@ class ExtraTreeClassifierDF(
 
 class LinearDiscriminantAnalysisDF(
     LinearDiscriminantAnalysisWrapperDF,
-    LinearDiscriminantAnalysis,
+    LinearDiscriminantAnalysis,  # type: ignore
     native=LinearDiscriminantAnalysis,
 ):
     """Stub for DF wrapper of class ``LinearDiscriminantAnalysis``"""
 
 
 class QuadraticDiscriminantAnalysisDF(
-    ClassifierWrapperDF,
-    QuadraticDiscriminantAnalysis,
+    ClassifierWrapperDF[QuadraticDiscriminantAnalysis],
+    QuadraticDiscriminantAnalysis,  # type: ignore
     native=QuadraticDiscriminantAnalysis,
 ):
     """Stub for DF wrapper of class ``QuadraticDiscriminantAnalysis``"""
@@ -235,21 +261,35 @@ class QuadraticDiscriminantAnalysisDF(
 #
 
 
-class GaussianNBDF(PartialFitClassifierWrapperDF, GaussianNB, native=GaussianNB):
+class GaussianNBDF(
+    PartialFitClassifierWrapperDF[GaussianNB],
+    GaussianNB,  # type: ignore
+    native=GaussianNB,
+):
     """Stub for DF wrapper of class ``GaussianNB``"""
 
 
 class MultinomialNBDF(
-    PartialFitClassifierWrapperDF, MultinomialNB, native=MultinomialNB
+    PartialFitClassifierWrapperDF[MultinomialNB],
+    MultinomialNB,  # type: ignore
+    native=MultinomialNB,
 ):
     """Stub for DF wrapper of class ``MultinomialNB``"""
 
 
-class ComplementNBDF(PartialFitClassifierWrapperDF, ComplementNB, native=ComplementNB):
+class ComplementNBDF(
+    PartialFitClassifierWrapperDF[ComplementNB],
+    ComplementNB,  # type: ignore
+    native=ComplementNB,
+):
     """Stub for DF wrapper of class ``ComplementNB``"""
 
 
-class BernoulliNBDF(PartialFitClassifierWrapperDF, BernoulliNB, native=BernoulliNB):
+class BernoulliNBDF(
+    PartialFitClassifierWrapperDF[BernoulliNB],
+    BernoulliNB,  # type: ignore
+    native=BernoulliNB,
+):
     """Stub for DF wrapper of class ``BernoulliNB``"""
 
 
@@ -259,7 +299,9 @@ class BernoulliNBDF(PartialFitClassifierWrapperDF, BernoulliNB, native=Bernoulli
 
 
 class CalibratedClassifierCVDF(
-    MetaClassifierWrapperDF, CalibratedClassifierCV, native=CalibratedClassifierCV
+    MetaClassifierWrapperDF[CalibratedClassifierCV],
+    CalibratedClassifierCV,  # type: ignore
+    native=CalibratedClassifierCV,
 ):
     """Stub for DF wrapper of class ``CalibratedClassifierCV``"""
 
@@ -269,15 +311,17 @@ class CalibratedClassifierCVDF(
 #
 
 
-class SVCDF(ClassifierWrapperDF, SVC, native=SVC):
+class SVCDF(ClassifierWrapperDF[SVC], SVC, native=SVC):  # type: ignore
     """Stub for DF wrapper of class ``SVC``"""
 
 
-class NuSVCDF(ClassifierWrapperDF, NuSVC, native=NuSVC):
+class NuSVCDF(ClassifierWrapperDF[NuSVC], NuSVC, native=NuSVC):  # type: ignore
     """Stub for DF wrapper of class ``NuSVC``"""
 
 
-class LinearSVCDF(ClassifierWrapperDF, LinearSVC, native=LinearSVC):
+class LinearSVCDF(
+    ClassifierWrapperDF[LinearSVC], LinearSVC, native=LinearSVC  # type: ignore
+):
     """Stub for DF wrapper of class ``LinearSVC``"""
 
 
@@ -287,7 +331,9 @@ class LinearSVCDF(ClassifierWrapperDF, LinearSVC, native=LinearSVC):
 
 
 class GaussianProcessClassifierDF(
-    ClassifierWrapperDF, GaussianProcessClassifier, native=GaussianProcessClassifier
+    ClassifierWrapperDF[GaussianProcessClassifier],
+    GaussianProcessClassifier,  # type: ignore
+    native=GaussianProcessClassifier,
 ):
     """Stub for DF wrapper of class ``GaussianProcessClassifier``"""
 
@@ -298,41 +344,57 @@ class GaussianProcessClassifierDF(
 
 
 class LogisticRegressionDF(
-    ClassifierWrapperDF, LogisticRegression, native=LogisticRegression
+    ClassifierWrapperDF[LogisticRegression],
+    LogisticRegression,  # type: ignore
+    native=LogisticRegression,
 ):
     """Stub for DF wrapper of class ``LogisticRegression``"""
 
 
 class LogisticRegressionCVDF(
-    ClassifierWrapperDF, LogisticRegressionCV, native=LogisticRegressionCV
+    ClassifierWrapperDF[LogisticRegressionCV],
+    LogisticRegressionCV,  # type: ignore
+    native=LogisticRegressionCV,
 ):
     """Stub for DF wrapper of class ``LogisticRegressionCV``"""
 
 
 class PassiveAggressiveClassifierDF(
-    PartialFitClassifierWrapperDF,
-    PassiveAggressiveClassifier,
+    PartialFitClassifierWrapperDF[PassiveAggressiveClassifier],
+    PassiveAggressiveClassifier,  # type: ignore
     native=PassiveAggressiveClassifier,
 ):
     """Stub for DF wrapper of class ``PassiveAggressiveClassifier``"""
 
 
-class PerceptronDF(PartialFitClassifierWrapperDF, Perceptron, native=Perceptron):
+class PerceptronDF(
+    PartialFitClassifierWrapperDF[Perceptron],
+    Perceptron,  # type: ignore
+    native=Perceptron,
+):
     """Stub for DF wrapper of class ``Perceptron``"""
 
 
 class SGDClassifierDF(
-    PartialFitClassifierWrapperDF, SGDClassifier, native=SGDClassifier
+    PartialFitClassifierWrapperDF[SGDClassifier],
+    SGDClassifier,  # type: ignore
+    native=SGDClassifier,
 ):
     """Stub for DF wrapper of class ``SGDClassifier``"""
 
 
-class RidgeClassifierDF(ClassifierWrapperDF, RidgeClassifier, native=RidgeClassifier):
+class RidgeClassifierDF(
+    ClassifierWrapperDF[RidgeClassifier],
+    RidgeClassifier,  # type: ignore
+    native=RidgeClassifier,
+):
     """Stub for DF wrapper of class ``RidgeClassifier``"""
 
 
 class RidgeClassifierCVDF(
-    ClassifierWrapperDF, RidgeClassifierCV, native=RidgeClassifierCV
+    ClassifierWrapperDF[RidgeClassifierCV],
+    RidgeClassifierCV,  # type: ignore
+    native=RidgeClassifierCV,
 ):
     """Stub for DF wrapper of class ``RidgeClassifierCV``"""
 
@@ -343,12 +405,18 @@ class RidgeClassifierCVDF(
 
 
 class LabelPropagationDF(
-    ClassifierWrapperDF, LabelPropagation, native=LabelPropagation
+    ClassifierWrapperDF[LabelPropagation],
+    LabelPropagation,  # type: ignore
+    native=LabelPropagation,
 ):
     """Stub for DF wrapper of class ``LabelPropagation``"""
 
 
-class LabelSpreadingDF(ClassifierWrapperDF, LabelSpreading, native=LabelSpreading):
+class LabelSpreadingDF(
+    ClassifierWrapperDF[LabelSpreading],
+    LabelSpreading,  # type: ignore
+    native=LabelSpreading,
+):
     """Stub for DF wrapper of class ``LabelSpreading``"""
 
 
@@ -358,24 +426,26 @@ class LabelSpreadingDF(ClassifierWrapperDF, LabelSpreading, native=LabelSpreadin
 
 
 class OneVsRestClassifierDF(
-    MetaClassifierWrapperDF, OneVsRestClassifier, native=OneVsRestClassifier
+    MetaClassifierWrapperDF[OneVsRestClassifier],
+    OneVsRestClassifier,  # type: ignore
+    native=OneVsRestClassifier,
 ):
     """Stub for DF wrapper of class ``OneVsRestClassifier``"""
 
 
 class OneVsOneClassifierDF(
-    ClassifierWrapperDF,
-    MetaEstimatorWrapperDF,
-    OneVsOneClassifier,
+    ClassifierWrapperDF[OneVsOneClassifier],
+    MetaEstimatorWrapperDF[OneVsOneClassifier],
+    OneVsOneClassifier,  # type: ignore
     native=OneVsOneClassifier,
 ):
     """Stub for DF wrapper of class ``OneVsOneClassifier``"""
 
 
 class OutputCodeClassifierDF(
-    ClassifierWrapperDF,
-    MetaEstimatorWrapperDF,
-    OutputCodeClassifier,
+    ClassifierWrapperDF[OutputCodeClassifier],
+    MetaEstimatorWrapperDF[OutputCodeClassifier],
+    OutputCodeClassifier,  # type: ignore
     native=OutputCodeClassifier,
 ):
     """Stub for DF wrapper of class ``OutputCodeClassifier``"""
@@ -387,7 +457,9 @@ class OutputCodeClassifierDF(
 
 
 class MultiOutputClassifierDF(
-    MultiOutputClassifierWrapperDF, MultiOutputClassifier, native=MultiOutputClassifier
+    MultiOutputClassifierWrapperDF,
+    MultiOutputClassifier,  # type: ignore
+    native=MultiOutputClassifier,
 ):
     """Stub for DF wrapper of class ``MultiOutputClassifier``"""
 
@@ -398,7 +470,9 @@ class MultiOutputClassifierDF(
 
 
 class ClassifierChainDF(
-    ClassifierChainWrapperDF, ClassifierChain, native=ClassifierChain
+    ClassifierChainWrapperDF,
+    ClassifierChain,  # type: ignore
+    native=ClassifierChain,
 ):
     """Stub for DF wrapper of class ``ClassifierChain``"""
 
@@ -409,7 +483,9 @@ class ClassifierChainDF(
 
 
 class MLPClassifierDF(
-    PartialFitClassifierWrapperDF, MLPClassifier, native=MLPClassifier
+    PartialFitClassifierWrapperDF[MLPClassifier],
+    MLPClassifier,  # type: ignore
+    native=MLPClassifier,
 ):
     """Stub for DF wrapper of class ``MLPClassifier``"""
 

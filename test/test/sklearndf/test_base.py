@@ -1,5 +1,6 @@
 # inspired by:
 # https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/tests/test_base.py
+from typing import Any
 
 import numpy as np
 import scipy.sparse as sp
@@ -18,38 +19,44 @@ from sklearndf.transformation import OneHotEncoderDF
 from sklearndf.wrapper import EstimatorWrapperDF
 
 
-class DummyEstimator(BaseEstimator):
-    def __init__(self, l1=0, empty=None) -> None:
+class DummyEstimator(
+    BaseEstimator,  # type: ignore
+):
+    def __init__(self, l1: int = 0, empty: Any = None) -> None:
         self.l1 = l1
         self.empty = empty
 
 
-class DummyEstimator2(BaseEstimator):
-    def __init__(self, a=None, b=None) -> None:
+class DummyEstimator2(
+    BaseEstimator,  # type: ignore
+):
+    def __init__(self, a: Any = None, b: Any = None) -> None:
         self.a = a
         self.b = b
 
 
-class DummyEstimator3(BaseEstimator):
-    def __init__(self, c=0, d=None) -> None:
+class DummyEstimator3(
+    BaseEstimator,  # type: ignore
+):
+    def __init__(self, c: int = 0, d: Any = None) -> None:
         self.c = c
         self.d = d
 
 
-class DummyEstimatorDF(  # type: ignore
-    EstimatorWrapperDF, DummyEstimator, native=DummyEstimator
+class DummyEstimatorDF(
+    EstimatorWrapperDF[DummyEstimator], DummyEstimator, native=DummyEstimator
 ):
     """A trivial estimator."""
 
 
-class DummyEstimator2DF(  # type: ignore
-    EstimatorWrapperDF, DummyEstimator2, native=DummyEstimator2
+class DummyEstimator2DF(
+    EstimatorWrapperDF[DummyEstimator2], DummyEstimator2, native=DummyEstimator2
 ):
     """A trivial estimator."""
 
 
-class DummyEstimator3DF(  # type: ignore
-    EstimatorWrapperDF, DummyEstimator3, native=DummyEstimator3
+class DummyEstimator3DF(
+    EstimatorWrapperDF[DummyEstimator3], DummyEstimator3, native=DummyEstimator3
 ):
     """A trivial estimator."""
 
