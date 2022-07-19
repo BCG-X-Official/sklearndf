@@ -26,13 +26,13 @@ from pytools.fit import NotFittedError
 log = logging.getLogger(__name__)
 
 __all__ = [
+    "ClassifierDF",
+    "ClusterDF",
     "EstimatorDF",
     "LearnerDF",
-    "ClassifierDF",
     "RegressorDF",
     "SupervisedLearnerDF",
     "TransformerDF",
-    "ClusterDF",
 ]
 
 #
@@ -208,11 +208,15 @@ class EstimatorDF(
             default_value = estimator_parameters.get(name, UNDEFINED)
 
             if (
-                (  # there is a parameter with the given name
-                    default_value is not UNDEFINED
+                (
+                    # there is a parameter with the given name
+                    default_value
+                    is not UNDEFINED
                 )
-                and (  # the parameter has a default value
-                    default_value != inspect.Signature.empty
+                and (
+                    # the parameter has a default value
+                    default_value
+                    != inspect.Signature.empty
                 )
                 and (
                     # if the value is an estimator ...
