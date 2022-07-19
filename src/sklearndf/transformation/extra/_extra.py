@@ -43,7 +43,11 @@ class BorutaPyWrapperDF(
         return self.feature_names_in_[self.native_estimator.support_]
 
 
-class BorutaDF(BorutaPyWrapperDF, BorutaPy, native=BorutaPy):
+class BorutaDF(
+    BorutaPyWrapperDF,
+    BorutaPy,  # type: ignore
+    native=BorutaPy,
+):
     """
     DF version of :class:`~boruta.BorutaPy`.
     """

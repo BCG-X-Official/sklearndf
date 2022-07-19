@@ -41,20 +41,34 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 #
 
 
-class PoissonRegressorDF(RegressorWrapperDF, PoissonRegressor, native=PoissonRegressor):
+class PoissonRegressorDF(
+    RegressorWrapperDF[PoissonRegressor],
+    PoissonRegressor,  # type: ignore
+    native=PoissonRegressor,
+):
     """Stub for DF wrapper of class ``PoissonRegressor``"""
 
 
-class GammaRegressorDF(RegressorWrapperDF, GammaRegressor, native=GammaRegressor):
+class GammaRegressorDF(
+    RegressorWrapperDF[GammaRegressor],
+    GammaRegressor,  # type: ignore
+    native=GammaRegressor,
+):
     """Stub for DF wrapper of class ``GammaRegressor``"""
 
 
-class TweedieRegressorDF(RegressorWrapperDF, TweedieRegressor, native=TweedieRegressor):
+class TweedieRegressorDF(
+    RegressorWrapperDF[TweedieRegressor],
+    TweedieRegressor,  # type: ignore
+    native=TweedieRegressor,
+):
     """Stub for DF wrapper of class ``TweedieRegressor``"""
 
 
 class GeneralizedLinearRegressorDF(
-    RegressorWrapperDF, GeneralizedLinearRegressor, native=GeneralizedLinearRegressor
+    RegressorWrapperDF[GeneralizedLinearRegressor],
+    GeneralizedLinearRegressor,  # type: ignore
+    native=GeneralizedLinearRegressor,
 ):
     """Stub for DF wrapper of class ``GeneralizedLinearRegressor``"""
 
