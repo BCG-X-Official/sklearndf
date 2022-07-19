@@ -48,7 +48,11 @@ __tracker = AllTracker(globals())
 
 if LGBMClassifier:
 
-    class LGBMClassifierDF(RegressorWrapperDF, LGBMClassifier, native=LGBMClassifier):
+    class LGBMClassifierDF(
+        RegressorWrapperDF[LGBMClassifier],
+        LGBMClassifier,  # type: ignore
+        native=LGBMClassifier,
+    ):
         """Stub for DF wrapper of class ``LGBMClassifierDF``"""
 
 else:
@@ -56,7 +60,11 @@ else:
 
 if XGBClassifier:
 
-    class XGBClassifierDF(RegressorWrapperDF, XGBClassifier, native=XGBClassifier):
+    class XGBClassifierDF(
+        RegressorWrapperDF[XGBClassifier],
+        XGBClassifier,  # type: ignore
+        native=XGBClassifier,
+    ):
         """Stub for DF wrapper of class ``XGBClassifierDF``"""
 
 else:

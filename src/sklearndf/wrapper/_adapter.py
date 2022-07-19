@@ -6,6 +6,7 @@ import logging
 from typing import Any, Callable, Generic, List, Optional, Sequence, TypeVar, Union
 
 import numpy as np
+import numpy.typing as npt
 import pandas as pd
 
 from pytools.api import AllTracker, inheritdoc
@@ -42,7 +43,7 @@ T_DelegateSupervisedLearnerDF = TypeVar(
 T_DelegateClassifierDF = TypeVar("T_DelegateClassifierDF", bound=ClassifierDF)
 T_DelegateRegressorDF = TypeVar("T_DelegateRegressorDF", bound=RegressorDF)
 T_DelegateTransformerDF = TypeVar("T_DelegateTransformerDF", bound=TransformerDF)
-T_EstimatorNPDF = TypeVar("T_EstimatorNPDF", bound="EstimatorNPDF")
+T_EstimatorNPDF = TypeVar("T_EstimatorNPDF", bound="EstimatorNPDF[EstimatorDF]")
 
 #
 # Ensure all symbols introduced below are included in __all__
@@ -101,8 +102,8 @@ class EstimatorNPDF(
 
     def fit(
         self: T_EstimatorNPDF,
-        X: Union[np.ndarray, pd.DataFrame],
-        y: Optional[Union[np.ndarray, pd.Series, pd.DataFrame]] = None,
+        X: Union[npt.NDArray[Any], pd.DataFrame],
+        y: Optional[Union[npt.NDArray[Any], pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
     ) -> T_EstimatorNPDF:
         """[see superclass]"""
@@ -117,7 +118,7 @@ class EstimatorNPDF(
     def _get_n_outputs(self) -> int:
         return self.delegate._get_n_outputs()
 
-    def _ensure_X_frame(self, X: Union[np.ndarray, pd.DataFrame]) -> pd.DataFrame:
+    def _ensure_X_frame(self, X: Union[npt.NDArray[Any], pd.DataFrame]) -> pd.DataFrame:
         column_names = self.column_names
         if callable(column_names):
             column_names = column_names()
@@ -145,7 +146,7 @@ class EstimatorNPDF(
 
     @staticmethod
     def _ensure_y_series_or_frame(
-        y: Optional[Union[np.ndarray, pd.Series, pd.DataFrame]]
+        y: Optional[Union[npt.NDArray[Any], pd.Series, pd.DataFrame]]
     ) -> Optional[Union[pd.Series, pd.DataFrame]]:
         if isinstance(y, np.ndarray):
             if y.ndim == 1:
@@ -168,7 +169,7 @@ class LearnerNPDF(
     """[see superclass]"""
 
     def predict(
-        self, X: Union[np.ndarray, pd.DataFrame], **predict_params: Any
+        self, X: Union[npt.NDArray[Any], pd.DataFrame], **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
         return self.delegate.predict(self._ensure_X_frame(X), **predict_params)
@@ -185,8 +186,8 @@ class SupervisedLearnerNPDF(
 
     def score(
         self,
-        X: Union[np.ndarray, pd.DataFrame],
-        y: Union[np.ndarray, pd.Series],
+        X: Union[npt.NDArray[Any], pd.DataFrame],
+        y: Union[npt.NDArray[Any], pd.Series],
         sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see superclass]"""
@@ -207,18 +208,18 @@ class ClassifierNPDF(
     """[see superclass]"""
 
     @property
-    def classes_(self) -> Sequence[Any]:
+    def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
         """[see superclass]"""
         return self.delegate.classes_
 
     def predict_proba(
-        self, X: Union[np.ndarray, pd.DataFrame], **predict_params: Any
+        self, X: Union[npt.NDArray[Any], pd.DataFrame], **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """[see superclass]"""
         return self.delegate.predict_proba(self._ensure_X_frame(X), **predict_params)
 
     def predict_log_proba(
-        self, X: Union[np.ndarray, pd.DataFrame], **predict_params: Any
+        self, X: Union[npt.NDArray[Any], pd.DataFrame], **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """[see superclass]"""
         return self.delegate.predict_log_proba(
@@ -226,7 +227,7 @@ class ClassifierNPDF(
         )
 
     def decision_function(
-        self, X: Union[np.ndarray, pd.DataFrame], **predict_params: Any
+        self, X: Union[npt.NDArray[Any], pd.DataFrame], **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
         return self.delegate.decision_function(
@@ -259,18 +260,20 @@ class TransformerNPDF(
 ):
     """[see superclass]"""
 
-    def transform(self, X: Union[np.ndarray, pd.DataFrame]) -> pd.DataFrame:
+    def transform(self, X: Union[npt.NDArray[Any], pd.DataFrame]) -> pd.DataFrame:
         """[see superclass]"""
         return self.delegate.predict(self._ensure_X_frame(X))
 
-    def inverse_transform(self, X: Union[np.ndarray, pd.DataFrame]) -> pd.DataFrame:
+    def inverse_transform(
+        self, X: Union[npt.NDArray[Any], pd.DataFrame]
+    ) -> pd.DataFrame:
         """[see superclass]"""
         return self.delegate.inverse_transform(self._ensure_X_frame(X))
 
     def fit_transform(
         self,
-        X: Union[np.ndarray, pd.DataFrame],
-        y: Optional[Union[np.ndarray, pd.Series, pd.DataFrame]] = None,
+        X: Union[npt.NDArray[Any], pd.DataFrame],
+        y: Optional[Union[npt.NDArray[Any], pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
     ) -> pd.DataFrame:
         """[see superclass]"""

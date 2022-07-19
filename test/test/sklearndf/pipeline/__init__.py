@@ -1,4 +1,4 @@
-from typing import Sequence
+from typing import Optional, Sequence
 
 from sklearndf import TransformerDF
 from sklearndf.transformation import (
@@ -12,8 +12,8 @@ STEP_ONE_HOT_ENCODE = "one-hot-encode"
 
 
 def make_simple_transformer(
-    impute_median_columns: Sequence[str] = None,
-    one_hot_encode_columns: Sequence[str] = None,
+    impute_median_columns: Optional[Sequence[str]] = None,
+    one_hot_encode_columns: Optional[Sequence[str]] = None,
 ) -> TransformerDF:
     column_transforms = []
 

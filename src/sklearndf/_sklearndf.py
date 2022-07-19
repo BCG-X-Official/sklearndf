@@ -4,8 +4,9 @@ Core implementation of :mod:`sklearndf`
 import inspect
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import Any, Dict, List, Mapping, Optional, Sequence, TypeVar, Union, cast
+from typing import Any, Dict, List, Mapping, Optional, TypeVar, Union, cast
 
+import numpy.typing as npt
 import pandas as pd
 from sklearn.base import (
     BaseEstimator,
@@ -61,7 +62,11 @@ __tracker = AllTracker(globals())
 
 
 @inheritdoc(match="""[see superclass]""")
-class EstimatorDF(HasExpressionRepr, BaseEstimator, metaclass=ABCMeta):
+class EstimatorDF(
+    HasExpressionRepr,
+    BaseEstimator,  # type: ignore
+    metaclass=ABCMeta,
+):
     """
     Base class for augmented `scikit-learn` estimators.
 
@@ -152,7 +157,7 @@ class EstimatorDF(HasExpressionRepr, BaseEstimator, metaclass=ABCMeta):
         :return: a mapping of parameter names to their values
         """
         # noinspection PyUnresolvedReferences
-        return super().get_params(deep=deep)
+        return cast(Mapping[str, Any], super().get_params(deep=deep))
 
     def set_params(self: T_EstimatorDF, **params: Any) -> T_EstimatorDF:
         """
@@ -172,7 +177,7 @@ class EstimatorDF(HasExpressionRepr, BaseEstimator, metaclass=ABCMeta):
 
         :return: the unfitted clone
         """
-        return clone(self)
+        return cast(T_EstimatorDF, clone(self))
 
     @abstractmethod
     def _get_features_in(self) -> pd.Index:
@@ -306,7 +311,11 @@ class SupervisedLearnerDF(LearnerDF, metaclass=ABCMeta):
         pass
 
 
-class TransformerDF(TransformerMixin, EstimatorDF, metaclass=ABCMeta):
+class TransformerDF(
+    TransformerMixin,  # type: ignore
+    EstimatorDF,
+    metaclass=ABCMeta,
+):
     """
     Base class for augmented `scikit-learn` transformers.
 
@@ -417,7 +426,11 @@ class TransformerDF(TransformerMixin, EstimatorDF, metaclass=ABCMeta):
         return self.feature_names_original_.index
 
 
-class RegressorDF(RegressorMixin, SupervisedLearnerDF, metaclass=ABCMeta):
+class RegressorDF(
+    RegressorMixin,  # type: ignore
+    SupervisedLearnerDF,
+    metaclass=ABCMeta,
+):
     """
     Base class for augmented `scikit-learn` regressors.
 
@@ -437,7 +450,11 @@ class RegressorDF(RegressorMixin, SupervisedLearnerDF, metaclass=ABCMeta):
     score.__doc__ = SupervisedLearnerDF.score.__doc__
 
 
-class ClassifierDF(ClassifierMixin, SupervisedLearnerDF, metaclass=ABCMeta):
+class ClassifierDF(
+    ClassifierMixin,  # type: ignore
+    SupervisedLearnerDF,
+    metaclass=ABCMeta,
+):
     """
     Base class for augmented `scikit-learn` classifiers.
 
@@ -446,12 +463,12 @@ class ClassifierDF(ClassifierMixin, SupervisedLearnerDF, metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def classes_(self) -> Sequence[Any]:
+    def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
         """
         Get the classes predicted by this classifier.
-        By default expects classes as a list-like stored in the `classes_` attribute.
 
-        :return: the classes predicted by this classifier
+        :return: a numpy array of class labels for single-output problems, or a list
+            of such arrays for multi-output problems
         """
         pass
 
@@ -534,7 +551,11 @@ class ClassifierDF(ClassifierMixin, SupervisedLearnerDF, metaclass=ABCMeta):
     score.__doc__ = SupervisedLearnerDF.score.__doc__
 
 
-class ClustererDF(ClusterMixin, LearnerDF, metaclass=ABCMeta):
+class ClustererDF(
+    ClusterMixin,  # type: ignore
+    LearnerDF,
+    metaclass=ABCMeta,
+):
     """
     Base class for augmented scikit-learn `clusterers`.
 

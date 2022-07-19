@@ -27,8 +27,8 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 
 
 class PolynomialCountSketchDF(
-    NComponentsDimensionalityReductionWrapperDF,
-    PolynomialCountSketch,
+    NComponentsDimensionalityReductionWrapperDF[PolynomialCountSketch],
+    PolynomialCountSketch,  # type: ignore
     native=PolynomialCountSketch,
 ):
     """Stub for DF wrapper of class ``PolynomialCountSketch``"""
@@ -42,8 +42,8 @@ class PolynomialCountSketchDF(
 
 
 class SequentialFeatureSelectorDF(
-    FeatureSelectionWrapperDF,
-    SequentialFeatureSelector,
+    FeatureSelectionWrapperDF[SequentialFeatureSelector],
+    SequentialFeatureSelector,  # type: ignore
     native=SequentialFeatureSelector,
 ):
     """Stub for DF wrapper of class ``SequentialFeatureSelector``"""

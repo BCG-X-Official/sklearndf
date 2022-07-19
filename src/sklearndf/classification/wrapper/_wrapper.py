@@ -16,7 +16,7 @@ from typing import (
     cast,
 )
 
-import numpy as np
+import numpy.typing as npt
 import pandas as pd
 from sklearn.base import ClassifierMixin
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
@@ -47,8 +47,10 @@ __all__ = [
 # Type variables
 #
 
+T_DelegateClassifierDF = TypeVar("T_DelegateClassifierDF", bound=ClassifierDF)
 T_PartialFitClassifierWrapperDF = TypeVar(
-    "T_PartialFitClassifierWrapperDF", bound="PartialFitClassifierWrapperDF"
+    "T_PartialFitClassifierWrapperDF",
+    bound="PartialFitClassifierWrapperDF[ClassifierMixin]",
 )
 T_NativeClassifier = TypeVar("T_NativeClassifier", bound=ClassifierMixin)
 
@@ -79,7 +81,7 @@ class LinearDiscriminantAnalysisWrapperDF(
 
 
 class MetaClassifierWrapperDF(
-    ClassifierWrapperDF,
+    ClassifierWrapperDF[T_NativeClassifier],
     MetaEstimatorWrapperDF[T_NativeClassifier],
     Generic[T_NativeClassifier],
     metaclass=ABCMeta,
@@ -93,7 +95,7 @@ class MetaClassifierWrapperDF(
 
 
 class PartialFitClassifierWrapperDF(
-    ClassifierWrapperDF,
+    ClassifierWrapperDF[T_NativeClassifier],
     Generic[T_NativeClassifier],
     metaclass=ABCMeta,
 ):
@@ -131,19 +133,22 @@ class PartialFitClassifierWrapperDF(
 
     # noinspection PyPep8Naming
     def _partial_fit(
-        self,
+        self: T_PartialFitClassifierWrapperDF,
         X: pd.DataFrame,
         y: Union[pd.Series, pd.DataFrame],
         **partial_fit_params: Optional[Any],
-    ):
-        return self._native_estimator.partial_fit(
-            self._prepare_X_for_delegate(X),
-            self._prepare_y_for_delegate(y),
-            **{
-                arg: value
-                for arg, value in partial_fit_params.items()
-                if value is not None
-            },
+    ) -> T_PartialFitClassifierWrapperDF:
+        return cast(
+            T_PartialFitClassifierWrapperDF,
+            self._native_estimator.partial_fit(
+                self._prepare_X_for_delegate(X),
+                self._prepare_y_for_delegate(y),
+                **{
+                    arg: value
+                    for arg, value in partial_fit_params.items()
+                    if value is not None
+                },
+            ),
         )
 
 
@@ -160,22 +165,24 @@ class MultiOutputClassifierWrapperDF(
     def _prediction_with_class_labels(
         self,
         X: pd.DataFrame,
-        y: Union[pd.Series, pd.DataFrame, list, np.ndarray],
+        prediction: Union[
+            pd.Series, pd.DataFrame, List[npt.NDArray[Any]], npt.NDArray[Any]
+        ],
         classes: Optional[Sequence[Any]] = None,
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
 
         # if we have a multi-output classifier, prediction of probabilities
         # yields a list of NumPy arrays
-        if not isinstance(y, list):
+        if not isinstance(prediction, list):
             raise ValueError(
                 "prediction of multi-output classifier expected to be a list of NumPy "
-                f"arrays, but got type {type(y)}"
+                f"arrays, but got type {type(prediction)}"
             )
 
         delegate_estimator = self.native_estimator
 
         # store the super() object as this is not available within a generator
-        _super = cast(ClassifierWrapperDF, super())
+        _super = cast(ClassifierWrapperDF[MultiOutputClassifier], super())
 
         # estimators attribute of abstract class MultiOutputEstimator
         # usually the delegate estimator will provide a list of estimators used
@@ -184,19 +191,22 @@ class MultiOutputClassifierWrapperDF(
         # labels
         estimators = getattr(delegate_estimator, "estimators_", None)
         if estimators is None:
-            return [_super._prediction_with_class_labels(X=X, y=output) for output in y]
+            return [
+                _super._prediction_with_class_labels(X=X, prediction=output)
+                for output in prediction
+            ]
         else:
             return [
                 _super._prediction_with_class_labels(
-                    X=X, y=output, classes=getattr(estimator, "classes_", None)
+                    X=X, prediction=output, classes=getattr(estimator, "classes_", None)
                 )
-                for estimator, output in zip(estimators, y)
+                for estimator, output in zip(estimators, prediction)
             ]
 
 
 class ClassifierChainWrapperDF(
     MetaEstimatorWrapperDF[ClassifierChain],
-    ClassifierWrapperDF,
+    ClassifierWrapperDF[ClassifierChain],
     metaclass=ABCMeta,
 ):
     """
@@ -207,12 +217,14 @@ class ClassifierChainWrapperDF(
     def _prediction_with_class_labels(
         self,
         X: pd.DataFrame,
-        y: Union[pd.Series, pd.DataFrame, list, np.ndarray],
+        prediction: Union[
+            pd.Series, pd.DataFrame, List[npt.NDArray[Any]], npt.NDArray[Any]
+        ],
         classes: Optional[Sequence[Any]] = None,
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
         # todo: infer actual class names
         return super()._prediction_with_class_labels(
-            X=X, y=y, classes=range(self.n_outputs_)
+            X, prediction, classes=range(self.n_outputs_)
         )
 
 
@@ -224,7 +236,7 @@ from ...wrapper._wrapper import _StackableClassifierDF
 
 
 class StackingClassifierWrapperDF(
-    ClassifierWrapperDF,
+    ClassifierWrapperDF[T_NativeClassifier],
     StackingEstimatorWrapperDF[T_NativeClassifier],
     Generic[T_NativeClassifier],
     metaclass=ABCMeta,
@@ -254,8 +266,10 @@ class StackingClassifierWrapperDF(
         return _StackableClassifierDF(learner)
 
     def _make_learner_np_df(
-        self, delegate: ClassifierDF, column_names: Callable[[], Sequence[str]]
-    ) -> _ClassifierNPDF:
+        self,
+        delegate: T_DelegateClassifierDF,
+        column_names: Callable[[], Sequence[str]],
+    ) -> _ClassifierNPDF[T_DelegateClassifierDF]:
         return _ClassifierNPDF(delegate, column_names)
 
 

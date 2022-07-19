@@ -59,7 +59,9 @@ if __sklearn_version__ >= __sklearn_0_22__:
     CLASSIFIERS_PARTIAL_FIT.append(classification.CategoricalNBDF)
 
 
-@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST)
+@pytest.mark.parametrize(  # type: ignore
+    argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST
+)
 def test_wrapped_fit_predict(
     sklearndf_cls: Type[ClassifierDF],
     iris_features: pd.DataFrame,
@@ -135,14 +137,16 @@ def test_wrapped_fit_predict(
                 method(X=iris_features)
 
 
-@pytest.mark.parametrize("sklearndf_cls", CLASSIFIERS_PARTIAL_FIT)
+@pytest.mark.parametrize(  # type: ignore
+    argnames="sklearndf_cls", argvalues=CLASSIFIERS_PARTIAL_FIT
+)
 def test_wrapped_partial_fit(
     sklearndf_cls: Type[ClassifierDF],
     iris_features: pd.DataFrame,
     iris_target_sr: pd.Series,
     iris_targets_df: pd.DataFrame,
-):
-
+) -> None:
+    # noinspection PyArgumentList
     classifier: ClassifierDF = sklearndf_cls(
         **CLASSIFIER_INIT_PARAMETERS.get(f"{sklearndf_cls.__name__}_partial_fit", {})
     )
