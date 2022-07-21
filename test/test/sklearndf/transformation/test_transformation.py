@@ -68,6 +68,13 @@ TRANSFORMERS_TO_TEST = iterate_classes(
 TRANSFORMERS_TO_TEST.append(FeatureAgglomerationDF)
 
 
+def test_transformer_count() -> None:
+    n = len(TRANSFORMERS_TO_TEST)
+
+    print(f"Testing {n} transformers.")
+    assert n == 56
+
+
 @pytest.fixture  # type: ignore
 def test_data() -> pd.DataFrame:
     return pd.DataFrame(

@@ -18,6 +18,13 @@ CLASSIFIERS_TO_TEST = iterate_classes(
 )
 
 
+def test_classifier_count() -> None:
+    n = len(CLASSIFIERS_TO_TEST)
+
+    print(f"Testing {n} classifiers.")
+    assert n == 41
+
+
 CLASSIFIER_INIT_PARAMETERS: Dict[str, Dict[str, Any]] = {
     "CalibratedClassifierCVDF": {
         "base_estimator": classification.RandomForestClassifierDF()

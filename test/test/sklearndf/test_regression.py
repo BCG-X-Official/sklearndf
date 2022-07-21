@@ -28,6 +28,14 @@ REGRESSORS_TO_TEST: List[Type[EstimatorWrapperDF[BaseEstimator]]] = iterate_clas
     excluding=[RegressorDF.__name__, TransformerDF.__name__, r".*WrapperDF"],
 )
 
+
+def test_regressor_count() -> None:
+    n = len(REGRESSORS_TO_TEST)
+
+    print(f"Testing {n} regressors.")
+    assert n == 56
+
+
 DEFAULT_REGRESSOR_PARAMETERS: Dict[str, Dict[str, Any]] = {
     "MultiOutputRegressorDF": {"estimator": RandomForestRegressorDF()},
     "MultiOutputRegressorDF_partial_fit": {"estimator": SGDRegressorDF()},
