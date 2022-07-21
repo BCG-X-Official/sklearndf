@@ -23,7 +23,7 @@ Any class implementing the `scikit-learn` estimator protocol (and subclassing
 :class:`.BaseEstimator`) can be used to create a DF wrapper by declaring a wrapper
 class as follows:
 
-.. codeblock:: python
+.. code-block:: python
 
     class <name>DF(
         <DF wrapper class>, <native class>, native=<native class>
