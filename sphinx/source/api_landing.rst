@@ -10,7 +10,7 @@ For all methods expecting an `X` argument for a feature matrix and potentially a
 1-dimensional `y`, or a pandas :class:`~pandas.DataFrame` when fitting to multiple
 targets or outputs.
 This includes methods such as :meth:`~EstimatorDF.fit`,
-:meth:`~TransformerDF.transform`, :meth:`~LearnerDF.predict`, and so on.
+:meth:`~TransformerDF.transform`, and :meth:`~LearnerDF.predict`.
 
 All estimators enhanced by `sklearndf` also implement an additional attribute
 :attr:`~EstimatorDF.feature_names_in_`, keeping track of the column names of the data
@@ -38,20 +38,28 @@ original implementation):
   in turn provides the API for all common classifier methods, e.g.,
   :meth:`~ClassifierDF.predict_proba`
 
-- all `sklearndf` regressors and classifiers are subclasses of :class:`.LearnerDF`
+- all `sklearndf` clusterers are subclasses of :class:`.ClusterDF`, which
+  in turn provides the API for all common clustering methods, e.g.,
+  :meth:`~ClusterDF.fit_predict`
+
+- all `sklearndf` regressors and classifiers are subclasses of
+  :class:`.SupervisedLearnerDF`
+
+- all `sklearndf` regressors, classifiers and clusterers are subclasses of
+  :class:`.LearnerDF`
 
 - all `sklearndf` estimators are subclasses of :class:`.EstimatorDF`
 
-`sklearndf` introduces two additional pipeline classes, :class:`.RegressorPipelineDF`
-and :class:`.ClassifierPipelineDF`, with an abstract base class
-:class:`.LearnerPipelineDF`, to allow for easier handling of common types of ML
+`sklearndf` introduces additional pipeline classes :class:`.RegressorPipelineDF`,
+:class:`.ClassifierPipelineDF`, and :class:`.ClusterPipelineDF`, with an abstract base
+class :class:`.LearnerPipelineDF`, to allow for easier handling of common types of ML
 pipelines.
 These classes implement pipelines with two steps -- one preprocessing step, followed by
-a regressor or a classifier.
+a learner as the second and final step.
 
 `sklearndf` also provides data frame support for a selection of custom or 3rd-party
-estimators, most notably :class:`.BorutaDF`, :class:`.LGBMRegressorDF`, and
-:class:`.LGBMClassifierDF`.
+estimators, most notably :class:`.BorutaDF`, :class:`.LGBMRegressorDF`,
+:class:`.LGBMClassifierDF`, :class:`.XGBRegressorDF`, and :class:`.XGBClassifierDF`.
 
 All `sklearndf` estimators are fully type hinted.
 
