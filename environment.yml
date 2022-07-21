@@ -31,9 +31,9 @@ dependencies:
   - tox ~= 3.24
   - yaml ~= 0.2
   # sphinx
+  - nbsphinx ~= 0.8.9
   - sphinx ~= 4.5
   - sphinx-autodoc-typehints ~= 1.12
-  - nbsphinx ~= 0.8.9
   - pydata-sphinx-theme ~= 0.9
   # notebooks
   - jupyterlab ~= 3.2
