@@ -413,6 +413,7 @@ class ClusterPipelineDF(
         """[see superclass]"""
         return self.final_estimator.labels_
 
+    # noinspection PyPep8Naming
     def fit_predict(
         self,
         X: pd.DataFrame,

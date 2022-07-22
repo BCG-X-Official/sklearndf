@@ -85,6 +85,7 @@ class PartialFitRegressorWrapperDF(
     method ``partial_fit()``.
     """
 
+    # noinspection PyPep8Naming
     def partial_fit(
         self: T_PartialFitRegressorWrapperDF,
         X: pd.DataFrame,
@@ -108,6 +109,7 @@ class PartialFitRegressorWrapperDF(
 
         return self
 
+    # noinspection PyPep8Naming
     def _partial_fit(
         self: T_PartialFitRegressorWrapperDF,
         X: pd.DataFrame,
@@ -163,9 +165,7 @@ class StackingRegressorWrapperDF(
 
         return RidgeCVDF()
 
-    def _make_stackable_learner_df(
-        self, learner: SupervisedLearnerDF
-    ) -> _StackableRegressorDF:
+    def _make_stackable_learner_df(self, learner: RegressorDF) -> _StackableRegressorDF:
         return _StackableRegressorDF(learner)
 
     def _make_learner_np_df(

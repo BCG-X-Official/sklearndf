@@ -7,14 +7,12 @@ In most cases, creating a DF classifier or regressor class is as simple as
 .. code-block:: python
 
     class RandomForestClassifierDF(
-    ClassifierWrapperDF[RandomForestClassifier],
-    RandomForestClassifier,  # type: ignore
+    ClassifierWrapperDF[RandomForestClassifier],  # type: ignore
     native=RandomForestClassifier):
         \"""Stub for DF wrapper of class ``RandomForestClassifier``\"""
 
     class RandomForestRegressorDF(
-    RegressorWrapperDF[RandomForestRegressor],
-    RandomForestRegressor,  # type: ignore
+    RegressorWrapperDF[RandomForestRegressor],  # type: ignore
     native=RandomForestRegressor):
         \"""Stub for DF wrapper of class ``RandomForestRegressor``\"""
 

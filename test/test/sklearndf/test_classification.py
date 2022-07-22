@@ -74,6 +74,7 @@ def test_wrapped_fit_predict(
     parameters: Dict[str, Any] = CLASSIFIER_INIT_PARAMETERS.get(
         sklearndf_cls.__name__, {}
     )
+    # noinspection PyArgumentList
     classifier: ClassifierDF = sklearndf_cls(**parameters)
 
     assert is_classifier(classifier)

@@ -31,7 +31,6 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 
 class HistGradientBoostingClassifierDF(
     ClassifierWrapperDF[HistGradientBoostingClassifier],
-    HistGradientBoostingClassifier,  # type: ignore
     native=HistGradientBoostingClassifier,
 ):
     """Stub for DF wrapper of class ``HistGradientBoostingClassifier``"""
