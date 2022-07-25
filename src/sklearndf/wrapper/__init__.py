@@ -23,25 +23,19 @@ class as follows:
 
 .. codeblock:: python
 
-    class <name>DF(
-        <DF wrapper class>, <native class>, native=<native class>
-    ):
+    class <name>DF(<DF wrapper class>, native=<native class>):
         \"""Stub for DF wrapper of class ``<native class>``\"""
 
-The resulting wrapper class
+The resulting wrapper class implements a *delegation* pattern, forwarding method calls
+and attribute access to a native estimator instance while
 
-- implements enhanced functionality introduced by the :class:`.EstimatorDF` class
-  hierarchy
-- adopts all additional methods and attributes from the wrapped native estimator
-- delegates relevant method calls and attribute access to the native estimator,
+- implementing enhanced functionality introduced by the :class:`.EstimatorDF` class
+  hierarchy, managing feature names and translating between data frames and *numpy*
+  arrays behind the scenes
+- adopting all additional methods and attributes from the wrapped native estimator
+- delegating relevant method calls and attribute access to the native estimator,
   thus replicating the original estimator's behaviour except for the enhanced
-  functionality introduced by the :class:`.EstimatorDF` class hierarchy
-
-Note that the resulting class will be based only on the DF wrapper class, even though
-the native class must be stated both as a base class and as class parameter ``native``.
-This is a design choice to improve code completions in IDEs relying on static code
-inspection; at runtime the native class is removed from the class hierarchy during class
-construction.
+  functionality introduced by the :class:`.EstimatorDF` class hierarchy.
 
 Most regressors, classifiers, and clusterers can be augmented using the
 :class:`.RegressorWrapperDF`, :class:`.ClassifierWrapperDF`, and
