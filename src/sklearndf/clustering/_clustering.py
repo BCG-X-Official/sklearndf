@@ -53,7 +53,6 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 
 class AffinityPropagationDF(
     ClusterWrapperDF[AffinityPropagation],
-    AffinityPropagation,  # type: ignore
     native=AffinityPropagation,
 ):
     """Stub for DF wrapper of class ``AffinityPropagation``"""
@@ -61,45 +60,40 @@ class AffinityPropagationDF(
 
 class AgglomerativeClusteringDF(
     ClusterWrapperDF[AgglomerativeClustering],
-    AgglomerativeClustering,  # type: ignore
     native=AgglomerativeClustering,
 ):
     """Stub for DF wrapper of class ``AgglomerativeClustering``"""
 
 
-class BirchDF(ClusterWrapperDF[Birch], Birch, native=Birch):  # type: ignore
+class BirchDF(ClusterWrapperDF[Birch], native=Birch):
     """Stub for DF wrapper of class ``Birch``"""
 
 
-class DBSCANDF(ClusterWrapperDF[DBSCAN], DBSCAN, native=DBSCAN):  # type: ignore
+class DBSCANDF(ClusterWrapperDF[DBSCAN], native=DBSCAN):
     """Stub for DF wrapper of class ``DBSCAN``"""
 
 
-class KMeansDF(KMeansBaseWrapperDF[KMeans], KMeans, native=KMeans):  # type: ignore
+class KMeansDF(KMeansBaseWrapperDF[KMeans], native=KMeans):
     """Stub for DF wrapper of class ``KMeans``"""
 
 
 class MiniBatchKMeansDF(
     KMeansBaseWrapperDF[MiniBatchKMeans],
-    MiniBatchKMeans,  # type: ignore
     native=MiniBatchKMeans,
 ):
     """Stub for DF wrapper of class ``MiniBatchKMeans``"""
 
 
-class MeanShiftDF(
-    ClusterWrapperDF[MeanShift], MeanShift, native=MeanShift  # type: ignore
-):
+class MeanShiftDF(ClusterWrapperDF[MeanShift], native=MeanShift):
     """Stub for DF wrapper of class ``MeanShift``"""
 
 
-class OPTICSDF(ClusterWrapperDF[OPTICS], OPTICS, native=OPTICS):  # type: ignore
+class OPTICSDF(ClusterWrapperDF[OPTICS], native=OPTICS):
     """Stub for DF wrapper of class ``OPTICS``"""
 
 
 class SpectralClusteringDF(
     ClusterWrapperDF[SpectralClustering],
-    SpectralClustering,  # type: ignore
     native=SpectralClustering,
 ):
     """Stub for DF wrapper of class ``SpectralClustering``"""
@@ -107,7 +101,6 @@ class SpectralClusteringDF(
 
 class FeatureAgglomerationDF(
     FeatureAgglomerationWrapperDF,
-    FeatureAgglomeration,  # type: ignore
     native=FeatureAgglomeration,
 ):
     """Stub for DF wrapper of class ``FeatureAgglomeration``"""

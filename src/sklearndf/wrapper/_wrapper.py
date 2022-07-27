@@ -152,14 +152,11 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
         native: Optional[T_NativeEstimator] = None,
         **kwargs: Any,
     ) -> EstimatorWrapperDFMeta[T_NativeEstimator]:
-        if native is not None:
-            if native in bases:
-                bases = tuple(base for base in bases if base is not native)
-            else:
-                raise TypeError(
-                    f"native base class {native.__name__} must also be given as a "
-                    f"base class of class {name} to enable static code inspection"
-                )
+        if native in bases:
+            raise TypeError(
+                f"wrapper class {name} must not state native class "
+                f"{native.__name__} as a base class"
+            )
 
         # noinspection PyArgumentList,PyTypeChecker
         cls: EstimatorWrapperDFMeta[T_NativeEstimator] = super().__new__(

@@ -171,7 +171,6 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 
 class ColumnTransformerDF(
     ColumnTransformerWrapperDF,
-    ColumnTransformer,  # type: ignore
     native=ColumnTransformer,
 ):
     """Stub for DF wrapper of class ``ColumnTransformer``"""
@@ -182,15 +181,12 @@ class ColumnTransformerDF(
 #
 
 
-class PLSSVDDF(
-    ColumnPreservingTransformerWrapperDF[PLSSVD], PLSSVD, native=PLSSVD  # type: ignore
-):
+class PLSSVDDF(ColumnPreservingTransformerWrapperDF[PLSSVD], native=PLSSVD):
     """Stub for DF wrapper of class ``PLSSVD``"""
 
 
 class FeatureHasherDF(
     ColumnPreservingTransformerWrapperDF[FeatureHasher],
-    FeatureHasher,  # type: ignore
     native=FeatureHasher,
 ):
     """Stub for DF wrapper of class ``FeatureHasher``"""
@@ -198,7 +194,6 @@ class FeatureHasherDF(
 
 class DictVectorizerDF(
     ColumnPreservingTransformerWrapperDF[DictVectorizer],
-    DictVectorizer,  # type: ignore
     native=DictVectorizer,
 ):
     """Stub for DF wrapper of class ``DictVectorizer``"""
@@ -206,7 +201,6 @@ class DictVectorizerDF(
 
 class HashingVectorizerDF(
     ColumnPreservingTransformerWrapperDF[HashingVectorizer],
-    HashingVectorizer,  # type: ignore
     native=HashingVectorizer,
 ):
     """Stub for DF wrapper of class ``HashingVectorizer``"""
@@ -214,7 +208,6 @@ class HashingVectorizerDF(
 
 class TfidfTransformerDF(
     ColumnPreservingTransformerWrapperDF[TfidfTransformer],
-    TfidfTransformer,  # type: ignore
     native=TfidfTransformer,
 ):
     """Stub for DF wrapper of class ``TfidfTransformer``"""
@@ -227,15 +220,12 @@ class TfidfTransformerDF(
 # we cannot move this to package _wrapper as it references MissingIndicatorDF
 
 
-class SimpleImputerDF(
-    ImputerWrapperDF[SimpleImputer], SimpleImputer, native=SimpleImputer  # type: ignore
-):
+class SimpleImputerDF(ImputerWrapperDF[SimpleImputer], native=SimpleImputer):
     """Stub for DF wrapper of class ``SimpleImputer``"""
 
 
 class MissingIndicatorDF(
     MissingIndicatorWrapperDF,
-    MissingIndicator,  # type: ignore
     native=MissingIndicator,
 ):
     """Stub for DF wrapper of class ``MissingIndicator``"""
@@ -243,7 +233,6 @@ class MissingIndicatorDF(
 
 class IterativeImputerDF(
     ImputerWrapperDF[IterativeImputer],
-    IterativeImputer,  # type: ignore
     native=IterativeImputer,
 ):
     """Stub for DF wrapper of class ``IterativeImputer``"""
@@ -251,7 +240,6 @@ class IterativeImputerDF(
 
 class IsomapDF(
     IsomapWrapperDF,
-    Isomap,  # type: ignore
     native=Isomap,
 ):
     """Stub for DF wrapper of class ``Isomap``"""
@@ -259,7 +247,6 @@ class IsomapDF(
 
 class AdditiveChi2SamplerDF(
     AdditiveChi2SamplerWrapperDF,
-    AdditiveChi2Sampler,  # type: ignore
     native=AdditiveChi2Sampler,
 ):
     """Stub for DF wrapper of class ``AdditiveChi2Sampler``"""
@@ -272,7 +259,6 @@ class AdditiveChi2SamplerDF(
 
 class NeighborhoodComponentsAnalysisDF(
     ColumnPreservingTransformerWrapperDF[NeighborhoodComponentsAnalysis],
-    NeighborhoodComponentsAnalysis,  # type: ignore
     native=NeighborhoodComponentsAnalysis,
 ):
     """Stub for DF wrapper of class ``NeighborhoodComponentsAnalysis``"""
@@ -285,7 +271,6 @@ class NeighborhoodComponentsAnalysisDF(
 
 class MinMaxScalerDF(
     ColumnPreservingTransformerWrapperDF[MinMaxScaler],
-    MinMaxScaler,  # type: ignore
     native=MinMaxScaler,
 ):
     """Stub for DF wrapper of class ``MinMaxScaler``"""
@@ -293,7 +278,6 @@ class MinMaxScalerDF(
 
 class StandardScalerDF(
     ColumnPreservingTransformerWrapperDF[StandardScaler],
-    StandardScaler,  # type: ignore
     native=StandardScaler,
 ):
     """Stub for DF wrapper of class ``StandardScaler``"""
@@ -301,7 +285,6 @@ class StandardScalerDF(
 
 class MaxAbsScalerDF(
     ColumnPreservingTransformerWrapperDF[MaxAbsScaler],
-    MaxAbsScaler,  # type: ignore
     native=MaxAbsScaler,
 ):
     """Stub for DF wrapper of class ``MaxAbsScaler``"""
@@ -309,7 +292,6 @@ class MaxAbsScalerDF(
 
 class RobustScalerDF(
     ColumnPreservingTransformerWrapperDF[RobustScaler],
-    RobustScaler,  # type: ignore
     native=RobustScaler,
 ):
     """Stub for DF wrapper of class ``RobustScaler``"""
@@ -317,7 +299,6 @@ class RobustScalerDF(
 
 class PolynomialFeaturesDF(
     PolynomialTransformerWrapperDF[PolynomialFeatures],
-    PolynomialFeatures,  # type: ignore
     native=PolynomialFeatures,
 ):
     """Stub for DF wrapper of class ``PolynomialFeatures``"""
@@ -325,7 +306,6 @@ class PolynomialFeaturesDF(
 
 class NormalizerDF(
     ColumnPreservingTransformerWrapperDF[Normalizer],
-    Normalizer,  # type: ignore
     native=Normalizer,
 ):
     """Stub for DF wrapper of class ``Normalizer``"""
@@ -333,7 +313,6 @@ class NormalizerDF(
 
 class BinarizerDF(
     ColumnPreservingTransformerWrapperDF[Binarizer],
-    Binarizer,  # type: ignore
     native=Binarizer,
 ):
     """Stub for DF wrapper of class ``Binarizer``"""
@@ -341,7 +320,6 @@ class BinarizerDF(
 
 class KernelCentererDF(
     ColumnPreservingTransformerWrapperDF[KernelCenterer],
-    KernelCenterer,  # type: ignore
     native=KernelCenterer,
 ):
     """Stub for DF wrapper of class ``KernelCenterer``"""
@@ -349,7 +327,6 @@ class KernelCentererDF(
 
 class QuantileTransformerDF(
     ColumnPreservingTransformerWrapperDF[QuantileTransformer],
-    QuantileTransformer,  # type: ignore
     native=QuantileTransformer,
 ):
     """Stub for DF wrapper of class ``QuantileTransformer``"""
@@ -357,7 +334,6 @@ class QuantileTransformerDF(
 
 class PowerTransformerDF(
     ColumnPreservingTransformerWrapperDF[PowerTransformer],
-    PowerTransformer,  # type: ignore
     native=PowerTransformer,
 ):
     """Stub for DF wrapper of class ``PowerTransformer``"""
@@ -365,7 +341,6 @@ class PowerTransformerDF(
 
 class FunctionTransformerDF(
     ColumnPreservingTransformerWrapperDF[FunctionTransformer],
-    FunctionTransformer,  # type: ignore
     native=FunctionTransformer,
 ):
     """Stub for DF wrapper of class ``FunctionTransformer``"""
@@ -373,7 +348,6 @@ class FunctionTransformerDF(
 
 class LabelEncoderDF(
     ColumnPreservingTransformerWrapperDF[LabelEncoder],
-    LabelEncoder,  # type: ignore
     native=LabelEncoder,
 ):
     """Stub for DF wrapper of class ``LabelEncoder``"""
@@ -381,7 +355,6 @@ class LabelEncoderDF(
 
 class LabelBinarizerDF(
     ColumnPreservingTransformerWrapperDF[LabelBinarizer],
-    LabelBinarizer,  # type: ignore
     native=LabelBinarizer,
 ):
     """Stub for DF wrapper of class ``LabelBinarizer``"""
@@ -389,7 +362,6 @@ class LabelBinarizerDF(
 
 class MultiLabelBinarizerDF(
     ColumnPreservingTransformerWrapperDF[MultiLabelBinarizer],
-    MultiLabelBinarizer,  # type: ignore
     native=MultiLabelBinarizer,
 ):
     """Stub for DF wrapper of class ``MultiLabelBinarizer``"""
@@ -397,7 +369,6 @@ class MultiLabelBinarizerDF(
 
 class OneHotEncoderDF(
     OneHotEncoderWrapperDF,
-    OneHotEncoder,  # type: ignore
     native=OneHotEncoder,
 ):
     """Stub for DF wrapper of class ``OneHotEncoder``"""
@@ -405,7 +376,6 @@ class OneHotEncoderDF(
 
 class OrdinalEncoderDF(
     ColumnPreservingTransformerWrapperDF[OrdinalEncoder],
-    OrdinalEncoder,  # type: ignore
     native=OrdinalEncoder,
 ):
     """Stub for DF wrapper of class ``OrdinalEncoder``"""
@@ -413,7 +383,6 @@ class OrdinalEncoderDF(
 
 class KBinsDiscretizerDF(
     KBinsDiscretizerWrapperDF,
-    KBinsDiscretizer,  # type: ignore
     native=KBinsDiscretizer,
 ):
     """Stub for DF wrapper of class ``KBinsDiscretizer``"""
@@ -427,7 +396,6 @@ class KBinsDiscretizerDF(
 
 class BernoulliRBMDF(
     ComponentsDimensionalityReductionWrapperDF[BernoulliRBM],
-    BernoulliRBM,  # type: ignore
     native=BernoulliRBM,
 ):
     """Stub for DF wrapper of class ``BernoulliRBM``"""
@@ -435,7 +403,6 @@ class BernoulliRBMDF(
 
 class DictionaryLearningDF(
     ComponentsDimensionalityReductionWrapperDF[DictionaryLearning],
-    DictionaryLearning,  # type: ignore
     native=DictionaryLearning,
 ):
     """Stub for DF wrapper of class ``DictionaryLearning``"""
@@ -443,7 +410,6 @@ class DictionaryLearningDF(
 
 class FactorAnalysisDF(
     ComponentsDimensionalityReductionWrapperDF[FactorAnalysis],
-    FactorAnalysis,  # type: ignore
     native=FactorAnalysis,
 ):
     """Stub for DF wrapper of class ``FactorAnalysis``"""
@@ -451,7 +417,6 @@ class FactorAnalysisDF(
 
 class FastICADF(
     ComponentsDimensionalityReductionWrapperDF[FastICA],
-    FastICA,  # type: ignore
     native=FastICA,
 ):
     """Stub for DF wrapper of class ``FastICA``"""
@@ -459,7 +424,6 @@ class FastICADF(
 
 class GaussianRandomProjectionDF(
     ComponentsDimensionalityReductionWrapperDF[GaussianRandomProjection],
-    GaussianRandomProjection,  # type: ignore
     native=GaussianRandomProjection,
 ):
     """Stub for DF wrapper of class ``GaussianRandomProjection``"""
@@ -467,7 +431,6 @@ class GaussianRandomProjectionDF(
 
 class IncrementalPCADF(
     ComponentsDimensionalityReductionWrapperDF[IncrementalPCA],
-    IncrementalPCA,  # type: ignore
     native=IncrementalPCA,
 ):
     """Stub for DF wrapper of class ``IncrementalPCA``"""
@@ -475,7 +438,6 @@ class IncrementalPCADF(
 
 class LatentDirichletAllocationDF(
     ComponentsDimensionalityReductionWrapperDF[LatentDirichletAllocation],
-    LatentDirichletAllocation,  # type: ignore
     native=LatentDirichletAllocation,
 ):
     """Stub for DF wrapper of class ``LatentDirichletAllocation``"""
@@ -483,7 +445,6 @@ class LatentDirichletAllocationDF(
 
 class MiniBatchDictionaryLearningDF(
     ComponentsDimensionalityReductionWrapperDF[MiniBatchDictionaryLearning],
-    MiniBatchDictionaryLearning,  # type: ignore
     native=MiniBatchDictionaryLearning,
 ):
     """Stub for DF wrapper of class ``MiniBatchDictionaryLearning``"""
@@ -491,27 +452,21 @@ class MiniBatchDictionaryLearningDF(
 
 class MiniBatchSparsePCADF(
     ComponentsDimensionalityReductionWrapperDF[MiniBatchSparsePCA],
-    MiniBatchSparsePCA,  # type: ignore
     native=MiniBatchSparsePCA,
 ):
     """Stub for DF wrapper of class ``MiniBatchSparsePCA``"""
 
 
-class NMFDF(
-    ComponentsDimensionalityReductionWrapperDF[NMF], NMF, native=NMF  # type: ignore
-):
+class NMFDF(ComponentsDimensionalityReductionWrapperDF[NMF], native=NMF):
     """Stub for DF wrapper of class ``NMF``"""
 
 
-class PCADF(
-    NComponentsDimensionalityReductionWrapperDF[PCA], PCA, native=PCA  # type: ignore
-):
+class PCADF(NComponentsDimensionalityReductionWrapperDF[PCA], native=PCA):
     """Stub for DF wrapper of class ``PCA``"""
 
 
 class SparseCoderDF(
     ComponentsDimensionalityReductionWrapperDF[SparseCoder],
-    SparseCoder,  # type: ignore
     native=SparseCoder,
 ):
     """Stub for DF wrapper of class ``SparseCoder``"""
@@ -519,7 +474,6 @@ class SparseCoderDF(
 
 class SparsePCADF(
     ComponentsDimensionalityReductionWrapperDF[SparsePCA],
-    SparsePCA,  # type: ignore
     native=SparsePCA,
 ):
     """Stub for DF wrapper of class ``SparsePCA``"""
@@ -527,7 +481,6 @@ class SparsePCADF(
 
 class SparseRandomProjectionDF(
     ComponentsDimensionalityReductionWrapperDF[SparseRandomProjection],
-    SparseRandomProjection,  # type: ignore
     native=SparseRandomProjection,
 ):
     """Stub for DF wrapper of class ``SparseRandomProjection``"""
@@ -535,7 +488,6 @@ class SparseRandomProjectionDF(
 
 class TruncatedSVDDF(
     ComponentsDimensionalityReductionWrapperDF[TruncatedSVD],
-    TruncatedSVD,  # type: ignore
     native=TruncatedSVD,
 ):
     """Stub for DF wrapper of class ``TruncatedSVD``"""
@@ -549,7 +501,6 @@ class TruncatedSVDDF(
 
 class KernelPCADF(
     NComponentsDimensionalityReductionWrapperDF[KernelPCA],
-    KernelPCA,  # type: ignore
     native=KernelPCA,
 ):
     """Stub for DF wrapper of class ``KernelPCA``"""
@@ -557,7 +508,6 @@ class KernelPCADF(
 
 class LocallyLinearEmbeddingDF(
     NComponentsDimensionalityReductionWrapperDF[LocallyLinearEmbedding],
-    LocallyLinearEmbedding,  # type: ignore
     native=LocallyLinearEmbedding,
 ):
     """Stub for DF wrapper of class ``LocallyLinearEmbedding``"""
@@ -565,7 +515,6 @@ class LocallyLinearEmbeddingDF(
 
 class NystroemDF(
     NComponentsDimensionalityReductionWrapperDF[Nystroem],
-    Nystroem,  # type: ignore
     native=Nystroem,
 ):
     """Stub for DF wrapper of class ``Nystroem``"""
@@ -573,7 +522,6 @@ class NystroemDF(
 
 class RBFSamplerDF(
     NComponentsDimensionalityReductionWrapperDF[RBFSampler],
-    RBFSampler,  # type: ignore
     native=RBFSampler,
 ):
     """Stub for DF wrapper of class ``RBFSampler``"""
@@ -581,7 +529,6 @@ class RBFSamplerDF(
 
 class SkewedChi2SamplerDF(
     NComponentsDimensionalityReductionWrapperDF[SkewedChi2Sampler],
-    SkewedChi2Sampler,  # type: ignore
     native=SkewedChi2Sampler,
 ):
     """Stub for DF wrapper of class ``SkewedChi2Sampler``"""
@@ -596,23 +543,21 @@ class SkewedChi2SamplerDF(
 
 class VarianceThresholdDF(
     FeatureSelectionWrapperDF[VarianceThreshold],
-    VarianceThreshold,  # type: ignore
     native=VarianceThreshold,
 ):
     """Stub for DF wrapper of class ``VarianceThreshold``"""
 
 
-class RFEDF(FeatureSelectionWrapperDF[RFE], RFE, native=RFE):  # type: ignore
+class RFEDF(FeatureSelectionWrapperDF[RFE], native=RFE):
     """Stub for DF wrapper of class ``RFE``"""
 
 
-class RFECVDF(FeatureSelectionWrapperDF[RFECV], RFECV, native=RFECV):  # type: ignore
+class RFECVDF(FeatureSelectionWrapperDF[RFECV], native=RFECV):
     """Stub for DF wrapper of class ``RFECV``"""
 
 
 class SelectFromModelDF(
     FeatureSelectionWrapperDF[SelectFromModel],
-    SelectFromModel,  # type: ignore
     native=SelectFromModel,
 ):
     """Stub for DF wrapper of class ``SelectFromModel``"""
@@ -620,7 +565,6 @@ class SelectFromModelDF(
 
 class SelectPercentileDF(
     FeatureSelectionWrapperDF[SelectPercentile],
-    SelectPercentile,  # type: ignore
     native=SelectPercentile,
 ):
     """Stub for DF wrapper of class ``SelectPercentile``"""
@@ -628,33 +572,25 @@ class SelectPercentileDF(
 
 class SelectKBestDF(
     FeatureSelectionWrapperDF[SelectKBest],
-    SelectKBest,  # type: ignore
     native=SelectKBest,
 ):
     """Stub for DF wrapper of class ``SelectKBest``"""
 
 
-class SelectFprDF(
-    FeatureSelectionWrapperDF[SelectFpr], SelectFpr, native=SelectFpr  # type: ignore
-):
+class SelectFprDF(FeatureSelectionWrapperDF[SelectFpr], native=SelectFpr):
     """Stub for DF wrapper of class ``SelectFpr``"""
 
 
-class SelectFdrDF(
-    FeatureSelectionWrapperDF[SelectFdr], SelectFdr, native=SelectFdr  # type: ignore
-):
+class SelectFdrDF(FeatureSelectionWrapperDF[SelectFdr], native=SelectFdr):
     """Stub for DF wrapper of class ``SelectFdr``"""
 
 
-class SelectFweDF(
-    FeatureSelectionWrapperDF[SelectFwe], SelectFwe, native=SelectFwe  # type: ignore
-):
+class SelectFweDF(FeatureSelectionWrapperDF[SelectFwe], native=SelectFwe):
     """Stub for DF wrapper of class ``SelectFwe``"""
 
 
 class GenericUnivariateSelectDF(
     FeatureSelectionWrapperDF[GenericUnivariateSelect],
-    GenericUnivariateSelect,  # type: ignore
     native=GenericUnivariateSelect,
 ):
     """Stub for DF wrapper of class ``GenericUnivariateSelect``"""
