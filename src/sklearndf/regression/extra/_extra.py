@@ -52,7 +52,6 @@ if LGBMRegressor:
 
     class LGBMRegressorDF(
         RegressorWrapperDF[LGBMRegressor],
-        LGBMRegressor,  # type: ignore
         native=LGBMRegressor,
     ):
         """Stub for DF wrapper of class ``LGBMRegressorDF``"""
@@ -64,7 +63,6 @@ if XGBRegressor:
 
     class XGBRegressorDF(
         RegressorWrapperDF[XGBRegressor],
-        XGBRegressor,  # type: ignore
         native=XGBRegressor,
     ):
         """Stub for DF wrapper of class ``XGBRegressorDF``"""

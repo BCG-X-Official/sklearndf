@@ -15,9 +15,6 @@ from ._transformation import *
 if __sklearn_version__ >= __sklearn_0_22__:
     from ._transformation_v0_22 import *
 
-if __sklearn_version__ >= __sklearn_0_23__:
-    from ._transformation_v0_23 import *
-
 if __sklearn_version__ >= __sklearn_0_24__:
     from ._transformation_v0_24 import *
 

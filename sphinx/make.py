@@ -14,7 +14,7 @@ if __name__ == "__main__":
         f"https://raw.githubusercontent.com/BCG-Gamma/pytools/{BRANCH}"
         f"/sphinx/base/bootstrap.py"
     ) as response:
-        run_make: Callable = lambda branch: ...
+        run_make: Callable[[str], None] = lambda branch: None
         exec(response.read().decode("utf-8"), globals())
 
     run_make(BRANCH)
