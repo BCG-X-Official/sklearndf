@@ -31,9 +31,7 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 #
 
 
-class KNNImputerDF(
-    ImputerWrapperDF[KNNImputer], KNNImputer, native=KNNImputer  # type: ignore
-):
+class KNNImputerDF(ImputerWrapperDF[KNNImputer], native=KNNImputer):
     """Stub for DF wrapper of class ``KNNImputer``"""
 
 

@@ -105,18 +105,14 @@ class DummyTransformer(Transformer):
         return self
 
 
-class DummyTransformerDF(  # type: ignore
-    ColumnPreservingTransformerWrapperDF[DummyTransformer],
-    DummyTransformer,
-    native=DummyTransformer,
+class DummyTransformerDF(
+    ColumnPreservingTransformerWrapperDF[DummyTransformer], native=DummyTransformer
 ):
     """dummy transformer"""
 
 
-class NoTransformerDF(  # type: ignore
-    ColumnPreservingTransformerWrapperDF[NoTransformer],
-    NoTransformer,
-    native=NoTransformer,
+class NoTransformerDF(
+    ColumnPreservingTransformerWrapperDF[NoTransformer], native=NoTransformer
 ):
     """not a transformer"""
 
