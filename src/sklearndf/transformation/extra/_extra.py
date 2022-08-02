@@ -17,12 +17,11 @@ log = logging.getLogger(__name__)
 
 __all__ = ["BorutaPyWrapperDF", "BorutaDF"]
 
-
 #
 # Ensure all symbols introduced below are included in __all__
 #
 
-__tracker = AllTracker(globals(), allow_imported_definitions=True)
+__tracker = AllTracker(globals())
 
 
 #
