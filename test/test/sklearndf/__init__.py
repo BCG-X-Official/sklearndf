@@ -53,11 +53,10 @@ def sklearn_delegate_classes(
     classes.
     """
     return {
-        df_class.__native_class__: df_class
+        df_class.__wrapped__: df_class
         for df_class in find_all_classes(module)
         # we only consider non-abstract wrapper classes wrapping a specific native class
-        if issubclass(df_class, EstimatorWrapperDF)
-        and hasattr(df_class, "__native_class__")
+        if issubclass(df_class, EstimatorWrapperDF) and hasattr(df_class, "__wrapped__")
     }
 
 

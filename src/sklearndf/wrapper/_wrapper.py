@@ -142,7 +142,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
     """
 
     #: the native class wrapped by the DF wrapper class
-    __native_class__: Type[T_NativeEstimator]
+    __wrapped__: Type[T_NativeEstimator]
 
     def __new__(
         mcs: Type[EstimatorWrapperDFMeta[T_NativeEstimator]],
@@ -167,7 +167,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
             return cls
 
         wrapper_cls = cast(Type[EstimatorWrapperDF[T_NativeEstimator]], cls)
-        wrapper_cls.__native_class__ = native
+        wrapper_cls.__wrapped__ = native
         setattr(wrapper_cls, "__init__", _make_init(wrapper_cls))
 
         _mirror_attributes(
@@ -195,7 +195,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
         """
         The type of native estimator that instances of this wrapper class delegate to.
         """
-        return cls.__native_class__
+        return cls.__wrapped__
 
 
 def _make_init(cls: type) -> Callable[..., None]:
@@ -237,7 +237,7 @@ class EstimatorWrapperDF(
         if fitted_delegate_context is None:
             # create a new delegate estimator with the given parameters
             # noinspection PyProtectedMember
-            _native_estimator = type(self).__native_class__(*args, **kwargs)
+            _native_estimator = type(self).__wrapped__(*args, **kwargs)
             self._reset_fit()
         else:
             (
@@ -250,8 +250,12 @@ class EstimatorWrapperDF(
 
         self._validate_delegate_estimator()
 
-    def __new__(cls: Type[T], *args: Any, **kwargs: Any) -> T:
-        if not hasattr(cls, "__native_class__"):
+    def __new__(
+        cls: Type[T_EstimatorWrapperDF], *args: Any, **kwargs: Any
+    ) -> T_EstimatorWrapperDF:
+        try:
+            cls.__wrapped__
+        except AttributeError:
             raise TypeError(
                 f"cannot instantiate wrapper class {cls.__name__}: "
                 "need to specify class argument 'native' in class definition"
