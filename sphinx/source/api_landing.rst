@@ -7,8 +7,8 @@ with `DF` added as a suffix:
 For all methods expecting an `X` argument for a feature matrix and potentially a
 `y` argument for one or more targets, `sklearndf` estimators expect a pandas
 :class:`~pandas.DataFrame` for `X` and a pandas :class:`~pandas.Series` for a
-1-dimensional `y`, or a pandas :class:`~pandas.DataFrame` when fitting to multiple
-targets or outputs.
+1‑dimensional `y`, or a pandas :class:`~pandas.DataFrame` for `y` when fitting to
+multiple targets or outputs.
 This includes methods such as :meth:`~EstimatorDF.fit`,
 :meth:`~TransformerDF.transform`, and :meth:`~LearnerDF.predict`.
 
@@ -16,7 +16,8 @@ All estimators enhanced by `sklearndf` also implement an additional attribute
 :attr:`~EstimatorDF.feature_names_in_`, keeping track of the column names of the data
 frame used to fit the estimator.
 
-`sklearndf` transformers also implement :attr:`~TransformerDF.feature_names_out_` and
+`sklearndf` transformers also implement attributes
+:attr:`~TransformerDF.feature_names_out_` and
 :attr:`~TransformerDF.feature_names_original_`, keeping track of the feature names of
 the transformed outputs as well as mapping output features back to the input features.
 This enables tracing features back to the original inputs even across complex
