@@ -168,7 +168,10 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
 
         wrapper_cls = cast(Type[EstimatorWrapperDF[T_NativeEstimator]], cls)
         wrapper_cls.__wrapped__ = native
-        setattr(wrapper_cls, "__init__", _make_init(wrapper_cls))
+        wrapper_cls.__signature__ = inspect.signature(native)
+        wrapper_init = _make_init(wrapper_cls)
+        wrapper_init.__signature__ = inspect.signature(native.__init__)  # type: ignore
+        setattr(wrapper_cls, "__init__", wrapper_init)
 
         _mirror_attributes(
             wrapper_class=wrapper_cls,
@@ -177,7 +180,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
         )
         # adopt the initializer signature of the wrapped sklearn estimator
         _update_wrapper(
-            wrapper=wrapper_cls.__init__,
+            wrapper=wrapper_init,
             wrapped=native.__init__,
             wrapper_module=native.__module__,
             wrapper_parent=name,
@@ -200,6 +203,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
 
 def _make_init(cls: type) -> Callable[..., None]:
     def __init__(self: type, *args: Any, **kwargs: Any) -> None:
+        """"""
         cast(EstimatorWrapperDF, super(cls, self)).__init__(  # type: ignore
             *args, **kwargs
         )
@@ -1444,7 +1448,9 @@ def _update_wrapper(
     wrapper_module: str,
     wrapper_parent: str,
 ) -> None:
-    updated = update_wrapper(wrapper, wrapped, assigned=("__name__", "__annotations__"))
+    updated = update_wrapper(
+        wrapper, wrapped, assigned=("__name__", "__annotations__"), updated=()
+    )
     updated.__module__ = wrapper_module
     if wrapper_parent:
         updated.__qualname__ = f"{wrapper_parent}.{updated.__name__}"
@@ -1484,8 +1490,9 @@ def _update_class_docstring(
             (
                 f"""
 .. note:: This class is a wrapper around class :class:`{estimator_name}`.
-    It provides enhanced support for pandas data frames, and otherwise
-    replicates all parameters and behaviours of class :class:`~{estimator_name}`.
+    It provides enhanced support for :mod:`pandas` data frames, and otherwise
+    delegates all attribute access and method calls to an associated
+    :class:`~{estimator_name}` instance.
 """
             ),
         ]
