@@ -1449,14 +1449,14 @@ def _update_wrapper(
     wrapper_module: str,
     wrapper_parent: str,
 ) -> None:
-    updated = update_wrapper(
+    update_wrapper(
         wrapper, wrapped, assigned=("__name__", "__annotations__"), updated=()
     )
-    updated.__module__ = wrapper_module
+    wrapper.__module__ = wrapper_module
     if wrapper_parent:
-        updated.__qualname__ = f"{wrapper_parent}.{updated.__name__}"
+        wrapper.__qualname__ = f"{wrapper_parent}.{wrapper.__name__}"
     else:
-        updated.__qualname__ = updated.__name__
+        wrapper.__qualname__ = wrapper.__name__
 
 
 def _update_class_docstring(
