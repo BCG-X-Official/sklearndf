@@ -172,17 +172,18 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
         wrapper_init = _make_init(wrapper_cls)
         wrapper_init.__signature__ = inspect.signature(native.__init__)  # type: ignore
         setattr(wrapper_cls, "__init__", wrapper_init)
+        wrapper_module = namespace["__module__"]
 
         _mirror_attributes(
             wrapper_class=wrapper_cls,
             native_estimator=native,
-            wrapper_module=native.__module__,
+            wrapper_module=wrapper_module,
         )
         # adopt the initializer signature of the wrapped sklearn estimator
         _update_wrapper(
             wrapper=wrapper_init,
             wrapped=native.__init__,
-            wrapper_module=native.__module__,
+            wrapper_module=wrapper_module,
             wrapper_parent=name,
         )
         # adopt the class docstring of the wrapped sklearn estimator …
