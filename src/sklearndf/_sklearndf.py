@@ -16,12 +16,12 @@ from sklearn.base import (
     TransformerMixin,
     clone,
 )
+from sklearn.exceptions import NotFittedError
 from sklearn.utils import is_scalar_nan
 
 from pytools.api import AllTracker, inheritdoc
 from pytools.expression import Expression, HasExpressionRepr, make_expression
 from pytools.expression.atomic import Id
-from pytools.fit import NotFittedError
 
 log = logging.getLogger(__name__)
 
@@ -120,9 +120,10 @@ class EstimatorDF(
 
     def ensure_fitted(self) -> None:
         """
-        Raise a :class:`.NotFittedError` if this object is not fitted.
+        Raise a :class:`~sklearn.exceptions.NotFittedError` if this estimator is not
+        fitted.
 
-        :raise NotFittedError: this object is not fitted
+        :raise sklearn.exceptions.NotFittedError: this estimator is not fitted
         """
         if not self.is_fitted:
             raise NotFittedError(f"{type(self).__name__} is not fitted")
