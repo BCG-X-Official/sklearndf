@@ -3,7 +3,7 @@ Wrappers around native `scikit-learn` estimators.
 
 `sklearndf` wrappers accept and return data frames (while `scikit-learn` transformers
 usually return a numpy arrays, and may not accept data frames as input).
-Otherwise the wrappers are designed to precisely mirror the API and behavior of the
+Otherwise, the wrappers are designed to precisely mirror the API and behavior of the
 native estimators they wrap.
 
 The wrappers also implement the additional column attributes introduced by `sklearndf`,
@@ -186,7 +186,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
             wrapper_module=wrapper_module,
             wrapper_parent=name,
         )
-        # adopt the class docstring of the wrapped sklearn estimator …
+        # adopt the class docstring of the wrapped sklearn estimator
         _update_class_docstring(
             df_estimator_type=wrapper_cls,
             sklearn_native_estimator_type=native,
@@ -325,10 +325,10 @@ class EstimatorWrapperDF(
         n_outputs: int,
     ) -> T_EstimatorWrapperDF:
         """
-        Make a new wrapped data frame estimator whose delegate is an estimator which
+        Make a new wrapped DF estimator, delegating to a given native estimator that
         has already been fitted.
 
-        :param estimator: the fitted estimator
+        :param estimator: the fitted native estimator to use as the delegate
         :param features_in: the column names of X used for fitting the estimator
         :param n_outputs: the number of outputs in y used for fitting the estimator
         :return: the wrapped data frame estimator
@@ -518,7 +518,7 @@ class EstimatorWrapperDF(
         self, X: pd.DataFrame
     ) -> Union[pd.DataFrame, npt.NDArray[Any]]:
         # Convert X before passing it to the delegate estimator.
-        # By default does nothing, but can be overridden.
+        # By default, does nothing, but can be overridden.
         return X
 
     def _adjust_y_type_for_delegate(
@@ -750,12 +750,14 @@ class LearnerWrapperDF(
     Generic[T_NativeLearner],
 ):
     """
-    Base class of DF wrappers for native learners conforming with the `scikit-learn`
+    Base class of DF wrappers for native `learners` conforming with the `scikit-learn`
     API.
+
+    Learners in `scikit-learn` typically are regressors, classifiers, or clusterers.
     """
 
-    #: Name of :class:`pd.Series` objects containing the predictions of single-output
-    #: learners.
+    #: Name of :class:`~pandas.Series` objects containing the predictions of
+    #: single-output learners.
     #:
     #: See :meth:`~.LearnerDF.predict`.
     COL_PREDICTION = "prediction"
@@ -809,7 +811,10 @@ class SupervisedLearnerWrapperDF(
     metaclass=ABCMeta,
 ):
     """
-    ...
+    Base class of DF wrappers for native `supervised learners` conforming with the
+    `scikit-learn` API.
+
+    Supervised learners in `scikit-learn` typically are regressors or classifiers.
     """
 
     # noinspection PyPep8Naming
@@ -1479,7 +1484,7 @@ def _update_class_docstring(
             # no: append line to tag lines
             tag_lines.append(stripped)
         elif tag_lines:
-            # empty line and we already have tag lines: stop here
+            # empty line, and we already have tag lines: stop here
             break
 
     estimator_name = _full_class_name(cls=sklearn_native_estimator_type)

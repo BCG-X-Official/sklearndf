@@ -232,7 +232,7 @@ class EstimatorDF(
                         # ... or both have the same expression.
                         # We cannot compare for equality since we don't know
                         # if the classes of the values implement this.
-                        # Therefore we compare the expressions but do this last,
+                        # Therefore, we compare the expressions but do this last,
                         # as it might be computationally more costly in the
                         # unlikely case that the default value is a very complex
                         # object.
@@ -293,7 +293,7 @@ class LearnerDF(EstimatorDF, metaclass=ABCMeta):
 
 class SupervisedLearnerDF(LearnerDF, metaclass=ABCMeta):
     """
-    Base class for augmented scikit-learn `supervised learners`.
+    Base class for augmented `scikit-learn` supervised learners.
 
     Provides enhanced support for data frames.
     """
@@ -344,6 +344,7 @@ class TransformerDF(
 
     @property
     def feature_names_original_(self) -> pd.Series:
+        # noinspection GrazieInspection
         """
         A pandas series, mapping the output features resulting from the transformation
         to the original input features.
@@ -562,7 +563,7 @@ class ClusterDF(
     metaclass=ABCMeta,
 ):
     """
-    Base class for augmented scikit-learn `clusterers`.
+    Base class for augmented `scikit-learn` clusterers.
 
     Provides enhanced support for data frames.
     """
@@ -570,6 +571,7 @@ class ClusterDF(
     @property
     @abstractmethod
     def labels_(self) -> pd.Series:
+        # noinspection GrazieInspection
         """
         A pandas series, mapping the index of the input data frame to cluster labels.
         """
