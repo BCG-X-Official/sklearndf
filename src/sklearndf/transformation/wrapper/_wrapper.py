@@ -389,7 +389,7 @@ class ImputerWrapperDF(TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
             stats: npt.NDArray[Any],
         ) -> Union[List[bool], npt.NDArray[np.bool_]]:
             if issubclass(stats.dtype.type, float):
-                return np.isnan(stats)
+                return cast(npt.NDArray[np.bool_], np.isnan(stats))
             else:
                 return [
                     x is None or (isinstance(x, float) and np.isnan(x)) for x in stats
