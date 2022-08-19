@@ -38,4 +38,4 @@ repos:
         language_version: python38
         additional_dependencies:
           - numpy~=1.22
-          - gamma-pytools~=2.0,>=2.0.1
+          - gamma-pytools~=2.0,!=2.0.0

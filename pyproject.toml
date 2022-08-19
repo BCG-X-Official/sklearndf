@@ -14,7 +14,6 @@ dist-name = "sklearndf"
 license = "Apache Software License v2.0"
 
 requires = [
-    "boruta         ~=0.3",
     "gamma-pytools  ~=2.0,>=2.0.1",
     "numpy          >=1.21,<2a",  # cannot use ~= due to conda bug
     "packaging      >=20",
@@ -43,9 +42,10 @@ classifiers = [
 
 [tool.flit.metadata.requires-extra]
 testing = [
+    "boruta ~=0.3",
+    "lightgbm ~= 3.3",
     "pytest ~= 7.1",
     "pytest-cov ~= 2.8",
-    "lightgbm ~= 3.3",
     "xgboost ~= 1.5",
 ]
 docs = [
