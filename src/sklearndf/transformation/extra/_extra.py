@@ -5,17 +5,19 @@ from __future__ import annotations
 
 import logging
 
-import pandas as pd
-from boruta import BorutaPy
-
 from pytools.api import AllTracker
-
-from ...wrapper import MetaEstimatorWrapperDF
-from ..wrapper import ColumnSubsetTransformerWrapperDF, NumpyTransformerWrapperDF
 
 log = logging.getLogger(__name__)
 
-__all__ = ["BorutaPyWrapperDF", "BorutaDF"]
+__all__ = ["BorutaDF"]
+
+
+try:
+    # import boruta classes only if installed
+    from boruta import BorutaPy
+
+except ImportError:
+    BorutaPy = None
 
 
 #
@@ -29,24 +31,20 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 # Class definitions
 #
 
+if BorutaPy:
 
-class BorutaPyWrapperDF(
-    MetaEstimatorWrapperDF[BorutaPy],
-    NumpyTransformerWrapperDF[BorutaPy],
-    ColumnSubsetTransformerWrapperDF[BorutaPy],
-):
-    """
-    DF wrapper for :class:`~boruta.BorutaPy`.
-    """
+    from .wrapper import BorutaPyWrapperDF
 
-    def _get_features_out(self) -> pd.Index:
-        return self.feature_names_in_[self.native_estimator.support_]
+    class BorutaDF(BorutaPyWrapperDF, native=BorutaPy):
+        """
+        DF version of :class:`~boruta.BorutaPy`.
+        """
 
+    # remove the wrapper class from the global namespace to pass AllTracker validation
+    del BorutaPyWrapperDF
 
-class BorutaDF(BorutaPyWrapperDF, native=BorutaPy):
-    """
-    DF version of :class:`~boruta.BorutaPy`.
-    """
+else:
+    __all__.remove("BorutaDF")
 
 
 __tracker.validate()
