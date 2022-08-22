@@ -56,4 +56,5 @@ examples in modules
 """
 
 from ._adapter import *
+from ._missing import *
 from ._wrapper import *

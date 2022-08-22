@@ -5,7 +5,7 @@ import logging
 
 from pytools.api import AllTracker
 
-from ...wrapper import RegressorWrapperDF
+from ...wrapper import MissingEstimator, RegressorWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -15,15 +15,22 @@ try:
     # import lightgbm classes only if installed
     from lightgbm.sklearn import LGBMClassifier
 except ImportError:
-    LGBMClassifier = None
+
+    class LGBMClassifier(  # type: ignore
+        MissingEstimator,
+    ):
+        """Mock-up for missing estimator."""
+
 
 try:
     # import xgboost classes only if installed
     from xgboost import XGBClassifier
 except ImportError:
-    XGBClassifier = None
 
-__imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
+    class XGBClassifier(  # type: ignore
+        MissingEstimator,
+    ):
+        """Mock-up for missing estimator."""
 
 
 #
@@ -60,21 +67,7 @@ else:
     __all__.remove("XGBClassifierDF")
 
 #
-# validate that __all__ comprises all symbols ending in "DF", and no others
+# validate that __all__
 #
-
-__estimators = [
-    sym
-    for sym in dir()
-    if sym.endswith("DF")
-    and sym not in __imported_estimators
-    and not sym.startswith("_")
-]
-if set(__estimators) != set(__all__):
-    raise RuntimeError(
-        "__all__ does not contain exactly all DF estimators; expected value is:\n"
-        f"{__estimators}"
-    )
-
 
 __tracker.validate()
