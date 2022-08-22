@@ -55,4 +55,5 @@ examples in modules
 :mod:`sklearndf.regression`, and :mod:`sklearndf.clustering`.
 """
 
+from ._adapter import *
 from ._wrapper import *
