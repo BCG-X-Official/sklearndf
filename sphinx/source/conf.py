@@ -18,4 +18,10 @@ set_config(
     globals(),
     project="sklearndf",
     html_logo=os.path.join("_images", "gamma_sklearndf_logo.png"),
+    intersphinx_mapping={
+        "lightgbm": ("https://lightgbm.readthedocs.io/en/latest/", None),
+        "pytools": ("https://bcg-gamma.github.io/pytools/", None),
+        "sklearn": ("https://scikit-learn.org/stable", None),
+        "xgboost": ("https://xgboost.readthedocs.io/en/latest/", None),
+    },
 )
