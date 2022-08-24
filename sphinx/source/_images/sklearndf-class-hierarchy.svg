@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns:xl="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="-161 263 542 186" width="542" height="186">
+  <defs/>
+  <g id="Canvas_1" fill-opacity="1" fill="none" stroke-opacity="1" stroke="none" stroke-dasharray="none">
+    <title>Canvas 1</title>
+    <rect fill="white" x="-161" y="263" width="542" height="186"/>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_2">
+        <rect x="200" y="320" width="160" height="24" fill="white"/>
+        <rect x="200" y="320" width="160" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(205 325)" fill="black">
+          <tspan font-family="Courier New" font-size="12" fill="black" x="28.192383" y="10">TransformerDF</tspan>
+        </text>
+      </g>
+      <g id="Graphic_8">
+        <rect x="-152" y="416" width="160" height="24" fill="white"/>
+        <rect x="-152" y="416" width="160" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-147 421)" fill="black">
+          <tspan font-family="Courier New" font-size="12" fill="black" x="31.79297" y="10">ClassifierDF</tspan>
+        </text>
+      </g>
+      <g id="Graphic_9">
+        <rect x="24" y="416" width="160" height="24" fill="white"/>
+        <rect x="24" y="416" width="160" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(29 421)" fill="black">
+          <tspan font-family="Courier New" font-size="12" fill="black" x="35.393555" y="10">RegressorDF</tspan>
+        </text>
+      </g>
+      <g id="Line_18">
+        <path d="M 104 344 L 104 356 L 16 356 L 16 368" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_19">
+        <path d="M 16 392 L 16 404 L -72 404 L -72 416" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_20">
+        <path d="M 16 392 L 16 404 L 104 404 L 104 416" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_21">
+        <path d="M 104 344 L 104 356 L 192 356 L 192 368" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_24">
+        <path d="M 191.5 296 L 191.5 308 L 104 308 L 104 320" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_25">
+        <path d="M 191.5 296 L 191.5 308 L 280 308 L 280 320" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_4">
+        <rect x="111" y="272" width="161" height="24" fill="white"/>
+        <rect x="111" y="272" width="161" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(116 277)" fill="black">
+          <tspan font-family="Courier New" font-size="12" fill="black" x="35.893555" y="10">EstimatorDF</tspan>
+        </text>
+      </g>
+      <g id="Graphic_6">
+        <rect x="-64" y="368" width="160" height="24" fill="white"/>
+        <rect x="-64" y="368" width="160" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-59 373)" fill="black">
+          <tspan font-family="Courier New" font-size="12" fill="black" x="6.588867" y="10">SupervisedLearnerDF</tspan>
+        </text>
+      </g>
+      <g id="Graphic_5">
+        <rect x="24" y="320" width="160" height="24" fill="white"/>
+        <rect x="24" y="320" width="160" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(29 325)" fill="black">
+          <tspan font-family="Courier New" font-size="12" fill="black" x="42.594727" y="10">LearnerDF</tspan>
+        </text>
+      </g>
+      <g id="Graphic_7">
+        <rect x="112" y="368" width="160" height="24" fill="white"/>
+        <rect x="112" y="368" width="160" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(117 373)" fill="black">
+          <tspan font-family="Courier New" font-size="12" fill="black" x="42.594727" y="10">ClusterDF</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

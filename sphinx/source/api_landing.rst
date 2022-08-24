@@ -27,6 +27,14 @@ pipelines (see also :class:`.PipelineDF`)
 scikit-learn classes (but is only partially reflected via class inheritance in the
 original implementation):
 
+|
+
+.. image:: /_images/sklearndf-class-hierarchy.svg
+  :alt: sklearndf class hierarchy
+  :align: center
+
+|
+
 - all `sklearndf` transformers are subclasses of :class:`.TransformerDF`, which in turn
   provides the API for all common transformer methods, e.g.,
   :meth:`~TransformerDF.transform`
