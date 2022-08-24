@@ -168,6 +168,10 @@ class LearnerNPDF(
 ):
     """[see superclass]"""
 
+    # repeating attribute declarations of base classes for Sphinx documentation
+    delegate: T_DelegateLearnerDF
+    column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
+
     def predict(
         self, X: Union[npt.NDArray[Any], pd.DataFrame], **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
@@ -183,6 +187,10 @@ class SupervisedLearnerNPDF(
     Generic[T_DelegateSupervisedLearnerDF],
 ):
     """[see superclass]"""
+
+    # repeating attribute declarations of base classes for Sphinx documentation
+    delegate: T_DelegateSupervisedLearnerDF
+    column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
 
     def score(
         self,
@@ -206,6 +214,10 @@ class ClassifierNPDF(
     Generic[T_DelegateClassifierDF],
 ):
     """[see superclass]"""
+
+    # repeating attribute declarations of base classes for Sphinx documentation
+    delegate: T_DelegateClassifierDF
+    column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
 
     @property
     def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
@@ -250,6 +262,10 @@ class RegressorNPDF(
 ):
     """[see superclass]"""
 
+    # repeating attribute declarations of base classes for Sphinx documentation
+    delegate: T_DelegateRegressorDF
+    column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
+
 
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
@@ -259,6 +275,10 @@ class TransformerNPDF(
     Generic[T_DelegateTransformerDF],
 ):
     """[see superclass]"""
+
+    # repeating attribute declarations of base classes for Sphinx documentation
+    delegate: T_DelegateTransformerDF
+    column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
 
     def transform(self, X: Union[npt.NDArray[Any], pd.DataFrame]) -> pd.DataFrame:
         """[see superclass]"""
