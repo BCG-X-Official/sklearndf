@@ -171,8 +171,7 @@ class StackingClassifierWrapperDF(
     metaclass=ABCMeta,
 ):
     """
-    Abstract base class of DF wrappers for classifiers implementing
-    :class:`sklearn.ensemble._stacking._BaseStacking`.
+    DF wrapper class for :class:`sklearn.classifier.StackingClassifierDF`.
     """
 
     @staticmethod
@@ -209,8 +208,7 @@ class StackingRegressorWrapperDF(
     metaclass=ABCMeta,
 ):
     """
-    Abstract base class of DF wrappers for regressors implementing
-    :class:`sklearn.ensemble._stacking._BaseStacking`.
+    DF wrapper class for :class:`sklearn.regression.StackingRegressorDF`.
     """
 
     @staticmethod

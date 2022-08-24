@@ -9,7 +9,7 @@ import numpy as np
 import numpy.typing as npt
 import pandas as pd
 
-from pytools.api import AllTracker, inheritdoc
+from pytools.api import AllTracker, inheritdoc, subsdoc
 
 from sklearndf import (
     ClassifierDF,
@@ -59,9 +59,8 @@ class EstimatorNPDF(
     Generic[T_DelegateEstimatorDF],
 ):
     """
-    An adapter class that wraps around a :class:`.EstimatorDF` and accepts numpy arrays
-    for all DF estimator methods that would usually only accept pandas data frames or
-    series.
+    Adapter class that delegates to :class:`.EstimatorDF` and accepts numpy arrays
+    in addition to :mod:`pandas` data frames and series.
 
     Converts all numpy arrays to pandas series or data frames before deferring to the
     delegate estimator, and passes through pandas objects unchanged.
@@ -163,6 +162,7 @@ class EstimatorNPDF(
 
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
+@subsdoc(pattern="EstimatorDF", replacement="LearnerDF", using=EstimatorNPDF)
 class LearnerNPDF(
     EstimatorNPDF[T_DelegateLearnerDF], LearnerDF, Generic[T_DelegateLearnerDF]
 ):
@@ -181,6 +181,7 @@ class LearnerNPDF(
 
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
+@subsdoc(pattern="EstimatorDF", replacement="SupervisedLearnerDF", using=EstimatorNPDF)
 class SupervisedLearnerNPDF(
     LearnerNPDF[T_DelegateSupervisedLearnerDF],
     SupervisedLearnerDF,
@@ -208,6 +209,7 @@ class SupervisedLearnerNPDF(
 
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
+@subsdoc(pattern="EstimatorDF", replacement="ClassifierDF", using=EstimatorNPDF)
 class ClassifierNPDF(
     SupervisedLearnerNPDF[T_DelegateClassifierDF],
     ClassifierDF,
@@ -255,6 +257,7 @@ class ClassifierNPDF(
 
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
+@subsdoc(pattern="EstimatorDF", replacement="RegressorDF", using=EstimatorNPDF)
 class RegressorNPDF(
     SupervisedLearnerNPDF[T_DelegateRegressorDF],
     RegressorDF,
@@ -269,6 +272,7 @@ class RegressorNPDF(
 
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
+@subsdoc(pattern="EstimatorDF", replacement="TransformerDF", using=EstimatorNPDF)
 class TransformerNPDF(
     EstimatorNPDF[T_DelegateTransformerDF],
     TransformerDF,
