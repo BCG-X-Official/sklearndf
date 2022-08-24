@@ -17,5 +17,5 @@ from conf_base import set_config
 set_config(
     globals(),
     project="sklearndf",
-    html_logo=os.path.join("_static", "gamma_sklearndf_logo.png"),
+    html_logo=os.path.join("_images", "gamma_sklearndf_logo.png"),
 )

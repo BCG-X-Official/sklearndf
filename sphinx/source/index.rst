@@ -1,4 +1,4 @@
-.. image:: _static/sklearndf_logo.png
+.. image:: /_images/sklearndf_logo.png
 
 |
 
