@@ -1,5 +1,5 @@
 """
-Estimator adapter classes to handle numpy arrays in meta-estimators
+Estimator adapter classes to handle numpy arrays in meta-estimators.
 """
 
 import logging
