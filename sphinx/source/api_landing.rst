@@ -21,11 +21,11 @@ frame used to fit the estimator.
 :attr:`~TransformerDF.feature_names_original_`, keeping track of the feature names of
 the transformed outputs as well as mapping output features back to the input features.
 This enables tracing features back to the original inputs even across complex
-pipelines (see also :class:`.PipelineDF`)
+pipelines (see also :class:`.PipelineDF`).
 
 `sklearndf` classes implement a class hierarchy that follows the taxonomy of
 scikit-learn classes (but is only partially reflected via class inheritance in the
-original implementation):
+original `scikit-learn` implementation):
 
 |
 
@@ -39,6 +39,10 @@ original implementation):
   provides the API for all common transformer methods, e.g.,
   :meth:`~TransformerDF.transform`
 
+- all `sklearndf` clusterers are subclasses of :class:`.ClusterDF`, which
+  in turn provides the API for all common clustering methods, e.g.,
+  :meth:`~ClusterDF.fit_predict`
+
 - all `sklearndf` regressors are subclasses of :class:`.RegressorDF`, which
   in turn provides the API for all common regressor methods, e.g.,
   :meth:`~LearnerDF.predict`
@@ -46,10 +50,6 @@ original implementation):
 - all `sklearndf` classifiers are subclasses of :class:`.ClassifierDF`, which
   in turn provides the API for all common classifier methods, e.g.,
   :meth:`~ClassifierDF.predict_proba`
-
-- all `sklearndf` clusterers are subclasses of :class:`.ClusterDF`, which
-  in turn provides the API for all common clustering methods, e.g.,
-  :meth:`~ClusterDF.fit_predict`
 
 - all `sklearndf` regressors and classifiers are subclasses of
   :class:`.SupervisedLearnerDF`
