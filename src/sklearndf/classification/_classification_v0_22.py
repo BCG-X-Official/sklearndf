@@ -9,7 +9,8 @@ from sklearn.naive_bayes import CategoricalNB
 
 from pytools.api import AllTracker
 
-from .wrapper import PartialFitClassifierWrapperDF, StackingClassifierWrapperDF
+from ..wrapper.stacking import StackingClassifierWrapperDF
+from .wrapper import PartialFitClassifierWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -29,7 +30,6 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 # Class definitions
 #
 
-# todo: add other classification implementations for sklearn 0.22
 
 #
 # naive bayes
