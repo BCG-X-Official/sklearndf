@@ -450,9 +450,8 @@ class RegressorDF(
     ) -> float:
         """[see SupervisedLearnerDF]"""
 
-    # we cannot get the docstring via the @inheritdoc mechanism because the
-    # ClassifierMixin and RegressorMixin implementations precede the
-    #
+    # we cannot get the docstring via the @inheritdoc mechanism because
+    # RegressorMixin precedes SupervisedLearnerDF in the MRO
     score.__doc__ = SupervisedLearnerDF.score.__doc__
 
 
@@ -551,9 +550,8 @@ class ClassifierDF(
     ) -> float:
         """[see SupervisedLearnerDF]"""
 
-    # we cannot get the docstring via the @inheritdoc mechanism because the
-    # ClassifierMixin and RegressorMixin implementations precede the
-    #
+    # we cannot get the docstring via the @inheritdoc mechanism because
+    # ClassifierMixin precedes SupervisedLearnerDF in the MRO
     score.__doc__ = SupervisedLearnerDF.score.__doc__
 
 
