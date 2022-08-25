@@ -1,4 +1,4 @@
-.. image:: /_images/sklearndf_logo.png
+.. image:: sphinx/source/_images/sklearndf_logo.png
 
 |
 
