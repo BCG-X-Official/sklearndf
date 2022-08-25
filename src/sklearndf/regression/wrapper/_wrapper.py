@@ -4,7 +4,7 @@ Core implementation of :mod:`sklearndf.regression.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Any, Callable, Generic, Optional, Sequence, TypeVar, Union, cast
+from typing import Any, Generic, Optional, TypeVar, Union, cast
 
 import numpy.typing as npt
 import pandas as pd
@@ -14,16 +14,11 @@ from sklearn.multioutput import MultiOutputRegressor
 
 from pytools.api import AllTracker
 
-from sklearndf import RegressorDF, SupervisedLearnerDF
-from sklearndf.transformation.wrapper import (
+from ...transformation.wrapper import (
     ColumnPreservingTransformerWrapperDF,
     NumpyTransformerWrapperDF,
 )
-from sklearndf.wrapper import (
-    MetaEstimatorWrapperDF,
-    RegressorWrapperDF,
-    StackingEstimatorWrapperDF,
-)
+from ...wrapper import MetaEstimatorWrapperDF, RegressorWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -31,7 +26,6 @@ __all__ = [
     "IsotonicRegressionWrapperDF",
     "MetaRegressorWrapperDF",
     "RegressorTransformerWrapperDF",
-    "StackingRegressorWrapperDF",
     "PartialFitRegressorWrapperDF",
     "MultiOutputRegressorWrapperDF",
 ]
@@ -41,7 +35,6 @@ __all__ = [
 # type variables
 #
 
-T_DelegateRegressorDF = TypeVar("T_DelegateRegressorDF", bound=RegressorDF)
 T_PartialFitRegressorWrapperDF = TypeVar(
     "T_PartialFitRegressorWrapperDF",
     bound="PartialFitRegressorWrapperDF[RegressorMixin]",
@@ -139,39 +132,6 @@ class MultiOutputRegressorWrapperDF(
     """
 
     pass
-
-
-# noinspection PyProtectedMember
-from ...wrapper._adapter import RegressorNPDF as _RegressorNPDF
-
-# noinspection PyProtectedMember
-from ...wrapper._wrapper import _StackableRegressorDF
-
-
-class StackingRegressorWrapperDF(
-    StackingEstimatorWrapperDF[T_NativeRegressor],
-    RegressorWrapperDF[T_NativeRegressor],
-    Generic[T_NativeRegressor],
-    metaclass=ABCMeta,
-):
-    """
-    Abstract base class of DF wrappers for regressors implementing
-    :class:`sklearn.ensemble._stacking._BaseStacking`.
-    """
-
-    @staticmethod
-    def _make_default_final_estimator() -> SupervisedLearnerDF:
-        from sklearndf.regression import RidgeCVDF
-
-        return RidgeCVDF()
-
-    def _make_stackable_learner_df(self, learner: RegressorDF) -> _StackableRegressorDF:
-        return _StackableRegressorDF(learner)
-
-    def _make_learner_np_df(
-        self, delegate: T_DelegateRegressorDF, column_names: Callable[[], Sequence[str]]
-    ) -> _RegressorNPDF[T_DelegateRegressorDF]:
-        return _RegressorNPDF(delegate, column_names)
 
 
 class RegressorTransformerWrapperDF(

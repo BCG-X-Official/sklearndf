@@ -31,6 +31,11 @@ improvements, and is now subject to static type checking with :mod:`mypy`.
   for details
 - API: remove functions ``make_df_estimator``, ``make_df_classifier``,
   ``make_df_regressor``, and ``make_df_transformer`` which are now obsolete
+- API: move some classes in :mod:`sklearndf.wrapper` to sub-packages
+  :mod:`sklearndf.wrapper.stacking` and :mod:`sklearndf.wrapper.numpy` to improve
+  package navigability and to achieve better de-coupling of the underlying code;
+  this change also moves :class:`~.StackingClassifierWrapperDF` and
+  :class:`~.StackingRegressorWrapperDF` to package :mod:`sklearndf.wrapper.stacking`
 
 
 *sklearndf* 1.2

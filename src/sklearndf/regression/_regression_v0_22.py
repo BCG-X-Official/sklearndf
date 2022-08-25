@@ -8,7 +8,7 @@ from sklearn.ensemble import StackingRegressor
 
 from pytools.api import AllTracker
 
-from .wrapper import StackingRegressorWrapperDF
+from ..wrapper.stacking import StackingRegressorWrapperDF
 
 log = logging.getLogger(__name__)
 
