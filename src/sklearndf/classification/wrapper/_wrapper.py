@@ -4,17 +4,7 @@ Core implementation of :mod:`sklearndf.classification.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import (
-    Any,
-    Callable,
-    Generic,
-    List,
-    Optional,
-    Sequence,
-    TypeVar,
-    Union,
-    cast,
-)
+from typing import Any, Generic, List, Optional, Sequence, TypeVar, Union, cast
 
 import numpy.typing as npt
 import pandas as pd
@@ -24,13 +14,8 @@ from sklearn.multioutput import ClassifierChain, MultiOutputClassifier
 
 from pytools.api import AllTracker
 
-from sklearndf import ClassifierDF, LearnerDF
-from sklearndf.transformation.wrapper import NComponentsDimensionalityReductionWrapperDF
-from sklearndf.wrapper import (
-    ClassifierWrapperDF,
-    MetaEstimatorWrapperDF,
-    StackingEstimatorWrapperDF,
-)
+from ...transformation.wrapper import NComponentsDimensionalityReductionWrapperDF
+from ...wrapper import ClassifierWrapperDF, MetaEstimatorWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -39,7 +24,6 @@ __all__ = [
     "LinearDiscriminantAnalysisWrapperDF",
     "MetaClassifierWrapperDF",
     "MultiOutputClassifierWrapperDF",
-    "StackingClassifierWrapperDF",
     "PartialFitClassifierWrapperDF",
 ]
 
@@ -47,7 +31,6 @@ __all__ = [
 # Type variables
 #
 
-T_DelegateClassifierDF = TypeVar("T_DelegateClassifierDF", bound=ClassifierDF)
 T_PartialFitClassifierWrapperDF = TypeVar(
     "T_PartialFitClassifierWrapperDF",
     bound="PartialFitClassifierWrapperDF[ClassifierMixin]",
@@ -226,51 +209,6 @@ class ClassifierChainWrapperDF(
         return super()._prediction_with_class_labels(
             X, prediction, classes=range(self.n_outputs_)
         )
-
-
-# noinspection PyProtectedMember
-from ...wrapper._adapter import ClassifierNPDF as _ClassifierNPDF
-
-# noinspection PyProtectedMember
-from ...wrapper._wrapper import _StackableClassifierDF
-
-
-class StackingClassifierWrapperDF(
-    ClassifierWrapperDF[T_NativeClassifier],
-    StackingEstimatorWrapperDF[T_NativeClassifier],
-    Generic[T_NativeClassifier],
-    metaclass=ABCMeta,
-):
-    """
-    Abstract base class of DF wrappers for classifiers implementing
-    :class:`sklearn.ensemble._stacking._BaseStacking`.
-    """
-
-    @staticmethod
-    def _make_default_final_estimator() -> LearnerDF:
-        from sklearndf.classification import LogisticRegressionDF
-
-        return LogisticRegressionDF()
-
-    def _get_estimators_features_out(self) -> List[str]:
-        classes = self.native_estimator.classes_
-        names = super()._get_estimators_features_out()
-        if len(classes) > 2:
-            return [f"{name}_{c}" for name in names for c in classes]
-        else:
-            return names
-
-    def _make_stackable_learner_df(
-        self, learner: ClassifierDF
-    ) -> _StackableClassifierDF:
-        return _StackableClassifierDF(learner)
-
-    def _make_learner_np_df(
-        self,
-        delegate: T_DelegateClassifierDF,
-        column_names: Callable[[], Sequence[str]],
-    ) -> _ClassifierNPDF[T_DelegateClassifierDF]:
-        return _ClassifierNPDF(delegate, column_names)
 
 
 #

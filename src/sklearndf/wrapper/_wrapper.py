@@ -15,7 +15,7 @@ from __future__ import annotations
 import inspect
 import logging
 import warnings
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 from functools import update_wrapper
 from typing import (
     Any,
@@ -50,7 +50,6 @@ from sklearn.base import (
 
 from pytools.api import AllTracker, inheritdoc, public_module_prefix
 
-from ._adapter import SupervisedLearnerNPDF
 from sklearndf import (
     ClassifierDF,
     ClusterDF,
@@ -71,7 +70,6 @@ __all__ = [
     "LearnerWrapperDF",
     "MetaEstimatorWrapperDF",
     "RegressorWrapperDF",
-    "StackingEstimatorWrapperDF",
     "SupervisedLearnerWrapperDF",
     "TransformerWrapperDF",
 ]
@@ -99,28 +97,7 @@ T_NativeCluster = TypeVar("T_NativeCluster", bound=ClusterMixin)
 T_EstimatorWrapperDF = TypeVar(
     "T_EstimatorWrapperDF", bound="EstimatorWrapperDF[BaseEstimator]"
 )
-T_TransformerWrapperDF = TypeVar(
-    "T_TransformerWrapperDF", bound="TransformerWrapperDF[TransformerMixin]"
-)
-T_SupervisedLearnerDF = TypeVar("T_SupervisedLearnerDF", bound="SupervisedLearnerDF")
-T_RegressorWrapperDF = TypeVar(
-    "T_RegressorWrapperDF", bound="RegressorWrapperDF[RegressorMixin]"
-)
-T_ClassifierWrapperDF = TypeVar(
-    "T_ClassifierWrapperDF", bound="ClassifierWrapperDF[ClassifierMixin]"
-)
-T_ClusterWrapperDF = TypeVar(
-    "T_ClusterWrapperDF", bound="ClusterWrapperDF[ClusterMixin]"
-)
 
-T_StackableSupervisedLearnerDF = TypeVar(
-    "T_StackableSupervisedLearnerDF",
-    bound="_StackableSupervisedLearnerDF[SupervisedLearnerDF]",
-)
-T_StackingEstimatorWrapperDF = TypeVar(
-    "T_StackingEstimatorWrapperDF",
-    bound="StackingEstimatorWrapperDF[Union[RegressorMixin, ClassifierMixin]]",
-)
 
 #
 # Ensure all symbols introduced below are included in __all__
@@ -1116,226 +1093,6 @@ class MetaEstimatorWrapperDF(
                 (name, _unwrap_estimator(estimator))
                 for name, estimator in delegate_estimator.estimators
             ]
-
-
-#
-# Stacking Estimator wrappers
-#
-
-# noinspection PyPep8Naming
-@inheritdoc(match="""[see superclass]""")
-class StackingEstimatorWrapperDF(
-    # note: MetaEstimatorMixin is the first public class in the mro of _BaseStacking
-    # MetaEstimatorMixin <-- _BaseHeterogeneousEnsemble <-- _BaseStacking
-    MetaEstimatorMixin,  # type: ignore
-    SupervisedLearnerWrapperDF[T_NativeSupervisedLearner],
-    Generic[T_NativeSupervisedLearner],
-    metaclass=ABCMeta,
-):
-    """
-    Abstract base class of wrappers for estimators implementing
-    :class:`sklearn.ensemble._stacking._BaseStacking`.
-
-    The stacking estimator will delegate to embedded estimators; this wrapper ensures
-    the required conversions from and to numpy arrays as the native stacking estimator
-    invokes the embedded estimators.
-    """
-
-    def fit(
-        self: T_StackingEstimatorWrapperDF,
-        X: pd.DataFrame,
-        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
-        **fit_params: Any,
-    ) -> T_StackingEstimatorWrapperDF:
-        """[see superclass]"""
-
-        class _ColumnNameFn:
-            # noinspection PyMethodParameters
-            def __call__(self_) -> Sequence[str]:
-                return self._get_final_estimator_features_in()
-
-            def __deepcopy__(self, memo: Any = None) -> Any:
-                # prevent a deep copy of this callable, to preserve reference to
-                # stacking estimator being fitted
-                return self
-
-        native: T_NativeSupervisedLearner = self.native_estimator
-        estimators: Sequence[Tuple[str, BaseEstimator]] = native.estimators
-        final_estimator: BaseEstimator = native.final_estimator
-
-        try:
-            native.estimators = [
-                (
-                    name,
-                    self._make_stackable_learner_df(estimator)
-                    if isinstance(estimator, SupervisedLearnerDF)
-                    else estimator,
-                )
-                for name, estimator in native.estimators
-            ]
-            native.final_estimator = self._make_learner_np_df(
-                delegate=native.final_estimator or self._make_default_final_estimator(),
-                column_names=_ColumnNameFn(),
-            )
-
-            # suppress a false warning from PyCharm's type checker
-            # noinspection PyTypeChecker
-            return super().fit(X, y, **fit_params)
-
-        finally:
-            native.estimators = estimators
-            native.final_estimator = final_estimator
-
-    @abstractmethod
-    def _make_stackable_learner_df(
-        self, learner: T_SupervisedLearnerDF
-    ) -> _StackableSupervisedLearnerDF[T_SupervisedLearnerDF]:
-        pass
-
-    @abstractmethod
-    def _make_learner_np_df(
-        self, delegate: T_SupervisedLearnerDF, column_names: Callable[[], Sequence[str]]
-    ) -> SupervisedLearnerNPDF[T_SupervisedLearnerDF]:
-        pass
-
-    def _get_estimators_features_out(self) -> List[str]:
-        return [name for name, estimator in self.estimators if estimator != "drop"]
-
-    def _get_final_estimator_features_in(self) -> List[str]:
-        names = self._get_estimators_features_out()
-        if self.passthrough:
-            return [*names, *self.estimators_[0].feature_names_in_]
-        else:
-            return names
-
-
-# noinspection PyPep8Naming
-@inheritdoc(match="""[see superclass]""")
-class _StackableSupervisedLearnerDF(
-    BaseEstimator,  # type: ignore
-    Generic[T_SupervisedLearnerDF],
-):
-    """
-    Returns numpy arrays from all prediction functions, instead of pandas series or
-    data frames.
-
-    For use in stacking estimators that forward the predictions of multiple learners to
-    one final learner.
-    """
-
-    def __init__(self, delegate: T_SupervisedLearnerDF) -> None:
-        super().__init__()
-        self.delegate = delegate
-
-    @property
-    def is_fitted(self) -> bool:
-        """[see superclass]"""
-        return self.delegate.is_fitted
-
-    def fit(
-        self: T_StackableSupervisedLearnerDF,
-        X: pd.DataFrame,
-        y: Optional[npt.NDArray[Any]] = None,
-        **fit_params: Any,
-    ) -> T_StackableSupervisedLearnerDF:
-        """[see superclass]"""
-        self.delegate.fit(X, self._convert_y_to_series(X, y), **fit_params)
-        return self
-
-    def predict(self, X: pd.DataFrame, **predict_params: Any) -> npt.NDArray[np.float_]:
-        """[see superclass]"""
-        return cast(
-            npt.NDArray[np.float_],
-            self.delegate.predict(X, **predict_params).values,
-        )
-
-    def score(
-        self,
-        X: pd.DataFrame,
-        y: npt.NDArray[Any],
-        sample_weight: Optional[pd.Series] = None,
-    ) -> float:
-        """[see superclass]"""
-        return self.delegate.score(X, self._convert_y_to_series(X, y), sample_weight)
-
-    def _get_features_in(self) -> pd.Index:
-        # noinspection PyProtectedMember
-        return self.delegate._get_features_in()
-
-    def _get_n_outputs(self) -> int:
-        # noinspection PyProtectedMember
-        return self.delegate._get_n_outputs()
-
-    @staticmethod
-    def _convert_y_to_series(
-        X: pd.DataFrame, y: Optional[npt.NDArray[Any]]
-    ) -> Optional[pd.Series]:
-        if y is None:
-            return y
-        if not isinstance(y, np.ndarray):
-            raise TypeError(
-                f"expected numpy array for arg y but got a {type(y).__name__}"
-            )
-        if y.ndim != 1:
-            raise TypeError(
-                f"expected 1-d numpy array for arg y but got a {y.ndim}-d array"
-            )
-        if len(y) != len(X):
-            raise ValueError(
-                "args X and y have different lengths: "
-                f"len(X)={len(X)} and len(y)={len(y)}"
-            )
-        return pd.Series(y, index=X.index)
-
-    @staticmethod
-    def _convert_prediction_to_numpy(
-        prediction: Union[pd.DataFrame, List[pd.DataFrame]]
-    ) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
-        if isinstance(prediction, list):
-            return [proba.values for proba in prediction]
-        else:
-            return cast(npt.NDArray[Any], prediction.values)
-
-
-# noinspection PyPep8Naming
-@inheritdoc(match="""[see superclass]""")
-class _StackableClassifierDF(_StackableSupervisedLearnerDF[ClassifierDF], ClassifierDF):
-    """[see superclass]"""
-
-    @property
-    def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
-        """[see superclass]"""
-        return self.delegate.classes_
-
-    def predict_proba(
-        self, X: pd.DataFrame, **predict_params: Any
-    ) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
-        """[see superclass]"""
-        return self._convert_prediction_to_numpy(
-            self.delegate.predict_proba(X, **predict_params)
-        )
-
-    def predict_log_proba(
-        self, X: pd.DataFrame, **predict_params: Any
-    ) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
-        """[see superclass]"""
-        return self._convert_prediction_to_numpy(
-            self.delegate.predict_log_proba(X, **predict_params)
-        )
-
-    def decision_function(
-        self, X: pd.DataFrame, **predict_params: Any
-    ) -> npt.NDArray[np.floating[Any]]:
-        """[see superclass]"""
-        return cast(
-            npt.NDArray[np.floating[Any]],
-            self.delegate.decision_function(X, **predict_params).values,
-        )
-
-
-@inheritdoc(match="""[see superclass]""")
-class _StackableRegressorDF(_StackableSupervisedLearnerDF[RegressorDF], RegressorDF):
-    """[see superclass]"""
 
 
 #
