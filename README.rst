@@ -28,22 +28,39 @@ To this end, *sklearndf* enhances scikit-learn's estimators as follows:
 Installation
 ------------
 
-*sklearndf* supports both PyPI and Anaconda
+*sklearndf* supports both PyPI and Anaconda.
+We recommend to install *sklearndf* into a dedicated environment.
 
 
 Anaconda
 ~~~~~~~~
 
-.. code-block:: RST
+.. code-block:: sh
 
-    conda install sklearndf -c bcg_gamma -c conda-forge
+    conda create -n sklearndf
+    conda activate sklearndf
+    conda install -c bcg_gamma -c conda-forge sklearndf
 
 
 Pip
 ~~~
 
-.. code-block:: RST
+macOS and Linux:
+^^^^^^^^^^^^^^^^
 
+.. code-block:: sh
+
+    python -m venv sklearndf
+    source sklearndf/bin/activate
+    pip install sklearndf
+
+Windows:
+^^^^^^^^
+
+.. code-block::
+
+    python -m venv sklearndf
+    sklearndf\Scripts\activate.bat
     pip install sklearndf
 
 
@@ -59,7 +76,7 @@ Changes and additions to new versions are summarized in the
 `release notes <https://bcg-gamma.github.io/sklearndf/release_notes.html>`__.
 
 
-Creating a DataFrame friendly scikit-learn preprocessing pipeline
+Creating a DataFrame-friendly scikit-learn preprocessing pipeline
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The titanic data set includes categorical features such as class and sex, and also has
@@ -74,9 +91,9 @@ We will build a preprocessing pipeline which:
 - for categorical variables fills missing values with the string 'Unknown' and then one-hot encodes
 - for numerical values fills missing values using median values
 
-The strength of *sklearndf* is to maintain the scikit-learn conventions and expressivity,
-while also preserving data frames, and hence feature names. We can see this after using
-fit_transform on our preprocessing pipeline.
+The strength of *sklearndf* is to maintain the scikit-learn conventions and
+expressiveness, while also preserving data frames, and hence feature names. We can see
+this after using ``fit_transform`` on our preprocessing pipeline.
 
 .. code-block:: Python
 
@@ -125,26 +142,27 @@ fit_transform on our preprocessing pipeline.
     transformed_df.head()
 
 
-+-------------+------------+------------+------------+------------------+------------+----------+------------+------------+------------+--------+----------+
-| feature_out | embarked_C | embarked_Q | embarked_S | embarked_Unknown | sex_female | sex_male | pclass_1.0 | pclass_2.0 | pclass_3.0 | age    | fare     |
-+=============+============+============+============+==================+============+==========+============+============+============+========+==========+
-|0            |0           |0           |1           |0                 |1           |0         |1           |0           |0           |29      |211.3375  |
-+-------------+------------+------------+------------+------------------+------------+----------+------------+------------+------------+--------+----------+
-|1            |0           |0           |1           |0                 |0           |1         |1           |0           |0           |0.9167  |151.55    |
-+-------------+------------+------------+------------+------------------+------------+----------+------------+------------+------------+--------+----------+
-|2            |0           |0           |1           |0                 |1           |0         |1           |0           |0           |2       |151.55    |
-+-------------+------------+------------+------------+------------------+------------+----------+------------+------------+------------+--------+----------+
-|3            |0           |0           |1           |0                 |0           |1         |1           |0           |0           |30      |151.55    |
-+-------------+------------+------------+------------+------------------+------------+----------+------------+------------+------------+--------+----------+
-|4            |0           |0           |1           |0                 |1           |0         |1           |0           |0           |25      |151.55    |
-+-------------+------------+------------+------------+------------------+------------+----------+------------+------------+------------+--------+----------+
++-------------+------------+------------+---+------------+--------+--------+
+| feature_out | embarked_C | embarked_Q | … | pclass_3.0 | age    | fare   |
++=============+============+============+===+============+========+========+
+| **0**       | 0          | 0          | … | 0          | 29     | 211.34 |
++-------------+------------+------------+---+------------+--------+--------+
+| **1**       | 0          | 0          | … | 0          | 0.9167 | 151.55 |
++-------------+------------+------------+---+------------+--------+--------+
+| **2**       | 0          | 0          | … | 0          | 2      | 151.55 |
++-------------+------------+------------+---+------------+--------+--------+
+| **3**       | 0          | 0          | … | 0          | 30     | 151.55 |
++-------------+------------+------------+---+------------+--------+--------+
+| **4**       | 0          | 0          | … | 0          | 25     | 151.55 |
++-------------+------------+------------+---+------------+--------+--------+
 
 
 Tracing features from post-transform to original 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The *sklearndf* pipeline has a `feature_names_original_` attribute which returns a series
-mapping the output columns (the series' index) to the input columns (the series' values).
+The *sklearndf* pipeline has a ``feature_names_original_`` attribute
+which returns a *pandas* ``Series``, mapping the output column names (the series' index)
+to the input column names (the series' values).
 We can therefore easily select all output features generated from a given input feature,
 such as in this case for embarked.
 
@@ -157,15 +175,15 @@ such as in this case for embarked.
 +-------------+------------+------------+------------+------------------+
 | feature_out | embarked_C | embarked_Q | embarked_S | embarked_Unknown |
 +=============+============+============+============+==================+
-|0            |0.0         |0.0         |1.0         |0.0               |
+| **0**       | 0.0        | 0.0        | 1.0        | 0.0              |
 +-------------+------------+------------+------------+------------------+
-|1            |0.0         |0.0         |1.0         |0.0               |
+| **1**       | 0.0        | 0.0        | 1.0        | 0.0              |
 +-------------+------------+------------+------------+------------------+
-|2            |0.0         |0.0         |1.0         |0.0               |
+| **2**       | 0.0        | 0.0        | 1.0        | 0.0              |
 +-------------+------------+------------+------------+------------------+
-|3            |0.0         |0.0         |1.0         |0.0               |
+| **3**       | 0.0        | 0.0        | 1.0        | 0.0              |
 +-------------+------------+------------+------------+------------------+
-|4            |0.0         |0.0         |1.0         |0.0               |
+| **4**       | 0.0        | 0.0        | 1.0        | 0.0              |
 +-------------+------------+------------+------------+------------------+
 
 
@@ -173,18 +191,18 @@ Completing the pipeline with a classifier
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Scikit-learn regressors and classifiers have a *sklearndf* sibling obtained by appending
-DF to the class name; the API remains the same.
-The result of any predict and decision function will be returned as a pandas series
-(single output) or data frame (class probabilities or multi-output).
+``DF`` to the class name; the API of the native estimators is preserved.
+The result of any predict and decision function will be returned as a *pandas*
+``Series`` (single output) or ``DataFrame`` (class probabilities or multi-output).
 
 We can combine the preprocessing pipeline above with a classifier to create a full
 predictive pipeline. *sklearndf* provides two useful, specialised pipeline objects for
-this, RegressorPipelineDF and ClassifierPipelineDF. Both implement a special two-step
-pipeline with one preprocessing step and one prediction step, while staying compatible
-with the general sklearn pipeline idiom.
+this, ``RegressorPipelineDF`` and ``ClassifierPipelineDF``.
+Both implement a special two-step pipeline with one preprocessing step and one
+prediction step, while staying compatible with the general sklearn pipeline idiom.
 
-Using ClassifierPipelineDF we can combine the preprocessing pipeline with
-RandomForestClassifierDF() to fit a model to a selected training set and then score
+Using ``ClassifierPipelineDF`` we can combine the preprocessing pipeline with
+``RandomForestClassifierDF`` to fit a model to a selected training set and then score
 on a test set.
 
 .. code-block:: Python
@@ -207,7 +225,9 @@ on a test set.
     print(f"model score: {pipeline_df.score(df_test, y_test).round(2)}")
 
 
-model score: 0.79
+|
+
+    model score: 0.79
 
 
 Contributing
@@ -220,8 +240,7 @@ For any bug reports or feature requests/enhancements please use the appropriate
 `GitHub form <https://github.com/BCG-Gamma/sklearndf/issues>`_, and if you wish to do
 so, please open a PR addressing the issue.
 
-We do ask that for any major changes please discuss these with us first via an issue or
-at our team email: FacetTeam@bcg.com.
+We do ask that for any major changes please discuss these with us first via an issue.
 
 For further information on contributing please see our
 `contribution guide <https://bcg-gamma.github.io/sklearndf/contribution_guide.html>`__.
