@@ -7,44 +7,47 @@ import logging
 
 from pytools.api import AllTracker
 
+from ...wrapper import MissingEstimator
+
 log = logging.getLogger(__name__)
 
 __all__ = ["BorutaDF"]
-
 
 try:
     # import boruta classes only if installed
     from boruta import BorutaPy
 
 except ImportError:
-    BorutaPy = None
+
+    class BorutaPy(  # type: ignore
+        MissingEstimator,
+    ):
+        """Mock-up for missing estimator."""
 
 
 #
 # Ensure all symbols introduced below are included in __all__
 #
 
-__tracker = AllTracker(globals(), allow_imported_definitions=True)
+__tracker = AllTracker(globals())
 
 
 #
 # Class definitions
 #
 
-if BorutaPy:
 
-    from .wrapper import BorutaPyWrapperDF
+from .wrapper import BorutaPyWrapperDF as _BorutaPyWrapperDF
 
-    class BorutaDF(BorutaPyWrapperDF, native=BorutaPy):
-        """
-        DF version of :class:`~boruta.BorutaPy`.
-        """
 
-    # remove the wrapper class from the global namespace to pass AllTracker validation
-    del BorutaPyWrapperDF
+class BorutaDF(_BorutaPyWrapperDF, native=BorutaPy):
+    """
+    DF version of :class:`~boruta.BorutaPy`.
+    """
 
-else:
-    __all__.remove("BorutaDF")
 
+#
+# validate __all__
+#
 
 __tracker.validate()

@@ -22,6 +22,7 @@ from sklearndf import (
     ClassifierDF,
     RegressorDF,
     TransformerDF,
+    __sklearn_0_22__,
     __sklearn_0_24__,
     __sklearn_1_0__,
     __sklearn_version__,
@@ -66,6 +67,20 @@ TRANSFORMERS_TO_TEST = iterate_classes(
     excluding=TRANSFORMER_EXCLUSIONS,
 )
 TRANSFORMERS_TO_TEST.append(FeatureAgglomerationDF)
+
+
+def test_transformer_count() -> None:
+    n = len(TRANSFORMERS_TO_TEST)
+
+    print(f"Testing {n} transformers.")
+    if __sklearn_version__ < __sklearn_0_22__:
+        assert n == 53
+    elif __sklearn_version__ < __sklearn_0_24__:
+        assert n == 54
+    elif __sklearn_version__ < __sklearn_1_0__:
+        assert n == 55
+    else:
+        assert n == 56
 
 
 @pytest.fixture  # type: ignore

@@ -1,7 +1,7 @@
 """
 Configuration file for the Sphinx documentation builder.
 
-Receives majority of configuration from pytools conf_base.py
+Receives the majority of the configuration from pytools conf_base.py
 """
 
 import os
@@ -17,5 +17,11 @@ from conf_base import set_config
 set_config(
     globals(),
     project="sklearndf",
-    html_logo=os.path.join("_static", "gamma_sklearndf_logo.png"),
+    html_logo=os.path.join("_images", "gamma_sklearndf_logo.png"),
+    intersphinx_mapping={
+        "lightgbm": ("https://lightgbm.readthedocs.io/en/latest/", None),
+        "pytools": ("https://bcg-gamma.github.io/pytools/", None),
+        "sklearn": ("https://scikit-learn.org/stable", None),
+        "xgboost": ("https://xgboost.readthedocs.io/en/latest/", None),
+    },
 )

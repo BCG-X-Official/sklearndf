@@ -1,12 +1,16 @@
 Release Notes
 =============
 
+.. |lightgbm| replace:: :external+lightgbm:doc:`lightgbm <index>`
+.. |xgboost| replace:: :external+xgboost:doc:`xgboost <index>`
+.. |mypy| replace:: :external+mypy:doc:`mypy <index>`
+
 *sklearndf* 2.0
 ---------------
 
 *sklearndf* 2 adds support for `scikit-learn 1.0 <https://scikit-learn.org/1.0>`_,
 adds data frame support for clusterers along with additional API enhancements and
-improvements, and is now subject to static type checking with :mod:`mypy`.
+improvements, and is now subject to static type checking with |mypy|.
 
 2.0.0
 ~~~~~
@@ -15,20 +19,21 @@ improvements, and is now subject to static type checking with :mod:`mypy`.
   :class:`.SupervisedLearnerDF`, which in turn is based on :class:`.LearnerDF`;
   :class:`.SupervisedLearnerDF` implements method :meth:`~.SupervisedLearnerDF.score`,
   which is no longer implemented by :class:`.LearnerDF`
-- API: new class :class:`.ClustererDF`, based on :class:`.LearnerDF`
+- API: new class :class:`.ClusterDF`, based on :class:`.LearnerDF`
 - API: class :class:`.EstimatorDF` now implements the
   :class:`~pytools.expression.HasExpressionRepr` mix-in, rendering estimator
   representations as :class:`~pytools.expression.Expression` objects to enable better
   formatting
-- API: added data frame support for method ``partial_fit()``
-- API: eliminated ``OutlierRemoverDF``
-- API: removed dependency on package :mod:`lightgbm`: :class:`.LGBMClassifierDF` and
-  :class:`.LGBMRegressorDF` are still available if :mod:`lightgbm` is installed
-- API: added support for :mod:`xgboost`: :class:`.XGBClassifierDF` and
-  :class:`.XGBClassifierDF` are available if :mod:`xgboost` is installed
-- API: wrapper classes are now created using proper class declarations to better conform
-  with Python type conventions checked by :mod:`mypy`; see :mod:`sklearndf.wrapper`
-  for details
+- API: added data frame support for method
+  :meth:`~.PartialFitRegressorWrapperDF.partial_fit`
+- API: removed ``OutlierRemoverDF``
+- API: removed dependency on package |lightgbm|: :class:`.LGBMClassifierDF` and
+  :class:`.LGBMRegressorDF` are still available if |lightgbm| is installed
+- API: added support for |xgboost|: :class:`.XGBClassifierDF` and
+  :class:`.XGBClassifierDF` are available if |xgboost| is installed
+- API: DF wrapper classes are now created using proper class declarations to better
+  conform with Python type conventions checked by |mypy|;
+  see :mod:`sklearndf.wrapper` for details
 - API: remove functions ``make_df_estimator``, ``make_df_classifier``,
   ``make_df_regressor``, and ``make_df_transformer`` which are now obsolete
 - API: move some classes in :mod:`sklearndf.wrapper` to sub-packages

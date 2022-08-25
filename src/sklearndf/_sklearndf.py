@@ -16,12 +16,12 @@ from sklearn.base import (
     TransformerMixin,
     clone,
 )
+from sklearn.exceptions import NotFittedError
 from sklearn.utils import is_scalar_nan
 
 from pytools.api import AllTracker, inheritdoc
 from pytools.expression import Expression, HasExpressionRepr, make_expression
 from pytools.expression.atomic import Id
-from pytools.fit import NotFittedError
 
 log = logging.getLogger(__name__)
 
@@ -120,9 +120,10 @@ class EstimatorDF(
 
     def ensure_fitted(self) -> None:
         """
-        Raise a :class:`.NotFittedError` if this object is not fitted.
+        Raise a :class:`~sklearn.exceptions.NotFittedError` if this estimator is not
+        fitted.
 
-        :raise NotFittedError: this object is not fitted
+        :raise sklearn.exceptions.NotFittedError: this estimator is not fitted
         """
         if not self.is_fitted:
             raise NotFittedError(f"{type(self).__name__} is not fitted")
@@ -231,7 +232,7 @@ class EstimatorDF(
                         # ... or both have the same expression.
                         # We cannot compare for equality since we don't know
                         # if the classes of the values implement this.
-                        # Therefore we compare the expressions but do this last,
+                        # Therefore, we compare the expressions but do this last,
                         # as it might be computationally more costly in the
                         # unlikely case that the default value is a very complex
                         # object.
@@ -292,7 +293,7 @@ class LearnerDF(EstimatorDF, metaclass=ABCMeta):
 
 class SupervisedLearnerDF(LearnerDF, metaclass=ABCMeta):
     """
-    Base class for augmented scikit-learn `supervised learners`.
+    Base class for augmented `scikit-learn` supervised learners.
 
     Provides enhanced support for data frames.
     """
@@ -343,6 +344,7 @@ class TransformerDF(
 
     @property
     def feature_names_original_(self) -> pd.Series:
+        # noinspection GrazieInspection
         """
         A pandas series, mapping the output features resulting from the transformation
         to the original input features.
@@ -448,9 +450,8 @@ class RegressorDF(
     ) -> float:
         """[see SupervisedLearnerDF]"""
 
-    # we cannot get the docstring via the @inheritdoc mechanism because the
-    # ClassifierMixin and RegressorMixin implementations precede the
-    #
+    # we cannot get the docstring via the @inheritdoc mechanism because
+    # RegressorMixin precedes SupervisedLearnerDF in the MRO
     score.__doc__ = SupervisedLearnerDF.score.__doc__
 
 
@@ -549,9 +550,8 @@ class ClassifierDF(
     ) -> float:
         """[see SupervisedLearnerDF]"""
 
-    # we cannot get the docstring via the @inheritdoc mechanism because the
-    # ClassifierMixin and RegressorMixin implementations precede the
-    #
+    # we cannot get the docstring via the @inheritdoc mechanism because
+    # ClassifierMixin precedes SupervisedLearnerDF in the MRO
     score.__doc__ = SupervisedLearnerDF.score.__doc__
 
 
@@ -561,7 +561,7 @@ class ClusterDF(
     metaclass=ABCMeta,
 ):
     """
-    Base class for augmented scikit-learn `clusterers`.
+    Base class for augmented `scikit-learn` clusterers.
 
     Provides enhanced support for data frames.
     """
@@ -569,6 +569,7 @@ class ClusterDF(
     @property
     @abstractmethod
     def labels_(self) -> pd.Series:
+        # noinspection GrazieInspection
         """
         A pandas series, mapping the index of the input data frame to cluster labels.
         """

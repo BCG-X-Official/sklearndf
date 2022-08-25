@@ -1,19 +1,21 @@
 """
-Factory functions and wrapper class API for enhancing the functionality of native
-estimators conforming with the `scikit-learn` API.
+Wrapper class API for enhancing the functionality of native estimators conforming with
+the `scikit-learn` API.
 
 In most cases, creating a DF classifier or regressor class is as simple as
 
 .. code-block:: python
 
     class RandomForestClassifierDF(
-    ClassifierWrapperDF[RandomForestClassifier],  # type: ignore
-    native=RandomForestClassifier):
+        ClassifierWrapperDF[RandomForestClassifier],
+        native=RandomForestClassifier,
+    ):
         \"""Stub for DF wrapper of class ``RandomForestClassifier``\"""
 
     class RandomForestRegressorDF(
-    RegressorWrapperDF[RandomForestRegressor],  # type: ignore
-    native=RandomForestRegressor):
+        RegressorWrapperDF[RandomForestRegressor],
+        native=RandomForestRegressor,
+    ):
         \"""Stub for DF wrapper of class ``RandomForestRegressor``\"""
 
 
@@ -21,7 +23,7 @@ Any class implementing the `scikit-learn` estimator protocol (and subclassing
 :class:`.BaseEstimator`) can be used to create a DF wrapper by declaring a wrapper
 class as follows:
 
-.. codeblock:: python
+.. code-block::
 
     class <name>DF(<DF wrapper class>, native=<native class>):
         \"""Stub for DF wrapper of class ``<native class>``\"""
@@ -53,4 +55,5 @@ examples in modules
 :mod:`sklearndf.regression`, and :mod:`sklearndf.clustering`.
 """
 
+from ._missing import *
 from ._wrapper import *

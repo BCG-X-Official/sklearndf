@@ -18,6 +18,13 @@ CLUSTERERS_TO_TEST = iterate_classes(
 CLUSTERERS_WITH_AGGLOMERATION = CLUSTERERS_TO_TEST + [FeatureAgglomerationDF]
 
 
+def test_clusterer_count() -> None:
+    n = len(CLUSTERERS_TO_TEST)
+
+    print(f"Testing {n} clusterers.")
+    assert n == 9
+
+
 @pytest.mark.parametrize(  # type: ignore
     argnames="sklearn_clusterer_cls", argvalues=CLUSTERERS_TO_TEST
 )
