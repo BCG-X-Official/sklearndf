@@ -11,11 +11,15 @@ feature names.
 To this end, *sklearndf* enhances scikit-learn's estimators as follows:
 
 - **Preserve data frame structure**:
-    Return data frames as results of transformations, preserving feature names as the column index.
+  Return data frames as results of transformations, preserving feature names as the
+  column index.
 - **Feature name tracing**:
-    Add additional estimator properties to enable tracing a feature name back to its original input feature; this is especially useful for transformers that create new features (e.g., one-hot encode), and for pipelines that include such transformers.
+  Add additional estimator properties to enable tracing a feature name back to its
+  original input feature; this is especially useful for transformers that create new
+  features (e.g., one-hot encode), and for pipelines that include such transformers.
 - **Easy use**:
-    Simply append DF at the end of your usual scikit-learn class names to get enhanced data frame support!
+  Simply append DF at the end of your usual scikit-learn class names to get enhanced
+  data frame support!
 
 .. Begin-Badges
 
@@ -109,12 +113,14 @@ this after using ``fit_transform`` on our preprocessing pipeline.
     )
     from sklearndf.pipeline import (
         PipelineDF,
-        ClassifierPipelineDF
+        ClassifierPipelineDF,
     )
     from sklearndf.classification import RandomForestClassifierDF
 
     # load titanic data
-    titanic_X, titanic_y = fetch_openml("titanic", version=1, as_frame=True, return_X_y=True)
+    titanic_X, titanic_y = fetch_openml(
+        "titanic", version=1, as_frame=True, return_X_y=True
+    )
 
     # select features
     numerical_features = ['age', 'fare']
@@ -126,7 +132,7 @@ this after using ``fit_transform`` on our preprocessing pipeline.
     preprocessing_categorical_df = PipelineDF(
         steps=[
             ('imputer', SimpleImputerDF(strategy='constant', fill_value='Unknown')),
-            ('one-hot', OneHotEncoderDF(sparse=False, handle_unknown="ignore"))
+            ('one-hot', OneHotEncoderDF(sparse=False, handle_unknown="ignore")),
         ]
     )
 
@@ -215,12 +221,14 @@ on a test set.
             max_features=2/3,
             max_depth=7,
             random_state=42,
-            n_jobs=-3
+            n_jobs=-3,
         )
     )
 
     # split data and then fit and score random forest classifier
-    df_train, df_test, y_train, y_test = train_test_split(titanic_X, titanic_y, random_state=42)
+    df_train, df_test, y_train, y_test = train_test_split(
+        titanic_X, titanic_y, random_state=42
+    )
     pipeline_df.fit(df_train, y_train)
     print(f"model score: {pipeline_df.score(df_test, y_test).round(2)}")
 
@@ -273,10 +281,10 @@ or have a look at
 .. Begin-Badges
 
 .. |conda| image:: https://anaconda.org/bcg_gamma/sklearndf/badges/version.svg
-    :target: https://anaconda.org/BCG_Gamma/sklearndf
+   :target: https://anaconda.org/BCG_Gamma/sklearndf
 
 .. |pypi| image:: https://badge.fury.io/py/sklearndf.svg
-    :target: https://pypi.org/project/sklearndf/
+   :target: https://pypi.org/project/sklearndf/
 
 .. |azure_build| image:: https://dev.azure.com/gamma-facet/facet/_apis/build/status/BCG-Gamma.sklearndf?repoName=BCG-Gamma%2Fsklearndf&branchName=develop
    :target: https://dev.azure.com/gamma-facet/facet/_build?definitionId=8&_a=summary
@@ -285,15 +293,15 @@ or have a look at
    :target: https://dev.azure.com/gamma-facet/facet/_build?definitionId=8&_a=summary
 
 .. |python_versions| image:: https://img.shields.io/badge/python-3.7|3.8|3.9-blue.svg
-    :target: https://www.python.org/downloads/release/python-380/
+   :target: https://www.python.org/downloads/release/python-380/
 
 .. |code_style| image:: https://img.shields.io/badge/code%20style-black-000000.svg
-    :target: https://github.com/psf/black
+   :target: https://github.com/psf/black
 
 .. |made_with_sphinx_doc| image:: https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg
-    :target: https://bcg-gamma.github.io/sklearndf/index.html
+   :target: https://bcg-gamma.github.io/sklearndf/index.html
 
 .. |license_badge| image:: https://img.shields.io/badge/License-Apache%202.0-olivegreen.svg
-    :target: https://opensource.org/licenses/Apache-2.0
+   :target: https://opensource.org/licenses/Apache-2.0
 
 .. End-Badges
