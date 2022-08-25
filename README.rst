@@ -1,6 +1,13 @@
 .. image:: sphinx/source/_images/sklearndf_logo.png
 
-|
+----
+
+.. Begin-Badges
+
+|pypi| |conda| |azure_build| |azure_code_cov|
+|python_versions| |code_style| |made_with_sphinx_doc| |License_badge|
+
+.. End-Badges
 
 *sklearndf* is an open source library designed to address a common need with
 `scikit-learn <https://github.com/scikit-learn/scikit-learn>`__: the outputs of
@@ -21,12 +28,12 @@ To this end, *sklearndf* enhances scikit-learn's estimators as follows:
   Simply append DF at the end of your usual scikit-learn class names to get enhanced
   data frame support!
 
-.. Begin-Badges
-
-|pypi| |conda| |azure_build| |azure_code_cov|
-|python_versions| |code_style| |made_with_sphinx_doc| |License_badge|
-
-.. End-Badges
+The following quickstart guide provides a minimal example workflow to get up and running
+with *sklearndf*.
+For additional tutorials and the API reference,
+see the `sklearndf documentation <https://bcg-gamma.github.io/sklearndf/>`__.
+Changes and additions to new versions are summarized in the
+`release notes <https://bcg-gamma.github.io/sklearndf/release_notes.html>`__.
 
 
 Installation
@@ -70,15 +77,6 @@ Windows:
 
 Quickstart
 ----------
-
-The following quickstart guide provides a minimal example workflow to get up and running
-with *sklearndf*.
-For additional tutorials and the API reference,
-see the *sklearndf* `documentation <https://bcg-gamma.github.io/sklearndf/>`__.
-
-Changes and additions to new versions are summarized in the
-`release notes <https://bcg-gamma.github.io/sklearndf/release_notes.html>`__.
-
 
 Creating a DataFrame-friendly scikit-learn preprocessing pipeline
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
