@@ -166,7 +166,7 @@ class EstimatorNPDF(
 class LearnerNPDF(
     EstimatorNPDF[T_DelegateLearnerDF], LearnerDF, Generic[T_DelegateLearnerDF]
 ):
-    """[see superclass]"""
+    """[see EstimatorNPDF]"""
 
     # repeating attribute declarations of base classes for Sphinx documentation
     delegate: T_DelegateLearnerDF
@@ -187,7 +187,7 @@ class SupervisedLearnerNPDF(
     SupervisedLearnerDF,
     Generic[T_DelegateSupervisedLearnerDF],
 ):
-    """[see superclass]"""
+    """[see EstimatorNPDF]"""
 
     # repeating attribute declarations of base classes for Sphinx documentation
     delegate: T_DelegateSupervisedLearnerDF
@@ -215,7 +215,7 @@ class ClassifierNPDF(
     ClassifierDF,
     Generic[T_DelegateClassifierDF],
 ):
-    """[see superclass]"""
+    """[see EstimatorNPDF]"""
 
     # repeating attribute declarations of base classes for Sphinx documentation
     delegate: T_DelegateClassifierDF
@@ -256,14 +256,13 @@ class ClassifierNPDF(
 
 
 # noinspection PyPep8Naming
-@inheritdoc(match="""[see superclass]""")
 @subsdoc(pattern="EstimatorDF", replacement="RegressorDF", using=EstimatorNPDF)
 class RegressorNPDF(
     SupervisedLearnerNPDF[T_DelegateRegressorDF],
     RegressorDF,
     Generic[T_DelegateRegressorDF],
 ):
-    """[see superclass]"""
+    """[see EstimatorNPDF]"""
 
     # repeating attribute declarations of base classes for Sphinx documentation
     delegate: T_DelegateRegressorDF
