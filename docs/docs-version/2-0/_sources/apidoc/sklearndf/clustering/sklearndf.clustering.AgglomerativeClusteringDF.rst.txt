@@ -1,0 +1,48 @@
+sklearndf.clustering.AgglomerativeClusteringDF
+==============================================
+
+.. currentmodule:: sklearndf.clustering
+
+.. autoclass:: AgglomerativeClusteringDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~AgglomerativeClusteringDF.clone
+      ~AgglomerativeClusteringDF.ensure_fitted
+      ~AgglomerativeClusteringDF.fit
+      ~AgglomerativeClusteringDF.fit_predict
+      ~AgglomerativeClusteringDF.from_fitted
+      ~AgglomerativeClusteringDF.get_params
+      ~AgglomerativeClusteringDF.predict
+      ~AgglomerativeClusteringDF.set_params
+      ~AgglomerativeClusteringDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~AgglomerativeClusteringDF.COL_FEATURE_IN
+      ~AgglomerativeClusteringDF.COL_LABELS
+      ~AgglomerativeClusteringDF.COL_PREDICTION
+      ~AgglomerativeClusteringDF.feature_names_in_
+      ~AgglomerativeClusteringDF.is_fitted
+      ~AgglomerativeClusteringDF.labels_
+      ~AgglomerativeClusteringDF.n_outputs_
+      ~AgglomerativeClusteringDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

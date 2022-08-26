@@ -1,0 +1,39 @@
+sklearndf.wrapper.stacking
+==========================
+
+.. automodule:: sklearndf.wrapper.stacking
+   :no-imported-members:
+
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: stacking
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      StackingClassifierWrapperDF
+      StackingEstimatorWrapperDF
+      StackingRegressorWrapperDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

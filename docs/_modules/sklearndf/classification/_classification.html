@@ -1,0 +1,677 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearndf.classification._classification &#8212; sklearndf  documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/gamma.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/gamma.js"></script>
+    <script src="../../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../../../index.html">
+  <img src="../../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../_generated/getting_started.html">
+  Getting started
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../apidoc/sklearndf.html">
+  API reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../tutorials.html">
+  Tutorials
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../contribution_guide.html">
+  Development Guidelines
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../faqs.html">
+  FAQ
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../_generated/release_notes.html">
+  Release Notes
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for sklearndf.classification._classification</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Core implementation of :mod:`sklearndf.classification`</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.calibration</span> <span class="kn">import</span> <span class="n">CalibratedClassifierCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.discriminant_analysis</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">LinearDiscriminantAnalysis</span><span class="p">,</span>
+    <span class="n">QuadraticDiscriminantAnalysis</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AdaBoostClassifier</span><span class="p">,</span>
+    <span class="n">BaggingClassifier</span><span class="p">,</span>
+    <span class="n">ExtraTreesClassifier</span><span class="p">,</span>
+    <span class="n">GradientBoostingClassifier</span><span class="p">,</span>
+    <span class="n">RandomForestClassifier</span><span class="p">,</span>
+    <span class="n">VotingClassifier</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.gaussian_process</span> <span class="kn">import</span> <span class="n">GaussianProcessClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">LogisticRegression</span><span class="p">,</span>
+    <span class="n">LogisticRegressionCV</span><span class="p">,</span>
+    <span class="n">PassiveAggressiveClassifier</span><span class="p">,</span>
+    <span class="n">Perceptron</span><span class="p">,</span>
+    <span class="n">RidgeClassifier</span><span class="p">,</span>
+    <span class="n">RidgeClassifierCV</span><span class="p">,</span>
+    <span class="n">SGDClassifier</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.multiclass</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">OneVsOneClassifier</span><span class="p">,</span>
+    <span class="n">OneVsRestClassifier</span><span class="p">,</span>
+    <span class="n">OutputCodeClassifier</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.multioutput</span> <span class="kn">import</span> <span class="n">ClassifierChain</span><span class="p">,</span> <span class="n">MultiOutputClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">BernoulliNB</span><span class="p">,</span> <span class="n">ComplementNB</span><span class="p">,</span> <span class="n">GaussianNB</span><span class="p">,</span> <span class="n">MultinomialNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">KNeighborsClassifier</span><span class="p">,</span>
+    <span class="n">NearestCentroid</span><span class="p">,</span>
+    <span class="n">RadiusNeighborsClassifier</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.neural_network</span> <span class="kn">import</span> <span class="n">MLPClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.semi_supervised</span> <span class="kn">import</span> <span class="n">LabelPropagation</span><span class="p">,</span> <span class="n">LabelSpreading</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span><span class="p">,</span> <span class="n">LinearSVC</span><span class="p">,</span> <span class="n">NuSVC</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">ExtraTreeClassifier</span>
+
+<span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span>
+
+<span class="kn">from</span> <span class="nn">..wrapper</span> <span class="kn">import</span> <span class="n">ClassifierWrapperDF</span><span class="p">,</span> <span class="n">MetaEstimatorWrapperDF</span>
+<span class="kn">from</span> <span class="nn">.wrapper</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ClassifierChainWrapperDF</span><span class="p">,</span>
+    <span class="n">LinearDiscriminantAnalysisWrapperDF</span><span class="p">,</span>
+    <span class="n">MetaClassifierWrapperDF</span><span class="p">,</span>
+    <span class="n">MultiOutputClassifierWrapperDF</span><span class="p">,</span>
+    <span class="n">PartialFitClassifierWrapperDF</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;AdaBoostClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BaggingClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BernoulliNBDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CalibratedClassifierCVDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ClassifierChainDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ComplementNBDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DecisionTreeClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DummyClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ExtraTreeClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ExtraTreesClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GaussianNBDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GaussianProcessClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GradientBoostingClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;KNeighborsClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LabelPropagationDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LabelSpreadingDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LinearDiscriminantAnalysisDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LinearSVCDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LogisticRegressionCVDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LogisticRegressionDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MLPClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MultinomialNBDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MultiOutputClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NearestCentroidDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NuSVCDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OneVsOneClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OneVsRestClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OutputCodeClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PassiveAggressiveClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PerceptronDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;QuadraticDiscriminantAnalysisDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RadiusNeighborsClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RandomForestClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RidgeClassifierCVDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RidgeClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SGDClassifierDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SVCDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;VotingClassifierDF&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">__imported_estimators</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;DF&quot;</span><span class="p">)}</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Ensure all symbols introduced below are included in __all__</span>
+<span class="c1">#</span>
+
+<span class="n">__tracker</span> <span class="o">=</span> <span class="n">AllTracker</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Class definitions</span>
+<span class="c1">#</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Dummy</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="DummyClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.DummyClassifierDF.html#sklearndf.classification.DummyClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">DummyClassifierDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">DummyClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">DummyClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``DummyClassifier``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># neighbors</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="NearestCentroidDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.NearestCentroidDF.html#sklearndf.classification.NearestCentroidDF">[docs]</a><span class="k">class</span> <span class="nc">NearestCentroidDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">NearestCentroid</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">NearestCentroid</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``NearestCentroid``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="KNeighborsClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.KNeighborsClassifierDF.html#sklearndf.classification.KNeighborsClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">KNeighborsClassifierDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">KNeighborsClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">KNeighborsClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``KNeighborsClassifier``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RadiusNeighborsClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.RadiusNeighborsClassifierDF.html#sklearndf.classification.RadiusNeighborsClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">RadiusNeighborsClassifierDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">RadiusNeighborsClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">RadiusNeighborsClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``RadiusNeighborsClassifier``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># voting</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="VotingClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.VotingClassifierDF.html#sklearndf.classification.VotingClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">VotingClassifierDF</span><span class="p">(</span>
+    <span class="n">MetaClassifierWrapperDF</span><span class="p">[</span><span class="n">VotingClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">VotingClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``VotingClassifier``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># ensemble</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="RandomForestClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.RandomForestClassifierDF.html#sklearndf.classification.RandomForestClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">RandomForestClassifierDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">RandomForestClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">RandomForestClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``RandomForestClassifier``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="ExtraTreesClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.ExtraTreesClassifierDF.html#sklearndf.classification.ExtraTreesClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">ExtraTreesClassifierDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">ExtraTreesClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">ExtraTreesClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``ExtraTreesClassifier``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1"># noinspection PyAbstractClass</span>
+<div class="viewcode-block" id="GradientBoostingClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.GradientBoostingClassifierDF.html#sklearndf.classification.GradientBoostingClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">GradientBoostingClassifierDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">GradientBoostingClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">GradientBoostingClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``GradientBoostingClassifier``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="AdaBoostClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.AdaBoostClassifierDF.html#sklearndf.classification.AdaBoostClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">AdaBoostClassifierDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">AdaBoostClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">AdaBoostClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``AdaBoostClassifier``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="BaggingClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.BaggingClassifierDF.html#sklearndf.classification.BaggingClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">BaggingClassifierDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">BaggingClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">BaggingClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``BaggingClassifier``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># tree</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="DecisionTreeClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.DecisionTreeClassifierDF.html#sklearndf.classification.DecisionTreeClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">DecisionTreeClassifierDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">DecisionTreeClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">DecisionTreeClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``DecisionTreeClassifier``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="ExtraTreeClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.ExtraTreeClassifierDF.html#sklearndf.classification.ExtraTreeClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">ExtraTreeClassifierDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">ExtraTreeClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">ExtraTreeClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``ExtraTreeClassifier``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># discriminant analysis</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="LinearDiscriminantAnalysisDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.LinearDiscriminantAnalysisDF.html#sklearndf.classification.LinearDiscriminantAnalysisDF">[docs]</a><span class="k">class</span> <span class="nc">LinearDiscriminantAnalysisDF</span><span class="p">(</span>
+    <span class="n">LinearDiscriminantAnalysisWrapperDF</span><span class="p">,</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">LinearDiscriminantAnalysis</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LinearDiscriminantAnalysis``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="QuadraticDiscriminantAnalysisDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.QuadraticDiscriminantAnalysisDF.html#sklearndf.classification.QuadraticDiscriminantAnalysisDF">[docs]</a><span class="k">class</span> <span class="nc">QuadraticDiscriminantAnalysisDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">QuadraticDiscriminantAnalysis</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">QuadraticDiscriminantAnalysis</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``QuadraticDiscriminantAnalysis``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># naive bayes</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="GaussianNBDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.GaussianNBDF.html#sklearndf.classification.GaussianNBDF">[docs]</a><span class="k">class</span> <span class="nc">GaussianNBDF</span><span class="p">(</span>
+    <span class="n">PartialFitClassifierWrapperDF</span><span class="p">[</span><span class="n">GaussianNB</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">GaussianNB</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``GaussianNB``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="MultinomialNBDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.MultinomialNBDF.html#sklearndf.classification.MultinomialNBDF">[docs]</a><span class="k">class</span> <span class="nc">MultinomialNBDF</span><span class="p">(</span>
+    <span class="n">PartialFitClassifierWrapperDF</span><span class="p">[</span><span class="n">MultinomialNB</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">MultinomialNB</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``MultinomialNB``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="ComplementNBDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.ComplementNBDF.html#sklearndf.classification.ComplementNBDF">[docs]</a><span class="k">class</span> <span class="nc">ComplementNBDF</span><span class="p">(</span>
+    <span class="n">PartialFitClassifierWrapperDF</span><span class="p">[</span><span class="n">ComplementNB</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">ComplementNB</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``ComplementNB``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="BernoulliNBDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.BernoulliNBDF.html#sklearndf.classification.BernoulliNBDF">[docs]</a><span class="k">class</span> <span class="nc">BernoulliNBDF</span><span class="p">(</span>
+    <span class="n">PartialFitClassifierWrapperDF</span><span class="p">[</span><span class="n">BernoulliNB</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">BernoulliNB</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``BernoulliNB``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># calibration</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="CalibratedClassifierCVDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.CalibratedClassifierCVDF.html#sklearndf.classification.CalibratedClassifierCVDF">[docs]</a><span class="k">class</span> <span class="nc">CalibratedClassifierCVDF</span><span class="p">(</span>
+    <span class="n">MetaClassifierWrapperDF</span><span class="p">[</span><span class="n">CalibratedClassifierCV</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">CalibratedClassifierCV</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``CalibratedClassifierCV``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># SVM</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="SVCDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.SVCDF.html#sklearndf.classification.SVCDF">[docs]</a><span class="k">class</span> <span class="nc">SVCDF</span><span class="p">(</span><span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">SVC</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">SVC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``SVC``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="NuSVCDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.NuSVCDF.html#sklearndf.classification.NuSVCDF">[docs]</a><span class="k">class</span> <span class="nc">NuSVCDF</span><span class="p">(</span><span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">NuSVC</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">NuSVC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``NuSVC``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="LinearSVCDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.LinearSVCDF.html#sklearndf.classification.LinearSVCDF">[docs]</a><span class="k">class</span> <span class="nc">LinearSVCDF</span><span class="p">(</span><span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">LinearSVC</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">LinearSVC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LinearSVC``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># gaussian process</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="GaussianProcessClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.GaussianProcessClassifierDF.html#sklearndf.classification.GaussianProcessClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">GaussianProcessClassifierDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">GaussianProcessClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">GaussianProcessClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``GaussianProcessClassifier``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># linear model</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="LogisticRegressionDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.LogisticRegressionDF.html#sklearndf.classification.LogisticRegressionDF">[docs]</a><span class="k">class</span> <span class="nc">LogisticRegressionDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">LogisticRegression</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">LogisticRegression</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LogisticRegression``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="LogisticRegressionCVDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.LogisticRegressionCVDF.html#sklearndf.classification.LogisticRegressionCVDF">[docs]</a><span class="k">class</span> <span class="nc">LogisticRegressionCVDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">LogisticRegressionCV</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">LogisticRegressionCV</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LogisticRegressionCV``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="PassiveAggressiveClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.PassiveAggressiveClassifierDF.html#sklearndf.classification.PassiveAggressiveClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">PassiveAggressiveClassifierDF</span><span class="p">(</span>
+    <span class="n">PartialFitClassifierWrapperDF</span><span class="p">[</span><span class="n">PassiveAggressiveClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">PassiveAggressiveClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``PassiveAggressiveClassifier``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="PerceptronDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.PerceptronDF.html#sklearndf.classification.PerceptronDF">[docs]</a><span class="k">class</span> <span class="nc">PerceptronDF</span><span class="p">(</span>
+    <span class="n">PartialFitClassifierWrapperDF</span><span class="p">[</span><span class="n">Perceptron</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">Perceptron</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``Perceptron``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="SGDClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.SGDClassifierDF.html#sklearndf.classification.SGDClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">SGDClassifierDF</span><span class="p">(</span>
+    <span class="n">PartialFitClassifierWrapperDF</span><span class="p">[</span><span class="n">SGDClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">SGDClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``SGDClassifier``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RidgeClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.RidgeClassifierDF.html#sklearndf.classification.RidgeClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">RidgeClassifierDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">RidgeClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">RidgeClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``RidgeClassifier``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RidgeClassifierCVDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.RidgeClassifierCVDF.html#sklearndf.classification.RidgeClassifierCVDF">[docs]</a><span class="k">class</span> <span class="nc">RidgeClassifierCVDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">RidgeClassifierCV</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">RidgeClassifierCV</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``RidgeClassifierCV``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># semi-supervised</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="LabelPropagationDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.LabelPropagationDF.html#sklearndf.classification.LabelPropagationDF">[docs]</a><span class="k">class</span> <span class="nc">LabelPropagationDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">LabelPropagation</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">LabelPropagation</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LabelPropagation``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="LabelSpreadingDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.LabelSpreadingDF.html#sklearndf.classification.LabelSpreadingDF">[docs]</a><span class="k">class</span> <span class="nc">LabelSpreadingDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">LabelSpreading</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">LabelSpreading</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LabelSpreading``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># multi-class</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="OneVsRestClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.OneVsRestClassifierDF.html#sklearndf.classification.OneVsRestClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">OneVsRestClassifierDF</span><span class="p">(</span>
+    <span class="n">MetaClassifierWrapperDF</span><span class="p">[</span><span class="n">OneVsRestClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">OneVsRestClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``OneVsRestClassifier``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="OneVsOneClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.OneVsOneClassifierDF.html#sklearndf.classification.OneVsOneClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">OneVsOneClassifierDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">OneVsOneClassifier</span><span class="p">],</span>
+    <span class="n">MetaEstimatorWrapperDF</span><span class="p">[</span><span class="n">OneVsOneClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">OneVsOneClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``OneVsOneClassifier``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="OutputCodeClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.OutputCodeClassifierDF.html#sklearndf.classification.OutputCodeClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">OutputCodeClassifierDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">OutputCodeClassifier</span><span class="p">],</span>
+    <span class="n">MetaEstimatorWrapperDF</span><span class="p">[</span><span class="n">OutputCodeClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">OutputCodeClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``OutputCodeClassifier``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># multi-output</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="MultiOutputClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.MultiOutputClassifierDF.html#sklearndf.classification.MultiOutputClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">MultiOutputClassifierDF</span><span class="p">(</span>
+    <span class="n">MultiOutputClassifierWrapperDF</span><span class="p">,</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">MultiOutputClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``MultiOutputClassifier``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># chaining</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="ClassifierChainDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.ClassifierChainDF.html#sklearndf.classification.ClassifierChainDF">[docs]</a><span class="k">class</span> <span class="nc">ClassifierChainDF</span><span class="p">(</span>
+    <span class="n">ClassifierChainWrapperDF</span><span class="p">,</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">ClassifierChain</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``ClassifierChain``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># neural network</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="MLPClassifierDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/classification/sklearndf.classification.MLPClassifierDF.html#sklearndf.classification.MLPClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">MLPClassifierDF</span><span class="p">(</span>
+    <span class="n">PartialFitClassifierWrapperDF</span><span class="p">[</span><span class="n">MLPClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">MLPClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``MLPClassifier``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># validate __all__</span>
+<span class="c1">#</span>
+
+<span class="n">__tracker</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># validate that __all__ comprises all symbols ending in &quot;DF&quot;, and no others</span>
+<span class="c1">#</span>
+
+<span class="n">__estimators</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">sym</span>
+    <span class="k">for</span> <span class="n">sym</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">sym</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;DF&quot;</span><span class="p">)</span>
+    <span class="ow">and</span> <span class="n">sym</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">__imported_estimators</span>
+    <span class="ow">and</span> <span class="ow">not</span> <span class="n">sym</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">if</span> <span class="n">__estimators</span> <span class="o">!=</span> <span class="nb">set</span><span class="p">(</span><span class="n">__all__</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+        <span class="s2">&quot;__all__ does not contain exactly all DF estimators; expected value is:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">__estimators</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, Boston Consulting Group (BCG).<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

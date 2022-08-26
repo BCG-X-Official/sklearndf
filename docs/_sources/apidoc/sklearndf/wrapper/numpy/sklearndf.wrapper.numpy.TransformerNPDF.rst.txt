@@ -1,0 +1,50 @@
+sklearndf.wrapper.numpy.TransformerNPDF
+=======================================
+
+.. currentmodule:: sklearndf.wrapper.numpy
+
+.. autoclass:: TransformerNPDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~TransformerNPDF.clone
+      ~TransformerNPDF.ensure_fitted
+      ~TransformerNPDF.fit
+      ~TransformerNPDF.fit_transform
+      ~TransformerNPDF.get_params
+      ~TransformerNPDF.inverse_transform
+      ~TransformerNPDF.set_params
+      ~TransformerNPDF.to_expression
+      ~TransformerNPDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~TransformerNPDF.COL_FEATURE_IN
+      ~TransformerNPDF.COL_FEATURE_OUT
+      ~TransformerNPDF.feature_names_in_
+      ~TransformerNPDF.feature_names_original_
+      ~TransformerNPDF.feature_names_out_
+      ~TransformerNPDF.is_fitted
+      ~TransformerNPDF.n_outputs_
+      ~TransformerNPDF.native_estimator
+      ~TransformerNPDF.delegate
+      ~TransformerNPDF.column_names
+   
+   
+
+   .. rubric:: Definitions

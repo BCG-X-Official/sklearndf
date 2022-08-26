@@ -1,0 +1,46 @@
+sklearndf.regression.QuantileRegressorDF
+========================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: QuantileRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~QuantileRegressorDF.clone
+      ~QuantileRegressorDF.ensure_fitted
+      ~QuantileRegressorDF.fit
+      ~QuantileRegressorDF.from_fitted
+      ~QuantileRegressorDF.get_params
+      ~QuantileRegressorDF.predict
+      ~QuantileRegressorDF.score
+      ~QuantileRegressorDF.set_params
+      ~QuantileRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~QuantileRegressorDF.COL_FEATURE_IN
+      ~QuantileRegressorDF.COL_PREDICTION
+      ~QuantileRegressorDF.feature_names_in_
+      ~QuantileRegressorDF.is_fitted
+      ~QuantileRegressorDF.n_outputs_
+      ~QuantileRegressorDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

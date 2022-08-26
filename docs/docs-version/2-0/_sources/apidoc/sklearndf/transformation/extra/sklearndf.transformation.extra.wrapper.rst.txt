@@ -1,0 +1,37 @@
+sklearndf.transformation.extra.wrapper
+======================================
+
+.. automodule:: sklearndf.transformation.extra.wrapper
+   :no-imported-members:
+
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: wrapper
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      BorutaPyWrapperDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

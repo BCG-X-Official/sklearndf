@@ -1,0 +1,47 @@
+sklearndf.classification.extra.XGBClassifierDF
+==============================================
+
+.. currentmodule:: sklearndf.classification.extra
+
+.. autoclass:: XGBClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~XGBClassifierDF.clone
+      ~XGBClassifierDF.ensure_fitted
+      ~XGBClassifierDF.fit
+      ~XGBClassifierDF.from_fitted
+      ~XGBClassifierDF.get_params
+      ~XGBClassifierDF.predict
+      ~XGBClassifierDF.predict_proba
+      ~XGBClassifierDF.score
+      ~XGBClassifierDF.set_params
+      ~XGBClassifierDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~XGBClassifierDF.COL_FEATURE_IN
+      ~XGBClassifierDF.COL_PREDICTION
+      ~XGBClassifierDF.feature_names_in_
+      ~XGBClassifierDF.is_fitted
+      ~XGBClassifierDF.n_outputs_
+      ~XGBClassifierDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

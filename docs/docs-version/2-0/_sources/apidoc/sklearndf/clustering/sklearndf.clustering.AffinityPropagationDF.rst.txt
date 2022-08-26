@@ -1,0 +1,48 @@
+sklearndf.clustering.AffinityPropagationDF
+==========================================
+
+.. currentmodule:: sklearndf.clustering
+
+.. autoclass:: AffinityPropagationDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~AffinityPropagationDF.clone
+      ~AffinityPropagationDF.ensure_fitted
+      ~AffinityPropagationDF.fit
+      ~AffinityPropagationDF.fit_predict
+      ~AffinityPropagationDF.from_fitted
+      ~AffinityPropagationDF.get_params
+      ~AffinityPropagationDF.predict
+      ~AffinityPropagationDF.set_params
+      ~AffinityPropagationDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~AffinityPropagationDF.COL_FEATURE_IN
+      ~AffinityPropagationDF.COL_LABELS
+      ~AffinityPropagationDF.COL_PREDICTION
+      ~AffinityPropagationDF.feature_names_in_
+      ~AffinityPropagationDF.is_fitted
+      ~AffinityPropagationDF.labels_
+      ~AffinityPropagationDF.n_outputs_
+      ~AffinityPropagationDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

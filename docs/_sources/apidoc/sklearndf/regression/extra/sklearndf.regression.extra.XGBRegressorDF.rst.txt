@@ -1,0 +1,46 @@
+sklearndf.regression.extra.XGBRegressorDF
+=========================================
+
+.. currentmodule:: sklearndf.regression.extra
+
+.. autoclass:: XGBRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~XGBRegressorDF.clone
+      ~XGBRegressorDF.ensure_fitted
+      ~XGBRegressorDF.fit
+      ~XGBRegressorDF.from_fitted
+      ~XGBRegressorDF.get_params
+      ~XGBRegressorDF.predict
+      ~XGBRegressorDF.score
+      ~XGBRegressorDF.set_params
+      ~XGBRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~XGBRegressorDF.COL_FEATURE_IN
+      ~XGBRegressorDF.COL_PREDICTION
+      ~XGBRegressorDF.feature_names_in_
+      ~XGBRegressorDF.is_fitted
+      ~XGBRegressorDF.n_outputs_
+      ~XGBRegressorDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

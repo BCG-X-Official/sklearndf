@@ -1,0 +1,42 @@
+sklearndf.wrapper.numpy
+=======================
+
+.. automodule:: sklearndf.wrapper.numpy
+   :no-imported-members:
+
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: numpy
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      ClassifierNPDF
+      EstimatorNPDF
+      LearnerNPDF
+      RegressorNPDF
+      SupervisedLearnerNPDF
+      TransformerNPDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
