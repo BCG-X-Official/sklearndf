@@ -1,4 +1,4 @@
-.. image:: _static/sklearndf_logo.png
+.. image:: /_images/sklearndf_logo.png
 
 |
 
@@ -9,9 +9,9 @@ Table of contents
    :maxdepth: 1
    :titlesonly:
 
-   Getting started <getting_started/getting_started>
+   Getting started <_generated/getting_started>
    API reference <apidoc/sklearndf>
    tutorials
    contribution_guide
    faqs
-   release_notes
+   _generated/release_notes

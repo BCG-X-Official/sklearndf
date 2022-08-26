@@ -413,3 +413,6 @@ TSWLatexianTemp*
 
 # exclude notebooks directory: this is generated during build
 /notebooks/
+
+# OmniGraffle previews
+**/*.graffle/preview.jpeg

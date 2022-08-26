@@ -1,12 +1,19 @@
-from typing import List, Type
+from typing import Any, Dict, List, Type
 
 import pandas as pd
 import pytest
-from sklearn.base import is_regressor
+from sklearn.base import BaseEstimator, is_regressor
 from sklearn.multioutput import MultiOutputRegressor, RegressorChain
 
 import sklearndf.regression
-from sklearndf import RegressorDF, TransformerDF
+from sklearndf import (
+    RegressorDF,
+    TransformerDF,
+    __sklearn_0_22__,
+    __sklearn_0_23__,
+    __sklearn_1_0__,
+    __sklearn_version__,
+)
 from sklearndf.regression import (
     SVRDF,
     IsotonicRegressionDF,
@@ -20,13 +27,30 @@ from sklearndf.regression import (
 from sklearndf.wrapper import EstimatorWrapperDF
 from test.sklearndf import check_expected_not_fitted_error, iterate_classes
 
-REGRESSORS_TO_TEST: List[Type[EstimatorWrapperDF]] = iterate_classes(
+# noinspection PyTypeChecker
+# ignore false alert about module type
+REGRESSORS_TO_TEST: List[Type[EstimatorWrapperDF[BaseEstimator]]] = iterate_classes(
     from_modules=sklearndf.regression,
     matching=r".*DF",
     excluding=[RegressorDF.__name__, TransformerDF.__name__, r".*WrapperDF"],
 )
 
-DEFAULT_REGRESSOR_PARAMETERS = {
+
+def test_regressor_count() -> None:
+    n = len(REGRESSORS_TO_TEST)
+
+    print(f"Testing {n} regressors.")
+    if __sklearn_version__ < __sklearn_0_22__:
+        assert n == 49
+    elif __sklearn_version__ < __sklearn_0_23__:
+        assert n == 50
+    elif __sklearn_version__ < __sklearn_1_0__:
+        assert n == 54
+    else:
+        assert n == 56
+
+
+DEFAULT_REGRESSOR_PARAMETERS: Dict[str, Dict[str, Any]] = {
     "MultiOutputRegressorDF": {"estimator": RandomForestRegressorDF()},
     "MultiOutputRegressorDF_partial_fit": {"estimator": SGDRegressorDF()},
     "RegressorChainDF": {"base_estimator": RandomForestRegressorDF()},
@@ -50,7 +74,9 @@ REGRESSORS_PARTIAL_FIT = [
 ]
 
 
-@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST)
+@pytest.mark.parametrize(  # type: ignore
+    argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST
+)
 def test_wrapped_fit_predict(
     sklearndf_cls: Type[RegressorDF],
     boston_features: pd.DataFrame,
@@ -58,9 +84,12 @@ def test_wrapped_fit_predict(
     boston_target_df: pd.DataFrame,
 ) -> None:
     """Test fit & predict of wrapped sklearn regressors"""
-    regressor: RegressorDF = sklearndf_cls(
-        **DEFAULT_REGRESSOR_PARAMETERS.get(sklearndf_cls.__name__, {})
+    parameters: Dict[str, Any] = DEFAULT_REGRESSOR_PARAMETERS.get(
+        sklearndf_cls.__name__, {}
     )
+
+    # noinspection PyArgumentList
+    regressor: RegressorDF = sklearndf_cls(**parameters)
 
     assert is_regressor(regressor)
 
@@ -90,14 +119,17 @@ def test_wrapped_fit_predict(
     assert len(predictions) == len(boston_target_sr)
 
 
-@pytest.mark.parametrize("sklearndf_cls", REGRESSORS_PARTIAL_FIT)
+@pytest.mark.parametrize(  # type: ignore
+    argnames="sklearndf_cls", argvalues=REGRESSORS_PARTIAL_FIT
+)
 def test_wrapped_partial_fit(
     sklearndf_cls: Type[RegressorDF],
     boston_features: pd.DataFrame,
     boston_target_sr: pd.Series,
     boston_target_df: pd.DataFrame,
-):
+) -> None:
 
+    # noinspection PyArgumentList
     regressor = sklearndf_cls(
         **DEFAULT_REGRESSOR_PARAMETERS.get(f"{sklearndf_cls.__name__}_partial_fit", {})
     )

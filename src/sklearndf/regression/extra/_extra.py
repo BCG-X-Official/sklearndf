@@ -6,7 +6,7 @@ import warnings
 
 from pytools.api import AllTracker
 
-from ...wrapper import make_df_regressor
+from ...wrapper import MissingEstimator, RegressorWrapperDF
 
 # since we install LGBM via conda, the warning about the Clang compiler is irrelevant
 warnings.filterwarnings("ignore", message=r"Starting from version 2\.2\.1")
@@ -18,32 +18,56 @@ warnings.filterwarnings(
 
 log = logging.getLogger(__name__)
 
-__all__ = []
+__all__ = ["LGBMRegressorDF", "XGBRegressorDF"]
 
 try:
     # import lightgbm classes only if installed
     from lightgbm.sklearn import LGBMRegressor
 
-    __all__.append("LGBMRegressorDF")
 except ImportError:
-    LGBMRegressor = None
 
-__imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
+    class LGBMRegressor(  # type: ignore
+        MissingEstimator,
+    ):
+        """Mock-up for missing estimator."""
+
+
+try:
+    # import xgboost classes only if installed
+    from xgboost import XGBRegressor
+
+except ImportError:
+
+    class XGBRegressor(  # type: ignore
+        MissingEstimator,
+    ):
+        """Mock-up for missing estimator."""
 
 
 #
 # Ensure all symbols introduced below are included in __all__
 #
 
-__tracker = AllTracker(globals(), allow_imported_definitions=True)
+__tracker = AllTracker(globals())
 
 
 #
 # Class definitions
 #
 
-if LGBMRegressor:
-    LGBMRegressorDF = make_df_regressor(LGBMRegressor)
+
+class LGBMRegressorDF(
+    RegressorWrapperDF[LGBMRegressor],
+    native=LGBMRegressor,
+):
+    """Stub for DF wrapper of class ``LGBMRegressorDF``"""
+
+
+class XGBRegressorDF(
+    RegressorWrapperDF[XGBRegressor],
+    native=XGBRegressor,
+):
+    """Stub for DF wrapper of class ``XGBRegressorDF``"""
 
 
 #
@@ -51,21 +75,3 @@ if LGBMRegressor:
 #
 
 __tracker.validate()
-
-
-#
-# validate that __all__ comprises all symbols ending in "DF", and no others
-#
-
-__estimators = {
-    sym
-    for sym in dir()
-    if sym.endswith("DF")
-    and sym not in __imported_estimators
-    and not sym.startswith("_")
-}
-if __estimators != set(__all__):
-    raise RuntimeError(
-        "__all__ does not contain exactly all DF estimators; expected value is:\n"
-        f"{__estimators}"
-    )

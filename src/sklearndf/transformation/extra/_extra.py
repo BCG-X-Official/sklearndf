@@ -5,24 +5,31 @@ from __future__ import annotations
 
 import logging
 
-import pandas as pd
-from boruta import BorutaPy
-
 from pytools.api import AllTracker
 
-from ...wrapper import MetaEstimatorWrapperDF, make_df_transformer
-from ..wrapper import ColumnSubsetTransformerWrapperDF, NumpyTransformerWrapperDF
+from ...wrapper import MissingEstimator
 
 log = logging.getLogger(__name__)
 
-__all__ = ["BorutaPyWrapperDF", "BorutaDF"]
+__all__ = ["BorutaDF"]
+
+try:
+    # import boruta classes only if installed
+    from boruta import BorutaPy
+
+except ImportError:
+
+    class BorutaPy(  # type: ignore
+        MissingEstimator,
+    ):
+        """Mock-up for missing estimator."""
 
 
 #
 # Ensure all symbols introduced below are included in __all__
 #
 
-__tracker = AllTracker(globals(), allow_imported_definitions=True)
+__tracker = AllTracker(globals())
 
 
 #
@@ -30,21 +37,17 @@ __tracker = AllTracker(globals(), allow_imported_definitions=True)
 #
 
 
-class BorutaPyWrapperDF(
-    MetaEstimatorWrapperDF[BorutaPy],
-    NumpyTransformerWrapperDF[BorutaPy],
-    ColumnSubsetTransformerWrapperDF[BorutaPy],
-):
+from .wrapper import BorutaPyWrapperDF as _BorutaPyWrapperDF
+
+
+class BorutaDF(_BorutaPyWrapperDF, native=BorutaPy):
     """
-    DF wrapper for :class:`~boruta.BorutaPy`.
+    DF version of :class:`~boruta.BorutaPy`.
     """
 
-    def _get_features_out(self) -> pd.Index:
-        return self.feature_names_in_[self.native_estimator.support_]
 
-
-BorutaDF = make_df_transformer(
-    BorutaPy, name="BorutaDF", base_wrapper=BorutaPyWrapperDF
-)
+#
+# validate __all__
+#
 
 __tracker.validate()

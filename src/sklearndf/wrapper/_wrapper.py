@@ -3,17 +3,20 @@ Wrappers around native `scikit-learn` estimators.
 
 `sklearndf` wrappers accept and return data frames (while `scikit-learn` transformers
 usually return a numpy arrays, and may not accept data frames as input).
-Otherwise the wrappers are designed to precisely mirror the API and behavior of the
+Otherwise, the wrappers are designed to precisely mirror the API and behavior of the
 native estimators they wrap.
 
 The wrappers also implement the additional column attributes introduced by `sklearndf`,
 :meth:`~EstimatorDF.feature_names_in_`, :meth:`~TransformerDF.feature_names_out_`, and
 :meth:`~TransformerDF.feature_names_original_`.
 """
+
+from __future__ import annotations
+
 import inspect
 import logging
 import warnings
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 from functools import update_wrapper
 from typing import (
     Any,
@@ -32,9 +35,9 @@ from typing import (
     Union,
     cast,
 )
-from weakref import WeakValueDictionary
 
 import numpy as np
+import numpy.typing as npt
 import pandas as pd
 import sklearn.utils.metaestimators as sklearn_meta
 from sklearn.base import (
@@ -48,10 +51,9 @@ from sklearn.base import (
 
 from pytools.api import AllTracker, inheritdoc, public_module_prefix
 
-from ._adapter import SupervisedLearnerNPDF
 from sklearndf import (
     ClassifierDF,
-    ClustererDF,
+    ClusterDF,
     EstimatorDF,
     LearnerDF,
     RegressorDF,
@@ -63,20 +65,14 @@ log = logging.getLogger(__name__)
 
 __all__ = [
     "ClassifierWrapperDF",
+    "ClusterWrapperDF",
     "EstimatorWrapperDF",
     "EstimatorWrapperDFMeta",
     "LearnerWrapperDF",
-    "SupervisedLearnerWrapperDF",
     "MetaEstimatorWrapperDF",
     "RegressorWrapperDF",
-    "ClustererWrapperDF",
-    "StackingEstimatorWrapperDF",
+    "SupervisedLearnerWrapperDF",
     "TransformerWrapperDF",
-    "make_df_classifier",
-    "make_df_estimator",
-    "make_df_regressor",
-    "make_df_transformer",
-    "make_df_clusterer",
 ]
 
 
@@ -85,6 +81,8 @@ __all__ = [
 #
 
 T = TypeVar("T")
+T_Callable = TypeVar("T_Callable", bound=Callable[..., Any])
+
 T_NativeEstimator = TypeVar("T_NativeEstimator", bound=BaseEstimator)
 T_NativeTransformer = TypeVar("T_NativeTransformer", bound=TransformerMixin)
 T_NativeLearner = TypeVar(
@@ -95,21 +93,12 @@ T_NativeSupervisedLearner = TypeVar(
 )
 T_NativeRegressor = TypeVar("T_NativeRegressor", bound=RegressorMixin)
 T_NativeClassifier = TypeVar("T_NativeClassifier", bound=ClassifierMixin)
-T_NativeClusterer = TypeVar("T_NativeClusterer", bound=ClusterMixin)
+T_NativeCluster = TypeVar("T_NativeCluster", bound=ClusterMixin)
 
-T_EstimatorWrapperDF = TypeVar("T_EstimatorWrapperDF", bound="EstimatorWrapperDF")
-T_TransformerWrapperDF = TypeVar("T_TransformerWrapperDF", bound="TransformerWrapperDF")
-T_SupervisedLearnerDF = TypeVar("T_SupervisedLearnerDF", bound="SupervisedLearnerDF")
-T_RegressorWrapperDF = TypeVar("T_RegressorWrapperDF", bound="RegressorWrapperDF")
-T_ClassifierWrapperDF = TypeVar("T_ClassifierWrapperDF", bound="ClassifierWrapperDF")
-T_ClustererWrapperDF = TypeVar("T_ClustererWrapperDF", bound="ClustererWrapperDF")
+T_EstimatorWrapperDF = TypeVar(
+    "T_EstimatorWrapperDF", bound="EstimatorWrapperDF[BaseEstimator]"
+)
 
-T_StackableSupervisedLearnerDF = TypeVar(
-    "T_StackableSupervisedLearnerDF", bound="_StackableSupervisedLearnerDF"
-)
-T_StackingEstimatorWrapperDF = TypeVar(
-    "T_StackingEstimatorWrapperDF", bound="StackingEstimatorWrapperDF"
-)
 
 #
 # Ensure all symbols introduced below are included in __all__
@@ -129,7 +118,58 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
     estimator.
     """
 
+    #: the native class wrapped by the DF wrapper class
     __wrapped__: Type[T_NativeEstimator]
+
+    def __new__(
+        mcs: Type[EstimatorWrapperDFMeta[T_NativeEstimator]],
+        name: str,
+        bases: Tuple[type, ...],
+        namespace: Dict[str, Any],
+        native: Optional[T_NativeEstimator] = None,
+        **kwargs: Any,
+    ) -> EstimatorWrapperDFMeta[T_NativeEstimator]:
+        if native in bases:
+            raise TypeError(
+                f"wrapper class {name} must not state native class "
+                f"{native.__name__} as a base class"
+            )
+
+        # noinspection PyArgumentList,PyTypeChecker
+        cls: EstimatorWrapperDFMeta[T_NativeEstimator] = super().__new__(
+            mcs, name, bases, namespace, **kwargs
+        )
+
+        if native is None:
+            return cls
+
+        wrapper_cls = cast(Type[EstimatorWrapperDF[T_NativeEstimator]], cls)
+        wrapper_cls.__wrapped__ = native
+        wrapper_cls.__signature__ = inspect.signature(native)
+        wrapper_init = _make_init(wrapper_cls)
+        wrapper_init.__signature__ = inspect.signature(native.__init__)  # type: ignore
+        setattr(wrapper_cls, "__init__", wrapper_init)
+        wrapper_module = namespace["__module__"]
+
+        _mirror_attributes(
+            wrapper_class=wrapper_cls,
+            native_estimator=native,
+            wrapper_module=wrapper_module,
+        )
+        # adopt the initializer signature of the wrapped sklearn estimator
+        _update_wrapper(
+            wrapper=wrapper_init,
+            wrapped=native.__init__,
+            wrapper_module=wrapper_module,
+            wrapper_parent=name,
+        )
+        # adopt the class docstring of the wrapped sklearn estimator
+        _update_class_docstring(
+            df_estimator_type=wrapper_cls,
+            sklearn_native_estimator_type=native,
+        )
+
+        return wrapper_cls
 
     @property
     def native_estimator_type(cls) -> Type[T_NativeEstimator]:
@@ -139,6 +179,16 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
         return cls.__wrapped__
 
 
+def _make_init(cls: type) -> Callable[..., None]:
+    def __init__(self: type, *args: Any, **kwargs: Any) -> None:
+        """"""
+        cast(EstimatorWrapperDF, super(cls, self)).__init__(  # type: ignore
+            *args, **kwargs
+        )
+
+    return __init__
+
+
 @inheritdoc(match="[see superclass]")
 class EstimatorWrapperDF(
     EstimatorDF, Generic[T_NativeEstimator], metaclass=EstimatorWrapperDFMeta
@@ -146,9 +196,6 @@ class EstimatorWrapperDF(
     """
     Base class of DF wrappers for native estimators conforming with the `scikit-learn`
     API.
-
-    Estimator wrapper classes should be created using function
-    :func:`.make_df_estimator`.
     """
 
     __ARG_FITTED_DELEGATE_CONTEXT = "__EstimatorWrapperDF_fitted"
@@ -185,9 +232,16 @@ class EstimatorWrapperDF(
 
         self._validate_delegate_estimator()
 
-    def __new__(cls: Type[T], *args, **kwargs: Any) -> T:
-        if not hasattr(cls, "__wrapped__"):
-            raise TypeError(f"cannot instantiate abstract wrapper class {cls.__name__}")
+    def __new__(
+        cls: Type[T_EstimatorWrapperDF], *args: Any, **kwargs: Any
+    ) -> T_EstimatorWrapperDF:
+        try:
+            cls.__wrapped__
+        except AttributeError:
+            raise TypeError(
+                f"cannot instantiate wrapper class {cls.__name__}: "
+                "need to specify class argument 'native' in class definition"
+            )
         else:
             return cast(Type[EstimatorDF], super()).__new__(cls)
 
@@ -218,18 +272,16 @@ class EstimatorWrapperDF(
         # names differ.
         # Return the same feature names that were passed to this method.
         try:
-            _feature_names_in_native_ = self.native_estimator.feature_names_in_
+            feature_names_in_native = self.native_estimator.feature_names_in_
         except AttributeError:
             return wrapper_feature_names_in
 
-        if not np.array_equal(
-            wrapper_feature_names_in.values, _feature_names_in_native_
-        ):
+        if not np.array_equal(wrapper_feature_names_in.values, feature_names_in_native):
             warnings.warn(
                 "conflicting input feature names: "
                 "the input feature names recorded by this estimator are "
                 f"{wrapper_feature_names_in}, but the input feature names recorded by "
-                f"the wrapped native estimator are {_feature_names_in_native_}",
+                f"the wrapped native estimator are {feature_names_in_native}",
                 stacklevel=warning_stacklevel + 1,
             )
         return wrapper_feature_names_in
@@ -238,7 +290,7 @@ class EstimatorWrapperDF(
     def _estimator_type(self) -> Optional[str]:
         try:
             # noinspection PyProtectedMember
-            return self.native_estimator._estimator_type
+            return cast(str, self.native_estimator._estimator_type)
         except AttributeError:
             return None
 
@@ -250,10 +302,10 @@ class EstimatorWrapperDF(
         n_outputs: int,
     ) -> T_EstimatorWrapperDF:
         """
-        Make a new wrapped data frame estimator whose delegate is an estimator which
+        Make a new wrapped DF estimator, delegating to a given native estimator that
         has already been fitted.
 
-        :param estimator: the fitted estimator
+        :param estimator: the fitted native estimator to use as the delegate
         :param features_in: the column names of X used for fitting the estimator
         :param n_outputs: the number of outputs in y used for fitting the estimator
         :return: the wrapped data frame estimator
@@ -271,7 +323,7 @@ class EstimatorWrapperDF(
 
     def get_params(self, deep: bool = True) -> Mapping[str, Any]:
         """[see superclass]"""
-        return self._native_estimator.get_params(deep=deep)
+        return cast(Mapping[str, Any], self._native_estimator.get_params(deep=deep))
 
     def set_params(self: T_EstimatorWrapperDF, **params: Any) -> T_EstimatorWrapperDF:
         """[see superclass]"""
@@ -301,6 +353,7 @@ class EstimatorWrapperDF(
         return self
 
     def _validate_delegate_estimator(self) -> None:
+        # no validation required by default; to be overloaded as needed
         pass
 
     def _get_features_in(self) -> pd.Index:
@@ -317,13 +370,19 @@ class EstimatorWrapperDF(
 
     # noinspection PyPep8Naming
     def _fit(
-        self, X: pd.DataFrame, y: Optional[Union[pd.Series, pd.DataFrame]], **fit_params
+        self,
+        X: pd.DataFrame,
+        y: Optional[Union[pd.Series, pd.DataFrame]],
+        **fit_params: Any,
     ) -> T_NativeEstimator:
         # noinspection PyUnresolvedReferences
-        return self._native_estimator.fit(
-            self._prepare_X_for_delegate(X),
-            self._prepare_y_for_delegate(y),
-            **fit_params,
+        return cast(
+            T_NativeEstimator,
+            self._native_estimator.fit(
+                self._prepare_X_for_delegate(X),
+                self._prepare_y_for_delegate(y),
+                **fit_params,
+            ),
         )
 
     # noinspection PyPep8Naming,PyUnusedLocal
@@ -331,12 +390,15 @@ class EstimatorWrapperDF(
         self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
-        **fit_params,
+        **fit_params: Any,
     ) -> None:
         self._features_in = X.columns.rename(self.COL_FEATURE_IN)
-        self._n_outputs = (
-            0 if y is None else 1 if isinstance(y, pd.Series) else y.shape[1]
-        )
+        if y is None:
+            self._n_outputs = 0
+        elif isinstance(y, pd.Series):
+            self._n_outputs = 1
+        else:
+            self._n_outputs = y.shape[1]
 
     # noinspection PyPep8Naming
     def _check_parameter_types(
@@ -370,7 +432,7 @@ class EstimatorWrapperDF(
         expected_columns: pd.Index,
         expected_index: pd.Index = None,
     ) -> None:
-        def _compare_labels(axis: str, actual: pd.Index, expected: pd.Index):
+        def _verify_labels(axis: str, actual: pd.Index, expected: pd.Index) -> None:
             error_message = f"{df_name} data frame does not have expected {axis}"
             missing_columns = expected.difference(actual)
             extra_columns = actual.difference(expected)
@@ -391,9 +453,9 @@ class EstimatorWrapperDF(
                     )
                 raise ValueError(f"{error_message} ({'; '.join(error_detail)})")
 
-        _compare_labels(axis="columns", actual=df.columns, expected=expected_columns)
+        _verify_labels(axis="columns", actual=df.columns, expected=expected_columns)
         if expected_index is not None:
-            _compare_labels(axis="index", actual=df.index, expected=expected_index)
+            _verify_labels(axis="index", actual=df.index, expected=expected_index)
 
     def _validate_delegate_attribute(self, attribute_name: str) -> None:
         if not hasattr(self.native_estimator, attribute_name):
@@ -403,7 +465,9 @@ class EstimatorWrapperDF(
             )
 
     # noinspection PyPep8Naming
-    def _prepare_X_for_delegate(self, X: pd.DataFrame) -> Any:
+    def _prepare_X_for_delegate(
+        self, X: pd.DataFrame
+    ) -> Union[pd.DataFrame, npt.NDArray[Any]]:
         # convert X before passing it to the delegate estimator
         return self._adjust_X_type_for_delegate(self._adjust_X_columns_for_delegate(X))
 
@@ -428,19 +492,17 @@ class EstimatorWrapperDF(
 
     # noinspection PyPep8Naming
     def _adjust_X_type_for_delegate(
-        self, X: pd.DataFrame, *, to_numpy: Optional[bool] = None
-    ) -> Any:
-        # convert X before passing it to the delegate estimator
-        return X.values if to_numpy else X
+        self, X: pd.DataFrame
+    ) -> Union[pd.DataFrame, npt.NDArray[Any]]:
+        # Convert X before passing it to the delegate estimator.
+        # By default, does nothing, but can be overridden.
+        return X
 
     def _adjust_y_type_for_delegate(
-        self,
-        y: Optional[Union[pd.Series, pd.DataFrame]],
-        *,
-        to_numpy: Optional[bool] = None,
-    ) -> Any:
+        self, y: Union[pd.Series, pd.DataFrame, None]
+    ) -> Union[pd.Series, pd.DataFrame, npt.NDArray[Any], None]:
         # convert y before passing it to the delegate estimator
-        return y if y is None or not to_numpy else y.values
+        return y
 
     def _make_verbose_exception(self, method: str, cause: Exception) -> Exception:
         verbose_message = f"{type(self).__name__}.{method}: {cause}"
@@ -483,17 +545,14 @@ class EstimatorWrapperDF(
 
 @inheritdoc(match="[see superclass]")
 class TransformerWrapperDF(
-    EstimatorWrapperDF[T_NativeTransformer],
     TransformerDF,
+    EstimatorWrapperDF[T_NativeTransformer],
     Generic[T_NativeTransformer],
     metaclass=ABCMeta,
 ):
     """
     Base class of DF wrappers for native transformers conforming with the `scikit-learn`
     API.
-
-    Transformer wrapper classes should be created using function
-    :func:`.make_df_transformer`.
     """
 
     @property
@@ -581,11 +640,15 @@ class TransformerWrapperDF(
             self._features_original = None
 
     # noinspection PyPep8Naming
-    def _prepare_X_for_delegate(self, X: pd.DataFrame, *, inverse: bool = False) -> Any:
-        return self._adjust_X_type_for_delegate(
-            self._adjust_X_columns_for_delegate(X, inverse=inverse),
-            to_numpy=inverse or None,
-        )
+    def _prepare_X_for_delegate(
+        self, X: pd.DataFrame, *, inverse: bool = False
+    ) -> Union[pd.DataFrame, npt.NDArray[Any]]:
+        x_adjusted = self._adjust_X_columns_for_delegate(X, inverse=inverse)
+        if inverse:
+            # when doing an inverse transform, we need X as a numpy array
+            return x_adjusted.values
+        else:
+            return self._adjust_X_type_for_delegate(x_adjusted)
 
     # noinspection PyPep8Naming
     def _adjust_X_columns_for_delegate(
@@ -605,8 +668,10 @@ class TransformerWrapperDF(
 
     @staticmethod
     def _transformed_to_df(
-        transformed: Union[pd.DataFrame, np.ndarray], index: pd.Index, columns: pd.Index
-    ):
+        transformed: Union[pd.DataFrame, npt.NDArray[Any]],
+        index: pd.Index,
+        columns: pd.Index,
+    ) -> pd.DataFrame:
         if isinstance(transformed, pd.DataFrame):
             # noinspection PyProtectedMember
             TransformerWrapperDF._verify_df(
@@ -620,24 +685,33 @@ class TransformerWrapperDF(
             return pd.DataFrame(data=transformed, index=index, columns=columns)
 
     # noinspection PyPep8Naming
-    def _transform(self, X: pd.DataFrame) -> np.ndarray:
+    def _transform(self, X: pd.DataFrame) -> npt.NDArray[Any]:
         # noinspection PyUnresolvedReferences
-        return self.native_estimator.transform(self._prepare_X_for_delegate(X))
-
-    # noinspection PyPep8Naming
-    def _fit_transform(
-        self, X: pd.DataFrame, y: Optional[pd.Series], **fit_params
-    ) -> np.ndarray:
-        return self.native_estimator.fit_transform(
-            self._prepare_X_for_delegate(X),
-            self._prepare_y_for_delegate(y),
-            **fit_params,
+        return cast(
+            npt.NDArray[Any],
+            self.native_estimator.transform(self._prepare_X_for_delegate(X)),
         )
 
     # noinspection PyPep8Naming
-    def _inverse_transform(self, X: pd.DataFrame) -> np.ndarray:
+    def _fit_transform(
+        self, X: pd.DataFrame, y: Optional[pd.Series], **fit_params: Any
+    ) -> npt.NDArray[Any]:
+        return cast(
+            npt.NDArray[Any],
+            self.native_estimator.fit_transform(
+                self._prepare_X_for_delegate(X),
+                self._prepare_y_for_delegate(y),
+                **fit_params,
+            ),
+        )
+
+    # noinspection PyPep8Naming
+    def _inverse_transform(self, X: pd.DataFrame) -> npt.NDArray[Any]:
         try:
-            inverse_transform_fn = self.native_estimator.inverse_transform
+            inverse_transform_fn = cast(
+                Callable[[npt.NDArray[Any]], npt.NDArray[Any]],
+                self.native_estimator.inverse_transform,
+            )
         except AttributeError:
             raise NotImplementedError(
                 f"{type(self).__name__} does not implement method inverse_transform()"
@@ -651,15 +725,16 @@ class LearnerWrapperDF(
     LearnerDF,
     EstimatorWrapperDF[T_NativeLearner],
     Generic[T_NativeLearner],
-    metaclass=ABCMeta,
 ):
     """
-    Base class of DF wrappers for native learners conforming with the `scikit-learn`
+    Base class of DF wrappers for native `learners` conforming with the `scikit-learn`
     API.
+
+    Learners in `scikit-learn` typically are regressors, classifiers, or clusterers.
     """
 
-    #: Name of :class:`pd.Series` objects containing the predictions of single-output
-    #: learners.
+    #: Name of :class:`~pandas.Series` objects containing the predictions of
+    #: single-output learners.
     #:
     #: See :meth:`~.LearnerDF.predict`.
     COL_PREDICTION = "prediction"
@@ -681,7 +756,7 @@ class LearnerWrapperDF(
 
     # noinspection PyPep8Naming
     def _prediction_to_series_or_frame(
-        self, X: pd.DataFrame, y: Union[np.ndarray, pd.Series, pd.DataFrame]
+        self, X: pd.DataFrame, y: Union[npt.NDArray[Any], pd.Series, pd.DataFrame]
     ) -> Union[pd.Series, pd.DataFrame]:
         if isinstance(y, pd.Series) or isinstance(y, pd.DataFrame):
             # if we already have a series or data frame, check it and return it
@@ -698,10 +773,10 @@ class LearnerWrapperDF(
                     # n_outputs)
                     return pd.DataFrame(data=y, index=X.index)
             raise TypeError(
-                f"Unexpected shape of numpy array returned as prediction:" f" {y.shape}"
+                f"unexpected shape of numpy array returned as prediction: {y.shape}"
             )
         raise TypeError(
-            f"unexpected data type returned as prediction: " f"{type(y).__name__}"
+            f"unexpected data type returned as prediction: {type(y).__name__}"
         )
 
 
@@ -713,7 +788,10 @@ class SupervisedLearnerWrapperDF(
     metaclass=ABCMeta,
 ):
     """
-    ...
+    Base class of DF wrappers for native `supervised learners` conforming with the
+    `scikit-learn` API.
+
+    Supervised learners in `scikit-learn` typically are regressors or classifiers.
     """
 
     # noinspection PyPep8Naming
@@ -727,13 +805,17 @@ class SupervisedLearnerWrapperDF(
         if sample_weight is not None and not isinstance(sample_weight, pd.Series):
             raise TypeError("arg sample_weight must be None or a Series")
 
-        return self.native_estimator.score(
-            self._prepare_X_for_delegate(X),
-            self._prepare_y_for_delegate(y),
-            sample_weight,
+        return cast(
+            float,
+            self.native_estimator.score(
+                self._prepare_X_for_delegate(X),
+                self._prepare_y_for_delegate(y),
+                sample_weight,
+            ),
         )
 
 
+@inheritdoc(match="[see superclass]")
 class RegressorWrapperDF(
     RegressorDF,
     SupervisedLearnerWrapperDF[T_NativeRegressor],
@@ -743,10 +825,17 @@ class RegressorWrapperDF(
     """
     Base class of DF wrappers for native regressors conforming with the `scikit-learn`
     API.
-
-    Regressor wrapper classes should be created using function
-    :func:`.make_df_regressor`.
     """
+
+    # noinspection PyPep8Naming
+    def score(
+        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+    ) -> float:
+        """[see superclass]"""
+        return cast(
+            float,
+            SupervisedLearnerWrapperDF.score(self, X, y, sample_weight=sample_weight),
+        )
 
 
 @inheritdoc(match="[see superclass]")
@@ -759,17 +848,17 @@ class ClassifierWrapperDF(
     """
     Base class of DF wrappers for native classifiers conforming with the `scikit-learn`
     API.
-
-    Classifier wrapper classes should be created using function
-    :func:`.make_df_classifier`.
     """
 
     @property
-    def classes_(self) -> Sequence[Any]:
+    def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
         """[see superclass]"""
         self.ensure_fitted()
         # noinspection PyUnresolvedReferences
-        return self._native_estimator.classes_
+        return cast(
+            Union[npt.NDArray[Any], List[npt.NDArray[Any]]],
+            self._native_estimator.classes_,
+        )
 
     # noinspection PyPep8Naming
     def predict_proba(
@@ -836,7 +925,9 @@ class ClassifierWrapperDF(
     def _prediction_with_class_labels(
         self,
         X: pd.DataFrame,
-        y: Union[pd.DataFrame, np.ndarray],
+        prediction: Union[
+            pd.Series, pd.DataFrame, List[npt.NDArray[Any]], npt.NDArray[Any]
+        ],
         classes: Optional[Sequence[Any]] = None,
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
 
@@ -845,41 +936,53 @@ class ClassifierWrapperDF(
             if classes is None:
                 classes = pd.RangeIndex(self._get_n_outputs())
 
-        if isinstance(y, pd.DataFrame):
-            return y.set_axis(classes, axis=1, inplace=False)
-        elif isinstance(y, np.ndarray):
-            if len(y) == len(X):
+        if isinstance(prediction, pd.DataFrame):
+            return prediction.set_axis(classes, axis=1, inplace=False)
+
+        elif isinstance(prediction, np.ndarray):
+            if len(prediction) == len(X):
                 # predictions of probabilities are usually provided as a NumPy array
                 # the same length as X
-                if y.ndim == 1:
+                if prediction.ndim == 1:
                     # for a binary classifier, we get a series with probabilities
                     # for the second class
-                    return pd.Series(data=y, index=X.index, name=classes[1])
-                elif y.ndim == 2:
+                    return pd.Series(data=prediction, index=X.index, name=classes[1])
+                elif prediction.ndim == 2:
                     # for a multi-class classifiers, we get a two-dimensional NumPy
                     # array with probabilities for each class
-                    return pd.DataFrame(data=y, index=X.index, columns=classes)
+                    return pd.DataFrame(data=prediction, index=X.index, columns=classes)
             raise TypeError(
-                f"ndarray with unexpected shape returned as prediction: " f"{y.shape}"
+                f"ndarray with unexpected shape returned as prediction: "
+                f"{prediction.shape}"
             )
+
         else:
-            raise TypeError(f"unexpected type or prediction result: {type(y).__name__}")
+            raise TypeError(
+                f"unexpected type or prediction result: {type(prediction).__name__}"
+            )
+
+    # noinspection PyPep8Naming
+    def score(
+        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+    ) -> float:
+        """[see superclass]"""
+        return cast(
+            float,
+            SupervisedLearnerWrapperDF.score(self, X, y, sample_weight=sample_weight),
+        )
 
 
 # noinspection PyPep8Naming
 @inheritdoc(match="[see superclass]")
-class ClustererWrapperDF(
-    ClustererDF,
-    LearnerWrapperDF[T_NativeClusterer],
-    Generic[T_NativeClusterer],
+class ClusterWrapperDF(
+    ClusterDF,
+    LearnerWrapperDF[T_NativeCluster],
+    Generic[T_NativeCluster],
     metaclass=ABCMeta,
 ):
     """
     Base class of DF wrappers for native clusterers conforming with the scikit-learn
     API.
-
-    Clusterer wrapper classes should be created using function
-    :func:`.make_df_clusterer`.
     """
 
     COL_LABELS = "labels"
@@ -937,7 +1040,7 @@ class ClustererWrapperDF(
         self,
         X: pd.DataFrame,
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
-        **fit_params,
+        **fit_params: Any,
     ) -> None:
         super()._post_fit(X, y, **fit_params)
         self._x_index = X.index
@@ -953,8 +1056,8 @@ class ClustererWrapperDF(
 
 
 class MetaEstimatorWrapperDF(
+    MetaEstimatorMixin,  # type: ignore
     EstimatorWrapperDF[T_NativeEstimator],
-    MetaEstimatorMixin,
     Generic[T_NativeEstimator],
     metaclass=ABCMeta,
 ):
@@ -1008,562 +1111,18 @@ class MetaEstimatorWrapperDF(
 
 
 #
-# Stacking Estimator wrappers
-#
-
-# noinspection PyPep8Naming
-@inheritdoc(match="""[see superclass]""")
-class StackingEstimatorWrapperDF(
-    SupervisedLearnerWrapperDF[T_NativeSupervisedLearner],
-    # note: MetaEstimatorMixin is the first public class in the mro of _BaseStacking
-    # MetaEstimatorMixin <-- _BaseHeterogeneousEnsemble <-- _BaseStacking
-    MetaEstimatorMixin,
-    Generic[T_NativeSupervisedLearner],
-    metaclass=ABCMeta,
-):
-    """
-    Abstract base class of wrappers for estimators implementing
-    :class:`sklearn.ensemble._stacking._BaseStacking`.
-
-    The stacking estimator will delegate to embedded estimators; this wrapper ensures
-    the required conversions from and to numpy arrays as the native stacking estimator
-    invokes the embedded estimators.
-    """
-
-    def fit(
-        self: T_StackingEstimatorWrapperDF,
-        X: pd.DataFrame,
-        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
-        **fit_params: Any,
-    ) -> T_StackingEstimatorWrapperDF:
-        """[see superclass]"""
-
-        class _ColumnNameFn:
-            # noinspection PyMethodParameters
-            def __call__(self_) -> Sequence[str]:
-                return self._get_final_estimator_features_in()
-
-            def __deepcopy__(self, memo=None) -> Any:
-                # prevent a deep copy of this callable, to preserve reference to
-                # stacking estimator being fitted
-                return self
-
-        native: T_NativeSupervisedLearner = self.native_estimator
-        estimators: Sequence[Tuple[str, BaseEstimator]] = native.estimators
-        final_estimator: BaseEstimator = native.final_estimator
-
-        try:
-            native.estimators = [
-                (
-                    name,
-                    self._make_stackable_learner_df(estimator)
-                    if isinstance(estimator, SupervisedLearnerDF)
-                    else estimator,
-                )
-                for name, estimator in native.estimators
-            ]
-            native.final_estimator = self._make_learner_np_df(
-                delegate=native.final_estimator or self._make_default_final_estimator(),
-                column_names=_ColumnNameFn(),
-            )
-
-            # suppress a false warning from PyCharm's type checker
-            # noinspection PyTypeChecker
-            return super().fit(X, y, **fit_params)
-
-        finally:
-            native.estimators = estimators
-            native.final_estimator = final_estimator
-
-    @abstractmethod
-    def _make_stackable_learner_df(
-        self, learner: SupervisedLearnerDF
-    ) -> "_StackableSupervisedLearnerDF":
-        pass
-
-    @abstractmethod
-    def _make_learner_np_df(
-        self, delegate: SupervisedLearnerDF, column_names: Callable[[], Sequence[str]]
-    ) -> SupervisedLearnerNPDF:
-        pass
-
-    def _get_estimators_features_out(self) -> List[str]:
-        return [name for name, estimator in self.estimators if estimator != "drop"]
-
-    def _get_final_estimator_features_in(self) -> List[str]:
-        names = self._get_estimators_features_out()
-        if self.passthrough:
-            return [*names, *self.estimators_[0].feature_names_in_]
-        else:
-            return names
-
-
-# noinspection PyPep8Naming
-@inheritdoc(match="""[see superclass]""")
-class _StackableSupervisedLearnerDF(
-    SupervisedLearnerDF, Generic[T_SupervisedLearnerDF]
-):
-    """
-    Returns numpy arrays from all prediction functions, instead of pandas series or
-    data frames.
-
-    For use in stacking estimators that forward the predictions of multiple learners to
-    one final learner.
-    """
-
-    def __init__(self, delegate: T_SupervisedLearnerDF) -> None:
-        self.delegate = delegate
-
-    @property
-    def is_fitted(self) -> bool:
-        """[see superclass]"""
-        return self.delegate.is_fitted
-
-    def fit(
-        self: T_StackableSupervisedLearnerDF,
-        X: pd.DataFrame,
-        y: np.ndarray = None,
-        **fit_params: Any,
-    ) -> T_StackableSupervisedLearnerDF:
-        """[see superclass]"""
-        self.delegate.fit(X, self._convert_y_to_series(X, y), **fit_params)
-        return self
-
-    def predict(self, X: pd.DataFrame, **predict_params: Any) -> np.ndarray:
-        """[see superclass]"""
-        return self.delegate.predict(X, **predict_params).values
-
-    def score(
-        self, X: pd.DataFrame, y: np.ndarray, sample_weight: Optional[pd.Series] = None
-    ) -> float:
-        """[see superclass]"""
-        return self.delegate.score(X, self._convert_y_to_series(X, y), sample_weight)
-
-    def _get_features_in(self) -> pd.Index:
-        return self.delegate._get_features_in()
-
-    def _get_n_outputs(self) -> int:
-        return self.delegate._get_n_outputs()
-
-    @staticmethod
-    def _convert_y_to_series(
-        X: pd.DataFrame, y: Optional[np.ndarray]
-    ) -> Optional[pd.Series]:
-        if y is None:
-            return y
-        if not isinstance(y, np.ndarray):
-            raise TypeError(
-                f"expected numpy array for arg y but got a {type(y).__name__}"
-            )
-        if y.ndim != 1:
-            raise TypeError(
-                f"expected 1-d numpy array for arg y but got a {y.ndim}-d array"
-            )
-        if len(y) != len(X):
-            raise ValueError(
-                "args X and y have different lengths: "
-                f"len(X)={len(X)} and len(y)={len(y)}"
-            )
-        return pd.Series(y, index=X.index)
-
-    @staticmethod
-    def _convert_prediction_to_numpy(
-        prediction: Union[pd.DataFrame, List[pd.DataFrame]]
-    ) -> Union[np.ndarray, List[np.ndarray]]:
-        if isinstance(prediction, list):
-            return [proba.values for proba in prediction]
-        else:
-            return prediction.values
-
-
-# noinspection PyPep8Naming
-@inheritdoc(match="""[see superclass]""")
-class _StackableClassifierDF(_StackableSupervisedLearnerDF[ClassifierDF], ClassifierDF):
-    """[see superclass]"""
-
-    @property
-    def classes_(self) -> Sequence[Any]:
-        """[see superclass]"""
-        return self.delegate.classes_
-
-    def predict_proba(
-        self, X: pd.DataFrame, **predict_params: Any
-    ) -> Union[np.ndarray, List[np.ndarray]]:
-        """[see superclass]"""
-        return self._convert_prediction_to_numpy(
-            self.delegate.predict_proba(X, **predict_params)
-        )
-
-    def predict_log_proba(
-        self, X: pd.DataFrame, **predict_params: Any
-    ) -> Union[np.ndarray, List[np.ndarray]]:
-        """[see superclass]"""
-        return self._convert_prediction_to_numpy(
-            self.delegate.predict_log_proba(X, **predict_params)
-        )
-
-    def decision_function(self, X: pd.DataFrame, **predict_params: Any) -> np.ndarray:
-        """[see superclass]"""
-        return self.delegate.decision_function(X, **predict_params).values
-
-
-@inheritdoc(match="""[see superclass]""")
-class _StackableRegressorDF(_StackableSupervisedLearnerDF[RegressorDF], RegressorDF):
-    """[see superclass]"""
-
-
-#
-# wrapper factory methods
-#
-
-
-def make_df_estimator(
-    native_estimator: Type[T_NativeEstimator],
-    *,
-    name: Optional[str] = None,
-    base_wrapper: Optional[Type[EstimatorWrapperDF[T_NativeEstimator]]] = None,
-    # The true return type is Type[EstimatorWrapperDF[T_NativeEstimator]],
-    # but we provide the union with T_NativeTransformer to enable better
-    # code completion in IDEs that derive attributes through static code inspection.
-) -> Union[Type[EstimatorWrapperDF[T_NativeEstimator]], T_NativeTransformer]:
-    """
-    Create an augmented version of a given estimator that conforms with the
-    `scikit-learn` API.
-
-    The augmented version is realised as a wrapper class that
-
-    - implements enhanced functionality introduced by :class:`.EstimatorDF`
-    - adopts all additional methods and attributes from the wrapped native estimator
-    - delegates relevant method calls and attribute access to the native estimator,
-      thus replicating the original estimator's behaviour except for the enhanced
-      functionality introduced by :class:`.EstimatorDF`
-
-    :param native_estimator: the native estimator to be augmented
-    :param name: the name of the resulting augmented estimator, defaults to the name
-        of the native estimator with "DF" appended
-    :param base_wrapper: the wrapper class used to create the augmented version
-    :return: the augmented estimator class
-    """
-    return _wrap(
-        native_estimator=native_estimator,
-        name=name,
-        base_wrapper=base_wrapper,
-        native_estimator_bound=BaseEstimator,
-        base_wrapper_bound=EstimatorWrapperDF,
-    )
-
-
-def make_df_transformer(
-    native_transformer: Type[T_NativeTransformer],
-    *,
-    name: Optional[str] = None,
-    base_wrapper: Type[TransformerWrapperDF[T_NativeTransformer]],
-    # The true return type is Type[TransformerWrapperDF[T_NativeEstimator]],
-    # but we provide the union with T_NativeTransformer to enable better
-    # code completion in IDEs that derive attributes through static code inspection.
-) -> Union[Type[TransformerWrapperDF[T_NativeTransformer]], T_NativeTransformer]:
-    """
-    Create an augmented version of a given transformer that conforms with the
-    `scikit-learn` API.
-
-    The augmented version is realised as a wrapper class that
-
-    - implements enhanced functionality introduced by :class:`.TransformerDF`
-    - adopts all additional methods and attributes from the wrapped native transformer
-    - delegates relevant method calls and attribute access to the native transformer,
-      thus replicating the original transformer's behaviour except for the enhanced
-      functionality introduced by :class:`.TransformerDF`
-
-    :param native_transformer: the native transformer to be augmented
-    :param name: the name of the resulting augmented transformer, defaults to the name
-        of the native transformer with "DF" appended
-    :param base_wrapper: the wrapper class used to create the augmented version
-    :return: the augmented transformer class
-    """
-    return _wrap(
-        native_estimator=native_transformer,
-        name=name,
-        base_wrapper=base_wrapper,
-        native_estimator_bound=TransformerMixin,
-        base_wrapper_bound=TransformerWrapperDF,
-    )
-
-
-def make_df_classifier(
-    native_classifier: Type[T_NativeClassifier],
-    *,
-    name: Optional[str] = None,
-    base_wrapper: Optional[Type[ClassifierWrapperDF[T_NativeClassifier]]] = None,
-    # The true return type is Type[ClassifierWrapperDF[T_NativeEstimator]],
-    # but we provide the union with T_NativeClassifier to enable better
-    # code completion in IDEs that derive attributes through static code inspection.
-) -> Union[Type[ClassifierWrapperDF[T_NativeClassifier]], T_NativeTransformer]:
-    """
-    Create an augmented version of a given classifier that conforms with the
-    `scikit-learn` API.
-
-    The augmented version is realised as a wrapper class that
-
-    - implements enhanced functionality introduced by :class:`.ClassifierDF`
-    - adopts all additional methods and attributes from the wrapped native classifier
-    - delegates relevant method calls and attribute access to the native classifier,
-      thus replicating the original classifier's behaviour except for the enhanced
-      functionality introduced by :class:`.ClassifierDF`
-
-    :param native_classifier: the native classifier to be augmented
-    :param name: the name of the resulting augmented classifier, defaults to the name
-        of the native classifier with "DF" appended
-    :param base_wrapper: the wrapper class used to create the augmented version
-    :return: the augmented classifier class
-    """
-    return _wrap(
-        native_estimator=native_classifier,
-        name=name,
-        base_wrapper=base_wrapper,
-        native_estimator_bound=ClassifierMixin,
-        base_wrapper_bound=ClassifierWrapperDF,
-    )
-
-
-def make_df_regressor(
-    native_regressor: Type[T_NativeRegressor],
-    *,
-    name: Optional[str] = None,
-    base_wrapper: Optional[Type[RegressorWrapperDF[T_NativeRegressor]]] = None,
-    # The true return type is Type[RegressorWrapperDF[T_NativeEstimator]],
-    # but we provide the union with T_NativeRegressor to enable better
-    # code completion in IDEs that derive attributes through static code inspection.
-) -> Union[Type[RegressorWrapperDF[T_NativeRegressor]], T_NativeTransformer]:
-    """
-    Create an augmented version of a given regressor that conforms with the
-    `scikit-learn` API.
-
-    The augmented version is realised as a wrapper class that
-
-    - implements enhanced functionality introduced by :class:`.RegressorDF`
-    - adopts all additional methods and attributes from the wrapped native regressor
-    - delegates relevant method calls and attribute access to the native regressor,
-      thus replicating the original regressor's behaviour except for the enhanced
-      functionality introduced by :class:`.RegressorDF`
-
-    :param native_regressor: the native regressor to be augmented
-    :param name: the name of the resulting augmented regressor, defaults to the name
-        of the native regressor with "DF" appended
-    :param base_wrapper: the wrapper class used to create the augmented version
-    :return: the augmented regressor class
-    """
-    return _wrap(
-        native_estimator=native_regressor,
-        name=name,
-        base_wrapper=base_wrapper,
-        native_estimator_bound=RegressorMixin,
-        base_wrapper_bound=RegressorWrapperDF,
-    )
-
-
-def make_df_clusterer(
-    native_clusterer: Type[T_NativeClusterer],
-    *,
-    name: Optional[str] = None,
-    base_wrapper: Optional[Type[ClustererWrapperDF[T_NativeClusterer]]] = None,
-    # The true return type is Type[ClustererWrapperDF[T_NativeEstimator]],
-    # but we provide the union with T_NativeClusterer to enable better
-    # code completion in IDEs that derive attributes through static code inspection.
-) -> Union[Type[ClustererWrapperDF[T_NativeClusterer]], T_NativeClusterer]:
-    """
-    Create an augmented version of a given clusterer that conforms with the
-    scikit-learn API.
-
-    The augmented version is realised as a wrapper class that
-
-    - implements enhanced functionality introduced by :class:`.ClustererDF`
-    - adopts all additional methods and attributes from the wrapped native clusterer
-    - delegates relevant method calls and attribute access to the native clusterer,
-      thus replicating the original clusterer's behaviour except for the enhanced
-      functionality introduced by :class:`.ClustererDF`
-
-    :param native_clusterer: the native clusterer to be augmented
-    :param name: the name of the resulting augmented clusterer, defaults to the name
-        of the native clusterer with "DF" appended
-    :param base_wrapper: the wrapper class used to create the augmented version
-    :return: the augmented clusterer class
-    """
-    return _wrap(
-        native_estimator=native_clusterer,
-        name=name,
-        base_wrapper=base_wrapper,
-        native_estimator_bound=ClusterMixin,
-        base_wrapper_bound=ClustererWrapperDF,
-    )
-
-
-#
 # private factory implementation
 #
 
-_df_wrapper_classes: Dict[str, Type[EstimatorWrapperDF]] = cast(
-    Dict[str, Type[EstimatorWrapperDF]], WeakValueDictionary()
-)
-
-
-def _wrap(
-    native_estimator: Type[T_NativeEstimator],
-    *,
-    name: Optional[str] = None,
-    base_wrapper: Optional[Type[EstimatorWrapperDF[T_NativeEstimator]]] = None,
-    native_estimator_bound: Optional[Type] = None,
-    base_wrapper_bound: Type[T_EstimatorWrapperDF],
-) -> Type[T_EstimatorWrapperDF]:
-    """
-    Class decorator wrapping a :class:`sklearn.base.BaseEstimator` in a
-    :class:`EstimatorWrapperDF`.
-
-    :param native_estimator: the native `scikit-learn` estimator class to wrap; must
-        be a subclass of :class:`~sklearn.base.BaseEstimator`
-    :param name: name of the resulting class
-    :param base_wrapper: optional parameter indicating the
-        :class:`EstimatorWrapperDF` class to be used for wrapping; defaults to
-        :class:`EstimatorWrapperDF`
-    :param native_estimator_bound: base class that must be subclassed by arg
-        ``native_estimator`` (optional)
-    :param base_wrapper_bound: base class that must be subclassed by arg
-        ``df_wrapper``
-    :return: the resulting ``EstimatorWrapperDF`` with ``native_estimator`` as
-        the delegate estimator
-    """
-
-    # validate arg native_estimator
-    if native_estimator_bound and not issubclass(
-        native_estimator, native_estimator_bound
-    ):
-        raise ValueError(
-            f"arg native_estimator is not a subclass of "
-            f"{native_estimator_bound.__name__}: {native_estimator}"
-        )
-    if not issubclass(native_estimator, BaseEstimator):
-        raise ValueError(
-            f"arg native_estimator is not a subclass of "
-            f"{BaseEstimator.__name__}: {native_estimator}"
-        )
-
-    # validate arg base_wrapper
-    if base_wrapper is None:
-        base_wrapper = base_wrapper_bound
-    elif not issubclass(base_wrapper, base_wrapper_bound):
-        raise ValueError(
-            f"arg base_wrapper is not a subclass of "
-            f"{base_wrapper_bound.__name__}: {base_wrapper}"
-        )
-
-    # use the customized name if given, else append DF to the native name
-    name = name or (native_estimator.__name__ + "DF")
-
-    # determine the sklearn estimator we are wrapping
-    if name in _df_wrapper_classes:
-        raise TypeError(
-            "Estimator wrapper type is already defined: "
-            f"{name} = {make_df_estimator.__name__}"
-            f"({native_estimator.__name__}, "
-            f"base_wrapper={base_wrapper.__name__})"
-        )
-
-    # dynamically create the wrapper class
-    df_wrapper_class = _make_df_wrapper_class(native_estimator, name, base_wrapper)
-
-    # finally, register the newly created class in our global WeakValueDictionary
-    _df_wrapper_classes[name] = df_wrapper_class
-
-    return df_wrapper_class
-
-
-def _make_df_wrapper_class(
-    native_estimator: Type[T_NativeEstimator],
-    name: str,
-    base_wrapper: Type[T_EstimatorWrapperDF],
-) -> Type[T_EstimatorWrapperDF]:
-    # noinspection PyMissingOrEmptyDocstring
-    class WrapperDF(base_wrapper):  # type: ignore
-        def __init__(self, *args, **kwargs: Any) -> None:
-            # we need to create this __init__ method in order to apply the signature
-            # of the native estimator's __init__ method
-            super().__init__(*args, **kwargs)
-
-        def __reduce__(
-            self,
-        ) -> Tuple[
-            Callable[[str, Type[BaseEstimator], Type[EstimatorWrapperDF]], object],
-            Tuple[str, Type[T_NativeEstimator], Type[T_EstimatorWrapperDF]],
-            Dict[str, Any],
-        ]:
-            # pickling by default does not work for dynamically created classes,
-            # so we need to customize it
-            return (
-                _get_wrapper_instance,
-                (name, native_estimator, base_wrapper),
-                self.__dict__,
-            )
-
-    # set the name
-    WrapperDF.__name__ = WrapperDF.__qualname__ = name
-
-    # add link to the wrapped class, for use in python module 'inspect'
-    WrapperDF.__wrapped__ = native_estimator
-
-    # set the module to this module's name
-    WrapperDF.__module__ = __name__
-
-    # … but do not keep the docstring of __init__
-    WrapperDF.__init__.__doc__ = None
-
-    # mirror all attributes of the wrapped sklearn class, as long
-    # as they are not inherited from the wrapper base class
-    _mirror_attributes(
-        wrapper=WrapperDF,
-        native_estimator=native_estimator,
-        wrapper_module=native_estimator.__module__,
-    )
-
-    # adopt the initializer signature of the wrapped sklearn estimator
-    _update_wrapper(
-        wrapper=WrapperDF.__init__,
-        wrapped=native_estimator.__init__,
-        wrapper_module=native_estimator.__module__,
-        wrapper_parent=name,
-    )
-
-    # adopt the class docstring of the wrapped sklearn estimator …
-    _update_class_docstring(
-        df_estimator_type=WrapperDF,
-        sklearn_native_estimator_type=native_estimator,
-    )
-
-    return WrapperDF
-
-
-def _get_wrapper_instance(
-    name: str,
-    native_estimator: Type[BaseEstimator],
-    base_wrapper: Type[EstimatorWrapperDF],
-) -> object:
-    try:
-        wrapper_cls = _df_wrapper_classes[name]
-    except KeyError:
-        wrapper_cls = make_df_estimator(
-            native_estimator=native_estimator,
-            name=name,
-            base_wrapper=base_wrapper,
-        )
-    return wrapper_cls.__new__(wrapper_cls)
-
 
 def _mirror_attributes(
-    wrapper: Type[EstimatorWrapperDF[T_NativeEstimator]],
+    wrapper_class: Type[EstimatorWrapperDF[T_NativeEstimator]],
     native_estimator: Type[T_NativeEstimator],
     wrapper_module: str,
 ) -> None:
 
-    wrapper_name = wrapper.__name__
-    wrapper_attributes: Set[str] = set(dir(wrapper))
+    wrapper_name = wrapper_class.__name__
+    wrapper_attributes: Set[str] = set(dir(wrapper_class))
 
     for name, member in vars(native_estimator).items():
 
@@ -1571,58 +1130,79 @@ def _mirror_attributes(
             continue
 
         alias = _make_alias(
-            module=wrapper_module,
-            class_=wrapper_name,
+            wrapper_module=wrapper_module,
+            wrapper_name=wrapper_name,
             name=name,
             delegate_cls=native_estimator,
             delegate=member,
         )
+
         if alias is not None:
-            setattr(wrapper, name, alias)
+            setattr(wrapper_class, name, alias)
 
 
 def _make_alias(
-    module: str,
-    class_: str,
-    name: str,
-    delegate_cls: type,
-    delegate: Union[Callable, Any],
-) -> Union[Callable, property, None]:
-    def _make_forwarder(delegate: Callable) -> Callable:
-        # noinspection PyShadowingNames
-        def _forwarder(self, *args, **kwargs: Any) -> Any:
-            return delegate(self._native_estimator, *args, **kwargs)
-
-        return _forwarder
-
-    class_name = _full_name(cls=delegate_cls)
-    full_name = f"{class_name}.{name}"
-
+    wrapper_module: str, wrapper_name: str, name: str, delegate_cls: type, delegate: Any
+) -> Union[Callable[..., Any], property, None]:
     if inspect.isfunction(delegate):
-        function = _make_forwarder(delegate)
-        _update_wrapper(
-            wrapper=function,
-            wrapped=delegate,
-            wrapper_module=module,
-            wrapper_parent=class_,
+        return _make_method_alias(
+            wrapper_module=wrapper_module,
+            wrapper_name=wrapper_name,
+            name=name,
+            delegate_cls=delegate_cls,
+            delegate_method=delegate,
         )
-        function.__doc__ = f"See :meth:`{full_name}`"
-        return function
-
     elif inspect.isdatadescriptor(delegate):
-        delegate_prop: property = cast(property, delegate)
-        # noinspection PyShadowingNames
-        return property(
-            fget=lambda self: delegate_prop.__get__(self._native_estimator),
-            fset=lambda self, value: delegate_prop.__set__(
-                self._native_estimator, value
-            ),
-            fdel=lambda self: delegate_prop.__delete__(self._native_estimator),
-            doc=f"See documentation of :class:`{class_name}`.",
+        return _make_descriptor_alias(
+            delegate_cls=delegate_cls, delegate_descriptor=delegate
         )
-
     else:
         return None
+
+
+def _make_method_alias(
+    wrapper_module: str,
+    wrapper_name: str,
+    name: str,
+    delegate_cls: type,
+    delegate_method: T_Callable,
+) -> T_Callable:
+    # create a method that forwards calls to a native delegate estimator
+    wrapper_method = _make_forwarder(delegate_method)
+    _update_wrapper(
+        wrapper=wrapper_method,
+        wrapped=delegate_method,
+        wrapper_module=wrapper_module,
+        wrapper_parent=wrapper_name,
+    )
+    class_name = _full_class_name(cls=delegate_cls)
+    wrapper_method.__doc__ = f"See :meth:`{class_name}.{name}`"
+    return wrapper_method
+
+
+def _make_descriptor_alias(delegate_cls: type, delegate_descriptor: Any) -> property:
+    # create a property that forwards attribute access to a native delegate estimator
+    class_name = _full_class_name(cls=delegate_cls)
+    return property(
+        fget=lambda self: delegate_descriptor.__get__(self._native_estimator),
+        fset=lambda self, value: cast(Callable[..., None], delegate_descriptor.__set__)(
+            self._native_estimator, value
+        ),
+        fdel=lambda self: cast(Callable[..., None], delegate_descriptor.__delete__)(
+            self._native_estimator
+        ),
+        doc=f"See documentation of :class:`{class_name}`.",
+    )
+
+
+def _make_forwarder(delegate_method: T_Callable) -> T_Callable:
+    # noinspection PyShadowingNames
+    def _forwarder(
+        self: EstimatorWrapperDF[BaseEstimator], *args: Any, **kwargs: Any
+    ) -> Any:
+        return delegate_method(self._native_estimator, *args, **kwargs)
+
+    return cast(T_Callable, _forwarder)
 
 
 def _update_wrapper(
@@ -1631,18 +1211,20 @@ def _update_wrapper(
     wrapper_module: str,
     wrapper_parent: str,
 ) -> None:
-    updated = update_wrapper(wrapper, wrapped, assigned=("__name__", "__annotations__"))
-    updated.__module__ = wrapper_module
+    update_wrapper(
+        wrapper, wrapped, assigned=("__name__", "__annotations__"), updated=()
+    )
+    wrapper.__module__ = wrapper_module
     if wrapper_parent:
-        updated.__qualname__ = f"{wrapper_parent}.{updated.__name__}"
+        wrapper.__qualname__ = f"{wrapper_parent}.{wrapper.__name__}"
     else:
-        updated.__qualname__ = updated.__name__
+        wrapper.__qualname__ = wrapper.__name__
 
 
 def _update_class_docstring(
     df_estimator_type: Type[EstimatorWrapperDF[T_NativeEstimator]],
-    sklearn_native_estimator_type: Type[BaseEstimator],
-):
+    sklearn_native_estimator_type: T_NativeEstimator,
+) -> None:
     base_doc = sklearn_native_estimator_type.__doc__
 
     if not base_doc:
@@ -1659,10 +1241,10 @@ def _update_class_docstring(
             # no: append line to tag lines
             tag_lines.append(stripped)
         elif tag_lines:
-            # empty line and we already have tag lines: stop here
+            # empty line, and we already have tag lines: stop here
             break
 
-    estimator_name = _full_name(cls=sklearn_native_estimator_type)
+    estimator_name = _full_class_name(cls=sklearn_native_estimator_type)
 
     df_estimator_type.__doc__ = "\n".join(
         [
@@ -1671,15 +1253,16 @@ def _update_class_docstring(
             (
                 f"""
 .. note:: This class is a wrapper around class :class:`{estimator_name}`.
-    It provides enhanced support for pandas data frames, and otherwise
-    replicates all parameters and behaviours of class :class:`~{estimator_name}`.
+    It provides enhanced support for :mod:`pandas` data frames, and otherwise
+    delegates all attribute access and method calls to an associated
+    :class:`~{estimator_name}` instance.
 """
             ),
         ]
     )
 
 
-def _full_name(cls: type):
+def _full_class_name(cls: type) -> str:
     # get the full name of the class, including the module prefix
 
     try:
@@ -1687,7 +1270,8 @@ def _full_name(cls: type):
     except AttributeError as e:
         raise RuntimeError(f"cannot get module for {cls}") from e
 
-    module_name = public_module_prefix(module_name)
+    if module_name != "__main__":
+        module_name = public_module_prefix(module_name)
 
     return f"{module_name}.{cls.__qualname__}"
 

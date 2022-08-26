@@ -4,22 +4,33 @@ Core implementation of :mod:`sklearndf.transformation.wrapper`
 
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import Callable, Generic, Iterable, List, Optional, Sequence, TypeVar, Union
+from typing import (
+    Any,
+    Callable,
+    Generic,
+    Iterable,
+    List,
+    Optional,
+    Sequence,
+    TypeVar,
+    Union,
+    cast,
+)
 
 import numpy as np
+import numpy.typing as npt
 import pandas as pd
 from sklearn.base import TransformerMixin
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import MissingIndicator, SimpleImputer
 from sklearn.kernel_approximation import AdditiveChi2Sampler
 from sklearn.manifold import Isomap
-from sklearn.preprocessing import KBinsDiscretizer, OneHotEncoder, PolynomialFeatures
+from sklearn.preprocessing import KBinsDiscretizer, OneHotEncoder
 
 from pytools.api import AllTracker
 
-from ... import TransformerDF
+from ... import TransformerDF, __sklearn_1_0__, __sklearn_version__
 from ...wrapper import TransformerWrapperDF
-from .. import __sklearn_1_0__, __sklearn_version__
 
 log = logging.getLogger(__name__)
 
@@ -49,7 +60,8 @@ __all__ = [
 
 T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
 
-# T_Imputer is needed because sklearn's _BaseImputer only exists from v0.22 onwards.
+# T_Imputer is needed because scikit-learn's _BaseImputer only exists from v0.22
+# onwards.
 # Once we drop support for sklearn 0.21, _BaseImputer can be used instead.
 # The following TypeVar helps to annotate availability of "add_indicator" and
 # "missing_values" attributes on an imputer instance for ImputerWrapperDF below
@@ -58,7 +70,7 @@ T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
 from sklearn.impute._iterative import IterativeImputer
 
 T_Imputer = TypeVar("T_Imputer", SimpleImputer, IterativeImputer)
-
+T_Polynomial = TypeVar("T_Polynomial", bound=TransformerMixin)
 
 #
 # Ensure all symbols introduced below are included in __all__
@@ -85,19 +97,15 @@ class NumpyTransformerWrapperDF(
 
     # noinspection PyPep8Naming
     def _adjust_X_type_for_delegate(
-        self, X: pd.DataFrame, *, to_numpy: Optional[bool] = None
-    ) -> np.ndarray:
-        assert to_numpy is not False, "X must be converted to a numpy array"
-        return super()._adjust_X_type_for_delegate(X, to_numpy=True)
+        self,
+        X: pd.DataFrame,
+    ) -> npt.NDArray[Any]:
+        return cast(npt.NDArray[Any], X.values)
 
     def _adjust_y_type_for_delegate(
-        self,
-        y: Optional[Union[pd.Series, pd.DataFrame]],
-        *,
-        to_numpy: Optional[bool] = None,
-    ) -> Optional[np.ndarray]:
-        assert to_numpy is not False, "y must be converted to a numpy array"
-        return super()._adjust_y_type_for_delegate(y, to_numpy=True)
+        self, y: Union[pd.Series, pd.DataFrame, None]
+    ) -> Optional[npt.NDArray[Any]]:
+        return None if y is None else cast(npt.NDArray[Any], y.values)
 
 
 class ColumnSubsetTransformerWrapperDF(
@@ -151,7 +159,7 @@ class BaseMultipleInputsPerOutputTransformerWrapperDF(
         pass
 
     def _get_features_original(self) -> pd.Series:
-        raise NotImplementedError(
+        raise TypeError(
             f"{type(self.native_estimator).__name__} transformers map multiple "
             "inputs to individual output columns; current sklearndf implementation "
             "only supports many-to-1 mappings from output columns to input columns"
@@ -197,7 +205,7 @@ class NComponentsDimensionalityReductionWrapperDF(
 
     @property
     def _n_components_(self) -> int:
-        return getattr(self.native_estimator, self._ATTR_N_COMPONENTS)
+        return cast(int, getattr(self.native_estimator, self._ATTR_N_COMPONENTS))
 
 
 class ComponentsDimensionalityReductionWrapperDF(
@@ -217,7 +225,7 @@ class ComponentsDimensionalityReductionWrapperDF(
 
     # noinspection PyPep8Naming
     def _post_fit(
-        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params
+        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params: Any
     ) -> None:
         # noinspection PyProtectedMember
         super()._post_fit(X, y, **fit_params)
@@ -313,10 +321,10 @@ class ColumnTransformerWrapperDF(
         def _features_original(
             transformer_name: str,
             df_transformer: Union[TransformerDF, str],
-            columns: Iterable,
+            columns: Iterable[Any],
         ) -> pd.Series:
-            input_column_names: np.ndarray
-            output_column_names: np.ndarray
+            input_column_names: npt.NDArray[Any]
+            output_column_names: npt.NDArray[Any]
 
             if df_transformer == ColumnTransformerWrapperDF.__PASSTHROUGH:
                 # we may get positional indices for columns selected by the
@@ -351,7 +359,7 @@ class ColumnTransformerWrapperDF(
 
         transformer_name: str
         df_transformer: Union[TransformerDF, str]
-        columns: Union[Sequence, np.ndarray]
+        columns: Union[Sequence[Any], npt.NDArray[Any]]
         return pd.concat(
             [
                 _features_original(transformer_name, df_transformer, columns)
@@ -375,13 +383,13 @@ class ImputerWrapperDF(TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
         # get the columns that were dropped during imputation
         delegate_estimator = self.native_estimator
 
-        nan_mask: Union[List[bool], np.ndarray] = []
+        nan_mask: Union[List[bool], npt.NDArray[Any]] = []
 
         def _nan_mask_from_statistics(
-            stats: np.ndarray,
-        ) -> Union[List[bool], np.ndarray]:
+            stats: npt.NDArray[Any],
+        ) -> Union[List[bool], npt.NDArray[np.bool_]]:
             if issubclass(stats.dtype.type, float):
-                return np.isnan(stats)
+                return cast(npt.NDArray[np.bool_], np.isnan(stats))
             else:
                 return [
                     x is None or (isinstance(x, float) and np.isnan(x)) for x in stats
@@ -416,7 +424,9 @@ class ImputerWrapperDF(TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
                 features_in=self.feature_names_in_,
                 n_outputs=self.n_outputs_,
             )
-            return features_original.append(missing_indicator.feature_names_original_)
+            return pd.concat(
+                [features_original, missing_indicator.feature_names_original_]
+            )
         else:
             return features_original
 
@@ -429,7 +439,7 @@ class MissingIndicatorWrapperDF(
     """
 
     def _get_features_original(self) -> pd.Series:
-        features_original: np.ndarray = self.feature_names_in_[
+        features_original: npt.NDArray[Any] = self.feature_names_in_[
             self.native_estimator.features_
         ].values
         features_out = pd.Index([f"{name}__missing" for name in features_original])
@@ -443,7 +453,7 @@ class IsomapWrapperDF(BaseDimensionalityReductionWrapperDF[Isomap], metaclass=AB
 
     @property
     def _n_components_(self) -> int:
-        return self.native_estimator.embedding_.shape[1]
+        return cast(int, self.native_estimator.embedding_.shape[1])
 
 
 class AdditiveChi2SamplerWrapperDF(
@@ -456,11 +466,14 @@ class AdditiveChi2SamplerWrapperDF(
     @property
     def _n_components_(self) -> int:
         assert self._features_in is not None, "estimator is fitted"
-        return len(self._features_in) * (2 * self.native_estimator.sample_steps + 1)
+        return len(self._features_in) * (
+            2 * cast(int, self.native_estimator.sample_steps) + 1
+        )
 
 
 class PolynomialTransformerWrapperDF(
-    BaseMultipleInputsPerOutputTransformerWrapperDF[PolynomialFeatures],
+    BaseMultipleInputsPerOutputTransformerWrapperDF[T_Polynomial],
+    Generic[T_Polynomial],
     metaclass=ABCMeta,
 ):
     """
@@ -582,7 +595,7 @@ def _get_native_feature_names_out(
     # get the output feature names from a native transformer implementing
     # method get_feature_names() (sklearn 0.x) or get_feature_names_out() (sklearn 1.x)
 
-    get_feature_names_out_fn: Callable[[np.ndarray], np.ndarray]
+    get_feature_names_out_fn: Callable[[npt.NDArray[Any]], npt.NDArray[Any]]
     if __sklearn_version__ >= __sklearn_1_0__:
         # noinspection PyUnresolvedReferences
         get_feature_names_out_fn = native_estimator.get_feature_names_out

@@ -4,9 +4,9 @@ Core implementation of :mod:`sklearndf.pipeline.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Iterator, List, Sequence, Tuple, Union, cast
+from typing import Any, Dict, Iterator, List, Sequence, Tuple, Union, cast
 
-import numpy as np
+import numpy.typing as npt
 import pandas as pd
 from pandas.core.arrays import ExtensionArray
 from sklearn.pipeline import FeatureUnion, Pipeline
@@ -90,7 +90,7 @@ class PipelineWrapperDF(
 
         List of (name, transformer) tuples (transformers implement fit/transform).
         """
-        return self.native_estimator.steps
+        return cast(List[Tuple[str, EstimatorDF]], self.native_estimator.steps)
 
     def __len__(self) -> int:
         """The number of steps of the pipeline."""
@@ -121,7 +121,7 @@ class PipelineWrapperDF(
                 ),
             )
         else:
-            return self.native_estimator[ind]
+            return cast(EstimatorDF, self.native_estimator[ind])
 
     @staticmethod
     def _is_passthrough(estimator: Union[EstimatorDF, str, None]) -> bool:
@@ -162,7 +162,7 @@ class PipelineWrapperDF(
         ]
 
         _features_out: pd.Index
-        _features_original: Union[np.ndarray, ExtensionArray]
+        _features_original: Union[npt.NDArray[Any], ExtensionArray]
 
         if len(col_mappings) == 0:
             _features_out = self.feature_names_in_
@@ -198,6 +198,16 @@ class PipelineWrapperDF(
                 return transformer.feature_names_out_
 
         return self.feature_names_in_
+
+    @property
+    def _estimator_type(self) -> str:
+        # noinspection PyProtectedMember
+        return cast(str, self.native_estimator._estimator_type)
+
+    def _more_tags(self) -> Dict[str, Any]:
+        return cast(
+            Dict[str, Any], getattr(self.native_estimator, "_more_tags", lambda: {})()
+        )
 
 
 class FeatureUnionWrapperDF(TransformerWrapperDF[FeatureUnion], metaclass=ABCMeta):

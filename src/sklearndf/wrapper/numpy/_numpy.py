@@ -1,14 +1,15 @@
 """
-Estimator adapter classes to handle numpy arrays in meta-estimators
+Estimator adapter classes to handle numpy arrays in meta-estimators.
 """
 
 import logging
 from typing import Any, Callable, Generic, List, Optional, Sequence, TypeVar, Union
 
 import numpy as np
+import numpy.typing as npt
 import pandas as pd
 
-from pytools.api import AllTracker, inheritdoc
+from pytools.api import AllTracker, inheritdoc, subsdoc
 
 from sklearndf import (
     ClassifierDF,
@@ -42,7 +43,7 @@ T_DelegateSupervisedLearnerDF = TypeVar(
 T_DelegateClassifierDF = TypeVar("T_DelegateClassifierDF", bound=ClassifierDF)
 T_DelegateRegressorDF = TypeVar("T_DelegateRegressorDF", bound=RegressorDF)
 T_DelegateTransformerDF = TypeVar("T_DelegateTransformerDF", bound=TransformerDF)
-T_EstimatorNPDF = TypeVar("T_EstimatorNPDF", bound="EstimatorNPDF")
+T_EstimatorNPDF = TypeVar("T_EstimatorNPDF", bound="EstimatorNPDF[EstimatorDF]")
 
 #
 # Ensure all symbols introduced below are included in __all__
@@ -58,9 +59,8 @@ class EstimatorNPDF(
     Generic[T_DelegateEstimatorDF],
 ):
     """
-    An adapter class that wraps around a :class:`.EstimatorDF` and accepts numpy arrays
-    for all DF estimator methods that would usually only accept pandas data frames or
-    series.
+    Adapter class that delegates to :class:`.EstimatorDF` and accepts numpy arrays
+    in addition to :mod:`pandas` data frames and series.
 
     Converts all numpy arrays to pandas series or data frames before deferring to the
     delegate estimator, and passes through pandas objects unchanged.
@@ -101,8 +101,8 @@ class EstimatorNPDF(
 
     def fit(
         self: T_EstimatorNPDF,
-        X: Union[np.ndarray, pd.DataFrame],
-        y: Optional[Union[np.ndarray, pd.Series, pd.DataFrame]] = None,
+        X: Union[npt.NDArray[Any], pd.DataFrame],
+        y: Optional[Union[npt.NDArray[Any], pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
     ) -> T_EstimatorNPDF:
         """[see superclass]"""
@@ -117,7 +117,7 @@ class EstimatorNPDF(
     def _get_n_outputs(self) -> int:
         return self.delegate._get_n_outputs()
 
-    def _ensure_X_frame(self, X: Union[np.ndarray, pd.DataFrame]) -> pd.DataFrame:
+    def _ensure_X_frame(self, X: Union[npt.NDArray[Any], pd.DataFrame]) -> pd.DataFrame:
         column_names = self.column_names
         if callable(column_names):
             column_names = column_names()
@@ -145,7 +145,7 @@ class EstimatorNPDF(
 
     @staticmethod
     def _ensure_y_series_or_frame(
-        y: Optional[Union[np.ndarray, pd.Series, pd.DataFrame]]
+        y: Optional[Union[npt.NDArray[Any], pd.Series, pd.DataFrame]]
     ) -> Optional[Union[pd.Series, pd.DataFrame]]:
         if isinstance(y, np.ndarray):
             if y.ndim == 1:
@@ -162,13 +162,18 @@ class EstimatorNPDF(
 
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
+@subsdoc(pattern="EstimatorDF", replacement="LearnerDF", using=EstimatorNPDF)
 class LearnerNPDF(
     EstimatorNPDF[T_DelegateLearnerDF], LearnerDF, Generic[T_DelegateLearnerDF]
 ):
-    """[see superclass]"""
+    """[see EstimatorNPDF]"""
+
+    # repeating attribute declarations of base classes for Sphinx documentation
+    delegate: T_DelegateLearnerDF
+    column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
 
     def predict(
-        self, X: Union[np.ndarray, pd.DataFrame], **predict_params: Any
+        self, X: Union[npt.NDArray[Any], pd.DataFrame], **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
         return self.delegate.predict(self._ensure_X_frame(X), **predict_params)
@@ -176,17 +181,22 @@ class LearnerNPDF(
 
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
+@subsdoc(pattern="EstimatorDF", replacement="SupervisedLearnerDF", using=EstimatorNPDF)
 class SupervisedLearnerNPDF(
     LearnerNPDF[T_DelegateSupervisedLearnerDF],
     SupervisedLearnerDF,
     Generic[T_DelegateSupervisedLearnerDF],
 ):
-    """[see superclass]"""
+    """[see EstimatorNPDF]"""
+
+    # repeating attribute declarations of base classes for Sphinx documentation
+    delegate: T_DelegateSupervisedLearnerDF
+    column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
 
     def score(
         self,
-        X: Union[np.ndarray, pd.DataFrame],
-        y: Union[np.ndarray, pd.Series],
+        X: Union[npt.NDArray[Any], pd.DataFrame],
+        y: Union[npt.NDArray[Any], pd.Series],
         sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see superclass]"""
@@ -199,26 +209,31 @@ class SupervisedLearnerNPDF(
 
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
+@subsdoc(pattern="EstimatorDF", replacement="ClassifierDF", using=EstimatorNPDF)
 class ClassifierNPDF(
     SupervisedLearnerNPDF[T_DelegateClassifierDF],
     ClassifierDF,
     Generic[T_DelegateClassifierDF],
 ):
-    """[see superclass]"""
+    """[see EstimatorNPDF]"""
+
+    # repeating attribute declarations of base classes for Sphinx documentation
+    delegate: T_DelegateClassifierDF
+    column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
 
     @property
-    def classes_(self) -> Sequence[Any]:
+    def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
         """[see superclass]"""
         return self.delegate.classes_
 
     def predict_proba(
-        self, X: Union[np.ndarray, pd.DataFrame], **predict_params: Any
+        self, X: Union[npt.NDArray[Any], pd.DataFrame], **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """[see superclass]"""
         return self.delegate.predict_proba(self._ensure_X_frame(X), **predict_params)
 
     def predict_log_proba(
-        self, X: Union[np.ndarray, pd.DataFrame], **predict_params: Any
+        self, X: Union[npt.NDArray[Any], pd.DataFrame], **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """[see superclass]"""
         return self.delegate.predict_log_proba(
@@ -226,7 +241,7 @@ class ClassifierNPDF(
         )
 
     def decision_function(
-        self, X: Union[np.ndarray, pd.DataFrame], **predict_params: Any
+        self, X: Union[npt.NDArray[Any], pd.DataFrame], **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
         return self.delegate.decision_function(
@@ -241,17 +256,22 @@ class ClassifierNPDF(
 
 
 # noinspection PyPep8Naming
-@inheritdoc(match="""[see superclass]""")
+@subsdoc(pattern="EstimatorDF", replacement="RegressorDF", using=EstimatorNPDF)
 class RegressorNPDF(
     SupervisedLearnerNPDF[T_DelegateRegressorDF],
     RegressorDF,
     Generic[T_DelegateRegressorDF],
 ):
-    """[see superclass]"""
+    """[see EstimatorNPDF]"""
+
+    # repeating attribute declarations of base classes for Sphinx documentation
+    delegate: T_DelegateRegressorDF
+    column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
 
 
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
+@subsdoc(pattern="EstimatorDF", replacement="TransformerDF", using=EstimatorNPDF)
 class TransformerNPDF(
     EstimatorNPDF[T_DelegateTransformerDF],
     TransformerDF,
@@ -259,18 +279,24 @@ class TransformerNPDF(
 ):
     """[see superclass]"""
 
-    def transform(self, X: Union[np.ndarray, pd.DataFrame]) -> pd.DataFrame:
+    # repeating attribute declarations of base classes for Sphinx documentation
+    delegate: T_DelegateTransformerDF
+    column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
+
+    def transform(self, X: Union[npt.NDArray[Any], pd.DataFrame]) -> pd.DataFrame:
         """[see superclass]"""
         return self.delegate.predict(self._ensure_X_frame(X))
 
-    def inverse_transform(self, X: Union[np.ndarray, pd.DataFrame]) -> pd.DataFrame:
+    def inverse_transform(
+        self, X: Union[npt.NDArray[Any], pd.DataFrame]
+    ) -> pd.DataFrame:
         """[see superclass]"""
         return self.delegate.inverse_transform(self._ensure_X_frame(X))
 
     def fit_transform(
         self,
-        X: Union[np.ndarray, pd.DataFrame],
-        y: Optional[Union[np.ndarray, pd.Series, pd.DataFrame]] = None,
+        X: Union[npt.NDArray[Any], pd.DataFrame],
+        y: Optional[Union[npt.NDArray[Any], pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
     ) -> pd.DataFrame:
         """[see superclass]"""

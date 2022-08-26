@@ -13,7 +13,6 @@ from sklearndf.transformation.wrapper import (
     FeatureSelectionWrapperDF,
     NComponentsDimensionalityReductionWrapperDF,
 )
-from sklearndf.wrapper import make_df_transformer
 
 log = logging.getLogger(__name__)
 
@@ -25,9 +24,13 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 # Transformers which have an n_components attribute
 # Implemented through NComponentsDimensionalityReductionWrapperDF
 #
-PolynomialCountSketchDF = make_df_transformer(
-    PolynomialCountSketch, base_wrapper=NComponentsDimensionalityReductionWrapperDF
-)
+
+
+class PolynomialCountSketchDF(
+    NComponentsDimensionalityReductionWrapperDF[PolynomialCountSketch],
+    native=PolynomialCountSketch,
+):
+    """Stub for DF wrapper of class ``PolynomialCountSketch``"""
 
 
 #
@@ -36,9 +39,12 @@ PolynomialCountSketchDF = make_df_transformer(
 # Transformers with a get_support method, implemented via FeatureSelectionWrapperDF
 #
 
-SequentialFeatureSelectorDF = make_df_transformer(
-    SequentialFeatureSelector, base_wrapper=FeatureSelectionWrapperDF
-)
+
+class SequentialFeatureSelectorDF(
+    FeatureSelectionWrapperDF[SequentialFeatureSelector],
+    native=SequentialFeatureSelector,
+):
+    """Stub for DF wrapper of class ``SequentialFeatureSelector``"""
 
 
 #

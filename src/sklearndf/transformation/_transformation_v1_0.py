@@ -9,7 +9,6 @@ import logging
 from sklearn.preprocessing import SplineTransformer
 
 from .wrapper import PolynomialTransformerWrapperDF
-from sklearndf.wrapper import make_df_transformer
 
 log = logging.getLogger(__name__)
 
@@ -21,9 +20,12 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 # preprocessing
 #
 
-SplineTransformerDF = make_df_transformer(
-    SplineTransformer, base_wrapper=PolynomialTransformerWrapperDF
-)
+
+class SplineTransformerDF(
+    PolynomialTransformerWrapperDF[SplineTransformer],
+    native=SplineTransformer,
+):
+    """Stub for DF wrapper of class ``SplineTransformer``"""
 
 
 #

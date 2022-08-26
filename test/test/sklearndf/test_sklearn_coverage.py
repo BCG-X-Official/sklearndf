@@ -1,5 +1,6 @@
 import itertools
-from typing import Dict, Iterable, List, Optional, Type, Union
+from types import ModuleType
+from typing import Dict, Iterable, List, Optional, Type, TypeVar, Union
 
 import pytest
 import sklearn
@@ -10,6 +11,7 @@ from sklearn.base import (
     RegressorMixin,
     TransformerMixin,
 )
+from sklearn.pipeline import Pipeline
 from sklearn.utils.metaestimators import _BaseComposition
 
 import sklearndf.classification
@@ -22,7 +24,8 @@ from ..conftest import UNSUPPORTED_SKLEARN_PACKAGES
 from ..sklearndf import find_all_submodules, iterate_classes, sklearn_delegate_classes
 from sklearndf import EstimatorDF
 
-Module = type(sklearn)
+T = TypeVar("T")
+
 
 GENERAL_COVERAGE_EXCLUSIONS = {
     # exclude all private classes:
@@ -85,10 +88,10 @@ UNSUPPORTED_SKLEARN_CLASSES = {
 
 
 def _find_sklearn_classes_to_cover(
-    from_modules: Union[Module, Iterable[Module]],
-    subclass_of: Type,
+    from_modules: Union[ModuleType, Iterable[ModuleType]],
+    subclass_of: Type[T],
     excluding: Optional[Union[str, Iterable[str]]] = None,
-) -> List[Type]:
+) -> List[Type[T]]:
     return [
         cls
         for cls in iterate_classes(
@@ -98,7 +101,7 @@ def _find_sklearn_classes_to_cover(
     ]
 
 
-def sklearn_classifier_classes() -> List[Type]:
+def sklearn_classifier_classes() -> List[type]:
     return _find_sklearn_classes_to_cover(
         from_modules=find_all_submodules(sklearn),
         subclass_of=ClassifierMixin,
@@ -106,7 +109,7 @@ def sklearn_classifier_classes() -> List[Type]:
     )
 
 
-def sklearn_regressor_classes() -> List[Type]:
+def sklearn_regressor_classes() -> List[type]:
     return _find_sklearn_classes_to_cover(
         from_modules=find_all_submodules(sklearn),
         subclass_of=RegressorMixin,
@@ -114,7 +117,7 @@ def sklearn_regressor_classes() -> List[Type]:
     )
 
 
-def sklearn_pipeline_classes() -> List[Type]:
+def sklearn_pipeline_classes() -> List[type]:
 
     pipeline_modules = find_all_submodules(sklearn.pipeline)
     pipeline_modules.add(sklearn.pipeline)
@@ -126,7 +129,7 @@ def sklearn_pipeline_classes() -> List[Type]:
     )
 
 
-def sklearn_transformer_classes() -> List[Type]:
+def sklearn_transformer_classes() -> List[type]:
     """Return all classes that are 'just' transformers, not learners or pipelines."""
     transformer_mixin_classes = [
         cls
@@ -149,7 +152,7 @@ def sklearn_transformer_classes() -> List[Type]:
     return transformer_classes
 
 
-def sklearn_clusterer_classes() -> List[Type]:
+def sklearn_clusterer_classes() -> List[type]:
     return _find_sklearn_classes_to_cover(
         from_modules=find_all_submodules(sklearn),
         subclass_of=ClusterMixin,
@@ -157,7 +160,7 @@ def sklearn_clusterer_classes() -> List[Type]:
     )
 
 
-def _check_unexpected_sklearn_class(cls: Type) -> None:
+def _check_unexpected_sklearn_class(cls: type) -> None:
     f_cls_name = f"{cls.__module__}.{cls.__name__}"
     if cls.__name__ in UNSUPPORTED_SKLEARN_CLASSES:
         pytest.skip(f"Class '{f_cls_name} is not wrapped but marked as unsupported' ")
@@ -165,7 +168,7 @@ def _check_unexpected_sklearn_class(cls: Type) -> None:
         raise ValueError(f"Class '{f_cls_name}' is not wrapped")
 
 
-@pytest.mark.parametrize(
+@pytest.mark.parametrize(  # type: ignore
     argnames="sklearn_classifier_cls", argvalues=sklearn_classifier_classes()
 )
 def test_classifier_coverage(sklearn_classifier_cls: Type[ClassifierMixin]) -> None:
@@ -178,7 +181,7 @@ def test_classifier_coverage(sklearn_classifier_cls: Type[ClassifierMixin]) -> N
         _check_unexpected_sklearn_class(sklearn_classifier_cls)
 
 
-@pytest.mark.parametrize(
+@pytest.mark.parametrize(  # type: ignore
     argnames="sklearn_regressor_cls", argvalues=sklearn_regressor_classes()
 )
 def test_regressor_coverage(sklearn_regressor_cls: Type[RegressorMixin]) -> None:
@@ -191,7 +194,7 @@ def test_regressor_coverage(sklearn_regressor_cls: Type[RegressorMixin]) -> None
         _check_unexpected_sklearn_class(sklearn_regressor_cls)
 
 
-@pytest.mark.parametrize(
+@pytest.mark.parametrize(  # type: ignore
     argnames="sklearn_transformer_cls", argvalues=sklearn_transformer_classes()
 )
 def test_transformer_coverage(sklearn_transformer_cls: Type[TransformerMixin]) -> None:
@@ -205,20 +208,21 @@ def test_transformer_coverage(sklearn_transformer_cls: Type[TransformerMixin]) -
         _check_unexpected_sklearn_class(sklearn_transformer_cls)
 
 
-@pytest.mark.parametrize(
+@pytest.mark.parametrize(  # type: ignore
     argnames="sklearn_pipeline_cls", argvalues=sklearn_pipeline_classes()
 )
-def test_pipeline_coverage(sklearn_pipeline_cls: Type) -> None:
+def test_pipeline_coverage(sklearn_pipeline_cls: Type[Pipeline]) -> None:
     """Check if each sklearn pipeline estimator has
     a wrapped sklearndf counterpart."""
 
+    # noinspection PyTypeChecker
     sklearn_classes = sklearn_delegate_classes(sklearndf.pipeline)
 
     if sklearn_pipeline_cls not in sklearn_classes:
         _check_unexpected_sklearn_class(sklearn_pipeline_cls)
 
 
-@pytest.mark.parametrize(
+@pytest.mark.parametrize(  # type: ignore
     argnames="sklearn_clusterer_cls", argvalues=sklearn_clusterer_classes()
 )
 def test_clusterer_coverage(sklearn_clusterer_cls: Type[ClusterMixin]) -> None:

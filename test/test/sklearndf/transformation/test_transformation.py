@@ -1,4 +1,4 @@
-from typing import List, Type, cast
+from typing import Any, List, Type, cast
 
 import numpy as np
 import pandas as pd
@@ -22,6 +22,7 @@ from sklearndf import (
     ClassifierDF,
     RegressorDF,
     TransformerDF,
+    __sklearn_0_22__,
     __sklearn_0_24__,
     __sklearn_1_0__,
     __sklearn_version__,
@@ -59,6 +60,7 @@ if check_sklearn_version(minimum="0.24"):
 
     TRANSFORMER_EXCLUSIONS.append(SequentialFeatureSelectorDF.__name__)
 
+# noinspection PyTypeChecker
 TRANSFORMERS_TO_TEST = iterate_classes(
     from_modules=sklearndf.transformation,
     matching=r".*DF",
@@ -67,7 +69,21 @@ TRANSFORMERS_TO_TEST = iterate_classes(
 TRANSFORMERS_TO_TEST.append(FeatureAgglomerationDF)
 
 
-@pytest.fixture
+def test_transformer_count() -> None:
+    n = len(TRANSFORMERS_TO_TEST)
+
+    print(f"Testing {n} transformers.")
+    if __sklearn_version__ < __sklearn_0_22__:
+        assert n == 53
+    elif __sklearn_version__ < __sklearn_0_24__:
+        assert n == 54
+    elif __sklearn_version__ < __sklearn_1_0__:
+        assert n == 55
+    else:
+        assert n == 56
+
+
+@pytest.fixture  # type: ignore
 def test_data() -> pd.DataFrame:
     return pd.DataFrame(
         data={
@@ -79,7 +95,9 @@ def test_data() -> pd.DataFrame:
     )
 
 
-@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=TRANSFORMERS_TO_TEST)
+@pytest.mark.parametrize(  # type: ignore
+    argnames="sklearndf_cls", argvalues=TRANSFORMERS_TO_TEST
+)
 def test_wrapped_constructor(sklearndf_cls: Type[TransformerDF]) -> None:
     transformer_df: TransformerDF = sklearndf_cls()
 
@@ -126,7 +144,7 @@ def test_special_wrapped_constructors() -> None:
         SequentialFeatureSelectorDF(estimator=rf)
 
 
-@pytest.mark.parametrize(
+@pytest.mark.parametrize(  # type: ignore
     argnames="sklearn_cls",
     argvalues=iterate_classes(
         from_modules=sklearn.preprocessing,
@@ -140,6 +158,7 @@ def test_fit_transform(
     test_data = test_data.select_dtypes(include=float)
 
     # get the wrapped counterpart for sklearn:
+    # noinspection PyTypeChecker
     wrapper_class = get_sklearndf_wrapper_class(
         to_wrap=sklearn_cls, from_module=sklearndf.transformation
     )
@@ -148,7 +167,7 @@ def test_fit_transform(
 
     # initialize both kind of transformers
     transformer_native = cast(TransformerMixin, sklearn_cls())
-    transformer_df = cast(TransformerDF, wrapper_class())
+    transformer_df = wrapper_class()
 
     # for sklearn >=0.22 - check if not_fitted error is raised properly:
     check_expected_not_fitted_error(estimator=transformer_df)
@@ -179,6 +198,7 @@ def test_fit_transform(
 
     # test feature names in and out
     if __sklearn_version__ >= __sklearn_1_0__:
+        # noinspection PyUnresolvedReferences
         assert_array_equal(
             transformer_df.feature_names_in_.values,
             transformer_native.feature_names_in_,
@@ -203,7 +223,10 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
 
     # noinspection PyShadowingNames
     def _test_transformer(
-        remainder: str, names_in: List[str], names_out: List[str], **transformer_args
+        remainder: str,
+        names_in: List[str],
+        names_out: List[str],
+        **transformer_args: Any,
     ) -> None:
         feature_names_out_expected = pd.Index(names_out, name="feature_out")
 
@@ -350,12 +373,13 @@ def test_simple_imputer_df() -> None:
 
     # test feature name in
     if __sklearn_version__ >= __sklearn_1_0__:
+        # noinspection PyUnresolvedReferences
         assert_array_equal(
             imputer_df.feature_names_in_.values, imputer_native.feature_names_in_
         )
 
 
-@pytest.fixture
+@pytest.fixture  # type: ignore
 def df_outlier() -> pd.DataFrame:
     return pd.DataFrame(
         data={

@@ -14,13 +14,12 @@ dist-name = "sklearndf"
 license = "Apache Software License v2.0"
 
 requires = [
-    "boruta         ~=0.3",
-    "gamma-pytools  ~=2.0dev0",
-    "numpy          >=1.16,<2a",  # cannot use ~= due to conda bug
+    "gamma-pytools  ~=2.0,>=2.0.1",
+    "numpy          >=1.21,<2a",  # cannot use ~= due to conda bug
     "packaging      >=20",
-    "pandas         >=0.24,<2a",  # cannot use ~= due to conda bug
+    "pandas         >=1,<2a",  # cannot use ~= due to conda bug
     "scikit-learn   >=0.21,<1.1a",
-    "scipy          ~=1.2",
+    "scipy          ~=1.4",
 ]
 
 requires-python = ">=3.7,<4a"
@@ -43,19 +42,18 @@ classifiers = [
 
 [tool.flit.metadata.requires-extra]
 testing = [
-    "pytest ~= 5.2",
+    "boruta ~=0.3",
+    "lightgbm ~= 3.3",
+    "pytest ~= 7.1",
     "pytest-cov ~= 2.8",
-    "flake8 ~= 3.8",
-    "flake8-comprehensions ~= 3.2",
-    "isort ~= 5.5",
-    "lightgbm ~=3.0.0",
+    "xgboost ~= 1.5",
 ]
 docs = [
-    "sphinx ~= 4.2",
-    "sphinx-autodoc-typehints ~= 1.12",
-    "pydata-sphinx-theme ~= 0.7",
+    "sphinx ~= 4.5",
+    "sphinx-autodoc-typehints ~= 1.19",
+    "pydata-sphinx-theme ~= 0.8.1",
     "jinja2 ~= 2.11",
-    "nbsphinx ~= 0.7.1",
+    "nbsphinx ~= 0.8.9",
     "jupyter == 1",
     "docutils ~= 0.17",
     "xlrd ~= 1.2",
@@ -66,36 +64,42 @@ docs = [
 Documentation = "https://bcg-gamma.github.io/sklearndf/"
 Repository = "https://github.com/BCG-Gamma/sklearndf"
 
+[build]
+# comma-separated list of packages to be built from source in pip min builds
+no-binary.min = ["matplotlib"]
+
 [build.matrix.min]
 # direct requirements of sklearndf
 boruta         = "~=0.3.0"
-gamma-pytools  = "~=2.0.dev2"
+gamma-pytools  = "~=2.0.1"
 lightgbm       = "~=3.0.0"
-numpy          = "==1.16.6"  # cannot use ~= due to conda bug
-pandas         = "~=0.24.2"
+numpy          = "==1.21.6"  # cannot use ~= due to conda bug
 packaging      = "~=20.9"
+pandas         = "~=1.0.5"
 python         = ">=3.7.12,<3.8a"    # cannot use ~= due to conda bug
-scikit-learn   = "~=0.21.0"
-scipy          = "~=1.2.1"
+scipy          = "~=1.4.1"
+scikit-learn   = "~=0.21.3"
+xgboost        = "~=1.0.2"
 # additional minimum requirements of gamma-pytools
-joblib         = "~=0.14.0"
+joblib         = "~=0.14.1"
 matplotlib     = "~=3.0.3"
 typing_inspect = "~=0.4.0"
 
 [build.matrix.max]
 # direct requirements of sklearndf
 boruta         = "~=0.3"
-gamma-pytools  = "~=2.0.dev2"
-lightgbm       = "~=3.2"
-numpy          = ">=1.20,<2a"  # cannot use ~= due to conda bug
+gamma-pytools  = "~=2.0,>=2.0.1"
+lightgbm       = "~=3.3"
+numpy          = ">=1.23,<2a"  # cannot use ~= due to conda bug
 packaging      = ">=20"
 pandas         = "~=1.4"
 python         = ">=3.8.10,<4a"   # cannot use ~= due to conda bug
 scikit-learn   = "~=1.0.2"
-scipy          = "~=1.6"
+scipy          = "~=1.8"
+xgboost        = "~=1.5"
 # additional maximum requirements of gamma-pytools
-joblib         = "~=1.0"
-matplotlib     = "~=3.4"
+joblib         = "~=1.1"
+matplotlib     = "~=3.5"
 typing_inspect = "~=0.7"
 
 [tool.black]

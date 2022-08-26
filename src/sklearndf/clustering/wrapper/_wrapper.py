@@ -12,7 +12,7 @@ from sklearn.cluster import FeatureAgglomeration, KMeans, MiniBatchKMeans
 from pytools.api import AllTracker
 
 from sklearndf.transformation.wrapper import ColumnPreservingTransformerWrapperDF
-from sklearndf.wrapper import ClustererWrapperDF
+from sklearndf.wrapper import ClusterWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -42,7 +42,7 @@ __tracker = AllTracker(globals())
 
 # noinspection PyPep8Naming
 class KMeansBaseWrapperDF(
-    ClustererWrapperDF[T_NativeKMeans], Generic[T_NativeKMeans], metaclass=ABCMeta
+    ClusterWrapperDF[T_NativeKMeans], Generic[T_NativeKMeans], metaclass=ABCMeta
 ):
     """
     DF wrapper for KMeans-like algorithms, e.g., :class:`sklearn.cluster.KMeans`.
@@ -71,7 +71,7 @@ class KMeansBaseWrapperDF(
 
 
 class FeatureAgglomerationWrapperDF(
-    ClustererWrapperDF[FeatureAgglomeration],
+    ClusterWrapperDF[FeatureAgglomeration],
     ColumnPreservingTransformerWrapperDF[FeatureAgglomeration],
     metaclass=ABCMeta,
 ):

@@ -69,7 +69,7 @@ def test_meta_estimators() -> None:
         ClassifierChainDF(base_estimator=SimpleImputer())
 
 
-@pytest.mark.skipif(
+@pytest.mark.skipif(  # type: ignore
     condition=__sklearn_version__ < __sklearn_0_22__,
     reason="stacking estimators are not implemented by current version of sklearn",
 )
@@ -142,7 +142,7 @@ def test_stacking_regressor(
     ]
 
 
-@pytest.mark.skipif(
+@pytest.mark.skipif(  # type: ignore
     condition=__sklearn_version__ < __sklearn_0_22__,
     reason="stacking estimators are not implemented by current version of sklearn",
 )

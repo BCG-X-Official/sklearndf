@@ -1,5 +1,6 @@
 # inspired by:
 # https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/tests/test_base.py
+from typing import Any
 
 import numpy as np
 import scipy.sparse as sp
@@ -15,30 +16,43 @@ from pytools.expression.atomic import Id
 from sklearndf.classification import SVCDF, DecisionTreeClassifierDF
 from sklearndf.pipeline import PipelineDF
 from sklearndf.transformation import OneHotEncoderDF
-from sklearndf.wrapper import make_df_estimator
+from sklearndf.wrapper import EstimatorWrapperDF
 
 
-class DummyEstimator(BaseEstimator):
-    def __init__(self, l1=0, empty=None) -> None:
+class DummyEstimator(
+    BaseEstimator,  # type: ignore
+):
+    def __init__(self, l1: int = 0, empty: Any = None) -> None:
         self.l1 = l1
         self.empty = empty
 
 
-class DummyEstimator2(BaseEstimator):
-    def __init__(self, a=None, b=None) -> None:
+class DummyEstimator2(
+    BaseEstimator,  # type: ignore
+):
+    def __init__(self, a: Any = None, b: Any = None) -> None:
         self.a = a
         self.b = b
 
 
-class DummyEstimator3(BaseEstimator):
-    def __init__(self, c=0, d=None) -> None:
+class DummyEstimator3(
+    BaseEstimator,  # type: ignore
+):
+    def __init__(self, c: int = 0, d: Any = None) -> None:
         self.c = c
         self.d = d
 
 
-DummyEstimatorDF = make_df_estimator(DummyEstimator)
-DummyEstimator2DF = make_df_estimator(DummyEstimator2)
-DummyEstimator3DF = make_df_estimator(DummyEstimator3)
+class DummyEstimatorDF(EstimatorWrapperDF[DummyEstimator], native=DummyEstimator):
+    """A trivial estimator."""
+
+
+class DummyEstimator2DF(EstimatorWrapperDF[DummyEstimator2], native=DummyEstimator2):
+    """A trivial estimator."""
+
+
+class DummyEstimator3DF(EstimatorWrapperDF[DummyEstimator3], native=DummyEstimator3):
+    """A trivial estimator."""
 
 
 def test_clone() -> None:
@@ -48,7 +62,7 @@ def test_clone() -> None:
     # and check that the obtained copy is a correct deep copy.
 
     encoder = OneHotEncoderDF(drop="first", sparse=False)
-    new_encoder = clone(encoder)
+    new_encoder = encoder.clone()
     assert encoder is not new_encoder
     assert encoder.get_params() == new_encoder.get_params()
 
@@ -67,7 +81,7 @@ def test_clone_2() -> None:
     encoder = OneHotEncoderDF(drop="first", sparse=False)
 
     encoder.own_attribute = "test"
-    new_encoder = clone(encoder)
+    new_encoder = encoder.clone()
 
     assert not hasattr(new_encoder, "own_attribute")
 
@@ -75,18 +89,18 @@ def test_clone_2() -> None:
 def test_clone_empty_array() -> None:
     # Regression test for cloning estimators with empty arrays
     clf = DummyEstimatorDF(empty=np.array([]))
-    clf2 = clone(clf)
+    clf2 = clf.clone()
     assert_array_equal(clf.empty, clf2.empty)
 
     clf = DummyEstimatorDF(empty=sp.csr_matrix(np.array([[0]])))
-    clf2 = clone(clf)
+    clf2 = clf.clone()
     assert_array_equal(clf.empty.data, clf2.empty.data)
 
 
 def test_clone_nan() -> None:
     # Regression test for cloning estimators with default parameter as np.nan
     clf = DummyEstimatorDF(empty=np.nan)
-    clf2 = clone(clf)
+    clf2 = clf.clone()
 
     assert clf.empty is clf2.empty
 
@@ -99,7 +113,7 @@ def test_clone_sparse_matrices() -> None:
     for cls in sparse_matrix_classes:
         sparse_matrix = cls(np.eye(5))
         clf = DummyEstimatorDF(empty=sparse_matrix)
-        clf_cloned = clone(clf)
+        clf_cloned = clf.clone()
         assert clf.empty.__class__ is clf_cloned.empty.__class__
         assert_array_equal(clf.empty.toarray(), clf_cloned.empty.toarray())
 
@@ -108,7 +122,7 @@ def test_clone_estimator_types() -> None:
     # Check that clone works for parameters that are types rather than
     # instances
     clf = DummyEstimatorDF(empty=DummyEstimator)
-    clf2 = clone(clf)
+    clf2 = clf.clone()
 
     assert clf.empty is clf2.empty
 

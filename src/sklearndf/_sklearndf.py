@@ -4,8 +4,9 @@ Core implementation of :mod:`sklearndf`
 import inspect
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import Any, Dict, List, Mapping, Optional, Sequence, TypeVar, Union, cast
+from typing import Any, Dict, List, Mapping, Optional, TypeVar, Union, cast
 
+import numpy.typing as npt
 import pandas as pd
 from sklearn.base import (
     BaseEstimator,
@@ -15,23 +16,23 @@ from sklearn.base import (
     TransformerMixin,
     clone,
 )
+from sklearn.exceptions import NotFittedError
 from sklearn.utils import is_scalar_nan
 
 from pytools.api import AllTracker, inheritdoc
 from pytools.expression import Expression, HasExpressionRepr, make_expression
 from pytools.expression.atomic import Id
-from pytools.fit import NotFittedError
 
 log = logging.getLogger(__name__)
 
 __all__ = [
+    "ClassifierDF",
+    "ClusterDF",
     "EstimatorDF",
     "LearnerDF",
-    "ClassifierDF",
     "RegressorDF",
     "SupervisedLearnerDF",
     "TransformerDF",
-    "ClustererDF",
 ]
 
 #
@@ -61,7 +62,11 @@ __tracker = AllTracker(globals())
 
 
 @inheritdoc(match="""[see superclass]""")
-class EstimatorDF(HasExpressionRepr, BaseEstimator, metaclass=ABCMeta):
+class EstimatorDF(
+    HasExpressionRepr,
+    BaseEstimator,  # type: ignore
+    metaclass=ABCMeta,
+):
     """
     Base class for augmented `scikit-learn` estimators.
 
@@ -115,9 +120,10 @@ class EstimatorDF(HasExpressionRepr, BaseEstimator, metaclass=ABCMeta):
 
     def ensure_fitted(self) -> None:
         """
-        Raise a :class:`.NotFittedError` if this object is not fitted.
+        Raise a :class:`~sklearn.exceptions.NotFittedError` if this estimator is not
+        fitted.
 
-        :raise NotFittedError: this object is not fitted
+        :raise sklearn.exceptions.NotFittedError: this estimator is not fitted
         """
         if not self.is_fitted:
             raise NotFittedError(f"{type(self).__name__} is not fitted")
@@ -152,7 +158,7 @@ class EstimatorDF(HasExpressionRepr, BaseEstimator, metaclass=ABCMeta):
         :return: a mapping of parameter names to their values
         """
         # noinspection PyUnresolvedReferences
-        return super().get_params(deep=deep)
+        return cast(Mapping[str, Any], super().get_params(deep=deep))
 
     def set_params(self: T_EstimatorDF, **params: Any) -> T_EstimatorDF:
         """
@@ -172,7 +178,7 @@ class EstimatorDF(HasExpressionRepr, BaseEstimator, metaclass=ABCMeta):
 
         :return: the unfitted clone
         """
-        return clone(self)
+        return cast(T_EstimatorDF, clone(self))
 
     @abstractmethod
     def _get_features_in(self) -> pd.Index:
@@ -203,11 +209,15 @@ class EstimatorDF(HasExpressionRepr, BaseEstimator, metaclass=ABCMeta):
             default_value = estimator_parameters.get(name, UNDEFINED)
 
             if (
-                (  # there is a parameter with the given name
-                    default_value is not UNDEFINED
+                (
+                    # there is a parameter with the given name
+                    default_value
+                    is not UNDEFINED
                 )
-                and (  # the parameter has a default value
-                    default_value != inspect.Signature.empty
+                and (
+                    # the parameter has a default value
+                    default_value
+                    != inspect.Signature.empty
                 )
                 and (
                     # if the value is an estimator ...
@@ -222,7 +232,7 @@ class EstimatorDF(HasExpressionRepr, BaseEstimator, metaclass=ABCMeta):
                         # ... or both have the same expression.
                         # We cannot compare for equality since we don't know
                         # if the classes of the values implement this.
-                        # Therefore we compare the expressions but do this last,
+                        # Therefore, we compare the expressions but do this last,
                         # as it might be computationally more costly in the
                         # unlikely case that the default value is a very complex
                         # object.
@@ -283,7 +293,7 @@ class LearnerDF(EstimatorDF, metaclass=ABCMeta):
 
 class SupervisedLearnerDF(LearnerDF, metaclass=ABCMeta):
     """
-    Base class for augmented scikit-learn `supervised learners`.
+    Base class for augmented `scikit-learn` supervised learners.
 
     Provides enhanced support for data frames.
     """
@@ -306,7 +316,11 @@ class SupervisedLearnerDF(LearnerDF, metaclass=ABCMeta):
         pass
 
 
-class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
+class TransformerDF(
+    TransformerMixin,  # type: ignore
+    EstimatorDF,
+    metaclass=ABCMeta,
+):
     """
     Base class for augmented `scikit-learn` transformers.
 
@@ -330,6 +344,7 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
 
     @property
     def feature_names_original_(self) -> pd.Series:
+        # noinspection GrazieInspection
         """
         A pandas series, mapping the output features resulting from the transformation
         to the original input features.
@@ -417,15 +432,34 @@ class TransformerDF(EstimatorDF, TransformerMixin, metaclass=ABCMeta):
         return self.feature_names_original_.index
 
 
-class RegressorDF(SupervisedLearnerDF, RegressorMixin, metaclass=ABCMeta):
+class RegressorDF(
+    RegressorMixin,  # type: ignore
+    SupervisedLearnerDF,
+    metaclass=ABCMeta,
+):
     """
     Base class for augmented `scikit-learn` regressors.
 
     Provides enhanced support for data frames.
     """
 
+    # noinspection PyPep8Naming
+    @abstractmethod
+    def score(
+        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+    ) -> float:
+        """[see SupervisedLearnerDF]"""
 
-class ClassifierDF(SupervisedLearnerDF, ClassifierMixin, metaclass=ABCMeta):
+    # we cannot get the docstring via the @inheritdoc mechanism because
+    # RegressorMixin precedes SupervisedLearnerDF in the MRO
+    score.__doc__ = SupervisedLearnerDF.score.__doc__
+
+
+class ClassifierDF(
+    ClassifierMixin,  # type: ignore
+    SupervisedLearnerDF,
+    metaclass=ABCMeta,
+):
     """
     Base class for augmented `scikit-learn` classifiers.
 
@@ -434,12 +468,12 @@ class ClassifierDF(SupervisedLearnerDF, ClassifierMixin, metaclass=ABCMeta):
 
     @property
     @abstractmethod
-    def classes_(self) -> Sequence[Any]:
+    def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
         """
         Get the classes predicted by this classifier.
-        By default expects classes as a list-like stored in the `classes_` attribute.
 
-        :return: the classes predicted by this classifier
+        :return: a numpy array of class labels for single-output problems, or a list
+            of such arrays for multi-output problems
         """
         pass
 
@@ -509,10 +543,25 @@ class ClassifierDF(SupervisedLearnerDF, ClassifierMixin, metaclass=ABCMeta):
             per output
         """
 
+    # noinspection PyPep8Naming
+    @abstractmethod
+    def score(
+        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+    ) -> float:
+        """[see SupervisedLearnerDF]"""
 
-class ClustererDF(LearnerDF, ClusterMixin, metaclass=ABCMeta):
+    # we cannot get the docstring via the @inheritdoc mechanism because
+    # ClassifierMixin precedes SupervisedLearnerDF in the MRO
+    score.__doc__ = SupervisedLearnerDF.score.__doc__
+
+
+class ClusterDF(
+    ClusterMixin,  # type: ignore
+    LearnerDF,
+    metaclass=ABCMeta,
+):
     """
-    Base class for augmented scikit-learn `clusterers`.
+    Base class for augmented `scikit-learn` clusterers.
 
     Provides enhanced support for data frames.
     """
@@ -520,6 +569,7 @@ class ClustererDF(LearnerDF, ClusterMixin, metaclass=ABCMeta):
     @property
     @abstractmethod
     def labels_(self) -> pd.Series:
+        # noinspection GrazieInspection
         """
         A pandas series, mapping the index of the input data frame to cluster labels.
         """

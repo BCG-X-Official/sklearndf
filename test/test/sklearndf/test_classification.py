@@ -1,5 +1,5 @@
 from itertools import chain
-from typing import Type
+from typing import Any, Dict, Type
 
 import numpy as np
 import pandas as pd
@@ -8,7 +8,12 @@ from sklearn.base import is_classifier
 from sklearn.multioutput import ClassifierChain, MultiOutputClassifier
 
 import sklearndf.classification as classification
-from sklearndf import ClassifierDF, __sklearn_0_22__, __sklearn_version__
+from sklearndf import (
+    ClassifierDF,
+    __sklearn_0_22__,
+    __sklearn_1_0__,
+    __sklearn_version__,
+)
 from test.sklearndf import check_expected_not_fitted_error, iterate_classes
 
 CLASSIFIERS_TO_TEST = iterate_classes(
@@ -18,7 +23,19 @@ CLASSIFIERS_TO_TEST = iterate_classes(
 )
 
 
-CLASSIFIER_INIT_PARAMETERS = {
+def test_classifier_count() -> None:
+    n = len(CLASSIFIERS_TO_TEST)
+
+    print(f"Testing {n} classifiers.")
+    if __sklearn_version__ < __sklearn_0_22__:
+        assert n == 38
+    elif __sklearn_version__ < __sklearn_1_0__:
+        assert n == 40
+    else:
+        assert n == 41
+
+
+CLASSIFIER_INIT_PARAMETERS: Dict[str, Dict[str, Any]] = {
     "CalibratedClassifierCVDF": {
         "base_estimator": classification.RandomForestClassifierDF()
     },
@@ -59,7 +76,9 @@ if __sklearn_version__ >= __sklearn_0_22__:
     CLASSIFIERS_PARTIAL_FIT.append(classification.CategoricalNBDF)
 
 
-@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST)
+@pytest.mark.parametrize(  # type: ignore
+    argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST
+)
 def test_wrapped_fit_predict(
     sklearndf_cls: Type[ClassifierDF],
     iris_features: pd.DataFrame,
@@ -69,9 +88,11 @@ def test_wrapped_fit_predict(
 ) -> None:
     """Test fit & predict & predict[_log]_proba of wrapped sklearn classifiers"""
     # noinspection PyArgumentList
-    classifier: ClassifierDF = sklearndf_cls(
-        **CLASSIFIER_INIT_PARAMETERS.get(sklearndf_cls.__name__, {})
+    parameters: Dict[str, Any] = CLASSIFIER_INIT_PARAMETERS.get(
+        sklearndf_cls.__name__, {}
     )
+    # noinspection PyArgumentList
+    classifier: ClassifierDF = sklearndf_cls(**parameters)
 
     assert is_classifier(classifier)
 
@@ -110,7 +131,7 @@ def test_wrapped_fit_predict(
 
     # test predict_proba & predict_log_proba:
     for method_name in ["predict_proba", "predict_log_proba"]:
-        method = getattr(classifier, method_name, None)
+        method = getattr(classifier, method_name)
 
         if hasattr(classifier.native_estimator, method_name):
             predictions = method(X=iris_features)
@@ -134,14 +155,16 @@ def test_wrapped_fit_predict(
                 method(X=iris_features)
 
 
-@pytest.mark.parametrize("sklearndf_cls", CLASSIFIERS_PARTIAL_FIT)
+@pytest.mark.parametrize(  # type: ignore
+    argnames="sklearndf_cls", argvalues=CLASSIFIERS_PARTIAL_FIT
+)
 def test_wrapped_partial_fit(
     sklearndf_cls: Type[ClassifierDF],
     iris_features: pd.DataFrame,
     iris_target_sr: pd.Series,
     iris_targets_df: pd.DataFrame,
-):
-
+) -> None:
+    # noinspection PyArgumentList
     classifier: ClassifierDF = sklearndf_cls(
         **CLASSIFIER_INIT_PARAMETERS.get(f"{sklearndf_cls.__name__}_partial_fit", {})
     )

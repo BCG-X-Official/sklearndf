@@ -10,7 +10,6 @@ from sklearn.impute import KNNImputer
 
 from pytools.api import AllTracker
 
-from ..wrapper import make_df_transformer
 from .wrapper import ImputerWrapperDF
 
 log = logging.getLogger(__name__)
@@ -24,14 +23,16 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 # Ensure all symbols introduced below are included in __all__
 #
 
-__tracker = AllTracker(globals(), allow_imported_definitions=True)
+__tracker = AllTracker(globals())
 
 
 #
 # impute
 #
 
-KNNImputerDF = make_df_transformer(KNNImputer, base_wrapper=ImputerWrapperDF)
+
+class KNNImputerDF(ImputerWrapperDF[KNNImputer], native=KNNImputer):
+    """Stub for DF wrapper of class ``KNNImputer``"""
 
 
 #
