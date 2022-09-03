@@ -2,10 +2,19 @@
 Core implementation of :mod:`sklearndf.classification.extra`
 """
 import logging
+import warnings
 
 from pytools.api import AllTracker
 
-from ...wrapper import MissingEstimator, RegressorWrapperDF
+from ...wrapper import ClassifierWrapperDF, MissingEstimator
+
+# since we install LGBM via conda, the warning about the Clang compiler is irrelevant
+warnings.filterwarnings("ignore", message=r"Starting from version 2\.2\.1")
+# cross-validation will invariably generate sliced subsets, so the following warning
+# is not helpful
+warnings.filterwarnings(
+    "ignore", message=r"Usage of np\.ndarray subset \(sliced data\) is not recommended"
+)
 
 log = logging.getLogger(__name__)
 
@@ -44,10 +53,10 @@ __tracker = AllTracker(globals())
 # Class definitions
 #
 
-if LGBMClassifier:
+if MissingEstimator not in LGBMClassifier.mro():
 
     class LGBMClassifierDF(
-        RegressorWrapperDF[LGBMClassifier],
+        ClassifierWrapperDF[LGBMClassifier],
         native=LGBMClassifier,
     ):
         """Stub for DF wrapper of class ``LGBMClassifierDF``"""
@@ -55,10 +64,10 @@ if LGBMClassifier:
 else:
     __all__.remove("LGBMClassifierDF")
 
-if XGBClassifier:
+if MissingEstimator not in XGBClassifier.mro():
 
     class XGBClassifierDF(
-        RegressorWrapperDF[XGBClassifier],
+        ClassifierWrapperDF[XGBClassifier],
         native=XGBClassifier,
     ):
         """Stub for DF wrapper of class ``XGBClassifierDF``"""
