@@ -64,6 +64,10 @@ DEFAULT_REGRESSOR_PARAMETERS: Dict[str, Dict[str, Any]] = {
             ("Linear", LinearRegressionDF()),
         )
     },
+    # the rank of Y is 1, so n_components needs to be 1
+    "CCADF": dict(n_components=1),
+    # the rank of Y is 1, so n_components needs to be 1
+    "PLSCanonicalDF": dict(n_components=1),
 }
 
 REGRESSORS_PARTIAL_FIT = [
