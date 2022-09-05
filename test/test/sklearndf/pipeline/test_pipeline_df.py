@@ -52,7 +52,10 @@ class NoFit(
         self.b = b
 
 
-class NoTransformer(NoFit):
+class NoTransformer(
+    NoFit,
+    TransformerMixin,  # type: ignore
+):
     """
     Not a transformer
     """
@@ -70,8 +73,8 @@ class NoTransformer(NoFit):
 
 
 class NoInvTransformer(
-    TransformerMixin,  # type: ignore
     NoTransformer,
+    TransformerMixin,  # type: ignore
 ):
     # noinspection PyPep8Naming
     def transform(self, X: npt.NDArray[Any]) -> npt.NDArray[Any]:

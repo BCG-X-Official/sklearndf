@@ -2,19 +2,12 @@
 Core implementation of :mod:`sklearndf.regression.extra`
 """
 import logging
-import warnings
+
+from sklearn.base import RegressorMixin
 
 from pytools.api import AllTracker
 
 from ...wrapper import MissingEstimator, RegressorWrapperDF
-
-# since we install LGBM via conda, the warning about the Clang compiler is irrelevant
-warnings.filterwarnings("ignore", message=r"Starting from version 2\.2\.1")
-# cross-validation will invariably generate sliced subsets, so the following warning
-# is not helpful
-warnings.filterwarnings(
-    "ignore", message=r"Usage of np\.ndarray subset \(sliced data\) is not recommended"
-)
 
 log = logging.getLogger(__name__)
 
@@ -28,6 +21,7 @@ except ImportError:
 
     class LGBMRegressor(  # type: ignore
         MissingEstimator,
+        RegressorMixin,  # type: ignore
     ):
         """Mock-up for missing estimator."""
 
@@ -40,6 +34,7 @@ except ImportError:
 
     class XGBRegressor(  # type: ignore
         MissingEstimator,
+        RegressorMixin,  # type: ignore
     ):
         """Mock-up for missing estimator."""
 

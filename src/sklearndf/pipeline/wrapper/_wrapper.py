@@ -47,6 +47,8 @@ class PipelineWrapperDF(
     DF wrapper for `scikit-learn` class :class:`~sklearn.pipeline.Pipeline`.
     """
 
+    __native_base_class__ = Pipeline
+
     #: Placeholder that can be used in place of an estimator to designate a pipeline
     #: step that preserves the original ingoing data.
     PASSTHROUGH = "passthrough"

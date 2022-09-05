@@ -3,10 +3,12 @@
 from typing import Any
 
 import numpy as np
+import pytest
 import scipy.sparse as sp
 from numpy.testing import assert_array_equal, assert_raises
 from sklearn import clone
 from sklearn.base import BaseEstimator, is_classifier
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 
@@ -14,9 +16,15 @@ from pytools.expression import freeze, make_expression
 from pytools.expression.atomic import Id
 
 from sklearndf.classification import SVCDF, DecisionTreeClassifierDF
+from sklearndf.clustering.wrapper import KMeansBaseWrapperDF
 from sklearndf.pipeline import PipelineDF
+from sklearndf.pipeline.wrapper import FeatureUnionWrapperDF
 from sklearndf.transformation import OneHotEncoderDF
-from sklearndf.wrapper import EstimatorWrapperDF
+from sklearndf.wrapper import (
+    ClassifierWrapperDF,
+    EstimatorWrapperDF,
+    RegressorWrapperDF,
+)
 
 
 class DummyEstimator(
@@ -189,3 +197,69 @@ def test_set_params_updates_valid_params() -> None:
     # noinspection PyTypeChecker
     gs.set_params(estimator=SVCDF(), estimator__C=42.0)
     assert gs.estimator.C == 42.0
+
+
+# noinspection PyUnusedLocal
+def test_native_class_validation() -> None:
+    with pytest.raises(
+        TypeError,
+        match=(
+            "native class RandomForestClassifier cannot be used with wrapper class "
+            "MismatchedNativeClass1 because it does not implement RegressorMixin"
+        ),
+    ):
+
+        class MismatchedNativeClass1(
+            RegressorWrapperDF[RandomForestClassifier], native=RandomForestClassifier
+        ):
+            pass
+
+    with pytest.raises(
+        TypeError,
+        match=(
+            "native class RandomForestRegressor cannot be used with wrapper class "
+            "MismatchedNativeClass2 because it does not implement ClassifierMixin"
+        ),
+    ):
+
+        class MismatchedNativeClass2(
+            ClassifierWrapperDF[RandomForestRegressor], native=RandomForestRegressor
+        ):
+            pass
+
+    with pytest.raises(
+        TypeError,
+        match=(
+            "native class RandomForestRegressor cannot be used with wrapper class "
+            "MismatchedNativeClass3 because it does not implement ClusterMixin"
+        ),
+    ):
+
+        class MismatchedNativeClass3(
+            KMeansBaseWrapperDF[RandomForestRegressor], native=RandomForestRegressor
+        ):
+            pass
+
+    with pytest.raises(
+        TypeError,
+        match=(
+            "native class RandomForestRegressor cannot be used with wrapper class "
+            "MismatchedNativeClass4 because it does not implement TransformerMixin"
+        ),
+    ):
+
+        class MismatchedNativeClass4(
+            FeatureUnionWrapperDF, native=RandomForestRegressor
+        ):
+            pass
+
+    with pytest.raises(
+        TypeError,
+        match=(
+            "native class RandomForestRegressor cannot be used with wrapper class "
+            "MismatchedNativeClass5 because it does not implement Pipeline"
+        ),
+    ):
+
+        class MismatchedNativeClass5(PipelineDF, native=RandomForestRegressor):
+            pass

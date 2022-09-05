@@ -5,6 +5,8 @@ from __future__ import annotations
 
 import logging
 
+from sklearn.base import TransformerMixin
+
 from pytools.api import AllTracker
 
 from ...wrapper import MissingEstimator
@@ -21,6 +23,7 @@ except ImportError:
 
     class BorutaPy(  # type: ignore
         MissingEstimator,
+        TransformerMixin,  # type: ignore
     ):
         """Mock-up for missing estimator."""
 
