@@ -217,16 +217,20 @@ def test_pipeline_df_memory(
 def test_pipeline_df__init() -> None:
     """Test the various init parameters of the pipeline."""
 
-    assert_raises(TypeError, PipelineDF)
+    with pytest.raises(TypeError):
+        PipelineDF()
+
     # Check that we can't instantiate pipelines with objects without fit
     # method
-    assert_raises_regex(
-        ValueError,
-        "expected final step 'clf' to be an EstimatorDF or passthrough, "
-        "but found an instance of NoFit",
-        PipelineDF,
-        [("clf", NoFit())],
-    )
+    with pytest.raises(
+        TypeError,
+        match=(
+            "Last step of Pipeline should implement fit "
+            "or be the string 'passthrough'"
+            ".*NoFit.*"
+        ),
+    ):
+        PipelineDF([("clf", NoFit())])
 
     # Smoke test with only an estimator
     clf = NoTransformerDF()
