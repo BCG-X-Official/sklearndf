@@ -1243,7 +1243,7 @@ def _update_wrapper(
 
 def _update_class_docstring(
     df_estimator_type: Type[EstimatorWrapperDF[T_NativeEstimator]],
-    sklearn_native_estimator_type: T_NativeEstimator,
+    sklearn_native_estimator_type: Type[T_NativeEstimator],
 ) -> None:
     base_doc = sklearn_native_estimator_type.__doc__
 
