@@ -281,9 +281,11 @@ class EstimatorWrapperDF(
         # recorded by the native estimator, if present. Issue a warning if the feature
         # names differ.
         # Return the same feature names that were passed to this method.
+
+        # noinspection PyBroadException
         try:
             feature_names_in_native = self.native_estimator.feature_names_in_
-        except AttributeError:
+        except Exception:
             return wrapper_feature_names_in
 
         if not np.array_equal(wrapper_feature_names_in.values, feature_names_in_native):
