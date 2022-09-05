@@ -59,6 +59,8 @@ from sklearndf import (
     RegressorDF,
     SupervisedLearnerDF,
     TransformerDF,
+    __sklearn_1_0__,
+    __sklearn_version__,
 )
 
 log = logging.getLogger(__name__)
@@ -606,7 +608,7 @@ class TransformerWrapperDF(
     def feature_names_out_(self) -> pd.Index:
         """[see superclass]"""
         return self._check_feature_names_out(
-            super().feature_names_out_, warning_stacklevel=2
+            self._get_features_in(), super().feature_names_out_, warning_stacklevel=2
         )
 
     @property
@@ -614,7 +616,9 @@ class TransformerWrapperDF(
         """[see superclass]"""
         feature_names_original_ = super().feature_names_original_
         self._check_feature_names_out(
-            feature_names_original_.index, warning_stacklevel=2
+            self._get_features_in().values,
+            feature_names_original_.index,
+            warning_stacklevel=2,
         )
         return feature_names_original_
 
@@ -663,11 +667,20 @@ class TransformerWrapperDF(
         )
 
     def _check_feature_names_out(
-        self, wrapper_feature_names_out: pd.Index, *, warning_stacklevel: int
+        self,
+        feature_names_in: npt.NDArray[Any],
+        wrapper_feature_names_out: pd.Index,
+        *,
+        warning_stacklevel: int,
     ) -> pd.Index:
+        if __sklearn_version__ < __sklearn_1_0__:
+            return wrapper_feature_names_out
+        # noinspection PyBroadException
         try:
-            native_feature_names_out = self.native_estimator.get_feature_names_out()
-        except AttributeError:
+            native_feature_names_out = self.native_estimator.get_feature_names_out(
+                feature_names_in
+            )
+        except Exception:
             return wrapper_feature_names_out
         if not np.all(native_feature_names_out == wrapper_feature_names_out):
             warnings.warn(
