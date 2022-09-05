@@ -352,7 +352,15 @@ def test_simple_imputer_df() -> None:
     transformed_df_expected = pd.DataFrame(
         transformed_native,
         columns=pd.Index(
-            ["a", "b", "c", "d", "a__missing", "b__missing", "d__missing"],
+            [
+                "a",
+                "b",
+                "c",
+                "d",
+                "missingindicator_a",
+                "missingindicator_b",
+                "missingindicator_d",
+            ],
             name="feature_out",
         ),
     )
