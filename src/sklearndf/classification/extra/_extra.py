@@ -53,27 +53,20 @@ __tracker = AllTracker(globals())
 # Class definitions
 #
 
-if MissingEstimator not in LGBMClassifier.mro():
 
-    class LGBMClassifierDF(
-        ClassifierWrapperDF[LGBMClassifier],
-        native=LGBMClassifier,
-    ):
-        """Stub for DF wrapper of class ``LGBMClassifierDF``"""
+class LGBMClassifierDF(
+    ClassifierWrapperDF[LGBMClassifier],
+    native=LGBMClassifier,
+):
+    """Stub for DF wrapper of class ``LGBMClassifierDF``"""
 
-else:
-    __all__.remove("LGBMClassifierDF")
 
-if MissingEstimator not in XGBClassifier.mro():
+class XGBClassifierDF(
+    ClassifierWrapperDF[XGBClassifier],
+    native=XGBClassifier,
+):
+    """Stub for DF wrapper of class ``XGBClassifierDF``"""
 
-    class XGBClassifierDF(
-        ClassifierWrapperDF[XGBClassifier],
-        native=XGBClassifier,
-    ):
-        """Stub for DF wrapper of class ``XGBClassifierDF``"""
-
-else:
-    __all__.remove("XGBClassifierDF")
 
 #
 # validate that __all__

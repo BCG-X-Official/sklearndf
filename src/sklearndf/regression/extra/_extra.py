@@ -55,27 +55,20 @@ __tracker = AllTracker(globals())
 # Class definitions
 #
 
-if MissingEstimator not in LGBMRegressor.mro():
 
-    class LGBMRegressorDF(
-        RegressorWrapperDF[LGBMRegressor],
-        native=LGBMRegressor,
-    ):
-        """Stub for DF wrapper of class ``LGBMRegressorDF``"""
+class LGBMRegressorDF(
+    RegressorWrapperDF[LGBMRegressor],
+    native=LGBMRegressor,
+):
+    """Stub for DF wrapper of class ``LGBMRegressorDF``"""
 
-else:
-    __all__.remove("LGBMRegressorDF")
 
-if MissingEstimator not in XGBRegressor.mro():
+class XGBRegressorDF(
+    RegressorWrapperDF[XGBRegressor],
+    native=XGBRegressor,
+):
+    """Stub for DF wrapper of class ``XGBRegressorDF``"""
 
-    class XGBRegressorDF(
-        RegressorWrapperDF[XGBRegressor],
-        native=XGBRegressor,
-    ):
-        """Stub for DF wrapper of class ``XGBRegressorDF``"""
-
-else:
-    __all__.remove("XGBClassifierDF")
 
 #
 # validate __all__
