@@ -29,17 +29,18 @@ from sklearn.preprocessing import KBinsDiscretizer, OneHotEncoder
 
 from pytools.api import AllTracker
 
-from ... import TransformerDF, __sklearn_1_0__, __sklearn_version__
+from ... import TransformerDF, __sklearn_1_0__, __sklearn_1_2__, __sklearn_version__
 from ...wrapper import TransformerWrapperDF
 
 log = logging.getLogger(__name__)
 
 __all__ = [
-    "BaseDimensionalityReductionWrapperDF",
+    "BaseMultiOutputWrapperDF",
     "BaseMultipleInputsPerOutputTransformerWrapperDF",
     "ColumnPreservingTransformerWrapperDF",
     "ColumnSubsetTransformerWrapperDF",
     "ComponentsDimensionalityReductionWrapperDF",
+    "EmbeddingWrapperDF",
     "FeatureSelectionWrapperDF",
     "NComponentsDimensionalityReductionWrapperDF",
     "NumpyTransformerWrapperDF",
@@ -166,7 +167,7 @@ class BaseMultipleInputsPerOutputTransformerWrapperDF(
         )
 
 
-class BaseDimensionalityReductionWrapperDF(
+class BaseMultiOutputWrapperDF(
     BaseMultipleInputsPerOutputTransformerWrapperDF[T_Transformer],
     Generic[T_Transformer],
     metaclass=ABCMeta,
@@ -187,7 +188,7 @@ class BaseDimensionalityReductionWrapperDF(
 
 
 class NComponentsDimensionalityReductionWrapperDF(
-    BaseDimensionalityReductionWrapperDF[T_Transformer],
+    BaseMultiOutputWrapperDF[T_Transformer],
     Generic[T_Transformer],
     metaclass=ABCMeta,
 ):
@@ -209,7 +210,7 @@ class NComponentsDimensionalityReductionWrapperDF(
 
 
 class ComponentsDimensionalityReductionWrapperDF(
-    BaseDimensionalityReductionWrapperDF[T_Transformer],
+    BaseMultiOutputWrapperDF[T_Transformer],
     Generic[T_Transformer],
     metaclass=ABCMeta,
 ):
@@ -442,11 +443,14 @@ class MissingIndicatorWrapperDF(
         features_original: npt.NDArray[Any] = self.feature_names_in_[
             self.native_estimator.features_
         ].values
-        features_out = pd.Index([f"{name}__missing" for name in features_original])
+        # noinspection SpellCheckingInspection
+        features_out = pd.Index(
+            [f"missingindicator_{name}" for name in features_original]
+        )
         return pd.Series(index=features_out, data=features_original)
 
 
-class IsomapWrapperDF(BaseDimensionalityReductionWrapperDF[Isomap], metaclass=ABCMeta):
+class IsomapWrapperDF(BaseMultiOutputWrapperDF[Isomap], metaclass=ABCMeta):
     """
     DF wrapper for :class:`sklearn.manifold.Isomap`.
     """
@@ -457,7 +461,7 @@ class IsomapWrapperDF(BaseDimensionalityReductionWrapperDF[Isomap], metaclass=AB
 
 
 class AdditiveChi2SamplerWrapperDF(
-    BaseDimensionalityReductionWrapperDF[AdditiveChi2Sampler], metaclass=ABCMeta
+    BaseMultiOutputWrapperDF[AdditiveChi2Sampler], metaclass=ABCMeta
 ):
     """
     DF wrapper for :class:`sklearn.kernel_approximation.AdditiveChi2Sampler`.
@@ -582,6 +586,38 @@ class KBinsDiscretizerWrapperDF(
             raise ValueError(
                 f"unexpected value for property encode={self.native_estimator.encode}"
             )
+
+
+class EmbeddingWrapperDF(
+    BaseMultiOutputWrapperDF[T_Transformer],
+    Generic[T_Transformer],
+    metaclass=ABCMeta,
+):
+    """
+    Base class of DF wrappers for dimensionality-reducing transformers.
+
+    The native transformer is considered to map all input columns to each output column.
+    """
+
+    if __sklearn_version__ < __sklearn_1_2__:
+        # n_features_ is deprecated as of sklearn 1.0,
+        # and will be removed in sklearn 1.2
+        @property
+        def n_features_(self) -> int:
+            """
+            The number of features when :meth:`.fit` is performed.
+            """
+            return cast(int, self.native_estimator.n_features_)
+
+    @property
+    def n_outputs_(self) -> int:
+        """
+        The number of outputs when :meth:`.fit` is performed.
+        """
+        return cast(int, self.native_estimator.n_outputs_)
+
+    def _n_components_(self) -> int:
+        return self.n_outputs_
 
 
 #

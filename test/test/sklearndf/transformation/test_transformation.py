@@ -25,6 +25,7 @@ from sklearndf import (
     __sklearn_0_22__,
     __sklearn_0_24__,
     __sklearn_1_0__,
+    __sklearn_1_1__,
     __sklearn_version__,
 )
 from sklearndf.classification import RandomForestClassifierDF
@@ -79,8 +80,10 @@ def test_transformer_count() -> None:
         assert n == 54
     elif __sklearn_version__ < __sklearn_1_0__:
         assert n == 55
-    else:
+    elif __sklearn_version__ < __sklearn_1_1__:
         assert n == 56
+    else:
+        assert n == 58
 
 
 @pytest.fixture  # type: ignore
