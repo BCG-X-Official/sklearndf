@@ -274,6 +274,11 @@ class EstimatorWrapperDF(
             super().feature_names_in_, warning_stacklevel=2
         )
 
+    @property
+    def n_features_in_(self) -> int:
+        """[see superclass]"""
+        return self._check_n_features_in(super().n_features_in_, warning_stacklevel=2)
+
     def _check_feature_names_in(
         self, wrapper_feature_names_in: pd.Index, *, warning_stacklevel: int
     ) -> pd.Index:
@@ -297,6 +302,30 @@ class EstimatorWrapperDF(
                 stacklevel=warning_stacklevel + 1,
             )
         return wrapper_feature_names_in
+
+    def _check_n_features_in(
+        self, wrapper_n_features: int, *, warning_stacklevel: int
+    ) -> int:
+        # Check that the given number of features is the same as the number of features
+        # recorded by the native estimator, if present. Issue a warning if the number of
+        # features differ.
+        # Return the same number of features that were passed to this method.
+
+        # noinspection PyBroadException
+        try:
+            n_features_native = self.native_estimator.n_features_in_
+        except Exception:
+            return wrapper_n_features
+
+        if wrapper_n_features != n_features_native:
+            warnings.warn(
+                "conflicting number of features: "
+                "the number of features recorded by this estimator is "
+                f"{wrapper_n_features}, but the number of features recorded by "
+                f"the wrapped native estimator is {n_features_native}",
+                stacklevel=warning_stacklevel + 1,
+            )
+        return wrapper_n_features
 
     @property
     def _estimator_type(self) -> Optional[str]:
@@ -371,6 +400,10 @@ class EstimatorWrapperDF(
     def _get_features_in(self) -> pd.Index:
         assert self._features_in is not None, "estimator is fitted"
         return self._features_in
+
+    def _get_n_features_in(self) -> int:
+        assert self._features_in is not None, "estimator is fitted"
+        return len(self._features_in)
 
     def _get_n_outputs(self) -> int:
         assert self._n_outputs is not None, "estimator is fitted"
