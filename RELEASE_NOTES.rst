@@ -12,6 +12,15 @@ Release Notes
 adds data frame support for clusterers along with additional API enhancements and
 improvements, and is now subject to static type checking with |mypy|.
 
+2.0.1
+~~~~~
+
+- API: when declaring new wrapper classes, validate that their associated native
+  estimators are compatible with the wrapper class
+- FIX: base :class:`.LGBMClassifierDF` and :class:`.XGBClassifierDF` on the
+  the correct wrapper class :class:`.ClassifierWrapperDF`
+
+
 2.0.0
 ~~~~~
 
