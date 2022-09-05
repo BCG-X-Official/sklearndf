@@ -45,9 +45,9 @@ def test_regressor_count() -> None:
     elif __sklearn_version__ < __sklearn_0_23__:
         assert n == 50
     elif __sklearn_version__ < __sklearn_1_0__:
-        assert n == 54
+        assert n == 53
     else:
-        assert n == 56
+        assert n == 55
 
 
 DEFAULT_REGRESSOR_PARAMETERS: Dict[str, Dict[str, Any]] = {
