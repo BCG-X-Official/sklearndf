@@ -312,7 +312,7 @@ def test_pipeline_df_raise_set_params_error() -> None:
 
     assert_raises_regex(
         ValueError,
-        "Invalid parameter fake for estimator Pipeline",
+        r"Invalid parameter (fake|'fake') for estimator Pipeline",
         pipe.set_params,
         fake="nope",
     )
@@ -320,7 +320,7 @@ def test_pipeline_df_raise_set_params_error() -> None:
     # nested model check
     assert_raises_regex(
         ValueError,
-        "Invalid parameter fake for estimator Pipeline",
+        r"Invalid parameter (fake|'fake') for estimator Pipeline",
         pipe.set_params,
         fake__estimator="nope",
     )
