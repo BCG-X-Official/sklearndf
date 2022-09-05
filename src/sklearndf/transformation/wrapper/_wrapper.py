@@ -65,7 +65,7 @@ T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
 # onwards.
 # Once we drop support for sklearn 0.21, _BaseImputer can be used instead.
 # The following TypeVar helps to annotate availability of "add_indicator" and
-# "missing_values" attributes on an imputer instance for ImputerWrapperDF below
+# "missing_values" attributes on an imputer instance for ImputerWrapperDF below.
 
 # noinspection PyProtectedMember
 from sklearn.impute._iterative import IterativeImputer
@@ -504,8 +504,8 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
     def _get_features_original(self) -> pd.Series:
         # Return the series mapping output column names to original column names.
         #
-        # Remove 1st category column if argument drop == 'first'
-        # Remove 1st category column only of binary features if arg drop == 'if_binary'
+        # Remove 1st category column if argument drop == 'first'.
+        # Remove 1st category column only of binary features if arg drop == 'if_binary'.
 
         native_estimator: OneHotEncoder = self.native_estimator
         feature_names_in: pd.Index = self.feature_names_in_

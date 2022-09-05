@@ -12,7 +12,6 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import Normalizer, StandardScaler
 
 import sklearndf.transformation
-from ... import check_sklearn_version
 from ...sklearndf import (
     check_expected_not_fitted_error,
     get_sklearndf_wrapper_class,
@@ -23,6 +22,7 @@ from sklearndf import (
     RegressorDF,
     TransformerDF,
     __sklearn_0_22__,
+    __sklearn_0_23__,
     __sklearn_0_24__,
     __sklearn_1_0__,
     __sklearn_1_1__,
@@ -56,7 +56,7 @@ TRANSFORMER_EXCLUSIONS = [
     r".*WrapperDF",
 ]
 
-if check_sklearn_version(minimum="0.24"):
+if __sklearn_version__ >= __sklearn_0_24__:
     from sklearndf.transformation import SequentialFeatureSelectorDF
 
     TRANSFORMER_EXCLUSIONS.append(SequentialFeatureSelectorDF.__name__)
@@ -141,7 +141,7 @@ def test_special_wrapped_constructors() -> None:
 
     RFEDF(estimator=rf)
 
-    if check_sklearn_version(minimum="0.24"):
+    if __sklearn_version__ >= __sklearn_0_24__:
         from sklearndf.transformation import SequentialFeatureSelectorDF
 
         SequentialFeatureSelectorDF(estimator=rf)
@@ -371,7 +371,7 @@ def test_simple_imputer_df() -> None:
         imputer_df.fit(X=x_df).transform(X=x_df), transformed_df_expected
     )
 
-    # test fit_trannsform
+    # test fit_transform
 
     transformed_df = imputer_df.fit_transform(X=x_df)
     assert_frame_equal(transformed_df, transformed_df_expected)
@@ -382,11 +382,18 @@ def test_simple_imputer_df() -> None:
         inverse_transformed_df = imputer_df.inverse_transform(X=transformed_df)
         assert_frame_equal(inverse_transformed_df, x_df)
 
-    # test feature name in
+    # test feature names in and out
     if __sklearn_version__ >= __sklearn_1_0__:
         # noinspection PyUnresolvedReferences
         assert_array_equal(
             imputer_df.feature_names_in_.values, imputer_native.feature_names_in_
+        )
+
+    if __sklearn_version__ >= __sklearn_1_1__:
+        # noinspection PyUnresolvedReferences
+        assert_array_equal(
+            imputer_df.feature_names_out_.values,
+            imputer_native.get_feature_names_out(),
         )
 
 
@@ -428,7 +435,7 @@ def test_one_hot_encoding() -> None:
         ).rename_axis(columns="feature_out"),
     )
 
-    if check_sklearn_version(minimum="0.23"):
+    if __sklearn_version__ >= __sklearn_0_23__:
         assert_frame_equal(
             OneHotEncoderDF(drop="if_binary", sparse=False).fit_transform(
                 test_data_categorical

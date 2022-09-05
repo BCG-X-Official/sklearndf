@@ -51,19 +51,19 @@ def test_regressor_count() -> None:
 
 
 DEFAULT_REGRESSOR_PARAMETERS: Dict[str, Dict[str, Any]] = {
-    "MultiOutputRegressorDF": {"estimator": RandomForestRegressorDF()},
-    "MultiOutputRegressorDF_partial_fit": {"estimator": SGDRegressorDF()},
-    "RegressorChainDF": {"base_estimator": RandomForestRegressorDF()},
-    "VotingRegressorDF": {
-        "estimators": [("rfr", RandomForestRegressorDF()), ("svr", SVRDF())]
-    },
-    "StackingRegressorDF": {
-        "estimators": (
+    "MultiOutputRegressorDF": dict(estimator=RandomForestRegressorDF()),
+    "MultiOutputRegressorDF_partial_fit": dict(estimator=SGDRegressorDF()),
+    "RegressorChainDF": dict(base_estimator=RandomForestRegressorDF()),
+    "VotingRegressorDF": dict(
+        estimators=[("rfr", RandomForestRegressorDF()), ("svr", SVRDF())]
+    ),
+    "StackingRegressorDF": dict(
+        estimators=(
             ("Forest", RandomForestRegressorDF()),
             ("SVR", SVRDF()),
             ("Linear", LinearRegressionDF()),
         )
-    },
+    ),
     # the rank of Y is 1, so n_components needs to be 1
     "CCADF": dict(n_components=1),
     # the rank of Y is 1, so n_components needs to be 1

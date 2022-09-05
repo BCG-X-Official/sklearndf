@@ -5,7 +5,7 @@ from typing import Any
 import numpy as np
 import pytest
 import scipy.sparse as sp
-from numpy.testing import assert_array_equal, assert_raises
+from numpy.testing import assert_array_equal
 from sklearn import clone
 from sklearn.base import BaseEstimator, is_classifier
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
@@ -170,7 +170,8 @@ def test_get_params() -> None:
     # noinspection PyTypeChecker
     test.set_params(a__d=2)
     assert test.a.d == 2
-    assert_raises(ValueError, test.set_params, a__a=2)
+    with pytest.raises(ValueError):
+        test.set_params(a__a=2)
 
 
 def test_is_classifier() -> None:
@@ -185,9 +186,13 @@ def test_set_params() -> None:
     # test nested estimator parameter setting
     clf = Pipeline([("svc", SVCDF())])
     # non-existing parameter in svc
-    assert_raises(ValueError, clf.set_params, svc__stupid_param=True)
+    with pytest.raises(ValueError):
+        # noinspection PyTypeChecker
+        clf.set_params(svc__stupid_param=True)
     # non-existing parameter of pipeline
-    assert_raises(ValueError, clf.set_params, svm__stupid_param=True)
+    with pytest.raises(ValueError):
+        # noinspection PyTypeChecker
+        clf.set_params(svm__stupid_param=True)
 
 
 def test_set_params_updates_valid_params() -> None:

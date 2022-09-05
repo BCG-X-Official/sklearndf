@@ -14,12 +14,7 @@ import numpy as np
 import numpy.typing as npt
 import pandas as pd
 import pytest
-from numpy.testing import (
-    assert_array_equal,
-    assert_no_warnings,
-    assert_raises,
-    assert_raises_regex,
-)
+from numpy.testing import assert_array_equal, assert_no_warnings
 from sklearn import clone
 from sklearn.base import BaseEstimator, TransformerMixin, is_classifier, is_regressor
 from sklearn.feature_selection import f_classif
@@ -219,7 +214,9 @@ def test_pipeline_df_memory(
 def test_pipeline_df__init() -> None:
     """Test the various init parameters of the pipeline."""
 
-    assert_raises(TypeError, PipelineDF)
+    with pytest.raises(TypeError):
+        PipelineDF()
+
     # Check that we can't instantiate pipelines with objects without fit
     # method
     if __sklearn_version__ < __sklearn_1_1__:
@@ -236,7 +233,7 @@ def test_pipeline_df__init() -> None:
         with pytest.raises(
             ValueError,
             match=(
-                'expected final step "clf" to contain a EstimatorDF, '
+                "expected final step 'clf' to be an EstimatorDF or passthrough, "
                 "but found an instance of NoFit"
             ),
         ):
@@ -284,7 +281,8 @@ def test_pipeline_df__init() -> None:
     _ = repr(pipe)
 
     # Check that params are not set when naming them wrong
-    assert_raises(ValueError, pipe.set_params, anova__C=0.1)
+    with pytest.raises(ValueError):
+        pipe.set_params(anova__C=0.1)
 
     # Test clone
     pipe2 = cast(PipelineDF, assert_no_warnings(clone, pipe))
@@ -310,17 +308,15 @@ def test_pipeline_df_raise_set_params_error() -> None:
     """Test pipeline raises set params error message for nested models."""
     pipe = PipelineDF([("cls", LinearRegressionDF())])
 
-    assert_raises_regex(
+    with pytest.raises(
         ValueError,
-        r"Invalid parameter (fake|'fake') for estimator Pipeline",
-        pipe.set_params,
-        fake="nope",
-    )
+        match=r"Invalid parameter (fake|'fake') for estimator Pipeline",
+    ):
+        pipe.set_params(fake="nope")
 
     # nested model check
-    assert_raises_regex(
+    with pytest.raises(
         ValueError,
-        r"Invalid parameter (fake|'fake') for estimator Pipeline",
-        pipe.set_params,
-        fake__estimator="nope",
-    )
+        match=r"Invalid parameter (fake|'fake') for estimator Pipeline",
+    ):
+        pipe.set_params(fake__estimator="nope")
