@@ -221,10 +221,9 @@ def test_pipeline_df__init() -> None:
     # Check that we can't instantiate pipelines with objects without fit
     # method
     assert_raises_regex(
-        TypeError,
-        "Last step of Pipeline should implement fit "
-        "or be the string 'passthrough'"
-        ".*NoFit.*",
+        ValueError,
+        "expected final step 'clf' to be an EstimatorDF or passthrough, "
+        "but found an instance of NoFit",
         PipelineDF,
         [("clf", NoFit())],
     )
