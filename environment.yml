@@ -12,7 +12,7 @@ dependencies:
   - numpy ~= 1.23
   - pandas ~= 1.4
   - python ~= 3.8.12
-  - scikit-learn ~= 1.0.2
+  - scikit-learn ~= 1.1.2
   - scipy ~= 1.8
   - xgboost ~= 1.5
   # build/test
