@@ -360,7 +360,7 @@ def test_simple_imputer_df() -> None:
         imputer_df.fit(X=x_df).transform(X=x_df), transformed_df_expected
     )
 
-    # test fit_trannsform
+    # test fit_transform
 
     transformed_df = imputer_df.fit_transform(X=x_df)
     assert_frame_equal(transformed_df, transformed_df_expected)
@@ -371,7 +371,7 @@ def test_simple_imputer_df() -> None:
         inverse_transformed_df = imputer_df.inverse_transform(X=transformed_df)
         assert_frame_equal(inverse_transformed_df, x_df)
 
-    # test feature name in
+    # test feature names in and out
     if __sklearn_version__ >= __sklearn_1_0__:
         # noinspection PyUnresolvedReferences
         assert_array_equal(
