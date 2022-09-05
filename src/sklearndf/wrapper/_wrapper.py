@@ -144,6 +144,15 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
             return cls
 
         wrapper_cls = cast(Type[EstimatorWrapperDF[T_NativeEstimator]], cls)
+
+        if not issubclass(native, wrapper_cls.__native_base_class__):
+            raise TypeError(
+                f"native class {native.__name__} "
+                f"cannot be used with wrapper class {wrapper_cls.__name__} "
+                f"because it does not implement "
+                f"{wrapper_cls.__native_base_class__.__name__}"
+            )
+
         wrapper_cls.__wrapped__ = native
         wrapper_cls.__signature__ = inspect.signature(native)
         wrapper_init = _make_init(wrapper_cls)
@@ -198,6 +207,7 @@ class EstimatorWrapperDF(
     API.
     """
 
+    __native_base_class__ = BaseEstimator
     __ARG_FITTED_DELEGATE_CONTEXT = "__EstimatorWrapperDF_fitted"
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
@@ -555,6 +565,8 @@ class TransformerWrapperDF(
     API.
     """
 
+    __native_base_class__ = TransformerMixin
+
     @property
     def feature_names_out_(self) -> pd.Index:
         """[see superclass]"""
@@ -827,6 +839,8 @@ class RegressorWrapperDF(
     API.
     """
 
+    __native_base_class__ = RegressorMixin
+
     # noinspection PyPep8Naming
     def score(
         self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
@@ -849,6 +863,8 @@ class ClassifierWrapperDF(
     Base class of DF wrappers for native classifiers conforming with the `scikit-learn`
     API.
     """
+
+    __native_base_class__ = ClassifierMixin
 
     @property
     def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
@@ -984,6 +1000,8 @@ class ClusterWrapperDF(
     Base class of DF wrappers for native clusterers conforming with the scikit-learn
     API.
     """
+
+    __native_base_class__ = ClusterMixin
 
     COL_LABELS = "labels"
 

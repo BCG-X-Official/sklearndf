@@ -4,6 +4,8 @@ Core implementation of :mod:`sklearndf.classification.extra`
 import logging
 import warnings
 
+from sklearn.base import ClassifierMixin
+
 from pytools.api import AllTracker
 
 from ...wrapper import ClassifierWrapperDF, MissingEstimator
@@ -27,6 +29,7 @@ except ImportError:
 
     class LGBMClassifier(  # type: ignore
         MissingEstimator,
+        ClassifierMixin,  # type: ignore
     ):
         """Mock-up for missing estimator."""
 
@@ -38,6 +41,7 @@ except ImportError:
 
     class XGBClassifier(  # type: ignore
         MissingEstimator,
+        ClassifierMixin,  # type: ignore
     ):
         """Mock-up for missing estimator."""
 

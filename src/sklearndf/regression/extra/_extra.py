@@ -4,6 +4,8 @@ Core implementation of :mod:`sklearndf.regression.extra`
 import logging
 import warnings
 
+from sklearn.base import RegressorMixin
+
 from pytools.api import AllTracker
 
 from ...wrapper import MissingEstimator, RegressorWrapperDF
@@ -28,6 +30,7 @@ except ImportError:
 
     class LGBMRegressor(  # type: ignore
         MissingEstimator,
+        RegressorMixin,  # type: ignore
     ):
         """Mock-up for missing estimator."""
 
@@ -40,6 +43,7 @@ except ImportError:
 
     class XGBRegressor(  # type: ignore
         MissingEstimator,
+        RegressorMixin,  # type: ignore
     ):
         """Mock-up for missing estimator."""
 
