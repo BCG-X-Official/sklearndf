@@ -19,6 +19,7 @@ improvements, and is now subject to static type checking with |mypy|.
   estimators are compatible with the wrapper class
 - FIX: base :class:`.LGBMClassifierDF` and :class:`.XGBClassifierDF` on the
   the correct wrapper class :class:`.ClassifierWrapperDF`
+- FIX: various minor tweaks and stability improvements
 
 
 2.0.0
