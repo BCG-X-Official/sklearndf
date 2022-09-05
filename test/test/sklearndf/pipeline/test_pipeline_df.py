@@ -13,6 +13,7 @@ import joblib
 import numpy as np
 import numpy.typing as npt
 import pandas as pd
+import pytest
 from numpy.testing import (
     assert_array_equal,
     assert_no_warnings,
