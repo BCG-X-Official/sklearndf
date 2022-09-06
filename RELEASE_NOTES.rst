@@ -5,6 +5,18 @@ Release Notes
 .. |xgboost| replace:: :external+xgboost:doc:`xgboost <index>`
 .. |mypy| replace:: :external+mypy:doc:`mypy <index>`
 
+*sklearndf* 2.1
+---------------
+
+*sklearndf* 2 adds support for `scikit-learn 1.1 <https://scikit-learn.org/1.1>`_.
+
+2.1.0
+~~~~~
+
+- API: support parameters ``max_categories`` and ``min_frequency`` of :class:`.OneHotEncoderDF`, introduced in *scikit-learn 1.1*
+- API: support array-like values for parameter ``drop`` of :class:`.OneHotEncoderDF`
+
+
 *sklearndf* 2.0
 ---------------
 

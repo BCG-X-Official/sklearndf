@@ -1,7 +1,7 @@
 """
 Core implementation of :mod:`sklearndf.transformation.wrapper`
 """
-
+import itertools
 import logging
 from abc import ABCMeta, abstractmethod
 from typing import (
@@ -29,7 +29,13 @@ from sklearn.preprocessing import KBinsDiscretizer, OneHotEncoder
 
 from pytools.api import AllTracker
 
-from ... import TransformerDF, __sklearn_1_0__, __sklearn_1_2__, __sklearn_version__
+from ... import (
+    TransformerDF,
+    __sklearn_1_0__,
+    __sklearn_1_1__,
+    __sklearn_1_2__,
+    __sklearn_version__,
+)
 from ...wrapper import TransformerWrapperDF
 
 log = logging.getLogger(__name__)
@@ -503,9 +509,6 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
 
     def _get_features_original(self) -> pd.Series:
         # Return the series mapping output column names to original column names.
-        #
-        # Remove 1st category column if argument drop == 'first'.
-        # Remove 1st category column only of binary features if arg drop == 'if_binary'.
 
         native_estimator: OneHotEncoder = self.native_estimator
         feature_names_in: pd.Index = self.feature_names_in_
@@ -514,30 +517,47 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
             feature_names_in_=feature_names_in, native_estimator=native_estimator
         )
 
-        if self.drop == "first":
-            feature_names_in_mapped = [
-                column_original
-                for column_original, category in zip(
-                    feature_names_in, native_estimator.categories_
-                )
-                for _ in range(len(category) - 1)
-            ]
-        elif self.drop == "if_binary":
-            feature_names_in_mapped = [
-                column_original
-                for column_original, category in zip(
-                    feature_names_in, native_estimator.categories_
-                )
-                for _ in (range(1) if len(category) == 2 else category)
-            ]
-        else:
-            feature_names_in_mapped = [
-                column_original
-                for column_original, category in zip(
-                    feature_names_in, native_estimator.categories_
-                )
-                for _ in category
-            ]
+        n_features_in: npt.NDArray[np.int_] = np.array(
+            [len(categories) for categories in native_estimator.categories_],
+            dtype=np.int_,
+        )
+
+        if __sklearn_version__ >= __sklearn_1_1__ and not (
+            self.max_categories is None and self.min_frequency is None
+        ):
+            # count number of infrequent categories per column
+            n_infrequent = np.array(
+                [
+                    1
+                    if infrequent_categories_for_column is None
+                    else len(infrequent_categories_for_column)
+                    for infrequent_categories_for_column in (
+                        self.native_estimator.infrequent_categories_
+                    )
+                ],
+                dtype=np.int_,
+            )
+            # all infrequent categories will be aggregated, so deduct number of
+            # infrequent categories, except one for the aggregated category
+            n_features_in -= n_infrequent - 1
+
+        drop = self.drop
+        if drop == "if_binary":
+            # drop a category column only for binary features
+            n_features_in[n_features_in == 2] = 1
+        elif drop == "first" or (
+            # drop is an array-like
+            not isinstance(drop, str)
+            and isinstance(drop, (Sequence, np.ndarray))
+        ):
+            # drop one column per category
+            n_features_in -= 1
+        elif drop is not None:
+            raise ValueError(f"unknown value for arg drop: {drop!r}")
+
+        feature_names_in_mapped = itertools.chain(
+            *([feature] * n for feature, n in zip(feature_names_in, n_features_in))
+        )
 
         return pd.Series(index=feature_names_out, data=feature_names_in_mapped)
 
