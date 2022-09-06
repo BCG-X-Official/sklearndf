@@ -449,3 +449,18 @@ def test_one_hot_encoding() -> None:
             }
         ).rename_axis(columns="feature_out"),
     )
+
+    assert_frame_equal(
+        OneHotEncoderDF(drop=["yes", "red", "mother"], sparse=False).fit_transform(
+            test_data_categorical
+        ),
+        pd.DataFrame(
+            {
+                "a_no": [0.0, 0.0, 1.0],
+                "b_blue": [0.0, 1.0, 0.0],
+                "b_green": [0.0, 0.0, 1.0],
+                "c_child": [1.0, 0.0, 0.0],
+                "c_father": [0.0, 1.0, 0.0],
+            }
+        ).rename_axis(columns="feature_out"),
+    )
