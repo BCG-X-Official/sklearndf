@@ -15,15 +15,16 @@ import numpy.typing as npt
 import pandas as pd
 import pytest
 from numpy.testing import assert_array_equal, assert_no_warnings
+from pandas.testing import assert_frame_equal
 from sklearn import clone
 from sklearn.base import BaseEstimator, TransformerMixin, is_classifier, is_regressor
 from sklearn.feature_selection import f_classif
 
 from sklearndf import __sklearn_1_1__, __sklearn_version__
 from sklearndf.classification import SVCDF, LogisticRegressionDF
-from sklearndf.pipeline import PipelineDF
+from sklearndf.pipeline import FeatureUnionDF, PipelineDF
 from sklearndf.regression import DummyRegressorDF, LassoDF, LinearRegressionDF
-from sklearndf.transformation import SelectKBestDF, SimpleImputerDF
+from sklearndf.transformation import OneHotEncoderDF, SelectKBestDF, SimpleImputerDF
 from sklearndf.transformation.wrapper import ColumnPreservingTransformerWrapperDF
 
 
@@ -320,3 +321,34 @@ def test_pipeline_df_raise_set_params_error() -> None:
         match=r"Invalid parameter (fake|'fake') for estimator Pipeline",
     ):
         pipe.set_params(fake__estimator="nope")
+
+
+def test_feature_union(test_data_categorical: pd.DataFrame) -> None:
+    feature_union = FeatureUnionDF(
+        [
+            ("oh", OneHotEncoderDF(drop="first", sparse=False)),
+            ("pass", "passthrough"),
+            ("pass_again", "passthrough"),
+        ]
+    )
+
+    assert_frame_equal(
+        feature_union.fit_transform(test_data_categorical),
+        pd.concat(
+            [
+                pd.DataFrame(
+                    dict(
+                        oh__a_yes=[1.0, 1.0, 0.0],
+                        oh__b_green=[0.0, 0.0, 1.0],
+                        oh__b_red=[1.0, 0.0, 0.0],
+                        oh__c_father=[0.0, 1.0, 0.0],
+                        oh__c_mother=[0.0, 0.0, 1.0],
+                    ),
+                    dtype=object,
+                ),
+                test_data_categorical.add_prefix("pass__"),
+                test_data_categorical.add_prefix("pass_again__"),
+            ],
+            axis=1,
+        ).rename_axis(columns="feature_out"),
+    )

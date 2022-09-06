@@ -10,6 +10,7 @@ import numpy.typing as npt
 import pandas as pd
 from pandas.core.arrays import ExtensionArray
 from sklearn.pipeline import FeatureUnion, Pipeline
+from sklearn.preprocessing import FunctionTransformer
 
 from pytools.api import AllTracker
 
@@ -132,7 +133,7 @@ class PipelineWrapperDF(
         return estimator is None or estimator == PipelineWrapperDF.PASSTHROUGH
 
     def _transformer_steps(self) -> Iterator[Tuple[str, TransformerDF]]:
-        # make an iterator of all transform steps, i.e. excluding the final step
+        # make an iterator of all transform steps, i.e., excluding the final step
         # in case it is not a transformer
         # excludes steps whose transformer is ``None`` or ``"passthrough"``
 
@@ -217,12 +218,15 @@ class FeatureUnionWrapperDF(TransformerWrapperDF[FeatureUnion], metaclass=ABCMet
     DF wrapper for `scikit-learn` class :class:`~sklearn.pipeline.FeatureUnion`.
     """
 
+    DROP = "drop"
+    PASSTHROUGH = "passthrough"
+
     @staticmethod
     def _prepend_features_out(features_out: pd.Index, name_prefix: str) -> pd.Index:
         return pd.Index(data=f"{name_prefix}__" + features_out.astype(str))
 
     def _get_features_original(self) -> pd.Series:
-        # concatenate output->input mappings from all included transformers other than
+        # concatenate output-to-input mappings from all included transformers other than
         # ones stated as ``None`` or ``"drop"`` or any other string
 
         # prepend the name of the transformer so the resulting feature name is
@@ -256,18 +260,29 @@ class FeatureUnionWrapperDF(TransformerWrapperDF[FeatureUnion], metaclass=ABCMet
         # prepend the name of the transformer so the resulting feature name is
         # `<name>__<output column of sub-transformer>
 
-        # noinspection PyProtectedMember
+        name: str
+        transformer: Union[TransformerDF, str, FunctionTransformer]
+
         indices = [
             self._prepend_features_out(
-                features_out=transformer.feature_names_out_, name_prefix=name
+                features_out=(
+                    self._get_features_in()
+                    if (
+                        isinstance(transformer, FunctionTransformer)
+                        and transformer.func is None
+                    )
+                    else cast(TransformerDF, transformer).feature_names_out_
+                ),
+                name_prefix=name,
             )
-            for name, transformer, _ in self.native_estimator._iter()
+            for name, transformer in self.native_estimator.transformer_list
+            if transformer != FeatureUnionWrapperDF.DROP
         ]
 
         if len(indices) == 0:
             return pd.Index()
         else:
-            return indices[0].append(other=indices[1:])
+            return indices[0].append(indices[1:])
 
 
 #

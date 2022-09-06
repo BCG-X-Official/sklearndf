@@ -15,6 +15,7 @@ Release Notes
 
 - API: support parameters ``max_categories`` and ``min_frequency`` of :class:`.OneHotEncoderDF`, introduced in *scikit-learn 1.1*
 - API: support array-like values for parameter ``drop`` of :class:`.OneHotEncoderDF`
+- API: support ``"passthrough"`` as a transformer in :class:`.FeatureUnionDF`
 
 
 *sklearndf* 2.0

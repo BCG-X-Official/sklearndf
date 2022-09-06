@@ -409,15 +409,7 @@ def df_outlier() -> pd.DataFrame:
     )
 
 
-def test_one_hot_encoding() -> None:
-    test_data_categorical = pd.DataFrame(
-        data=[
-            ["yes", "red", "child"],
-            ["yes", "blue", "father"],
-            ["no", "green", "mother"],
-        ],
-        columns=["a", "b", "c"],
-    )
+def test_one_hot_encoding(test_data_categorical: pd.DataFrame) -> None:
 
     assert_frame_equal(
         OneHotEncoderDF(drop=None, sparse=False).fit_transform(test_data_categorical),
