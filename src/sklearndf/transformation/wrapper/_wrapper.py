@@ -268,10 +268,10 @@ class ColumnTransformerWrapperDF(
     :class:`.TransformerDF`.
     """
 
-    __DROP = "drop"
-    __PASSTHROUGH = "passthrough"
+    DROP = "drop"
+    PASSTHROUGH = "passthrough"
 
-    __SPECIAL_TRANSFORMERS = (__DROP, __PASSTHROUGH)
+    __SPECIAL_TRANSFORMERS = (DROP, PASSTHROUGH)
 
     def _validate_delegate_estimator(self) -> None:
         column_transformer: ColumnTransformer = self.native_estimator
@@ -326,7 +326,7 @@ class ColumnTransformerWrapperDF(
             input_column_names: npt.NDArray[Any]
             output_column_names: npt.NDArray[Any]
 
-            if df_transformer == ColumnTransformerWrapperDF.__PASSTHROUGH:
+            if df_transformer == ColumnTransformerWrapperDF.PASSTHROUGH:
                 # we may get positional indices for columns selected by the
                 # 'passthrough' transformer, and in that case so need to look up the
                 # associated column names
@@ -368,7 +368,7 @@ class ColumnTransformerWrapperDF(
                 )
                 if (
                     len(columns) > 0
-                    and df_transformer != ColumnTransformerWrapperDF.__DROP
+                    and df_transformer != ColumnTransformerWrapperDF.DROP
                 )
             ]
         )
