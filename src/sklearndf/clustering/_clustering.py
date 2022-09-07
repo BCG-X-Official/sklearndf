@@ -30,8 +30,8 @@ __all__ = [
     "DBSCANDF",
     "FeatureAgglomerationDF",
     "KMeansDF",
-    "MiniBatchKMeansDF",
     "MeanShiftDF",
+    "MiniBatchKMeansDF",
     "OPTICSDF",
     "SpectralClusteringDF",
 ]
@@ -77,10 +77,7 @@ class KMeansDF(KMeansBaseWrapperDF[KMeans], native=KMeans):
     """Stub for DF wrapper of class ``KMeans``"""
 
 
-class MiniBatchKMeansDF(
-    KMeansBaseWrapperDF[MiniBatchKMeans],
-    native=MiniBatchKMeans,
-):
+class MiniBatchKMeansDF(KMeansBaseWrapperDF[MiniBatchKMeans], native=MiniBatchKMeans):
     """Stub for DF wrapper of class ``MiniBatchKMeans``"""
 
 
