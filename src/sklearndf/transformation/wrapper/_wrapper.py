@@ -268,7 +268,12 @@ class ColumnTransformerWrapperDF(
     :class:`.TransformerDF`.
     """
 
+    #: Special transformer argument for use with parameters ``transformers`` and
+    #: ``remainder``.
     DROP = "drop"
+
+    #: Special transformer argument for use with parameters ``transformers`` and
+    #: ``remainder``.
     PASSTHROUGH = "passthrough"
 
     __SPECIAL_TRANSFORMERS = (DROP, PASSTHROUGH)
