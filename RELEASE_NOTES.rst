@@ -45,6 +45,9 @@ improvements, and is now subject to static type checking with |mypy|.
 
 - API: when declaring new wrapper classes, validate that their associated native
   estimators are compatible with the wrapper class
+- API: add public constants :attr:`.ColumnTransformerWrapperDF.DROP` and
+  :attr:`.ColumnTransformerWrapperDF.PASSTHROUGH` to
+  :class:`.ColumnTransformerWrapperDF`
 - FIX: base :class:`.LGBMClassifierDF` and :class:`.XGBClassifierDF` on the
   the correct wrapper class :class:`.ClassifierWrapperDF`
 - FIX: support array-like values for parameter ``drop`` of :class:`.OneHotEncoderDF`
