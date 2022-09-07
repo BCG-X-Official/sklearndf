@@ -1,7 +1,7 @@
 """
 Core implementation of :mod:`sklearndf.transformation.wrapper`
 """
-
+import itertools
 import logging
 from abc import ABCMeta, abstractmethod
 from typing import (
@@ -499,41 +499,42 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
 
     def _get_features_original(self) -> pd.Series:
         # Return the series mapping output column names to original column names.
-        #
-        # Remove 1st category column if argument drop == 'first'.
-        # Remove 1st category column only of binary features if arg drop == 'if_binary'.
 
         native_estimator: OneHotEncoder = self.native_estimator
         feature_names_in: pd.Index = self.feature_names_in_
-
-        feature_names_out = _get_native_feature_names_out(
+        feature_names_out: pd.Index = _get_native_feature_names_out(
             feature_names_in_=feature_names_in, native_estimator=native_estimator
         )
 
-        if self.drop == "first":
-            feature_names_in_mapped = [
-                column_original
-                for column_original, category in zip(
-                    feature_names_in, native_estimator.categories_
-                )
-                for _ in range(len(category) - 1)
-            ]
-        elif self.drop == "if_binary":
-            feature_names_in_mapped = [
-                column_original
-                for column_original, category in zip(
-                    feature_names_in, native_estimator.categories_
-                )
-                for _ in (range(1) if len(category) == 2 else category)
-            ]
-        else:
-            feature_names_in_mapped = [
-                column_original
-                for column_original, category in zip(
-                    feature_names_in, native_estimator.categories_
-                )
-                for _ in category
-            ]
+        def _adjust_n_features_in(n: npt.NDArray[np.int_]) -> None:
+            drop = self.drop
+            if drop is None:
+                return
+            elif isinstance(drop, str):
+                if drop == "first":
+                    # drop one category for all feature
+                    n -= 1
+                    return
+                elif drop == "if_binary":
+                    # drop one category only for binary features
+                    n[n == 2] = 1
+                    return
+            elif isinstance(drop, (Sequence, np.ndarray)):
+                # drop is an array-like
+                n -= 1
+                return
+
+            raise ValueError(f"unexpected value for arg drop: {drop!r}")
+
+        n_features_in: npt.NDArray[np.int_] = np.array(
+            [len(categories) for categories in native_estimator.categories_],
+            dtype=np.int_,
+        )
+        _adjust_n_features_in(n_features_in)
+
+        feature_names_in_mapped = itertools.chain(
+            *([feature] * n for feature, n in zip(feature_names_in, n_features_in))
+        )
 
         return pd.Series(index=feature_names_out, data=feature_names_in_mapped)
 
