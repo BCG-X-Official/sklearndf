@@ -512,10 +512,29 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
 
         native_estimator: OneHotEncoder = self.native_estimator
         feature_names_in: pd.Index = self.feature_names_in_
-
-        feature_names_out = _get_native_feature_names_out(
+        feature_names_out: pd.Index = _get_native_feature_names_out(
             feature_names_in_=feature_names_in, native_estimator=native_estimator
         )
+
+        def _adjust_n_features_in(n: npt.NDArray[np.int_]) -> None:
+            drop = self.drop
+            if drop is None:
+                return
+            elif isinstance(drop, str):
+                if drop == "first":
+                    # drop one category for all feature
+                    n -= 1
+                    return
+                elif drop == "if_binary":
+                    # drop one category only for binary features
+                    n[n == 2] = 1
+                    return
+            elif isinstance(drop, (Sequence, np.ndarray)):
+                # drop is an array-like
+                n -= 1
+                return
+
+            raise ValueError(f"unexpected value for arg drop: {drop!r}")
 
         n_features_in: npt.NDArray[np.int_] = np.array(
             [len(categories) for categories in native_estimator.categories_],
@@ -541,19 +560,7 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
             # infrequent categories, except one for the aggregated category
             n_features_in -= n_infrequent - 1
 
-        drop = self.drop
-        if drop == "if_binary":
-            # drop a category column only for binary features
-            n_features_in[n_features_in == 2] = 1
-        elif drop == "first" or (
-            # drop is an array-like
-            not isinstance(drop, str)
-            and isinstance(drop, (Sequence, np.ndarray))
-        ):
-            # drop one column per category
-            n_features_in -= 1
-        elif drop is not None:
-            raise ValueError(f"unknown value for arg drop: {drop!r}")
+        _adjust_n_features_in(n_features_in)
 
         feature_names_in_mapped = itertools.chain(
             *([feature] * n for feature, n in zip(feature_names_in, n_features_in))
