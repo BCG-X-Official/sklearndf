@@ -327,28 +327,48 @@ def test_feature_union(test_data_categorical: pd.DataFrame) -> None:
     feature_union = FeatureUnionDF(
         [
             ("oh", OneHotEncoderDF(drop="first", sparse=False)),
-            ("pass", "passthrough"),
-            ("pass_again", "passthrough"),
         ]
     )
 
     assert_frame_equal(
         feature_union.fit_transform(test_data_categorical),
-        pd.concat(
-            [
-                pd.DataFrame(
-                    dict(
-                        oh__a_yes=[1.0, 1.0, 0.0],
-                        oh__b_green=[0.0, 0.0, 1.0],
-                        oh__b_red=[1.0, 0.0, 0.0],
-                        oh__c_father=[0.0, 1.0, 0.0],
-                        oh__c_mother=[0.0, 0.0, 1.0],
-                    ),
-                    dtype=object,
-                ),
-                test_data_categorical.add_prefix("pass__"),
-                test_data_categorical.add_prefix("pass_again__"),
-            ],
-            axis=1,
+        pd.DataFrame(
+            dict(
+                oh__a_yes=[1.0, 1.0, 0.0],
+                oh__b_green=[0.0, 0.0, 1.0],
+                oh__b_red=[1.0, 0.0, 0.0],
+                oh__c_father=[0.0, 1.0, 0.0],
+                oh__c_mother=[0.0, 0.0, 1.0],
+            ),
         ).rename_axis(columns="feature_out"),
     )
+
+    if __sklearn_version__ >= __sklearn_1_1__:
+        feature_union = FeatureUnionDF(
+            [
+                ("oh", OneHotEncoderDF(drop="first", sparse=False)),
+                ("pass", "passthrough"),
+                ("pass_again", "passthrough"),
+            ]
+        )
+
+        assert_frame_equal(
+            feature_union.fit_transform(test_data_categorical),
+            pd.concat(
+                [
+                    pd.DataFrame(
+                        dict(
+                            oh__a_yes=[1.0, 1.0, 0.0],
+                            oh__b_green=[0.0, 0.0, 1.0],
+                            oh__b_red=[1.0, 0.0, 0.0],
+                            oh__c_father=[0.0, 1.0, 0.0],
+                            oh__c_mother=[0.0, 0.0, 1.0],
+                        ),
+                        dtype=object,
+                    ),
+                    test_data_categorical.add_prefix("pass__"),
+                    test_data_categorical.add_prefix("pass_again__"),
+                ],
+                axis=1,
+            ).rename_axis(columns="feature_out"),
+        )
