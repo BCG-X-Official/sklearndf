@@ -47,6 +47,8 @@ class PipelineWrapperDF(
     DF wrapper for `scikit-learn` class :class:`~sklearn.pipeline.Pipeline`.
     """
 
+    __native_base_class__ = Pipeline
+
     #: Placeholder that can be used in place of an estimator to designate a pipeline
     #: step that preserves the original ingoing data.
     PASSTHROUGH = "passthrough"
@@ -66,8 +68,8 @@ class PipelineWrapperDF(
                 or isinstance(transformer, TransformerDF)
             ):
                 raise ValueError(
-                    f'expected step "{name}" to contain a '
-                    f"{TransformerDF.__name__}, but found an instance of "
+                    f"expected step {name!r} to be a {TransformerDF.__name__}, "
+                    f"or {PipelineWrapperDF.PASSTHROUGH}, but found an instance of "
                     f"{type(transformer).__name__}"
                 )
 
@@ -78,9 +80,9 @@ class PipelineWrapperDF(
             or isinstance(final_estimator, EstimatorDF)
         ):
             raise ValueError(
-                f'expected final step "{final_step[0]}" to contain a '
-                f"{EstimatorDF.__name__}, but found an instance of "
-                f"{type(final_estimator).__name__}"
+                f"expected final step {final_step[0]!r} to be an "
+                f"{EstimatorDF.__name__} or {PipelineWrapperDF.PASSTHROUGH}, "
+                f"but found an instance of {type(final_estimator).__name__}"
             )
 
     @property

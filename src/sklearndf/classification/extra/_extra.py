@@ -3,9 +3,11 @@ Core implementation of :mod:`sklearndf.classification.extra`
 """
 import logging
 
+from sklearn.base import ClassifierMixin
+
 from pytools.api import AllTracker
 
-from ...wrapper import MissingEstimator, RegressorWrapperDF
+from ...wrapper import ClassifierWrapperDF, MissingEstimator
 
 log = logging.getLogger(__name__)
 
@@ -18,6 +20,7 @@ except ImportError:
 
     class LGBMClassifier(  # type: ignore
         MissingEstimator,
+        ClassifierMixin,  # type: ignore
     ):
         """Mock-up for missing estimator."""
 
@@ -29,6 +32,7 @@ except ImportError:
 
     class XGBClassifier(  # type: ignore
         MissingEstimator,
+        ClassifierMixin,  # type: ignore
     ):
         """Mock-up for missing estimator."""
 
@@ -44,27 +48,20 @@ __tracker = AllTracker(globals())
 # Class definitions
 #
 
-if LGBMClassifier:
 
-    class LGBMClassifierDF(
-        RegressorWrapperDF[LGBMClassifier],
-        native=LGBMClassifier,
-    ):
-        """Stub for DF wrapper of class ``LGBMClassifierDF``"""
+class LGBMClassifierDF(
+    ClassifierWrapperDF[LGBMClassifier],
+    native=LGBMClassifier,
+):
+    """Stub for DF wrapper of class ``LGBMClassifierDF``"""
 
-else:
-    __all__.remove("LGBMClassifierDF")
 
-if XGBClassifier:
+class XGBClassifierDF(
+    ClassifierWrapperDF[XGBClassifier],
+    native=XGBClassifier,
+):
+    """Stub for DF wrapper of class ``XGBClassifierDF``"""
 
-    class XGBClassifierDF(
-        RegressorWrapperDF[XGBClassifier],
-        native=XGBClassifier,
-    ):
-        """Stub for DF wrapper of class ``XGBClassifierDF``"""
-
-else:
-    __all__.remove("XGBClassifierDF")
 
 #
 # validate that __all__

@@ -1,7 +1,7 @@
 """
 Core implementation of :mod:`sklearndf.transformation.wrapper`
 """
-
+import itertools
 import logging
 from abc import ABCMeta, abstractmethod
 from typing import (
@@ -64,7 +64,7 @@ T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
 # onwards.
 # Once we drop support for sklearn 0.21, _BaseImputer can be used instead.
 # The following TypeVar helps to annotate availability of "add_indicator" and
-# "missing_values" attributes on an imputer instance for ImputerWrapperDF below
+# "missing_values" attributes on an imputer instance for ImputerWrapperDF below.
 
 # noinspection PyProtectedMember
 from sklearn.impute._iterative import IterativeImputer
@@ -268,10 +268,15 @@ class ColumnTransformerWrapperDF(
     :class:`.TransformerDF`.
     """
 
-    __DROP = "drop"
-    __PASSTHROUGH = "passthrough"
+    #: Special transformer argument for use with parameters ``transformers`` and
+    #: ``remainder``.
+    DROP = "drop"
 
-    __SPECIAL_TRANSFORMERS = (__DROP, __PASSTHROUGH)
+    #: Special transformer argument for use with parameters ``transformers`` and
+    #: ``remainder``.
+    PASSTHROUGH = "passthrough"
+
+    __SPECIAL_TRANSFORMERS = (DROP, PASSTHROUGH)
 
     def _validate_delegate_estimator(self) -> None:
         column_transformer: ColumnTransformer = self.native_estimator
@@ -326,7 +331,7 @@ class ColumnTransformerWrapperDF(
             input_column_names: npt.NDArray[Any]
             output_column_names: npt.NDArray[Any]
 
-            if df_transformer == ColumnTransformerWrapperDF.__PASSTHROUGH:
+            if df_transformer == ColumnTransformerWrapperDF.PASSTHROUGH:
                 # we may get positional indices for columns selected by the
                 # 'passthrough' transformer, and in that case so need to look up the
                 # associated column names
@@ -368,7 +373,7 @@ class ColumnTransformerWrapperDF(
                 )
                 if (
                     len(columns) > 0
-                    and df_transformer != ColumnTransformerWrapperDF.__DROP
+                    and df_transformer != ColumnTransformerWrapperDF.DROP
                 )
             ]
         )
@@ -499,41 +504,42 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
 
     def _get_features_original(self) -> pd.Series:
         # Return the series mapping output column names to original column names.
-        #
-        # Remove 1st category column if argument drop == 'first'
-        # Remove 1st category column only of binary features if arg drop == 'if_binary'
 
         native_estimator: OneHotEncoder = self.native_estimator
         feature_names_in: pd.Index = self.feature_names_in_
-
-        feature_names_out = _get_native_feature_names_out(
+        feature_names_out: pd.Index = _get_native_feature_names_out(
             feature_names_in_=feature_names_in, native_estimator=native_estimator
         )
 
-        if self.drop == "first":
-            feature_names_in_mapped = [
-                column_original
-                for column_original, category in zip(
-                    feature_names_in, native_estimator.categories_
-                )
-                for _ in range(len(category) - 1)
-            ]
-        elif self.drop == "if_binary":
-            feature_names_in_mapped = [
-                column_original
-                for column_original, category in zip(
-                    feature_names_in, native_estimator.categories_
-                )
-                for _ in (range(1) if len(category) == 2 else category)
-            ]
-        else:
-            feature_names_in_mapped = [
-                column_original
-                for column_original, category in zip(
-                    feature_names_in, native_estimator.categories_
-                )
-                for _ in category
-            ]
+        def _adjust_n_features_in(n: npt.NDArray[np.int_]) -> None:
+            drop = self.drop
+            if drop is None:
+                return
+            elif isinstance(drop, str):
+                if drop == "first":
+                    # drop one category for all feature
+                    n -= 1
+                    return
+                elif drop == "if_binary":
+                    # drop one category only for binary features
+                    n[n == 2] = 1
+                    return
+            elif isinstance(drop, (Sequence, np.ndarray)):
+                # drop is an array-like
+                n -= 1
+                return
+
+            raise ValueError(f"unexpected value for arg drop: {drop!r}")
+
+        n_features_in: npt.NDArray[np.int_] = np.array(
+            [len(categories) for categories in native_estimator.categories_],
+            dtype=np.int_,
+        )
+        _adjust_n_features_in(n_features_in)
+
+        feature_names_in_mapped = itertools.chain(
+            *([feature] * n for feature, n in zip(feature_names_in, n_features_in))
+        )
 
         return pd.Series(index=feature_names_out, data=feature_names_in_mapped)
 

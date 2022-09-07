@@ -19,10 +19,9 @@ import sklearndf.clustering
 import sklearndf.pipeline
 import sklearndf.regression
 import sklearndf.transformation
-from .. import check_sklearn_version
 from ..conftest import UNSUPPORTED_SKLEARN_PACKAGES
 from ..sklearndf import find_all_submodules, iterate_classes, sklearn_delegate_classes
-from sklearndf import EstimatorDF
+from sklearndf import EstimatorDF, __sklearn_0_23__, __sklearn_version__
 
 T = TypeVar("T")
 
@@ -42,7 +41,7 @@ CLASSIFIER_COVERAGE_EXCLUSIONS = {
     "ForestClassifier",
 }
 
-if check_sklearn_version(minimum="0.23"):
+if __sklearn_version__ >= __sklearn_0_23__:
     added_in_v023 = ("_IdentityClassifier",)
     CLASSIFIER_COVERAGE_EXCLUSIONS.update(added_in_v023)
 

@@ -12,7 +12,6 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import Normalizer, StandardScaler
 
 import sklearndf.transformation
-from ... import check_sklearn_version
 from ...sklearndf import (
     check_expected_not_fitted_error,
     get_sklearndf_wrapper_class,
@@ -23,6 +22,7 @@ from sklearndf import (
     RegressorDF,
     TransformerDF,
     __sklearn_0_22__,
+    __sklearn_0_23__,
     __sklearn_0_24__,
     __sklearn_1_0__,
     __sklearn_version__,
@@ -55,7 +55,7 @@ TRANSFORMER_EXCLUSIONS = [
     r".*WrapperDF",
 ]
 
-if check_sklearn_version(minimum="0.24"):
+if __sklearn_version__ >= __sklearn_0_24__:
     from sklearndf.transformation import SequentialFeatureSelectorDF
 
     TRANSFORMER_EXCLUSIONS.append(SequentialFeatureSelectorDF.__name__)
@@ -138,7 +138,7 @@ def test_special_wrapped_constructors() -> None:
 
     RFEDF(estimator=rf)
 
-    if check_sklearn_version(minimum="0.24"):
+    if __sklearn_version__ >= __sklearn_0_24__:
         from sklearndf.transformation import SequentialFeatureSelectorDF
 
         SequentialFeatureSelectorDF(estimator=rf)
@@ -219,16 +219,17 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
     numeric_columns: List[str] = test_data.select_dtypes(include=float).columns.tolist()
     assert numeric_columns == ["c0", "c2"]
 
-    feature_names_in_expected = test_data.columns.rename("feature_in")
-
     # noinspection PyShadowingNames
     def _test_transformer(
         remainder: str,
         names_in: List[str],
+        names_original: List[str],
         names_out: List[str],
         **transformer_args: Any,
     ) -> None:
         feature_names_out_expected = pd.Index(names_out, name="feature_out")
+        data = test_data.loc[:, names_in]
+        feature_names_in_expected = data.columns.rename("feature_in")
 
         # test fit-transform in connection with ColumnTransformer(DF)
         tx_df = StandardScalerDF()
@@ -240,7 +241,7 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
             remainder=remainder,
             **transformer_args,
         )
-        transformed_df = col_tx_df.fit_transform(X=test_data)
+        transformed_df = col_tx_df.fit_transform(X=data)
 
         tx_native = StandardScaler()
         col_tx_native = ColumnTransformer(
@@ -251,7 +252,7 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
             remainder=remainder,
             **transformer_args,
         )
-        transformed_native = col_tx_native.fit_transform(X=test_data)
+        transformed_native = col_tx_native.fit_transform(X=data)
 
         assert_frame_equal(
             transformed_df,
@@ -261,7 +262,7 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
         assert col_tx_df.feature_names_in_.equals(feature_names_in_expected)
         assert col_tx_df.feature_names_out_.equals(feature_names_out_expected)
         assert col_tx_df.feature_names_original_.equals(
-            pd.Series(names_in, index=feature_names_out_expected)
+            pd.Series(names_original, index=feature_names_out_expected)
         )
 
         if __sklearn_version__ >= __sklearn_1_0__:
@@ -270,39 +271,61 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
                 col_tx_df.feature_names_in_.values, col_tx_native.feature_names_in_
             )
 
-    for remainder, names, names_verbose in [
-        (
-            "drop",
-            ["c0", "c2", "c3"],
-            ["tx__c0", "tx__c2", "keep__c3"],
-        ),
-        (
-            "passthrough",
-            ["c0", "c2", "c3", "c1"],
-            ["tx__c0", "tx__c2", "keep__c3", "remainder__c1"],
-        ),
-    ]:
-        if __sklearn_version__ < __sklearn_1_0__:
-            _test_transformer(remainder=remainder, names_in=names, names_out=names)
-        else:
-            # As of scikit-learn 1.0, column transformers have a new boolean parameter
-            # verbose_feature_names_out. We test once with verbosity disabled, once
-            # with verbosity enabled, and once with the default (enabled).
-            _test_transformer(
-                remainder=remainder,
-                names_in=names,
-                names_out=names,
-                verbose_feature_names_out=False,
-            )
-            _test_transformer(
-                remainder=remainder,
-                names_in=names,
-                names_out=names_verbose,
-                verbose_feature_names_out=True,
-            )
-            _test_transformer(
-                remainder=remainder, names_in=names, names_out=names_verbose
-            )
+    if __sklearn_version__ < __sklearn_1_0__:
+        _test_transformer(
+            remainder="passthrough",
+            names_in=["c0", "c2", "c3", "c1"],
+            names_original=["c0", "c2", "c3", "c1"],
+            names_out=["c0", "c2", "c3", "c1"],
+        )
+        _test_transformer(
+            remainder="drop",
+            names_in=["c0", "c2", "c3"],
+            names_original=["c0", "c2", "c3"],
+            names_out=["c0", "c2", "c3"],
+        )
+        _test_transformer(
+            remainder="drop",
+            names_in=["c0", "c2", "c3", "c1"],
+            names_original=["c0", "c2", "c3"],
+            names_out=["c0", "c2", "c3"],
+        )
+    else:
+        # As of scikit-learn 1.0, column transformers have a new boolean parameter
+        # verbose_feature_names_out. We test once with verbosity disabled, once
+        # with verbosity enabled, and once with the default (enabled).
+        _test_transformer(
+            remainder="passthrough",
+            names_in=["c0", "c2", "c3", "c1"],
+            names_original=["c0", "c2", "c3", "c1"],
+            names_out=["tx__c0", "tx__c2", "keep__c3", "remainder__c1"],
+        )
+        _test_transformer(
+            remainder="drop",
+            names_in=["c0", "c2", "c3"],
+            names_original=["c0", "c2", "c3"],
+            names_out=["tx__c0", "tx__c2", "keep__c3"],
+        )
+        _test_transformer(
+            remainder="drop",
+            names_in=["c0", "c2", "c3", "c1"],
+            names_original=["c0", "c2", "c3"],
+            names_out=["tx__c0", "tx__c2", "keep__c3"],
+        )
+        _test_transformer(
+            remainder="drop",
+            names_in=["c0", "c2", "c3", "c1"],
+            names_original=["c0", "c2", "c3"],
+            names_out=["tx__c0", "tx__c2", "keep__c3"],
+            verbose_feature_names_out=True,
+        )
+        _test_transformer(
+            remainder="drop",
+            names_in=["c0", "c2", "c3", "c1"],
+            names_original=["c0", "c2", "c3"],
+            names_out=["c0", "c2", "c3"],
+            verbose_feature_names_out=False,
+        )
 
 
 def test_normalizer_df() -> None:
@@ -360,7 +383,7 @@ def test_simple_imputer_df() -> None:
         imputer_df.fit(X=x_df).transform(X=x_df), transformed_df_expected
     )
 
-    # test fit_trannsform
+    # test fit_transform
 
     transformed_df = imputer_df.fit_transform(X=x_df)
     assert_frame_equal(transformed_df, transformed_df_expected)
@@ -371,7 +394,7 @@ def test_simple_imputer_df() -> None:
         inverse_transformed_df = imputer_df.inverse_transform(X=transformed_df)
         assert_frame_equal(inverse_transformed_df, x_df)
 
-    # test feature name in
+    # test feature names in and out
     if __sklearn_version__ >= __sklearn_1_0__:
         # noinspection PyUnresolvedReferences
         assert_array_equal(
@@ -417,7 +440,7 @@ def test_one_hot_encoding() -> None:
         ).rename_axis(columns="feature_out"),
     )
 
-    if check_sklearn_version(minimum="0.23"):
+    if __sklearn_version__ >= __sklearn_0_23__:
         assert_frame_equal(
             OneHotEncoderDF(drop="if_binary", sparse=False).fit_transform(
                 test_data_categorical
@@ -446,6 +469,21 @@ def test_one_hot_encoding() -> None:
                 "b_red": [1.0, 0.0, 0.0],
                 "c_father": [0.0, 1.0, 0.0],
                 "c_mother": [0.0, 0.0, 1.0],
+            }
+        ).rename_axis(columns="feature_out"),
+    )
+
+    assert_frame_equal(
+        OneHotEncoderDF(drop=["yes", "red", "mother"], sparse=False).fit_transform(
+            test_data_categorical
+        ),
+        pd.DataFrame(
+            {
+                "a_no": [0.0, 0.0, 1.0],
+                "b_blue": [0.0, 1.0, 0.0],
+                "b_green": [0.0, 0.0, 1.0],
+                "c_child": [1.0, 0.0, 0.0],
+                "c_father": [0.0, 1.0, 0.0],
             }
         ).rename_axis(columns="feature_out"),
     )
