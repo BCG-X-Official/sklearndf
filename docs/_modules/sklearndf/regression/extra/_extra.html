@@ -165,19 +165,12 @@
 <span class="sd">Core implementation of :mod:`sklearndf.regression.extra`</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">RegressorMixin</span>
 
 <span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span>
 
 <span class="kn">from</span> <span class="nn">...wrapper</span> <span class="kn">import</span> <span class="n">MissingEstimator</span><span class="p">,</span> <span class="n">RegressorWrapperDF</span>
-
-<span class="c1"># since we install LGBM via conda, the warning about the Clang compiler is irrelevant</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Starting from version 2\.2\.1&quot;</span><span class="p">)</span>
-<span class="c1"># cross-validation will invariably generate sliced subsets, so the following warning</span>
-<span class="c1"># is not helpful</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
-    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Usage of np\.ndarray subset \(sliced data\) is not recommended&quot;</span>
-<span class="p">)</span>
 
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -191,6 +184,7 @@
 
     <span class="k">class</span> <span class="nc">LGBMRegressor</span><span class="p">(</span>  <span class="c1"># type: ignore</span>
         <span class="n">MissingEstimator</span><span class="p">,</span>
+        <span class="n">RegressorMixin</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Mock-up for missing estimator.&quot;&quot;&quot;</span>
 
@@ -203,6 +197,7 @@
 
     <span class="k">class</span> <span class="nc">XGBRegressor</span><span class="p">(</span>  <span class="c1"># type: ignore</span>
         <span class="n">MissingEstimator</span><span class="p">,</span>
+        <span class="n">RegressorMixin</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Mock-up for missing estimator.&quot;&quot;&quot;</span>
 

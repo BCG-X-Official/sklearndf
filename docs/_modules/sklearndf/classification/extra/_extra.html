@@ -166,9 +166,11 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">ClassifierMixin</span>
+
 <span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span>
 
-<span class="kn">from</span> <span class="nn">...wrapper</span> <span class="kn">import</span> <span class="n">MissingEstimator</span><span class="p">,</span> <span class="n">RegressorWrapperDF</span>
+<span class="kn">from</span> <span class="nn">...wrapper</span> <span class="kn">import</span> <span class="n">ClassifierWrapperDF</span><span class="p">,</span> <span class="n">MissingEstimator</span>
 
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -181,6 +183,7 @@
 
     <span class="k">class</span> <span class="nc">LGBMClassifier</span><span class="p">(</span>  <span class="c1"># type: ignore</span>
         <span class="n">MissingEstimator</span><span class="p">,</span>
+        <span class="n">ClassifierMixin</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Mock-up for missing estimator.&quot;&quot;&quot;</span>
 
@@ -192,6 +195,7 @@
 
     <span class="k">class</span> <span class="nc">XGBClassifier</span><span class="p">(</span>  <span class="c1"># type: ignore</span>
         <span class="n">MissingEstimator</span><span class="p">,</span>
+        <span class="n">ClassifierMixin</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Mock-up for missing estimator.&quot;&quot;&quot;</span>
 
@@ -207,27 +211,20 @@
 <span class="c1"># Class definitions</span>
 <span class="c1">#</span>
 
-<span class="k">if</span> <span class="n">LGBMClassifier</span><span class="p">:</span>
 
-<div class="viewcode-block" id="LGBMClassifierDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/classification/extra/sklearndf.classification.extra.LGBMClassifierDF.html#sklearndf.classification.extra.LGBMClassifierDF">[docs]</a>    <span class="k">class</span> <span class="nc">LGBMClassifierDF</span><span class="p">(</span>
-        <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">LGBMClassifier</span><span class="p">],</span>
-        <span class="n">native</span><span class="o">=</span><span class="n">LGBMClassifier</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LGBMClassifierDF``&quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="LGBMClassifierDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/classification/extra/sklearndf.classification.extra.LGBMClassifierDF.html#sklearndf.classification.extra.LGBMClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">LGBMClassifierDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">LGBMClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">LGBMClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LGBMClassifierDF``&quot;&quot;&quot;</span></div>
 
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">__all__</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;LGBMClassifierDF&quot;</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">XGBClassifier</span><span class="p">:</span>
+<div class="viewcode-block" id="XGBClassifierDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/classification/extra/sklearndf.classification.extra.XGBClassifierDF.html#sklearndf.classification.extra.XGBClassifierDF">[docs]</a><span class="k">class</span> <span class="nc">XGBClassifierDF</span><span class="p">(</span>
+    <span class="n">ClassifierWrapperDF</span><span class="p">[</span><span class="n">XGBClassifier</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">XGBClassifier</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``XGBClassifierDF``&quot;&quot;&quot;</span></div>
 
-<div class="viewcode-block" id="XGBClassifierDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/classification/extra/sklearndf.classification.extra.XGBClassifierDF.html#sklearndf.classification.extra.XGBClassifierDF">[docs]</a>    <span class="k">class</span> <span class="nc">XGBClassifierDF</span><span class="p">(</span>
-        <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">XGBClassifier</span><span class="p">],</span>
-        <span class="n">native</span><span class="o">=</span><span class="n">XGBClassifier</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``XGBClassifierDF``&quot;&quot;&quot;</span></div>
-
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">__all__</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;XGBClassifierDF&quot;</span><span class="p">)</span>
 
 <span class="c1">#</span>
 <span class="c1"># validate that __all__</span>

@@ -39,6 +39,8 @@ sklearndf.transformation.ColumnTransformerDF
    
       ~ColumnTransformerDF.COL_FEATURE_IN
       ~ColumnTransformerDF.COL_FEATURE_OUT
+      ~ColumnTransformerDF.DROP
+      ~ColumnTransformerDF.PASSTHROUGH
       ~ColumnTransformerDF.feature_names_in_
       ~ColumnTransformerDF.feature_names_original_
       ~ColumnTransformerDF.feature_names_out_

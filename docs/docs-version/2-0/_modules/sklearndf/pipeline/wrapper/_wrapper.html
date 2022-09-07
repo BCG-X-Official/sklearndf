@@ -210,6 +210,8 @@
 <span class="sd">    DF wrapper for `scikit-learn` class :class:`~sklearn.pipeline.Pipeline`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="n">__native_base_class__</span> <span class="o">=</span> <span class="n">Pipeline</span>
+
     <span class="c1">#: Placeholder that can be used in place of an estimator to designate a pipeline</span>
     <span class="c1">#: step that preserves the original ingoing data.</span>
     <span class="n">PASSTHROUGH</span> <span class="o">=</span> <span class="s2">&quot;passthrough&quot;</span>
@@ -229,8 +231,8 @@
                 <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">transformer</span><span class="p">,</span> <span class="n">TransformerDF</span><span class="p">)</span>
             <span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s1">&#39;expected step &quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&quot; to contain a &#39;</span>
-                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">TransformerDF</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, but found an instance of &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;expected step </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> to be a </span><span class="si">{</span><span class="n">TransformerDF</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;or </span><span class="si">{</span><span class="n">PipelineWrapperDF</span><span class="o">.</span><span class="n">PASSTHROUGH</span><span class="si">}</span><span class="s2">, but found an instance of &quot;</span>
                     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">transformer</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
                 <span class="p">)</span>
 
@@ -241,9 +243,9 @@
             <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">final_estimator</span><span class="p">,</span> <span class="n">EstimatorDF</span><span class="p">)</span>
         <span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;expected final step &quot;</span><span class="si">{</span><span class="n">final_step</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">&quot; to contain a &#39;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">EstimatorDF</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, but found an instance of &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">final_estimator</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;expected final step </span><span class="si">{</span><span class="n">final_step</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">!r}</span><span class="s2"> to be an &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">EstimatorDF</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> or </span><span class="si">{</span><span class="n">PipelineWrapperDF</span><span class="o">.</span><span class="n">PASSTHROUGH</span><span class="si">}</span><span class="s2">, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;but found an instance of </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">final_estimator</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
 
     <span class="nd">@property</span>

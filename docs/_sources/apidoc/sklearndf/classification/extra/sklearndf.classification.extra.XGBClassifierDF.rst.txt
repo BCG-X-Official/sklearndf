@@ -17,11 +17,13 @@ sklearndf.classification.extra.XGBClassifierDF
       :nosignatures:
    
       ~XGBClassifierDF.clone
+      ~XGBClassifierDF.decision_function
       ~XGBClassifierDF.ensure_fitted
       ~XGBClassifierDF.fit
       ~XGBClassifierDF.from_fitted
       ~XGBClassifierDF.get_params
       ~XGBClassifierDF.predict
+      ~XGBClassifierDF.predict_log_proba
       ~XGBClassifierDF.predict_proba
       ~XGBClassifierDF.score
       ~XGBClassifierDF.set_params
@@ -37,6 +39,7 @@ sklearndf.classification.extra.XGBClassifierDF
    
       ~XGBClassifierDF.COL_FEATURE_IN
       ~XGBClassifierDF.COL_PREDICTION
+      ~XGBClassifierDF.classes_
       ~XGBClassifierDF.feature_names_in_
       ~XGBClassifierDF.is_fitted
       ~XGBClassifierDF.n_outputs_

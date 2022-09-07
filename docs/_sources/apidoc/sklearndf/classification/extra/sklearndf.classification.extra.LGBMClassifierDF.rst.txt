@@ -17,11 +17,13 @@ sklearndf.classification.extra.LGBMClassifierDF
       :nosignatures:
    
       ~LGBMClassifierDF.clone
+      ~LGBMClassifierDF.decision_function
       ~LGBMClassifierDF.ensure_fitted
       ~LGBMClassifierDF.fit
       ~LGBMClassifierDF.from_fitted
       ~LGBMClassifierDF.get_params
       ~LGBMClassifierDF.predict
+      ~LGBMClassifierDF.predict_log_proba
       ~LGBMClassifierDF.predict_proba
       ~LGBMClassifierDF.score
       ~LGBMClassifierDF.set_params
