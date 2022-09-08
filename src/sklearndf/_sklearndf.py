@@ -196,10 +196,9 @@ class EstimatorDF(
         # get the input columns as a pandas Index
         pass
 
-    @abstractmethod
     def _get_n_features_in(self) -> int:
         # get the number of inputs this estimator has been fitted to
-        pass
+        return len(self._get_features_in())
 
     @abstractmethod
     def _get_n_outputs(self) -> int:

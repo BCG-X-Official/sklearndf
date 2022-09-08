@@ -403,10 +403,6 @@ class EstimatorWrapperDF(
         assert self._features_in is not None, "estimator is fitted"
         return self._features_in
 
-    def _get_n_features_in(self) -> int:
-        assert self._features_in is not None, "estimator is fitted"
-        return len(self._features_in)
-
     def _get_n_outputs(self) -> int:
         assert self._n_outputs is not None, "estimator is fitted"
         return self._n_outputs
