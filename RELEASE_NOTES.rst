@@ -16,8 +16,8 @@ Release Notes
 - API: new clusterer :class:`.BisectingKMeansDF`
 - API: new transformer :class:`.MiniBatchNMFDF`
 - API: new transformer :class:`.RandomTreesEmbeddingDF`; note that class
-  :class:`.RandomTreesEmbedding` existed previously in *scikit-learn*, but is based
-  on :class:`.TransformerMixin` only as of *scikit-learn 1.1*
+  :class:`~sklearn.ensemble.RandomTreesEmbedding` existed previously in *scikit-learn*,
+  but is based on :class:`~sklearn.base.TransformerMixin` only as of *scikit-learn 1.1*
 - API: support parameters ``max_categories`` and ``min_frequency`` of
   :class:`.OneHotEncoderDF`, introduced in *scikit-learn 1.1*
 - API: support array-like values for parameter ``drop`` of :class:`.OneHotEncoderDF`
