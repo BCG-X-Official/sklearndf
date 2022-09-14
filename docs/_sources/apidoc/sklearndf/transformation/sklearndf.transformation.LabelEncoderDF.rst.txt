@@ -41,6 +41,7 @@ sklearndf.transformation.LabelEncoderDF
       ~LabelEncoderDF.feature_names_original_
       ~LabelEncoderDF.feature_names_out_
       ~LabelEncoderDF.is_fitted
+      ~LabelEncoderDF.n_features_in_
       ~LabelEncoderDF.n_outputs_
       ~LabelEncoderDF.native_estimator
    

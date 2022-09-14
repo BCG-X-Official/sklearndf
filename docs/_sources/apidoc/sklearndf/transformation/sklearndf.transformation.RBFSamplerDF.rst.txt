@@ -41,6 +41,7 @@ sklearndf.transformation.RBFSamplerDF
       ~RBFSamplerDF.feature_names_original_
       ~RBFSamplerDF.feature_names_out_
       ~RBFSamplerDF.is_fitted
+      ~RBFSamplerDF.n_features_in_
       ~RBFSamplerDF.n_outputs_
       ~RBFSamplerDF.native_estimator
    

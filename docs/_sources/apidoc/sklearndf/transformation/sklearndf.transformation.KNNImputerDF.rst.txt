@@ -21,6 +21,7 @@ sklearndf.transformation.KNNImputerDF
       ~KNNImputerDF.fit
       ~KNNImputerDF.fit_transform
       ~KNNImputerDF.from_fitted
+      ~KNNImputerDF.get_feature_names_out
       ~KNNImputerDF.get_params
       ~KNNImputerDF.inverse_transform
       ~KNNImputerDF.set_params
@@ -41,6 +42,7 @@ sklearndf.transformation.KNNImputerDF
       ~KNNImputerDF.feature_names_original_
       ~KNNImputerDF.feature_names_out_
       ~KNNImputerDF.is_fitted
+      ~KNNImputerDF.n_features_in_
       ~KNNImputerDF.n_outputs_
       ~KNNImputerDF.native_estimator
    

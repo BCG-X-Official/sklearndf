@@ -42,6 +42,7 @@ sklearndf.classification.RadiusNeighborsClassifierDF
       ~RadiusNeighborsClassifierDF.classes_
       ~RadiusNeighborsClassifierDF.feature_names_in_
       ~RadiusNeighborsClassifierDF.is_fitted
+      ~RadiusNeighborsClassifierDF.n_features_in_
       ~RadiusNeighborsClassifierDF.n_outputs_
       ~RadiusNeighborsClassifierDF.native_estimator
    

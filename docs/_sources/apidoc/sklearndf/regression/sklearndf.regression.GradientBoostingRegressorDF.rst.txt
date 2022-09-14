@@ -40,7 +40,7 @@ sklearndf.regression.GradientBoostingRegressorDF
       ~GradientBoostingRegressorDF.COL_PREDICTION
       ~GradientBoostingRegressorDF.feature_names_in_
       ~GradientBoostingRegressorDF.is_fitted
-      ~GradientBoostingRegressorDF.n_classes_
+      ~GradientBoostingRegressorDF.n_features_in_
       ~GradientBoostingRegressorDF.n_outputs_
       ~GradientBoostingRegressorDF.native_estimator
    

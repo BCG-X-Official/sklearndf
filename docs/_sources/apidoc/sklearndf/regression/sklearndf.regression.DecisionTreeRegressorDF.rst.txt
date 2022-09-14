@@ -39,6 +39,7 @@ sklearndf.regression.DecisionTreeRegressorDF
       ~DecisionTreeRegressorDF.feature_names_in_
       ~DecisionTreeRegressorDF.is_fitted
       ~DecisionTreeRegressorDF.n_features_
+      ~DecisionTreeRegressorDF.n_features_in_
       ~DecisionTreeRegressorDF.n_outputs_
       ~DecisionTreeRegressorDF.native_estimator
    

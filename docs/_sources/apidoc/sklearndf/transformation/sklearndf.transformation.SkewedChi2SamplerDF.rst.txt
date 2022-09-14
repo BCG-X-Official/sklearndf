@@ -41,6 +41,7 @@ sklearndf.transformation.SkewedChi2SamplerDF
       ~SkewedChi2SamplerDF.feature_names_original_
       ~SkewedChi2SamplerDF.feature_names_out_
       ~SkewedChi2SamplerDF.is_fitted
+      ~SkewedChi2SamplerDF.n_features_in_
       ~SkewedChi2SamplerDF.n_outputs_
       ~SkewedChi2SamplerDF.native_estimator
    

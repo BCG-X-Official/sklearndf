@@ -40,6 +40,7 @@ sklearndf.wrapper.numpy.ClassifierNPDF
       ~ClassifierNPDF.classes_
       ~ClassifierNPDF.feature_names_in_
       ~ClassifierNPDF.is_fitted
+      ~ClassifierNPDF.n_features_in_
       ~ClassifierNPDF.n_outputs_
       ~ClassifierNPDF.native_estimator
       ~ClassifierNPDF.delegate

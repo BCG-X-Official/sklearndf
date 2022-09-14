@@ -38,6 +38,7 @@ sklearndf.regression.RANSACRegressorDF
       ~RANSACRegressorDF.COL_PREDICTION
       ~RANSACRegressorDF.feature_names_in_
       ~RANSACRegressorDF.is_fitted
+      ~RANSACRegressorDF.n_features_in_
       ~RANSACRegressorDF.n_outputs_
       ~RANSACRegressorDF.native_estimator
    

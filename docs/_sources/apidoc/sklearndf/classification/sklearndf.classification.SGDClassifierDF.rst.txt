@@ -43,6 +43,7 @@ sklearndf.classification.SGDClassifierDF
       ~SGDClassifierDF.classes_
       ~SGDClassifierDF.feature_names_in_
       ~SGDClassifierDF.is_fitted
+      ~SGDClassifierDF.n_features_in_
       ~SGDClassifierDF.n_outputs_
       ~SGDClassifierDF.native_estimator
    

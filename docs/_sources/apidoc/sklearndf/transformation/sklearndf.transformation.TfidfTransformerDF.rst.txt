@@ -42,6 +42,7 @@ sklearndf.transformation.TfidfTransformerDF
       ~TfidfTransformerDF.feature_names_out_
       ~TfidfTransformerDF.idf_
       ~TfidfTransformerDF.is_fitted
+      ~TfidfTransformerDF.n_features_in_
       ~TfidfTransformerDF.n_outputs_
       ~TfidfTransformerDF.native_estimator
    

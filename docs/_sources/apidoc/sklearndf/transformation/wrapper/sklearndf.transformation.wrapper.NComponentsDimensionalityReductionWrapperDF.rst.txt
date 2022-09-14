@@ -41,6 +41,7 @@ sklearndf.transformation.wrapper.NComponentsDimensionalityReductionWrapperDF
       ~NComponentsDimensionalityReductionWrapperDF.feature_names_original_
       ~NComponentsDimensionalityReductionWrapperDF.feature_names_out_
       ~NComponentsDimensionalityReductionWrapperDF.is_fitted
+      ~NComponentsDimensionalityReductionWrapperDF.n_features_in_
       ~NComponentsDimensionalityReductionWrapperDF.n_outputs_
       ~NComponentsDimensionalityReductionWrapperDF.native_estimator
    

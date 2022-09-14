@@ -43,6 +43,7 @@ sklearndf.transformation.KernelPCADF
       ~KernelPCADF.feature_names_out_
       ~KernelPCADF.is_fitted
       ~KernelPCADF.lambdas_
+      ~KernelPCADF.n_features_in_
       ~KernelPCADF.n_outputs_
       ~KernelPCADF.native_estimator
    

@@ -44,6 +44,7 @@ sklearndf.pipeline.ClassifierPipelineDF
       ~ClassifierPipelineDF.final_estimator
       ~ClassifierPipelineDF.final_estimator_name
       ~ClassifierPipelineDF.is_fitted
+      ~ClassifierPipelineDF.n_features_in_
       ~ClassifierPipelineDF.n_outputs_
       ~ClassifierPipelineDF.native_estimator
       ~ClassifierPipelineDF.preprocessing

@@ -18,12 +18,13 @@ sklearndf.transformation.wrapper
       :nosignatures:
    
       AdditiveChi2SamplerWrapperDF
-      BaseDimensionalityReductionWrapperDF
+      BaseMultiOutputWrapperDF
       BaseMultipleInputsPerOutputTransformerWrapperDF
       ColumnPreservingTransformerWrapperDF
       ColumnSubsetTransformerWrapperDF
       ColumnTransformerWrapperDF
       ComponentsDimensionalityReductionWrapperDF
+      EmbeddingWrapperDF
       FeatureSelectionWrapperDF
       ImputerWrapperDF
       IsomapWrapperDF

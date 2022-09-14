@@ -38,6 +38,7 @@ sklearndf.regression.RadiusNeighborsRegressorDF
       ~RadiusNeighborsRegressorDF.COL_PREDICTION
       ~RadiusNeighborsRegressorDF.feature_names_in_
       ~RadiusNeighborsRegressorDF.is_fitted
+      ~RadiusNeighborsRegressorDF.n_features_in_
       ~RadiusNeighborsRegressorDF.n_outputs_
       ~RadiusNeighborsRegressorDF.native_estimator
    

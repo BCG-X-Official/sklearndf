@@ -44,6 +44,7 @@ sklearndf.transformation.LatentDirichletAllocationDF
       ~LatentDirichletAllocationDF.feature_names_original_
       ~LatentDirichletAllocationDF.feature_names_out_
       ~LatentDirichletAllocationDF.is_fitted
+      ~LatentDirichletAllocationDF.n_features_in_
       ~LatentDirichletAllocationDF.n_outputs_
       ~LatentDirichletAllocationDF.native_estimator
    

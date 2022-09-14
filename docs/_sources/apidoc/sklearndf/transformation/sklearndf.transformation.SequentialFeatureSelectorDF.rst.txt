@@ -41,6 +41,7 @@ sklearndf.transformation.SequentialFeatureSelectorDF
       ~SequentialFeatureSelectorDF.feature_names_original_
       ~SequentialFeatureSelectorDF.feature_names_out_
       ~SequentialFeatureSelectorDF.is_fitted
+      ~SequentialFeatureSelectorDF.n_features_in_
       ~SequentialFeatureSelectorDF.n_outputs_
       ~SequentialFeatureSelectorDF.native_estimator
    

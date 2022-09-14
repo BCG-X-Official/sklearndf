@@ -36,6 +36,7 @@ sklearndf.wrapper.numpy.SupervisedLearnerNPDF
       ~SupervisedLearnerNPDF.COL_FEATURE_IN
       ~SupervisedLearnerNPDF.feature_names_in_
       ~SupervisedLearnerNPDF.is_fitted
+      ~SupervisedLearnerNPDF.n_features_in_
       ~SupervisedLearnerNPDF.n_outputs_
       ~SupervisedLearnerNPDF.native_estimator
       ~SupervisedLearnerNPDF.delegate

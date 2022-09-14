@@ -40,6 +40,7 @@ sklearndf.pipeline.RegressorPipelineDF
       ~RegressorPipelineDF.final_estimator
       ~RegressorPipelineDF.final_estimator_name
       ~RegressorPipelineDF.is_fitted
+      ~RegressorPipelineDF.n_features_in_
       ~RegressorPipelineDF.n_outputs_
       ~RegressorPipelineDF.native_estimator
       ~RegressorPipelineDF.preprocessing

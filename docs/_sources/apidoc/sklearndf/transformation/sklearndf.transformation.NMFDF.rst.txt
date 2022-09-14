@@ -41,6 +41,7 @@ sklearndf.transformation.NMFDF
       ~NMFDF.feature_names_original_
       ~NMFDF.feature_names_out_
       ~NMFDF.is_fitted
+      ~NMFDF.n_features_in_
       ~NMFDF.n_outputs_
       ~NMFDF.native_estimator
    

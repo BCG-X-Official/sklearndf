@@ -40,6 +40,7 @@ sklearndf.regression.GaussianProcessRegressorDF
       ~GaussianProcessRegressorDF.COL_PREDICTION
       ~GaussianProcessRegressorDF.feature_names_in_
       ~GaussianProcessRegressorDF.is_fitted
+      ~GaussianProcessRegressorDF.n_features_in_
       ~GaussianProcessRegressorDF.n_outputs_
       ~GaussianProcessRegressorDF.native_estimator
    

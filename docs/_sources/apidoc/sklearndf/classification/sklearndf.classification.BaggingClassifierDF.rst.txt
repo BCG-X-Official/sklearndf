@@ -42,6 +42,7 @@ sklearndf.classification.BaggingClassifierDF
       ~BaggingClassifierDF.classes_
       ~BaggingClassifierDF.feature_names_in_
       ~BaggingClassifierDF.is_fitted
+      ~BaggingClassifierDF.n_features_in_
       ~BaggingClassifierDF.n_outputs_
       ~BaggingClassifierDF.native_estimator
    

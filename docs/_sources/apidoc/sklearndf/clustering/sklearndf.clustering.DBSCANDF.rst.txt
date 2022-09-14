@@ -40,6 +40,7 @@ sklearndf.clustering.DBSCANDF
       ~DBSCANDF.feature_names_in_
       ~DBSCANDF.is_fitted
       ~DBSCANDF.labels_
+      ~DBSCANDF.n_features_in_
       ~DBSCANDF.n_outputs_
       ~DBSCANDF.native_estimator
    

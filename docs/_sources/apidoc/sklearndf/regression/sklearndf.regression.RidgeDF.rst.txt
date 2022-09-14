@@ -38,6 +38,7 @@ sklearndf.regression.RidgeDF
       ~RidgeDF.COL_PREDICTION
       ~RidgeDF.feature_names_in_
       ~RidgeDF.is_fitted
+      ~RidgeDF.n_features_in_
       ~RidgeDF.n_outputs_
       ~RidgeDF.native_estimator
    

@@ -41,6 +41,7 @@ sklearndf.transformation.QuantileTransformerDF
       ~QuantileTransformerDF.feature_names_original_
       ~QuantileTransformerDF.feature_names_out_
       ~QuantileTransformerDF.is_fitted
+      ~QuantileTransformerDF.n_features_in_
       ~QuantileTransformerDF.n_outputs_
       ~QuantileTransformerDF.native_estimator
    

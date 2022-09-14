@@ -43,6 +43,7 @@ sklearndf.classification.PerceptronDF
       ~PerceptronDF.classes_
       ~PerceptronDF.feature_names_in_
       ~PerceptronDF.is_fitted
+      ~PerceptronDF.n_features_in_
       ~PerceptronDF.n_outputs_
       ~PerceptronDF.native_estimator
    

@@ -41,6 +41,7 @@ sklearndf.transformation.wrapper.MissingIndicatorWrapperDF
       ~MissingIndicatorWrapperDF.feature_names_original_
       ~MissingIndicatorWrapperDF.feature_names_out_
       ~MissingIndicatorWrapperDF.is_fitted
+      ~MissingIndicatorWrapperDF.n_features_in_
       ~MissingIndicatorWrapperDF.n_outputs_
       ~MissingIndicatorWrapperDF.native_estimator
    

@@ -40,6 +40,7 @@ sklearndf.TransformerDF
       ~TransformerDF.feature_names_original_
       ~TransformerDF.feature_names_out_
       ~TransformerDF.is_fitted
+      ~TransformerDF.n_features_in_
       ~TransformerDF.n_outputs_
       ~TransformerDF.native_estimator
    

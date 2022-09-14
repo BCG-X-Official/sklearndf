@@ -41,6 +41,7 @@ sklearndf.transformation.SparseRandomProjectionDF
       ~SparseRandomProjectionDF.feature_names_original_
       ~SparseRandomProjectionDF.feature_names_out_
       ~SparseRandomProjectionDF.is_fitted
+      ~SparseRandomProjectionDF.n_features_in_
       ~SparseRandomProjectionDF.n_outputs_
       ~SparseRandomProjectionDF.native_estimator
    

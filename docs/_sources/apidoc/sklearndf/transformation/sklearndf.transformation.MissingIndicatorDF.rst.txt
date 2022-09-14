@@ -21,6 +21,7 @@ sklearndf.transformation.MissingIndicatorDF
       ~MissingIndicatorDF.fit
       ~MissingIndicatorDF.fit_transform
       ~MissingIndicatorDF.from_fitted
+      ~MissingIndicatorDF.get_feature_names_out
       ~MissingIndicatorDF.get_params
       ~MissingIndicatorDF.inverse_transform
       ~MissingIndicatorDF.set_params
@@ -41,6 +42,7 @@ sklearndf.transformation.MissingIndicatorDF
       ~MissingIndicatorDF.feature_names_original_
       ~MissingIndicatorDF.feature_names_out_
       ~MissingIndicatorDF.is_fitted
+      ~MissingIndicatorDF.n_features_in_
       ~MissingIndicatorDF.n_outputs_
       ~MissingIndicatorDF.native_estimator
    

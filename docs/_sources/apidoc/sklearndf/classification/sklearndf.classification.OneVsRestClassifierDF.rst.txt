@@ -40,12 +40,11 @@ sklearndf.classification.OneVsRestClassifierDF
       ~OneVsRestClassifierDF.COL_FEATURE_IN
       ~OneVsRestClassifierDF.COL_PREDICTION
       ~OneVsRestClassifierDF.classes_
-      ~OneVsRestClassifierDF.coef_
       ~OneVsRestClassifierDF.feature_names_in_
-      ~OneVsRestClassifierDF.intercept_
       ~OneVsRestClassifierDF.is_fitted
       ~OneVsRestClassifierDF.multilabel_
       ~OneVsRestClassifierDF.n_classes_
+      ~OneVsRestClassifierDF.n_features_in_
       ~OneVsRestClassifierDF.n_outputs_
       ~OneVsRestClassifierDF.native_estimator
    

@@ -38,6 +38,7 @@ sklearndf.regression.KNeighborsRegressorDF
       ~KNeighborsRegressorDF.COL_PREDICTION
       ~KNeighborsRegressorDF.feature_names_in_
       ~KNeighborsRegressorDF.is_fitted
+      ~KNeighborsRegressorDF.n_features_in_
       ~KNeighborsRegressorDF.n_outputs_
       ~KNeighborsRegressorDF.native_estimator
    

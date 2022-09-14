@@ -41,6 +41,7 @@ sklearndf.transformation.SelectFweDF
       ~SelectFweDF.feature_names_original_
       ~SelectFweDF.feature_names_out_
       ~SelectFweDF.is_fitted
+      ~SelectFweDF.n_features_in_
       ~SelectFweDF.n_outputs_
       ~SelectFweDF.native_estimator
    

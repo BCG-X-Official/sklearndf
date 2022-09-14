@@ -39,6 +39,8 @@ sklearndf.pipeline.FeatureUnionDF
    
       ~FeatureUnionDF.COL_FEATURE_IN
       ~FeatureUnionDF.COL_FEATURE_OUT
+      ~FeatureUnionDF.DROP
+      ~FeatureUnionDF.PASSTHROUGH
       ~FeatureUnionDF.feature_names_in_
       ~FeatureUnionDF.feature_names_original_
       ~FeatureUnionDF.feature_names_out_

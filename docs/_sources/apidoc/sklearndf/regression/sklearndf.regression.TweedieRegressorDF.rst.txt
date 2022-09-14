@@ -36,9 +36,9 @@ sklearndf.regression.TweedieRegressorDF
    
       ~TweedieRegressorDF.COL_FEATURE_IN
       ~TweedieRegressorDF.COL_PREDICTION
-      ~TweedieRegressorDF.family
       ~TweedieRegressorDF.feature_names_in_
       ~TweedieRegressorDF.is_fitted
+      ~TweedieRegressorDF.n_features_in_
       ~TweedieRegressorDF.n_outputs_
       ~TweedieRegressorDF.native_estimator
    

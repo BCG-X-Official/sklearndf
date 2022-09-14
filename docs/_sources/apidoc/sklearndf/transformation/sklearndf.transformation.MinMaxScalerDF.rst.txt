@@ -42,6 +42,7 @@ sklearndf.transformation.MinMaxScalerDF
       ~MinMaxScalerDF.feature_names_original_
       ~MinMaxScalerDF.feature_names_out_
       ~MinMaxScalerDF.is_fitted
+      ~MinMaxScalerDF.n_features_in_
       ~MinMaxScalerDF.n_outputs_
       ~MinMaxScalerDF.native_estimator
    

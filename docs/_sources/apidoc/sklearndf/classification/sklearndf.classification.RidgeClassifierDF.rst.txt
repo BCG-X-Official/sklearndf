@@ -42,6 +42,7 @@ sklearndf.classification.RidgeClassifierDF
       ~RidgeClassifierDF.classes_
       ~RidgeClassifierDF.feature_names_in_
       ~RidgeClassifierDF.is_fitted
+      ~RidgeClassifierDF.n_features_in_
       ~RidgeClassifierDF.n_outputs_
       ~RidgeClassifierDF.native_estimator
    

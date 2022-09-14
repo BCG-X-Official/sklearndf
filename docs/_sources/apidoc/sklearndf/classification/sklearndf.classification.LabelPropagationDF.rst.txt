@@ -42,6 +42,7 @@ sklearndf.classification.LabelPropagationDF
       ~LabelPropagationDF.classes_
       ~LabelPropagationDF.feature_names_in_
       ~LabelPropagationDF.is_fitted
+      ~LabelPropagationDF.n_features_in_
       ~LabelPropagationDF.n_outputs_
       ~LabelPropagationDF.native_estimator
    

@@ -41,6 +41,7 @@ sklearndf.transformation.wrapper.FeatureSelectionWrapperDF
       ~FeatureSelectionWrapperDF.feature_names_original_
       ~FeatureSelectionWrapperDF.feature_names_out_
       ~FeatureSelectionWrapperDF.is_fitted
+      ~FeatureSelectionWrapperDF.n_features_in_
       ~FeatureSelectionWrapperDF.n_outputs_
       ~FeatureSelectionWrapperDF.native_estimator
    

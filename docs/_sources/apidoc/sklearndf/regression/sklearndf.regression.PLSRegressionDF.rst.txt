@@ -44,6 +44,7 @@ sklearndf.regression.PLSRegressionDF
       ~PLSRegressionDF.feature_names_original_
       ~PLSRegressionDF.feature_names_out_
       ~PLSRegressionDF.is_fitted
+      ~PLSRegressionDF.n_features_in_
       ~PLSRegressionDF.n_outputs_
       ~PLSRegressionDF.native_estimator
    

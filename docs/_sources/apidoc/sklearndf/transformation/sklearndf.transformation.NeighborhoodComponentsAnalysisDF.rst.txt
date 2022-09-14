@@ -41,6 +41,7 @@ sklearndf.transformation.NeighborhoodComponentsAnalysisDF
       ~NeighborhoodComponentsAnalysisDF.feature_names_original_
       ~NeighborhoodComponentsAnalysisDF.feature_names_out_
       ~NeighborhoodComponentsAnalysisDF.is_fitted
+      ~NeighborhoodComponentsAnalysisDF.n_features_in_
       ~NeighborhoodComponentsAnalysisDF.n_outputs_
       ~NeighborhoodComponentsAnalysisDF.native_estimator
    

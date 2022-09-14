@@ -40,6 +40,7 @@ sklearndf.clustering.AffinityPropagationDF
       ~AffinityPropagationDF.feature_names_in_
       ~AffinityPropagationDF.is_fitted
       ~AffinityPropagationDF.labels_
+      ~AffinityPropagationDF.n_features_in_
       ~AffinityPropagationDF.n_outputs_
       ~AffinityPropagationDF.native_estimator
    

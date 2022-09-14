@@ -35,6 +35,7 @@ sklearndf.wrapper.numpy.LearnerNPDF
       ~LearnerNPDF.COL_FEATURE_IN
       ~LearnerNPDF.feature_names_in_
       ~LearnerNPDF.is_fitted
+      ~LearnerNPDF.n_features_in_
       ~LearnerNPDF.n_outputs_
       ~LearnerNPDF.native_estimator
       ~LearnerNPDF.delegate

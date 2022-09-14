@@ -41,6 +41,7 @@ sklearndf.transformation.MiniBatchSparsePCADF
       ~MiniBatchSparsePCADF.feature_names_original_
       ~MiniBatchSparsePCADF.feature_names_out_
       ~MiniBatchSparsePCADF.is_fitted
+      ~MiniBatchSparsePCADF.n_features_in_
       ~MiniBatchSparsePCADF.n_outputs_
       ~MiniBatchSparsePCADF.native_estimator
    

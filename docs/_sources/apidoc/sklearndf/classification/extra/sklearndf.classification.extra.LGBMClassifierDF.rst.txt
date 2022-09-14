@@ -43,6 +43,7 @@ sklearndf.classification.extra.LGBMClassifierDF
       ~LGBMClassifierDF.feature_names_in_
       ~LGBMClassifierDF.is_fitted
       ~LGBMClassifierDF.n_classes_
+      ~LGBMClassifierDF.n_features_in_
       ~LGBMClassifierDF.n_outputs_
       ~LGBMClassifierDF.native_estimator
    

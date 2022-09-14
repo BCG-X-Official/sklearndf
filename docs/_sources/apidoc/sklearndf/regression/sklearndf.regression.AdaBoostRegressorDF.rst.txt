@@ -39,6 +39,7 @@ sklearndf.regression.AdaBoostRegressorDF
       ~AdaBoostRegressorDF.COL_PREDICTION
       ~AdaBoostRegressorDF.feature_names_in_
       ~AdaBoostRegressorDF.is_fitted
+      ~AdaBoostRegressorDF.n_features_in_
       ~AdaBoostRegressorDF.n_outputs_
       ~AdaBoostRegressorDF.native_estimator
    

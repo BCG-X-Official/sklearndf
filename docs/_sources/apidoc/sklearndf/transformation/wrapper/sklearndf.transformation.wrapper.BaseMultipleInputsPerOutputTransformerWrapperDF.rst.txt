@@ -41,6 +41,7 @@ sklearndf.transformation.wrapper.BaseMultipleInputsPerOutputTransformerWrapperDF
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.feature_names_original_
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.feature_names_out_
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.is_fitted
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.n_features_in_
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.n_outputs_
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.native_estimator
    

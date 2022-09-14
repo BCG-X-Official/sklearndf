@@ -36,6 +36,7 @@ sklearndf.wrapper.numpy.RegressorNPDF
       ~RegressorNPDF.COL_FEATURE_IN
       ~RegressorNPDF.feature_names_in_
       ~RegressorNPDF.is_fitted
+      ~RegressorNPDF.n_features_in_
       ~RegressorNPDF.n_outputs_
       ~RegressorNPDF.native_estimator
       ~RegressorNPDF.delegate

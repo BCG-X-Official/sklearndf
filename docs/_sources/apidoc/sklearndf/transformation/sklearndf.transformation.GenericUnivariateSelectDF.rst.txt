@@ -41,6 +41,7 @@ sklearndf.transformation.GenericUnivariateSelectDF
       ~GenericUnivariateSelectDF.feature_names_original_
       ~GenericUnivariateSelectDF.feature_names_out_
       ~GenericUnivariateSelectDF.is_fitted
+      ~GenericUnivariateSelectDF.n_features_in_
       ~GenericUnivariateSelectDF.n_outputs_
       ~GenericUnivariateSelectDF.native_estimator
    

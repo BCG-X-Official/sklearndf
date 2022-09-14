@@ -44,6 +44,7 @@ sklearndf.transformation.BernoulliRBMDF
       ~BernoulliRBMDF.feature_names_original_
       ~BernoulliRBMDF.feature_names_out_
       ~BernoulliRBMDF.is_fitted
+      ~BernoulliRBMDF.n_features_in_
       ~BernoulliRBMDF.n_outputs_
       ~BernoulliRBMDF.native_estimator
    

@@ -38,6 +38,7 @@ sklearndf.regression.wrapper.MetaRegressorWrapperDF
       ~MetaRegressorWrapperDF.COL_PREDICTION
       ~MetaRegressorWrapperDF.feature_names_in_
       ~MetaRegressorWrapperDF.is_fitted
+      ~MetaRegressorWrapperDF.n_features_in_
       ~MetaRegressorWrapperDF.n_outputs_
       ~MetaRegressorWrapperDF.native_estimator
    

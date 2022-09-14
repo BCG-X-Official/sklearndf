@@ -38,6 +38,7 @@ sklearndf.regression.extra.LGBMRegressorDF
       ~LGBMRegressorDF.COL_PREDICTION
       ~LGBMRegressorDF.feature_names_in_
       ~LGBMRegressorDF.is_fitted
+      ~LGBMRegressorDF.n_features_in_
       ~LGBMRegressorDF.n_outputs_
       ~LGBMRegressorDF.native_estimator
    

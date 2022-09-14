@@ -43,6 +43,7 @@ sklearndf.classification.MLPClassifierDF
       ~MLPClassifierDF.classes_
       ~MLPClassifierDF.feature_names_in_
       ~MLPClassifierDF.is_fitted
+      ~MLPClassifierDF.n_features_in_
       ~MLPClassifierDF.n_outputs_
       ~MLPClassifierDF.native_estimator
    

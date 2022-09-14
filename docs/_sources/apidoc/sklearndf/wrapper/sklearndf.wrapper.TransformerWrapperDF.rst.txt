@@ -41,6 +41,7 @@ sklearndf.wrapper.TransformerWrapperDF
       ~TransformerWrapperDF.feature_names_original_
       ~TransformerWrapperDF.feature_names_out_
       ~TransformerWrapperDF.is_fitted
+      ~TransformerWrapperDF.n_features_in_
       ~TransformerWrapperDF.n_outputs_
       ~TransformerWrapperDF.native_estimator
    

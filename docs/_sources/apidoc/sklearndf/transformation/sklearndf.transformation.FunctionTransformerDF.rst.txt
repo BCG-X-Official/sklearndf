@@ -41,6 +41,7 @@ sklearndf.transformation.FunctionTransformerDF
       ~FunctionTransformerDF.feature_names_original_
       ~FunctionTransformerDF.feature_names_out_
       ~FunctionTransformerDF.is_fitted
+      ~FunctionTransformerDF.n_features_in_
       ~FunctionTransformerDF.n_outputs_
       ~FunctionTransformerDF.native_estimator
    

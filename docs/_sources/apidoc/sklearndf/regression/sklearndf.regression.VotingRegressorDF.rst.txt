@@ -20,6 +20,7 @@ sklearndf.regression.VotingRegressorDF
       ~VotingRegressorDF.ensure_fitted
       ~VotingRegressorDF.fit
       ~VotingRegressorDF.from_fitted
+      ~VotingRegressorDF.get_feature_names_out
       ~VotingRegressorDF.get_params
       ~VotingRegressorDF.predict
       ~VotingRegressorDF.score
@@ -39,6 +40,7 @@ sklearndf.regression.VotingRegressorDF
       ~VotingRegressorDF.COL_PREDICTION
       ~VotingRegressorDF.feature_names_in_
       ~VotingRegressorDF.is_fitted
+      ~VotingRegressorDF.n_features_in_
       ~VotingRegressorDF.n_outputs_
       ~VotingRegressorDF.native_estimator
    

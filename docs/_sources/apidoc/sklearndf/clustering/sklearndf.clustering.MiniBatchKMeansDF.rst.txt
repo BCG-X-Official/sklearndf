@@ -40,14 +40,12 @@ sklearndf.clustering.MiniBatchKMeansDF
       ~MiniBatchKMeansDF.COL_PREDICTION
       ~MiniBatchKMeansDF.IDX_CLUSTER
       ~MiniBatchKMeansDF.cluster_centers_
-      ~MiniBatchKMeansDF.counts_
       ~MiniBatchKMeansDF.feature_names_in_
-      ~MiniBatchKMeansDF.init_size_
       ~MiniBatchKMeansDF.is_fitted
       ~MiniBatchKMeansDF.labels_
+      ~MiniBatchKMeansDF.n_features_in_
       ~MiniBatchKMeansDF.n_outputs_
       ~MiniBatchKMeansDF.native_estimator
-      ~MiniBatchKMeansDF.random_state_
    
    
 

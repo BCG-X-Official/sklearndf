@@ -42,6 +42,7 @@ sklearndf.classification.CalibratedClassifierCVDF
       ~CalibratedClassifierCVDF.classes_
       ~CalibratedClassifierCVDF.feature_names_in_
       ~CalibratedClassifierCVDF.is_fitted
+      ~CalibratedClassifierCVDF.n_features_in_
       ~CalibratedClassifierCVDF.n_outputs_
       ~CalibratedClassifierCVDF.native_estimator
    

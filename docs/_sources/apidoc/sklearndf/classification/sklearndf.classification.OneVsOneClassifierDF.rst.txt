@@ -43,6 +43,7 @@ sklearndf.classification.OneVsOneClassifierDF
       ~OneVsOneClassifierDF.feature_names_in_
       ~OneVsOneClassifierDF.is_fitted
       ~OneVsOneClassifierDF.n_classes_
+      ~OneVsOneClassifierDF.n_features_in_
       ~OneVsOneClassifierDF.n_outputs_
       ~OneVsOneClassifierDF.native_estimator
    

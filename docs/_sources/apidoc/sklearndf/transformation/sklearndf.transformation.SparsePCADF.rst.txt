@@ -41,6 +41,7 @@ sklearndf.transformation.SparsePCADF
       ~SparsePCADF.feature_names_original_
       ~SparsePCADF.feature_names_out_
       ~SparsePCADF.is_fitted
+      ~SparsePCADF.n_features_in_
       ~SparsePCADF.n_outputs_
       ~SparsePCADF.native_estimator
    

@@ -42,6 +42,7 @@ sklearndf.classification.extra.XGBClassifierDF
       ~XGBClassifierDF.classes_
       ~XGBClassifierDF.feature_names_in_
       ~XGBClassifierDF.is_fitted
+      ~XGBClassifierDF.n_features_in_
       ~XGBClassifierDF.n_outputs_
       ~XGBClassifierDF.native_estimator
    

@@ -42,6 +42,7 @@ sklearndf.classification.LogisticRegressionDF
       ~LogisticRegressionDF.classes_
       ~LogisticRegressionDF.feature_names_in_
       ~LogisticRegressionDF.is_fitted
+      ~LogisticRegressionDF.n_features_in_
       ~LogisticRegressionDF.n_outputs_
       ~LogisticRegressionDF.native_estimator
    

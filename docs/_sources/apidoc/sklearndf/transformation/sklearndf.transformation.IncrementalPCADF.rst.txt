@@ -42,6 +42,7 @@ sklearndf.transformation.IncrementalPCADF
       ~IncrementalPCADF.feature_names_original_
       ~IncrementalPCADF.feature_names_out_
       ~IncrementalPCADF.is_fitted
+      ~IncrementalPCADF.n_features_in_
       ~IncrementalPCADF.n_outputs_
       ~IncrementalPCADF.native_estimator
    

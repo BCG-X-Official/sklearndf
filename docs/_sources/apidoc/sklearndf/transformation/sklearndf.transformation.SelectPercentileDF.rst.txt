@@ -41,6 +41,7 @@ sklearndf.transformation.SelectPercentileDF
       ~SelectPercentileDF.feature_names_original_
       ~SelectPercentileDF.feature_names_out_
       ~SelectPercentileDF.is_fitted
+      ~SelectPercentileDF.n_features_in_
       ~SelectPercentileDF.n_outputs_
       ~SelectPercentileDF.native_estimator
    

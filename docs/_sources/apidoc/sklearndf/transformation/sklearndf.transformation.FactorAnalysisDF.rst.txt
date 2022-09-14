@@ -45,6 +45,7 @@ sklearndf.transformation.FactorAnalysisDF
       ~FactorAnalysisDF.feature_names_original_
       ~FactorAnalysisDF.feature_names_out_
       ~FactorAnalysisDF.is_fitted
+      ~FactorAnalysisDF.n_features_in_
       ~FactorAnalysisDF.n_outputs_
       ~FactorAnalysisDF.native_estimator
    

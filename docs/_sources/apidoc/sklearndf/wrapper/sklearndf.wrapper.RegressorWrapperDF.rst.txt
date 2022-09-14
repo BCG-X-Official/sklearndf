@@ -38,6 +38,7 @@ sklearndf.wrapper.RegressorWrapperDF
       ~RegressorWrapperDF.COL_PREDICTION
       ~RegressorWrapperDF.feature_names_in_
       ~RegressorWrapperDF.is_fitted
+      ~RegressorWrapperDF.n_features_in_
       ~RegressorWrapperDF.n_outputs_
       ~RegressorWrapperDF.native_estimator
    

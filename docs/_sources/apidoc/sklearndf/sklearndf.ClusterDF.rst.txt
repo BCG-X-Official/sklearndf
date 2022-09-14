@@ -37,6 +37,7 @@ sklearndf.ClusterDF
       ~ClusterDF.feature_names_in_
       ~ClusterDF.is_fitted
       ~ClusterDF.labels_
+      ~ClusterDF.n_features_in_
       ~ClusterDF.n_outputs_
       ~ClusterDF.native_estimator
    

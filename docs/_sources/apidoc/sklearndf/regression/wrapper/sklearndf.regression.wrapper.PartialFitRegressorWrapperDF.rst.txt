@@ -39,6 +39,7 @@ sklearndf.regression.wrapper.PartialFitRegressorWrapperDF
       ~PartialFitRegressorWrapperDF.COL_PREDICTION
       ~PartialFitRegressorWrapperDF.feature_names_in_
       ~PartialFitRegressorWrapperDF.is_fitted
+      ~PartialFitRegressorWrapperDF.n_features_in_
       ~PartialFitRegressorWrapperDF.n_outputs_
       ~PartialFitRegressorWrapperDF.native_estimator
    

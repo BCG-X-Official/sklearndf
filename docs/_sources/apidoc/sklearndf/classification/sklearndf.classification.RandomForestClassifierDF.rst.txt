@@ -42,6 +42,7 @@ sklearndf.classification.RandomForestClassifierDF
       ~RandomForestClassifierDF.classes_
       ~RandomForestClassifierDF.feature_names_in_
       ~RandomForestClassifierDF.is_fitted
+      ~RandomForestClassifierDF.n_features_in_
       ~RandomForestClassifierDF.n_outputs_
       ~RandomForestClassifierDF.native_estimator
    

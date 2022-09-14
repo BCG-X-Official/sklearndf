@@ -42,6 +42,7 @@ sklearndf.classification.LinearSVCDF
       ~LinearSVCDF.classes_
       ~LinearSVCDF.feature_names_in_
       ~LinearSVCDF.is_fitted
+      ~LinearSVCDF.n_features_in_
       ~LinearSVCDF.n_outputs_
       ~LinearSVCDF.native_estimator
    

@@ -41,6 +41,7 @@ sklearndf.transformation.FeatureHasherDF
       ~FeatureHasherDF.feature_names_original_
       ~FeatureHasherDF.feature_names_out_
       ~FeatureHasherDF.is_fitted
+      ~FeatureHasherDF.n_features_in_
       ~FeatureHasherDF.n_outputs_
       ~FeatureHasherDF.native_estimator
    

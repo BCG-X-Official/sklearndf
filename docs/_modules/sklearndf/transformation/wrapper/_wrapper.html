@@ -192,17 +192,24 @@
 
 <span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span>
 
-<span class="kn">from</span> <span class="nn">...</span> <span class="kn">import</span> <span class="n">TransformerDF</span><span class="p">,</span> <span class="n">__sklearn_1_0__</span><span class="p">,</span> <span class="n">__sklearn_version__</span>
+<span class="kn">from</span> <span class="nn">...</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TransformerDF</span><span class="p">,</span>
+    <span class="n">__sklearn_1_0__</span><span class="p">,</span>
+    <span class="n">__sklearn_1_1__</span><span class="p">,</span>
+    <span class="n">__sklearn_1_2__</span><span class="p">,</span>
+    <span class="n">__sklearn_version__</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">...wrapper</span> <span class="kn">import</span> <span class="n">TransformerWrapperDF</span>
 
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;BaseDimensionalityReductionWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BaseMultiOutputWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;BaseMultipleInputsPerOutputTransformerWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ColumnPreservingTransformerWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ColumnSubsetTransformerWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ComponentsDimensionalityReductionWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;EmbeddingWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;FeatureSelectionWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;NComponentsDimensionalityReductionWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;NumpyTransformerWrapperDF&quot;</span><span class="p">,</span>
@@ -329,7 +336,7 @@
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="BaseDimensionalityReductionWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.BaseDimensionalityReductionWrapperDF.html#sklearndf.transformation.wrapper.BaseDimensionalityReductionWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">BaseDimensionalityReductionWrapperDF</span><span class="p">(</span>
+<div class="viewcode-block" id="BaseMultiOutputWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF.html#sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">BaseMultiOutputWrapperDF</span><span class="p">(</span>
     <span class="n">BaseMultipleInputsPerOutputTransformerWrapperDF</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
     <span class="n">Generic</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
     <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
@@ -350,7 +357,7 @@
 
 
 <div class="viewcode-block" id="NComponentsDimensionalityReductionWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.NComponentsDimensionalityReductionWrapperDF.html#sklearndf.transformation.wrapper.NComponentsDimensionalityReductionWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">NComponentsDimensionalityReductionWrapperDF</span><span class="p">(</span>
-    <span class="n">BaseDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
+    <span class="n">BaseMultiOutputWrapperDF</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
     <span class="n">Generic</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
     <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
 <span class="p">):</span>
@@ -372,7 +379,7 @@
 
 
 <div class="viewcode-block" id="ComponentsDimensionalityReductionWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF.html#sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">ComponentsDimensionalityReductionWrapperDF</span><span class="p">(</span>
-    <span class="n">BaseDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
+    <span class="n">BaseMultiOutputWrapperDF</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
     <span class="n">Generic</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
     <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
 <span class="p">):</span>
@@ -610,11 +617,14 @@
         <span class="n">features_original</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">[</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">features_</span>
         <span class="p">]</span><span class="o">.</span><span class="n">values</span>
-        <span class="n">features_out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">__missing&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">features_original</span><span class="p">])</span>
+        <span class="c1"># noinspection SpellCheckingInspection</span>
+        <span class="n">features_out</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span>
+            <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;missingindicator_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">features_original</span><span class="p">]</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">features_out</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">features_original</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="IsomapWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.IsomapWrapperDF.html#sklearndf.transformation.wrapper.IsomapWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">IsomapWrapperDF</span><span class="p">(</span><span class="n">BaseDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">Isomap</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+<div class="viewcode-block" id="IsomapWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.IsomapWrapperDF.html#sklearndf.transformation.wrapper.IsomapWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">IsomapWrapperDF</span><span class="p">(</span><span class="n">BaseMultiOutputWrapperDF</span><span class="p">[</span><span class="n">Isomap</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for :class:`sklearn.manifold.Isomap`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -625,7 +635,7 @@
 
 
 <div class="viewcode-block" id="AdditiveChi2SamplerWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.AdditiveChi2SamplerWrapperDF.html#sklearndf.transformation.wrapper.AdditiveChi2SamplerWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">AdditiveChi2SamplerWrapperDF</span><span class="p">(</span>
-    <span class="n">BaseDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">AdditiveChi2Sampler</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span>
+    <span class="n">BaseMultiOutputWrapperDF</span><span class="p">[</span><span class="n">AdditiveChi2Sampler</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for :class:`sklearn.kernel_approximation.AdditiveChi2Sampler`.</span>
@@ -698,6 +708,26 @@
             <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">categories</span><span class="p">)</span> <span class="k">for</span> <span class="n">categories</span> <span class="ow">in</span> <span class="n">native_estimator</span><span class="o">.</span><span class="n">categories_</span><span class="p">],</span>
             <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int_</span><span class="p">,</span>
         <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">__sklearn_version__</span> <span class="o">&gt;=</span> <span class="n">__sklearn_1_1__</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_categories</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_frequency</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="p">):</span>
+            <span class="c1"># count number of infrequent categories per column</span>
+            <span class="n">n_infrequent</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="mi">1</span>
+                    <span class="k">if</span> <span class="n">infrequent_categories_for_column</span> <span class="ow">is</span> <span class="kc">None</span>
+                    <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="n">infrequent_categories_for_column</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">infrequent_categories_for_column</span> <span class="ow">in</span> <span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">infrequent_categories_</span>
+                    <span class="p">)</span>
+                <span class="p">],</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int_</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="c1"># all infrequent categories will be aggregated, so deduct number of</span>
+            <span class="c1"># infrequent categories, except one for the aggregated category</span>
+            <span class="n">n_features_in</span> <span class="o">-=</span> <span class="n">n_infrequent</span> <span class="o">-</span> <span class="mi">1</span>
+
         <span class="n">_adjust_n_features_in</span><span class="p">(</span><span class="n">n_features_in</span><span class="p">)</span>
 
         <span class="n">feature_names_in_mapped</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span>
@@ -751,6 +781,38 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;unexpected value for property encode=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">encode</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EmbeddingWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.EmbeddingWrapperDF.html#sklearndf.transformation.wrapper.EmbeddingWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">EmbeddingWrapperDF</span><span class="p">(</span>
+    <span class="n">BaseMultiOutputWrapperDF</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
+    <span class="n">Generic</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
+    <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class of DF wrappers for dimensionality-reducing transformers.</span>
+
+<span class="sd">    The native transformer is considered to map all input columns to each output column.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">__sklearn_version__</span> <span class="o">&lt;</span> <span class="n">__sklearn_1_2__</span><span class="p">:</span>
+        <span class="c1"># n_features_ is deprecated as of sklearn 1.0,</span>
+        <span class="c1"># and will be removed in sklearn 1.2</span>
+        <span class="nd">@property</span>
+        <span class="k">def</span> <span class="nf">n_features_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            The number of features when :meth:`.fit` is performed.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">n_features_</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_outputs_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The number of outputs when :meth:`.fit` is performed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">n_outputs_</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_n_components_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_outputs_</span></div>
 
 
 <span class="c1">#</span>

@@ -42,6 +42,7 @@ sklearndf.wrapper.ClassifierWrapperDF
       ~ClassifierWrapperDF.classes_
       ~ClassifierWrapperDF.feature_names_in_
       ~ClassifierWrapperDF.is_fitted
+      ~ClassifierWrapperDF.n_features_in_
       ~ClassifierWrapperDF.n_outputs_
       ~ClassifierWrapperDF.native_estimator
    

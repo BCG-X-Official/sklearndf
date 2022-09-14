@@ -38,6 +38,7 @@ sklearndf.regression.MultiTaskLassoDF
       ~MultiTaskLassoDF.COL_PREDICTION
       ~MultiTaskLassoDF.feature_names_in_
       ~MultiTaskLassoDF.is_fitted
+      ~MultiTaskLassoDF.n_features_in_
       ~MultiTaskLassoDF.n_outputs_
       ~MultiTaskLassoDF.native_estimator
    

@@ -38,6 +38,7 @@ sklearndf.wrapper.stacking.StackingRegressorWrapperDF
       ~StackingRegressorWrapperDF.COL_PREDICTION
       ~StackingRegressorWrapperDF.feature_names_in_
       ~StackingRegressorWrapperDF.is_fitted
+      ~StackingRegressorWrapperDF.n_features_in_
       ~StackingRegressorWrapperDF.n_outputs_
       ~StackingRegressorWrapperDF.native_estimator
    

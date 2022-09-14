@@ -43,6 +43,7 @@ sklearndf.transformation.SplineTransformerDF
       ~SplineTransformerDF.feature_names_original_
       ~SplineTransformerDF.feature_names_out_
       ~SplineTransformerDF.is_fitted
+      ~SplineTransformerDF.n_features_in_
       ~SplineTransformerDF.n_outputs_
       ~SplineTransformerDF.native_estimator
    

@@ -41,6 +41,7 @@ sklearndf.transformation.PolynomialCountSketchDF
       ~PolynomialCountSketchDF.feature_names_original_
       ~PolynomialCountSketchDF.feature_names_out_
       ~PolynomialCountSketchDF.is_fitted
+      ~PolynomialCountSketchDF.n_features_in_
       ~PolynomialCountSketchDF.n_outputs_
       ~PolynomialCountSketchDF.native_estimator
    

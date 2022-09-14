@@ -43,6 +43,7 @@ sklearndf.classification.MultiOutputClassifierDF
       ~MultiOutputClassifierDF.classes_
       ~MultiOutputClassifierDF.feature_names_in_
       ~MultiOutputClassifierDF.is_fitted
+      ~MultiOutputClassifierDF.n_features_in_
       ~MultiOutputClassifierDF.n_outputs_
       ~MultiOutputClassifierDF.native_estimator
    

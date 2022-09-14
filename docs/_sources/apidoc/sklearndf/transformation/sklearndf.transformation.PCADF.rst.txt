@@ -43,6 +43,7 @@ sklearndf.transformation.PCADF
       ~PCADF.feature_names_original_
       ~PCADF.feature_names_out_
       ~PCADF.is_fitted
+      ~PCADF.n_features_in_
       ~PCADF.n_outputs_
       ~PCADF.native_estimator
    

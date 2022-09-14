@@ -44,6 +44,7 @@ sklearndf.regression.wrapper.RegressorTransformerWrapperDF
       ~RegressorTransformerWrapperDF.feature_names_original_
       ~RegressorTransformerWrapperDF.feature_names_out_
       ~RegressorTransformerWrapperDF.is_fitted
+      ~RegressorTransformerWrapperDF.n_features_in_
       ~RegressorTransformerWrapperDF.n_outputs_
       ~RegressorTransformerWrapperDF.native_estimator
    

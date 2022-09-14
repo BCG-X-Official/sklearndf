@@ -479,6 +479,11 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../clustering/sklearndf.clustering.BisectingKMeansDF.html">
+     sklearndf.clustering.BisectingKMeansDF
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../clustering/sklearndf.clustering.DBSCANDF.html">
      sklearndf.clustering.DBSCANDF
     </a>
@@ -679,11 +684,6 @@
    <li class="toctree-l2">
     <a class="reference internal" href="../regression/sklearndf.regression.GaussianProcessRegressorDF.html">
      sklearndf.regression.GaussianProcessRegressorDF
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../regression/sklearndf.regression.GeneralizedLinearRegressorDF.html">
-     sklearndf.regression.GeneralizedLinearRegressorDF
     </a>
    </li>
    <li class="toctree-l2">
@@ -1103,6 +1103,11 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="sklearndf.transformation.MiniBatchNMFDF.html">
+     sklearndf.transformation.MiniBatchNMFDF
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="sklearndf.transformation.MiniBatchSparsePCADF.html">
      sklearndf.transformation.MiniBatchSparsePCADF
     </a>
@@ -1190,6 +1195,11 @@
    <li class="toctree-l2">
     <a class="reference internal" href="sklearndf.transformation.RFEDF.html">
      sklearndf.transformation.RFEDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="sklearndf.transformation.RandomTreesEmbeddingDF.html">
+     sklearndf.transformation.RandomTreesEmbeddingDF
     </a>
    </li>
    <li class="toctree-l2">
@@ -1332,8 +1342,8 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.BaseDimensionalityReductionWrapperDF.html">
-       sklearndf.transformation.wrapper.BaseDimensionalityReductionWrapperDF
+      <a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF.html">
+       sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF
       </a>
      </li>
      <li class="toctree-l3">
@@ -1359,6 +1369,11 @@
      <li class="toctree-l3">
       <a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF.html">
        sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.EmbeddingWrapperDF.html">
+       sklearndf.transformation.wrapper.EmbeddingWrapperDF
       </a>
      </li>
      <li class="toctree-l3">
@@ -1605,7 +1620,7 @@ frames.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.AdditiveChi2SamplerWrapperDF.html#sklearndf.transformation.wrapper.AdditiveChi2SamplerWrapperDF" title="sklearndf.transformation.wrapper.AdditiveChi2SamplerWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AdditiveChi2SamplerWrapperDF</span></code></a></p></td>
 <td><p>DF wrapper for <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.kernel_approximation.AdditiveChi2Sampler.html#sklearn.kernel_approximation.AdditiveChi2Sampler" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.kernel_approximation.AdditiveChi2Sampler</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.BaseDimensionalityReductionWrapperDF.html#sklearndf.transformation.wrapper.BaseDimensionalityReductionWrapperDF" title="sklearndf.transformation.wrapper.BaseDimensionalityReductionWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseDimensionalityReductionWrapperDF</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF.html#sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF" title="sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseMultiOutputWrapperDF</span></code></a></p></td>
 <td><p>Base class of DF wrappers for dimensionality-reducing transformers.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.BaseMultipleInputsPerOutputTransformerWrapperDF.html#sklearndf.transformation.wrapper.BaseMultipleInputsPerOutputTransformerWrapperDF" title="sklearndf.transformation.wrapper.BaseMultipleInputsPerOutputTransformerWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseMultipleInputsPerOutputTransformerWrapperDF</span></code></a></p></td>
@@ -1623,31 +1638,34 @@ frames.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF.html#sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF" title="sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ComponentsDimensionalityReductionWrapperDF</span></code></a></p></td>
 <td><p>Base class of DF wrappers for dimensionality-reducing transformers supporting the <code class="docutils literal notranslate"><span class="pre">components_</span></code> attribute.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.FeatureSelectionWrapperDF.html#sklearndf.transformation.wrapper.FeatureSelectionWrapperDF" title="sklearndf.transformation.wrapper.FeatureSelectionWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureSelectionWrapperDF</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.EmbeddingWrapperDF.html#sklearndf.transformation.wrapper.EmbeddingWrapperDF" title="sklearndf.transformation.wrapper.EmbeddingWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EmbeddingWrapperDF</span></code></a></p></td>
+<td><p>Base class of DF wrappers for dimensionality-reducing transformers.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.FeatureSelectionWrapperDF.html#sklearndf.transformation.wrapper.FeatureSelectionWrapperDF" title="sklearndf.transformation.wrapper.FeatureSelectionWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureSelectionWrapperDF</span></code></a></p></td>
 <td><p>DF wrapper for feature selection transformers.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.ImputerWrapperDF.html#sklearndf.transformation.wrapper.ImputerWrapperDF" title="sklearndf.transformation.wrapper.ImputerWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImputerWrapperDF</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.ImputerWrapperDF.html#sklearndf.transformation.wrapper.ImputerWrapperDF" title="sklearndf.transformation.wrapper.ImputerWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImputerWrapperDF</span></code></a></p></td>
 <td><p>DF wrapper for imputation transformers, e.g., <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html#sklearn.impute.SimpleImputer" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.impute.SimpleImputer</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.IsomapWrapperDF.html#sklearndf.transformation.wrapper.IsomapWrapperDF" title="sklearndf.transformation.wrapper.IsomapWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IsomapWrapperDF</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.IsomapWrapperDF.html#sklearndf.transformation.wrapper.IsomapWrapperDF" title="sklearndf.transformation.wrapper.IsomapWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IsomapWrapperDF</span></code></a></p></td>
 <td><p>DF wrapper for <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.manifold.Isomap.html#sklearn.manifold.Isomap" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.manifold.Isomap</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF.html#sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF" title="sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KBinsDiscretizerWrapperDF</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF.html#sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF" title="sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KBinsDiscretizerWrapperDF</span></code></a></p></td>
 <td><p>DF wrapper for <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.KBinsDiscretizer.html#sklearn.preprocessing.KBinsDiscretizer" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.preprocessing.KBinsDiscretizer</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.MissingIndicatorWrapperDF.html#sklearndf.transformation.wrapper.MissingIndicatorWrapperDF" title="sklearndf.transformation.wrapper.MissingIndicatorWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MissingIndicatorWrapperDF</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.MissingIndicatorWrapperDF.html#sklearndf.transformation.wrapper.MissingIndicatorWrapperDF" title="sklearndf.transformation.wrapper.MissingIndicatorWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MissingIndicatorWrapperDF</span></code></a></p></td>
 <td><p>DF wrapper for <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.MissingIndicator.html#sklearn.impute.MissingIndicator" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.impute.MissingIndicator</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.NComponentsDimensionalityReductionWrapperDF.html#sklearndf.transformation.wrapper.NComponentsDimensionalityReductionWrapperDF" title="sklearndf.transformation.wrapper.NComponentsDimensionalityReductionWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NComponentsDimensionalityReductionWrapperDF</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.NComponentsDimensionalityReductionWrapperDF.html#sklearndf.transformation.wrapper.NComponentsDimensionalityReductionWrapperDF" title="sklearndf.transformation.wrapper.NComponentsDimensionalityReductionWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NComponentsDimensionalityReductionWrapperDF</span></code></a></p></td>
 <td><p>Base class of DF wrappers for dimensionality-reducing transformers supporting the <code class="xref py py-attr docutils literal notranslate"><span class="pre">n_components</span></code> attribute.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.NumpyTransformerWrapperDF.html#sklearndf.transformation.wrapper.NumpyTransformerWrapperDF" title="sklearndf.transformation.wrapper.NumpyTransformerWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NumpyTransformerWrapperDF</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.NumpyTransformerWrapperDF.html#sklearndf.transformation.wrapper.NumpyTransformerWrapperDF" title="sklearndf.transformation.wrapper.NumpyTransformerWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NumpyTransformerWrapperDF</span></code></a></p></td>
 <td><p>Abstract base class of DF wrappers for transformers that only accept numpy arrays.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.OneHotEncoderWrapperDF.html#sklearndf.transformation.wrapper.OneHotEncoderWrapperDF" title="sklearndf.transformation.wrapper.OneHotEncoderWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OneHotEncoderWrapperDF</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.OneHotEncoderWrapperDF.html#sklearndf.transformation.wrapper.OneHotEncoderWrapperDF" title="sklearndf.transformation.wrapper.OneHotEncoderWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OneHotEncoderWrapperDF</span></code></a></p></td>
 <td><p>DF wrapper for <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html#sklearn.preprocessing.OneHotEncoder" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.preprocessing.OneHotEncoder</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF.html#sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF" title="sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PolynomialTransformerWrapperDF</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF.html#sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF" title="sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PolynomialTransformerWrapperDF</span></code></a></p></td>
 <td><p>DF wrapper for <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.PolynomialFeatures.html#sklearn.preprocessing.PolynomialFeatures" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.preprocessing.PolynomialFeatures</span></code></a> and <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.SplineTransformer.html#sklearn.preprocessing.SplineTransformer" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.preprocessing.SplineTransformer</span></code></a>.</p></td>
 </tr>
 </tbody>

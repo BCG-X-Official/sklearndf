@@ -43,6 +43,7 @@ sklearndf.classification.CategoricalNBDF
       ~CategoricalNBDF.classes_
       ~CategoricalNBDF.feature_names_in_
       ~CategoricalNBDF.is_fitted
+      ~CategoricalNBDF.n_features_in_
       ~CategoricalNBDF.n_outputs_
       ~CategoricalNBDF.native_estimator
    

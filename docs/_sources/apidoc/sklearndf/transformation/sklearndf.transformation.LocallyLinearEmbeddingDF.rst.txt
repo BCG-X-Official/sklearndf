@@ -41,6 +41,7 @@ sklearndf.transformation.LocallyLinearEmbeddingDF
       ~LocallyLinearEmbeddingDF.feature_names_original_
       ~LocallyLinearEmbeddingDF.feature_names_out_
       ~LocallyLinearEmbeddingDF.is_fitted
+      ~LocallyLinearEmbeddingDF.n_features_in_
       ~LocallyLinearEmbeddingDF.n_outputs_
       ~LocallyLinearEmbeddingDF.native_estimator
    

@@ -41,6 +41,7 @@ sklearndf.transformation.PowerTransformerDF
       ~PowerTransformerDF.feature_names_original_
       ~PowerTransformerDF.feature_names_out_
       ~PowerTransformerDF.is_fitted
+      ~PowerTransformerDF.n_features_in_
       ~PowerTransformerDF.n_outputs_
       ~PowerTransformerDF.native_estimator
    

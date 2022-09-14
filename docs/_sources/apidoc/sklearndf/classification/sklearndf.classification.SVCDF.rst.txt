@@ -42,6 +42,7 @@ sklearndf.classification.SVCDF
       ~SVCDF.classes_
       ~SVCDF.feature_names_in_
       ~SVCDF.is_fitted
+      ~SVCDF.n_features_in_
       ~SVCDF.n_outputs_
       ~SVCDF.native_estimator
    

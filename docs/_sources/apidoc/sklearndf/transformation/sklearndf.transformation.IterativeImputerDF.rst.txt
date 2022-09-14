@@ -21,6 +21,7 @@ sklearndf.transformation.IterativeImputerDF
       ~IterativeImputerDF.fit
       ~IterativeImputerDF.fit_transform
       ~IterativeImputerDF.from_fitted
+      ~IterativeImputerDF.get_feature_names_out
       ~IterativeImputerDF.get_params
       ~IterativeImputerDF.inverse_transform
       ~IterativeImputerDF.set_params
@@ -41,6 +42,7 @@ sklearndf.transformation.IterativeImputerDF
       ~IterativeImputerDF.feature_names_original_
       ~IterativeImputerDF.feature_names_out_
       ~IterativeImputerDF.is_fitted
+      ~IterativeImputerDF.n_features_in_
       ~IterativeImputerDF.n_outputs_
       ~IterativeImputerDF.native_estimator
    

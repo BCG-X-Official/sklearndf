@@ -48,6 +48,7 @@ sklearndf.classification.LinearDiscriminantAnalysisDF
       ~LinearDiscriminantAnalysisDF.feature_names_original_
       ~LinearDiscriminantAnalysisDF.feature_names_out_
       ~LinearDiscriminantAnalysisDF.is_fitted
+      ~LinearDiscriminantAnalysisDF.n_features_in_
       ~LinearDiscriminantAnalysisDF.n_outputs_
       ~LinearDiscriminantAnalysisDF.native_estimator
    

@@ -44,6 +44,7 @@ sklearndf.regression.wrapper.IsotonicRegressionWrapperDF
       ~IsotonicRegressionWrapperDF.feature_names_original_
       ~IsotonicRegressionWrapperDF.feature_names_out_
       ~IsotonicRegressionWrapperDF.is_fitted
+      ~IsotonicRegressionWrapperDF.n_features_in_
       ~IsotonicRegressionWrapperDF.n_outputs_
       ~IsotonicRegressionWrapperDF.native_estimator
    

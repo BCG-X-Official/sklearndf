@@ -42,6 +42,7 @@ sklearndf.transformation.MaxAbsScalerDF
       ~MaxAbsScalerDF.feature_names_original_
       ~MaxAbsScalerDF.feature_names_out_
       ~MaxAbsScalerDF.is_fitted
+      ~MaxAbsScalerDF.n_features_in_
       ~MaxAbsScalerDF.n_outputs_
       ~MaxAbsScalerDF.native_estimator
    

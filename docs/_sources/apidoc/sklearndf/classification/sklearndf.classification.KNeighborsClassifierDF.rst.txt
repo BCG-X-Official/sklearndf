@@ -42,6 +42,7 @@ sklearndf.classification.KNeighborsClassifierDF
       ~KNeighborsClassifierDF.classes_
       ~KNeighborsClassifierDF.feature_names_in_
       ~KNeighborsClassifierDF.is_fitted
+      ~KNeighborsClassifierDF.n_features_in_
       ~KNeighborsClassifierDF.n_outputs_
       ~KNeighborsClassifierDF.native_estimator
    

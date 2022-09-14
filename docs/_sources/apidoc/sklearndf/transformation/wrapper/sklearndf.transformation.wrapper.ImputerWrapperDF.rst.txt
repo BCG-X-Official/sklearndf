@@ -41,6 +41,7 @@ sklearndf.transformation.wrapper.ImputerWrapperDF
       ~ImputerWrapperDF.feature_names_original_
       ~ImputerWrapperDF.feature_names_out_
       ~ImputerWrapperDF.is_fitted
+      ~ImputerWrapperDF.n_features_in_
       ~ImputerWrapperDF.n_outputs_
       ~ImputerWrapperDF.native_estimator
    

@@ -41,6 +41,7 @@ sklearndf.transformation.wrapper.ColumnSubsetTransformerWrapperDF
       ~ColumnSubsetTransformerWrapperDF.feature_names_original_
       ~ColumnSubsetTransformerWrapperDF.feature_names_out_
       ~ColumnSubsetTransformerWrapperDF.is_fitted
+      ~ColumnSubsetTransformerWrapperDF.n_features_in_
       ~ColumnSubsetTransformerWrapperDF.n_outputs_
       ~ColumnSubsetTransformerWrapperDF.native_estimator
    

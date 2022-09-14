@@ -41,6 +41,7 @@ sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF
       ~KBinsDiscretizerWrapperDF.feature_names_original_
       ~KBinsDiscretizerWrapperDF.feature_names_out_
       ~KBinsDiscretizerWrapperDF.is_fitted
+      ~KBinsDiscretizerWrapperDF.n_features_in_
       ~KBinsDiscretizerWrapperDF.n_outputs_
       ~KBinsDiscretizerWrapperDF.native_estimator
    

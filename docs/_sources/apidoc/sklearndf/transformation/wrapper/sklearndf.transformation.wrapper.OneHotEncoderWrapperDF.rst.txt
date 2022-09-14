@@ -41,6 +41,7 @@ sklearndf.transformation.wrapper.OneHotEncoderWrapperDF
       ~OneHotEncoderWrapperDF.feature_names_original_
       ~OneHotEncoderWrapperDF.feature_names_out_
       ~OneHotEncoderWrapperDF.is_fitted
+      ~OneHotEncoderWrapperDF.n_features_in_
       ~OneHotEncoderWrapperDF.n_outputs_
       ~OneHotEncoderWrapperDF.native_estimator
    

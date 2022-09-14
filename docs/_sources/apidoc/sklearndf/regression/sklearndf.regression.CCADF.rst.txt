@@ -44,6 +44,7 @@ sklearndf.regression.CCADF
       ~CCADF.feature_names_original_
       ~CCADF.feature_names_out_
       ~CCADF.is_fitted
+      ~CCADF.n_features_in_
       ~CCADF.n_outputs_
       ~CCADF.native_estimator
    

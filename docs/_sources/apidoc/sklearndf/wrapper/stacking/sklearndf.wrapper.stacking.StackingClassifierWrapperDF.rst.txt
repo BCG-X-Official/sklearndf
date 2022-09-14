@@ -42,6 +42,7 @@ sklearndf.wrapper.stacking.StackingClassifierWrapperDF
       ~StackingClassifierWrapperDF.classes_
       ~StackingClassifierWrapperDF.feature_names_in_
       ~StackingClassifierWrapperDF.is_fitted
+      ~StackingClassifierWrapperDF.n_features_in_
       ~StackingClassifierWrapperDF.n_outputs_
       ~StackingClassifierWrapperDF.native_estimator
    

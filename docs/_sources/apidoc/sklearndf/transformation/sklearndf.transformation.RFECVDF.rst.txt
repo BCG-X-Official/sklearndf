@@ -42,6 +42,7 @@ sklearndf.transformation.RFECVDF
       ~RFECVDF.feature_names_out_
       ~RFECVDF.grid_scores_
       ~RFECVDF.is_fitted
+      ~RFECVDF.n_features_in_
       ~RFECVDF.n_outputs_
       ~RFECVDF.native_estimator
    

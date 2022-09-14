@@ -45,6 +45,7 @@ sklearndf.classification.GradientBoostingClassifierDF
       ~GradientBoostingClassifierDF.classes_
       ~GradientBoostingClassifierDF.feature_names_in_
       ~GradientBoostingClassifierDF.is_fitted
+      ~GradientBoostingClassifierDF.n_features_in_
       ~GradientBoostingClassifierDF.n_outputs_
       ~GradientBoostingClassifierDF.native_estimator
    

@@ -49,6 +49,7 @@ sklearndf.pipeline.wrapper.PipelineWrapperDF
       ~PipelineWrapperDF.feature_names_original_
       ~PipelineWrapperDF.feature_names_out_
       ~PipelineWrapperDF.is_fitted
+      ~PipelineWrapperDF.n_features_in_
       ~PipelineWrapperDF.n_outputs_
       ~PipelineWrapperDF.native_estimator
       ~PipelineWrapperDF.steps

@@ -30,7 +30,6 @@ sklearndf.regression
       ExtraTreesRegressorDF
       GammaRegressorDF
       GaussianProcessRegressorDF
-      GeneralizedLinearRegressorDF
       GradientBoostingRegressorDF
       HistGradientBoostingRegressorDF
       HuberRegressorDF

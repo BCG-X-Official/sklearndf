@@ -41,6 +41,7 @@ sklearndf.transformation.SelectFdrDF
       ~SelectFdrDF.feature_names_original_
       ~SelectFdrDF.feature_names_out_
       ~SelectFdrDF.is_fitted
+      ~SelectFdrDF.n_features_in_
       ~SelectFdrDF.n_outputs_
       ~SelectFdrDF.native_estimator
    

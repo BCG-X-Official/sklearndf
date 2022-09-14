@@ -36,9 +36,9 @@ sklearndf.regression.GammaRegressorDF
    
       ~GammaRegressorDF.COL_FEATURE_IN
       ~GammaRegressorDF.COL_PREDICTION
-      ~GammaRegressorDF.family
       ~GammaRegressorDF.feature_names_in_
       ~GammaRegressorDF.is_fitted
+      ~GammaRegressorDF.n_features_in_
       ~GammaRegressorDF.n_outputs_
       ~GammaRegressorDF.native_estimator
    

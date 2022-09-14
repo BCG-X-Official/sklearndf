@@ -169,9 +169,6 @@
 
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">GammaRegressor</span><span class="p">,</span> <span class="n">PoissonRegressor</span><span class="p">,</span> <span class="n">TweedieRegressor</span>
 
-<span class="c1"># noinspection PyProtectedMember</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model._glm</span> <span class="kn">import</span> <span class="n">GeneralizedLinearRegressor</span>
-
 <span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span>
 
 <span class="kn">from</span> <span class="nn">..wrapper</span> <span class="kn">import</span> <span class="n">RegressorWrapperDF</span>
@@ -180,7 +177,6 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&quot;GammaRegressorDF&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;GeneralizedLinearRegressorDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;PoissonRegressorDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;TweedieRegressorDF&quot;</span><span class="p">,</span>
 <span class="p">]</span>
@@ -223,13 +219,6 @@
     <span class="n">native</span><span class="o">=</span><span class="n">TweedieRegressor</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``TweedieRegressor``&quot;&quot;&quot;</span></div>
-
-
-<div class="viewcode-block" id="GeneralizedLinearRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.GeneralizedLinearRegressorDF.html#sklearndf.regression.GeneralizedLinearRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">GeneralizedLinearRegressorDF</span><span class="p">(</span>
-    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">GeneralizedLinearRegressor</span><span class="p">],</span>
-    <span class="n">native</span><span class="o">=</span><span class="n">GeneralizedLinearRegressor</span><span class="p">,</span>
-<span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``GeneralizedLinearRegressor``&quot;&quot;&quot;</span></div>
 
 
 <span class="c1">#</span>

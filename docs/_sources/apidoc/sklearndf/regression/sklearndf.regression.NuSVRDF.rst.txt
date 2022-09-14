@@ -38,6 +38,7 @@ sklearndf.regression.NuSVRDF
       ~NuSVRDF.COL_PREDICTION
       ~NuSVRDF.feature_names_in_
       ~NuSVRDF.is_fitted
+      ~NuSVRDF.n_features_in_
       ~NuSVRDF.n_outputs_
       ~NuSVRDF.native_estimator
    

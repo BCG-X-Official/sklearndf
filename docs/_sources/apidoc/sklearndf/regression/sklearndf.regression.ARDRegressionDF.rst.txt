@@ -38,6 +38,7 @@ sklearndf.regression.ARDRegressionDF
       ~ARDRegressionDF.COL_PREDICTION
       ~ARDRegressionDF.feature_names_in_
       ~ARDRegressionDF.is_fitted
+      ~ARDRegressionDF.n_features_in_
       ~ARDRegressionDF.n_outputs_
       ~ARDRegressionDF.native_estimator
    

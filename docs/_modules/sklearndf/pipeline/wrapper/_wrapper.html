@@ -173,6 +173,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pandas.core.arrays</span> <span class="kn">import</span> <span class="n">ExtensionArray</span>
 <span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">FeatureUnion</span><span class="p">,</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">FunctionTransformer</span>
 
 <span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span>
 
@@ -295,7 +296,7 @@
         <span class="k">return</span> <span class="n">estimator</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">estimator</span> <span class="o">==</span> <span class="n">PipelineWrapperDF</span><span class="o">.</span><span class="n">PASSTHROUGH</span>
 
     <span class="k">def</span> <span class="nf">_transformer_steps</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TransformerDF</span><span class="p">]]:</span>
-        <span class="c1"># make an iterator of all transform steps, i.e. excluding the final step</span>
+        <span class="c1"># make an iterator of all transform steps, i.e., excluding the final step</span>
         <span class="c1"># in case it is not a transformer</span>
         <span class="c1"># excludes steps whose transformer is ``None`` or ``&quot;passthrough&quot;``</span>
 
@@ -380,12 +381,15 @@
 <span class="sd">    DF wrapper for `scikit-learn` class :class:`~sklearn.pipeline.FeatureUnion`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="n">DROP</span> <span class="o">=</span> <span class="s2">&quot;drop&quot;</span>
+    <span class="n">PASSTHROUGH</span> <span class="o">=</span> <span class="s2">&quot;passthrough&quot;</span>
+
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_prepend_features_out</span><span class="p">(</span><span class="n">features_out</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span> <span class="n">name_prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name_prefix</span><span class="si">}</span><span class="s2">__&quot;</span> <span class="o">+</span> <span class="n">features_out</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_get_features_original</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
-        <span class="c1"># concatenate output-&gt;input mappings from all included transformers other than</span>
+        <span class="c1"># concatenate output-to-input mappings from all included transformers other than</span>
         <span class="c1"># ones stated as ``None`` or ``&quot;drop&quot;`` or any other string</span>
 
         <span class="c1"># prepend the name of the transformer so the resulting feature name is</span>
@@ -419,18 +423,29 @@
         <span class="c1"># prepend the name of the transformer so the resulting feature name is</span>
         <span class="c1"># `&lt;name&gt;__&lt;output column of sub-transformer&gt;</span>
 
-        <span class="c1"># noinspection PyProtectedMember</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="n">transformer</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">TransformerDF</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">FunctionTransformer</span><span class="p">]</span>
+
         <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_prepend_features_out</span><span class="p">(</span>
-                <span class="n">features_out</span><span class="o">=</span><span class="n">transformer</span><span class="o">.</span><span class="n">feature_names_out_</span><span class="p">,</span> <span class="n">name_prefix</span><span class="o">=</span><span class="n">name</span>
+                <span class="n">features_out</span><span class="o">=</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_get_features_in</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="p">(</span>
+                        <span class="nb">isinstance</span><span class="p">(</span><span class="n">transformer</span><span class="p">,</span> <span class="n">FunctionTransformer</span><span class="p">)</span>
+                        <span class="ow">and</span> <span class="n">transformer</span><span class="o">.</span><span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span>
+                    <span class="p">)</span>
+                    <span class="k">else</span> <span class="n">cast</span><span class="p">(</span><span class="n">TransformerDF</span><span class="p">,</span> <span class="n">transformer</span><span class="p">)</span><span class="o">.</span><span class="n">feature_names_out_</span>
+                <span class="p">),</span>
+                <span class="n">name_prefix</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">transformer</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">_iter</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">transformer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">transformer_list</span>
+            <span class="k">if</span> <span class="n">transformer</span> <span class="o">!=</span> <span class="n">FeatureUnionWrapperDF</span><span class="o">.</span><span class="n">DROP</span>
         <span class="p">]</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">other</span><span class="o">=</span><span class="n">indices</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span></div>
+            <span class="k">return</span> <span class="n">indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span></div>
 
 
 <span class="c1">#</span>

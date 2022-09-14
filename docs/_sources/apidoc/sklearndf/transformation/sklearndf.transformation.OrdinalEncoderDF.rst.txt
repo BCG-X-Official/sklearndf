@@ -41,6 +41,7 @@ sklearndf.transformation.OrdinalEncoderDF
       ~OrdinalEncoderDF.feature_names_original_
       ~OrdinalEncoderDF.feature_names_out_
       ~OrdinalEncoderDF.is_fitted
+      ~OrdinalEncoderDF.n_features_in_
       ~OrdinalEncoderDF.n_outputs_
       ~OrdinalEncoderDF.native_estimator
    

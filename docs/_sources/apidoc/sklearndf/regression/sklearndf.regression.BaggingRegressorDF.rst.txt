@@ -38,6 +38,7 @@ sklearndf.regression.BaggingRegressorDF
       ~BaggingRegressorDF.COL_PREDICTION
       ~BaggingRegressorDF.feature_names_in_
       ~BaggingRegressorDF.is_fitted
+      ~BaggingRegressorDF.n_features_in_
       ~BaggingRegressorDF.n_outputs_
       ~BaggingRegressorDF.native_estimator
    

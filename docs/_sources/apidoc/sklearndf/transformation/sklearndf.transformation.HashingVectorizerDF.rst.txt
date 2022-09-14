@@ -42,6 +42,7 @@ sklearndf.transformation.HashingVectorizerDF
       ~HashingVectorizerDF.feature_names_original_
       ~HashingVectorizerDF.feature_names_out_
       ~HashingVectorizerDF.is_fitted
+      ~HashingVectorizerDF.n_features_in_
       ~HashingVectorizerDF.n_outputs_
       ~HashingVectorizerDF.native_estimator
    

@@ -37,10 +37,13 @@ sklearndf.pipeline.wrapper.FeatureUnionWrapperDF
    
       ~FeatureUnionWrapperDF.COL_FEATURE_IN
       ~FeatureUnionWrapperDF.COL_FEATURE_OUT
+      ~FeatureUnionWrapperDF.DROP
+      ~FeatureUnionWrapperDF.PASSTHROUGH
       ~FeatureUnionWrapperDF.feature_names_in_
       ~FeatureUnionWrapperDF.feature_names_original_
       ~FeatureUnionWrapperDF.feature_names_out_
       ~FeatureUnionWrapperDF.is_fitted
+      ~FeatureUnionWrapperDF.n_features_in_
       ~FeatureUnionWrapperDF.n_outputs_
       ~FeatureUnionWrapperDF.native_estimator
    

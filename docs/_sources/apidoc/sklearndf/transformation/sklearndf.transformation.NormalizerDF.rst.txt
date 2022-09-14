@@ -41,6 +41,7 @@ sklearndf.transformation.NormalizerDF
       ~NormalizerDF.feature_names_original_
       ~NormalizerDF.feature_names_out_
       ~NormalizerDF.is_fitted
+      ~NormalizerDF.n_features_in_
       ~NormalizerDF.n_outputs_
       ~NormalizerDF.native_estimator
    

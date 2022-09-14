@@ -45,6 +45,7 @@ sklearndf.classification.AdaBoostClassifierDF
       ~AdaBoostClassifierDF.classes_
       ~AdaBoostClassifierDF.feature_names_in_
       ~AdaBoostClassifierDF.is_fitted
+      ~AdaBoostClassifierDF.n_features_in_
       ~AdaBoostClassifierDF.n_outputs_
       ~AdaBoostClassifierDF.native_estimator
    

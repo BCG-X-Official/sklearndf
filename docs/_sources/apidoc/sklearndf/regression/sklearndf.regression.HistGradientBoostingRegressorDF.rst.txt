@@ -39,6 +39,7 @@ sklearndf.regression.HistGradientBoostingRegressorDF
       ~HistGradientBoostingRegressorDF.COL_PREDICTION
       ~HistGradientBoostingRegressorDF.feature_names_in_
       ~HistGradientBoostingRegressorDF.is_fitted
+      ~HistGradientBoostingRegressorDF.n_features_in_
       ~HistGradientBoostingRegressorDF.n_outputs_
       ~HistGradientBoostingRegressorDF.native_estimator
    

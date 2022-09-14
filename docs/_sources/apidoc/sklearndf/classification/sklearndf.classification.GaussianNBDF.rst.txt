@@ -43,6 +43,7 @@ sklearndf.classification.GaussianNBDF
       ~GaussianNBDF.classes_
       ~GaussianNBDF.feature_names_in_
       ~GaussianNBDF.is_fitted
+      ~GaussianNBDF.n_features_in_
       ~GaussianNBDF.n_outputs_
       ~GaussianNBDF.native_estimator
       ~GaussianNBDF.sigma_

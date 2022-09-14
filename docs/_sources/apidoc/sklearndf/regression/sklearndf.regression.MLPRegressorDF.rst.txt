@@ -39,6 +39,7 @@ sklearndf.regression.MLPRegressorDF
       ~MLPRegressorDF.COL_PREDICTION
       ~MLPRegressorDF.feature_names_in_
       ~MLPRegressorDF.is_fitted
+      ~MLPRegressorDF.n_features_in_
       ~MLPRegressorDF.n_outputs_
       ~MLPRegressorDF.native_estimator
    

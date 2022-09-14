@@ -42,6 +42,7 @@ sklearndf.classification.LogisticRegressionCVDF
       ~LogisticRegressionCVDF.classes_
       ~LogisticRegressionCVDF.feature_names_in_
       ~LogisticRegressionCVDF.is_fitted
+      ~LogisticRegressionCVDF.n_features_in_
       ~LogisticRegressionCVDF.n_outputs_
       ~LogisticRegressionCVDF.native_estimator
    

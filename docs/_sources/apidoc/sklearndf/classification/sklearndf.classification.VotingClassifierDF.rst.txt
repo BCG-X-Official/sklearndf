@@ -21,6 +21,7 @@ sklearndf.classification.VotingClassifierDF
       ~VotingClassifierDF.ensure_fitted
       ~VotingClassifierDF.fit
       ~VotingClassifierDF.from_fitted
+      ~VotingClassifierDF.get_feature_names_out
       ~VotingClassifierDF.get_params
       ~VotingClassifierDF.predict
       ~VotingClassifierDF.predict_log_proba
@@ -43,6 +44,7 @@ sklearndf.classification.VotingClassifierDF
       ~VotingClassifierDF.classes_
       ~VotingClassifierDF.feature_names_in_
       ~VotingClassifierDF.is_fitted
+      ~VotingClassifierDF.n_features_in_
       ~VotingClassifierDF.n_outputs_
       ~VotingClassifierDF.native_estimator
    

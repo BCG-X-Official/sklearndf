@@ -41,6 +41,7 @@ sklearndf.transformation.VarianceThresholdDF
       ~VarianceThresholdDF.feature_names_original_
       ~VarianceThresholdDF.feature_names_out_
       ~VarianceThresholdDF.is_fitted
+      ~VarianceThresholdDF.n_features_in_
       ~VarianceThresholdDF.n_outputs_
       ~VarianceThresholdDF.native_estimator
    

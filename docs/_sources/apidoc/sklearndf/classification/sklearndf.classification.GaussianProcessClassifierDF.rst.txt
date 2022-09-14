@@ -44,6 +44,7 @@ sklearndf.classification.GaussianProcessClassifierDF
       ~GaussianProcessClassifierDF.feature_names_in_
       ~GaussianProcessClassifierDF.is_fitted
       ~GaussianProcessClassifierDF.kernel_
+      ~GaussianProcessClassifierDF.n_features_in_
       ~GaussianProcessClassifierDF.n_outputs_
       ~GaussianProcessClassifierDF.native_estimator
    

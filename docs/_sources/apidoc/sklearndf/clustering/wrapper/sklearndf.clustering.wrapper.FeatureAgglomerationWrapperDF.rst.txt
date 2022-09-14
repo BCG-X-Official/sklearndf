@@ -46,6 +46,7 @@ sklearndf.clustering.wrapper.FeatureAgglomerationWrapperDF
       ~FeatureAgglomerationWrapperDF.feature_names_out_
       ~FeatureAgglomerationWrapperDF.is_fitted
       ~FeatureAgglomerationWrapperDF.labels_
+      ~FeatureAgglomerationWrapperDF.n_features_in_
       ~FeatureAgglomerationWrapperDF.n_outputs_
       ~FeatureAgglomerationWrapperDF.native_estimator
    

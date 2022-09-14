@@ -41,6 +41,7 @@ sklearndf.transformation.TruncatedSVDDF
       ~TruncatedSVDDF.feature_names_original_
       ~TruncatedSVDDF.feature_names_out_
       ~TruncatedSVDDF.is_fitted
+      ~TruncatedSVDDF.n_features_in_
       ~TruncatedSVDDF.n_outputs_
       ~TruncatedSVDDF.native_estimator
    

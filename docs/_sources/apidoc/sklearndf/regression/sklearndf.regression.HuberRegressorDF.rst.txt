@@ -38,6 +38,7 @@ sklearndf.regression.HuberRegressorDF
       ~HuberRegressorDF.COL_PREDICTION
       ~HuberRegressorDF.feature_names_in_
       ~HuberRegressorDF.is_fitted
+      ~HuberRegressorDF.n_features_in_
       ~HuberRegressorDF.n_outputs_
       ~HuberRegressorDF.native_estimator
    

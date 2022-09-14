@@ -44,6 +44,7 @@ sklearndf.transformation
       MaxAbsScalerDF
       MinMaxScalerDF
       MiniBatchDictionaryLearningDF
+      MiniBatchNMFDF
       MiniBatchSparsePCADF
       MissingIndicatorDF
       MultiLabelBinarizerDF
@@ -62,6 +63,7 @@ sklearndf.transformation
       RBFSamplerDF
       RFECVDF
       RFEDF
+      RandomTreesEmbeddingDF
       RobustScalerDF
       SelectFdrDF
       SelectFprDF

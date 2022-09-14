@@ -39,6 +39,7 @@ sklearndf.regression.SGDRegressorDF
       ~SGDRegressorDF.COL_PREDICTION
       ~SGDRegressorDF.feature_names_in_
       ~SGDRegressorDF.is_fitted
+      ~SGDRegressorDF.n_features_in_
       ~SGDRegressorDF.n_outputs_
       ~SGDRegressorDF.native_estimator
    

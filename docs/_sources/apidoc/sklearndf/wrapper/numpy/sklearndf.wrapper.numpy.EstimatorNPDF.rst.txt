@@ -34,6 +34,7 @@ sklearndf.wrapper.numpy.EstimatorNPDF
       ~EstimatorNPDF.COL_FEATURE_IN
       ~EstimatorNPDF.feature_names_in_
       ~EstimatorNPDF.is_fitted
+      ~EstimatorNPDF.n_features_in_
       ~EstimatorNPDF.n_outputs_
       ~EstimatorNPDF.native_estimator
       ~EstimatorNPDF.delegate

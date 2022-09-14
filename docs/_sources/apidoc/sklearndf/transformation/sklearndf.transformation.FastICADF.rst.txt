@@ -41,6 +41,7 @@ sklearndf.transformation.FastICADF
       ~FastICADF.feature_names_original_
       ~FastICADF.feature_names_out_
       ~FastICADF.is_fitted
+      ~FastICADF.n_features_in_
       ~FastICADF.n_outputs_
       ~FastICADF.native_estimator
    

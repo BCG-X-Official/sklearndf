@@ -39,6 +39,7 @@ sklearndf.pipeline.LearnerPipelineDF
       ~LearnerPipelineDF.final_estimator
       ~LearnerPipelineDF.final_estimator_name
       ~LearnerPipelineDF.is_fitted
+      ~LearnerPipelineDF.n_features_in_
       ~LearnerPipelineDF.n_outputs_
       ~LearnerPipelineDF.native_estimator
       ~LearnerPipelineDF.preprocessing

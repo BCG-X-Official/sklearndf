@@ -39,6 +39,7 @@ sklearndf.regression.PassiveAggressiveRegressorDF
       ~PassiveAggressiveRegressorDF.COL_PREDICTION
       ~PassiveAggressiveRegressorDF.feature_names_in_
       ~PassiveAggressiveRegressorDF.is_fitted
+      ~PassiveAggressiveRegressorDF.n_features_in_
       ~PassiveAggressiveRegressorDF.n_outputs_
       ~PassiveAggressiveRegressorDF.native_estimator
    

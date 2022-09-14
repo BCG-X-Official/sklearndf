@@ -42,6 +42,7 @@ sklearndf.classification.NearestCentroidDF
       ~NearestCentroidDF.classes_
       ~NearestCentroidDF.feature_names_in_
       ~NearestCentroidDF.is_fitted
+      ~NearestCentroidDF.n_features_in_
       ~NearestCentroidDF.n_outputs_
       ~NearestCentroidDF.native_estimator
    

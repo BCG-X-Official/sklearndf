@@ -41,6 +41,7 @@ sklearndf.transformation.DictionaryLearningDF
       ~DictionaryLearningDF.feature_names_original_
       ~DictionaryLearningDF.feature_names_out_
       ~DictionaryLearningDF.is_fitted
+      ~DictionaryLearningDF.n_features_in_
       ~DictionaryLearningDF.n_outputs_
       ~DictionaryLearningDF.native_estimator
    

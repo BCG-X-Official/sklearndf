@@ -41,6 +41,7 @@ sklearndf.transformation.BinarizerDF
       ~BinarizerDF.feature_names_original_
       ~BinarizerDF.feature_names_out_
       ~BinarizerDF.is_fitted
+      ~BinarizerDF.n_features_in_
       ~BinarizerDF.n_outputs_
       ~BinarizerDF.native_estimator
    

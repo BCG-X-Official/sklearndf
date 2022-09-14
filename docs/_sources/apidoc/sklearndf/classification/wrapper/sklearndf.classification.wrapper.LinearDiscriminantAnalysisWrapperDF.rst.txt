@@ -48,6 +48,7 @@ sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF
       ~LinearDiscriminantAnalysisWrapperDF.feature_names_original_
       ~LinearDiscriminantAnalysisWrapperDF.feature_names_out_
       ~LinearDiscriminantAnalysisWrapperDF.is_fitted
+      ~LinearDiscriminantAnalysisWrapperDF.n_features_in_
       ~LinearDiscriminantAnalysisWrapperDF.n_outputs_
       ~LinearDiscriminantAnalysisWrapperDF.native_estimator
    

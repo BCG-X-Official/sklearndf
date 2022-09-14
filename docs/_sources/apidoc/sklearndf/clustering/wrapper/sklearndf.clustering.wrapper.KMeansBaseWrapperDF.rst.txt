@@ -42,6 +42,7 @@ sklearndf.clustering.wrapper.KMeansBaseWrapperDF
       ~KMeansBaseWrapperDF.feature_names_in_
       ~KMeansBaseWrapperDF.is_fitted
       ~KMeansBaseWrapperDF.labels_
+      ~KMeansBaseWrapperDF.n_features_in_
       ~KMeansBaseWrapperDF.n_outputs_
       ~KMeansBaseWrapperDF.native_estimator
    

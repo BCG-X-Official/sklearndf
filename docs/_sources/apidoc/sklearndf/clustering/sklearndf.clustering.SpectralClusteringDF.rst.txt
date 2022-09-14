@@ -40,6 +40,7 @@ sklearndf.clustering.SpectralClusteringDF
       ~SpectralClusteringDF.feature_names_in_
       ~SpectralClusteringDF.is_fitted
       ~SpectralClusteringDF.labels_
+      ~SpectralClusteringDF.n_features_in_
       ~SpectralClusteringDF.n_outputs_
       ~SpectralClusteringDF.native_estimator
    

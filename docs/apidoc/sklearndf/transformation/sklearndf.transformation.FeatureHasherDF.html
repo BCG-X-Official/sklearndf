@@ -479,6 +479,11 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../clustering/sklearndf.clustering.BisectingKMeansDF.html">
+     sklearndf.clustering.BisectingKMeansDF
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../clustering/sklearndf.clustering.DBSCANDF.html">
      sklearndf.clustering.DBSCANDF
     </a>
@@ -679,11 +684,6 @@
    <li class="toctree-l2">
     <a class="reference internal" href="../regression/sklearndf.regression.GaussianProcessRegressorDF.html">
      sklearndf.regression.GaussianProcessRegressorDF
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../regression/sklearndf.regression.GeneralizedLinearRegressorDF.html">
-     sklearndf.regression.GeneralizedLinearRegressorDF
     </a>
    </li>
    <li class="toctree-l2">
@@ -1103,6 +1103,11 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="sklearndf.transformation.MiniBatchNMFDF.html">
+     sklearndf.transformation.MiniBatchNMFDF
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="sklearndf.transformation.MiniBatchSparsePCADF.html">
      sklearndf.transformation.MiniBatchSparsePCADF
     </a>
@@ -1190,6 +1195,11 @@
    <li class="toctree-l2">
     <a class="reference internal" href="sklearndf.transformation.RFEDF.html">
      sklearndf.transformation.RFEDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="sklearndf.transformation.RandomTreesEmbeddingDF.html">
+     sklearndf.transformation.RandomTreesEmbeddingDF
     </a>
    </li>
    <li class="toctree-l2">
@@ -1332,8 +1342,8 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.BaseDimensionalityReductionWrapperDF.html">
-       sklearndf.transformation.wrapper.BaseDimensionalityReductionWrapperDF
+      <a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF.html">
+       sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF
       </a>
      </li>
      <li class="toctree-l3">
@@ -1359,6 +1369,11 @@
      <li class="toctree-l3">
       <a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF.html">
        sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.EmbeddingWrapperDF.html">
+       sklearndf.transformation.wrapper.EmbeddingWrapperDF
       </a>
      </li>
      <li class="toctree-l3">
@@ -1665,10 +1680,13 @@ delegates all attribute access and method calls to an associated
 <tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.FeatureHasherDF.is_fitted" title="sklearndf.transformation.FeatureHasherDF.is_fitted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_fitted</span></code></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if this object is fitted, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.FeatureHasherDF.n_outputs_" title="sklearndf.transformation.FeatureHasherDF.n_outputs_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_outputs_</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.FeatureHasherDF.n_features_in_" title="sklearndf.transformation.FeatureHasherDF.n_features_in_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_features_in_</span></code></a></p></td>
+<td><p>The number of features used to fit this estimator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.FeatureHasherDF.n_outputs_" title="sklearndf.transformation.FeatureHasherDF.n_outputs_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_outputs_</span></code></a></p></td>
 <td><p>The number of outputs used to fit this estimator.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.FeatureHasherDF.native_estimator" title="sklearndf.transformation.FeatureHasherDF.native_estimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">native_estimator</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.FeatureHasherDF.native_estimator" title="sklearndf.transformation.FeatureHasherDF.native_estimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">native_estimator</span></code></a></p></td>
 <td><p>The native estimator that this wrapper delegates to.</p></td>
 </tr>
 </tbody>
@@ -1832,7 +1850,7 @@ column names.</p>
 <dd><p>Render this object as an expression.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://bcg-gamma.github.io/pytools/apidoc/pytools/expression/pytools.expression.Expression.html#pytools.expression.Expression" title="(in pytools v2.0.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Expression</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://bcg-gamma.github.io/pytools/apidoc/pytools/expression/pytools.expression.Expression.html#pytools.expression.Expression" title="(in pytools v2.0.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Expression</span></code></a></p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the expression representing this object</p>
@@ -1909,6 +1927,23 @@ transformer</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.transformation.FeatureHasherDF.n_features_in_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_features_in_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#int" title="(in Python v3.7)"><span class="pre">int</span></a></em><a class="headerlink" href="#sklearndf.transformation.FeatureHasherDF.n_features_in_" title="Permalink to this definition">#</a></dt>
+<dd><p>The number of features used to fit this estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/exceptions.html#AttributeError" title="(in Python v3.7)"><strong>AttributeError</strong></a> – if this estimator is not fitted</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the number of features</p>
 </dd>
 </dl>
 </dd></dl>

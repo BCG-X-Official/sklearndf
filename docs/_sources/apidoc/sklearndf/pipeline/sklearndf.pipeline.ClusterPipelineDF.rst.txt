@@ -41,6 +41,7 @@ sklearndf.pipeline.ClusterPipelineDF
       ~ClusterPipelineDF.final_estimator_name
       ~ClusterPipelineDF.is_fitted
       ~ClusterPipelineDF.labels_
+      ~ClusterPipelineDF.n_features_in_
       ~ClusterPipelineDF.n_outputs_
       ~ClusterPipelineDF.native_estimator
       ~ClusterPipelineDF.preprocessing

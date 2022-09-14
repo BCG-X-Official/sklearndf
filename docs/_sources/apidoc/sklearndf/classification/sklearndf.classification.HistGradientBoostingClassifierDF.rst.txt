@@ -45,6 +45,7 @@ sklearndf.classification.HistGradientBoostingClassifierDF
       ~HistGradientBoostingClassifierDF.classes_
       ~HistGradientBoostingClassifierDF.feature_names_in_
       ~HistGradientBoostingClassifierDF.is_fitted
+      ~HistGradientBoostingClassifierDF.n_features_in_
       ~HistGradientBoostingClassifierDF.n_outputs_
       ~HistGradientBoostingClassifierDF.native_estimator
    

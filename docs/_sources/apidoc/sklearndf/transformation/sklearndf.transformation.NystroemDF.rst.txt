@@ -41,6 +41,7 @@ sklearndf.transformation.NystroemDF
       ~NystroemDF.feature_names_original_
       ~NystroemDF.feature_names_out_
       ~NystroemDF.is_fitted
+      ~NystroemDF.n_features_in_
       ~NystroemDF.n_outputs_
       ~NystroemDF.native_estimator
    

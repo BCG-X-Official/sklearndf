@@ -39,6 +39,7 @@ sklearndf.regression.wrapper.MultiOutputRegressorWrapperDF
       ~MultiOutputRegressorWrapperDF.COL_PREDICTION
       ~MultiOutputRegressorWrapperDF.feature_names_in_
       ~MultiOutputRegressorWrapperDF.is_fitted
+      ~MultiOutputRegressorWrapperDF.n_features_in_
       ~MultiOutputRegressorWrapperDF.n_outputs_
       ~MultiOutputRegressorWrapperDF.native_estimator
    

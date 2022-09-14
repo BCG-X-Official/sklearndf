@@ -42,6 +42,7 @@ sklearndf.classification.wrapper.MetaClassifierWrapperDF
       ~MetaClassifierWrapperDF.classes_
       ~MetaClassifierWrapperDF.feature_names_in_
       ~MetaClassifierWrapperDF.is_fitted
+      ~MetaClassifierWrapperDF.n_features_in_
       ~MetaClassifierWrapperDF.n_outputs_
       ~MetaClassifierWrapperDF.native_estimator
    

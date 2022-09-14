@@ -38,6 +38,7 @@ sklearndf.regression.RidgeCVDF
       ~RidgeCVDF.COL_PREDICTION
       ~RidgeCVDF.feature_names_in_
       ~RidgeCVDF.is_fitted
+      ~RidgeCVDF.n_features_in_
       ~RidgeCVDF.n_outputs_
       ~RidgeCVDF.native_estimator
    

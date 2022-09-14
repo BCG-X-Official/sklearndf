@@ -38,6 +38,7 @@ sklearndf.regression.ElasticNetCVDF
       ~ElasticNetCVDF.COL_PREDICTION
       ~ElasticNetCVDF.feature_names_in_
       ~ElasticNetCVDF.is_fitted
+      ~ElasticNetCVDF.n_features_in_
       ~ElasticNetCVDF.n_outputs_
       ~ElasticNetCVDF.native_estimator
    

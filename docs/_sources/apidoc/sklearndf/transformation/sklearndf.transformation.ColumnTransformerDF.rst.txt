@@ -45,6 +45,7 @@ sklearndf.transformation.ColumnTransformerDF
       ~ColumnTransformerDF.feature_names_original_
       ~ColumnTransformerDF.feature_names_out_
       ~ColumnTransformerDF.is_fitted
+      ~ColumnTransformerDF.n_features_in_
       ~ColumnTransformerDF.n_outputs_
       ~ColumnTransformerDF.named_transformers_
       ~ColumnTransformerDF.native_estimator

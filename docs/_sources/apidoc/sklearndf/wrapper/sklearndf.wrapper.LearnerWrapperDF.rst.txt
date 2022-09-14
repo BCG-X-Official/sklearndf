@@ -37,6 +37,7 @@ sklearndf.wrapper.LearnerWrapperDF
       ~LearnerWrapperDF.COL_PREDICTION
       ~LearnerWrapperDF.feature_names_in_
       ~LearnerWrapperDF.is_fitted
+      ~LearnerWrapperDF.n_features_in_
       ~LearnerWrapperDF.n_outputs_
       ~LearnerWrapperDF.native_estimator
    

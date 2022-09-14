@@ -35,6 +35,7 @@ sklearndf.wrapper.MetaEstimatorWrapperDF
       ~MetaEstimatorWrapperDF.COL_FEATURE_IN
       ~MetaEstimatorWrapperDF.feature_names_in_
       ~MetaEstimatorWrapperDF.is_fitted
+      ~MetaEstimatorWrapperDF.n_features_in_
       ~MetaEstimatorWrapperDF.n_outputs_
       ~MetaEstimatorWrapperDF.native_estimator
    

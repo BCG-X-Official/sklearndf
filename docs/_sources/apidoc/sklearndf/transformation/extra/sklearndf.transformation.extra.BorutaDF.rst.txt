@@ -41,6 +41,7 @@ sklearndf.transformation.extra.BorutaDF
       ~BorutaDF.feature_names_original_
       ~BorutaDF.feature_names_out_
       ~BorutaDF.is_fitted
+      ~BorutaDF.n_features_in_
       ~BorutaDF.n_outputs_
       ~BorutaDF.native_estimator
    

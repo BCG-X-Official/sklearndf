@@ -44,6 +44,7 @@ sklearndf.transformation.DictVectorizerDF
       ~DictVectorizerDF.feature_names_original_
       ~DictVectorizerDF.feature_names_out_
       ~DictVectorizerDF.is_fitted
+      ~DictVectorizerDF.n_features_in_
       ~DictVectorizerDF.n_outputs_
       ~DictVectorizerDF.native_estimator
    

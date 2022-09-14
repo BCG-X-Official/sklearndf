@@ -42,6 +42,7 @@ sklearndf.classification.QuadraticDiscriminantAnalysisDF
       ~QuadraticDiscriminantAnalysisDF.classes_
       ~QuadraticDiscriminantAnalysisDF.feature_names_in_
       ~QuadraticDiscriminantAnalysisDF.is_fitted
+      ~QuadraticDiscriminantAnalysisDF.n_features_in_
       ~QuadraticDiscriminantAnalysisDF.n_outputs_
       ~QuadraticDiscriminantAnalysisDF.native_estimator
    

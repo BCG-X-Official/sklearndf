@@ -43,6 +43,7 @@ sklearndf.classification.wrapper.PartialFitClassifierWrapperDF
       ~PartialFitClassifierWrapperDF.classes_
       ~PartialFitClassifierWrapperDF.feature_names_in_
       ~PartialFitClassifierWrapperDF.is_fitted
+      ~PartialFitClassifierWrapperDF.n_features_in_
       ~PartialFitClassifierWrapperDF.n_outputs_
       ~PartialFitClassifierWrapperDF.native_estimator
    

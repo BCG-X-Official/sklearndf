@@ -41,6 +41,7 @@ sklearndf.transformation.MultiLabelBinarizerDF
       ~MultiLabelBinarizerDF.feature_names_original_
       ~MultiLabelBinarizerDF.feature_names_out_
       ~MultiLabelBinarizerDF.is_fitted
+      ~MultiLabelBinarizerDF.n_features_in_
       ~MultiLabelBinarizerDF.n_outputs_
       ~MultiLabelBinarizerDF.native_estimator
    

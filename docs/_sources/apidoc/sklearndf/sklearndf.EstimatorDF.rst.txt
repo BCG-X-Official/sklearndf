@@ -34,6 +34,7 @@ sklearndf.EstimatorDF
       ~EstimatorDF.COL_FEATURE_IN
       ~EstimatorDF.feature_names_in_
       ~EstimatorDF.is_fitted
+      ~EstimatorDF.n_features_in_
       ~EstimatorDF.n_outputs_
       ~EstimatorDF.native_estimator
    

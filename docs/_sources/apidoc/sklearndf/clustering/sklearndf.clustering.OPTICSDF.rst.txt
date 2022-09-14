@@ -40,6 +40,7 @@ sklearndf.clustering.OPTICSDF
       ~OPTICSDF.feature_names_in_
       ~OPTICSDF.is_fitted
       ~OPTICSDF.labels_
+      ~OPTICSDF.n_features_in_
       ~OPTICSDF.n_outputs_
       ~OPTICSDF.native_estimator
    

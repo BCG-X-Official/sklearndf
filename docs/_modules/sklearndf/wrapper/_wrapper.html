@@ -439,6 +439,11 @@
             <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">,</span> <span class="n">warning_stacklevel</span><span class="o">=</span><span class="mi">2</span>
         <span class="p">)</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_features_in_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_n_features_in</span><span class="p">(</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">n_features_in_</span><span class="p">,</span> <span class="n">warning_stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">_check_feature_names_in</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">wrapper_feature_names_in</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">warning_stacklevel</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
@@ -462,6 +467,30 @@
                 <span class="n">stacklevel</span><span class="o">=</span><span class="n">warning_stacklevel</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">return</span> <span class="n">wrapper_feature_names_in</span>
+
+    <span class="k">def</span> <span class="nf">_check_n_features_in</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">wrapper_n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">warning_stacklevel</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="c1"># Check that the given number of features is the same as the number of features</span>
+        <span class="c1"># recorded by the native estimator, if present. Issue a warning if the number of</span>
+        <span class="c1"># features differ.</span>
+        <span class="c1"># Return the same number of features that were passed to this method.</span>
+
+        <span class="c1"># noinspection PyBroadException</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">n_features_native</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">n_features_in_</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">wrapper_n_features</span>
+
+        <span class="k">if</span> <span class="n">wrapper_n_features</span> <span class="o">!=</span> <span class="n">n_features_native</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;conflicting number of features: &quot;</span>
+                <span class="s2">&quot;the number of features recorded by this estimator is &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wrapper_n_features</span><span class="si">}</span><span class="s2">, but the number of features recorded by &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;the wrapped native estimator is </span><span class="si">{</span><span class="n">n_features_native</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">stacklevel</span><span class="o">=</span><span class="n">warning_stacklevel</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrapper_n_features</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_estimator_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>

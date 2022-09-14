@@ -38,6 +38,7 @@ sklearndf.regression.SVRDF
       ~SVRDF.COL_PREDICTION
       ~SVRDF.feature_names_in_
       ~SVRDF.is_fitted
+      ~SVRDF.n_features_in_
       ~SVRDF.n_outputs_
       ~SVRDF.native_estimator
    

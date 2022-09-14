@@ -38,6 +38,7 @@ sklearndf.regression.ExtraTreeRegressorDF
       ~ExtraTreeRegressorDF.COL_PREDICTION
       ~ExtraTreeRegressorDF.feature_names_in_
       ~ExtraTreeRegressorDF.is_fitted
+      ~ExtraTreeRegressorDF.n_features_in_
       ~ExtraTreeRegressorDF.n_outputs_
       ~ExtraTreeRegressorDF.native_estimator
    

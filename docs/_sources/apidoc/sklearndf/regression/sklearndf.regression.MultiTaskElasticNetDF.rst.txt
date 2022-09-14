@@ -38,6 +38,7 @@ sklearndf.regression.MultiTaskElasticNetDF
       ~MultiTaskElasticNetDF.COL_PREDICTION
       ~MultiTaskElasticNetDF.feature_names_in_
       ~MultiTaskElasticNetDF.is_fitted
+      ~MultiTaskElasticNetDF.n_features_in_
       ~MultiTaskElasticNetDF.n_outputs_
       ~MultiTaskElasticNetDF.native_estimator
    

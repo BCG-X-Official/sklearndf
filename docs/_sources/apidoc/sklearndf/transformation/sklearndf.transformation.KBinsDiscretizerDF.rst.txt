@@ -42,6 +42,7 @@ sklearndf.transformation.KBinsDiscretizerDF
       ~KBinsDiscretizerDF.feature_names_original_
       ~KBinsDiscretizerDF.feature_names_out_
       ~KBinsDiscretizerDF.is_fitted
+      ~KBinsDiscretizerDF.n_features_in_
       ~KBinsDiscretizerDF.n_outputs_
       ~KBinsDiscretizerDF.native_estimator
    

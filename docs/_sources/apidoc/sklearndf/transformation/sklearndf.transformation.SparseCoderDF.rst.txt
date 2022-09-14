@@ -37,7 +37,6 @@ sklearndf.transformation.SparseCoderDF
    
       ~SparseCoderDF.COL_FEATURE_IN
       ~SparseCoderDF.COL_FEATURE_OUT
-      ~SparseCoderDF.components_
       ~SparseCoderDF.feature_names_in_
       ~SparseCoderDF.feature_names_original_
       ~SparseCoderDF.feature_names_out_

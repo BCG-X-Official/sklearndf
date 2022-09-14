@@ -21,6 +21,7 @@ sklearndf.transformation.SimpleImputerDF
       ~SimpleImputerDF.fit
       ~SimpleImputerDF.fit_transform
       ~SimpleImputerDF.from_fitted
+      ~SimpleImputerDF.get_feature_names_out
       ~SimpleImputerDF.get_params
       ~SimpleImputerDF.inverse_transform
       ~SimpleImputerDF.set_params
@@ -41,6 +42,7 @@ sklearndf.transformation.SimpleImputerDF
       ~SimpleImputerDF.feature_names_original_
       ~SimpleImputerDF.feature_names_out_
       ~SimpleImputerDF.is_fitted
+      ~SimpleImputerDF.n_features_in_
       ~SimpleImputerDF.n_outputs_
       ~SimpleImputerDF.native_estimator
    

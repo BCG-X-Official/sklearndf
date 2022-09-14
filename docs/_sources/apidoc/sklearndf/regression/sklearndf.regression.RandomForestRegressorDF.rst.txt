@@ -38,6 +38,7 @@ sklearndf.regression.RandomForestRegressorDF
       ~RandomForestRegressorDF.COL_PREDICTION
       ~RandomForestRegressorDF.feature_names_in_
       ~RandomForestRegressorDF.is_fitted
+      ~RandomForestRegressorDF.n_features_in_
       ~RandomForestRegressorDF.n_outputs_
       ~RandomForestRegressorDF.native_estimator
    

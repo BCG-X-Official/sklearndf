@@ -479,6 +479,11 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../clustering/sklearndf.clustering.BisectingKMeansDF.html">
+     sklearndf.clustering.BisectingKMeansDF
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../clustering/sklearndf.clustering.DBSCANDF.html">
      sklearndf.clustering.DBSCANDF
     </a>
@@ -679,11 +684,6 @@
    <li class="toctree-l2">
     <a class="reference internal" href="sklearndf.regression.GaussianProcessRegressorDF.html">
      sklearndf.regression.GaussianProcessRegressorDF
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="sklearndf.regression.GeneralizedLinearRegressorDF.html">
-     sklearndf.regression.GeneralizedLinearRegressorDF
     </a>
    </li>
    <li class="toctree-l2">
@@ -1103,6 +1103,11 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../transformation/sklearndf.transformation.MiniBatchNMFDF.html">
+     sklearndf.transformation.MiniBatchNMFDF
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../transformation/sklearndf.transformation.MiniBatchSparsePCADF.html">
      sklearndf.transformation.MiniBatchSparsePCADF
     </a>
@@ -1190,6 +1195,11 @@
    <li class="toctree-l2">
     <a class="reference internal" href="../transformation/sklearndf.transformation.RFEDF.html">
      sklearndf.transformation.RFEDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../transformation/sklearndf.transformation.RandomTreesEmbeddingDF.html">
+     sklearndf.transformation.RandomTreesEmbeddingDF
     </a>
    </li>
    <li class="toctree-l2">
@@ -1332,8 +1342,8 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../transformation/wrapper/sklearndf.transformation.wrapper.BaseDimensionalityReductionWrapperDF.html">
-       sklearndf.transformation.wrapper.BaseDimensionalityReductionWrapperDF
+      <a class="reference internal" href="../transformation/wrapper/sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF.html">
+       sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF
       </a>
      </li>
      <li class="toctree-l3">
@@ -1359,6 +1369,11 @@
      <li class="toctree-l3">
       <a class="reference internal" href="../transformation/wrapper/sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF.html">
        sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../transformation/wrapper/sklearndf.transformation.wrapper.EmbeddingWrapperDF.html">
+       sklearndf.transformation.wrapper.EmbeddingWrapperDF
       </a>
      </li>
      <li class="toctree-l3">
@@ -1584,7 +1599,7 @@
 <h1>sklearndf.regression.ExtraTreesRegressorDF<a class="headerlink" href="#sklearndf-regression-extratreesregressordf" title="Permalink to this headline">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="sklearndf.regression.ExtraTreesRegressorDF">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sklearndf.regression.</span></span><span class="sig-name descname"><span class="pre">ExtraTreesRegressorDF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criterion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'squared_error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples_leaf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_weight_fraction_leaf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_leaf_nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_impurity_decrease</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oob_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warm_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ccp_alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/sklearndf/regression/_regression.html#ExtraTreesRegressorDF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sklearndf.regression.ExtraTreesRegressorDF" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sklearndf.regression.</span></span><span class="sig-name descname"><span class="pre">ExtraTreesRegressorDF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_estimators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">criterion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'squared_error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_samples_leaf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_weight_fraction_leaf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_leaf_nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_impurity_decrease</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oob_score</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warm_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ccp_alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/sklearndf/regression/_regression.html#ExtraTreesRegressorDF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sklearndf.regression.ExtraTreesRegressorDF" title="Permalink to this definition">#</a></dt>
 <dd><p>An extra-trees regressor.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1656,10 +1671,13 @@ delegates all attribute access and method calls to an associated
 <tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.regression.ExtraTreesRegressorDF.is_fitted" title="sklearndf.regression.ExtraTreesRegressorDF.is_fitted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_fitted</span></code></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if this object is fitted, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.regression.ExtraTreesRegressorDF.n_outputs_" title="sklearndf.regression.ExtraTreesRegressorDF.n_outputs_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_outputs_</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.regression.ExtraTreesRegressorDF.n_features_in_" title="sklearndf.regression.ExtraTreesRegressorDF.n_features_in_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_features_in_</span></code></a></p></td>
+<td><p>The number of features used to fit this estimator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.regression.ExtraTreesRegressorDF.n_outputs_" title="sklearndf.regression.ExtraTreesRegressorDF.n_outputs_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_outputs_</span></code></a></p></td>
 <td><p>The number of outputs used to fit this estimator.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.regression.ExtraTreesRegressorDF.native_estimator" title="sklearndf.regression.ExtraTreesRegressorDF.native_estimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">native_estimator</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.regression.ExtraTreesRegressorDF.native_estimator" title="sklearndf.regression.ExtraTreesRegressorDF.native_estimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">native_estimator</span></code></a></p></td>
 <td><p>The native estimator that this wrapper delegates to.</p></td>
 </tr>
 </tbody>
@@ -1829,7 +1847,7 @@ predictions</p></li>
 <dd><p>Render this object as an expression.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://bcg-gamma.github.io/pytools/apidoc/pytools/expression/pytools.expression.Expression.html#pytools.expression.Expression" title="(in pytools v2.0.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Expression</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://bcg-gamma.github.io/pytools/apidoc/pytools/expression/pytools.expression.Expression.html#pytools.expression.Expression" title="(in pytools v2.0.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Expression</span></code></a></p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the expression representing this object</p>
@@ -1859,6 +1877,23 @@ estimator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.regression.ExtraTreesRegressorDF.n_features_in_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_features_in_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#int" title="(in Python v3.7)"><span class="pre">int</span></a></em><a class="headerlink" href="#sklearndf.regression.ExtraTreesRegressorDF.n_features_in_" title="Permalink to this definition">#</a></dt>
+<dd><p>The number of features used to fit this estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/exceptions.html#AttributeError" title="(in Python v3.7)"><strong>AttributeError</strong></a> – if this estimator is not fitted</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the number of features</p>
 </dd>
 </dl>
 </dd></dl>

@@ -43,6 +43,7 @@ sklearndf.classification.ComplementNBDF
       ~ComplementNBDF.classes_
       ~ComplementNBDF.feature_names_in_
       ~ComplementNBDF.is_fitted
+      ~ComplementNBDF.n_features_in_
       ~ComplementNBDF.n_outputs_
       ~ComplementNBDF.native_estimator
    

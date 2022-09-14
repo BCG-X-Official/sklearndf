@@ -43,6 +43,7 @@ sklearndf.clustering.BirchDF
       ~BirchDF.fit_
       ~BirchDF.is_fitted
       ~BirchDF.labels_
+      ~BirchDF.n_features_in_
       ~BirchDF.n_outputs_
       ~BirchDF.native_estimator
       ~BirchDF.partial_fit_

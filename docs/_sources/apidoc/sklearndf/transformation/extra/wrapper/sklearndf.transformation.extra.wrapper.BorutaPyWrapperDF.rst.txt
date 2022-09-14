@@ -41,6 +41,7 @@ sklearndf.transformation.extra.wrapper.BorutaPyWrapperDF
       ~BorutaPyWrapperDF.feature_names_original_
       ~BorutaPyWrapperDF.feature_names_out_
       ~BorutaPyWrapperDF.is_fitted
+      ~BorutaPyWrapperDF.n_features_in_
       ~BorutaPyWrapperDF.n_outputs_
       ~BorutaPyWrapperDF.native_estimator
    

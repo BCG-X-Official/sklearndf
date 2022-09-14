@@ -43,6 +43,7 @@ sklearndf.classification.BernoulliNBDF
       ~BernoulliNBDF.classes_
       ~BernoulliNBDF.feature_names_in_
       ~BernoulliNBDF.is_fitted
+      ~BernoulliNBDF.n_features_in_
       ~BernoulliNBDF.n_outputs_
       ~BernoulliNBDF.native_estimator
    

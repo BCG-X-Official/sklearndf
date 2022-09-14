@@ -41,6 +41,7 @@ sklearndf.transformation.SelectKBestDF
       ~SelectKBestDF.feature_names_original_
       ~SelectKBestDF.feature_names_out_
       ~SelectKBestDF.is_fitted
+      ~SelectKBestDF.n_features_in_
       ~SelectKBestDF.n_outputs_
       ~SelectKBestDF.native_estimator
    

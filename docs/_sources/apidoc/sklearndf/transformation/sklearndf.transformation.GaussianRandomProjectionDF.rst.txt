@@ -41,6 +41,7 @@ sklearndf.transformation.GaussianRandomProjectionDF
       ~GaussianRandomProjectionDF.feature_names_original_
       ~GaussianRandomProjectionDF.feature_names_out_
       ~GaussianRandomProjectionDF.is_fitted
+      ~GaussianRandomProjectionDF.n_features_in_
       ~GaussianRandomProjectionDF.n_outputs_
       ~GaussianRandomProjectionDF.native_estimator
    

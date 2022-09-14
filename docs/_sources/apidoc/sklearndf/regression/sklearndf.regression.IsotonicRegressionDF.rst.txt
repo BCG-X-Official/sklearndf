@@ -21,6 +21,7 @@ sklearndf.regression.IsotonicRegressionDF
       ~IsotonicRegressionDF.fit
       ~IsotonicRegressionDF.fit_transform
       ~IsotonicRegressionDF.from_fitted
+      ~IsotonicRegressionDF.get_feature_names_out
       ~IsotonicRegressionDF.get_params
       ~IsotonicRegressionDF.inverse_transform
       ~IsotonicRegressionDF.predict
@@ -44,6 +45,7 @@ sklearndf.regression.IsotonicRegressionDF
       ~IsotonicRegressionDF.feature_names_original_
       ~IsotonicRegressionDF.feature_names_out_
       ~IsotonicRegressionDF.is_fitted
+      ~IsotonicRegressionDF.n_features_in_
       ~IsotonicRegressionDF.n_outputs_
       ~IsotonicRegressionDF.native_estimator
    

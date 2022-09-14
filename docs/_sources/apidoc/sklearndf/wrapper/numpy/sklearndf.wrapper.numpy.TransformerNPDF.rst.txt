@@ -40,6 +40,7 @@ sklearndf.wrapper.numpy.TransformerNPDF
       ~TransformerNPDF.feature_names_original_
       ~TransformerNPDF.feature_names_out_
       ~TransformerNPDF.is_fitted
+      ~TransformerNPDF.n_features_in_
       ~TransformerNPDF.n_outputs_
       ~TransformerNPDF.native_estimator
       ~TransformerNPDF.delegate

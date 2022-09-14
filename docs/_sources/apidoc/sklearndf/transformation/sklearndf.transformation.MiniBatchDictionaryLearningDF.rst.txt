@@ -41,9 +41,13 @@ sklearndf.transformation.MiniBatchDictionaryLearningDF
       ~MiniBatchDictionaryLearningDF.feature_names_in_
       ~MiniBatchDictionaryLearningDF.feature_names_original_
       ~MiniBatchDictionaryLearningDF.feature_names_out_
+      ~MiniBatchDictionaryLearningDF.inner_stats_
       ~MiniBatchDictionaryLearningDF.is_fitted
+      ~MiniBatchDictionaryLearningDF.iter_offset_
+      ~MiniBatchDictionaryLearningDF.n_features_in_
       ~MiniBatchDictionaryLearningDF.n_outputs_
       ~MiniBatchDictionaryLearningDF.native_estimator
+      ~MiniBatchDictionaryLearningDF.random_state_
    
    
 

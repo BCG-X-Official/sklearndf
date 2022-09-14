@@ -42,6 +42,7 @@ sklearndf.classification.ExtraTreesClassifierDF
       ~ExtraTreesClassifierDF.classes_
       ~ExtraTreesClassifierDF.feature_names_in_
       ~ExtraTreesClassifierDF.is_fitted
+      ~ExtraTreesClassifierDF.n_features_in_
       ~ExtraTreesClassifierDF.n_outputs_
       ~ExtraTreesClassifierDF.native_estimator
    

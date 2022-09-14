@@ -39,6 +39,7 @@ sklearndf.regression.StackingRegressorDF
       ~StackingRegressorDF.COL_PREDICTION
       ~StackingRegressorDF.feature_names_in_
       ~StackingRegressorDF.is_fitted
+      ~StackingRegressorDF.n_features_in_
       ~StackingRegressorDF.n_outputs_
       ~StackingRegressorDF.native_estimator
    

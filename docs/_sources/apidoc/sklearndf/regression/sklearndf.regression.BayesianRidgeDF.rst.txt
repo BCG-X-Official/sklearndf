@@ -38,6 +38,7 @@ sklearndf.regression.BayesianRidgeDF
       ~BayesianRidgeDF.COL_PREDICTION
       ~BayesianRidgeDF.feature_names_in_
       ~BayesianRidgeDF.is_fitted
+      ~BayesianRidgeDF.n_features_in_
       ~BayesianRidgeDF.n_outputs_
       ~BayesianRidgeDF.native_estimator
    

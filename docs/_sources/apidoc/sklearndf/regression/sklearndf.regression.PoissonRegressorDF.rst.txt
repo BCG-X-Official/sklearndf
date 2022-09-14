@@ -36,9 +36,9 @@ sklearndf.regression.PoissonRegressorDF
    
       ~PoissonRegressorDF.COL_FEATURE_IN
       ~PoissonRegressorDF.COL_PREDICTION
-      ~PoissonRegressorDF.family
       ~PoissonRegressorDF.feature_names_in_
       ~PoissonRegressorDF.is_fitted
+      ~PoissonRegressorDF.n_features_in_
       ~PoissonRegressorDF.n_outputs_
       ~PoissonRegressorDF.native_estimator
    

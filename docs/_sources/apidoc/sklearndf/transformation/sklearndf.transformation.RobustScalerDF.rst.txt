@@ -41,6 +41,7 @@ sklearndf.transformation.RobustScalerDF
       ~RobustScalerDF.feature_names_original_
       ~RobustScalerDF.feature_names_out_
       ~RobustScalerDF.is_fitted
+      ~RobustScalerDF.n_features_in_
       ~RobustScalerDF.n_outputs_
       ~RobustScalerDF.native_estimator
    

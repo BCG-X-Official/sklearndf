@@ -41,6 +41,7 @@ sklearndf.transformation.KernelCentererDF
       ~KernelCentererDF.feature_names_original_
       ~KernelCentererDF.feature_names_out_
       ~KernelCentererDF.is_fitted
+      ~KernelCentererDF.n_features_in_
       ~KernelCentererDF.n_outputs_
       ~KernelCentererDF.native_estimator
    

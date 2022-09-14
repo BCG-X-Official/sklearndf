@@ -40,6 +40,7 @@ sklearndf.clustering.MeanShiftDF
       ~MeanShiftDF.feature_names_in_
       ~MeanShiftDF.is_fitted
       ~MeanShiftDF.labels_
+      ~MeanShiftDF.n_features_in_
       ~MeanShiftDF.n_outputs_
       ~MeanShiftDF.native_estimator
    

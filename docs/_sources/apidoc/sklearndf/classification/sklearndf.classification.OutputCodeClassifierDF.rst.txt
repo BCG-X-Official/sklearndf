@@ -42,6 +42,7 @@ sklearndf.classification.OutputCodeClassifierDF
       ~OutputCodeClassifierDF.classes_
       ~OutputCodeClassifierDF.feature_names_in_
       ~OutputCodeClassifierDF.is_fitted
+      ~OutputCodeClassifierDF.n_features_in_
       ~OutputCodeClassifierDF.n_outputs_
       ~OutputCodeClassifierDF.native_estimator
    

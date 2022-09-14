@@ -38,6 +38,7 @@ sklearndf.wrapper.stacking.StackingEstimatorWrapperDF
       ~StackingEstimatorWrapperDF.COL_PREDICTION
       ~StackingEstimatorWrapperDF.feature_names_in_
       ~StackingEstimatorWrapperDF.is_fitted
+      ~StackingEstimatorWrapperDF.n_features_in_
       ~StackingEstimatorWrapperDF.n_outputs_
       ~StackingEstimatorWrapperDF.native_estimator
    

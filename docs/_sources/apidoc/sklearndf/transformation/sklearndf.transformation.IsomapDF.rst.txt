@@ -42,6 +42,7 @@ sklearndf.transformation.IsomapDF
       ~IsomapDF.feature_names_original_
       ~IsomapDF.feature_names_out_
       ~IsomapDF.is_fitted
+      ~IsomapDF.n_features_in_
       ~IsomapDF.n_outputs_
       ~IsomapDF.native_estimator
    

@@ -41,6 +41,7 @@ sklearndf.transformation.wrapper.IsomapWrapperDF
       ~IsomapWrapperDF.feature_names_original_
       ~IsomapWrapperDF.feature_names_out_
       ~IsomapWrapperDF.is_fitted
+      ~IsomapWrapperDF.n_features_in_
       ~IsomapWrapperDF.n_outputs_
       ~IsomapWrapperDF.native_estimator
    

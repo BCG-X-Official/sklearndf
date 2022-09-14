@@ -38,6 +38,7 @@ sklearndf.regression.extra.XGBRegressorDF
       ~XGBRegressorDF.COL_PREDICTION
       ~XGBRegressorDF.feature_names_in_
       ~XGBRegressorDF.is_fitted
+      ~XGBRegressorDF.n_features_in_
       ~XGBRegressorDF.n_outputs_
       ~XGBRegressorDF.native_estimator
    

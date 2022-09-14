@@ -43,6 +43,7 @@ sklearndf.transformation.PolynomialFeaturesDF
       ~PolynomialFeaturesDF.feature_names_original_
       ~PolynomialFeaturesDF.feature_names_out_
       ~PolynomialFeaturesDF.is_fitted
+      ~PolynomialFeaturesDF.n_features_in_
       ~PolynomialFeaturesDF.n_input_features_
       ~PolynomialFeaturesDF.n_outputs_
       ~PolynomialFeaturesDF.native_estimator

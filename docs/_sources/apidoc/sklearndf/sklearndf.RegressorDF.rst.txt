@@ -36,6 +36,7 @@ sklearndf.RegressorDF
       ~RegressorDF.COL_FEATURE_IN
       ~RegressorDF.feature_names_in_
       ~RegressorDF.is_fitted
+      ~RegressorDF.n_features_in_
       ~RegressorDF.n_outputs_
       ~RegressorDF.native_estimator
    

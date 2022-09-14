@@ -21,6 +21,7 @@ sklearndf.transformation.AdditiveChi2SamplerDF
       ~AdditiveChi2SamplerDF.fit
       ~AdditiveChi2SamplerDF.fit_transform
       ~AdditiveChi2SamplerDF.from_fitted
+      ~AdditiveChi2SamplerDF.get_feature_names_out
       ~AdditiveChi2SamplerDF.get_params
       ~AdditiveChi2SamplerDF.inverse_transform
       ~AdditiveChi2SamplerDF.set_params
@@ -41,6 +42,7 @@ sklearndf.transformation.AdditiveChi2SamplerDF
       ~AdditiveChi2SamplerDF.feature_names_original_
       ~AdditiveChi2SamplerDF.feature_names_out_
       ~AdditiveChi2SamplerDF.is_fitted
+      ~AdditiveChi2SamplerDF.n_features_in_
       ~AdditiveChi2SamplerDF.n_outputs_
       ~AdditiveChi2SamplerDF.native_estimator
    

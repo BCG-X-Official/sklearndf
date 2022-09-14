@@ -36,6 +36,7 @@ sklearndf.SupervisedLearnerDF
       ~SupervisedLearnerDF.COL_FEATURE_IN
       ~SupervisedLearnerDF.feature_names_in_
       ~SupervisedLearnerDF.is_fitted
+      ~SupervisedLearnerDF.n_features_in_
       ~SupervisedLearnerDF.n_outputs_
       ~SupervisedLearnerDF.native_estimator
    

@@ -41,6 +41,7 @@ sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF
       ~PolynomialTransformerWrapperDF.feature_names_original_
       ~PolynomialTransformerWrapperDF.feature_names_out_
       ~PolynomialTransformerWrapperDF.is_fitted
+      ~PolynomialTransformerWrapperDF.n_features_in_
       ~PolynomialTransformerWrapperDF.n_outputs_
       ~PolynomialTransformerWrapperDF.native_estimator
    

@@ -43,6 +43,7 @@ sklearndf.classification.StackingClassifierDF
       ~StackingClassifierDF.classes_
       ~StackingClassifierDF.feature_names_in_
       ~StackingClassifierDF.is_fitted
+      ~StackingClassifierDF.n_features_in_
       ~StackingClassifierDF.n_outputs_
       ~StackingClassifierDF.native_estimator
    

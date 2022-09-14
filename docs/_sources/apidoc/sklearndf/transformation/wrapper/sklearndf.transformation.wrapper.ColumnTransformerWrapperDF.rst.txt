@@ -43,6 +43,7 @@ sklearndf.transformation.wrapper.ColumnTransformerWrapperDF
       ~ColumnTransformerWrapperDF.feature_names_original_
       ~ColumnTransformerWrapperDF.feature_names_out_
       ~ColumnTransformerWrapperDF.is_fitted
+      ~ColumnTransformerWrapperDF.n_features_in_
       ~ColumnTransformerWrapperDF.n_outputs_
       ~ColumnTransformerWrapperDF.native_estimator
    
