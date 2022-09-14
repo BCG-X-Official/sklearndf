@@ -68,7 +68,7 @@ macOS and Linux:
 Windows:
 ^^^^^^^^
 
-.. code-block::
+.. code-block:: dosbatch
 
     python -m venv sklearndf
     sklearndf\Scripts\activate.bat
