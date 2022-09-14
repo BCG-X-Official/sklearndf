@@ -8,4 +8,4 @@ native support of data frames, while leaving the original API intact.
 from ._sklearn_version import *
 from ._sklearndf import *
 
-__version__ = "2.1rc0"
+__version__ = "2.1.0"
