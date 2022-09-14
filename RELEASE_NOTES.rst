@@ -8,7 +8,7 @@ Release Notes
 *sklearndf* 2.1
 ---------------
 
-*sklearndf* 2 adds support for `scikit-learn 1.1 <https://scikit-learn.org/1.1>`_.
+*sklearndf* 2.1 adds support for `scikit-learn 1.1 <https://scikit-learn.org/1.1>`_.
 
 2.1.0
 ~~~~~
@@ -29,7 +29,7 @@ Release Notes
 *sklearndf* 2.0
 ---------------
 
-*sklearndf* 2 adds support for `scikit-learn 1.0 <https://scikit-learn.org/1.0>`_,
+*sklearndf* 2.0 adds support for `scikit-learn 1.0 <https://scikit-learn.org/1.0>`_,
 adds data frame support for clusterers along with additional API enhancements and
 improvements, and is now subject to static type checking with |mypy|.
 
