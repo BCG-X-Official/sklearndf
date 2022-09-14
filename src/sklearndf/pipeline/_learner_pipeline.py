@@ -181,6 +181,12 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
         else:
             return self.final_estimator.feature_names_in_
 
+    def _get_n_features_in(self) -> int:
+        if self.preprocessing is not None:
+            return self.preprocessing.n_features_in_
+        else:
+            return self.final_estimator.n_features_in_
+
     def _get_n_outputs(self) -> int:
         if self.preprocessing is not None:
             return self.preprocessing.n_outputs_

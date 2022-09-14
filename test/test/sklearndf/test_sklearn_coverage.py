@@ -47,13 +47,12 @@ if __sklearn_version__ >= __sklearn_0_23__:
 
 REGRESSOR_COVERAGE_EXCLUSIONS = {
     *GENERAL_COVERAGE_EXCLUSIONS,
-    # Base classes and Mixins, not following the convention -->
+    # Base classes and mix-ins
     "ForestRegressor",
-    # <--- Base classes and Mixins, not following the convention
-    # Private classes -->
+    "GeneralizedLinearRegressor",
+    # Private classes
     "_SigmoidCalibration",
-    "_PLS"
-    # <-- Private classes
+    "_PLS",
 }
 
 

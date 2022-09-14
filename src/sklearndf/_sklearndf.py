@@ -140,6 +140,17 @@ class EstimatorDF(
         return self._get_features_in().rename(self.COL_FEATURE_IN)
 
     @property
+    def n_features_in_(self) -> int:
+        """
+        The number of features used to fit this estimator.
+
+        :raises AttributeError: if this estimator is not fitted
+        :return: the number of features
+        """
+        self.ensure_fitted()
+        return self._get_n_features_in()
+
+    @property
     def n_outputs_(self) -> int:
         """
         The number of outputs used to fit this estimator.
@@ -184,6 +195,10 @@ class EstimatorDF(
     def _get_features_in(self) -> pd.Index:
         # get the input columns as a pandas Index
         pass
+
+    def _get_n_features_in(self) -> int:
+        # get the number of inputs this estimator has been fitted to
+        return len(self._get_features_in())
 
     @abstractmethod
     def _get_n_outputs(self) -> int:
