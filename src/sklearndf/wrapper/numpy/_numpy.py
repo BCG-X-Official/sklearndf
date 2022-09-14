@@ -114,6 +114,9 @@ class EstimatorNPDF(
     def _get_features_in(self) -> pd.Index:
         return self.delegate._get_features_in()
 
+    def _get_n_features_in(self) -> int:
+        return self.delegate._get_n_features_in()
+
     def _get_n_outputs(self) -> int:
         return self.delegate._get_n_outputs()
 

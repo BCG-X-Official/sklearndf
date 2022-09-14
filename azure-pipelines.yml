@@ -1,9 +1,9 @@
 trigger:
-  - 2.0.x
+  - 2.1.x
   - release/*
 
 pr:
-  - 2.0.x
+  - 2.1.x
   - release/*
 
 pool:

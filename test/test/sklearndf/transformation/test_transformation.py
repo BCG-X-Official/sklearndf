@@ -25,6 +25,7 @@ from sklearndf import (
     __sklearn_0_23__,
     __sklearn_0_24__,
     __sklearn_1_0__,
+    __sklearn_1_1__,
     __sklearn_version__,
 )
 from sklearndf.classification import RandomForestClassifierDF
@@ -79,8 +80,10 @@ def test_transformer_count() -> None:
         assert n == 54
     elif __sklearn_version__ < __sklearn_1_0__:
         assert n == 55
-    else:
+    elif __sklearn_version__ < __sklearn_1_1__:
         assert n == 56
+    else:
+        assert n == 58
 
 
 @pytest.fixture  # type: ignore
@@ -372,7 +375,15 @@ def test_simple_imputer_df() -> None:
     transformed_df_expected = pd.DataFrame(
         transformed_native,
         columns=pd.Index(
-            ["a", "b", "c", "d", "a__missing", "b__missing", "d__missing"],
+            [
+                "a",
+                "b",
+                "c",
+                "d",
+                "missingindicator_a",
+                "missingindicator_b",
+                "missingindicator_d",
+            ],
             name="feature_out",
         ),
     )
@@ -401,6 +412,13 @@ def test_simple_imputer_df() -> None:
             imputer_df.feature_names_in_.values, imputer_native.feature_names_in_
         )
 
+    if __sklearn_version__ >= __sklearn_1_1__:
+        # noinspection PyUnresolvedReferences
+        assert_array_equal(
+            imputer_df.feature_names_out_.values,
+            imputer_native.get_feature_names_out(),
+        )
+
 
 @pytest.fixture  # type: ignore
 def df_outlier() -> pd.DataFrame:
@@ -414,15 +432,7 @@ def df_outlier() -> pd.DataFrame:
     )
 
 
-def test_one_hot_encoding() -> None:
-    test_data_categorical = pd.DataFrame(
-        data=[
-            ["yes", "red", "child"],
-            ["yes", "blue", "father"],
-            ["no", "green", "mother"],
-        ],
-        columns=["a", "b", "c"],
-    )
+def test_one_hot_encoding(test_data_categorical: pd.DataFrame) -> None:
 
     assert_frame_equal(
         OneHotEncoderDF(drop=None, sparse=False).fit_transform(test_data_categorical),
@@ -439,24 +449,6 @@ def test_one_hot_encoding() -> None:
             }
         ).rename_axis(columns="feature_out"),
     )
-
-    if __sklearn_version__ >= __sklearn_0_23__:
-        assert_frame_equal(
-            OneHotEncoderDF(drop="if_binary", sparse=False).fit_transform(
-                test_data_categorical
-            ),
-            pd.DataFrame(
-                {
-                    "a_yes": [1.0, 1.0, 0.0],
-                    "b_blue": [0.0, 1.0, 0.0],
-                    "b_green": [0.0, 0.0, 1.0],
-                    "b_red": [1.0, 0.0, 0.0],
-                    "c_child": [1.0, 0.0, 0.0],
-                    "c_father": [0.0, 1.0, 0.0],
-                    "c_mother": [0.0, 0.0, 1.0],
-                }
-            ).rename_axis(columns="feature_out"),
-        )
 
     assert_frame_equal(
         OneHotEncoderDF(drop="first", sparse=False).fit_transform(
@@ -487,3 +479,114 @@ def test_one_hot_encoding() -> None:
             }
         ).rename_axis(columns="feature_out"),
     )
+
+    if __sklearn_version__ >= __sklearn_0_23__:
+        assert_frame_equal(
+            OneHotEncoderDF(drop="if_binary", sparse=False).fit_transform(
+                test_data_categorical
+            ),
+            pd.DataFrame(
+                {
+                    "a_yes": [1.0, 1.0, 0.0],
+                    "b_blue": [0.0, 1.0, 0.0],
+                    "b_green": [0.0, 0.0, 1.0],
+                    "b_red": [1.0, 0.0, 0.0],
+                    "c_child": [1.0, 0.0, 0.0],
+                    "c_father": [0.0, 1.0, 0.0],
+                    "c_mother": [0.0, 0.0, 1.0],
+                }
+            ).rename_axis(columns="feature_out"),
+        )
+
+    if __sklearn_version__ >= __sklearn_1_1__:
+
+        assert_frame_equal(
+            OneHotEncoderDF(min_frequency=2, sparse=False).fit_transform(
+                test_data_categorical
+            ),
+            pd.DataFrame(
+                {
+                    "a_yes": [1.0, 1.0, 0.0],
+                    "a_infrequent_sklearn": [0.0, 0.0, 1.0],
+                    "b_infrequent_sklearn": [1.0, 1.0, 1.0],
+                    "c_infrequent_sklearn": [1.0, 1.0, 1.0],
+                }
+            ).rename_axis(columns="feature_out"),
+        )
+
+        assert_frame_equal(
+            OneHotEncoderDF(max_categories=2, sparse=False).fit_transform(
+                test_data_categorical
+            ),
+            pd.DataFrame(
+                {
+                    "a_yes": [1.0, 1.0, 0.0],
+                    "a_infrequent_sklearn": [0.0, 0.0, 1.0],
+                    "b_red": [1.0, 0.0, 0.0],
+                    "b_infrequent_sklearn": [0.0, 1.0, 1.0],
+                    "c_mother": [0.0, 0.0, 1.0],
+                    "c_infrequent_sklearn": [1.0, 1.0, 0.0],
+                }
+            ).rename_axis(columns="feature_out"),
+        )
+
+        assert_frame_equal(
+            OneHotEncoderDF(max_categories=10, sparse=False).fit_transform(
+                test_data_categorical
+            ),
+            pd.DataFrame(
+                {
+                    "a_no": [0.0, 0.0, 1.0],
+                    "a_yes": [1.0, 1.0, 0.0],
+                    "b_blue": [0.0, 1.0, 0.0],
+                    "b_green": [0.0, 0.0, 1.0],
+                    "b_red": [1.0, 0.0, 0.0],
+                    "c_child": [1.0, 0.0, 0.0],
+                    "c_father": [0.0, 1.0, 0.0],
+                    "c_mother": [0.0, 0.0, 1.0],
+                }
+            ).rename_axis(columns="feature_out"),
+        )
+
+        assert_frame_equal(
+            OneHotEncoderDF(
+                drop="if_binary", max_categories=10, sparse=False
+            ).fit_transform(test_data_categorical),
+            pd.DataFrame(
+                {
+                    "a_yes": [1.0, 1.0, 0.0],
+                    "b_blue": [0.0, 1.0, 0.0],
+                    "b_green": [0.0, 0.0, 1.0],
+                    "b_red": [1.0, 0.0, 0.0],
+                    "c_child": [1.0, 0.0, 0.0],
+                    "c_father": [0.0, 1.0, 0.0],
+                    "c_mother": [0.0, 0.0, 1.0],
+                }
+            ).rename_axis(columns="feature_out"),
+        )
+
+        assert_frame_equal(
+            OneHotEncoderDF(drop="first", max_categories=2, sparse=False).fit_transform(
+                test_data_categorical
+            ),
+            pd.DataFrame(
+                {
+                    "a_infrequent_sklearn": [0.0, 0.0, 1.0],
+                    "b_infrequent_sklearn": [0.0, 1.0, 1.0],
+                    "c_infrequent_sklearn": [1.0, 1.0, 0.0],
+                }
+            ).rename_axis(columns="feature_out"),
+        )
+
+        assert_frame_equal(
+            OneHotEncoderDF(
+                drop="if_binary", max_categories=2, sparse=False
+            ).fit_transform(test_data_categorical),
+            pd.DataFrame(
+                {
+                    "a_infrequent_sklearn": [0.0, 0.0, 1.0],
+                    "b_infrequent_sklearn": [0.0, 1.0, 1.0],
+                    "c_infrequent_sklearn": [1.0, 1.0, 0.0],
+                }
+            ).rename_axis(columns="feature_out"),
+        )

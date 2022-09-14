@@ -6,9 +6,6 @@ import logging
 
 from sklearn.linear_model import GammaRegressor, PoissonRegressor, TweedieRegressor
 
-# noinspection PyProtectedMember
-from sklearn.linear_model._glm import GeneralizedLinearRegressor
-
 from pytools.api import AllTracker
 
 from ..wrapper import RegressorWrapperDF
@@ -17,7 +14,6 @@ log = logging.getLogger(__name__)
 
 __all__ = [
     "GammaRegressorDF",
-    "GeneralizedLinearRegressorDF",
     "PoissonRegressorDF",
     "TweedieRegressorDF",
 ]
@@ -60,13 +56,6 @@ class TweedieRegressorDF(
     native=TweedieRegressor,
 ):
     """Stub for DF wrapper of class ``TweedieRegressor``"""
-
-
-class GeneralizedLinearRegressorDF(
-    RegressorWrapperDF[GeneralizedLinearRegressor],
-    native=GeneralizedLinearRegressor,
-):
-    """Stub for DF wrapper of class ``GeneralizedLinearRegressor``"""
 
 
 #
