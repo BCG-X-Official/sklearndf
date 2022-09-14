@@ -1,0 +1,47 @@
+sklearndf.regression.TheilSenRegressorDF
+========================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: TheilSenRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~TheilSenRegressorDF.clone
+      ~TheilSenRegressorDF.ensure_fitted
+      ~TheilSenRegressorDF.fit
+      ~TheilSenRegressorDF.from_fitted
+      ~TheilSenRegressorDF.get_params
+      ~TheilSenRegressorDF.predict
+      ~TheilSenRegressorDF.score
+      ~TheilSenRegressorDF.set_params
+      ~TheilSenRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~TheilSenRegressorDF.COL_FEATURE_IN
+      ~TheilSenRegressorDF.COL_PREDICTION
+      ~TheilSenRegressorDF.feature_names_in_
+      ~TheilSenRegressorDF.is_fitted
+      ~TheilSenRegressorDF.n_features_in_
+      ~TheilSenRegressorDF.n_outputs_
+      ~TheilSenRegressorDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

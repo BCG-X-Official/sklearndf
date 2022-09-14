@@ -1,0 +1,48 @@
+sklearndf.regression.PassiveAggressiveRegressorDF
+=================================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: PassiveAggressiveRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PassiveAggressiveRegressorDF.clone
+      ~PassiveAggressiveRegressorDF.ensure_fitted
+      ~PassiveAggressiveRegressorDF.fit
+      ~PassiveAggressiveRegressorDF.from_fitted
+      ~PassiveAggressiveRegressorDF.get_params
+      ~PassiveAggressiveRegressorDF.partial_fit
+      ~PassiveAggressiveRegressorDF.predict
+      ~PassiveAggressiveRegressorDF.score
+      ~PassiveAggressiveRegressorDF.set_params
+      ~PassiveAggressiveRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~PassiveAggressiveRegressorDF.COL_FEATURE_IN
+      ~PassiveAggressiveRegressorDF.COL_PREDICTION
+      ~PassiveAggressiveRegressorDF.feature_names_in_
+      ~PassiveAggressiveRegressorDF.is_fitted
+      ~PassiveAggressiveRegressorDF.n_features_in_
+      ~PassiveAggressiveRegressorDF.n_outputs_
+      ~PassiveAggressiveRegressorDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

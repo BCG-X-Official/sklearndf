@@ -1,0 +1,51 @@
+sklearndf.classification.NuSVCDF
+================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: NuSVCDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~NuSVCDF.clone
+      ~NuSVCDF.decision_function
+      ~NuSVCDF.ensure_fitted
+      ~NuSVCDF.fit
+      ~NuSVCDF.from_fitted
+      ~NuSVCDF.get_params
+      ~NuSVCDF.predict
+      ~NuSVCDF.predict_log_proba
+      ~NuSVCDF.predict_proba
+      ~NuSVCDF.score
+      ~NuSVCDF.set_params
+      ~NuSVCDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~NuSVCDF.COL_FEATURE_IN
+      ~NuSVCDF.COL_PREDICTION
+      ~NuSVCDF.classes_
+      ~NuSVCDF.feature_names_in_
+      ~NuSVCDF.is_fitted
+      ~NuSVCDF.n_features_in_
+      ~NuSVCDF.n_outputs_
+      ~NuSVCDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

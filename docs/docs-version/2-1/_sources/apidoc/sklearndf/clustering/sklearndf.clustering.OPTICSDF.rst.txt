@@ -1,0 +1,49 @@
+sklearndf.clustering.OPTICSDF
+=============================
+
+.. currentmodule:: sklearndf.clustering
+
+.. autoclass:: OPTICSDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~OPTICSDF.clone
+      ~OPTICSDF.ensure_fitted
+      ~OPTICSDF.fit
+      ~OPTICSDF.fit_predict
+      ~OPTICSDF.from_fitted
+      ~OPTICSDF.get_params
+      ~OPTICSDF.predict
+      ~OPTICSDF.set_params
+      ~OPTICSDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~OPTICSDF.COL_FEATURE_IN
+      ~OPTICSDF.COL_LABELS
+      ~OPTICSDF.COL_PREDICTION
+      ~OPTICSDF.feature_names_in_
+      ~OPTICSDF.is_fitted
+      ~OPTICSDF.labels_
+      ~OPTICSDF.n_features_in_
+      ~OPTICSDF.n_outputs_
+      ~OPTICSDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

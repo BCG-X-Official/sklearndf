@@ -1,0 +1,51 @@
+sklearndf.classification.wrapper.ClassifierChainWrapperDF
+=========================================================
+
+.. currentmodule:: sklearndf.classification.wrapper
+
+.. autoclass:: ClassifierChainWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ClassifierChainWrapperDF.clone
+      ~ClassifierChainWrapperDF.decision_function
+      ~ClassifierChainWrapperDF.ensure_fitted
+      ~ClassifierChainWrapperDF.fit
+      ~ClassifierChainWrapperDF.from_fitted
+      ~ClassifierChainWrapperDF.get_params
+      ~ClassifierChainWrapperDF.predict
+      ~ClassifierChainWrapperDF.predict_log_proba
+      ~ClassifierChainWrapperDF.predict_proba
+      ~ClassifierChainWrapperDF.score
+      ~ClassifierChainWrapperDF.set_params
+      ~ClassifierChainWrapperDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ClassifierChainWrapperDF.COL_FEATURE_IN
+      ~ClassifierChainWrapperDF.COL_PREDICTION
+      ~ClassifierChainWrapperDF.classes_
+      ~ClassifierChainWrapperDF.feature_names_in_
+      ~ClassifierChainWrapperDF.is_fitted
+      ~ClassifierChainWrapperDF.n_features_in_
+      ~ClassifierChainWrapperDF.n_outputs_
+      ~ClassifierChainWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

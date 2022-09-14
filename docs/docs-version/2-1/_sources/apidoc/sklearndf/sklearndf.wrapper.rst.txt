@@ -1,0 +1,58 @@
+sklearndf.wrapper
+=================
+
+.. automodule:: sklearndf.wrapper
+   :no-imported-members:
+
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: wrapper
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      ClassifierWrapperDF
+      ClusterWrapperDF
+      EstimatorWrapperDF
+      EstimatorWrapperDFMeta
+      LearnerWrapperDF
+      MetaEstimatorWrapperDF
+      MissingEstimator
+      RegressorWrapperDF
+      SupervisedLearnerWrapperDF
+      TransformerWrapperDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+
+==========
+Submodules
+==========
+.. autosummary::
+   :toctree: wrapper
+   :template: custom-module-template.rst
+   :recursive:
+
+   sklearndf.wrapper.numpy
+   sklearndf.wrapper.stacking
+

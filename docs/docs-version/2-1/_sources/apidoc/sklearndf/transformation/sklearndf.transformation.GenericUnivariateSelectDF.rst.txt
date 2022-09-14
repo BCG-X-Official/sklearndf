@@ -1,0 +1,50 @@
+sklearndf.transformation.GenericUnivariateSelectDF
+==================================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: GenericUnivariateSelectDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~GenericUnivariateSelectDF.clone
+      ~GenericUnivariateSelectDF.ensure_fitted
+      ~GenericUnivariateSelectDF.fit
+      ~GenericUnivariateSelectDF.fit_transform
+      ~GenericUnivariateSelectDF.from_fitted
+      ~GenericUnivariateSelectDF.get_params
+      ~GenericUnivariateSelectDF.inverse_transform
+      ~GenericUnivariateSelectDF.set_params
+      ~GenericUnivariateSelectDF.to_expression
+      ~GenericUnivariateSelectDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~GenericUnivariateSelectDF.COL_FEATURE_IN
+      ~GenericUnivariateSelectDF.COL_FEATURE_OUT
+      ~GenericUnivariateSelectDF.feature_names_in_
+      ~GenericUnivariateSelectDF.feature_names_original_
+      ~GenericUnivariateSelectDF.feature_names_out_
+      ~GenericUnivariateSelectDF.is_fitted
+      ~GenericUnivariateSelectDF.n_features_in_
+      ~GenericUnivariateSelectDF.n_outputs_
+      ~GenericUnivariateSelectDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

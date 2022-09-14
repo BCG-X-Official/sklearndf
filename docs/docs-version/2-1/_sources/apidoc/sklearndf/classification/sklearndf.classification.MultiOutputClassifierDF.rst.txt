@@ -1,0 +1,52 @@
+sklearndf.classification.MultiOutputClassifierDF
+================================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: MultiOutputClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MultiOutputClassifierDF.clone
+      ~MultiOutputClassifierDF.decision_function
+      ~MultiOutputClassifierDF.ensure_fitted
+      ~MultiOutputClassifierDF.fit
+      ~MultiOutputClassifierDF.from_fitted
+      ~MultiOutputClassifierDF.get_params
+      ~MultiOutputClassifierDF.partial_fit
+      ~MultiOutputClassifierDF.predict
+      ~MultiOutputClassifierDF.predict_log_proba
+      ~MultiOutputClassifierDF.predict_proba
+      ~MultiOutputClassifierDF.score
+      ~MultiOutputClassifierDF.set_params
+      ~MultiOutputClassifierDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MultiOutputClassifierDF.COL_FEATURE_IN
+      ~MultiOutputClassifierDF.COL_PREDICTION
+      ~MultiOutputClassifierDF.classes_
+      ~MultiOutputClassifierDF.feature_names_in_
+      ~MultiOutputClassifierDF.is_fitted
+      ~MultiOutputClassifierDF.n_features_in_
+      ~MultiOutputClassifierDF.n_outputs_
+      ~MultiOutputClassifierDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,50 @@
+sklearndf.transformation.wrapper.FeatureSelectionWrapperDF
+==========================================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: FeatureSelectionWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~FeatureSelectionWrapperDF.clone
+      ~FeatureSelectionWrapperDF.ensure_fitted
+      ~FeatureSelectionWrapperDF.fit
+      ~FeatureSelectionWrapperDF.fit_transform
+      ~FeatureSelectionWrapperDF.from_fitted
+      ~FeatureSelectionWrapperDF.get_params
+      ~FeatureSelectionWrapperDF.inverse_transform
+      ~FeatureSelectionWrapperDF.set_params
+      ~FeatureSelectionWrapperDF.to_expression
+      ~FeatureSelectionWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~FeatureSelectionWrapperDF.COL_FEATURE_IN
+      ~FeatureSelectionWrapperDF.COL_FEATURE_OUT
+      ~FeatureSelectionWrapperDF.feature_names_in_
+      ~FeatureSelectionWrapperDF.feature_names_original_
+      ~FeatureSelectionWrapperDF.feature_names_out_
+      ~FeatureSelectionWrapperDF.is_fitted
+      ~FeatureSelectionWrapperDF.n_features_in_
+      ~FeatureSelectionWrapperDF.n_outputs_
+      ~FeatureSelectionWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

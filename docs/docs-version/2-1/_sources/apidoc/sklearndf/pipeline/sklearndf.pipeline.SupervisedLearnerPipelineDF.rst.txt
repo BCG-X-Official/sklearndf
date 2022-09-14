@@ -1,0 +1,51 @@
+sklearndf.pipeline.SupervisedLearnerPipelineDF
+==============================================
+
+.. currentmodule:: sklearndf.pipeline
+
+.. autoclass:: SupervisedLearnerPipelineDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SupervisedLearnerPipelineDF.clone
+      ~SupervisedLearnerPipelineDF.ensure_fitted
+      ~SupervisedLearnerPipelineDF.fit
+      ~SupervisedLearnerPipelineDF.get_params
+      ~SupervisedLearnerPipelineDF.predict
+      ~SupervisedLearnerPipelineDF.score
+      ~SupervisedLearnerPipelineDF.set_params
+      ~SupervisedLearnerPipelineDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~SupervisedLearnerPipelineDF.COL_FEATURE_IN
+      ~SupervisedLearnerPipelineDF.feature_names_in_
+      ~SupervisedLearnerPipelineDF.feature_names_original_
+      ~SupervisedLearnerPipelineDF.feature_names_out_
+      ~SupervisedLearnerPipelineDF.final_estimator
+      ~SupervisedLearnerPipelineDF.final_estimator_name
+      ~SupervisedLearnerPipelineDF.is_fitted
+      ~SupervisedLearnerPipelineDF.n_features_in_
+      ~SupervisedLearnerPipelineDF.n_outputs_
+      ~SupervisedLearnerPipelineDF.native_estimator
+      ~SupervisedLearnerPipelineDF.preprocessing
+      ~SupervisedLearnerPipelineDF.preprocessing_name
+   
+   
+
+   .. rubric:: Definitions

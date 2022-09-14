@@ -1,0 +1,28 @@
+sklearndf.wrapper.MissingEstimator
+==================================
+
+.. currentmodule:: sklearndf.wrapper
+
+.. autoclass:: MissingEstimator
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MissingEstimator.get_params
+      ~MissingEstimator.set_params
+   
+   
+
+   
+   
+   
+
+   .. rubric:: Definitions

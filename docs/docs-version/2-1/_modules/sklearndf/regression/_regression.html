@@ -1,0 +1,717 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearndf.regression._regression &#8212; sklearndf  documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/gamma.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/gamma.js"></script>
+    <script src="../../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../../../index.html">
+  <img src="../../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../_generated/getting_started.html">
+  Getting started
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../apidoc/sklearndf.html">
+  API reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../tutorials.html">
+  Tutorials
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../contribution_guide.html">
+  Development Guidelines
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../faqs.html">
+  FAQ
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../_generated/release_notes.html">
+  Release Notes
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for sklearndf.regression._regression</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Core implementation of :mod:`sklearndf.regression`</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">TransformedTargetRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.cross_decomposition</span> <span class="kn">import</span> <span class="n">CCA</span><span class="p">,</span> <span class="n">PLSCanonical</span><span class="p">,</span> <span class="n">PLSRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.dummy</span> <span class="kn">import</span> <span class="n">DummyRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AdaBoostRegressor</span><span class="p">,</span>
+    <span class="n">BaggingRegressor</span><span class="p">,</span>
+    <span class="n">ExtraTreesRegressor</span><span class="p">,</span>
+    <span class="n">GradientBoostingRegressor</span><span class="p">,</span>
+    <span class="n">RandomForestRegressor</span><span class="p">,</span>
+    <span class="n">VotingRegressor</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.gaussian_process</span> <span class="kn">import</span> <span class="n">GaussianProcessRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.isotonic</span> <span class="kn">import</span> <span class="n">IsotonicRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.kernel_ridge</span> <span class="kn">import</span> <span class="n">KernelRidge</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ARDRegression</span><span class="p">,</span>
+    <span class="n">BayesianRidge</span><span class="p">,</span>
+    <span class="n">ElasticNet</span><span class="p">,</span>
+    <span class="n">ElasticNetCV</span><span class="p">,</span>
+    <span class="n">HuberRegressor</span><span class="p">,</span>
+    <span class="n">Lars</span><span class="p">,</span>
+    <span class="n">LarsCV</span><span class="p">,</span>
+    <span class="n">Lasso</span><span class="p">,</span>
+    <span class="n">LassoCV</span><span class="p">,</span>
+    <span class="n">LassoLars</span><span class="p">,</span>
+    <span class="n">LassoLarsCV</span><span class="p">,</span>
+    <span class="n">LassoLarsIC</span><span class="p">,</span>
+    <span class="n">LinearRegression</span><span class="p">,</span>
+    <span class="n">MultiTaskElasticNet</span><span class="p">,</span>
+    <span class="n">MultiTaskElasticNetCV</span><span class="p">,</span>
+    <span class="n">MultiTaskLasso</span><span class="p">,</span>
+    <span class="n">MultiTaskLassoCV</span><span class="p">,</span>
+    <span class="n">OrthogonalMatchingPursuit</span><span class="p">,</span>
+    <span class="n">OrthogonalMatchingPursuitCV</span><span class="p">,</span>
+    <span class="n">PassiveAggressiveRegressor</span><span class="p">,</span>
+    <span class="n">RANSACRegressor</span><span class="p">,</span>
+    <span class="n">Ridge</span><span class="p">,</span>
+    <span class="n">RidgeCV</span><span class="p">,</span>
+    <span class="n">SGDRegressor</span><span class="p">,</span>
+    <span class="n">TheilSenRegressor</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.multioutput</span> <span class="kn">import</span> <span class="n">MultiOutputRegressor</span><span class="p">,</span> <span class="n">RegressorChain</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsRegressor</span><span class="p">,</span> <span class="n">RadiusNeighborsRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.neural_network</span> <span class="kn">import</span> <span class="n">MLPRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVR</span><span class="p">,</span> <span class="n">LinearSVR</span><span class="p">,</span> <span class="n">NuSVR</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span><span class="p">,</span> <span class="n">ExtraTreeRegressor</span>
+
+<span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span>
+
+<span class="kn">from</span> <span class="nn">..wrapper</span> <span class="kn">import</span> <span class="n">RegressorWrapperDF</span>
+<span class="kn">from</span> <span class="nn">.wrapper</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">IsotonicRegressionWrapperDF</span><span class="p">,</span>
+    <span class="n">MetaRegressorWrapperDF</span><span class="p">,</span>
+    <span class="n">MultiOutputRegressorWrapperDF</span><span class="p">,</span>
+    <span class="n">PartialFitRegressorWrapperDF</span><span class="p">,</span>
+    <span class="n">RegressorTransformerWrapperDF</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># noinspection PyProtectedMember</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;AdaBoostRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ARDRegressionDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BaggingRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BayesianRidgeDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CCADF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DecisionTreeRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DummyRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ElasticNetCVDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ElasticNetDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ExtraTreeRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ExtraTreesRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GaussianProcessRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GradientBoostingRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;HuberRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;IsotonicRegressionDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;KernelRidgeDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;KNeighborsRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LarsCVDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LarsDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LassoCVDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LassoDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LassoLarsCVDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LassoLarsDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LassoLarsICDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LinearRegressionDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LinearSVRDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MLPRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MultiOutputRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MultiTaskElasticNetCVDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MultiTaskElasticNetDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MultiTaskLassoCVDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MultiTaskLassoDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NuSVRDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OrthogonalMatchingPursuitCVDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OrthogonalMatchingPursuitDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PassiveAggressiveRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PLSCanonicalDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PLSRegressionDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RadiusNeighborsRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RandomForestRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RANSACRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RegressorChainDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RidgeCVDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RidgeDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SGDRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SVRDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TheilSenRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TransformedTargetRegressorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;VotingRegressorDF&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">__imported_estimators</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;DF&quot;</span><span class="p">)}</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Ensure all symbols introduced below are included in __all__</span>
+<span class="c1">#</span>
+
+<span class="n">__tracker</span> <span class="o">=</span> <span class="n">AllTracker</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Class definitions</span>
+<span class="c1">#</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Dummy</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="DummyRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.DummyRegressorDF.html#sklearndf.regression.DummyRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">DummyRegressorDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">DummyRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">DummyRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``DummyRegressor``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># SVM</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="LinearSVRDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.LinearSVRDF.html#sklearndf.regression.LinearSVRDF">[docs]</a><span class="k">class</span> <span class="nc">LinearSVRDF</span><span class="p">(</span><span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">LinearSVR</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">LinearSVR</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LinearSVR``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="SVRDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.SVRDF.html#sklearndf.regression.SVRDF">[docs]</a><span class="k">class</span> <span class="nc">SVRDF</span><span class="p">(</span><span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">SVR</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">SVR</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``SVR``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="NuSVRDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.NuSVRDF.html#sklearndf.regression.NuSVRDF">[docs]</a><span class="k">class</span> <span class="nc">NuSVRDF</span><span class="p">(</span><span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">NuSVR</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">NuSVR</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``NuSVR``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># multi-output</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="MultiOutputRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.MultiOutputRegressorDF.html#sklearndf.regression.MultiOutputRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">MultiOutputRegressorDF</span><span class="p">(</span>
+    <span class="n">MultiOutputRegressorWrapperDF</span><span class="p">,</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">MultiOutputRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``MultiOutputRegressor``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RegressorChainDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.RegressorChainDF.html#sklearndf.regression.RegressorChainDF">[docs]</a><span class="k">class</span> <span class="nc">RegressorChainDF</span><span class="p">(</span>
+    <span class="n">MetaRegressorWrapperDF</span><span class="p">[</span><span class="n">RegressorChain</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">RegressorChain</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``RegressorChain``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># neighbors</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="KNeighborsRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.KNeighborsRegressorDF.html#sklearndf.regression.KNeighborsRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">KNeighborsRegressorDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">KNeighborsRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">KNeighborsRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``KNeighborsRegressor``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RadiusNeighborsRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.RadiusNeighborsRegressorDF.html#sklearndf.regression.RadiusNeighborsRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">RadiusNeighborsRegressorDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">RadiusNeighborsRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">RadiusNeighborsRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``RadiusNeighborsRegressor``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># neural_network</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="MLPRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.MLPRegressorDF.html#sklearndf.regression.MLPRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">MLPRegressorDF</span><span class="p">(</span>
+    <span class="n">PartialFitRegressorWrapperDF</span><span class="p">[</span><span class="n">MLPRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">MLPRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``MLPRegressor``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># linear_model</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="LinearRegressionDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.LinearRegressionDF.html#sklearndf.regression.LinearRegressionDF">[docs]</a><span class="k">class</span> <span class="nc">LinearRegressionDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">LinearRegression</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">LinearRegression</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LinearRegression``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RidgeDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.RidgeDF.html#sklearndf.regression.RidgeDF">[docs]</a><span class="k">class</span> <span class="nc">RidgeDF</span><span class="p">(</span><span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">Ridge</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">Ridge</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``Ridge``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RidgeCVDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.RidgeCVDF.html#sklearndf.regression.RidgeCVDF">[docs]</a><span class="k">class</span> <span class="nc">RidgeCVDF</span><span class="p">(</span><span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">RidgeCV</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">RidgeCV</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``RidgeCV``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="SGDRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.SGDRegressorDF.html#sklearndf.regression.SGDRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">SGDRegressorDF</span><span class="p">(</span>
+    <span class="n">PartialFitRegressorWrapperDF</span><span class="p">[</span><span class="n">SGDRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">SGDRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``SGDRegressor``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="HuberRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.HuberRegressorDF.html#sklearndf.regression.HuberRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">HuberRegressorDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">HuberRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">HuberRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``HuberRegressor``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="TheilSenRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.TheilSenRegressorDF.html#sklearndf.regression.TheilSenRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">TheilSenRegressorDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">TheilSenRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">TheilSenRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``TheilSenRegressor``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="BayesianRidgeDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.BayesianRidgeDF.html#sklearndf.regression.BayesianRidgeDF">[docs]</a><span class="k">class</span> <span class="nc">BayesianRidgeDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">BayesianRidge</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">BayesianRidge</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``BayesianRidge``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="ARDRegressionDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.ARDRegressionDF.html#sklearndf.regression.ARDRegressionDF">[docs]</a><span class="k">class</span> <span class="nc">ARDRegressionDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">ARDRegression</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">ARDRegression</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``ARDRegression``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="OrthogonalMatchingPursuitDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.OrthogonalMatchingPursuitDF.html#sklearndf.regression.OrthogonalMatchingPursuitDF">[docs]</a><span class="k">class</span> <span class="nc">OrthogonalMatchingPursuitDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">OrthogonalMatchingPursuit</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">OrthogonalMatchingPursuit</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``OrthogonalMatchingPursuit``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="OrthogonalMatchingPursuitCVDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.OrthogonalMatchingPursuitCVDF.html#sklearndf.regression.OrthogonalMatchingPursuitCVDF">[docs]</a><span class="k">class</span> <span class="nc">OrthogonalMatchingPursuitCVDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">OrthogonalMatchingPursuitCV</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">OrthogonalMatchingPursuitCV</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``OrthogonalMatchingPursuitCV``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RANSACRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.RANSACRegressorDF.html#sklearndf.regression.RANSACRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">RANSACRegressorDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">RANSACRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">RANSACRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``RANSACRegressor``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="ElasticNetDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.ElasticNetDF.html#sklearndf.regression.ElasticNetDF">[docs]</a><span class="k">class</span> <span class="nc">ElasticNetDF</span><span class="p">(</span><span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">ElasticNet</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">ElasticNet</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``ElasticNet``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="LassoCVDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.LassoCVDF.html#sklearndf.regression.LassoCVDF">[docs]</a><span class="k">class</span> <span class="nc">LassoCVDF</span><span class="p">(</span><span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">LassoCV</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">LassoCV</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LassoCV``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="ElasticNetCVDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.ElasticNetCVDF.html#sklearndf.regression.ElasticNetCVDF">[docs]</a><span class="k">class</span> <span class="nc">ElasticNetCVDF</span><span class="p">(</span><span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">ElasticNetCV</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">ElasticNetCV</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``ElasticNetCV``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="MultiTaskElasticNetCVDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.MultiTaskElasticNetCVDF.html#sklearndf.regression.MultiTaskElasticNetCVDF">[docs]</a><span class="k">class</span> <span class="nc">MultiTaskElasticNetCVDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">MultiTaskElasticNetCV</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">MultiTaskElasticNetCV</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``MultiTaskElasticNetCV``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="MultiTaskLassoCVDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.MultiTaskLassoCVDF.html#sklearndf.regression.MultiTaskLassoCVDF">[docs]</a><span class="k">class</span> <span class="nc">MultiTaskLassoCVDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">MultiTaskLassoCV</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">MultiTaskLassoCV</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``MultiTaskLassoCV``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="MultiTaskElasticNetDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.MultiTaskElasticNetDF.html#sklearndf.regression.MultiTaskElasticNetDF">[docs]</a><span class="k">class</span> <span class="nc">MultiTaskElasticNetDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">MultiTaskElasticNet</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">MultiTaskElasticNet</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``MultiTaskElasticNet``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="MultiTaskLassoDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.MultiTaskLassoDF.html#sklearndf.regression.MultiTaskLassoDF">[docs]</a><span class="k">class</span> <span class="nc">MultiTaskLassoDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">MultiTaskLasso</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">MultiTaskLasso</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``MultiTaskLasso``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="LassoDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.LassoDF.html#sklearndf.regression.LassoDF">[docs]</a><span class="k">class</span> <span class="nc">LassoDF</span><span class="p">(</span><span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">Lasso</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">Lasso</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``Lasso``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="PassiveAggressiveRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.PassiveAggressiveRegressorDF.html#sklearndf.regression.PassiveAggressiveRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">PassiveAggressiveRegressorDF</span><span class="p">(</span>
+    <span class="n">PartialFitRegressorWrapperDF</span><span class="p">[</span><span class="n">PassiveAggressiveRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">PassiveAggressiveRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``PassiveAggressiveRegressor``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="LarsDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.LarsDF.html#sklearndf.regression.LarsDF">[docs]</a><span class="k">class</span> <span class="nc">LarsDF</span><span class="p">(</span><span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">Lars</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">Lars</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``Lars``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="LassoLarsDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.LassoLarsDF.html#sklearndf.regression.LassoLarsDF">[docs]</a><span class="k">class</span> <span class="nc">LassoLarsDF</span><span class="p">(</span><span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">LassoLars</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">LassoLars</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LassoLars``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="LassoLarsICDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.LassoLarsICDF.html#sklearndf.regression.LassoLarsICDF">[docs]</a><span class="k">class</span> <span class="nc">LassoLarsICDF</span><span class="p">(</span><span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">LassoLarsIC</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">LassoLarsIC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LassoLarsIC``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="LarsCVDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.LarsCVDF.html#sklearndf.regression.LarsCVDF">[docs]</a><span class="k">class</span> <span class="nc">LarsCVDF</span><span class="p">(</span><span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">LarsCV</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">LarsCV</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LarsCV``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="LassoLarsCVDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.LassoLarsCVDF.html#sklearndf.regression.LassoLarsCVDF">[docs]</a><span class="k">class</span> <span class="nc">LassoLarsCVDF</span><span class="p">(</span><span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">LassoLarsCV</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">LassoLarsCV</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LassoLarsCV``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># ensemble</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="BaggingRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.BaggingRegressorDF.html#sklearndf.regression.BaggingRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">BaggingRegressorDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">BaggingRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">BaggingRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``BaggingRegressor``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1"># noinspection PyAbstractClass</span>
+<div class="viewcode-block" id="GradientBoostingRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.GradientBoostingRegressorDF.html#sklearndf.regression.GradientBoostingRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">GradientBoostingRegressorDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">GradientBoostingRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">GradientBoostingRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``GradientBoostingRegressor``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="AdaBoostRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.AdaBoostRegressorDF.html#sklearndf.regression.AdaBoostRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">AdaBoostRegressorDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">AdaBoostRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">AdaBoostRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``AdaBoostRegressor``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RandomForestRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.RandomForestRegressorDF.html#sklearndf.regression.RandomForestRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">RandomForestRegressorDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">RandomForestRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">RandomForestRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``RandomForestRegressor``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="ExtraTreesRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.ExtraTreesRegressorDF.html#sklearndf.regression.ExtraTreesRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">ExtraTreesRegressorDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">ExtraTreesRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">ExtraTreesRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``ExtraTreesRegressor``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="VotingRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.VotingRegressorDF.html#sklearndf.regression.VotingRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">VotingRegressorDF</span><span class="p">(</span>
+    <span class="n">MetaRegressorWrapperDF</span><span class="p">[</span><span class="n">VotingRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">VotingRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``VotingRegressor``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># gaussian_process</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="GaussianProcessRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.GaussianProcessRegressorDF.html#sklearndf.regression.GaussianProcessRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">GaussianProcessRegressorDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">GaussianProcessRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">GaussianProcessRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``GaussianProcessRegressor``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># isotonic</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="IsotonicRegressionDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.IsotonicRegressionDF.html#sklearndf.regression.IsotonicRegressionDF">[docs]</a><span class="k">class</span> <span class="nc">IsotonicRegressionDF</span><span class="p">(</span>
+    <span class="n">IsotonicRegressionWrapperDF</span><span class="p">,</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">IsotonicRegression</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``IsotonicRegression``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># compose</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="TransformedTargetRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.TransformedTargetRegressorDF.html#sklearndf.regression.TransformedTargetRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">TransformedTargetRegressorDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">TransformedTargetRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">TransformedTargetRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``TransformedTargetRegressor``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># kernel_ridge</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="KernelRidgeDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.KernelRidgeDF.html#sklearndf.regression.KernelRidgeDF">[docs]</a><span class="k">class</span> <span class="nc">KernelRidgeDF</span><span class="p">(</span><span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">KernelRidge</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">KernelRidge</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``KernelRidge``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># tree</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="DecisionTreeRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.DecisionTreeRegressorDF.html#sklearndf.regression.DecisionTreeRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">DecisionTreeRegressorDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">DecisionTreeRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">DecisionTreeRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``DecisionTreeRegressor``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="ExtraTreeRegressorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.ExtraTreeRegressorDF.html#sklearndf.regression.ExtraTreeRegressorDF">[docs]</a><span class="k">class</span> <span class="nc">ExtraTreeRegressorDF</span><span class="p">(</span>
+    <span class="n">RegressorWrapperDF</span><span class="p">[</span><span class="n">ExtraTreeRegressor</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">ExtraTreeRegressor</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``ExtraTreeRegressor``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># cross_decomposition</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="CCADF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.CCADF.html#sklearndf.regression.CCADF">[docs]</a><span class="k">class</span> <span class="nc">CCADF</span><span class="p">(</span><span class="n">RegressorTransformerWrapperDF</span><span class="p">[</span><span class="n">CCA</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">CCA</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``CCA``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="PLSRegressionDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.PLSRegressionDF.html#sklearndf.regression.PLSRegressionDF">[docs]</a><span class="k">class</span> <span class="nc">PLSRegressionDF</span><span class="p">(</span>
+    <span class="n">RegressorTransformerWrapperDF</span><span class="p">[</span><span class="n">PLSRegression</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">PLSRegression</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``PLSRegression``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="PLSCanonicalDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/regression/sklearndf.regression.PLSCanonicalDF.html#sklearndf.regression.PLSCanonicalDF">[docs]</a><span class="k">class</span> <span class="nc">PLSCanonicalDF</span><span class="p">(</span>
+    <span class="n">RegressorTransformerWrapperDF</span><span class="p">[</span><span class="n">PLSCanonical</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">PLSCanonical</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``PLSCanonical``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># validate __all__</span>
+<span class="c1">#</span>
+
+<span class="n">__tracker</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># validate that __all__ comprises all symbols ending in &quot;DF&quot;, and no others</span>
+<span class="c1">#</span>
+
+<span class="n">__estimators</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">sym</span>
+    <span class="k">for</span> <span class="n">sym</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">sym</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;DF&quot;</span><span class="p">)</span>
+    <span class="ow">and</span> <span class="n">sym</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">__imported_estimators</span>
+    <span class="ow">and</span> <span class="ow">not</span> <span class="n">sym</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">if</span> <span class="n">__estimators</span> <span class="o">!=</span> <span class="nb">set</span><span class="p">(</span><span class="n">__all__</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+        <span class="s2">&quot;__all__ does not contain exactly all DF estimators; expected value is:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">__estimators</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, Boston Consulting Group (BCG).<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

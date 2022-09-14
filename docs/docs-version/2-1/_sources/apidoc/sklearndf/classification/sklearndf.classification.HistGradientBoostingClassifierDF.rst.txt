@@ -1,0 +1,54 @@
+sklearndf.classification.HistGradientBoostingClassifierDF
+=========================================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: HistGradientBoostingClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~HistGradientBoostingClassifierDF.clone
+      ~HistGradientBoostingClassifierDF.decision_function
+      ~HistGradientBoostingClassifierDF.ensure_fitted
+      ~HistGradientBoostingClassifierDF.fit
+      ~HistGradientBoostingClassifierDF.from_fitted
+      ~HistGradientBoostingClassifierDF.get_params
+      ~HistGradientBoostingClassifierDF.predict
+      ~HistGradientBoostingClassifierDF.predict_log_proba
+      ~HistGradientBoostingClassifierDF.predict_proba
+      ~HistGradientBoostingClassifierDF.score
+      ~HistGradientBoostingClassifierDF.set_params
+      ~HistGradientBoostingClassifierDF.staged_decision_function
+      ~HistGradientBoostingClassifierDF.staged_predict
+      ~HistGradientBoostingClassifierDF.staged_predict_proba
+      ~HistGradientBoostingClassifierDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~HistGradientBoostingClassifierDF.COL_FEATURE_IN
+      ~HistGradientBoostingClassifierDF.COL_PREDICTION
+      ~HistGradientBoostingClassifierDF.classes_
+      ~HistGradientBoostingClassifierDF.feature_names_in_
+      ~HistGradientBoostingClassifierDF.is_fitted
+      ~HistGradientBoostingClassifierDF.n_features_in_
+      ~HistGradientBoostingClassifierDF.n_outputs_
+      ~HistGradientBoostingClassifierDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,47 @@
+sklearndf.regression.HuberRegressorDF
+=====================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: HuberRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~HuberRegressorDF.clone
+      ~HuberRegressorDF.ensure_fitted
+      ~HuberRegressorDF.fit
+      ~HuberRegressorDF.from_fitted
+      ~HuberRegressorDF.get_params
+      ~HuberRegressorDF.predict
+      ~HuberRegressorDF.score
+      ~HuberRegressorDF.set_params
+      ~HuberRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~HuberRegressorDF.COL_FEATURE_IN
+      ~HuberRegressorDF.COL_PREDICTION
+      ~HuberRegressorDF.feature_names_in_
+      ~HuberRegressorDF.is_fitted
+      ~HuberRegressorDF.n_features_in_
+      ~HuberRegressorDF.n_outputs_
+      ~HuberRegressorDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

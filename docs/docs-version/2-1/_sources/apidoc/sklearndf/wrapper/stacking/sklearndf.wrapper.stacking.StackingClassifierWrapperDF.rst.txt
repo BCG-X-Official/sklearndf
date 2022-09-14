@@ -1,0 +1,51 @@
+sklearndf.wrapper.stacking.StackingClassifierWrapperDF
+======================================================
+
+.. currentmodule:: sklearndf.wrapper.stacking
+
+.. autoclass:: StackingClassifierWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~StackingClassifierWrapperDF.clone
+      ~StackingClassifierWrapperDF.decision_function
+      ~StackingClassifierWrapperDF.ensure_fitted
+      ~StackingClassifierWrapperDF.fit
+      ~StackingClassifierWrapperDF.from_fitted
+      ~StackingClassifierWrapperDF.get_params
+      ~StackingClassifierWrapperDF.predict
+      ~StackingClassifierWrapperDF.predict_log_proba
+      ~StackingClassifierWrapperDF.predict_proba
+      ~StackingClassifierWrapperDF.score
+      ~StackingClassifierWrapperDF.set_params
+      ~StackingClassifierWrapperDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~StackingClassifierWrapperDF.COL_FEATURE_IN
+      ~StackingClassifierWrapperDF.COL_PREDICTION
+      ~StackingClassifierWrapperDF.classes_
+      ~StackingClassifierWrapperDF.feature_names_in_
+      ~StackingClassifierWrapperDF.is_fitted
+      ~StackingClassifierWrapperDF.n_features_in_
+      ~StackingClassifierWrapperDF.n_outputs_
+      ~StackingClassifierWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,47 @@
+sklearndf.regression.MultiTaskLassoDF
+=====================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: MultiTaskLassoDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MultiTaskLassoDF.clone
+      ~MultiTaskLassoDF.ensure_fitted
+      ~MultiTaskLassoDF.fit
+      ~MultiTaskLassoDF.from_fitted
+      ~MultiTaskLassoDF.get_params
+      ~MultiTaskLassoDF.predict
+      ~MultiTaskLassoDF.score
+      ~MultiTaskLassoDF.set_params
+      ~MultiTaskLassoDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MultiTaskLassoDF.COL_FEATURE_IN
+      ~MultiTaskLassoDF.COL_PREDICTION
+      ~MultiTaskLassoDF.feature_names_in_
+      ~MultiTaskLassoDF.is_fitted
+      ~MultiTaskLassoDF.n_features_in_
+      ~MultiTaskLassoDF.n_outputs_
+      ~MultiTaskLassoDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

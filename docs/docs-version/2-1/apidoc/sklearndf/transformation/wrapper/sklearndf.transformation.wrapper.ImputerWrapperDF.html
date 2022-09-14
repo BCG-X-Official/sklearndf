@@ -1,0 +1,2027 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>sklearndf.transformation.wrapper.ImputerWrapperDF &#8212; sklearndf  documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/gamma.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/gamma.js"></script>
+    <script src="../../../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="sklearndf.transformation.wrapper.IsomapWrapperDF" href="sklearndf.transformation.wrapper.IsomapWrapperDF.html" />
+    <link rel="prev" title="sklearndf.transformation.wrapper.FeatureSelectionWrapperDF" href="sklearndf.transformation.wrapper.FeatureSelectionWrapperDF.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../../../../index.html">
+  <img src="../../../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../_generated/getting_started.html">
+  Getting started
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../../../sklearndf.html">
+  API reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../tutorials.html">
+  Tutorials
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../contribution_guide.html">
+  Development Guidelines
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../faqs.html">
+  FAQ
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../_generated/release_notes.html">
+  Release Notes
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sklearndf.ClassifierDF.html">
+   sklearndf.ClassifierDF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sklearndf.ClusterDF.html">
+   sklearndf.ClusterDF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sklearndf.EstimatorDF.html">
+   sklearndf.EstimatorDF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sklearndf.LearnerDF.html">
+   sklearndf.LearnerDF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sklearndf.RegressorDF.html">
+   sklearndf.RegressorDF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sklearndf.SupervisedLearnerDF.html">
+   sklearndf.SupervisedLearnerDF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sklearndf.TransformerDF.html">
+   sklearndf.TransformerDF
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../sklearndf.classification.html">
+   sklearndf.classification
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.AdaBoostClassifierDF.html">
+     sklearndf.classification.AdaBoostClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.BaggingClassifierDF.html">
+     sklearndf.classification.BaggingClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.BernoulliNBDF.html">
+     sklearndf.classification.BernoulliNBDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.CalibratedClassifierCVDF.html">
+     sklearndf.classification.CalibratedClassifierCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.CategoricalNBDF.html">
+     sklearndf.classification.CategoricalNBDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.ClassifierChainDF.html">
+     sklearndf.classification.ClassifierChainDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.ComplementNBDF.html">
+     sklearndf.classification.ComplementNBDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.DecisionTreeClassifierDF.html">
+     sklearndf.classification.DecisionTreeClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.DummyClassifierDF.html">
+     sklearndf.classification.DummyClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.ExtraTreeClassifierDF.html">
+     sklearndf.classification.ExtraTreeClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.ExtraTreesClassifierDF.html">
+     sklearndf.classification.ExtraTreesClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.GaussianNBDF.html">
+     sklearndf.classification.GaussianNBDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.GaussianProcessClassifierDF.html">
+     sklearndf.classification.GaussianProcessClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.GradientBoostingClassifierDF.html">
+     sklearndf.classification.GradientBoostingClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.HistGradientBoostingClassifierDF.html">
+     sklearndf.classification.HistGradientBoostingClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.KNeighborsClassifierDF.html">
+     sklearndf.classification.KNeighborsClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.LabelPropagationDF.html">
+     sklearndf.classification.LabelPropagationDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.LabelSpreadingDF.html">
+     sklearndf.classification.LabelSpreadingDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.LinearDiscriminantAnalysisDF.html">
+     sklearndf.classification.LinearDiscriminantAnalysisDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.LinearSVCDF.html">
+     sklearndf.classification.LinearSVCDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.LogisticRegressionCVDF.html">
+     sklearndf.classification.LogisticRegressionCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.LogisticRegressionDF.html">
+     sklearndf.classification.LogisticRegressionDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.MLPClassifierDF.html">
+     sklearndf.classification.MLPClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.MultiOutputClassifierDF.html">
+     sklearndf.classification.MultiOutputClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.MultinomialNBDF.html">
+     sklearndf.classification.MultinomialNBDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.NearestCentroidDF.html">
+     sklearndf.classification.NearestCentroidDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.NuSVCDF.html">
+     sklearndf.classification.NuSVCDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.OneVsOneClassifierDF.html">
+     sklearndf.classification.OneVsOneClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.OneVsRestClassifierDF.html">
+     sklearndf.classification.OneVsRestClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.OutputCodeClassifierDF.html">
+     sklearndf.classification.OutputCodeClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.PassiveAggressiveClassifierDF.html">
+     sklearndf.classification.PassiveAggressiveClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.PerceptronDF.html">
+     sklearndf.classification.PerceptronDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.QuadraticDiscriminantAnalysisDF.html">
+     sklearndf.classification.QuadraticDiscriminantAnalysisDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.RadiusNeighborsClassifierDF.html">
+     sklearndf.classification.RadiusNeighborsClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.RandomForestClassifierDF.html">
+     sklearndf.classification.RandomForestClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.RidgeClassifierCVDF.html">
+     sklearndf.classification.RidgeClassifierCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.RidgeClassifierDF.html">
+     sklearndf.classification.RidgeClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.SGDClassifierDF.html">
+     sklearndf.classification.SGDClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.SVCDF.html">
+     sklearndf.classification.SVCDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.StackingClassifierDF.html">
+     sklearndf.classification.StackingClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.VotingClassifierDF.html">
+     sklearndf.classification.VotingClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../classification/sklearndf.classification.extra.html">
+     sklearndf.classification.extra
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../classification/extra/sklearndf.classification.extra.LGBMClassifierDF.html">
+       sklearndf.classification.extra.LGBMClassifierDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../classification/extra/sklearndf.classification.extra.XGBClassifierDF.html">
+       sklearndf.classification.extra.XGBClassifierDF
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../classification/sklearndf.classification.wrapper.html">
+     sklearndf.classification.wrapper
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../classification/wrapper/sklearndf.classification.wrapper.ClassifierChainWrapperDF.html">
+       sklearndf.classification.wrapper.ClassifierChainWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../classification/wrapper/sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF.html">
+       sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../classification/wrapper/sklearndf.classification.wrapper.MetaClassifierWrapperDF.html">
+       sklearndf.classification.wrapper.MetaClassifierWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../classification/wrapper/sklearndf.classification.wrapper.MultiOutputClassifierWrapperDF.html">
+       sklearndf.classification.wrapper.MultiOutputClassifierWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../classification/wrapper/sklearndf.classification.wrapper.PartialFitClassifierWrapperDF.html">
+       sklearndf.classification.wrapper.PartialFitClassifierWrapperDF
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../sklearndf.clustering.html">
+   sklearndf.clustering
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.AffinityPropagationDF.html">
+     sklearndf.clustering.AffinityPropagationDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.AgglomerativeClusteringDF.html">
+     sklearndf.clustering.AgglomerativeClusteringDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.BirchDF.html">
+     sklearndf.clustering.BirchDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.BisectingKMeansDF.html">
+     sklearndf.clustering.BisectingKMeansDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.DBSCANDF.html">
+     sklearndf.clustering.DBSCANDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.FeatureAgglomerationDF.html">
+     sklearndf.clustering.FeatureAgglomerationDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.KMeansDF.html">
+     sklearndf.clustering.KMeansDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.MeanShiftDF.html">
+     sklearndf.clustering.MeanShiftDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.MiniBatchKMeansDF.html">
+     sklearndf.clustering.MiniBatchKMeansDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.OPTICSDF.html">
+     sklearndf.clustering.OPTICSDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.SpectralClusteringDF.html">
+     sklearndf.clustering.SpectralClusteringDF
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.wrapper.html">
+     sklearndf.clustering.wrapper
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../clustering/wrapper/sklearndf.clustering.wrapper.FeatureAgglomerationWrapperDF.html">
+       sklearndf.clustering.wrapper.FeatureAgglomerationWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../clustering/wrapper/sklearndf.clustering.wrapper.KMeansBaseWrapperDF.html">
+       sklearndf.clustering.wrapper.KMeansBaseWrapperDF
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../sklearndf.pipeline.html">
+   sklearndf.pipeline
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../pipeline/sklearndf.pipeline.ClassifierPipelineDF.html">
+     sklearndf.pipeline.ClassifierPipelineDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../pipeline/sklearndf.pipeline.ClusterPipelineDF.html">
+     sklearndf.pipeline.ClusterPipelineDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../pipeline/sklearndf.pipeline.FeatureUnionDF.html">
+     sklearndf.pipeline.FeatureUnionDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../pipeline/sklearndf.pipeline.LearnerPipelineDF.html">
+     sklearndf.pipeline.LearnerPipelineDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../pipeline/sklearndf.pipeline.PipelineDF.html">
+     sklearndf.pipeline.PipelineDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../pipeline/sklearndf.pipeline.RegressorPipelineDF.html">
+     sklearndf.pipeline.RegressorPipelineDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../pipeline/sklearndf.pipeline.SupervisedLearnerPipelineDF.html">
+     sklearndf.pipeline.SupervisedLearnerPipelineDF
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../pipeline/sklearndf.pipeline.wrapper.html">
+     sklearndf.pipeline.wrapper
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../pipeline/wrapper/sklearndf.pipeline.wrapper.FeatureUnionWrapperDF.html">
+       sklearndf.pipeline.wrapper.FeatureUnionWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../pipeline/wrapper/sklearndf.pipeline.wrapper.PipelineWrapperDF.html">
+       sklearndf.pipeline.wrapper.PipelineWrapperDF
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../sklearndf.regression.html">
+   sklearndf.regression
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.ARDRegressionDF.html">
+     sklearndf.regression.ARDRegressionDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.AdaBoostRegressorDF.html">
+     sklearndf.regression.AdaBoostRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.BaggingRegressorDF.html">
+     sklearndf.regression.BaggingRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.BayesianRidgeDF.html">
+     sklearndf.regression.BayesianRidgeDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.CCADF.html">
+     sklearndf.regression.CCADF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.DecisionTreeRegressorDF.html">
+     sklearndf.regression.DecisionTreeRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.DummyRegressorDF.html">
+     sklearndf.regression.DummyRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.ElasticNetCVDF.html">
+     sklearndf.regression.ElasticNetCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.ElasticNetDF.html">
+     sklearndf.regression.ElasticNetDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.ExtraTreeRegressorDF.html">
+     sklearndf.regression.ExtraTreeRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.ExtraTreesRegressorDF.html">
+     sklearndf.regression.ExtraTreesRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.GammaRegressorDF.html">
+     sklearndf.regression.GammaRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.GaussianProcessRegressorDF.html">
+     sklearndf.regression.GaussianProcessRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.GradientBoostingRegressorDF.html">
+     sklearndf.regression.GradientBoostingRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.HistGradientBoostingRegressorDF.html">
+     sklearndf.regression.HistGradientBoostingRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.HuberRegressorDF.html">
+     sklearndf.regression.HuberRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.IsotonicRegressionDF.html">
+     sklearndf.regression.IsotonicRegressionDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.KNeighborsRegressorDF.html">
+     sklearndf.regression.KNeighborsRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.KernelRidgeDF.html">
+     sklearndf.regression.KernelRidgeDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LarsCVDF.html">
+     sklearndf.regression.LarsCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LarsDF.html">
+     sklearndf.regression.LarsDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LassoCVDF.html">
+     sklearndf.regression.LassoCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LassoDF.html">
+     sklearndf.regression.LassoDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LassoLarsCVDF.html">
+     sklearndf.regression.LassoLarsCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LassoLarsDF.html">
+     sklearndf.regression.LassoLarsDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LassoLarsICDF.html">
+     sklearndf.regression.LassoLarsICDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LinearRegressionDF.html">
+     sklearndf.regression.LinearRegressionDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LinearSVRDF.html">
+     sklearndf.regression.LinearSVRDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.MLPRegressorDF.html">
+     sklearndf.regression.MLPRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.MultiOutputRegressorDF.html">
+     sklearndf.regression.MultiOutputRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.MultiTaskElasticNetCVDF.html">
+     sklearndf.regression.MultiTaskElasticNetCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.MultiTaskElasticNetDF.html">
+     sklearndf.regression.MultiTaskElasticNetDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.MultiTaskLassoCVDF.html">
+     sklearndf.regression.MultiTaskLassoCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.MultiTaskLassoDF.html">
+     sklearndf.regression.MultiTaskLassoDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.NuSVRDF.html">
+     sklearndf.regression.NuSVRDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.OrthogonalMatchingPursuitCVDF.html">
+     sklearndf.regression.OrthogonalMatchingPursuitCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.OrthogonalMatchingPursuitDF.html">
+     sklearndf.regression.OrthogonalMatchingPursuitDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.PLSCanonicalDF.html">
+     sklearndf.regression.PLSCanonicalDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.PLSRegressionDF.html">
+     sklearndf.regression.PLSRegressionDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.PassiveAggressiveRegressorDF.html">
+     sklearndf.regression.PassiveAggressiveRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.PoissonRegressorDF.html">
+     sklearndf.regression.PoissonRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.QuantileRegressorDF.html">
+     sklearndf.regression.QuantileRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.RANSACRegressorDF.html">
+     sklearndf.regression.RANSACRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.RadiusNeighborsRegressorDF.html">
+     sklearndf.regression.RadiusNeighborsRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.RandomForestRegressorDF.html">
+     sklearndf.regression.RandomForestRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.RegressorChainDF.html">
+     sklearndf.regression.RegressorChainDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.RidgeCVDF.html">
+     sklearndf.regression.RidgeCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.RidgeDF.html">
+     sklearndf.regression.RidgeDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.SGDRegressorDF.html">
+     sklearndf.regression.SGDRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.SVRDF.html">
+     sklearndf.regression.SVRDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.StackingRegressorDF.html">
+     sklearndf.regression.StackingRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.TheilSenRegressorDF.html">
+     sklearndf.regression.TheilSenRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.TransformedTargetRegressorDF.html">
+     sklearndf.regression.TransformedTargetRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.TweedieRegressorDF.html">
+     sklearndf.regression.TweedieRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.VotingRegressorDF.html">
+     sklearndf.regression.VotingRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../regression/sklearndf.regression.extra.html">
+     sklearndf.regression.extra
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <label for="toctree-checkbox-9">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../regression/extra/sklearndf.regression.extra.LGBMRegressorDF.html">
+       sklearndf.regression.extra.LGBMRegressorDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../regression/extra/sklearndf.regression.extra.XGBRegressorDF.html">
+       sklearndf.regression.extra.XGBRegressorDF
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../regression/sklearndf.regression.wrapper.html">
+     sklearndf.regression.wrapper
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+    <label for="toctree-checkbox-10">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../regression/wrapper/sklearndf.regression.wrapper.IsotonicRegressionWrapperDF.html">
+       sklearndf.regression.wrapper.IsotonicRegressionWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../regression/wrapper/sklearndf.regression.wrapper.MetaRegressorWrapperDF.html">
+       sklearndf.regression.wrapper.MetaRegressorWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../regression/wrapper/sklearndf.regression.wrapper.MultiOutputRegressorWrapperDF.html">
+       sklearndf.regression.wrapper.MultiOutputRegressorWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../regression/wrapper/sklearndf.regression.wrapper.PartialFitRegressorWrapperDF.html">
+       sklearndf.regression.wrapper.PartialFitRegressorWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../regression/wrapper/sklearndf.regression.wrapper.RegressorTransformerWrapperDF.html">
+       sklearndf.regression.wrapper.RegressorTransformerWrapperDF
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../../sklearndf.transformation.html">
+   sklearndf.transformation
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.AdditiveChi2SamplerDF.html">
+     sklearndf.transformation.AdditiveChi2SamplerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.BernoulliRBMDF.html">
+     sklearndf.transformation.BernoulliRBMDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.BinarizerDF.html">
+     sklearndf.transformation.BinarizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.ColumnTransformerDF.html">
+     sklearndf.transformation.ColumnTransformerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.DictVectorizerDF.html">
+     sklearndf.transformation.DictVectorizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.DictionaryLearningDF.html">
+     sklearndf.transformation.DictionaryLearningDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.FactorAnalysisDF.html">
+     sklearndf.transformation.FactorAnalysisDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.FastICADF.html">
+     sklearndf.transformation.FastICADF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.FeatureHasherDF.html">
+     sklearndf.transformation.FeatureHasherDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.FunctionTransformerDF.html">
+     sklearndf.transformation.FunctionTransformerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.GaussianRandomProjectionDF.html">
+     sklearndf.transformation.GaussianRandomProjectionDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.GenericUnivariateSelectDF.html">
+     sklearndf.transformation.GenericUnivariateSelectDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.HashingVectorizerDF.html">
+     sklearndf.transformation.HashingVectorizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.IncrementalPCADF.html">
+     sklearndf.transformation.IncrementalPCADF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.IsomapDF.html">
+     sklearndf.transformation.IsomapDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.IterativeImputerDF.html">
+     sklearndf.transformation.IterativeImputerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.KBinsDiscretizerDF.html">
+     sklearndf.transformation.KBinsDiscretizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.KNNImputerDF.html">
+     sklearndf.transformation.KNNImputerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.KernelCentererDF.html">
+     sklearndf.transformation.KernelCentererDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.KernelPCADF.html">
+     sklearndf.transformation.KernelPCADF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.LabelBinarizerDF.html">
+     sklearndf.transformation.LabelBinarizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.LabelEncoderDF.html">
+     sklearndf.transformation.LabelEncoderDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.LatentDirichletAllocationDF.html">
+     sklearndf.transformation.LatentDirichletAllocationDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.LocallyLinearEmbeddingDF.html">
+     sklearndf.transformation.LocallyLinearEmbeddingDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.MaxAbsScalerDF.html">
+     sklearndf.transformation.MaxAbsScalerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.MinMaxScalerDF.html">
+     sklearndf.transformation.MinMaxScalerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.MiniBatchDictionaryLearningDF.html">
+     sklearndf.transformation.MiniBatchDictionaryLearningDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.MiniBatchNMFDF.html">
+     sklearndf.transformation.MiniBatchNMFDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.MiniBatchSparsePCADF.html">
+     sklearndf.transformation.MiniBatchSparsePCADF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.MissingIndicatorDF.html">
+     sklearndf.transformation.MissingIndicatorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.MultiLabelBinarizerDF.html">
+     sklearndf.transformation.MultiLabelBinarizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.NMFDF.html">
+     sklearndf.transformation.NMFDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.NeighborhoodComponentsAnalysisDF.html">
+     sklearndf.transformation.NeighborhoodComponentsAnalysisDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.NormalizerDF.html">
+     sklearndf.transformation.NormalizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.NystroemDF.html">
+     sklearndf.transformation.NystroemDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.OneHotEncoderDF.html">
+     sklearndf.transformation.OneHotEncoderDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.OrdinalEncoderDF.html">
+     sklearndf.transformation.OrdinalEncoderDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.PCADF.html">
+     sklearndf.transformation.PCADF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.PLSSVDDF.html">
+     sklearndf.transformation.PLSSVDDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.PolynomialCountSketchDF.html">
+     sklearndf.transformation.PolynomialCountSketchDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.PolynomialFeaturesDF.html">
+     sklearndf.transformation.PolynomialFeaturesDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.PowerTransformerDF.html">
+     sklearndf.transformation.PowerTransformerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.QuantileTransformerDF.html">
+     sklearndf.transformation.QuantileTransformerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.RBFSamplerDF.html">
+     sklearndf.transformation.RBFSamplerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.RFECVDF.html">
+     sklearndf.transformation.RFECVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.RFEDF.html">
+     sklearndf.transformation.RFEDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.RandomTreesEmbeddingDF.html">
+     sklearndf.transformation.RandomTreesEmbeddingDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.RobustScalerDF.html">
+     sklearndf.transformation.RobustScalerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.SelectFdrDF.html">
+     sklearndf.transformation.SelectFdrDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.SelectFprDF.html">
+     sklearndf.transformation.SelectFprDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.SelectFromModelDF.html">
+     sklearndf.transformation.SelectFromModelDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.SelectFweDF.html">
+     sklearndf.transformation.SelectFweDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.SelectKBestDF.html">
+     sklearndf.transformation.SelectKBestDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.SelectPercentileDF.html">
+     sklearndf.transformation.SelectPercentileDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.SequentialFeatureSelectorDF.html">
+     sklearndf.transformation.SequentialFeatureSelectorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.SimpleImputerDF.html">
+     sklearndf.transformation.SimpleImputerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.SkewedChi2SamplerDF.html">
+     sklearndf.transformation.SkewedChi2SamplerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.SparseCoderDF.html">
+     sklearndf.transformation.SparseCoderDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.SparsePCADF.html">
+     sklearndf.transformation.SparsePCADF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.SparseRandomProjectionDF.html">
+     sklearndf.transformation.SparseRandomProjectionDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.SplineTransformerDF.html">
+     sklearndf.transformation.SplineTransformerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.StandardScalerDF.html">
+     sklearndf.transformation.StandardScalerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.TfidfTransformerDF.html">
+     sklearndf.transformation.TfidfTransformerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.TruncatedSVDDF.html">
+     sklearndf.transformation.TruncatedSVDDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.transformation.VarianceThresholdDF.html">
+     sklearndf.transformation.VarianceThresholdDF
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../sklearndf.transformation.extra.html">
+     sklearndf.transformation.extra
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+    <label for="toctree-checkbox-12">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../extra/sklearndf.transformation.extra.BorutaDF.html">
+       sklearndf.transformation.extra.BorutaDF
+      </a>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../extra/sklearndf.transformation.extra.wrapper.html">
+       sklearndf.transformation.extra.wrapper
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+      <label for="toctree-checkbox-13">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../extra/wrapper/sklearndf.transformation.extra.wrapper.BorutaPyWrapperDF.html">
+         sklearndf.transformation.extra.wrapper.BorutaPyWrapperDF
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="../sklearndf.transformation.wrapper.html">
+     sklearndf.transformation.wrapper
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.transformation.wrapper.AdditiveChi2SamplerWrapperDF.html">
+       sklearndf.transformation.wrapper.AdditiveChi2SamplerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF.html">
+       sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.transformation.wrapper.BaseMultipleInputsPerOutputTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.BaseMultipleInputsPerOutputTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.transformation.wrapper.ColumnPreservingTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.ColumnPreservingTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.transformation.wrapper.ColumnSubsetTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.ColumnSubsetTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.transformation.wrapper.ColumnTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.ColumnTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF.html">
+       sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.transformation.wrapper.EmbeddingWrapperDF.html">
+       sklearndf.transformation.wrapper.EmbeddingWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.transformation.wrapper.FeatureSelectionWrapperDF.html">
+       sklearndf.transformation.wrapper.FeatureSelectionWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       sklearndf.transformation.wrapper.ImputerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.transformation.wrapper.IsomapWrapperDF.html">
+       sklearndf.transformation.wrapper.IsomapWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF.html">
+       sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.transformation.wrapper.MissingIndicatorWrapperDF.html">
+       sklearndf.transformation.wrapper.MissingIndicatorWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.transformation.wrapper.NComponentsDimensionalityReductionWrapperDF.html">
+       sklearndf.transformation.wrapper.NComponentsDimensionalityReductionWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.transformation.wrapper.NumpyTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.NumpyTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.transformation.wrapper.OneHotEncoderWrapperDF.html">
+       sklearndf.transformation.wrapper.OneHotEncoderWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../sklearndf.wrapper.html">
+   sklearndf.wrapper
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+  <label for="toctree-checkbox-15">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.ClassifierWrapperDF.html">
+     sklearndf.wrapper.ClassifierWrapperDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.ClusterWrapperDF.html">
+     sklearndf.wrapper.ClusterWrapperDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.EstimatorWrapperDF.html">
+     sklearndf.wrapper.EstimatorWrapperDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.EstimatorWrapperDFMeta.html">
+     sklearndf.wrapper.EstimatorWrapperDFMeta
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.LearnerWrapperDF.html">
+     sklearndf.wrapper.LearnerWrapperDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.MetaEstimatorWrapperDF.html">
+     sklearndf.wrapper.MetaEstimatorWrapperDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.MissingEstimator.html">
+     sklearndf.wrapper.MissingEstimator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.RegressorWrapperDF.html">
+     sklearndf.wrapper.RegressorWrapperDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.SupervisedLearnerWrapperDF.html">
+     sklearndf.wrapper.SupervisedLearnerWrapperDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.TransformerWrapperDF.html">
+     sklearndf.wrapper.TransformerWrapperDF
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.numpy.html">
+     sklearndf.wrapper.numpy
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/numpy/sklearndf.wrapper.numpy.ClassifierNPDF.html">
+       sklearndf.wrapper.numpy.ClassifierNPDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/numpy/sklearndf.wrapper.numpy.EstimatorNPDF.html">
+       sklearndf.wrapper.numpy.EstimatorNPDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/numpy/sklearndf.wrapper.numpy.LearnerNPDF.html">
+       sklearndf.wrapper.numpy.LearnerNPDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/numpy/sklearndf.wrapper.numpy.RegressorNPDF.html">
+       sklearndf.wrapper.numpy.RegressorNPDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/numpy/sklearndf.wrapper.numpy.SupervisedLearnerNPDF.html">
+       sklearndf.wrapper.numpy.SupervisedLearnerNPDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/numpy/sklearndf.wrapper.numpy.TransformerNPDF.html">
+       sklearndf.wrapper.numpy.TransformerNPDF
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.stacking.html">
+     sklearndf.wrapper.stacking
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/stacking/sklearndf.wrapper.stacking.StackingClassifierWrapperDF.html">
+       sklearndf.wrapper.stacking.StackingClassifierWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/stacking/sklearndf.wrapper.stacking.StackingEstimatorWrapperDF.html">
+       sklearndf.wrapper.stacking.StackingEstimatorWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/stacking/sklearndf.wrapper.stacking.StackingRegressorWrapperDF.html">
+       sklearndf.wrapper.stacking.StackingRegressorWrapperDF
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+
+<nav id="bd-toc-nav">
+    
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="sklearndf-transformation-wrapper-imputerwrapperdf">
+<h1>sklearndf.transformation.wrapper.ImputerWrapperDF<a class="headerlink" href="#sklearndf-transformation-wrapper-imputerwrapperdf" title="Permalink to this headline">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sklearndf.transformation.wrapper.</span></span><span class="sig-name descname"><span class="pre">ImputerWrapperDF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/sklearndf/transformation/wrapper/_wrapper.html#ImputerWrapperDF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF" title="Permalink to this definition">#</a></dt>
+<dd><p>DF wrapper for imputation transformers, e.g., <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html#sklearn.impute.SimpleImputer" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.impute.SimpleImputer</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Bases</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../../wrapper/sklearndf.wrapper.TransformerWrapperDF.html#sklearndf.wrapper.TransformerWrapperDF" title="sklearndf.wrapper.TransformerWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TransformerWrapperDF</span></code></a> [~T_Imputer]</p>
+</dd>
+<dt class="field-even">Metaclasses</dt>
+<dd class="field-even"><p><a class="reference internal" href="../../wrapper/sklearndf.wrapper.EstimatorWrapperDFMeta.html#sklearndf.wrapper.EstimatorWrapperDFMeta" title="sklearndf.wrapper.EstimatorWrapperDFMeta"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatorWrapperDFMeta</span></code></a>, <a class="reference external" href="https://docs.python.org/3.7/library/abc.html#abc.ABCMeta" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABCMeta</span></code></a></p>
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>) – transformer parameters</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>) – transformer keyword parameters</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Method summary</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.clone" title="sklearndf.transformation.wrapper.ImputerWrapperDF.clone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clone</span></code></a></p></td>
+<td><p>Make an unfitted clone of this estimator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.ensure_fitted" title="sklearndf.transformation.wrapper.ImputerWrapperDF.ensure_fitted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_fitted</span></code></a></p></td>
+<td><p>Raise a <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.exceptions.NotFittedError.html#sklearn.exceptions.NotFittedError" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NotFittedError</span></code></a> if this estimator is not fitted.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.fit" title="sklearndf.transformation.wrapper.ImputerWrapperDF.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a></p></td>
+<td><p>Fit this estimator using the given inputs.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.fit_transform" title="sklearndf.transformation.wrapper.ImputerWrapperDF.fit_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit_transform</span></code></a></p></td>
+<td><p>Fit this transformer using the given inputs, then transform the inputs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.from_fitted" title="sklearndf.transformation.wrapper.ImputerWrapperDF.from_fitted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_fitted</span></code></a></p></td>
+<td><p>Make a new wrapped DF estimator, delegating to a given native estimator that has already been fitted.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.get_params" title="sklearndf.transformation.wrapper.ImputerWrapperDF.get_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_params</span></code></a></p></td>
+<td><p>Get the parameters for this estimator.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.inverse_transform" title="sklearndf.transformation.wrapper.ImputerWrapperDF.inverse_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverse_transform</span></code></a></p></td>
+<td><p>Inverse-transform the given inputs.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.set_params" title="sklearndf.transformation.wrapper.ImputerWrapperDF.set_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_params</span></code></a></p></td>
+<td><p>Set the parameters of this estimator.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.to_expression" title="sklearndf.transformation.wrapper.ImputerWrapperDF.to_expression"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_expression</span></code></a></p></td>
+<td><p>Render this object as an expression.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.transform" title="sklearndf.transformation.wrapper.ImputerWrapperDF.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a></p></td>
+<td><p>Transform the given inputs.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attribute summary</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">COL_FEATURE_IN</span></code></p></td>
+<td><p>Name assigned to an <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a> or a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a> containing the names of the features used to fit a <a class="reference internal" href="../../sklearndf.EstimatorDF.html#sklearndf.EstimatorDF" title="sklearndf.EstimatorDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatorDF</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">COL_FEATURE_OUT</span></code></p></td>
+<td><p>Name assigned to a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a> containing the names of the features produced by a <a class="reference internal" href="../../sklearndf.TransformerDF.html#sklearndf.TransformerDF" title="sklearndf.TransformerDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerDF</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.feature_names_in_" title="sklearndf.transformation.wrapper.ImputerWrapperDF.feature_names_in_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feature_names_in_</span></code></a></p></td>
+<td><p>The pandas column index with the names of the features used to fit this estimator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.feature_names_original_" title="sklearndf.transformation.wrapper.ImputerWrapperDF.feature_names_original_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feature_names_original_</span></code></a></p></td>
+<td><p>A pandas series, mapping the output features resulting from the transformation to the original input features.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.feature_names_out_" title="sklearndf.transformation.wrapper.ImputerWrapperDF.feature_names_out_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feature_names_out_</span></code></a></p></td>
+<td><p>A pandas column index with the names of the features produced by this transformer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.is_fitted" title="sklearndf.transformation.wrapper.ImputerWrapperDF.is_fitted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_fitted</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if this object is fitted, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.n_features_in_" title="sklearndf.transformation.wrapper.ImputerWrapperDF.n_features_in_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_features_in_</span></code></a></p></td>
+<td><p>The number of features used to fit this estimator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.n_outputs_" title="sklearndf.transformation.wrapper.ImputerWrapperDF.n_outputs_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_outputs_</span></code></a></p></td>
+<td><p>The number of outputs used to fit this estimator.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.native_estimator" title="sklearndf.transformation.wrapper.ImputerWrapperDF.native_estimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">native_estimator</span></code></a></p></td>
+<td><p>The native estimator that this wrapper delegates to.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Definitions</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.clone" title="Permalink to this definition">#</a></dt>
+<dd><p>Make an unfitted clone of this estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF" title="sklearndf.transformation.wrapper.ImputerWrapperDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImputerWrapperDF</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the unfitted clone</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.ensure_fitted">
+<span class="sig-name descname"><span class="pre">ensure_fitted</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.ensure_fitted" title="Permalink to this definition">#</a></dt>
+<dd><p>Raise a <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.exceptions.NotFittedError.html#sklearn.exceptions.NotFittedError" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NotFittedError</span></code></a> if this estimator is not
+fitted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.exceptions.NotFittedError.html#sklearn.exceptions.NotFittedError" title="(in scikit-learn v1.1)"><strong>sklearn.exceptions.NotFittedError</strong></a> – this estimator is not fitted</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.7/library/constants.html#None" title="(in Python v3.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fit_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.fit" title="Permalink to this definition">#</a></dt>
+<dd><p>Fit this estimator using the given inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>) – input data frame with observations as rows and features as columns</p></li>
+<li><p><strong>y</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a>, <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>, <a class="reference external" href="https://docs.python.org/3.7/library/constants.html#None" title="(in Python v3.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]) – an optional series or data frame with one or more outputs</p></li>
+<li><p><strong>fit_params</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>) – additional keyword parameters as required by specific
+estimator implementations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF" title="sklearndf.transformation.wrapper.ImputerWrapperDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImputerWrapperDF</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">self</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fit_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.fit_transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Fit this transformer using the given inputs, then transform the inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>) – input data frame with observations as rows and features as columns</p></li>
+<li><p><strong>y</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a>]) – an optional series or data frame with one or more outputs</p></li>
+<li><p><strong>fit_params</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>) – additional keyword parameters as required by specific
+transformer implementations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the transformed inputs</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.from_fitted">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_fitted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_outputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.from_fitted" title="Permalink to this definition">#</a></dt>
+<dd><p>Make a new wrapped DF estimator, delegating to a given native estimator that
+has already been fitted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>estimator</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.TypeVar" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">T_Imputer</span></code>, <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html#sklearn.impute.SimpleImputer" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleImputer</span></code></a>, <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.IterativeImputer.html#sklearn.impute.IterativeImputer" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">IterativeImputer</span></code></a>)) – the fitted native estimator to use as the delegate</p></li>
+<li><p><strong>features_in</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a>) – the column names of X used for fitting the estimator</p></li>
+<li><p><strong>n_outputs</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – the number of outputs in y used for fitting the estimator</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF" title="sklearndf.transformation.wrapper.ImputerWrapperDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImputerWrapperDF</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the wrapped data frame estimator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.get_params">
+<span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.get_params" title="Permalink to this definition">#</a></dt>
+<dd><p>Get the parameters for this estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>deep</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>) – if <code class="docutils literal notranslate"><span class="pre">True</span></code>, return the parameters for this estimator, and
+for any sub-estimators contained in this estimator</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Mapping" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapping</span></code></a>[<a class="reference external" href="https://docs.python.org/3.7/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a mapping of parameter names to their values</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.inverse_transform">
+<span class="sig-name descname"><span class="pre">inverse_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.inverse_transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Inverse-transform the given inputs.</p>
+<p>The inputs must have the same features as the inputs used to fit
+this transformer.
+The features can be provided in any order since they are identified by their
+column names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>) – input data frame with observations as rows and features as columns</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the reverse-transformed inputs</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.set_params">
+<span class="sig-name descname"><span class="pre">set_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.set_params" title="Permalink to this definition">#</a></dt>
+<dd><p>Set the parameters of this estimator.</p>
+<p>Valid parameter keys can be obtained by calling <a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.get_params" title="sklearndf.transformation.wrapper.ImputerWrapperDF.get_params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_params()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>) – the estimator parameters to set</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#sklearndf.transformation.wrapper.ImputerWrapperDF" title="sklearndf.transformation.wrapper.ImputerWrapperDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImputerWrapperDF</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">self</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.to_expression">
+<span class="sig-name descname"><span class="pre">to_expression</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.to_expression" title="Permalink to this definition">#</a></dt>
+<dd><p>Render this object as an expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://bcg-gamma.github.io/pytools/apidoc/pytools/expression/pytools.expression.Expression.html#pytools.expression.Expression" title="(in pytools v2.0.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Expression</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the expression representing this object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.transform" title="Permalink to this definition">#</a></dt>
+<dd><p>Transform the given inputs.</p>
+<p>The inputs must have the same features as the inputs used to fit
+this transformer.
+The features can be provided in any order since they are identified by their
+column names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>) – input data frame with observations as rows and features as columns</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the transformed inputs</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.feature_names_in_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_names_in_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.4.4)"><span class="pre">pandas.Index</span></a></em><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.feature_names_in_" title="Permalink to this definition">#</a></dt>
+<dd><p>The pandas column index with the names of the features used to fit this
+estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/exceptions.html#AttributeError" title="(in Python v3.7)"><strong>AttributeError</strong></a> – if this estimator is not fitted</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.feature_names_original_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_names_original_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.4.4)"><span class="pre">pandas.Series</span></a></em><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.feature_names_original_" title="Permalink to this definition">#</a></dt>
+<dd><p>A pandas series, mapping the output features resulting from the transformation
+to the original input features.</p>
+<p>The index of the resulting series consists of the names of the output features;
+the corresponding values are the names of the original input features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.feature_names_out_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_names_out_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.4.4)"><span class="pre">pandas.Index</span></a></em><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.feature_names_out_" title="Permalink to this definition">#</a></dt>
+<dd><p>A pandas column index with the names of the features produced by this
+transformer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.4.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.is_fitted">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_fitted</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#bool" title="(in Python v3.7)"><span class="pre">bool</span></a></em><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.is_fitted" title="Permalink to this definition">#</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if this object is fitted, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.n_features_in_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_features_in_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#int" title="(in Python v3.7)"><span class="pre">int</span></a></em><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.n_features_in_" title="Permalink to this definition">#</a></dt>
+<dd><p>The number of features used to fit this estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/exceptions.html#AttributeError" title="(in Python v3.7)"><strong>AttributeError</strong></a> – if this estimator is not fitted</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the number of features</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.n_outputs_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_outputs_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#int" title="(in Python v3.7)"><span class="pre">int</span></a></em><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.n_outputs_" title="Permalink to this definition">#</a></dt>
+<dd><p>The number of outputs used to fit this estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/exceptions.html#AttributeError" title="(in Python v3.7)"><strong>AttributeError</strong></a> – if this estimator is not fitted</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.transformation.wrapper.ImputerWrapperDF.native_estimator">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">native_estimator</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">sklearndf.wrapper.T_NativeEstimator</span></em><a class="headerlink" href="#sklearndf.transformation.wrapper.ImputerWrapperDF.native_estimator" title="Permalink to this definition">#</a></dt>
+<dd><p>The native estimator that this wrapper delegates to.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.TypeVar" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">T_NativeEstimator</span></code>, bound= <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="sklearndf.transformation.wrapper.FeatureSelectionWrapperDF.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">sklearndf.transformation.wrapper.FeatureSelectionWrapperDF</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="sklearndf.transformation.wrapper.IsomapWrapperDF.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">sklearndf.transformation.wrapper.IsomapWrapperDF</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, Boston Consulting Group (BCG).<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

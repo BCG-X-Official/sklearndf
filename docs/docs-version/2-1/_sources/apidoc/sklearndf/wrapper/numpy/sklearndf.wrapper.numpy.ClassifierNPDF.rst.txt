@@ -1,0 +1,51 @@
+sklearndf.wrapper.numpy.ClassifierNPDF
+======================================
+
+.. currentmodule:: sklearndf.wrapper.numpy
+
+.. autoclass:: ClassifierNPDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ClassifierNPDF.clone
+      ~ClassifierNPDF.decision_function
+      ~ClassifierNPDF.ensure_fitted
+      ~ClassifierNPDF.fit
+      ~ClassifierNPDF.get_params
+      ~ClassifierNPDF.predict
+      ~ClassifierNPDF.predict_log_proba
+      ~ClassifierNPDF.predict_proba
+      ~ClassifierNPDF.score
+      ~ClassifierNPDF.set_params
+      ~ClassifierNPDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ClassifierNPDF.COL_FEATURE_IN
+      ~ClassifierNPDF.classes_
+      ~ClassifierNPDF.feature_names_in_
+      ~ClassifierNPDF.is_fitted
+      ~ClassifierNPDF.n_features_in_
+      ~ClassifierNPDF.n_outputs_
+      ~ClassifierNPDF.native_estimator
+      ~ClassifierNPDF.delegate
+      ~ClassifierNPDF.column_names
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,51 @@
+sklearndf.classification.NearestCentroidDF
+==========================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: NearestCentroidDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~NearestCentroidDF.clone
+      ~NearestCentroidDF.decision_function
+      ~NearestCentroidDF.ensure_fitted
+      ~NearestCentroidDF.fit
+      ~NearestCentroidDF.from_fitted
+      ~NearestCentroidDF.get_params
+      ~NearestCentroidDF.predict
+      ~NearestCentroidDF.predict_log_proba
+      ~NearestCentroidDF.predict_proba
+      ~NearestCentroidDF.score
+      ~NearestCentroidDF.set_params
+      ~NearestCentroidDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~NearestCentroidDF.COL_FEATURE_IN
+      ~NearestCentroidDF.COL_PREDICTION
+      ~NearestCentroidDF.classes_
+      ~NearestCentroidDF.feature_names_in_
+      ~NearestCentroidDF.is_fitted
+      ~NearestCentroidDF.n_features_in_
+      ~NearestCentroidDF.n_outputs_
+      ~NearestCentroidDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

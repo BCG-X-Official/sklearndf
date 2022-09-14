@@ -1,0 +1,53 @@
+sklearndf.regression.wrapper.RegressorTransformerWrapperDF
+==========================================================
+
+.. currentmodule:: sklearndf.regression.wrapper
+
+.. autoclass:: RegressorTransformerWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~RegressorTransformerWrapperDF.clone
+      ~RegressorTransformerWrapperDF.ensure_fitted
+      ~RegressorTransformerWrapperDF.fit
+      ~RegressorTransformerWrapperDF.fit_transform
+      ~RegressorTransformerWrapperDF.from_fitted
+      ~RegressorTransformerWrapperDF.get_params
+      ~RegressorTransformerWrapperDF.inverse_transform
+      ~RegressorTransformerWrapperDF.predict
+      ~RegressorTransformerWrapperDF.score
+      ~RegressorTransformerWrapperDF.set_params
+      ~RegressorTransformerWrapperDF.to_expression
+      ~RegressorTransformerWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~RegressorTransformerWrapperDF.COL_FEATURE_IN
+      ~RegressorTransformerWrapperDF.COL_FEATURE_OUT
+      ~RegressorTransformerWrapperDF.COL_PREDICTION
+      ~RegressorTransformerWrapperDF.feature_names_in_
+      ~RegressorTransformerWrapperDF.feature_names_original_
+      ~RegressorTransformerWrapperDF.feature_names_out_
+      ~RegressorTransformerWrapperDF.is_fitted
+      ~RegressorTransformerWrapperDF.n_features_in_
+      ~RegressorTransformerWrapperDF.n_outputs_
+      ~RegressorTransformerWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

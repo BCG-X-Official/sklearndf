@@ -1,0 +1,50 @@
+sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF
+==========================================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: KBinsDiscretizerWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~KBinsDiscretizerWrapperDF.clone
+      ~KBinsDiscretizerWrapperDF.ensure_fitted
+      ~KBinsDiscretizerWrapperDF.fit
+      ~KBinsDiscretizerWrapperDF.fit_transform
+      ~KBinsDiscretizerWrapperDF.from_fitted
+      ~KBinsDiscretizerWrapperDF.get_params
+      ~KBinsDiscretizerWrapperDF.inverse_transform
+      ~KBinsDiscretizerWrapperDF.set_params
+      ~KBinsDiscretizerWrapperDF.to_expression
+      ~KBinsDiscretizerWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~KBinsDiscretizerWrapperDF.COL_FEATURE_IN
+      ~KBinsDiscretizerWrapperDF.COL_FEATURE_OUT
+      ~KBinsDiscretizerWrapperDF.feature_names_in_
+      ~KBinsDiscretizerWrapperDF.feature_names_original_
+      ~KBinsDiscretizerWrapperDF.feature_names_out_
+      ~KBinsDiscretizerWrapperDF.is_fitted
+      ~KBinsDiscretizerWrapperDF.n_features_in_
+      ~KBinsDiscretizerWrapperDF.n_outputs_
+      ~KBinsDiscretizerWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

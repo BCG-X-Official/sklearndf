@@ -1,0 +1,41 @@
+sklearndf.classification.wrapper
+================================
+
+.. automodule:: sklearndf.classification.wrapper
+   :no-imported-members:
+
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: wrapper
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      ClassifierChainWrapperDF
+      LinearDiscriminantAnalysisWrapperDF
+      MetaClassifierWrapperDF
+      MultiOutputClassifierWrapperDF
+      PartialFitClassifierWrapperDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

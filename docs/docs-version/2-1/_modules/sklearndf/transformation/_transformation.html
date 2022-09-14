@@ -1,0 +1,821 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearndf.transformation._transformation &#8212; sklearndf  documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/gamma.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/gamma.js"></script>
+    <script src="../../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../../../index.html">
+  <img src="../../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../_generated/getting_started.html">
+  Getting started
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../apidoc/sklearndf.html">
+  API reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../tutorials.html">
+  Tutorials
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../contribution_guide.html">
+  Development Guidelines
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../faqs.html">
+  FAQ
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../_generated/release_notes.html">
+  Release Notes
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for sklearndf.transformation._transformation</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Core implementation of :mod:`sklearndf.transformation`</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.cross_decomposition</span> <span class="kn">import</span> <span class="n">PLSSVD</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">NMF</span><span class="p">,</span>
+    <span class="n">PCA</span><span class="p">,</span>
+    <span class="n">DictionaryLearning</span><span class="p">,</span>
+    <span class="n">FactorAnalysis</span><span class="p">,</span>
+    <span class="n">FastICA</span><span class="p">,</span>
+    <span class="n">IncrementalPCA</span><span class="p">,</span>
+    <span class="n">KernelPCA</span><span class="p">,</span>
+    <span class="n">LatentDirichletAllocation</span><span class="p">,</span>
+    <span class="n">MiniBatchDictionaryLearning</span><span class="p">,</span>
+    <span class="n">MiniBatchSparsePCA</span><span class="p">,</span>
+    <span class="n">SparseCoder</span><span class="p">,</span>
+    <span class="n">SparsePCA</span><span class="p">,</span>
+    <span class="n">TruncatedSVD</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction</span> <span class="kn">import</span> <span class="n">DictVectorizer</span><span class="p">,</span> <span class="n">FeatureHasher</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">HashingVectorizer</span><span class="p">,</span> <span class="n">TfidfTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">RFE</span><span class="p">,</span>
+    <span class="n">RFECV</span><span class="p">,</span>
+    <span class="n">GenericUnivariateSelect</span><span class="p">,</span>
+    <span class="n">SelectFdr</span><span class="p">,</span>
+    <span class="n">SelectFpr</span><span class="p">,</span>
+    <span class="n">SelectFromModel</span><span class="p">,</span>
+    <span class="n">SelectFwe</span><span class="p">,</span>
+    <span class="n">SelectKBest</span><span class="p">,</span>
+    <span class="n">SelectPercentile</span><span class="p">,</span>
+    <span class="n">VarianceThreshold</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">MissingIndicator</span><span class="p">,</span> <span class="n">SimpleImputer</span>
+
+<span class="c1"># noinspection PyProtectedMember</span>
+<span class="kn">from</span> <span class="nn">sklearn.impute._iterative</span> <span class="kn">import</span> <span class="n">IterativeImputer</span>
+<span class="kn">from</span> <span class="nn">sklearn.kernel_approximation</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AdditiveChi2Sampler</span><span class="p">,</span>
+    <span class="n">Nystroem</span><span class="p">,</span>
+    <span class="n">RBFSampler</span><span class="p">,</span>
+    <span class="n">SkewedChi2Sampler</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">Isomap</span><span class="p">,</span> <span class="n">LocallyLinearEmbedding</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">NeighborhoodComponentsAnalysis</span>
+<span class="kn">from</span> <span class="nn">sklearn.neural_network</span> <span class="kn">import</span> <span class="n">BernoulliRBM</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Binarizer</span><span class="p">,</span>
+    <span class="n">FunctionTransformer</span><span class="p">,</span>
+    <span class="n">KBinsDiscretizer</span><span class="p">,</span>
+    <span class="n">KernelCenterer</span><span class="p">,</span>
+    <span class="n">LabelBinarizer</span><span class="p">,</span>
+    <span class="n">LabelEncoder</span><span class="p">,</span>
+    <span class="n">MaxAbsScaler</span><span class="p">,</span>
+    <span class="n">MinMaxScaler</span><span class="p">,</span>
+    <span class="n">MultiLabelBinarizer</span><span class="p">,</span>
+    <span class="n">Normalizer</span><span class="p">,</span>
+    <span class="n">OneHotEncoder</span><span class="p">,</span>
+    <span class="n">OrdinalEncoder</span><span class="p">,</span>
+    <span class="n">PolynomialFeatures</span><span class="p">,</span>
+    <span class="n">PowerTransformer</span><span class="p">,</span>
+    <span class="n">QuantileTransformer</span><span class="p">,</span>
+    <span class="n">RobustScaler</span><span class="p">,</span>
+    <span class="n">StandardScaler</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.random_projection</span> <span class="kn">import</span> <span class="n">GaussianRandomProjection</span><span class="p">,</span> <span class="n">SparseRandomProjection</span>
+
+<span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span>
+
+<span class="kn">from</span> <span class="nn">.wrapper</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AdditiveChi2SamplerWrapperDF</span><span class="p">,</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">,</span>
+    <span class="n">ColumnTransformerWrapperDF</span><span class="p">,</span>
+    <span class="n">ComponentsDimensionalityReductionWrapperDF</span><span class="p">,</span>
+    <span class="n">FeatureSelectionWrapperDF</span><span class="p">,</span>
+    <span class="n">ImputerWrapperDF</span><span class="p">,</span>
+    <span class="n">IsomapWrapperDF</span><span class="p">,</span>
+    <span class="n">KBinsDiscretizerWrapperDF</span><span class="p">,</span>
+    <span class="n">MissingIndicatorWrapperDF</span><span class="p">,</span>
+    <span class="n">NComponentsDimensionalityReductionWrapperDF</span><span class="p">,</span>
+    <span class="n">OneHotEncoderWrapperDF</span><span class="p">,</span>
+    <span class="n">PolynomialTransformerWrapperDF</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;AdditiveChi2SamplerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BernoulliRBMDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BinarizerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ColumnTransformerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DictVectorizerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DictionaryLearningDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;FactorAnalysisDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;FastICADF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;FeatureHasherDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;FunctionTransformerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GaussianRandomProjectionDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;GenericUnivariateSelectDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;HashingVectorizerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;IncrementalPCADF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;IsomapDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;IterativeImputerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;KBinsDiscretizerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;KernelCentererDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;KernelPCADF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LabelBinarizerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LabelEncoderDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LatentDirichletAllocationDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LocallyLinearEmbeddingDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MaxAbsScalerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MinMaxScalerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MiniBatchDictionaryLearningDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MiniBatchSparsePCADF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MissingIndicatorDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MultiLabelBinarizerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NMFDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NeighborhoodComponentsAnalysisDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NormalizerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NystroemDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OneHotEncoderDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OrdinalEncoderDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PCADF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PLSSVDDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PolynomialFeaturesDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PowerTransformerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;QuantileTransformerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RBFSamplerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RFECVDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RFEDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RobustScalerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SelectFdrDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SelectFprDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SelectFromModelDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SelectFweDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SelectKBestDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SelectPercentileDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SimpleImputerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SkewedChi2SamplerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SparseCoderDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SparsePCADF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SparseRandomProjectionDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;StandardScalerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TfidfTransformerDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TruncatedSVDDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;VarianceThresholdDF&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">__imported_estimators</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;DF&quot;</span><span class="p">)}</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Ensure all symbols introduced below are included in __all__</span>
+<span class="c1">#</span>
+
+<span class="n">__tracker</span> <span class="o">=</span> <span class="n">AllTracker</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Class definitions</span>
+<span class="c1">#</span>
+
+<span class="c1">#</span>
+<span class="c1"># compose</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="ColumnTransformerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.ColumnTransformerDF.html#sklearndf.transformation.ColumnTransformerDF">[docs]</a><span class="k">class</span> <span class="nc">ColumnTransformerDF</span><span class="p">(</span>
+    <span class="n">ColumnTransformerWrapperDF</span><span class="p">,</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">ColumnTransformer</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``ColumnTransformer``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># cross_decomposition</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="PLSSVDDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.PLSSVDDF.html#sklearndf.transformation.PLSSVDDF">[docs]</a><span class="k">class</span> <span class="nc">PLSSVDDF</span><span class="p">(</span><span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">PLSSVD</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">PLSSVD</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``PLSSVD``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="FeatureHasherDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.FeatureHasherDF.html#sklearndf.transformation.FeatureHasherDF">[docs]</a><span class="k">class</span> <span class="nc">FeatureHasherDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">FeatureHasher</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">FeatureHasher</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``FeatureHasher``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="DictVectorizerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.DictVectorizerDF.html#sklearndf.transformation.DictVectorizerDF">[docs]</a><span class="k">class</span> <span class="nc">DictVectorizerDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">DictVectorizer</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">DictVectorizer</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``DictVectorizer``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="HashingVectorizerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.HashingVectorizerDF.html#sklearndf.transformation.HashingVectorizerDF">[docs]</a><span class="k">class</span> <span class="nc">HashingVectorizerDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">HashingVectorizer</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">HashingVectorizer</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``HashingVectorizer``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="TfidfTransformerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.TfidfTransformerDF.html#sklearndf.transformation.TfidfTransformerDF">[docs]</a><span class="k">class</span> <span class="nc">TfidfTransformerDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">TfidfTransformer</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">TfidfTransformer</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``TfidfTransformer``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># impute</span>
+<span class="c1">#</span>
+
+<span class="c1"># we cannot move this to package _wrapper as it references MissingIndicatorDF</span>
+
+
+<div class="viewcode-block" id="SimpleImputerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.SimpleImputerDF.html#sklearndf.transformation.SimpleImputerDF">[docs]</a><span class="k">class</span> <span class="nc">SimpleImputerDF</span><span class="p">(</span><span class="n">ImputerWrapperDF</span><span class="p">[</span><span class="n">SimpleImputer</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">SimpleImputer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``SimpleImputer``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="MissingIndicatorDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.MissingIndicatorDF.html#sklearndf.transformation.MissingIndicatorDF">[docs]</a><span class="k">class</span> <span class="nc">MissingIndicatorDF</span><span class="p">(</span>
+    <span class="n">MissingIndicatorWrapperDF</span><span class="p">,</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">MissingIndicator</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``MissingIndicator``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="IterativeImputerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.IterativeImputerDF.html#sklearndf.transformation.IterativeImputerDF">[docs]</a><span class="k">class</span> <span class="nc">IterativeImputerDF</span><span class="p">(</span>
+    <span class="n">ImputerWrapperDF</span><span class="p">[</span><span class="n">IterativeImputer</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">IterativeImputer</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``IterativeImputer``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="IsomapDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.IsomapDF.html#sklearndf.transformation.IsomapDF">[docs]</a><span class="k">class</span> <span class="nc">IsomapDF</span><span class="p">(</span>
+    <span class="n">IsomapWrapperDF</span><span class="p">,</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">Isomap</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``Isomap``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="AdditiveChi2SamplerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.AdditiveChi2SamplerDF.html#sklearndf.transformation.AdditiveChi2SamplerDF">[docs]</a><span class="k">class</span> <span class="nc">AdditiveChi2SamplerDF</span><span class="p">(</span>
+    <span class="n">AdditiveChi2SamplerWrapperDF</span><span class="p">,</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">AdditiveChi2Sampler</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``AdditiveChi2Sampler``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># neighbors</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="NeighborhoodComponentsAnalysisDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.NeighborhoodComponentsAnalysisDF.html#sklearndf.transformation.NeighborhoodComponentsAnalysisDF">[docs]</a><span class="k">class</span> <span class="nc">NeighborhoodComponentsAnalysisDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">NeighborhoodComponentsAnalysis</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">NeighborhoodComponentsAnalysis</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``NeighborhoodComponentsAnalysis``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># preprocessing</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="MinMaxScalerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.MinMaxScalerDF.html#sklearndf.transformation.MinMaxScalerDF">[docs]</a><span class="k">class</span> <span class="nc">MinMaxScalerDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">MinMaxScaler</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">MinMaxScaler</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``MinMaxScaler``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="StandardScalerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.StandardScalerDF.html#sklearndf.transformation.StandardScalerDF">[docs]</a><span class="k">class</span> <span class="nc">StandardScalerDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">StandardScaler</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">StandardScaler</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``StandardScaler``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="MaxAbsScalerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.MaxAbsScalerDF.html#sklearndf.transformation.MaxAbsScalerDF">[docs]</a><span class="k">class</span> <span class="nc">MaxAbsScalerDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">MaxAbsScaler</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">MaxAbsScaler</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``MaxAbsScaler``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RobustScalerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.RobustScalerDF.html#sklearndf.transformation.RobustScalerDF">[docs]</a><span class="k">class</span> <span class="nc">RobustScalerDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">RobustScaler</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">RobustScaler</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``RobustScaler``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="PolynomialFeaturesDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.PolynomialFeaturesDF.html#sklearndf.transformation.PolynomialFeaturesDF">[docs]</a><span class="k">class</span> <span class="nc">PolynomialFeaturesDF</span><span class="p">(</span>
+    <span class="n">PolynomialTransformerWrapperDF</span><span class="p">[</span><span class="n">PolynomialFeatures</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">PolynomialFeatures</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``PolynomialFeatures``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="NormalizerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.NormalizerDF.html#sklearndf.transformation.NormalizerDF">[docs]</a><span class="k">class</span> <span class="nc">NormalizerDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">Normalizer</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">Normalizer</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``Normalizer``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="BinarizerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.BinarizerDF.html#sklearndf.transformation.BinarizerDF">[docs]</a><span class="k">class</span> <span class="nc">BinarizerDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">Binarizer</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">Binarizer</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``Binarizer``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="KernelCentererDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.KernelCentererDF.html#sklearndf.transformation.KernelCentererDF">[docs]</a><span class="k">class</span> <span class="nc">KernelCentererDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">KernelCenterer</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">KernelCenterer</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``KernelCenterer``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="QuantileTransformerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.QuantileTransformerDF.html#sklearndf.transformation.QuantileTransformerDF">[docs]</a><span class="k">class</span> <span class="nc">QuantileTransformerDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">QuantileTransformer</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">QuantileTransformer</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``QuantileTransformer``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="PowerTransformerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.PowerTransformerDF.html#sklearndf.transformation.PowerTransformerDF">[docs]</a><span class="k">class</span> <span class="nc">PowerTransformerDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">PowerTransformer</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">PowerTransformer</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``PowerTransformer``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="FunctionTransformerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.FunctionTransformerDF.html#sklearndf.transformation.FunctionTransformerDF">[docs]</a><span class="k">class</span> <span class="nc">FunctionTransformerDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">FunctionTransformer</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">FunctionTransformer</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``FunctionTransformer``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="LabelEncoderDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.LabelEncoderDF.html#sklearndf.transformation.LabelEncoderDF">[docs]</a><span class="k">class</span> <span class="nc">LabelEncoderDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">LabelEncoder</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">LabelEncoder</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LabelEncoder``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="LabelBinarizerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.LabelBinarizerDF.html#sklearndf.transformation.LabelBinarizerDF">[docs]</a><span class="k">class</span> <span class="nc">LabelBinarizerDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">LabelBinarizer</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">LabelBinarizer</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LabelBinarizer``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="MultiLabelBinarizerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.MultiLabelBinarizerDF.html#sklearndf.transformation.MultiLabelBinarizerDF">[docs]</a><span class="k">class</span> <span class="nc">MultiLabelBinarizerDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">MultiLabelBinarizer</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">MultiLabelBinarizer</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``MultiLabelBinarizer``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="OneHotEncoderDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.OneHotEncoderDF.html#sklearndf.transformation.OneHotEncoderDF">[docs]</a><span class="k">class</span> <span class="nc">OneHotEncoderDF</span><span class="p">(</span>
+    <span class="n">OneHotEncoderWrapperDF</span><span class="p">,</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">OneHotEncoder</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``OneHotEncoder``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="OrdinalEncoderDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.OrdinalEncoderDF.html#sklearndf.transformation.OrdinalEncoderDF">[docs]</a><span class="k">class</span> <span class="nc">OrdinalEncoderDF</span><span class="p">(</span>
+    <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">[</span><span class="n">OrdinalEncoder</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">OrdinalEncoder</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``OrdinalEncoder``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="KBinsDiscretizerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.KBinsDiscretizerDF.html#sklearndf.transformation.KBinsDiscretizerDF">[docs]</a><span class="k">class</span> <span class="nc">KBinsDiscretizerDF</span><span class="p">(</span>
+    <span class="n">KBinsDiscretizerWrapperDF</span><span class="p">,</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">KBinsDiscretizer</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``KBinsDiscretizer``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># Transformers which have a components_ attribute</span>
+<span class="c1"># Implemented through ComponentsDimensionalityReductionWrapperDF</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="BernoulliRBMDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.BernoulliRBMDF.html#sklearndf.transformation.BernoulliRBMDF">[docs]</a><span class="k">class</span> <span class="nc">BernoulliRBMDF</span><span class="p">(</span>
+    <span class="n">ComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">BernoulliRBM</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">BernoulliRBM</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``BernoulliRBM``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="DictionaryLearningDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.DictionaryLearningDF.html#sklearndf.transformation.DictionaryLearningDF">[docs]</a><span class="k">class</span> <span class="nc">DictionaryLearningDF</span><span class="p">(</span>
+    <span class="n">ComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">DictionaryLearning</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">DictionaryLearning</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``DictionaryLearning``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="FactorAnalysisDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.FactorAnalysisDF.html#sklearndf.transformation.FactorAnalysisDF">[docs]</a><span class="k">class</span> <span class="nc">FactorAnalysisDF</span><span class="p">(</span>
+    <span class="n">ComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">FactorAnalysis</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">FactorAnalysis</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``FactorAnalysis``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="FastICADF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.FastICADF.html#sklearndf.transformation.FastICADF">[docs]</a><span class="k">class</span> <span class="nc">FastICADF</span><span class="p">(</span>
+    <span class="n">ComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">FastICA</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">FastICA</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``FastICA``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GaussianRandomProjectionDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.GaussianRandomProjectionDF.html#sklearndf.transformation.GaussianRandomProjectionDF">[docs]</a><span class="k">class</span> <span class="nc">GaussianRandomProjectionDF</span><span class="p">(</span>
+    <span class="n">ComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">GaussianRandomProjection</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">GaussianRandomProjection</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``GaussianRandomProjection``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="IncrementalPCADF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.IncrementalPCADF.html#sklearndf.transformation.IncrementalPCADF">[docs]</a><span class="k">class</span> <span class="nc">IncrementalPCADF</span><span class="p">(</span>
+    <span class="n">ComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">IncrementalPCA</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">IncrementalPCA</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``IncrementalPCA``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="LatentDirichletAllocationDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.LatentDirichletAllocationDF.html#sklearndf.transformation.LatentDirichletAllocationDF">[docs]</a><span class="k">class</span> <span class="nc">LatentDirichletAllocationDF</span><span class="p">(</span>
+    <span class="n">ComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">LatentDirichletAllocation</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">LatentDirichletAllocation</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LatentDirichletAllocation``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="MiniBatchDictionaryLearningDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.MiniBatchDictionaryLearningDF.html#sklearndf.transformation.MiniBatchDictionaryLearningDF">[docs]</a><span class="k">class</span> <span class="nc">MiniBatchDictionaryLearningDF</span><span class="p">(</span>
+    <span class="n">ComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">MiniBatchDictionaryLearning</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">MiniBatchDictionaryLearning</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``MiniBatchDictionaryLearning``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="MiniBatchSparsePCADF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.MiniBatchSparsePCADF.html#sklearndf.transformation.MiniBatchSparsePCADF">[docs]</a><span class="k">class</span> <span class="nc">MiniBatchSparsePCADF</span><span class="p">(</span>
+    <span class="n">ComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">MiniBatchSparsePCA</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">MiniBatchSparsePCA</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``MiniBatchSparsePCA``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="NMFDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.NMFDF.html#sklearndf.transformation.NMFDF">[docs]</a><span class="k">class</span> <span class="nc">NMFDF</span><span class="p">(</span><span class="n">ComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">NMF</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">NMF</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``NMF``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="PCADF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.PCADF.html#sklearndf.transformation.PCADF">[docs]</a><span class="k">class</span> <span class="nc">PCADF</span><span class="p">(</span><span class="n">NComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">PCA</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">PCA</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``PCA``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="SparseCoderDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.SparseCoderDF.html#sklearndf.transformation.SparseCoderDF">[docs]</a><span class="k">class</span> <span class="nc">SparseCoderDF</span><span class="p">(</span>
+    <span class="n">ComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">SparseCoder</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">SparseCoder</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``SparseCoder``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="SparsePCADF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.SparsePCADF.html#sklearndf.transformation.SparsePCADF">[docs]</a><span class="k">class</span> <span class="nc">SparsePCADF</span><span class="p">(</span>
+    <span class="n">ComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">SparsePCA</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">SparsePCA</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``SparsePCA``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="SparseRandomProjectionDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.SparseRandomProjectionDF.html#sklearndf.transformation.SparseRandomProjectionDF">[docs]</a><span class="k">class</span> <span class="nc">SparseRandomProjectionDF</span><span class="p">(</span>
+    <span class="n">ComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">SparseRandomProjection</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">SparseRandomProjection</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``SparseRandomProjection``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="TruncatedSVDDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.TruncatedSVDDF.html#sklearndf.transformation.TruncatedSVDDF">[docs]</a><span class="k">class</span> <span class="nc">TruncatedSVDDF</span><span class="p">(</span>
+    <span class="n">ComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">TruncatedSVD</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">TruncatedSVD</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``TruncatedSVD``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># Transformers which have an n_components attribute</span>
+<span class="c1"># Implemented through NComponentsDimensionalityReductionWrapperDF</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="KernelPCADF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.KernelPCADF.html#sklearndf.transformation.KernelPCADF">[docs]</a><span class="k">class</span> <span class="nc">KernelPCADF</span><span class="p">(</span>
+    <span class="n">NComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">KernelPCA</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">KernelPCA</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``KernelPCA``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="LocallyLinearEmbeddingDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.LocallyLinearEmbeddingDF.html#sklearndf.transformation.LocallyLinearEmbeddingDF">[docs]</a><span class="k">class</span> <span class="nc">LocallyLinearEmbeddingDF</span><span class="p">(</span>
+    <span class="n">NComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">LocallyLinearEmbedding</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">LocallyLinearEmbedding</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``LocallyLinearEmbedding``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="NystroemDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.NystroemDF.html#sklearndf.transformation.NystroemDF">[docs]</a><span class="k">class</span> <span class="nc">NystroemDF</span><span class="p">(</span>
+    <span class="n">NComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">Nystroem</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">Nystroem</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``Nystroem``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RBFSamplerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.RBFSamplerDF.html#sklearndf.transformation.RBFSamplerDF">[docs]</a><span class="k">class</span> <span class="nc">RBFSamplerDF</span><span class="p">(</span>
+    <span class="n">NComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">RBFSampler</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">RBFSampler</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``RBFSampler``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="SkewedChi2SamplerDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.SkewedChi2SamplerDF.html#sklearndf.transformation.SkewedChi2SamplerDF">[docs]</a><span class="k">class</span> <span class="nc">SkewedChi2SamplerDF</span><span class="p">(</span>
+    <span class="n">NComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">SkewedChi2Sampler</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">SkewedChi2Sampler</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``SkewedChi2Sampler``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># feature_selection</span>
+<span class="c1">#</span>
+<span class="c1"># Transformers with a get_support method, implemented via FeatureSelectionWrapperDF</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="VarianceThresholdDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.VarianceThresholdDF.html#sklearndf.transformation.VarianceThresholdDF">[docs]</a><span class="k">class</span> <span class="nc">VarianceThresholdDF</span><span class="p">(</span>
+    <span class="n">FeatureSelectionWrapperDF</span><span class="p">[</span><span class="n">VarianceThreshold</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">VarianceThreshold</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``VarianceThreshold``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RFEDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.RFEDF.html#sklearndf.transformation.RFEDF">[docs]</a><span class="k">class</span> <span class="nc">RFEDF</span><span class="p">(</span><span class="n">FeatureSelectionWrapperDF</span><span class="p">[</span><span class="n">RFE</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">RFE</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``RFE``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="RFECVDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.RFECVDF.html#sklearndf.transformation.RFECVDF">[docs]</a><span class="k">class</span> <span class="nc">RFECVDF</span><span class="p">(</span><span class="n">FeatureSelectionWrapperDF</span><span class="p">[</span><span class="n">RFECV</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">RFECV</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``RFECV``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="SelectFromModelDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.SelectFromModelDF.html#sklearndf.transformation.SelectFromModelDF">[docs]</a><span class="k">class</span> <span class="nc">SelectFromModelDF</span><span class="p">(</span>
+    <span class="n">FeatureSelectionWrapperDF</span><span class="p">[</span><span class="n">SelectFromModel</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">SelectFromModel</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``SelectFromModel``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="SelectPercentileDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.SelectPercentileDF.html#sklearndf.transformation.SelectPercentileDF">[docs]</a><span class="k">class</span> <span class="nc">SelectPercentileDF</span><span class="p">(</span>
+    <span class="n">FeatureSelectionWrapperDF</span><span class="p">[</span><span class="n">SelectPercentile</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">SelectPercentile</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``SelectPercentile``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="SelectKBestDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.SelectKBestDF.html#sklearndf.transformation.SelectKBestDF">[docs]</a><span class="k">class</span> <span class="nc">SelectKBestDF</span><span class="p">(</span>
+    <span class="n">FeatureSelectionWrapperDF</span><span class="p">[</span><span class="n">SelectKBest</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">SelectKBest</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``SelectKBest``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="SelectFprDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.SelectFprDF.html#sklearndf.transformation.SelectFprDF">[docs]</a><span class="k">class</span> <span class="nc">SelectFprDF</span><span class="p">(</span><span class="n">FeatureSelectionWrapperDF</span><span class="p">[</span><span class="n">SelectFpr</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">SelectFpr</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``SelectFpr``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="SelectFdrDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.SelectFdrDF.html#sklearndf.transformation.SelectFdrDF">[docs]</a><span class="k">class</span> <span class="nc">SelectFdrDF</span><span class="p">(</span><span class="n">FeatureSelectionWrapperDF</span><span class="p">[</span><span class="n">SelectFdr</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">SelectFdr</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``SelectFdr``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="SelectFweDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.SelectFweDF.html#sklearndf.transformation.SelectFweDF">[docs]</a><span class="k">class</span> <span class="nc">SelectFweDF</span><span class="p">(</span><span class="n">FeatureSelectionWrapperDF</span><span class="p">[</span><span class="n">SelectFwe</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">SelectFwe</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``SelectFwe``&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="GenericUnivariateSelectDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/transformation/sklearndf.transformation.GenericUnivariateSelectDF.html#sklearndf.transformation.GenericUnivariateSelectDF">[docs]</a><span class="k">class</span> <span class="nc">GenericUnivariateSelectDF</span><span class="p">(</span>
+    <span class="n">FeatureSelectionWrapperDF</span><span class="p">[</span><span class="n">GenericUnivariateSelect</span><span class="p">],</span>
+    <span class="n">native</span><span class="o">=</span><span class="n">GenericUnivariateSelect</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Stub for DF wrapper of class ``GenericUnivariateSelect``&quot;&quot;&quot;</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># validate __all__</span>
+<span class="c1">#</span>
+
+<span class="n">__tracker</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># validate that __all__ comprises all symbols ending in &quot;DF&quot;, and no others</span>
+<span class="c1">#</span>
+
+<span class="n">__estimators</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">sym</span>
+    <span class="k">for</span> <span class="n">sym</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">sym</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;DF&quot;</span><span class="p">)</span>
+    <span class="ow">and</span> <span class="n">sym</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">__imported_estimators</span>
+    <span class="ow">and</span> <span class="ow">not</span> <span class="n">sym</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="n">__estimators</span> <span class="o">!=</span> <span class="nb">set</span><span class="p">(</span><span class="n">__all__</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+        <span class="s2">&quot;__all__ does not contain exactly all DF estimators; expected value is:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">__estimators</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, Boston Consulting Group (BCG).<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+sklearndf.regression.GaussianProcessRegressorDF
+===============================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: GaussianProcessRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~GaussianProcessRegressorDF.clone
+      ~GaussianProcessRegressorDF.ensure_fitted
+      ~GaussianProcessRegressorDF.fit
+      ~GaussianProcessRegressorDF.from_fitted
+      ~GaussianProcessRegressorDF.get_params
+      ~GaussianProcessRegressorDF.log_marginal_likelihood
+      ~GaussianProcessRegressorDF.predict
+      ~GaussianProcessRegressorDF.sample_y
+      ~GaussianProcessRegressorDF.score
+      ~GaussianProcessRegressorDF.set_params
+      ~GaussianProcessRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~GaussianProcessRegressorDF.COL_FEATURE_IN
+      ~GaussianProcessRegressorDF.COL_PREDICTION
+      ~GaussianProcessRegressorDF.feature_names_in_
+      ~GaussianProcessRegressorDF.is_fitted
+      ~GaussianProcessRegressorDF.n_features_in_
+      ~GaussianProcessRegressorDF.n_outputs_
+      ~GaussianProcessRegressorDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

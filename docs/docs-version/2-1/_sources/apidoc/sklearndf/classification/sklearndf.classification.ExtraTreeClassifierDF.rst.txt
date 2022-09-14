@@ -1,0 +1,51 @@
+sklearndf.classification.ExtraTreeClassifierDF
+==============================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: ExtraTreeClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ExtraTreeClassifierDF.clone
+      ~ExtraTreeClassifierDF.decision_function
+      ~ExtraTreeClassifierDF.ensure_fitted
+      ~ExtraTreeClassifierDF.fit
+      ~ExtraTreeClassifierDF.from_fitted
+      ~ExtraTreeClassifierDF.get_params
+      ~ExtraTreeClassifierDF.predict
+      ~ExtraTreeClassifierDF.predict_log_proba
+      ~ExtraTreeClassifierDF.predict_proba
+      ~ExtraTreeClassifierDF.score
+      ~ExtraTreeClassifierDF.set_params
+      ~ExtraTreeClassifierDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ExtraTreeClassifierDF.COL_FEATURE_IN
+      ~ExtraTreeClassifierDF.COL_PREDICTION
+      ~ExtraTreeClassifierDF.classes_
+      ~ExtraTreeClassifierDF.feature_names_in_
+      ~ExtraTreeClassifierDF.is_fitted
+      ~ExtraTreeClassifierDF.n_features_in_
+      ~ExtraTreeClassifierDF.n_outputs_
+      ~ExtraTreeClassifierDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

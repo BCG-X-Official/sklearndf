@@ -1,0 +1,50 @@
+sklearndf.transformation.SelectPercentileDF
+===========================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: SelectPercentileDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SelectPercentileDF.clone
+      ~SelectPercentileDF.ensure_fitted
+      ~SelectPercentileDF.fit
+      ~SelectPercentileDF.fit_transform
+      ~SelectPercentileDF.from_fitted
+      ~SelectPercentileDF.get_params
+      ~SelectPercentileDF.inverse_transform
+      ~SelectPercentileDF.set_params
+      ~SelectPercentileDF.to_expression
+      ~SelectPercentileDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~SelectPercentileDF.COL_FEATURE_IN
+      ~SelectPercentileDF.COL_FEATURE_OUT
+      ~SelectPercentileDF.feature_names_in_
+      ~SelectPercentileDF.feature_names_original_
+      ~SelectPercentileDF.feature_names_out_
+      ~SelectPercentileDF.is_fitted
+      ~SelectPercentileDF.n_features_in_
+      ~SelectPercentileDF.n_outputs_
+      ~SelectPercentileDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

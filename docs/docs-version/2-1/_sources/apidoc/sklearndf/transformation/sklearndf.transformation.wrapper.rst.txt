@@ -1,0 +1,53 @@
+sklearndf.transformation.wrapper
+================================
+
+.. automodule:: sklearndf.transformation.wrapper
+   :no-imported-members:
+
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: wrapper
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      AdditiveChi2SamplerWrapperDF
+      BaseMultiOutputWrapperDF
+      BaseMultipleInputsPerOutputTransformerWrapperDF
+      ColumnPreservingTransformerWrapperDF
+      ColumnSubsetTransformerWrapperDF
+      ColumnTransformerWrapperDF
+      ComponentsDimensionalityReductionWrapperDF
+      EmbeddingWrapperDF
+      FeatureSelectionWrapperDF
+      ImputerWrapperDF
+      IsomapWrapperDF
+      KBinsDiscretizerWrapperDF
+      MissingIndicatorWrapperDF
+      NComponentsDimensionalityReductionWrapperDF
+      NumpyTransformerWrapperDF
+      OneHotEncoderWrapperDF
+      PolynomialTransformerWrapperDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

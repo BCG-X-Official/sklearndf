@@ -1,0 +1,51 @@
+sklearndf.classification.OutputCodeClassifierDF
+===============================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: OutputCodeClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~OutputCodeClassifierDF.clone
+      ~OutputCodeClassifierDF.decision_function
+      ~OutputCodeClassifierDF.ensure_fitted
+      ~OutputCodeClassifierDF.fit
+      ~OutputCodeClassifierDF.from_fitted
+      ~OutputCodeClassifierDF.get_params
+      ~OutputCodeClassifierDF.predict
+      ~OutputCodeClassifierDF.predict_log_proba
+      ~OutputCodeClassifierDF.predict_proba
+      ~OutputCodeClassifierDF.score
+      ~OutputCodeClassifierDF.set_params
+      ~OutputCodeClassifierDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~OutputCodeClassifierDF.COL_FEATURE_IN
+      ~OutputCodeClassifierDF.COL_PREDICTION
+      ~OutputCodeClassifierDF.classes_
+      ~OutputCodeClassifierDF.feature_names_in_
+      ~OutputCodeClassifierDF.is_fitted
+      ~OutputCodeClassifierDF.n_features_in_
+      ~OutputCodeClassifierDF.n_outputs_
+      ~OutputCodeClassifierDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

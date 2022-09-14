@@ -1,0 +1,55 @@
+sklearndf.pipeline.ClassifierPipelineDF
+=======================================
+
+.. currentmodule:: sklearndf.pipeline
+
+.. autoclass:: ClassifierPipelineDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ClassifierPipelineDF.clone
+      ~ClassifierPipelineDF.decision_function
+      ~ClassifierPipelineDF.ensure_fitted
+      ~ClassifierPipelineDF.fit
+      ~ClassifierPipelineDF.get_params
+      ~ClassifierPipelineDF.predict
+      ~ClassifierPipelineDF.predict_log_proba
+      ~ClassifierPipelineDF.predict_proba
+      ~ClassifierPipelineDF.score
+      ~ClassifierPipelineDF.set_params
+      ~ClassifierPipelineDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ClassifierPipelineDF.COL_FEATURE_IN
+      ~ClassifierPipelineDF.classes_
+      ~ClassifierPipelineDF.feature_names_in_
+      ~ClassifierPipelineDF.feature_names_original_
+      ~ClassifierPipelineDF.feature_names_out_
+      ~ClassifierPipelineDF.final_estimator
+      ~ClassifierPipelineDF.final_estimator_name
+      ~ClassifierPipelineDF.is_fitted
+      ~ClassifierPipelineDF.n_features_in_
+      ~ClassifierPipelineDF.n_outputs_
+      ~ClassifierPipelineDF.native_estimator
+      ~ClassifierPipelineDF.preprocessing
+      ~ClassifierPipelineDF.preprocessing_name
+   
+   
+
+   .. rubric:: Definitions

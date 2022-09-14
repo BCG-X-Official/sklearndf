@@ -1,0 +1,38 @@
+sklearndf.regression.extra
+==========================
+
+.. automodule:: sklearndf.regression.extra
+   :no-imported-members:
+
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: extra
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      LGBMRegressorDF
+      XGBRegressorDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

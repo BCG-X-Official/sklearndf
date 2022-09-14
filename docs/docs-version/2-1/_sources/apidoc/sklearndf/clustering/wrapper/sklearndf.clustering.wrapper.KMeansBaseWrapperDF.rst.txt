@@ -1,0 +1,51 @@
+sklearndf.clustering.wrapper.KMeansBaseWrapperDF
+================================================
+
+.. currentmodule:: sklearndf.clustering.wrapper
+
+.. autoclass:: KMeansBaseWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~KMeansBaseWrapperDF.clone
+      ~KMeansBaseWrapperDF.ensure_fitted
+      ~KMeansBaseWrapperDF.fit
+      ~KMeansBaseWrapperDF.fit_predict
+      ~KMeansBaseWrapperDF.from_fitted
+      ~KMeansBaseWrapperDF.get_params
+      ~KMeansBaseWrapperDF.predict
+      ~KMeansBaseWrapperDF.set_params
+      ~KMeansBaseWrapperDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~KMeansBaseWrapperDF.COL_FEATURE_IN
+      ~KMeansBaseWrapperDF.COL_LABELS
+      ~KMeansBaseWrapperDF.COL_PREDICTION
+      ~KMeansBaseWrapperDF.IDX_CLUSTER
+      ~KMeansBaseWrapperDF.cluster_centers_
+      ~KMeansBaseWrapperDF.feature_names_in_
+      ~KMeansBaseWrapperDF.is_fitted
+      ~KMeansBaseWrapperDF.labels_
+      ~KMeansBaseWrapperDF.n_features_in_
+      ~KMeansBaseWrapperDF.n_outputs_
+      ~KMeansBaseWrapperDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

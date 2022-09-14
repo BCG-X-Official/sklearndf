@@ -1,0 +1,47 @@
+sklearndf.regression.ElasticNetCVDF
+===================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: ElasticNetCVDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ElasticNetCVDF.clone
+      ~ElasticNetCVDF.ensure_fitted
+      ~ElasticNetCVDF.fit
+      ~ElasticNetCVDF.from_fitted
+      ~ElasticNetCVDF.get_params
+      ~ElasticNetCVDF.predict
+      ~ElasticNetCVDF.score
+      ~ElasticNetCVDF.set_params
+      ~ElasticNetCVDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ElasticNetCVDF.COL_FEATURE_IN
+      ~ElasticNetCVDF.COL_PREDICTION
+      ~ElasticNetCVDF.feature_names_in_
+      ~ElasticNetCVDF.is_fitted
+      ~ElasticNetCVDF.n_features_in_
+      ~ElasticNetCVDF.n_outputs_
+      ~ElasticNetCVDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

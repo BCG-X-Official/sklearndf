@@ -1,0 +1,47 @@
+sklearndf.wrapper.numpy.RegressorNPDF
+=====================================
+
+.. currentmodule:: sklearndf.wrapper.numpy
+
+.. autoclass:: RegressorNPDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~RegressorNPDF.clone
+      ~RegressorNPDF.ensure_fitted
+      ~RegressorNPDF.fit
+      ~RegressorNPDF.get_params
+      ~RegressorNPDF.predict
+      ~RegressorNPDF.score
+      ~RegressorNPDF.set_params
+      ~RegressorNPDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~RegressorNPDF.COL_FEATURE_IN
+      ~RegressorNPDF.feature_names_in_
+      ~RegressorNPDF.is_fitted
+      ~RegressorNPDF.n_features_in_
+      ~RegressorNPDF.n_outputs_
+      ~RegressorNPDF.native_estimator
+      ~RegressorNPDF.delegate
+      ~RegressorNPDF.column_names
+   
+   
+
+   .. rubric:: Definitions

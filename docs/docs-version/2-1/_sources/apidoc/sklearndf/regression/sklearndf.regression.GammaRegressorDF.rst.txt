@@ -1,0 +1,47 @@
+sklearndf.regression.GammaRegressorDF
+=====================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: GammaRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~GammaRegressorDF.clone
+      ~GammaRegressorDF.ensure_fitted
+      ~GammaRegressorDF.fit
+      ~GammaRegressorDF.from_fitted
+      ~GammaRegressorDF.get_params
+      ~GammaRegressorDF.predict
+      ~GammaRegressorDF.score
+      ~GammaRegressorDF.set_params
+      ~GammaRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~GammaRegressorDF.COL_FEATURE_IN
+      ~GammaRegressorDF.COL_PREDICTION
+      ~GammaRegressorDF.feature_names_in_
+      ~GammaRegressorDF.is_fitted
+      ~GammaRegressorDF.n_features_in_
+      ~GammaRegressorDF.n_outputs_
+      ~GammaRegressorDF.native_estimator
+   
+   
+
+   .. rubric:: Definitions

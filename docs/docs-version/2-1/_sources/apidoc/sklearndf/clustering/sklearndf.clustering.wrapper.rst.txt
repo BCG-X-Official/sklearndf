@@ -1,0 +1,38 @@
+sklearndf.clustering.wrapper
+============================
+
+.. automodule:: sklearndf.clustering.wrapper
+   :no-imported-members:
+
+   
+
+   
+   
+   =======
+   Classes
+   =======
+
+   .. autosummary::
+      :toctree: wrapper
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      FeatureAgglomerationWrapperDF
+      KMeansBaseWrapperDF
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
