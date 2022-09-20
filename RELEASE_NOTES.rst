@@ -10,7 +10,7 @@ Release Notes
 *sklearndf* 2.1
 ---------------
 
-*sklearndf* 2.1 adds support for `scikit-learn 1.1 <https://scikit-learn.org/1.1>`_.
+*sklearndf* 2.1 adds support for `scikit-learn |nbsp| 1.1 <https://scikit-learn.org/1.1>`_.
 
 2.1.0
 ~~~~~
@@ -19,9 +19,10 @@ Release Notes
 - API: new transformer :class:`.MiniBatchNMFDF`
 - API: new transformer :class:`.RandomTreesEmbeddingDF`; note that class
   :class:`~sklearn.ensemble.RandomTreesEmbedding` existed previously in *scikit-learn*,
-  but is based on :class:`~sklearn.base.TransformerMixin` only as of *scikit-learn 1.1*
+  but is based on :class:`~sklearn.base.TransformerMixin` only as of
+  *scikit-learn* |nbsp| 1.1
 - API: support parameters ``max_categories`` and ``min_frequency`` of
-  :class:`.OneHotEncoderDF`, introduced in *scikit-learn 1.1*
+  :class:`.OneHotEncoderDF`, introduced in *scikit-learn* |nbsp| 1.1
 - API: support array-like values for parameter ``drop`` of :class:`.OneHotEncoderDF`
 - API: support ``"passthrough"`` as a transformer in :class:`.FeatureUnionDF`
 - API: remove ``GeneralizedLinearRegressorDF`` since the underlying native estimator is
