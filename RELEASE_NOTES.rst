@@ -4,6 +4,8 @@ Release Notes
 .. |lightgbm| replace:: :external+lightgbm:doc:`lightgbm <index>`
 .. |xgboost| replace:: :external+xgboost:doc:`xgboost <index>`
 .. |mypy| replace:: :external+mypy:doc:`mypy <index>`
+.. |nbsp| unicode:: 0xA0
+   :trim:
 
 *sklearndf* 2.0
 ---------------
@@ -65,13 +67,13 @@ This release adds support for `scikit-learn 0.24 <https://scikit-learn.org/0.24/
 1.2.3
 ~~~~~
 
-This is a maintenance release to catch up with *sklearndf* 1.1.3.
+This is a maintenance release to catch up with *sklearndf* |nbsp| 1.1.3.
 
 
 1.2.2
 ~~~~~
 
-This release makes small API tweaks, and catches up with *sklearndf* 1.1.2.
+This release makes small API tweaks, and catches up with *sklearndf* |nbsp| 1.1.2.
 
 - API: make type hints more specific in signatures for
   :func:`.make_df_transformer`, :func:`.make_df_classifier`, and
@@ -81,13 +83,13 @@ This release makes small API tweaks, and catches up with *sklearndf* 1.1.2.
 1.2.1
 ~~~~~
 
-This is a maintenance release to catch up with *sklearndf* 1.1.1.
+This is a maintenance release to catch up with *sklearndf* |nbsp| 1.1.1.
 
 
 1.2.0
 ~~~~~
 
-- API: add `DF` adaptations for classes introduced by scikit-learn 0.24:
+- API: add `DF` adaptations for classes introduced by *scikit-learn* |nbsp| 0.24:
   :class:`.PolynomialCountSketchDF` and :class:`.SequentialFeatureSelectorDF`
 
 
@@ -152,7 +154,7 @@ fixes.
   DF estimators
 - FIX: support ``"passthrough"`` transformer in :class:`.ColumnTransformerDF`
 - FIX: support ``drop`` parameter in :class:`.OneHotEncoderDF`
-- BUILD: add support for `numpy` 1.20
+- BUILD: add support for `numpy` |nbsp| 1.20
 - BUILD: updates and changes to the CI/CD pipeline
 
 
