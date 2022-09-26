@@ -202,11 +202,21 @@ class NComponentsDimensionalityReductionWrapperDF(
     _ATTR_N_COMPONENTS = "n_components"
 
     def _validate_delegate_estimator(self) -> None:
-        self._validate_delegate_attribute(attribute_name=self._ATTR_N_COMPONENTS)
+        self._validate_delegate_attribute(
+            attribute_name=(
+                NComponentsDimensionalityReductionWrapperDF._ATTR_N_COMPONENTS
+            )
+        )
 
     @property
     def _n_components_(self) -> int:
-        return cast(int, getattr(self.native_estimator, self._ATTR_N_COMPONENTS))
+        return cast(
+            int,
+            getattr(
+                self.native_estimator,
+                NComponentsDimensionalityReductionWrapperDF._ATTR_N_COMPONENTS,
+            ),
+        )
 
 
 class PCAWrapperDF(NComponentsDimensionalityReductionWrapperDF[PCA]):
@@ -217,8 +227,9 @@ class PCAWrapperDF(NComponentsDimensionalityReductionWrapperDF[PCA]):
     of components, which may be determined by the estimator during fitting.
     """
 
-    # overrides "n_components" defined in NComponentsDimensionalityReductionWrapperDF
-    _ATTR_N_COMPONENTS = "n_components_"
+    @property
+    def _n_components_(self) -> int:
+        return cast(int, self._native_estimator.n_components_)
 
 
 class ComponentsDimensionalityReductionWrapperDF(
