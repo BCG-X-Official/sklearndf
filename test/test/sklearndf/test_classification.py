@@ -138,9 +138,19 @@ def test_wrapped_fit_predict(
 
             if is_multi_output:
                 assert isinstance(predictions, list)
+                assert classifier.output_names_ == iris_targets_df.columns.tolist()
                 assert classifier.n_outputs_ == len(predictions)
             else:
-                assert classifier.n_outputs_ == predictions.shape[1] if is_chain else 1
+                if is_chain:
+                    assert (
+                        classifier.output_names_
+                        == iris_targets_binary_df.columns.tolist()
+                    )
+                    assert classifier.n_outputs_ == predictions.shape[1]
+                else:
+                    assert classifier.output_names_ == [iris_target_sr.name]
+                    assert classifier.n_outputs_ == 1
+
                 predictions = [predictions]
 
             for prediction in predictions:

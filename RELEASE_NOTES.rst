@@ -7,10 +7,25 @@ Release Notes
 .. |nbsp| unicode:: 0xA0
    :trim:
 
+*sklearndf* 2.2
+---------------
+
+*sklearndf* 2.2 adds support for
+`scikit-learn |nbsp| 1.2 <https://scikit-learn.org/1.2>`_, and enhances the EstimatorDF
+API.
+
+2.2.0
+~~~~~
+
+- API: new property :attr:`.EstimatorDF.output_names_` to get the names of the output
+  columns the estimator was fitted with.
+
+
 *sklearndf* 2.1
 ---------------
 
-*sklearndf* 2.1 adds support for `scikit-learn |nbsp| 1.1 <https://scikit-learn.org/1.1>`_.
+*sklearndf* 2.1 adds support for
+`scikit-learn |nbsp| 1.1 <https://scikit-learn.org/1.1>`_.
 
 2.1.0
 ~~~~~
@@ -32,7 +47,8 @@ Release Notes
 *sklearndf* 2.0
 ---------------
 
-*sklearndf* 2.0 adds support for `scikit-learn 1.0 <https://scikit-learn.org/1.0>`_,
+*sklearndf* 2.0 adds support for
+`scikit-learn |nbsp| 1.0 <https://scikit-learn.org/1.0>`_,
 adds data frame support for clusterers along with additional API enhancements and
 improvements, and is now subject to static type checking with |mypy|.
 

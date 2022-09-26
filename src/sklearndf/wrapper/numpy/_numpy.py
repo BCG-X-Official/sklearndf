@@ -117,6 +117,9 @@ class EstimatorNPDF(
     def _get_n_features_in(self) -> int:
         return self.delegate._get_n_features_in()
 
+    def _get_outputs(self) -> Optional[List[str]]:
+        return self.delegate._get_outputs()
+
     def _get_n_outputs(self) -> int:
         return self.delegate._get_n_outputs()
 
@@ -250,12 +253,6 @@ class ClassifierNPDF(
         return self.delegate.decision_function(
             self._ensure_X_frame(X), **predict_params
         )
-
-    def _get_features_in(self) -> pd.Index:
-        return self.delegate._get_features_in()
-
-    def _get_n_outputs(self) -> int:
-        return self.delegate._get_n_outputs()
 
 
 # noinspection PyPep8Naming

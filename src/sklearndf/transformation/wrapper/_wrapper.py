@@ -641,11 +641,7 @@ class EmbeddingWrapperDF(
             """
             return cast(int, self.native_estimator.n_features_)
 
-    @property
-    def n_outputs_(self) -> int:
-        """
-        The number of outputs when :meth:`.fit` is performed.
-        """
+    def _get_n_outputs(self) -> int:
         return cast(int, self.native_estimator.n_outputs_)
 
     def _n_components_(self) -> int:
