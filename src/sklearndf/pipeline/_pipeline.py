@@ -31,10 +31,7 @@ class PipelineDF(PipelineWrapperDF, native=Pipeline):
     """Stub for DF wrapper of class ``Pipeline``"""
 
 
-class FeatureUnionDF(
-    FeatureUnionWrapperDF,
-    native=FeatureUnion,
-):
+class FeatureUnionDF(FeatureUnionWrapperDF, native=FeatureUnion):
     """Stub for DF wrapper of class ``FeatureUnion``"""
 
 
