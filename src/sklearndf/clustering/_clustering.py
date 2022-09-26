@@ -52,15 +52,13 @@ __tracker = AllTracker(globals())
 
 
 class AffinityPropagationDF(
-    ClusterWrapperDF[AffinityPropagation],
-    native=AffinityPropagation,
+    ClusterWrapperDF[AffinityPropagation], native=AffinityPropagation
 ):
     """Stub for DF wrapper of class ``AffinityPropagation``"""
 
 
 class AgglomerativeClusteringDF(
-    ClusterWrapperDF[AgglomerativeClustering],
-    native=AgglomerativeClustering,
+    ClusterWrapperDF[AgglomerativeClustering], native=AgglomerativeClustering
 ):
     """Stub for DF wrapper of class ``AgglomerativeClustering``"""
 
@@ -90,15 +88,13 @@ class OPTICSDF(ClusterWrapperDF[OPTICS], native=OPTICS):
 
 
 class SpectralClusteringDF(
-    ClusterWrapperDF[SpectralClustering],
-    native=SpectralClustering,
+    ClusterWrapperDF[SpectralClustering], native=SpectralClustering
 ):
     """Stub for DF wrapper of class ``SpectralClustering``"""
 
 
 class FeatureAgglomerationDF(
-    FeatureAgglomerationWrapperDF,
-    native=FeatureAgglomeration,
+    FeatureAgglomerationWrapperDF, native=FeatureAgglomeration
 ):
     """Stub for DF wrapper of class ``FeatureAgglomeration``"""
 
