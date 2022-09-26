@@ -43,8 +43,7 @@ class HistGradientBoostingRegressorDF(
 
 
 class QuantileRegressorDF(
-    RegressorWrapperDF[QuantileRegressor],
-    native=QuantileRegressor,
+    RegressorWrapperDF[QuantileRegressor], native=QuantileRegressor
 ):
     """Stub for DF wrapper of class ``QuantileRegressor``"""
 
