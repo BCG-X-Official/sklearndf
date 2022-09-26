@@ -212,6 +212,9 @@ class EstimatorWrapperDF(
     __native_base_class__ = BaseEstimator
     __ARG_FITTED_DELEGATE_CONTEXT = "__EstimatorWrapperDF_fitted"
 
+    #: The native estimator that this wrapper delegates to.
+    _native_estimator: T_NativeEstimator
+
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """
         :param args: positional arguments to use when initializing a new new delegate
@@ -227,6 +230,8 @@ class EstimatorWrapperDF(
         fitted_delegate_context: Tuple[T_NativeEstimator, pd.Index, int] = kwargs.get(
             EstimatorWrapperDF.__ARG_FITTED_DELEGATE_CONTEXT, None
         )
+
+        _native_estimator: T_NativeEstimator
 
         if fitted_delegate_context is None:
             # create a new delegate estimator with the given parameters
