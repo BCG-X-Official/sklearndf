@@ -140,6 +140,17 @@ class EstimatorDF(
         return self._get_features_in().rename(self.COL_FEATURE_IN)
 
     @property
+    def output_names_(self) -> Optional[List[str]]:
+        """
+        The name(s) of the output(s) this estimator was fitted to,
+        or ``None`` if this estimator was not fitted to any outputs.
+
+        :raises AttributeError: if this estimator is not fitted
+        """
+        self.ensure_fitted()
+        return self._get_outputs()
+
+    @property
     def n_features_in_(self) -> int:
         """
         The number of features used to fit this estimator.
@@ -201,9 +212,14 @@ class EstimatorDF(
         return len(self._get_features_in())
 
     @abstractmethod
+    def _get_outputs(self) -> Optional[List[str]]:
+        # get the output columns as a list of strings, or None if this estimator
+        # was not fitted to any outputs
+        pass
+
     def _get_n_outputs(self) -> int:
         # get the number of outputs this estimator has been fitted to
-        pass
+        return len(self._get_outputs() or [])
 
     def to_expression(self) -> Expression:
         """[see superclass]"""
