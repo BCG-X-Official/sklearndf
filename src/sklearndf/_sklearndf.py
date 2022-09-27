@@ -346,6 +346,17 @@ class SupervisedLearnerDF(LearnerDF, metaclass=ABCMeta):
         """
         pass
 
+    @property
+    def output_names_(self) -> List[str]:
+        """
+        The name(s) of the output(s) this supervised learner was fitted to.
+
+        :raises sklearn.exceptions.NotFittedError: this estimator is not fitted
+        """
+        output_names = super().output_names_
+        assert output_names is not None, "Supervised learners must be fitted to outputs"
+        return output_names
+
 
 class TransformerDF(
     TransformerMixin,  # type: ignore
