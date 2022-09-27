@@ -287,7 +287,7 @@ or have a look at
 .. |azure_build| image:: https://dev.azure.com/gamma-facet/facet/_apis/build/status/BCG-Gamma.sklearndf?repoName=BCG-Gamma%2Fsklearndf&branchName=develop
    :target: https://dev.azure.com/gamma-facet/facet/_build?definitionId=8&_a=summary
 
-.. |azure_code_cov| image:: https://img.shields.io/azure-devops/coverage/gamma-facet/facet/8/2.0.x
+.. |azure_code_cov| image:: https://img.shields.io/azure-devops/coverage/gamma-facet/facet/8/2.1.x
    :target: https://dev.azure.com/gamma-facet/facet/_build?definitionId=8&_a=summary
 
 .. |python_versions| image:: https://img.shields.io/badge/python-3.7|3.8|3.9-blue.svg

@@ -4,11 +4,28 @@ Release Notes
 .. |lightgbm| replace:: :external+lightgbm:doc:`lightgbm <index>`
 .. |xgboost| replace:: :external+xgboost:doc:`xgboost <index>`
 .. |mypy| replace:: :external+mypy:doc:`mypy <index>`
+.. |nbsp| unicode:: 0xA0
+   :trim:
+
+*sklearndf* 2.2
+---------------
+
+*sklearndf* 2.2 adds support for
+`scikit-learn |nbsp| 1.2 <https://scikit-learn.org/1.2>`_, and enhances the EstimatorDF
+API.
+
+2.2.0
+~~~~~
+
+- API: new property :attr:`.EstimatorDF.output_names_` to get the names of the output
+  columns the estimator was fitted with.
+
 
 *sklearndf* 2.1
 ---------------
 
-*sklearndf* 2.1 adds support for `scikit-learn 1.1 <https://scikit-learn.org/1.1>`_.
+*sklearndf* 2.1 adds support for
+`scikit-learn |nbsp| 1.1 <https://scikit-learn.org/1.1>`_.
 
 2.1.0
 ~~~~~
@@ -17,9 +34,10 @@ Release Notes
 - API: new transformer :class:`.MiniBatchNMFDF`
 - API: new transformer :class:`.RandomTreesEmbeddingDF`; note that class
   :class:`~sklearn.ensemble.RandomTreesEmbedding` existed previously in *scikit-learn*,
-  but is based on :class:`~sklearn.base.TransformerMixin` only as of *scikit-learn 1.1*
+  but is based on :class:`~sklearn.base.TransformerMixin` only as of
+  *scikit-learn* |nbsp| 1.1
 - API: support parameters ``max_categories`` and ``min_frequency`` of
-  :class:`.OneHotEncoderDF`, introduced in *scikit-learn 1.1*
+  :class:`.OneHotEncoderDF`, introduced in *scikit-learn* |nbsp| 1.1
 - API: support array-like values for parameter ``drop`` of :class:`.OneHotEncoderDF`
 - API: support ``"passthrough"`` as a transformer in :class:`.FeatureUnionDF`
 - API: remove ``GeneralizedLinearRegressorDF`` since the underlying native estimator is
@@ -29,7 +47,8 @@ Release Notes
 *sklearndf* 2.0
 ---------------
 
-*sklearndf* 2.0 adds support for `scikit-learn 1.0 <https://scikit-learn.org/1.0>`_,
+*sklearndf* 2.0 adds support for
+`scikit-learn |nbsp| 1.0 <https://scikit-learn.org/1.0>`_,
 adds data frame support for clusterers along with additional API enhancements and
 improvements, and is now subject to static type checking with |mypy|.
 
@@ -86,13 +105,13 @@ This release adds support for `scikit-learn 0.24 <https://scikit-learn.org/0.24/
 1.2.3
 ~~~~~
 
-This is a maintenance release to catch up with *sklearndf* 1.1.3.
+This is a maintenance release to catch up with *sklearndf* |nbsp| 1.1.3.
 
 
 1.2.2
 ~~~~~
 
-This release makes small API tweaks, and catches up with *sklearndf* 1.1.2.
+This release makes small API tweaks, and catches up with *sklearndf* |nbsp| 1.1.2.
 
 - API: make type hints more specific in signatures for
   :func:`.make_df_transformer`, :func:`.make_df_classifier`, and
@@ -102,13 +121,13 @@ This release makes small API tweaks, and catches up with *sklearndf* 1.1.2.
 1.2.1
 ~~~~~
 
-This is a maintenance release to catch up with *sklearndf* 1.1.1.
+This is a maintenance release to catch up with *sklearndf* |nbsp| 1.1.1.
 
 
 1.2.0
 ~~~~~
 
-- API: add `DF` adaptations for classes introduced by scikit-learn 0.24:
+- API: add `DF` adaptations for classes introduced by *scikit-learn* |nbsp| 0.24:
   :class:`.PolynomialCountSketchDF` and :class:`.SequentialFeatureSelectorDF`
 
 
@@ -173,7 +192,7 @@ fixes.
   DF estimators
 - FIX: support ``"passthrough"`` transformer in :class:`.ColumnTransformerDF`
 - FIX: support ``drop`` parameter in :class:`.OneHotEncoderDF`
-- BUILD: add support for `numpy` 1.20
+- BUILD: add support for `numpy` |nbsp| 1.20
 - BUILD: updates and changes to the CI/CD pipeline
 
 

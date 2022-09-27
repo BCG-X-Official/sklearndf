@@ -34,6 +34,7 @@ from ... import (
     __sklearn_1_0__,
     __sklearn_1_1__,
     __sklearn_1_2__,
+    __sklearn_1_4__,
     __sklearn_version__,
 )
 from ...wrapper import TransformerWrapperDF
@@ -509,8 +510,24 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
     """
 
     def _validate_delegate_estimator(self) -> None:
-        if self.native_estimator.sparse:
-            raise NotImplementedError("sparse matrices not supported; use sparse=False")
+        sparse: bool
+        attr_sparse: str
+
+        if __sklearn_version__ < __sklearn_1_2__:
+            sparse = self.native_estimator.sparse
+            attr_sparse = "sparse"
+        else:
+            attr_sparse = "sparse_output"
+            sparse = self.native_estimator.sparse_output
+            if __sklearn_version__ < __sklearn_1_4__ and isinstance(
+                self.native_estimator.sparse, bool
+            ):
+                sparse = self.native_estimator.sparse
+
+        if sparse:
+            raise NotImplementedError(
+                f"sparse matrices not supported; use {attr_sparse}=False"
+            )
 
     def _get_features_original(self) -> pd.Series:
         # Return the series mapping output column names to original column names.
@@ -641,11 +658,7 @@ class EmbeddingWrapperDF(
             """
             return cast(int, self.native_estimator.n_features_)
 
-    @property
-    def n_outputs_(self) -> int:
-        """
-        The number of outputs when :meth:`.fit` is performed.
-        """
+    def _get_n_outputs(self) -> int:
         return cast(int, self.native_estimator.n_outputs_)
 
     def _n_components_(self) -> int:

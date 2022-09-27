@@ -221,7 +221,7 @@ class EstimatorWrapperDF(
         """
         super().__init__()
         self._features_in: Optional[pd.Index] = None
-        self._n_outputs: Optional[int] = None
+        self._outputs: Optional[List[str]] = None
 
         # check if a fitted estimator was passed by class method is_fitted
         fitted_delegate_context: Tuple[T_NativeEstimator, pd.Index, int] = kwargs.get(
@@ -403,13 +403,12 @@ class EstimatorWrapperDF(
         assert self._features_in is not None, "estimator is fitted"
         return self._features_in
 
-    def _get_n_outputs(self) -> int:
-        assert self._n_outputs is not None, "estimator is fitted"
-        return self._n_outputs
+    def _get_outputs(self) -> Optional[List[str]]:
+        return self._outputs
 
     def _reset_fit(self) -> None:
         self._features_in = None
-        self._n_outputs = None
+        self._outputs = None
 
     # noinspection PyPep8Naming
     def _fit(
@@ -437,11 +436,11 @@ class EstimatorWrapperDF(
     ) -> None:
         self._features_in = X.columns.rename(self.COL_FEATURE_IN)
         if y is None:
-            self._n_outputs = 0
+            self._outputs = None
         elif isinstance(y, pd.Series):
-            self._n_outputs = 1
+            self._outputs = [y.name]
         else:
-            self._n_outputs = y.shape[1]
+            self._outputs = y.columns.tolist()
 
     # noinspection PyPep8Naming
     def _check_parameter_types(
@@ -604,7 +603,9 @@ class TransformerWrapperDF(
     def feature_names_out_(self) -> pd.Index:
         """[see superclass]"""
         return self._check_feature_names_out(
-            self._get_features_in(), super().feature_names_out_, warning_stacklevel=2
+            self._get_features_in().values,
+            super().feature_names_out_,
+            warning_stacklevel=2,
         )
 
     @property
@@ -814,20 +815,54 @@ class LearnerWrapperDF(
     def _prediction_to_series_or_frame(
         self, X: pd.DataFrame, y: Union[npt.NDArray[Any], pd.Series, pd.DataFrame]
     ) -> Union[pd.Series, pd.DataFrame]:
-        if isinstance(y, pd.Series) or isinstance(y, pd.DataFrame):
-            # if we already have a series or data frame, check it and return it
-            # unchanged
-            return y
+        if len(y) != len(X):
+            raise ValueError(
+                f"length of prediction ({len(y)}) does not match length of X ({len(X)})"
+            )
+
+        outputs: Optional[List[str]] = self._get_outputs()
+
+        if y.ndim == 1:
+            if outputs is None:
+                # in case predict() was called without first calling fit(),
+                # no outputs are known, so we use the default output name
+                outputs = [self.COL_PREDICTION]
+            elif len(outputs) != 1:
+                raise ValueError(
+                    f"expected {len(outputs)} predictions, but got 1 prediction"
+                )
+        elif y.ndim == 2:
+            if outputs is None:
+                # in case predict() was called without first calling fit(),
+                # no outputs are known, so we use default output names
+                outputs = [
+                    f"{self.COL_PREDICTION}_{output}" for output in range(y.shape[1])
+                ]
+            elif y.shape[1] != len(outputs):
+                raise ValueError(
+                    f"expected {len(outputs)} predictions, "
+                    f"but got {y.shape[1]} prediction{'' if y.shape[1] == 1 else 's'}"
+                )
+        else:
+            raise ValueError(
+                f"got {y.ndim}-dimensional prediction, "
+                f"but expected 1- or 2-dimensional prediction"
+            )
+
+        if isinstance(y, pd.Series):
+            return y.rename(outputs[0])
+        elif isinstance(y, pd.DataFrame):
+            return y.set_axis(outputs, axis=1)
         elif isinstance(y, np.ndarray):
             if len(y) == len(X):
                 # predictions are usually provided as a numpy array the same length as X
                 if y.ndim == 1:
                     # single-output predictions yield a numpy array of shape (n_samples)
-                    return pd.Series(data=y, name=self.COL_PREDICTION, index=X.index)
+                    return pd.Series(data=y, name=outputs[0], index=X.index)
                 if y.ndim == 2:
                     # multi-output predictions yield a numpy array of shape (n_samples,
                     # n_outputs)
-                    return pd.DataFrame(data=y, index=X.index)
+                    return pd.DataFrame(data=y, columns=outputs, index=X.index)
             raise TypeError(
                 f"unexpected shape of numpy array returned as prediction: {y.shape}"
             )
@@ -1075,6 +1110,9 @@ class ClusterWrapperDF(
         try:
             self._check_parameter_types(X, y)
 
+            # fitting a clusterer produces a single output column for labels
+            self._outputs = [ClusterWrapperDF.COL_LABELS]
+
             # Ignore a PyCharm warning that is caused by scikit-learn incorrectly
             # omitting optional arguments from the abstract method declaration
             # of ClassifierMixin.fit_predict():
@@ -1157,18 +1195,21 @@ class MetaEstimatorWrapperDF(
 
         delegate_estimator = self.native_estimator
 
-        if hasattr(delegate_estimator, "estimator"):
-            delegate_estimator.estimator = _unwrap_estimator(
-                delegate_estimator.estimator
-            )
-        elif hasattr(delegate_estimator, "base_estimator"):
-            delegate_estimator.base_estimator = _unwrap_estimator(
-                delegate_estimator.base_estimator
-            )
-        elif hasattr(delegate_estimator, "estimators"):
+        estimator = getattr(delegate_estimator, "estimator", None)
+        if estimator is not None:
+            delegate_estimator.estimator = _unwrap_estimator(estimator)
+
+        base_estimator = getattr(delegate_estimator, "base_estimator", None)
+        # attribute base_estimator is deprecated as of scikit-learn 1.2, with the
+        # default value of "deprecated"
+
+        if base_estimator is not None and base_estimator != "deprecated":
+            delegate_estimator.base_estimator = _unwrap_estimator(base_estimator)
+
+        estimators = getattr(delegate_estimator, "estimators", None)
+        if estimators is not None:
             delegate_estimator.estimators = [
-                (name, _unwrap_estimator(estimator))
-                for name, estimator in delegate_estimator.estimators
+                (name, _unwrap_estimator(estimator)) for name, estimator in estimators
             ]
 
 

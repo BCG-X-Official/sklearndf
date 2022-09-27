@@ -51,17 +51,11 @@ __tracker = AllTracker(globals())
 #
 
 
-class LGBMRegressorDF(
-    RegressorWrapperDF[LGBMRegressor],
-    native=LGBMRegressor,
-):
+class LGBMRegressorDF(RegressorWrapperDF[LGBMRegressor], native=LGBMRegressor):
     """Stub for DF wrapper of class ``LGBMRegressorDF``"""
 
 
-class XGBRegressorDF(
-    RegressorWrapperDF[XGBRegressor],
-    native=XGBRegressor,
-):
+class XGBRegressorDF(RegressorWrapperDF[XGBRegressor], native=XGBRegressor):
     """Stub for DF wrapper of class ``XGBRegressorDF``"""
 
 
