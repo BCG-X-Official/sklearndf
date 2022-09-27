@@ -1,0 +1,51 @@
+sklearndf.transformation.GaussianRandomProjectionDF
+===================================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: GaussianRandomProjectionDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~GaussianRandomProjectionDF.clone
+      ~GaussianRandomProjectionDF.ensure_fitted
+      ~GaussianRandomProjectionDF.fit
+      ~GaussianRandomProjectionDF.fit_transform
+      ~GaussianRandomProjectionDF.from_fitted
+      ~GaussianRandomProjectionDF.get_params
+      ~GaussianRandomProjectionDF.inverse_transform
+      ~GaussianRandomProjectionDF.set_params
+      ~GaussianRandomProjectionDF.to_expression
+      ~GaussianRandomProjectionDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~GaussianRandomProjectionDF.COL_FEATURE_IN
+      ~GaussianRandomProjectionDF.COL_FEATURE_OUT
+      ~GaussianRandomProjectionDF.feature_names_in_
+      ~GaussianRandomProjectionDF.feature_names_original_
+      ~GaussianRandomProjectionDF.feature_names_out_
+      ~GaussianRandomProjectionDF.is_fitted
+      ~GaussianRandomProjectionDF.n_features_in_
+      ~GaussianRandomProjectionDF.n_outputs_
+      ~GaussianRandomProjectionDF.native_estimator
+      ~GaussianRandomProjectionDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

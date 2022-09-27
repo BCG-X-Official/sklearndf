@@ -1,0 +1,52 @@
+sklearndf.transformation.MiniBatchNMFDF
+=======================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: MiniBatchNMFDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MiniBatchNMFDF.clone
+      ~MiniBatchNMFDF.ensure_fitted
+      ~MiniBatchNMFDF.fit
+      ~MiniBatchNMFDF.fit_transform
+      ~MiniBatchNMFDF.from_fitted
+      ~MiniBatchNMFDF.get_params
+      ~MiniBatchNMFDF.inverse_transform
+      ~MiniBatchNMFDF.partial_fit
+      ~MiniBatchNMFDF.set_params
+      ~MiniBatchNMFDF.to_expression
+      ~MiniBatchNMFDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MiniBatchNMFDF.COL_FEATURE_IN
+      ~MiniBatchNMFDF.COL_FEATURE_OUT
+      ~MiniBatchNMFDF.feature_names_in_
+      ~MiniBatchNMFDF.feature_names_original_
+      ~MiniBatchNMFDF.feature_names_out_
+      ~MiniBatchNMFDF.is_fitted
+      ~MiniBatchNMFDF.n_features_in_
+      ~MiniBatchNMFDF.n_outputs_
+      ~MiniBatchNMFDF.native_estimator
+      ~MiniBatchNMFDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

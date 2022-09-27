@@ -1,0 +1,51 @@
+sklearndf.transformation.FunctionTransformerDF
+==============================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: FunctionTransformerDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~FunctionTransformerDF.clone
+      ~FunctionTransformerDF.ensure_fitted
+      ~FunctionTransformerDF.fit
+      ~FunctionTransformerDF.fit_transform
+      ~FunctionTransformerDF.from_fitted
+      ~FunctionTransformerDF.get_params
+      ~FunctionTransformerDF.inverse_transform
+      ~FunctionTransformerDF.set_params
+      ~FunctionTransformerDF.to_expression
+      ~FunctionTransformerDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~FunctionTransformerDF.COL_FEATURE_IN
+      ~FunctionTransformerDF.COL_FEATURE_OUT
+      ~FunctionTransformerDF.feature_names_in_
+      ~FunctionTransformerDF.feature_names_original_
+      ~FunctionTransformerDF.feature_names_out_
+      ~FunctionTransformerDF.is_fitted
+      ~FunctionTransformerDF.n_features_in_
+      ~FunctionTransformerDF.n_outputs_
+      ~FunctionTransformerDF.native_estimator
+      ~FunctionTransformerDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

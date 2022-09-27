@@ -1,0 +1,52 @@
+sklearndf.clustering.KMeansDF
+=============================
+
+.. currentmodule:: sklearndf.clustering
+
+.. autoclass:: KMeansDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~KMeansDF.clone
+      ~KMeansDF.ensure_fitted
+      ~KMeansDF.fit
+      ~KMeansDF.fit_predict
+      ~KMeansDF.from_fitted
+      ~KMeansDF.get_params
+      ~KMeansDF.predict
+      ~KMeansDF.set_params
+      ~KMeansDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~KMeansDF.COL_FEATURE_IN
+      ~KMeansDF.COL_LABELS
+      ~KMeansDF.COL_PREDICTION
+      ~KMeansDF.IDX_CLUSTER
+      ~KMeansDF.cluster_centers_
+      ~KMeansDF.feature_names_in_
+      ~KMeansDF.is_fitted
+      ~KMeansDF.labels_
+      ~KMeansDF.n_features_in_
+      ~KMeansDF.n_outputs_
+      ~KMeansDF.native_estimator
+      ~KMeansDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

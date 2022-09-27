@@ -1,0 +1,1585 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sklearndf.wrapper._wrapper &#8212; sklearndf  documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/gamma.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/gamma.js"></script>
+    <script src="../../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../../../index.html">
+  <img src="../../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../_generated/getting_started.html">
+  Getting started
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../apidoc/sklearndf.html">
+  API reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../tutorials.html">
+  Tutorials
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../contribution_guide.html">
+  Development Guidelines
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../faqs.html">
+  FAQ
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../_generated/release_notes.html">
+  Release Notes
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <h1>Source code for sklearndf.wrapper._wrapper</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Wrappers around native `scikit-learn` estimators.</span>
+
+<span class="sd">`sklearndf` wrappers accept and return data frames (while `scikit-learn` transformers</span>
+<span class="sd">usually return a numpy arrays, and may not accept data frames as input).</span>
+<span class="sd">Otherwise, the wrappers are designed to precisely mirror the API and behavior of the</span>
+<span class="sd">native estimators they wrap.</span>
+
+<span class="sd">The wrappers also implement the additional column attributes introduced by `sklearndf`,</span>
+<span class="sd">:meth:`~EstimatorDF.feature_names_in_`, :meth:`~TransformerDF.feature_names_out_`, and</span>
+<span class="sd">:meth:`~TransformerDF.feature_names_original_`.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">update_wrapper</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">Generic</span><span class="p">,</span>
+    <span class="n">Iterable</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Mapping</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Sequence</span><span class="p">,</span>
+    <span class="n">Set</span><span class="p">,</span>
+    <span class="n">Tuple</span><span class="p">,</span>
+    <span class="n">Type</span><span class="p">,</span>
+    <span class="n">TypeVar</span><span class="p">,</span>
+    <span class="n">Union</span><span class="p">,</span>
+    <span class="n">cast</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy.typing</span> <span class="k">as</span> <span class="nn">npt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">sklearn.utils.metaestimators</span> <span class="k">as</span> <span class="nn">sklearn_meta</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BaseEstimator</span><span class="p">,</span>
+    <span class="n">ClassifierMixin</span><span class="p">,</span>
+    <span class="n">ClusterMixin</span><span class="p">,</span>
+    <span class="n">MetaEstimatorMixin</span><span class="p">,</span>
+    <span class="n">RegressorMixin</span><span class="p">,</span>
+    <span class="n">TransformerMixin</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span><span class="p">,</span> <span class="n">inheritdoc</span><span class="p">,</span> <span class="n">public_module_prefix</span>
+
+<span class="kn">from</span> <span class="nn">sklearndf</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ClassifierDF</span><span class="p">,</span>
+    <span class="n">ClusterDF</span><span class="p">,</span>
+    <span class="n">EstimatorDF</span><span class="p">,</span>
+    <span class="n">LearnerDF</span><span class="p">,</span>
+    <span class="n">RegressorDF</span><span class="p">,</span>
+    <span class="n">SupervisedLearnerDF</span><span class="p">,</span>
+    <span class="n">TransformerDF</span><span class="p">,</span>
+    <span class="n">__sklearn_1_0__</span><span class="p">,</span>
+    <span class="n">__sklearn_version__</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;ClassifierWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ClusterWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;EstimatorWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;EstimatorWrapperDFMeta&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LearnerWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MetaEstimatorWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RegressorWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SupervisedLearnerWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TransformerWrapperDF&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># type variables</span>
+<span class="c1">#</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
+<span class="n">T_Callable</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_Callable&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span>
+
+<span class="n">T_NativeEstimator</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_NativeEstimator&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">BaseEstimator</span><span class="p">)</span>
+<span class="n">T_NativeTransformer</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_NativeTransformer&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">TransformerMixin</span><span class="p">)</span>
+<span class="n">T_NativeLearner</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span>
+    <span class="s2">&quot;T_NativeLearner&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">Union</span><span class="p">[</span><span class="n">RegressorMixin</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">,</span> <span class="n">ClusterMixin</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">T_NativeSupervisedLearner</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span>
+    <span class="s2">&quot;T_NativeSupervisedLearner&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">Union</span><span class="p">[</span><span class="n">RegressorMixin</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">T_NativeRegressor</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_NativeRegressor&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">RegressorMixin</span><span class="p">)</span>
+<span class="n">T_NativeClassifier</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_NativeClassifier&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">ClassifierMixin</span><span class="p">)</span>
+<span class="n">T_NativeCluster</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_NativeCluster&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">ClusterMixin</span><span class="p">)</span>
+
+<span class="n">T_EstimatorWrapperDF</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span>
+    <span class="s2">&quot;T_EstimatorWrapperDF&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="s2">&quot;EstimatorWrapperDF[BaseEstimator]&quot;</span>
+<span class="p">)</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Ensure all symbols introduced below are included in __all__</span>
+<span class="c1">#</span>
+
+<span class="n">__tracker</span> <span class="o">=</span> <span class="n">AllTracker</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># base wrapper classes</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="EstimatorWrapperDFMeta"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.EstimatorWrapperDFMeta.html#sklearndf.wrapper.EstimatorWrapperDFMeta">[docs]</a><span class="k">class</span> <span class="nc">EstimatorWrapperDFMeta</span><span class="p">(</span><span class="n">ABCMeta</span><span class="p">,</span> <span class="n">Generic</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Metaclass of DF wrappers, providing a reference to the type of the wrapped native</span>
+<span class="sd">    estimator.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: the native class wrapped by the DF wrapper class</span>
+    <span class="n">__wrapped__</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span>
+        <span class="n">mcs</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">EstimatorWrapperDFMeta</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">]],</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">bases</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">type</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+        <span class="n">namespace</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">native</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EstimatorWrapperDFMeta</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">native</span> <span class="ow">in</span> <span class="n">bases</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;wrapper class </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> must not state native class &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">native</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> as a base class&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># noinspection PyArgumentList,PyTypeChecker</span>
+        <span class="bp">cls</span><span class="p">:</span> <span class="n">EstimatorWrapperDFMeta</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">]</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span>
+            <span class="n">mcs</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">namespace</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">native</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span>
+
+        <span class="n">wrapper_cls</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">Type</span><span class="p">[</span><span class="n">EstimatorWrapperDF</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">]],</span> <span class="bp">cls</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">native</span><span class="p">,</span> <span class="n">wrapper_cls</span><span class="o">.</span><span class="n">__native_base_class__</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;native class </span><span class="si">{</span><span class="n">native</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;cannot be used with wrapper class </span><span class="si">{</span><span class="n">wrapper_cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;because it does not implement &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wrapper_cls</span><span class="o">.</span><span class="n">__native_base_class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">wrapper_cls</span><span class="o">.</span><span class="n">__wrapped__</span> <span class="o">=</span> <span class="n">native</span>
+        <span class="n">wrapper_cls</span><span class="o">.</span><span class="n">__signature__</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">native</span><span class="p">)</span>
+        <span class="n">wrapper_init</span> <span class="o">=</span> <span class="n">_make_init</span><span class="p">(</span><span class="n">wrapper_cls</span><span class="p">)</span>
+        <span class="n">wrapper_init</span><span class="o">.</span><span class="n">__signature__</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">native</span><span class="o">.</span><span class="fm">__init__</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">wrapper_cls</span><span class="p">,</span> <span class="s2">&quot;__init__&quot;</span><span class="p">,</span> <span class="n">wrapper_init</span><span class="p">)</span>
+        <span class="n">wrapper_module</span> <span class="o">=</span> <span class="n">namespace</span><span class="p">[</span><span class="s2">&quot;__module__&quot;</span><span class="p">]</span>
+
+        <span class="n">_mirror_attributes</span><span class="p">(</span>
+            <span class="n">wrapper_class</span><span class="o">=</span><span class="n">wrapper_cls</span><span class="p">,</span>
+            <span class="n">native_estimator</span><span class="o">=</span><span class="n">native</span><span class="p">,</span>
+            <span class="n">wrapper_module</span><span class="o">=</span><span class="n">wrapper_module</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># adopt the initializer signature of the wrapped sklearn estimator</span>
+        <span class="n">_update_wrapper</span><span class="p">(</span>
+            <span class="n">wrapper</span><span class="o">=</span><span class="n">wrapper_init</span><span class="p">,</span>
+            <span class="n">wrapped</span><span class="o">=</span><span class="n">native</span><span class="o">.</span><span class="fm">__init__</span><span class="p">,</span>
+            <span class="n">wrapper_module</span><span class="o">=</span><span class="n">wrapper_module</span><span class="p">,</span>
+            <span class="n">wrapper_parent</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="c1"># adopt the class docstring of the wrapped sklearn estimator</span>
+        <span class="n">_update_class_docstring</span><span class="p">(</span>
+            <span class="n">df_estimator_type</span><span class="o">=</span><span class="n">wrapper_cls</span><span class="p">,</span>
+            <span class="n">sklearn_native_estimator_type</span><span class="o">=</span><span class="n">native</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">wrapper_cls</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">native_estimator_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Type</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The type of native estimator that instances of this wrapper class delegate to.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__wrapped__</span></div>
+
+
+<span class="k">def</span> <span class="nf">_make_init</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+        <span class="n">cast</span><span class="p">(</span><span class="n">EstimatorWrapperDF</span><span class="p">,</span> <span class="nb">super</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>  <span class="c1"># type: ignore</span>
+            <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="fm">__init__</span>
+
+
+<div class="viewcode-block" id="EstimatorWrapperDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.EstimatorWrapperDF.html#sklearndf.wrapper.EstimatorWrapperDF">[docs]</a><span class="nd">@inheritdoc</span><span class="p">(</span><span class="n">match</span><span class="o">=</span><span class="s2">&quot;[see superclass]&quot;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">EstimatorWrapperDF</span><span class="p">(</span>
+    <span class="n">EstimatorDF</span><span class="p">,</span> <span class="n">Generic</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">EstimatorWrapperDFMeta</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class of DF wrappers for native estimators conforming with the `scikit-learn`</span>
+<span class="sd">    API.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">__native_base_class__</span> <span class="o">=</span> <span class="n">BaseEstimator</span>
+    <span class="n">__ARG_FITTED_DELEGATE_CONTEXT</span> <span class="o">=</span> <span class="s2">&quot;__EstimatorWrapperDF_fitted&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param args: positional arguments to use when initializing a new new delegate</span>
+<span class="sd">            estimator</span>
+<span class="sd">        :param kwargs: keyword arguments to use when initializing a new new delegate</span>
+<span class="sd">            estimator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_in</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_outputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># check if a fitted estimator was passed by class method is_fitted</span>
+        <span class="n">fitted_delegate_context</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">EstimatorWrapperDF</span><span class="o">.</span><span class="n">__ARG_FITTED_DELEGATE_CONTEXT</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">fitted_delegate_context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># create a new delegate estimator with the given parameters</span>
+            <span class="c1"># noinspection PyProtectedMember</span>
+            <span class="n">_native_estimator</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__wrapped__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_reset_fit</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="p">(</span>
+                <span class="n">_native_estimator</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_features_in</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_n_outputs</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">fitted_delegate_context</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span> <span class="o">=</span> <span class="n">_native_estimator</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_delegate_estimator</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T_EstimatorWrapperDF</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T_EstimatorWrapperDF</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">__wrapped__</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;cannot instantiate wrapper class </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: &quot;</span>
+                <span class="s2">&quot;need to specify class argument &#39;native&#39; in class definition&quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">Type</span><span class="p">[</span><span class="n">EstimatorDF</span><span class="p">],</span> <span class="nb">super</span><span class="p">())</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_in</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">native_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T_NativeEstimator</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The native estimator that this wrapper delegates to.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">feature_names_in_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_feature_names_in</span><span class="p">(</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">,</span> <span class="n">warning_stacklevel</span><span class="o">=</span><span class="mi">2</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_features_in_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_n_features_in</span><span class="p">(</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">n_features_in_</span><span class="p">,</span> <span class="n">warning_stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_check_feature_names_in</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">wrapper_feature_names_in</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">warning_stacklevel</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
+        <span class="c1"># Check that the given feature names are the same as the ingoing feature names</span>
+        <span class="c1"># recorded by the native estimator, if present. Issue a warning if the feature</span>
+        <span class="c1"># names differ.</span>
+        <span class="c1"># Return the same feature names that were passed to this method.</span>
+
+        <span class="c1"># noinspection PyBroadException</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">feature_names_in_native</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">feature_names_in_</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">wrapper_feature_names_in</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">wrapper_feature_names_in</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">feature_names_in_native</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;conflicting input feature names: &quot;</span>
+                <span class="s2">&quot;the input feature names recorded by this estimator are &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wrapper_feature_names_in</span><span class="si">}</span><span class="s2">, but the input feature names recorded by &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;the wrapped native estimator are </span><span class="si">{</span><span class="n">feature_names_in_native</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">stacklevel</span><span class="o">=</span><span class="n">warning_stacklevel</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrapper_feature_names_in</span>
+
+    <span class="k">def</span> <span class="nf">_check_n_features_in</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">wrapper_n_features</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">warning_stacklevel</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="c1"># Check that the given number of features is the same as the number of features</span>
+        <span class="c1"># recorded by the native estimator, if present. Issue a warning if the number of</span>
+        <span class="c1"># features differ.</span>
+        <span class="c1"># Return the same number of features that were passed to this method.</span>
+
+        <span class="c1"># noinspection PyBroadException</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">n_features_native</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">n_features_in_</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">wrapper_n_features</span>
+
+        <span class="k">if</span> <span class="n">wrapper_n_features</span> <span class="o">!=</span> <span class="n">n_features_native</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;conflicting number of features: &quot;</span>
+                <span class="s2">&quot;the number of features recorded by this estimator is &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wrapper_n_features</span><span class="si">}</span><span class="s2">, but the number of features recorded by &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;the wrapped native estimator is </span><span class="si">{</span><span class="n">n_features_native</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">stacklevel</span><span class="o">=</span><span class="n">warning_stacklevel</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrapper_n_features</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_estimator_type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># noinspection PyProtectedMember</span>
+            <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">_estimator_type</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="EstimatorWrapperDF.from_fitted"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.EstimatorWrapperDF.html#sklearndf.wrapper.EstimatorWrapperDF.from_fitted">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_fitted</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T_EstimatorWrapperDF</span><span class="p">],</span>
+        <span class="n">estimator</span><span class="p">:</span> <span class="n">T_NativeEstimator</span><span class="p">,</span>
+        <span class="n">features_in</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span>
+        <span class="n">n_outputs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T_EstimatorWrapperDF</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make a new wrapped DF estimator, delegating to a given native estimator that</span>
+<span class="sd">        has already been fitted.</span>
+
+<span class="sd">        :param estimator: the fitted native estimator to use as the delegate</span>
+<span class="sd">        :param features_in: the column names of X used for fitting the estimator</span>
+<span class="sd">        :param n_outputs: the number of outputs in y used for fitting the estimator</span>
+<span class="sd">        :return: the wrapped data frame estimator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="o">**</span><span class="p">{</span>
+                <span class="n">EstimatorWrapperDF</span><span class="o">.</span><span class="n">__ARG_FITTED_DELEGATE_CONTEXT</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="n">estimator</span><span class="p">,</span>
+                    <span class="n">features_in</span><span class="p">,</span>
+                    <span class="n">n_outputs</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="EstimatorWrapperDF.get_params"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.EstimatorWrapperDF.html#sklearndf.wrapper.EstimatorWrapperDF.get_params">[docs]</a>    <span class="k">def</span> <span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deep</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span><span class="o">.</span><span class="n">get_params</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="n">deep</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="EstimatorWrapperDF.set_params"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.EstimatorWrapperDF.html#sklearndf.wrapper.EstimatorWrapperDF.set_params">[docs]</a>    <span class="k">def</span> <span class="nf">set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">T_EstimatorWrapperDF</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T_EstimatorWrapperDF</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="EstimatorWrapperDF.fit"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.EstimatorWrapperDF.html#sklearndf.wrapper.EstimatorWrapperDF.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">:</span> <span class="n">T_EstimatorWrapperDF</span><span class="p">,</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">fit_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T_EstimatorWrapperDF</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_fit</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_check_parameter_types</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_params</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_post_fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_params</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">cause</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_reset_fit</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_verbose_exception</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">cause</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">cause</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="k">def</span> <span class="nf">_validate_delegate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># no validation required by default; to be overloaded as needed</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_get_features_in</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_in</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;estimator is fitted&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features_in</span>
+
+    <span class="k">def</span> <span class="nf">_get_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_outputs</span>
+
+    <span class="k">def</span> <span class="nf">_reset_fit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_in</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_outputs</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_fit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]],</span>
+        <span class="o">**</span><span class="n">fit_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T_NativeEstimator</span><span class="p">:</span>
+        <span class="c1"># noinspection PyUnresolvedReferences</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span>
+            <span class="n">T_NativeEstimator</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_X_for_delegate</span><span class="p">(</span><span class="n">X</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_y_for_delegate</span><span class="p">(</span><span class="n">y</span><span class="p">),</span>
+                <span class="o">**</span><span class="n">fit_params</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="c1"># noinspection PyPep8Naming,PyUnusedLocal</span>
+    <span class="k">def</span> <span class="nf">_post_fit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">fit_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_features_in</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">COL_FEATURE_IN</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_outputs</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_outputs</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_check_parameter_types</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">expected_columns</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;arg X must be a DataFrame&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitted</span><span class="p">:</span>
+            <span class="n">EstimatorWrapperDF</span><span class="o">.</span><span class="n">_verify_df</span><span class="p">(</span>
+                <span class="n">df_name</span><span class="o">=</span><span class="s2">&quot;arg X&quot;</span><span class="p">,</span>
+                <span class="n">df</span><span class="o">=</span><span class="n">X</span><span class="p">,</span>
+                <span class="n">expected_columns</span><span class="o">=</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_in_</span>
+                    <span class="k">if</span> <span class="n">expected_columns</span> <span class="ow">is</span> <span class="kc">None</span>
+                    <span class="k">else</span> <span class="n">expected_columns</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;arg y must be None, or a pandas series or data frame&quot;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_verify_df</span><span class="p">(</span>
+        <span class="n">df_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">expected_columns</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span>
+        <span class="n">expected_index</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">_verify_labels</span><span class="p">(</span><span class="n">axis</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">actual</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span> <span class="n">expected</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">error_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">df_name</span><span class="si">}</span><span class="s2"> data frame does not have expected </span><span class="si">{</span><span class="n">axis</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">missing_columns</span> <span class="o">=</span> <span class="n">expected</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span>
+            <span class="n">extra_columns</span> <span class="o">=</span> <span class="n">actual</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">expected</span><span class="p">)</span>
+            <span class="n">error_detail</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">expected</span><span class="p">):</span>
+                <span class="n">error_detail</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;expected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">expected</span><span class="p">)</span><span class="si">}</span><span class="s2"> columns but got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">actual</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing_columns</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">error_detail</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;missing columns: &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">missing_columns</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">extra_columns</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">error_detail</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;extra columns: &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">extra_columns</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">error_message</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="s1">&#39;; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">error_detail</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+        <span class="n">_verify_labels</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">,</span> <span class="n">actual</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">expected</span><span class="o">=</span><span class="n">expected_columns</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">expected_index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_verify_labels</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="n">actual</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">expected</span><span class="o">=</span><span class="n">expected_index</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_validate_delegate_attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="p">,</span> <span class="n">attribute_name</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;delegate estimator of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;does not have attribute </span><span class="si">{</span><span class="n">attribute_name</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_prepare_X_for_delegate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
+        <span class="c1"># convert X before passing it to the delegate estimator</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_X_type_for_delegate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_adjust_X_columns_for_delegate</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_prepare_y_for_delegate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_y_type_for_delegate</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_adjust_X_columns_for_delegate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="c1"># make sure columns of X are aligned with frame used to fit this estimator</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fitted</span><span class="p">:</span>
+            <span class="c1"># return X unchanged if estimator is not fitted yet</span>
+            <span class="k">return</span> <span class="n">X</span>
+
+        <span class="n">features_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_features_in</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">is_</span><span class="p">(</span><span class="n">features_in</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">X</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">features_in</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_adjust_X_type_for_delegate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
+        <span class="c1"># Convert X before passing it to the delegate estimator.</span>
+        <span class="c1"># By default, does nothing, but can be overridden.</span>
+        <span class="k">return</span> <span class="n">X</span>
+
+    <span class="k">def</span> <span class="nf">_adjust_y_type_for_delegate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="c1"># convert y before passing it to the delegate estimator</span>
+        <span class="k">return</span> <span class="n">y</span>
+
+    <span class="k">def</span> <span class="nf">_make_verbose_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cause</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">verbose_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">cause</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="c1"># noinspection PyBroadException</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">cause</span><span class="p">)(</span><span class="n">verbose_message</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">verbose_message</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__dir__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="c1"># include non-private attributes of delegate estimator in directory</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__dir__</span><span class="p">(),</span>
+            <span class="o">*</span><span class="p">(</span>
+                <span class="n">attr</span>
+                <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span><span class="o">.</span><span class="fm">__dir__</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">attr</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+            <span class="p">),</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="c1"># get a non-private attribute of the delegate estimator</span>
+        <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
+            <span class="c1"># raise attribute error</span>
+            <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="c1"># raise attribute error</span>
+                <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># set a public attribute of the delegate estimator</span>
+        <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TransformerWrapperDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.TransformerWrapperDF.html#sklearndf.wrapper.TransformerWrapperDF">[docs]</a><span class="nd">@inheritdoc</span><span class="p">(</span><span class="n">match</span><span class="o">=</span><span class="s2">&quot;[see superclass]&quot;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">TransformerWrapperDF</span><span class="p">(</span>
+    <span class="n">TransformerDF</span><span class="p">,</span>
+    <span class="n">EstimatorWrapperDF</span><span class="p">[</span><span class="n">T_NativeTransformer</span><span class="p">],</span>
+    <span class="n">Generic</span><span class="p">[</span><span class="n">T_NativeTransformer</span><span class="p">],</span>
+    <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class of DF wrappers for native transformers conforming with the `scikit-learn`</span>
+<span class="sd">    API.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">__native_base_class__</span> <span class="o">=</span> <span class="n">TransformerMixin</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">feature_names_out_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_feature_names_out</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get_features_in</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">feature_names_out_</span><span class="p">,</span>
+            <span class="n">warning_stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">feature_names_original_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="n">feature_names_original_</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">feature_names_original_</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_feature_names_out</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get_features_in</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+            <span class="n">feature_names_original_</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+            <span class="n">warning_stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">feature_names_original_</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="TransformerWrapperDF.transform"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.TransformerWrapperDF.html#sklearndf.wrapper.TransformerWrapperDF.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_parameter_types</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">transformed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transformed_to_df</span><span class="p">(</span>
+            <span class="n">transformed</span><span class="o">=</span><span class="n">transformed</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_names_out_</span>
+        <span class="p">)</span></div>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="TransformerWrapperDF.fit_transform"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.TransformerWrapperDF.html#sklearndf.wrapper.TransformerWrapperDF.fit_transform">[docs]</a>    <span class="k">def</span> <span class="nf">fit_transform</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_params</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_fit</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_check_parameter_types</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">transformed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_params</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_post_fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_params</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">cause</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_reset_fit</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_verbose_exception</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fit_transform</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">cause</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="nn">cause</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transformed_to_df</span><span class="p">(</span>
+            <span class="n">transformed</span><span class="o">=</span><span class="n">transformed</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_names_out_</span>
+        <span class="p">)</span></div>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="TransformerWrapperDF.inverse_transform"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.TransformerWrapperDF.html#sklearndf.wrapper.TransformerWrapperDF.inverse_transform">[docs]</a>    <span class="k">def</span> <span class="nf">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_parameter_types</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">expected_columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_names_out_</span><span class="p">)</span>
+
+        <span class="n">transformed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inverse_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transformed_to_df</span><span class="p">(</span>
+            <span class="n">transformed</span><span class="o">=</span><span class="n">transformed</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_names_in_</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_check_feature_names_out</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">feature_names_in</span><span class="p">:</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span>
+        <span class="n">wrapper_feature_names_out</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">warning_stacklevel</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">__sklearn_version__</span> <span class="o">&lt;</span> <span class="n">__sklearn_1_0__</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">wrapper_feature_names_out</span>
+        <span class="c1"># noinspection PyBroadException</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">native_feature_names_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(</span>
+                <span class="n">feature_names_in</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">wrapper_feature_names_out</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">native_feature_names_out</span> <span class="o">==</span> <span class="n">wrapper_feature_names_out</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;conflicting output feature names: &quot;</span>
+                <span class="s2">&quot;the output feature names recorded by this transformer are &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wrapper_feature_names_out</span><span class="si">}</span><span class="s2"> but the input feature names recorded &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;by the wrapped native transformer are </span><span class="si">{</span><span class="n">native_feature_names_out</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">stacklevel</span><span class="o">=</span><span class="n">warning_stacklevel</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrapper_feature_names_out</span>
+
+    <span class="k">def</span> <span class="nf">_reset_fit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># noinspection PyProtectedMember</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_reset_fit</span><span class="p">()</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_features_original</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_prepare_X_for_delegate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">inverse</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
+        <span class="n">x_adjusted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_X_columns_for_delegate</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="n">inverse</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">inverse</span><span class="p">:</span>
+            <span class="c1"># when doing an inverse transform, we need X as a numpy array</span>
+            <span class="k">return</span> <span class="n">x_adjusted</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_X_type_for_delegate</span><span class="p">(</span><span class="n">x_adjusted</span><span class="p">)</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_adjust_X_columns_for_delegate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">inverse</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">inverse</span><span class="p">:</span>
+            <span class="c1"># when converting X for an inverse transform, ensure the data frame is</span>
+            <span class="c1"># aligned with the output features, and convert the data frame to a</span>
+            <span class="c1"># numpy array</span>
+            <span class="n">features_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_out_</span>
+            <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">is_</span><span class="p">(</span><span class="n">features_out</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">X</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">features_out</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_adjust_X_columns_for_delegate</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_transformed_to_df</span><span class="p">(</span>
+        <span class="n">transformed</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span>
+        <span class="n">index</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span>
+        <span class="n">columns</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">transformed</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="c1"># noinspection PyProtectedMember</span>
+            <span class="n">TransformerWrapperDF</span><span class="o">.</span><span class="n">_verify_df</span><span class="p">(</span>
+                <span class="n">df_name</span><span class="o">=</span><span class="s2">&quot;transformed&quot;</span><span class="p">,</span>
+                <span class="n">df</span><span class="o">=</span><span class="n">transformed</span><span class="p">,</span>
+                <span class="n">expected_columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span>
+                <span class="n">expected_index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">transformed</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">transformed</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+        <span class="c1"># noinspection PyUnresolvedReferences</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span>
+            <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_prepare_X_for_delegate</span><span class="p">(</span><span class="n">X</span><span class="p">)),</span>
+        <span class="p">)</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_fit_transform</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">],</span> <span class="o">**</span><span class="n">fit_params</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span>
+            <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_X_for_delegate</span><span class="p">(</span><span class="n">X</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_y_for_delegate</span><span class="p">(</span><span class="n">y</span><span class="p">),</span>
+                <span class="o">**</span><span class="n">fit_params</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">inverse_transform_fn</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span>
+                <span class="n">Callable</span><span class="p">[[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> does not implement method inverse_transform()&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">inverse_transform_fn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_prepare_X_for_delegate</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="LearnerWrapperDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.LearnerWrapperDF.html#sklearndf.wrapper.LearnerWrapperDF">[docs]</a><span class="nd">@inheritdoc</span><span class="p">(</span><span class="n">match</span><span class="o">=</span><span class="s2">&quot;[see superclass]&quot;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">LearnerWrapperDF</span><span class="p">(</span>
+    <span class="n">LearnerDF</span><span class="p">,</span>
+    <span class="n">EstimatorWrapperDF</span><span class="p">[</span><span class="n">T_NativeLearner</span><span class="p">],</span>
+    <span class="n">Generic</span><span class="p">[</span><span class="n">T_NativeLearner</span><span class="p">],</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class of DF wrappers for native `learners` conforming with the `scikit-learn`</span>
+<span class="sd">    API.</span>
+
+<span class="sd">    Learners in `scikit-learn` typically are regressors, classifiers, or clusterers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: Name of :class:`~pandas.Series` objects containing the predictions of</span>
+    <span class="c1">#: single-output learners.</span>
+    <span class="c1">#:</span>
+    <span class="c1">#: See :meth:`~.LearnerDF.predict`.</span>
+    <span class="n">COL_PREDICTION</span> <span class="o">=</span> <span class="s2">&quot;prediction&quot;</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="LearnerWrapperDF.predict"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.LearnerWrapperDF.html#sklearndf.wrapper.LearnerWrapperDF.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="o">**</span><span class="n">predict_params</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_parameter_types</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="c1"># noinspection PyUnresolvedReferences</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prediction_to_series_or_frame</span><span class="p">(</span>
+            <span class="n">X</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_X_for_delegate</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="o">**</span><span class="n">predict_params</span>
+            <span class="p">),</span>
+        <span class="p">)</span></div>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_prediction_to_series_or_frame</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;length of prediction (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s2">) does not match length of X (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">outputs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_outputs</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">outputs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># in case predict() was called without first calling fit(),</span>
+                <span class="c1"># no outputs are known, so we use the default output name</span>
+                <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">COL_PREDICTION</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;expected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span><span class="si">}</span><span class="s2"> predictions, but got 1 prediction&quot;</span>
+                <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">outputs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># in case predict() was called without first calling fit(),</span>
+                <span class="c1"># no outputs are known, so we use default output names</span>
+                <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">COL_PREDICTION</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="p">]</span>
+            <span class="k">elif</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">outputs</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;expected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span><span class="si">}</span><span class="s2"> predictions, &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;but got </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> prediction</span><span class="si">{</span><span class="s1">&#39;&#39;</span> <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;s&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">ndim</span><span class="si">}</span><span class="s2">-dimensional prediction, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;but expected 1- or 2-dimensional prediction&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">y</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">y</span><span class="o">.</span><span class="n">set_axis</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+                <span class="c1"># predictions are usually provided as a numpy array the same length as X</span>
+                <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># single-output predictions yield a numpy array of shape (n_samples)</span>
+                    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="c1"># multi-output predictions yield a numpy array of shape (n_samples,</span>
+                    <span class="c1"># n_outputs)</span>
+                    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;unexpected shape of numpy array returned as prediction: </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;unexpected data type returned as prediction: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SupervisedLearnerWrapperDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.SupervisedLearnerWrapperDF.html#sklearndf.wrapper.SupervisedLearnerWrapperDF">[docs]</a><span class="nd">@inheritdoc</span><span class="p">(</span><span class="n">match</span><span class="o">=</span><span class="s2">&quot;[see superclass]&quot;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">SupervisedLearnerWrapperDF</span><span class="p">(</span>
+    <span class="n">SupervisedLearnerDF</span><span class="p">,</span>
+    <span class="n">LearnerWrapperDF</span><span class="p">[</span><span class="n">T_NativeSupervisedLearner</span><span class="p">],</span>
+    <span class="n">Generic</span><span class="p">[</span><span class="n">T_NativeSupervisedLearner</span><span class="p">],</span>
+    <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class of DF wrappers for native `supervised learners` conforming with the</span>
+<span class="sd">    `scikit-learn` API.</span>
+
+<span class="sd">    Supervised learners in `scikit-learn` typically are regressors or classifiers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="SupervisedLearnerWrapperDF.score"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.SupervisedLearnerWrapperDF.html#sklearndf.wrapper.SupervisedLearnerWrapperDF.score">[docs]</a>    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">sample_weight</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_parameter_types</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;arg y must not be None&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sample_weight</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sample_weight</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;arg sample_weight must be None or a Series&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span>
+            <span class="nb">float</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">score</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_X_for_delegate</span><span class="p">(</span><span class="n">X</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_y_for_delegate</span><span class="p">(</span><span class="n">y</span><span class="p">),</span>
+                <span class="n">sample_weight</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="RegressorWrapperDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.RegressorWrapperDF.html#sklearndf.wrapper.RegressorWrapperDF">[docs]</a><span class="nd">@inheritdoc</span><span class="p">(</span><span class="n">match</span><span class="o">=</span><span class="s2">&quot;[see superclass]&quot;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">RegressorWrapperDF</span><span class="p">(</span>
+    <span class="n">RegressorDF</span><span class="p">,</span>
+    <span class="n">SupervisedLearnerWrapperDF</span><span class="p">[</span><span class="n">T_NativeRegressor</span><span class="p">],</span>
+    <span class="n">Generic</span><span class="p">[</span><span class="n">T_NativeRegressor</span><span class="p">],</span>
+    <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class of DF wrappers for native regressors conforming with the `scikit-learn`</span>
+<span class="sd">    API.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">__native_base_class__</span> <span class="o">=</span> <span class="n">RegressorMixin</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="RegressorWrapperDF.score"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.RegressorWrapperDF.html#sklearndf.wrapper.RegressorWrapperDF.score">[docs]</a>    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">sample_weight</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span>
+            <span class="nb">float</span><span class="p">,</span>
+            <span class="n">SupervisedLearnerWrapperDF</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">),</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ClassifierWrapperDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.ClassifierWrapperDF.html#sklearndf.wrapper.ClassifierWrapperDF">[docs]</a><span class="nd">@inheritdoc</span><span class="p">(</span><span class="n">match</span><span class="o">=</span><span class="s2">&quot;[see superclass]&quot;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ClassifierWrapperDF</span><span class="p">(</span>
+    <span class="n">ClassifierDF</span><span class="p">,</span>
+    <span class="n">SupervisedLearnerWrapperDF</span><span class="p">[</span><span class="n">T_NativeClassifier</span><span class="p">],</span>
+    <span class="n">Generic</span><span class="p">[</span><span class="n">T_NativeClassifier</span><span class="p">],</span>
+    <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class of DF wrappers for native classifiers conforming with the `scikit-learn`</span>
+<span class="sd">    API.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">__native_base_class__</span> <span class="o">=</span> <span class="n">ClassifierMixin</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">classes_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]]]:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ensure_fitted</span><span class="p">()</span>
+        <span class="c1"># noinspection PyUnresolvedReferences</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span>
+            <span class="n">Union</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]]],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="ClassifierWrapperDF.predict_proba"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.ClassifierWrapperDF.html#sklearndf.wrapper.ClassifierWrapperDF.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="o">**</span><span class="n">predict_params</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_delegate_method</span><span class="p">(</span><span class="s2">&quot;predict_proba&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_parameter_types</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="c1"># noinspection PyUnresolvedReferences</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prediction_with_class_labels</span><span class="p">(</span>
+            <span class="n">X</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_X_for_delegate</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="o">**</span><span class="n">predict_params</span>
+            <span class="p">),</span>
+        <span class="p">)</span></div>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="ClassifierWrapperDF.predict_log_proba"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.ClassifierWrapperDF.html#sklearndf.wrapper.ClassifierWrapperDF.predict_log_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_log_proba</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="o">**</span><span class="n">predict_params</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_delegate_method</span><span class="p">(</span><span class="s2">&quot;predict_log_proba&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_parameter_types</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="c1"># noinspection PyUnresolvedReferences</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prediction_with_class_labels</span><span class="p">(</span>
+            <span class="n">X</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">predict_log_proba</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_X_for_delegate</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="o">**</span><span class="n">predict_params</span>
+            <span class="p">),</span>
+        <span class="p">)</span></div>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="ClassifierWrapperDF.decision_function"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.ClassifierWrapperDF.html#sklearndf.wrapper.ClassifierWrapperDF.decision_function">[docs]</a>    <span class="k">def</span> <span class="nf">decision_function</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="o">**</span><span class="n">predict_params</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_delegate_method</span><span class="p">(</span><span class="s2">&quot;decision_function&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_parameter_types</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="c1"># noinspection PyUnresolvedReferences</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prediction_with_class_labels</span><span class="p">(</span>
+            <span class="n">X</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_X_for_delegate</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="o">**</span><span class="n">predict_params</span>
+            <span class="p">),</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_ensure_delegate_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> does not implement method &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_prediction_with_class_labels</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">prediction</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span>
+            <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+        <span class="p">],</span>
+        <span class="n">classes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]:</span>
+
+        <span class="k">if</span> <span class="n">classes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">classes</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="p">,</span> <span class="s2">&quot;classes_&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">classes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">classes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">RangeIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_n_outputs</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">prediction</span><span class="o">.</span><span class="n">set_axis</span><span class="p">(</span><span class="n">classes</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">prediction</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+                <span class="c1"># predictions of probabilities are usually provided as a NumPy array</span>
+                <span class="c1"># the same length as X</span>
+                <span class="k">if</span> <span class="n">prediction</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># for a binary classifier, we get a series with probabilities</span>
+                    <span class="c1"># for the second class</span>
+                    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">prediction</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">classes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="n">prediction</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="c1"># for a multi-class classifiers, we get a two-dimensional NumPy</span>
+                    <span class="c1"># array with probabilities for each class</span>
+                    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">prediction</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">classes</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;ndarray with unexpected shape returned as prediction: &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prediction</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;unexpected type or prediction result: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">prediction</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="ClassifierWrapperDF.score"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.ClassifierWrapperDF.html#sklearndf.wrapper.ClassifierWrapperDF.score">[docs]</a>    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">sample_weight</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span>
+            <span class="nb">float</span><span class="p">,</span>
+            <span class="n">SupervisedLearnerWrapperDF</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">),</span>
+        <span class="p">)</span></div></div>
+
+
+<span class="c1"># noinspection PyPep8Naming</span>
+<div class="viewcode-block" id="ClusterWrapperDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.ClusterWrapperDF.html#sklearndf.wrapper.ClusterWrapperDF">[docs]</a><span class="nd">@inheritdoc</span><span class="p">(</span><span class="n">match</span><span class="o">=</span><span class="s2">&quot;[see superclass]&quot;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ClusterWrapperDF</span><span class="p">(</span>
+    <span class="n">ClusterDF</span><span class="p">,</span>
+    <span class="n">LearnerWrapperDF</span><span class="p">[</span><span class="n">T_NativeCluster</span><span class="p">],</span>
+    <span class="n">Generic</span><span class="p">[</span><span class="n">T_NativeCluster</span><span class="p">],</span>
+    <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class of DF wrappers for native clusterers conforming with the scikit-learn</span>
+<span class="sd">    API.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">__native_base_class__</span> <span class="o">=</span> <span class="n">ClusterMixin</span>
+
+    <span class="n">COL_LABELS</span> <span class="o">=</span> <span class="s2">&quot;labels&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x_index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">labels_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ensure_fitted</span><span class="p">()</span>
+        <span class="n">raw_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span><span class="o">.</span><span class="n">labels_</span>
+
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">raw_labels</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">COL_LABELS</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_x_index</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ClusterWrapperDF.fit_predict"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.ClusterWrapperDF.html#sklearndf.wrapper.ClusterWrapperDF.fit_predict">[docs]</a>    <span class="k">def</span> <span class="nf">fit_predict</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">fit_predict_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;[see superclass]&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_fit</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_check_parameter_types</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+            <span class="c1"># fitting a clusterer produces a single output column for labels</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">ClusterWrapperDF</span><span class="o">.</span><span class="n">COL_LABELS</span><span class="p">]</span>
+
+            <span class="c1"># Ignore a PyCharm warning that is caused by scikit-learn incorrectly</span>
+            <span class="c1"># omitting optional arguments from the abstract method declaration</span>
+            <span class="c1"># of ClassifierMixin.fit_predict():</span>
+            <span class="c1"># noinspection PyArgumentList</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prediction_to_series_or_frame</span><span class="p">(</span>
+                <span class="n">X</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_X_for_delegate</span><span class="p">(</span><span class="n">X</span><span class="p">),</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_y_for_delegate</span><span class="p">(</span><span class="n">y</span><span class="p">),</span>
+                    <span class="o">**</span><span class="n">fit_predict_params</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_post_fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_predict_params</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">cause</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_reset_fit</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_verbose_exception</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fit_predict</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">cause</span>
+            <span class="p">)</span> <span class="kn">from</span> <span class="nn">cause</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+    <span class="k">def</span> <span class="nf">_post_fit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">fit_params</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_post_fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x_index</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">index</span>
+
+    <span class="k">def</span> <span class="nf">_reset_fit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_reset_fit</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_x_index</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># Meta estimator wrappers</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="MetaEstimatorWrapperDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.MetaEstimatorWrapperDF.html#sklearndf.wrapper.MetaEstimatorWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">MetaEstimatorWrapperDF</span><span class="p">(</span>
+    <span class="n">MetaEstimatorMixin</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
+    <span class="n">EstimatorWrapperDF</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">],</span>
+    <span class="n">Generic</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">],</span>
+    <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract base class of wrappers for estimators implementing</span>
+<span class="sd">    :class:`sklearn.base.MetaEstimatorMixin`.</span>
+
+<span class="sd">    A meta-estimator will call the methods of the embedded estimator using a modified</span>
+<span class="sd">    copy of the `X` and `y` parameters, so we need to make sure that these are converted</span>
+<span class="sd">    back to data frames.</span>
+
+<span class="sd">    This class covers three variants used in sklearn:</span>
+
+<span class="sd">    - one delegate estimator in attribute `estimator`</span>
+<span class="sd">    - one delegate estimator in attribute `base_estimator`</span>
+<span class="sd">    - multiple delegate estimators in attribute `estimators`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_validate_delegate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">_unwrap_estimator</span><span class="p">(</span><span class="n">estimator</span><span class="p">:</span> <span class="n">BaseEstimator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseEstimator</span><span class="p">:</span>
+            <span class="n">native_estimator</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">estimator</span><span class="o">.</span><span class="n">native_estimator</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">EstimatorWrapperDF</span><span class="p">)</span>
+                <span class="k">else</span> <span class="n">estimator</span>
+            <span class="p">)</span>
+            <span class="c1"># noinspection PyProtectedMember</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
+                <span class="n">native_estimator</span><span class="p">,</span> <span class="p">(</span><span class="n">EstimatorDF</span><span class="p">,</span> <span class="n">sklearn_meta</span><span class="o">.</span><span class="n">_BaseComposition</span><span class="p">)</span>
+            <span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">native_estimator</span><span class="p">,</span> <span class="p">(</span><span class="n">RegressorMixin</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="s2">&quot;sklearndf meta-estimators only accept simple regressors and &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;classifiers, but got: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">estimator</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">native_estimator</span><span class="p">)</span>
+
+        <span class="n">delegate_estimator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span>
+
+        <span class="n">estimator</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">delegate_estimator</span><span class="p">,</span> <span class="s2">&quot;estimator&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">estimator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">delegate_estimator</span><span class="o">.</span><span class="n">estimator</span> <span class="o">=</span> <span class="n">_unwrap_estimator</span><span class="p">(</span><span class="n">estimator</span><span class="p">)</span>
+
+        <span class="n">base_estimator</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">delegate_estimator</span><span class="p">,</span> <span class="s2">&quot;base_estimator&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="c1"># attribute base_estimator is deprecated as of scikit-learn 1.2, with the</span>
+        <span class="c1"># default value of &quot;deprecated&quot;</span>
+
+        <span class="k">if</span> <span class="n">base_estimator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_estimator</span> <span class="o">!=</span> <span class="s2">&quot;deprecated&quot;</span><span class="p">:</span>
+            <span class="n">delegate_estimator</span><span class="o">.</span><span class="n">base_estimator</span> <span class="o">=</span> <span class="n">_unwrap_estimator</span><span class="p">(</span><span class="n">base_estimator</span><span class="p">)</span>
+
+        <span class="n">estimators</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">delegate_estimator</span><span class="p">,</span> <span class="s2">&quot;estimators&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">estimators</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">delegate_estimator</span><span class="o">.</span><span class="n">estimators</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">_unwrap_estimator</span><span class="p">(</span><span class="n">estimator</span><span class="p">))</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">estimator</span> <span class="ow">in</span> <span class="n">estimators</span>
+            <span class="p">]</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># private factory implementation</span>
+<span class="c1">#</span>
+
+
+<span class="k">def</span> <span class="nf">_mirror_attributes</span><span class="p">(</span>
+    <span class="n">wrapper_class</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">EstimatorWrapperDF</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">]],</span>
+    <span class="n">native_estimator</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">],</span>
+    <span class="n">wrapper_module</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+    <span class="n">wrapper_name</span> <span class="o">=</span> <span class="n">wrapper_class</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="n">wrapper_attributes</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">wrapper_class</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">member</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="n">native_estimator</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+
+        <span class="k">if</span> <span class="n">member</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">wrapper_attributes</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">alias</span> <span class="o">=</span> <span class="n">_make_alias</span><span class="p">(</span>
+            <span class="n">wrapper_module</span><span class="o">=</span><span class="n">wrapper_module</span><span class="p">,</span>
+            <span class="n">wrapper_name</span><span class="o">=</span><span class="n">wrapper_name</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">delegate_cls</span><span class="o">=</span><span class="n">native_estimator</span><span class="p">,</span>
+            <span class="n">delegate</span><span class="o">=</span><span class="n">member</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">alias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">wrapper_class</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">alias</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_make_alias</span><span class="p">(</span>
+    <span class="n">wrapper_module</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">wrapper_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">delegate_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="n">delegate</span><span class="p">:</span> <span class="n">Any</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="nb">property</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isfunction</span><span class="p">(</span><span class="n">delegate</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_make_method_alias</span><span class="p">(</span>
+            <span class="n">wrapper_module</span><span class="o">=</span><span class="n">wrapper_module</span><span class="p">,</span>
+            <span class="n">wrapper_name</span><span class="o">=</span><span class="n">wrapper_name</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">delegate_cls</span><span class="o">=</span><span class="n">delegate_cls</span><span class="p">,</span>
+            <span class="n">delegate_method</span><span class="o">=</span><span class="n">delegate</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isdatadescriptor</span><span class="p">(</span><span class="n">delegate</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_make_descriptor_alias</span><span class="p">(</span>
+            <span class="n">delegate_cls</span><span class="o">=</span><span class="n">delegate_cls</span><span class="p">,</span> <span class="n">delegate_descriptor</span><span class="o">=</span><span class="n">delegate</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">_make_method_alias</span><span class="p">(</span>
+    <span class="n">wrapper_module</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">wrapper_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">delegate_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span>
+    <span class="n">delegate_method</span><span class="p">:</span> <span class="n">T_Callable</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T_Callable</span><span class="p">:</span>
+    <span class="c1"># create a method that forwards calls to a native delegate estimator</span>
+    <span class="n">wrapper_method</span> <span class="o">=</span> <span class="n">_make_forwarder</span><span class="p">(</span><span class="n">delegate_method</span><span class="p">)</span>
+    <span class="n">_update_wrapper</span><span class="p">(</span>
+        <span class="n">wrapper</span><span class="o">=</span><span class="n">wrapper_method</span><span class="p">,</span>
+        <span class="n">wrapped</span><span class="o">=</span><span class="n">delegate_method</span><span class="p">,</span>
+        <span class="n">wrapper_module</span><span class="o">=</span><span class="n">wrapper_module</span><span class="p">,</span>
+        <span class="n">wrapper_parent</span><span class="o">=</span><span class="n">wrapper_name</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">class_name</span> <span class="o">=</span> <span class="n">_full_class_name</span><span class="p">(</span><span class="bp">cls</span><span class="o">=</span><span class="n">delegate_cls</span><span class="p">)</span>
+    <span class="n">wrapper_method</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;See :meth:`</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">`&quot;</span>
+    <span class="k">return</span> <span class="n">wrapper_method</span>
+
+
+<span class="k">def</span> <span class="nf">_make_descriptor_alias</span><span class="p">(</span><span class="n">delegate_cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="n">delegate_descriptor</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">property</span><span class="p">:</span>
+    <span class="c1"># create a property that forwards attribute access to a native delegate estimator</span>
+    <span class="n">class_name</span> <span class="o">=</span> <span class="n">_full_class_name</span><span class="p">(</span><span class="bp">cls</span><span class="o">=</span><span class="n">delegate_cls</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">property</span><span class="p">(</span>
+        <span class="n">fget</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="n">delegate_descriptor</span><span class="o">.</span><span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span><span class="p">),</span>
+        <span class="n">fset</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">cast</span><span class="p">(</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">delegate_descriptor</span><span class="o">.</span><span class="fm">__set__</span><span class="p">)(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span><span class="p">,</span> <span class="n">value</span>
+        <span class="p">),</span>
+        <span class="n">fdel</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="n">cast</span><span class="p">(</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">delegate_descriptor</span><span class="o">.</span><span class="fm">__delete__</span><span class="p">)(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span>
+        <span class="p">),</span>
+        <span class="n">doc</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;See documentation of :class:`</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">`.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_make_forwarder</span><span class="p">(</span><span class="n">delegate_method</span><span class="p">:</span> <span class="n">T_Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T_Callable</span><span class="p">:</span>
+    <span class="c1"># noinspection PyShadowingNames</span>
+    <span class="k">def</span> <span class="nf">_forwarder</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">:</span> <span class="n">EstimatorWrapperDF</span><span class="p">[</span><span class="n">BaseEstimator</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">delegate_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">T_Callable</span><span class="p">,</span> <span class="n">_forwarder</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_update_wrapper</span><span class="p">(</span>
+    <span class="n">wrapper</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">wrapped</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+    <span class="n">wrapper_module</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">wrapper_parent</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">update_wrapper</span><span class="p">(</span>
+        <span class="n">wrapper</span><span class="p">,</span> <span class="n">wrapped</span><span class="p">,</span> <span class="n">assigned</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;__name__&quot;</span><span class="p">,</span> <span class="s2">&quot;__annotations__&quot;</span><span class="p">),</span> <span class="n">updated</span><span class="o">=</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="n">wrapper</span><span class="o">.</span><span class="vm">__module__</span> <span class="o">=</span> <span class="n">wrapper_module</span>
+    <span class="k">if</span> <span class="n">wrapper_parent</span><span class="p">:</span>
+        <span class="n">wrapper</span><span class="o">.</span><span class="vm">__qualname__</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wrapper_parent</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">wrapper</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">wrapper</span><span class="o">.</span><span class="vm">__qualname__</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="vm">__name__</span>
+
+
+<span class="k">def</span> <span class="nf">_update_class_docstring</span><span class="p">(</span>
+    <span class="n">df_estimator_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">EstimatorWrapperDF</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">]],</span>
+    <span class="n">sklearn_native_estimator_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">base_doc</span> <span class="o">=</span> <span class="n">sklearn_native_estimator_type</span><span class="o">.</span><span class="vm">__doc__</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">base_doc</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="n">base_doc_lines</span> <span class="o">=</span> <span class="n">base_doc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># use the first paragraph as the tag line</span>
+    <span class="n">tag_lines</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">base_doc_lines</span><span class="p">:</span>
+        <span class="c1"># end of paragraph reached?</span>
+        <span class="n">stripped</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">stripped</span><span class="p">:</span>
+            <span class="c1"># no: append line to tag lines</span>
+            <span class="n">tag_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stripped</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">tag_lines</span><span class="p">:</span>
+            <span class="c1"># empty line, and we already have tag lines: stop here</span>
+            <span class="k">break</span>
+
+    <span class="n">estimator_name</span> <span class="o">=</span> <span class="n">_full_class_name</span><span class="p">(</span><span class="bp">cls</span><span class="o">=</span><span class="n">sklearn_native_estimator_type</span><span class="p">)</span>
+
+    <span class="n">df_estimator_type</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="o">*</span><span class="n">tag_lines</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">.. note:: This class is a wrapper around class :class:`</span><span class="si">{</span><span class="n">estimator_name</span><span class="si">}</span><span class="s2">`.</span>
+<span class="s2">    It provides enhanced support for :mod:`pandas` data frames, and otherwise</span>
+<span class="s2">    delegates all attribute access and method calls to an associated</span>
+<span class="s2">    :class:`~</span><span class="si">{</span><span class="n">estimator_name</span><span class="si">}</span><span class="s2">` instance.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+            <span class="p">),</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_full_class_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="c1"># get the full name of the class, including the module prefix</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">module_name</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cannot get module for </span><span class="si">{</span><span class="bp">cls</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+
+    <span class="k">if</span> <span class="n">module_name</span> <span class="o">!=</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+        <span class="n">module_name</span> <span class="o">=</span> <span class="n">public_module_prefix</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__qualname__</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># validate __all__</span>
+<span class="c1">#</span>
+
+<span class="n">__tracker</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+</pre></div>
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, Boston Consulting Group (BCG).<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

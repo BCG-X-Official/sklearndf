@@ -1,0 +1,53 @@
+sklearndf.classification.wrapper.PartialFitClassifierWrapperDF
+==============================================================
+
+.. currentmodule:: sklearndf.classification.wrapper
+
+.. autoclass:: PartialFitClassifierWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PartialFitClassifierWrapperDF.clone
+      ~PartialFitClassifierWrapperDF.decision_function
+      ~PartialFitClassifierWrapperDF.ensure_fitted
+      ~PartialFitClassifierWrapperDF.fit
+      ~PartialFitClassifierWrapperDF.from_fitted
+      ~PartialFitClassifierWrapperDF.get_params
+      ~PartialFitClassifierWrapperDF.partial_fit
+      ~PartialFitClassifierWrapperDF.predict
+      ~PartialFitClassifierWrapperDF.predict_log_proba
+      ~PartialFitClassifierWrapperDF.predict_proba
+      ~PartialFitClassifierWrapperDF.score
+      ~PartialFitClassifierWrapperDF.set_params
+      ~PartialFitClassifierWrapperDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~PartialFitClassifierWrapperDF.COL_FEATURE_IN
+      ~PartialFitClassifierWrapperDF.COL_PREDICTION
+      ~PartialFitClassifierWrapperDF.classes_
+      ~PartialFitClassifierWrapperDF.feature_names_in_
+      ~PartialFitClassifierWrapperDF.is_fitted
+      ~PartialFitClassifierWrapperDF.n_features_in_
+      ~PartialFitClassifierWrapperDF.n_outputs_
+      ~PartialFitClassifierWrapperDF.native_estimator
+      ~PartialFitClassifierWrapperDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

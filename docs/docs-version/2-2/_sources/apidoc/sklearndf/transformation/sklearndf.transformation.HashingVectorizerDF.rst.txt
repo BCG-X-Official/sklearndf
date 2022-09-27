@@ -1,0 +1,52 @@
+sklearndf.transformation.HashingVectorizerDF
+============================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: HashingVectorizerDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~HashingVectorizerDF.clone
+      ~HashingVectorizerDF.ensure_fitted
+      ~HashingVectorizerDF.fit
+      ~HashingVectorizerDF.fit_transform
+      ~HashingVectorizerDF.from_fitted
+      ~HashingVectorizerDF.get_params
+      ~HashingVectorizerDF.inverse_transform
+      ~HashingVectorizerDF.partial_fit
+      ~HashingVectorizerDF.set_params
+      ~HashingVectorizerDF.to_expression
+      ~HashingVectorizerDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~HashingVectorizerDF.COL_FEATURE_IN
+      ~HashingVectorizerDF.COL_FEATURE_OUT
+      ~HashingVectorizerDF.feature_names_in_
+      ~HashingVectorizerDF.feature_names_original_
+      ~HashingVectorizerDF.feature_names_out_
+      ~HashingVectorizerDF.is_fitted
+      ~HashingVectorizerDF.n_features_in_
+      ~HashingVectorizerDF.n_outputs_
+      ~HashingVectorizerDF.native_estimator
+      ~HashingVectorizerDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

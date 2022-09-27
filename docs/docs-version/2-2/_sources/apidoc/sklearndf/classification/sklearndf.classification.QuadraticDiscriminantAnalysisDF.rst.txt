@@ -1,0 +1,52 @@
+sklearndf.classification.QuadraticDiscriminantAnalysisDF
+========================================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: QuadraticDiscriminantAnalysisDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~QuadraticDiscriminantAnalysisDF.clone
+      ~QuadraticDiscriminantAnalysisDF.decision_function
+      ~QuadraticDiscriminantAnalysisDF.ensure_fitted
+      ~QuadraticDiscriminantAnalysisDF.fit
+      ~QuadraticDiscriminantAnalysisDF.from_fitted
+      ~QuadraticDiscriminantAnalysisDF.get_params
+      ~QuadraticDiscriminantAnalysisDF.predict
+      ~QuadraticDiscriminantAnalysisDF.predict_log_proba
+      ~QuadraticDiscriminantAnalysisDF.predict_proba
+      ~QuadraticDiscriminantAnalysisDF.score
+      ~QuadraticDiscriminantAnalysisDF.set_params
+      ~QuadraticDiscriminantAnalysisDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~QuadraticDiscriminantAnalysisDF.COL_FEATURE_IN
+      ~QuadraticDiscriminantAnalysisDF.COL_PREDICTION
+      ~QuadraticDiscriminantAnalysisDF.classes_
+      ~QuadraticDiscriminantAnalysisDF.feature_names_in_
+      ~QuadraticDiscriminantAnalysisDF.is_fitted
+      ~QuadraticDiscriminantAnalysisDF.n_features_in_
+      ~QuadraticDiscriminantAnalysisDF.n_outputs_
+      ~QuadraticDiscriminantAnalysisDF.native_estimator
+      ~QuadraticDiscriminantAnalysisDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

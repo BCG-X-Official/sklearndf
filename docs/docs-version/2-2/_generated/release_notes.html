@@ -1,0 +1,536 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Release Notes &#8212; sklearndf  documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/gamma.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/gamma.js"></script>
+    <script src="../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="FAQ" href="../faqs.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../index.html">
+  <img src="../_static/gamma_sklearndf_logo.png" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="getting_started.html">
+  Getting started
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../apidoc/sklearndf.html">
+  API reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../tutorials.html">
+  Tutorials
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../contribution_guide.html">
+  Development Guidelines
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../faqs.html">
+  FAQ
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="current reference internal nav-link" href="#">
+  Release Notes
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sklearndf-2-2">
+   <em>
+    sklearndf
+   </em>
+   2.2
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     2.2.0
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sklearndf-2-1">
+   <em>
+    sklearndf
+   </em>
+   2.1
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     2.1.0
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sklearndf-2-0">
+   <em>
+    sklearndf
+   </em>
+   2.0
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     2.0.1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     2.0.0
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sklearndf-1-2">
+   <em>
+    sklearndf
+   </em>
+   1.2
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     1.2.3
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     1.2.2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     1.2.1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     1.2.0
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sklearndf-1-1">
+   <em>
+    sklearndf
+   </em>
+   1.1
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     1.1.3
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     1.1.2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     1.1.1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id13">
+     1.1.0
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sklearndf-1-0">
+   <em>
+    sklearndf
+   </em>
+   1.0
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id14">
+     1.0.2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id15">
+     1.0.1
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="release-notes">
+<span id="id1"></span><h1>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">#</a></h1>
+<section id="sklearndf-2-2">
+<h2><em>sklearndf</em> 2.2<a class="headerlink" href="#sklearndf-2-2" title="Permalink to this headline">#</a></h2>
+<p><em>sklearndf</em> 2.2 adds support for
+<a class="reference external" href="https://scikit-learn.org/1.2">scikit-learn |nbsp| 1.2</a>, and enhances the EstimatorDF
+API.</p>
+<section id="id2">
+<h3>2.2.0<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>API: new property <a class="reference internal" href="../apidoc/sklearndf/sklearndf.EstimatorDF.html#sklearndf.EstimatorDF.output_names_" title="sklearndf.EstimatorDF.output_names_"><code class="xref py py-attr docutils literal notranslate"><span class="pre">EstimatorDF.output_names_</span></code></a> to get the names of the output
+columns the estimator was fitted with.</p></li>
+</ul>
+</section>
+</section>
+<section id="sklearndf-2-1">
+<h2><em>sklearndf</em> 2.1<a class="headerlink" href="#sklearndf-2-1" title="Permalink to this headline">#</a></h2>
+<p><em>sklearndf</em> 2.1 adds support for
+<a class="reference external" href="https://scikit-learn.org/1.1">scikit-learn |nbsp| 1.1</a>.</p>
+<section id="id3">
+<h3>2.1.0<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>API: new clusterer <a class="reference internal" href="../apidoc/sklearndf/clustering/sklearndf.clustering.BisectingKMeansDF.html#sklearndf.clustering.BisectingKMeansDF" title="sklearndf.clustering.BisectingKMeansDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BisectingKMeansDF</span></code></a></p></li>
+<li><p>API: new transformer <a class="reference internal" href="../apidoc/sklearndf/transformation/sklearndf.transformation.MiniBatchNMFDF.html#sklearndf.transformation.MiniBatchNMFDF" title="sklearndf.transformation.MiniBatchNMFDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">MiniBatchNMFDF</span></code></a></p></li>
+<li><p>API: new transformer <a class="reference internal" href="../apidoc/sklearndf/transformation/sklearndf.transformation.RandomTreesEmbeddingDF.html#sklearndf.transformation.RandomTreesEmbeddingDF" title="sklearndf.transformation.RandomTreesEmbeddingDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">RandomTreesEmbeddingDF</span></code></a>; note that class
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomTreesEmbedding.html#sklearn.ensemble.RandomTreesEmbedding" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RandomTreesEmbedding</span></code></a> existed previously in <em>scikit-learn</em>,
+but is based on <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html#sklearn.base.TransformerMixin" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></a> only as of
+<em>scikit-learn</em> 1.1</p></li>
+<li><p>API: support parameters <code class="docutils literal notranslate"><span class="pre">max_categories</span></code> and <code class="docutils literal notranslate"><span class="pre">min_frequency</span></code> of
+<a class="reference internal" href="../apidoc/sklearndf/transformation/sklearndf.transformation.OneHotEncoderDF.html#sklearndf.transformation.OneHotEncoderDF" title="sklearndf.transformation.OneHotEncoderDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">OneHotEncoderDF</span></code></a>, introduced in <em>scikit-learn</em> 1.1</p></li>
+<li><p>API: support array-like values for parameter <code class="docutils literal notranslate"><span class="pre">drop</span></code> of <a class="reference internal" href="../apidoc/sklearndf/transformation/sklearndf.transformation.OneHotEncoderDF.html#sklearndf.transformation.OneHotEncoderDF" title="sklearndf.transformation.OneHotEncoderDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">OneHotEncoderDF</span></code></a></p></li>
+<li><p>API: support <code class="docutils literal notranslate"><span class="pre">&quot;passthrough&quot;</span></code> as a transformer in <a class="reference internal" href="../apidoc/sklearndf/pipeline/sklearndf.pipeline.FeatureUnionDF.html#sklearndf.pipeline.FeatureUnionDF" title="sklearndf.pipeline.FeatureUnionDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">FeatureUnionDF</span></code></a></p></li>
+<li><p>API: remove <code class="docutils literal notranslate"><span class="pre">GeneralizedLinearRegressorDF</span></code> since the underlying native estimator is
+a base class and not intended to be used as a regressor of its own</p></li>
+</ul>
+</section>
+</section>
+<section id="sklearndf-2-0">
+<h2><em>sklearndf</em> 2.0<a class="headerlink" href="#sklearndf-2-0" title="Permalink to this headline">#</a></h2>
+<p><em>sklearndf</em> 2.0 adds support for
+<a class="reference external" href="https://scikit-learn.org/1.0">scikit-learn |nbsp| 1.0</a>,
+adds data frame support for clusterers along with additional API enhancements and
+improvements, and is now subject to static type checking with <a class="reference external" href="https://mypy.readthedocs.io/en/latest/index.html" title="(in mypy v0.990+dev.9783b46a0062b6acfb8ba58e349e811873fc13f2.dirty)"><span class="xref std std-doc">mypy</span></a>.</p>
+<section id="id4">
+<h3>2.0.1<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>API: upon declaration of new wrapper classes, automatically validate that their
+associated native estimators are compatible with the wrapper class</p></li>
+<li><p>API: new public constants <code class="docutils literal notranslate"><span class="pre">DROP</span></code> and <code class="docutils literal notranslate"><span class="pre">PASSTHROUGH</span></code> in
+<a class="reference internal" href="../apidoc/sklearndf/transformation/sklearndf.transformation.ColumnTransformerDF.html#sklearndf.transformation.ColumnTransformerDF" title="sklearndf.transformation.ColumnTransformerDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnTransformerDF</span></code></a></p></li>
+<li><p>FIX: base <a class="reference internal" href="../apidoc/sklearndf/classification/extra/sklearndf.classification.extra.LGBMClassifierDF.html#sklearndf.classification.extra.LGBMClassifierDF" title="sklearndf.classification.extra.LGBMClassifierDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">LGBMClassifierDF</span></code></a> and <a class="reference internal" href="../apidoc/sklearndf/classification/extra/sklearndf.classification.extra.XGBClassifierDF.html#sklearndf.classification.extra.XGBClassifierDF" title="sklearndf.classification.extra.XGBClassifierDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">XGBClassifierDF</span></code></a> on the
+the correct wrapper class <a class="reference internal" href="../apidoc/sklearndf/wrapper/sklearndf.wrapper.ClassifierWrapperDF.html#sklearndf.wrapper.ClassifierWrapperDF" title="sklearndf.wrapper.ClassifierWrapperDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClassifierWrapperDF</span></code></a></p></li>
+<li><p>FIX: support array-like values for parameter <code class="docutils literal notranslate"><span class="pre">drop</span></code> of <a class="reference internal" href="../apidoc/sklearndf/transformation/sklearndf.transformation.OneHotEncoderDF.html#sklearndf.transformation.OneHotEncoderDF" title="sklearndf.transformation.OneHotEncoderDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">OneHotEncoderDF</span></code></a></p></li>
+<li><p>FIX: various minor tweaks and stability improvements</p></li>
+</ul>
+</section>
+<section id="id5">
+<h3>2.0.0<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>API: <a class="reference internal" href="../apidoc/sklearndf/sklearndf.ClassifierDF.html#sklearndf.ClassifierDF" title="sklearndf.ClassifierDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClassifierDF</span></code></a> and <a class="reference internal" href="../apidoc/sklearndf/sklearndf.RegressorDF.html#sklearndf.RegressorDF" title="sklearndf.RegressorDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">RegressorDF</span></code></a> get a new base class
+<a class="reference internal" href="../apidoc/sklearndf/sklearndf.SupervisedLearnerDF.html#sklearndf.SupervisedLearnerDF" title="sklearndf.SupervisedLearnerDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">SupervisedLearnerDF</span></code></a>, which in turn is based on <a class="reference internal" href="../apidoc/sklearndf/sklearndf.LearnerDF.html#sklearndf.LearnerDF" title="sklearndf.LearnerDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">LearnerDF</span></code></a>;
+<a class="reference internal" href="../apidoc/sklearndf/sklearndf.SupervisedLearnerDF.html#sklearndf.SupervisedLearnerDF" title="sklearndf.SupervisedLearnerDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">SupervisedLearnerDF</span></code></a> implements method <a class="reference internal" href="../apidoc/sklearndf/sklearndf.SupervisedLearnerDF.html#sklearndf.SupervisedLearnerDF.score" title="sklearndf.SupervisedLearnerDF.score"><code class="xref py py-meth docutils literal notranslate"><span class="pre">score()</span></code></a>,
+which is no longer implemented by <a class="reference internal" href="../apidoc/sklearndf/sklearndf.LearnerDF.html#sklearndf.LearnerDF" title="sklearndf.LearnerDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">LearnerDF</span></code></a></p></li>
+<li><p>API: new class <a class="reference internal" href="../apidoc/sklearndf/sklearndf.ClusterDF.html#sklearndf.ClusterDF" title="sklearndf.ClusterDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterDF</span></code></a>, based on <a class="reference internal" href="../apidoc/sklearndf/sklearndf.LearnerDF.html#sklearndf.LearnerDF" title="sklearndf.LearnerDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">LearnerDF</span></code></a></p></li>
+<li><p>API: class <a class="reference internal" href="../apidoc/sklearndf/sklearndf.EstimatorDF.html#sklearndf.EstimatorDF" title="sklearndf.EstimatorDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatorDF</span></code></a> now implements the
+<a class="reference external" href="https://bcg-gamma.github.io/pytools/apidoc/pytools/expression/pytools.expression.HasExpressionRepr.html#pytools.expression.HasExpressionRepr" title="(in pytools v2.0.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">HasExpressionRepr</span></code></a> mix-in, rendering estimator
+representations as <a class="reference external" href="https://bcg-gamma.github.io/pytools/apidoc/pytools/expression/pytools.expression.Expression.html#pytools.expression.Expression" title="(in pytools v2.0.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Expression</span></code></a> objects to enable better
+formatting</p></li>
+<li><p>API: added data frame support for method
+<a class="reference internal" href="../apidoc/sklearndf/regression/wrapper/sklearndf.regression.wrapper.PartialFitRegressorWrapperDF.html#sklearndf.regression.wrapper.PartialFitRegressorWrapperDF.partial_fit" title="sklearndf.regression.wrapper.PartialFitRegressorWrapperDF.partial_fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">partial_fit()</span></code></a></p></li>
+<li><p>API: removed <code class="docutils literal notranslate"><span class="pre">OutlierRemoverDF</span></code></p></li>
+<li><p>API: removed dependency on package <a class="reference external" href="https://lightgbm.readthedocs.io/en/latest/index.html" title="(in LightGBM v3.3.2.99)"><span class="xref std std-doc">lightgbm</span></a>: <a class="reference internal" href="../apidoc/sklearndf/classification/extra/sklearndf.classification.extra.LGBMClassifierDF.html#sklearndf.classification.extra.LGBMClassifierDF" title="sklearndf.classification.extra.LGBMClassifierDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">LGBMClassifierDF</span></code></a> and
+<a class="reference internal" href="../apidoc/sklearndf/regression/extra/sklearndf.regression.extra.LGBMRegressorDF.html#sklearndf.regression.extra.LGBMRegressorDF" title="sklearndf.regression.extra.LGBMRegressorDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">LGBMRegressorDF</span></code></a> are still available if <a class="reference external" href="https://lightgbm.readthedocs.io/en/latest/index.html" title="(in LightGBM v3.3.2.99)"><span class="xref std std-doc">lightgbm</span></a> is installed</p></li>
+<li><p>API: added support for <a class="reference external" href="https://xgboost.readthedocs.io/en/latest/index.html" title="(in xgboost v2.0.0-dev)"><span class="xref std std-doc">xgboost</span></a>: <a class="reference internal" href="../apidoc/sklearndf/classification/extra/sklearndf.classification.extra.XGBClassifierDF.html#sklearndf.classification.extra.XGBClassifierDF" title="sklearndf.classification.extra.XGBClassifierDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">XGBClassifierDF</span></code></a> and
+<a class="reference internal" href="../apidoc/sklearndf/classification/extra/sklearndf.classification.extra.XGBClassifierDF.html#sklearndf.classification.extra.XGBClassifierDF" title="sklearndf.classification.extra.XGBClassifierDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">XGBClassifierDF</span></code></a> are available if <a class="reference external" href="https://xgboost.readthedocs.io/en/latest/index.html" title="(in xgboost v2.0.0-dev)"><span class="xref std std-doc">xgboost</span></a> is installed</p></li>
+<li><p>API: DF wrapper classes are now created using proper class declarations to better
+conform with Python type conventions checked by <a class="reference external" href="https://mypy.readthedocs.io/en/latest/index.html" title="(in mypy v0.990+dev.9783b46a0062b6acfb8ba58e349e811873fc13f2.dirty)"><span class="xref std std-doc">mypy</span></a>;
+see <a class="reference internal" href="../apidoc/sklearndf/sklearndf.wrapper.html#module-sklearndf.wrapper" title="sklearndf.wrapper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sklearndf.wrapper</span></code></a> for details</p></li>
+<li><p>API: remove functions <code class="docutils literal notranslate"><span class="pre">make_df_estimator</span></code>, <code class="docutils literal notranslate"><span class="pre">make_df_classifier</span></code>,
+<code class="docutils literal notranslate"><span class="pre">make_df_regressor</span></code>, and <code class="docutils literal notranslate"><span class="pre">make_df_transformer</span></code> which are now obsolete</p></li>
+<li><p>API: move some classes in <a class="reference internal" href="../apidoc/sklearndf/sklearndf.wrapper.html#module-sklearndf.wrapper" title="sklearndf.wrapper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sklearndf.wrapper</span></code></a> to sub-packages
+<a class="reference internal" href="../apidoc/sklearndf/wrapper/sklearndf.wrapper.stacking.html#module-sklearndf.wrapper.stacking" title="sklearndf.wrapper.stacking"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sklearndf.wrapper.stacking</span></code></a> and <a class="reference internal" href="../apidoc/sklearndf/wrapper/sklearndf.wrapper.numpy.html#module-sklearndf.wrapper.numpy" title="sklearndf.wrapper.numpy"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sklearndf.wrapper.numpy</span></code></a> to improve
+package navigability and to achieve better de-coupling of the underlying code;
+this change also moves <a class="reference internal" href="../apidoc/sklearndf/wrapper/stacking/sklearndf.wrapper.stacking.StackingClassifierWrapperDF.html#sklearndf.wrapper.stacking.StackingClassifierWrapperDF" title="sklearndf.wrapper.stacking.StackingClassifierWrapperDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">StackingClassifierWrapperDF</span></code></a> and
+<a class="reference internal" href="../apidoc/sklearndf/wrapper/stacking/sklearndf.wrapper.stacking.StackingRegressorWrapperDF.html#sklearndf.wrapper.stacking.StackingRegressorWrapperDF" title="sklearndf.wrapper.stacking.StackingRegressorWrapperDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">StackingRegressorWrapperDF</span></code></a> to package <a class="reference internal" href="../apidoc/sklearndf/wrapper/sklearndf.wrapper.stacking.html#module-sklearndf.wrapper.stacking" title="sklearndf.wrapper.stacking"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sklearndf.wrapper.stacking</span></code></a></p></li>
+</ul>
+</section>
+</section>
+<section id="sklearndf-1-2">
+<h2><em>sklearndf</em> 1.2<a class="headerlink" href="#sklearndf-1-2" title="Permalink to this headline">#</a></h2>
+<p>This release adds support for <a class="reference external" href="https://scikit-learn.org/0.24/">scikit-learn 0.24</a>.</p>
+<section id="id6">
+<h3>1.2.3<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
+<p>This is a maintenance release to catch up with <em>sklearndf</em> 1.1.3.</p>
+</section>
+<section id="id7">
+<h3>1.2.2<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h3>
+<p>This release makes small API tweaks, and catches up with <em>sklearndf</em> 1.1.2.</p>
+<ul class="simple">
+<li><p>API: make type hints more specific in signatures for
+<code class="xref py py-func docutils literal notranslate"><span class="pre">make_df_transformer()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">make_df_classifier()</span></code>, and
+<code class="xref py py-func docutils literal notranslate"><span class="pre">make_df_regressor()</span></code></p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>1.2.1<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h3>
+<p>This is a maintenance release to catch up with <em>sklearndf</em> 1.1.1.</p>
+</section>
+<section id="id9">
+<h3>1.2.0<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>API: add <cite>DF</cite> adaptations for classes introduced by <em>scikit-learn</em> 0.24:
+<a class="reference internal" href="../apidoc/sklearndf/transformation/sklearndf.transformation.PolynomialCountSketchDF.html#sklearndf.transformation.PolynomialCountSketchDF" title="sklearndf.transformation.PolynomialCountSketchDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">PolynomialCountSketchDF</span></code></a> and <a class="reference internal" href="../apidoc/sklearndf/transformation/sklearndf.transformation.SequentialFeatureSelectorDF.html#sklearndf.transformation.SequentialFeatureSelectorDF" title="sklearndf.transformation.SequentialFeatureSelectorDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">SequentialFeatureSelectorDF</span></code></a></p></li>
+</ul>
+</section>
+</section>
+<section id="sklearndf-1-1">
+<h2><em>sklearndf</em> 1.1<a class="headerlink" href="#sklearndf-1-1" title="Permalink to this headline">#</a></h2>
+<section id="id10">
+<h3>1.1.3<a class="headerlink" href="#id10" title="Permalink to this headline">#</a></h3>
+<p>This release relaxes package dependencies to support any <cite>numpy</cite> version <cite>1.x</cite> from
+1.16.</p>
+</section>
+<section id="id11">
+<h3>1.1.2<a class="headerlink" href="#id11" title="Permalink to this headline">#</a></h3>
+<p>This release improves compatibility with <cite>scikit-learn</cite> and fixes bugs.</p>
+<ul class="simple">
+<li><p>API: add full support for the
+<a class="reference external" href="https://scikit-learn.org/stable/glossary.html#term-_estimator_type">_estimator_type</a>
+attribute</p></li>
+<li><p>FIX: do not reset transformers when calling <a class="reference internal" href="../apidoc/sklearndf/sklearndf.TransformerDF.html#sklearndf.TransformerDF.inverse_transform" title="sklearndf.TransformerDF.inverse_transform"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TransformerDF.inverse_transform()</span></code></a></p></li>
+<li><p>FIX: accept <cite>“passthrough”</cite> as value for arg <cite>remainder</cite> of
+<a class="reference internal" href="../apidoc/sklearndf/transformation/sklearndf.transformation.ColumnTransformerDF.html#sklearndf.transformation.ColumnTransformerDF" title="sklearndf.transformation.ColumnTransformerDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnTransformerDF</span></code></a></p></li>
+</ul>
+</section>
+<section id="id12">
+<h3>1.1.1<a class="headerlink" href="#id12" title="Permalink to this headline">#</a></h3>
+<p>This release addresses compatibility issues with meta-estimators.</p>
+<ul class="simple">
+<li><p>FIX: support complex DF estimators inside <code class="xref py py-class docutils literal notranslate"><span class="pre">StackingEstimatorDF</span></code></p></li>
+<li><p>FIX: raise an exception if a base estimator is not supported by one of <cite>sklearndf</cite>’s
+implementations for DF meta-estimators</p></li>
+</ul>
+</section>
+<section id="id13">
+<h3>1.1.0<a class="headerlink" href="#id13" title="Permalink to this headline">#</a></h3>
+<p>This release exposes the <cite>wrapper</cite> API used to generate augmented DF estimators from
+native <cite>scikit-learn</cite> estimators.</p>
+<ul class="simple">
+<li><p>API: expose the <a class="reference internal" href="../apidoc/sklearndf/wrapper/sklearndf.wrapper.EstimatorWrapperDF.html#sklearndf.wrapper.EstimatorWrapperDF" title="sklearndf.wrapper.EstimatorWrapperDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatorWrapperDF</span></code></a> class hierarchy through the new
+<a class="reference internal" href="../apidoc/sklearndf/sklearndf.wrapper.html#module-sklearndf.wrapper" title="sklearndf.wrapper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sklearndf.wrapper</span></code></a> package</p></li>
+<li><p>API: create new <cite>scikit-learn</cite> wrapper classes with the new functions
+<code class="xref py py-func docutils literal notranslate"><span class="pre">make_df_estimator()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">make_df_classifier()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">make_df_regressor()</span></code>,
+and <code class="xref py py-func docutils literal notranslate"><span class="pre">make_df_transformer()</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="sklearndf-1-0">
+<h2><em>sklearndf</em> 1.0<a class="headerlink" href="#sklearndf-1-0" title="Permalink to this headline">#</a></h2>
+<section id="id14">
+<h3>1.0.2<a class="headerlink" href="#id14" title="Permalink to this headline">#</a></h3>
+<p>This is a maintenance release focusing on enhancements to the CI/CD pipeline and bug
+fixes.</p>
+<ul class="simple">
+<li><p>FIX: correctly mirror <code class="docutils literal notranslate"><span class="pre">__init__</span></code> signatures of native estimators to their
+corresponding DF estimators</p></li>
+<li><p>FIX: do not mirror native estimator class attributes and protected members to
+DF estimators</p></li>
+<li><p>FIX: support <code class="docutils literal notranslate"><span class="pre">&quot;passthrough&quot;</span></code> transformer in <a class="reference internal" href="../apidoc/sklearndf/transformation/sklearndf.transformation.ColumnTransformerDF.html#sklearndf.transformation.ColumnTransformerDF" title="sklearndf.transformation.ColumnTransformerDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnTransformerDF</span></code></a></p></li>
+<li><p>FIX: support <code class="docutils literal notranslate"><span class="pre">drop</span></code> parameter in <a class="reference internal" href="../apidoc/sklearndf/transformation/sklearndf.transformation.OneHotEncoderDF.html#sklearndf.transformation.OneHotEncoderDF" title="sklearndf.transformation.OneHotEncoderDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">OneHotEncoderDF</span></code></a></p></li>
+<li><p>BUILD: add support for <cite>numpy</cite> 1.20</p></li>
+<li><p>BUILD: updates and changes to the CI/CD pipeline</p></li>
+</ul>
+</section>
+<section id="id15">
+<h3>1.0.1<a class="headerlink" href="#id15" title="Permalink to this headline">#</a></h3>
+<p>Initial release.</p>
+</section>
+</section>
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../faqs.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">FAQ</p>
+        </div>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, Boston Consulting Group (BCG).<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

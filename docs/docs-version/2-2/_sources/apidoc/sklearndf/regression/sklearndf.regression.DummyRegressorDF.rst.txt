@@ -1,0 +1,48 @@
+sklearndf.regression.DummyRegressorDF
+=====================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: DummyRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~DummyRegressorDF.clone
+      ~DummyRegressorDF.ensure_fitted
+      ~DummyRegressorDF.fit
+      ~DummyRegressorDF.from_fitted
+      ~DummyRegressorDF.get_params
+      ~DummyRegressorDF.predict
+      ~DummyRegressorDF.score
+      ~DummyRegressorDF.set_params
+      ~DummyRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~DummyRegressorDF.COL_FEATURE_IN
+      ~DummyRegressorDF.COL_PREDICTION
+      ~DummyRegressorDF.feature_names_in_
+      ~DummyRegressorDF.is_fitted
+      ~DummyRegressorDF.n_features_in_
+      ~DummyRegressorDF.n_outputs_
+      ~DummyRegressorDF.native_estimator
+      ~DummyRegressorDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

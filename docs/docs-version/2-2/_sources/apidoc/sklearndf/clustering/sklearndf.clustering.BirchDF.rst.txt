@@ -1,0 +1,52 @@
+sklearndf.clustering.BirchDF
+============================
+
+.. currentmodule:: sklearndf.clustering
+
+.. autoclass:: BirchDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~BirchDF.clone
+      ~BirchDF.ensure_fitted
+      ~BirchDF.fit
+      ~BirchDF.fit_predict
+      ~BirchDF.from_fitted
+      ~BirchDF.get_params
+      ~BirchDF.partial_fit
+      ~BirchDF.predict
+      ~BirchDF.set_params
+      ~BirchDF.to_expression
+      ~BirchDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~BirchDF.COL_FEATURE_IN
+      ~BirchDF.COL_LABELS
+      ~BirchDF.COL_PREDICTION
+      ~BirchDF.feature_names_in_
+      ~BirchDF.is_fitted
+      ~BirchDF.labels_
+      ~BirchDF.n_features_in_
+      ~BirchDF.n_outputs_
+      ~BirchDF.native_estimator
+      ~BirchDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

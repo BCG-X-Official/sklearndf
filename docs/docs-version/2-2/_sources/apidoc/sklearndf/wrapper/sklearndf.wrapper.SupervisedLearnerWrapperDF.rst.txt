@@ -1,0 +1,48 @@
+sklearndf.wrapper.SupervisedLearnerWrapperDF
+============================================
+
+.. currentmodule:: sklearndf.wrapper
+
+.. autoclass:: SupervisedLearnerWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SupervisedLearnerWrapperDF.clone
+      ~SupervisedLearnerWrapperDF.ensure_fitted
+      ~SupervisedLearnerWrapperDF.fit
+      ~SupervisedLearnerWrapperDF.from_fitted
+      ~SupervisedLearnerWrapperDF.get_params
+      ~SupervisedLearnerWrapperDF.predict
+      ~SupervisedLearnerWrapperDF.score
+      ~SupervisedLearnerWrapperDF.set_params
+      ~SupervisedLearnerWrapperDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~SupervisedLearnerWrapperDF.COL_FEATURE_IN
+      ~SupervisedLearnerWrapperDF.COL_PREDICTION
+      ~SupervisedLearnerWrapperDF.feature_names_in_
+      ~SupervisedLearnerWrapperDF.is_fitted
+      ~SupervisedLearnerWrapperDF.n_features_in_
+      ~SupervisedLearnerWrapperDF.n_outputs_
+      ~SupervisedLearnerWrapperDF.native_estimator
+      ~SupervisedLearnerWrapperDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

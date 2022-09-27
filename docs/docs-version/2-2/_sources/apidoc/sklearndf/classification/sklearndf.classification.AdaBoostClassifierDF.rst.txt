@@ -1,0 +1,55 @@
+sklearndf.classification.AdaBoostClassifierDF
+=============================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: AdaBoostClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~AdaBoostClassifierDF.clone
+      ~AdaBoostClassifierDF.decision_function
+      ~AdaBoostClassifierDF.ensure_fitted
+      ~AdaBoostClassifierDF.fit
+      ~AdaBoostClassifierDF.from_fitted
+      ~AdaBoostClassifierDF.get_params
+      ~AdaBoostClassifierDF.predict
+      ~AdaBoostClassifierDF.predict_log_proba
+      ~AdaBoostClassifierDF.predict_proba
+      ~AdaBoostClassifierDF.score
+      ~AdaBoostClassifierDF.set_params
+      ~AdaBoostClassifierDF.staged_decision_function
+      ~AdaBoostClassifierDF.staged_predict
+      ~AdaBoostClassifierDF.staged_predict_proba
+      ~AdaBoostClassifierDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~AdaBoostClassifierDF.COL_FEATURE_IN
+      ~AdaBoostClassifierDF.COL_PREDICTION
+      ~AdaBoostClassifierDF.classes_
+      ~AdaBoostClassifierDF.feature_names_in_
+      ~AdaBoostClassifierDF.is_fitted
+      ~AdaBoostClassifierDF.n_features_in_
+      ~AdaBoostClassifierDF.n_outputs_
+      ~AdaBoostClassifierDF.native_estimator
+      ~AdaBoostClassifierDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

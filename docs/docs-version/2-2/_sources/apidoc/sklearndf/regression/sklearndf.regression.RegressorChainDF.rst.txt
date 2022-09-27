@@ -1,0 +1,48 @@
+sklearndf.regression.RegressorChainDF
+=====================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: RegressorChainDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~RegressorChainDF.clone
+      ~RegressorChainDF.ensure_fitted
+      ~RegressorChainDF.fit
+      ~RegressorChainDF.from_fitted
+      ~RegressorChainDF.get_params
+      ~RegressorChainDF.predict
+      ~RegressorChainDF.score
+      ~RegressorChainDF.set_params
+      ~RegressorChainDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~RegressorChainDF.COL_FEATURE_IN
+      ~RegressorChainDF.COL_PREDICTION
+      ~RegressorChainDF.feature_names_in_
+      ~RegressorChainDF.is_fitted
+      ~RegressorChainDF.n_features_in_
+      ~RegressorChainDF.n_outputs_
+      ~RegressorChainDF.native_estimator
+      ~RegressorChainDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

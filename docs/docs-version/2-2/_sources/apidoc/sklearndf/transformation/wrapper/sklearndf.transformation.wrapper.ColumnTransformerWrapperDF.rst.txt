@@ -1,0 +1,53 @@
+sklearndf.transformation.wrapper.ColumnTransformerWrapperDF
+===========================================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: ColumnTransformerWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ColumnTransformerWrapperDF.clone
+      ~ColumnTransformerWrapperDF.ensure_fitted
+      ~ColumnTransformerWrapperDF.fit
+      ~ColumnTransformerWrapperDF.fit_transform
+      ~ColumnTransformerWrapperDF.from_fitted
+      ~ColumnTransformerWrapperDF.get_params
+      ~ColumnTransformerWrapperDF.inverse_transform
+      ~ColumnTransformerWrapperDF.set_params
+      ~ColumnTransformerWrapperDF.to_expression
+      ~ColumnTransformerWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ColumnTransformerWrapperDF.COL_FEATURE_IN
+      ~ColumnTransformerWrapperDF.COL_FEATURE_OUT
+      ~ColumnTransformerWrapperDF.DROP
+      ~ColumnTransformerWrapperDF.PASSTHROUGH
+      ~ColumnTransformerWrapperDF.feature_names_in_
+      ~ColumnTransformerWrapperDF.feature_names_original_
+      ~ColumnTransformerWrapperDF.feature_names_out_
+      ~ColumnTransformerWrapperDF.is_fitted
+      ~ColumnTransformerWrapperDF.n_features_in_
+      ~ColumnTransformerWrapperDF.n_outputs_
+      ~ColumnTransformerWrapperDF.native_estimator
+      ~ColumnTransformerWrapperDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

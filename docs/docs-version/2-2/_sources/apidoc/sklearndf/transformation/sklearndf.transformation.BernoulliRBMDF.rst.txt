@@ -1,0 +1,54 @@
+sklearndf.transformation.BernoulliRBMDF
+=======================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: BernoulliRBMDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~BernoulliRBMDF.clone
+      ~BernoulliRBMDF.ensure_fitted
+      ~BernoulliRBMDF.fit
+      ~BernoulliRBMDF.fit_transform
+      ~BernoulliRBMDF.from_fitted
+      ~BernoulliRBMDF.get_params
+      ~BernoulliRBMDF.gibbs
+      ~BernoulliRBMDF.inverse_transform
+      ~BernoulliRBMDF.partial_fit
+      ~BernoulliRBMDF.score_samples
+      ~BernoulliRBMDF.set_params
+      ~BernoulliRBMDF.to_expression
+      ~BernoulliRBMDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~BernoulliRBMDF.COL_FEATURE_IN
+      ~BernoulliRBMDF.COL_FEATURE_OUT
+      ~BernoulliRBMDF.feature_names_in_
+      ~BernoulliRBMDF.feature_names_original_
+      ~BernoulliRBMDF.feature_names_out_
+      ~BernoulliRBMDF.is_fitted
+      ~BernoulliRBMDF.n_features_in_
+      ~BernoulliRBMDF.n_outputs_
+      ~BernoulliRBMDF.native_estimator
+      ~BernoulliRBMDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

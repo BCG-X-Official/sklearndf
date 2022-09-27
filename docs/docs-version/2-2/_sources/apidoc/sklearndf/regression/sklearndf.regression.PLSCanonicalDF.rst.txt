@@ -1,0 +1,54 @@
+sklearndf.regression.PLSCanonicalDF
+===================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: PLSCanonicalDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PLSCanonicalDF.clone
+      ~PLSCanonicalDF.ensure_fitted
+      ~PLSCanonicalDF.fit
+      ~PLSCanonicalDF.fit_transform
+      ~PLSCanonicalDF.from_fitted
+      ~PLSCanonicalDF.get_params
+      ~PLSCanonicalDF.inverse_transform
+      ~PLSCanonicalDF.predict
+      ~PLSCanonicalDF.score
+      ~PLSCanonicalDF.set_params
+      ~PLSCanonicalDF.to_expression
+      ~PLSCanonicalDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~PLSCanonicalDF.COL_FEATURE_IN
+      ~PLSCanonicalDF.COL_FEATURE_OUT
+      ~PLSCanonicalDF.COL_PREDICTION
+      ~PLSCanonicalDF.feature_names_in_
+      ~PLSCanonicalDF.feature_names_original_
+      ~PLSCanonicalDF.feature_names_out_
+      ~PLSCanonicalDF.is_fitted
+      ~PLSCanonicalDF.n_features_in_
+      ~PLSCanonicalDF.n_outputs_
+      ~PLSCanonicalDF.native_estimator
+      ~PLSCanonicalDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

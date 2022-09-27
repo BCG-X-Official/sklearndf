@@ -1,0 +1,52 @@
+sklearndf.clustering.BisectingKMeansDF
+======================================
+
+.. currentmodule:: sklearndf.clustering
+
+.. autoclass:: BisectingKMeansDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~BisectingKMeansDF.clone
+      ~BisectingKMeansDF.ensure_fitted
+      ~BisectingKMeansDF.fit
+      ~BisectingKMeansDF.fit_predict
+      ~BisectingKMeansDF.from_fitted
+      ~BisectingKMeansDF.get_params
+      ~BisectingKMeansDF.predict
+      ~BisectingKMeansDF.set_params
+      ~BisectingKMeansDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~BisectingKMeansDF.COL_FEATURE_IN
+      ~BisectingKMeansDF.COL_LABELS
+      ~BisectingKMeansDF.COL_PREDICTION
+      ~BisectingKMeansDF.IDX_CLUSTER
+      ~BisectingKMeansDF.cluster_centers_
+      ~BisectingKMeansDF.feature_names_in_
+      ~BisectingKMeansDF.is_fitted
+      ~BisectingKMeansDF.labels_
+      ~BisectingKMeansDF.n_features_in_
+      ~BisectingKMeansDF.n_outputs_
+      ~BisectingKMeansDF.native_estimator
+      ~BisectingKMeansDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

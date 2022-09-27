@@ -1,0 +1,51 @@
+sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF
+=========================================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: BaseMultiOutputWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~BaseMultiOutputWrapperDF.clone
+      ~BaseMultiOutputWrapperDF.ensure_fitted
+      ~BaseMultiOutputWrapperDF.fit
+      ~BaseMultiOutputWrapperDF.fit_transform
+      ~BaseMultiOutputWrapperDF.from_fitted
+      ~BaseMultiOutputWrapperDF.get_params
+      ~BaseMultiOutputWrapperDF.inverse_transform
+      ~BaseMultiOutputWrapperDF.set_params
+      ~BaseMultiOutputWrapperDF.to_expression
+      ~BaseMultiOutputWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~BaseMultiOutputWrapperDF.COL_FEATURE_IN
+      ~BaseMultiOutputWrapperDF.COL_FEATURE_OUT
+      ~BaseMultiOutputWrapperDF.feature_names_in_
+      ~BaseMultiOutputWrapperDF.feature_names_original_
+      ~BaseMultiOutputWrapperDF.feature_names_out_
+      ~BaseMultiOutputWrapperDF.is_fitted
+      ~BaseMultiOutputWrapperDF.n_features_in_
+      ~BaseMultiOutputWrapperDF.n_outputs_
+      ~BaseMultiOutputWrapperDF.native_estimator
+      ~BaseMultiOutputWrapperDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

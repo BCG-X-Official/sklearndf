@@ -1,0 +1,46 @@
+sklearndf.wrapper.numpy.EstimatorNPDF
+=====================================
+
+.. currentmodule:: sklearndf.wrapper.numpy
+
+.. autoclass:: EstimatorNPDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~EstimatorNPDF.clone
+      ~EstimatorNPDF.ensure_fitted
+      ~EstimatorNPDF.fit
+      ~EstimatorNPDF.get_params
+      ~EstimatorNPDF.set_params
+      ~EstimatorNPDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~EstimatorNPDF.COL_FEATURE_IN
+      ~EstimatorNPDF.feature_names_in_
+      ~EstimatorNPDF.is_fitted
+      ~EstimatorNPDF.n_features_in_
+      ~EstimatorNPDF.n_outputs_
+      ~EstimatorNPDF.native_estimator
+      ~EstimatorNPDF.output_names_
+      ~EstimatorNPDF.delegate
+      ~EstimatorNPDF.column_names
+   
+   
+
+   .. rubric:: Definitions

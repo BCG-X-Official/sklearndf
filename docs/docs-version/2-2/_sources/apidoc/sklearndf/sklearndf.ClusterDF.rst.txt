@@ -1,0 +1,47 @@
+sklearndf.ClusterDF
+===================
+
+.. currentmodule:: sklearndf
+
+.. autoclass:: ClusterDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ClusterDF.clone
+      ~ClusterDF.ensure_fitted
+      ~ClusterDF.fit
+      ~ClusterDF.fit_predict
+      ~ClusterDF.get_params
+      ~ClusterDF.predict
+      ~ClusterDF.set_params
+      ~ClusterDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ClusterDF.COL_FEATURE_IN
+      ~ClusterDF.feature_names_in_
+      ~ClusterDF.is_fitted
+      ~ClusterDF.labels_
+      ~ClusterDF.n_features_in_
+      ~ClusterDF.n_outputs_
+      ~ClusterDF.native_estimator
+      ~ClusterDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

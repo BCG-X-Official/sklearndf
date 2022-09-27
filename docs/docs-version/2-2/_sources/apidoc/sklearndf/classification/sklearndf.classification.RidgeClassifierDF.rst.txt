@@ -1,0 +1,52 @@
+sklearndf.classification.RidgeClassifierDF
+==========================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: RidgeClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~RidgeClassifierDF.clone
+      ~RidgeClassifierDF.decision_function
+      ~RidgeClassifierDF.ensure_fitted
+      ~RidgeClassifierDF.fit
+      ~RidgeClassifierDF.from_fitted
+      ~RidgeClassifierDF.get_params
+      ~RidgeClassifierDF.predict
+      ~RidgeClassifierDF.predict_log_proba
+      ~RidgeClassifierDF.predict_proba
+      ~RidgeClassifierDF.score
+      ~RidgeClassifierDF.set_params
+      ~RidgeClassifierDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~RidgeClassifierDF.COL_FEATURE_IN
+      ~RidgeClassifierDF.COL_PREDICTION
+      ~RidgeClassifierDF.classes_
+      ~RidgeClassifierDF.feature_names_in_
+      ~RidgeClassifierDF.is_fitted
+      ~RidgeClassifierDF.n_features_in_
+      ~RidgeClassifierDF.n_outputs_
+      ~RidgeClassifierDF.native_estimator
+      ~RidgeClassifierDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

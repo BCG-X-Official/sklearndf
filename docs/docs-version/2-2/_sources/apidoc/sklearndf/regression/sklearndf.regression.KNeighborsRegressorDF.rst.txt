@@ -1,0 +1,48 @@
+sklearndf.regression.KNeighborsRegressorDF
+==========================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: KNeighborsRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~KNeighborsRegressorDF.clone
+      ~KNeighborsRegressorDF.ensure_fitted
+      ~KNeighborsRegressorDF.fit
+      ~KNeighborsRegressorDF.from_fitted
+      ~KNeighborsRegressorDF.get_params
+      ~KNeighborsRegressorDF.predict
+      ~KNeighborsRegressorDF.score
+      ~KNeighborsRegressorDF.set_params
+      ~KNeighborsRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~KNeighborsRegressorDF.COL_FEATURE_IN
+      ~KNeighborsRegressorDF.COL_PREDICTION
+      ~KNeighborsRegressorDF.feature_names_in_
+      ~KNeighborsRegressorDF.is_fitted
+      ~KNeighborsRegressorDF.n_features_in_
+      ~KNeighborsRegressorDF.n_outputs_
+      ~KNeighborsRegressorDF.native_estimator
+      ~KNeighborsRegressorDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,48 @@
+sklearndf.regression.BaggingRegressorDF
+=======================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: BaggingRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~BaggingRegressorDF.clone
+      ~BaggingRegressorDF.ensure_fitted
+      ~BaggingRegressorDF.fit
+      ~BaggingRegressorDF.from_fitted
+      ~BaggingRegressorDF.get_params
+      ~BaggingRegressorDF.predict
+      ~BaggingRegressorDF.score
+      ~BaggingRegressorDF.set_params
+      ~BaggingRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~BaggingRegressorDF.COL_FEATURE_IN
+      ~BaggingRegressorDF.COL_PREDICTION
+      ~BaggingRegressorDF.feature_names_in_
+      ~BaggingRegressorDF.is_fitted
+      ~BaggingRegressorDF.n_features_in_
+      ~BaggingRegressorDF.n_outputs_
+      ~BaggingRegressorDF.native_estimator
+      ~BaggingRegressorDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

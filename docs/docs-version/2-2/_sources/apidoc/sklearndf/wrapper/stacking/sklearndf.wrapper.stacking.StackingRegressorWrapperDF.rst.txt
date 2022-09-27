@@ -1,0 +1,48 @@
+sklearndf.wrapper.stacking.StackingRegressorWrapperDF
+=====================================================
+
+.. currentmodule:: sklearndf.wrapper.stacking
+
+.. autoclass:: StackingRegressorWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~StackingRegressorWrapperDF.clone
+      ~StackingRegressorWrapperDF.ensure_fitted
+      ~StackingRegressorWrapperDF.fit
+      ~StackingRegressorWrapperDF.from_fitted
+      ~StackingRegressorWrapperDF.get_params
+      ~StackingRegressorWrapperDF.predict
+      ~StackingRegressorWrapperDF.score
+      ~StackingRegressorWrapperDF.set_params
+      ~StackingRegressorWrapperDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~StackingRegressorWrapperDF.COL_FEATURE_IN
+      ~StackingRegressorWrapperDF.COL_PREDICTION
+      ~StackingRegressorWrapperDF.feature_names_in_
+      ~StackingRegressorWrapperDF.is_fitted
+      ~StackingRegressorWrapperDF.n_features_in_
+      ~StackingRegressorWrapperDF.n_outputs_
+      ~StackingRegressorWrapperDF.native_estimator
+      ~StackingRegressorWrapperDF.output_names_
+   
+   
+
+   .. rubric:: Definitions
