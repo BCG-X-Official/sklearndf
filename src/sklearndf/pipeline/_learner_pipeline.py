@@ -195,7 +195,7 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
 
     def _get_n_outputs(self) -> int:
         if self.preprocessing is not None:
-            return self.preprocessing.n_outputs_
+            return self.preprocessing._get_n_outputs()
         else:
             return self.final_estimator._get_n_outputs()
 
