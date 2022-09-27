@@ -30,8 +30,7 @@ __tracker = AllTracker(globals())
 
 
 class StackingRegressorDF(
-    StackingRegressorWrapperDF[StackingRegressor],
-    native=StackingRegressor,
+    StackingRegressorWrapperDF[StackingRegressor], native=StackingRegressor
 ):
     """Stub for DF wrapper of class ``StackingRegressor``"""
 

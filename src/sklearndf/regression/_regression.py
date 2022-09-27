@@ -137,10 +137,7 @@ __tracker = AllTracker(globals())
 #
 
 
-class DummyRegressorDF(
-    RegressorWrapperDF[DummyRegressor],
-    native=DummyRegressor,
-):
+class DummyRegressorDF(RegressorWrapperDF[DummyRegressor], native=DummyRegressor):
     """Stub for DF wrapper of class ``DummyRegressor``"""
 
 
@@ -167,16 +164,12 @@ class NuSVRDF(RegressorWrapperDF[NuSVR], native=NuSVR):
 
 
 class MultiOutputRegressorDF(
-    MultiOutputRegressorWrapperDF,
-    native=MultiOutputRegressor,
+    MultiOutputRegressorWrapperDF, native=MultiOutputRegressor
 ):
     """Stub for DF wrapper of class ``MultiOutputRegressor``"""
 
 
-class RegressorChainDF(
-    MetaRegressorWrapperDF[RegressorChain],
-    native=RegressorChain,
-):
+class RegressorChainDF(MetaRegressorWrapperDF[RegressorChain], native=RegressorChain):
     """Stub for DF wrapper of class ``RegressorChain``"""
 
 
@@ -186,15 +179,13 @@ class RegressorChainDF(
 
 
 class KNeighborsRegressorDF(
-    RegressorWrapperDF[KNeighborsRegressor],
-    native=KNeighborsRegressor,
+    RegressorWrapperDF[KNeighborsRegressor], native=KNeighborsRegressor
 ):
     """Stub for DF wrapper of class ``KNeighborsRegressor``"""
 
 
 class RadiusNeighborsRegressorDF(
-    RegressorWrapperDF[RadiusNeighborsRegressor],
-    native=RadiusNeighborsRegressor,
+    RegressorWrapperDF[RadiusNeighborsRegressor], native=RadiusNeighborsRegressor
 ):
     """Stub for DF wrapper of class ``RadiusNeighborsRegressor``"""
 
@@ -204,10 +195,7 @@ class RadiusNeighborsRegressorDF(
 #
 
 
-class MLPRegressorDF(
-    PartialFitRegressorWrapperDF[MLPRegressor],
-    native=MLPRegressor,
-):
+class MLPRegressorDF(PartialFitRegressorWrapperDF[MLPRegressor], native=MLPRegressor):
     """Stub for DF wrapper of class ``MLPRegressor``"""
 
 
@@ -216,10 +204,7 @@ class MLPRegressorDF(
 #
 
 
-class LinearRegressionDF(
-    RegressorWrapperDF[LinearRegression],
-    native=LinearRegression,
-):
+class LinearRegressionDF(RegressorWrapperDF[LinearRegression], native=LinearRegression):
     """Stub for DF wrapper of class ``LinearRegression``"""
 
 
@@ -231,59 +216,41 @@ class RidgeCVDF(RegressorWrapperDF[RidgeCV], native=RidgeCV):
     """Stub for DF wrapper of class ``RidgeCV``"""
 
 
-class SGDRegressorDF(
-    PartialFitRegressorWrapperDF[SGDRegressor],
-    native=SGDRegressor,
-):
+class SGDRegressorDF(PartialFitRegressorWrapperDF[SGDRegressor], native=SGDRegressor):
     """Stub for DF wrapper of class ``SGDRegressor``"""
 
 
-class HuberRegressorDF(
-    RegressorWrapperDF[HuberRegressor],
-    native=HuberRegressor,
-):
+class HuberRegressorDF(RegressorWrapperDF[HuberRegressor], native=HuberRegressor):
     """Stub for DF wrapper of class ``HuberRegressor``"""
 
 
 class TheilSenRegressorDF(
-    RegressorWrapperDF[TheilSenRegressor],
-    native=TheilSenRegressor,
+    RegressorWrapperDF[TheilSenRegressor], native=TheilSenRegressor
 ):
     """Stub for DF wrapper of class ``TheilSenRegressor``"""
 
 
-class BayesianRidgeDF(
-    RegressorWrapperDF[BayesianRidge],
-    native=BayesianRidge,
-):
+class BayesianRidgeDF(RegressorWrapperDF[BayesianRidge], native=BayesianRidge):
     """Stub for DF wrapper of class ``BayesianRidge``"""
 
 
-class ARDRegressionDF(
-    RegressorWrapperDF[ARDRegression],
-    native=ARDRegression,
-):
+class ARDRegressionDF(RegressorWrapperDF[ARDRegression], native=ARDRegression):
     """Stub for DF wrapper of class ``ARDRegression``"""
 
 
 class OrthogonalMatchingPursuitDF(
-    RegressorWrapperDF[OrthogonalMatchingPursuit],
-    native=OrthogonalMatchingPursuit,
+    RegressorWrapperDF[OrthogonalMatchingPursuit], native=OrthogonalMatchingPursuit
 ):
     """Stub for DF wrapper of class ``OrthogonalMatchingPursuit``"""
 
 
 class OrthogonalMatchingPursuitCVDF(
-    RegressorWrapperDF[OrthogonalMatchingPursuitCV],
-    native=OrthogonalMatchingPursuitCV,
+    RegressorWrapperDF[OrthogonalMatchingPursuitCV], native=OrthogonalMatchingPursuitCV
 ):
     """Stub for DF wrapper of class ``OrthogonalMatchingPursuitCV``"""
 
 
-class RANSACRegressorDF(
-    RegressorWrapperDF[RANSACRegressor],
-    native=RANSACRegressor,
-):
+class RANSACRegressorDF(RegressorWrapperDF[RANSACRegressor], native=RANSACRegressor):
     """Stub for DF wrapper of class ``RANSACRegressor``"""
 
 
@@ -300,30 +267,22 @@ class ElasticNetCVDF(RegressorWrapperDF[ElasticNetCV], native=ElasticNetCV):
 
 
 class MultiTaskElasticNetCVDF(
-    RegressorWrapperDF[MultiTaskElasticNetCV],
-    native=MultiTaskElasticNetCV,
+    RegressorWrapperDF[MultiTaskElasticNetCV], native=MultiTaskElasticNetCV
 ):
     """Stub for DF wrapper of class ``MultiTaskElasticNetCV``"""
 
 
-class MultiTaskLassoCVDF(
-    RegressorWrapperDF[MultiTaskLassoCV],
-    native=MultiTaskLassoCV,
-):
+class MultiTaskLassoCVDF(RegressorWrapperDF[MultiTaskLassoCV], native=MultiTaskLassoCV):
     """Stub for DF wrapper of class ``MultiTaskLassoCV``"""
 
 
 class MultiTaskElasticNetDF(
-    RegressorWrapperDF[MultiTaskElasticNet],
-    native=MultiTaskElasticNet,
+    RegressorWrapperDF[MultiTaskElasticNet], native=MultiTaskElasticNet
 ):
     """Stub for DF wrapper of class ``MultiTaskElasticNet``"""
 
 
-class MultiTaskLassoDF(
-    RegressorWrapperDF[MultiTaskLasso],
-    native=MultiTaskLasso,
-):
+class MultiTaskLassoDF(RegressorWrapperDF[MultiTaskLasso], native=MultiTaskLasso):
     """Stub for DF wrapper of class ``MultiTaskLasso``"""
 
 
@@ -363,45 +322,37 @@ class LassoLarsCVDF(RegressorWrapperDF[LassoLarsCV], native=LassoLarsCV):
 #
 
 
-class BaggingRegressorDF(
-    RegressorWrapperDF[BaggingRegressor],
-    native=BaggingRegressor,
-):
+class BaggingRegressorDF(RegressorWrapperDF[BaggingRegressor], native=BaggingRegressor):
     """Stub for DF wrapper of class ``BaggingRegressor``"""
 
 
 # noinspection PyAbstractClass
 class GradientBoostingRegressorDF(
-    RegressorWrapperDF[GradientBoostingRegressor],
-    native=GradientBoostingRegressor,
+    RegressorWrapperDF[GradientBoostingRegressor], native=GradientBoostingRegressor
 ):
     """Stub for DF wrapper of class ``GradientBoostingRegressor``"""
 
 
 class AdaBoostRegressorDF(
-    RegressorWrapperDF[AdaBoostRegressor],
-    native=AdaBoostRegressor,
+    RegressorWrapperDF[AdaBoostRegressor], native=AdaBoostRegressor
 ):
     """Stub for DF wrapper of class ``AdaBoostRegressor``"""
 
 
 class RandomForestRegressorDF(
-    RegressorWrapperDF[RandomForestRegressor],
-    native=RandomForestRegressor,
+    RegressorWrapperDF[RandomForestRegressor], native=RandomForestRegressor
 ):
     """Stub for DF wrapper of class ``RandomForestRegressor``"""
 
 
 class ExtraTreesRegressorDF(
-    RegressorWrapperDF[ExtraTreesRegressor],
-    native=ExtraTreesRegressor,
+    RegressorWrapperDF[ExtraTreesRegressor], native=ExtraTreesRegressor
 ):
     """Stub for DF wrapper of class ``ExtraTreesRegressor``"""
 
 
 class VotingRegressorDF(
-    MetaRegressorWrapperDF[VotingRegressor],
-    native=VotingRegressor,
+    MetaRegressorWrapperDF[VotingRegressor], native=VotingRegressor
 ):
     """Stub for DF wrapper of class ``VotingRegressor``"""
 
@@ -412,8 +363,7 @@ class VotingRegressorDF(
 
 
 class GaussianProcessRegressorDF(
-    RegressorWrapperDF[GaussianProcessRegressor],
-    native=GaussianProcessRegressor,
+    RegressorWrapperDF[GaussianProcessRegressor], native=GaussianProcessRegressor
 ):
     """Stub for DF wrapper of class ``GaussianProcessRegressor``"""
 
@@ -423,10 +373,7 @@ class GaussianProcessRegressorDF(
 #
 
 
-class IsotonicRegressionDF(
-    IsotonicRegressionWrapperDF,
-    native=IsotonicRegression,
-):
+class IsotonicRegressionDF(IsotonicRegressionWrapperDF, native=IsotonicRegression):
     """Stub for DF wrapper of class ``IsotonicRegression``"""
 
 
@@ -436,8 +383,7 @@ class IsotonicRegressionDF(
 
 
 class TransformedTargetRegressorDF(
-    RegressorWrapperDF[TransformedTargetRegressor],
-    native=TransformedTargetRegressor,
+    RegressorWrapperDF[TransformedTargetRegressor], native=TransformedTargetRegressor
 ):
     """Stub for DF wrapper of class ``TransformedTargetRegressor``"""
 
@@ -457,15 +403,13 @@ class KernelRidgeDF(RegressorWrapperDF[KernelRidge], native=KernelRidge):
 
 
 class DecisionTreeRegressorDF(
-    RegressorWrapperDF[DecisionTreeRegressor],
-    native=DecisionTreeRegressor,
+    RegressorWrapperDF[DecisionTreeRegressor], native=DecisionTreeRegressor
 ):
     """Stub for DF wrapper of class ``DecisionTreeRegressor``"""
 
 
 class ExtraTreeRegressorDF(
-    RegressorWrapperDF[ExtraTreeRegressor],
-    native=ExtraTreeRegressor,
+    RegressorWrapperDF[ExtraTreeRegressor], native=ExtraTreeRegressor
 ):
     """Stub for DF wrapper of class ``ExtraTreeRegressor``"""
 
@@ -480,16 +424,12 @@ class CCADF(RegressorTransformerWrapperDF[CCA], native=CCA):
 
 
 class PLSRegressionDF(
-    RegressorTransformerWrapperDF[PLSRegression],
-    native=PLSRegression,
+    RegressorTransformerWrapperDF[PLSRegression], native=PLSRegression
 ):
     """Stub for DF wrapper of class ``PLSRegression``"""
 
 
-class PLSCanonicalDF(
-    RegressorTransformerWrapperDF[PLSCanonical],
-    native=PLSCanonical,
-):
+class PLSCanonicalDF(RegressorTransformerWrapperDF[PLSCanonical], native=PLSCanonical):
     """Stub for DF wrapper of class ``PLSCanonical``"""
 
 

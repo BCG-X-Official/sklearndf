@@ -509,8 +509,20 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
     """
 
     def _validate_delegate_estimator(self) -> None:
-        if self.native_estimator.sparse:
-            raise NotImplementedError("sparse matrices not supported; use sparse=False")
+        sparse: bool
+        attr_sparse: str
+
+        if __sklearn_version__ < __sklearn_1_2__:
+            sparse = self.native_estimator.sparse
+            attr_sparse = "sparse"
+        else:
+            sparse = self.native_estimator.sparse_output
+            attr_sparse = "sparse_output"
+
+        if sparse:
+            raise NotImplementedError(
+                f"sparse matrices not supported; use {attr_sparse}=False"
+            )
 
     def _get_features_original(self) -> pd.Series:
         # Return the series mapping output column names to original column names.

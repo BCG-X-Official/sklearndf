@@ -1195,18 +1195,21 @@ class MetaEstimatorWrapperDF(
 
         delegate_estimator = self.native_estimator
 
-        if hasattr(delegate_estimator, "estimator"):
-            delegate_estimator.estimator = _unwrap_estimator(
-                delegate_estimator.estimator
-            )
-        elif hasattr(delegate_estimator, "base_estimator"):
-            delegate_estimator.base_estimator = _unwrap_estimator(
-                delegate_estimator.base_estimator
-            )
-        elif hasattr(delegate_estimator, "estimators"):
+        estimator = getattr(delegate_estimator, "estimator", None)
+        if estimator is not None:
+            delegate_estimator.estimator = _unwrap_estimator(estimator)
+
+        base_estimator = getattr(delegate_estimator, "base_estimator", None)
+        # attribute base_estimator is deprecated as of scikit-learn 1.2, with the
+        # default value of "deprecated"
+
+        if base_estimator is not None and base_estimator != "deprecated":
+            delegate_estimator.base_estimator = _unwrap_estimator(base_estimator)
+
+        estimators = getattr(delegate_estimator, "estimators", None)
+        if estimators is not None:
             delegate_estimator.estimators = [
-                (name, _unwrap_estimator(estimator))
-                for name, estimator in delegate_estimator.estimators
+                (name, _unwrap_estimator(estimator)) for name, estimator in estimators
             ]
 
 
