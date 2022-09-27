@@ -611,7 +611,6 @@ stages:
               sshKeySecureFile: 'deploy_docs_$(project_name)'
             displayName: 'Install the deploy SSH key'
 
-          - checkout: pytools
           - checkout: self
 
           - script: dir $(Build.SourcesDirectory)
