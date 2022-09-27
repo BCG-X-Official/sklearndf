@@ -49,17 +49,11 @@ __tracker = AllTracker(globals())
 #
 
 
-class LGBMClassifierDF(
-    ClassifierWrapperDF[LGBMClassifier],
-    native=LGBMClassifier,
-):
+class LGBMClassifierDF(ClassifierWrapperDF[LGBMClassifier], native=LGBMClassifier):
     """Stub for DF wrapper of class ``LGBMClassifierDF``"""
 
 
-class XGBClassifierDF(
-    ClassifierWrapperDF[XGBClassifier],
-    native=XGBClassifier,
-):
+class XGBClassifierDF(ClassifierWrapperDF[XGBClassifier], native=XGBClassifier):
     """Stub for DF wrapper of class ``XGBClassifierDF``"""
 
 

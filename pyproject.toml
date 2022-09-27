@@ -18,7 +18,7 @@ requires = [
     "numpy          >=1.21,<2a",  # cannot use ~= due to conda bug
     "packaging      >=20",
     "pandas         >=1,<2a",  # cannot use ~= due to conda bug
-    "scikit-learn   >=0.21,<1.2a",
+    "scikit-learn   >=0.21,<1.3a",
     "scipy          ~=1.4",
 ]
 
@@ -94,7 +94,7 @@ numpy          = ">=1.23,<2a"  # cannot use ~= due to conda bug
 packaging      = ">=20"
 pandas         = "~=1.4"
 python         = ">=3.9,<4a"   # cannot use ~= due to conda bug
-scikit-learn   = "~=1.1.2"
+scikit-learn   = "~=1.1,<1.3a" # todo: replace with ~=1.2.0 once it is released
 scipy          = "~=1.8"
 xgboost        = "~=1.5"
 # additional maximum requirements of gamma-pytools

@@ -22,8 +22,7 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 
 
 class SplineTransformerDF(
-    PolynomialTransformerWrapperDF[SplineTransformer],
-    native=SplineTransformer,
+    PolynomialTransformerWrapperDF[SplineTransformer], native=SplineTransformer
 ):
     """Stub for DF wrapper of class ``SplineTransformer``"""
 
