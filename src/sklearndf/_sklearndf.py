@@ -22,6 +22,7 @@ from sklearn.utils import is_scalar_nan
 from pytools.api import AllTracker, inheritdoc
 from pytools.expression import Expression, HasExpressionRepr, make_expression
 from pytools.expression.atomic import Id
+from pytools.fit import fitted_only
 
 log = logging.getLogger(__name__)
 
@@ -118,35 +119,25 @@ class EstimatorDF(
         """
         pass
 
-    def ensure_fitted(self) -> None:
-        """
-        Raise a :class:`~sklearn.exceptions.NotFittedError` if this estimator is not
-        fitted.
-
-        :raise sklearn.exceptions.NotFittedError: this estimator is not fitted
-        """
-        if not self.is_fitted:
-            raise NotFittedError(f"{type(self).__name__} is not fitted")
-
     @property
+    @fitted_only(not_fitted_error=AttributeError)
     def feature_names_in_(self) -> pd.Index:
         """
         The pandas column index with the names of the features used to fit this
         estimator.
 
-        :raises AttributeError: if this estimator is not fitted
+        :raises AttributeError: this estimator is not fitted
         """
-        self.ensure_fitted()
         return self._get_features_in().rename(self.COL_FEATURE_IN)
 
     @property
+    @fitted_only(not_fitted_error=AttributeError)
     def n_outputs_(self) -> int:
         """
         The number of outputs used to fit this estimator.
 
-        :raises AttributeError: if this estimator is not fitted
+        :raises AttributeError: this estimator is not fitted
         """
-        self.ensure_fitted()
         return self._get_n_outputs()
 
     def get_params(self, deep: bool = True) -> Mapping[str, Any]:
@@ -343,6 +334,7 @@ class TransformerDF(
         self._features_original = None
 
     @property
+    @fitted_only(not_fitted_error=AttributeError)
     def feature_names_original_(self) -> pd.Series:
         # noinspection GrazieInspection
         """
@@ -351,8 +343,9 @@ class TransformerDF(
 
         The index of the resulting series consists of the names of the output features;
         the corresponding values are the names of the original input features.
+
+        :raises AttributeError: this transformer is not fitted
         """
-        self.ensure_fitted()
         if self._features_original is None:
             self._features_original = (
                 self._get_features_original()
@@ -362,12 +355,14 @@ class TransformerDF(
         return self._features_original
 
     @property
+    @fitted_only(not_fitted_error=AttributeError)
     def feature_names_out_(self) -> pd.Index:
         """
         A pandas column index with the names of the features produced by this
         transformer
+
+        :raises AttributeError: this transformer is not fitted
         """
-        self.ensure_fitted()
         return self._get_features_out().rename(self.COL_FEATURE_OUT)
 
     # noinspection PyPep8Naming
@@ -470,10 +465,10 @@ class ClassifierDF(
     @abstractmethod
     def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
         """
-        Get the classes predicted by this classifier.
+        Get the classes predicted by this classifier as a numpy array of class labels
+        for single-output problems, or a list of such arrays for multi-output problems
 
-        :return: a numpy array of class labels for single-output problems, or a list
-            of such arrays for multi-output problems
+        :raises AttributeError: this classifier is not fitted
         """
         pass
 
@@ -572,6 +567,8 @@ class ClusterDF(
         # noinspection GrazieInspection
         """
         A pandas series, mapping the index of the input data frame to cluster labels.
+
+        :raises AttributeError: this clusterer is not fitted
         """
         pass
 

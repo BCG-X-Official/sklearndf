@@ -50,6 +50,7 @@ from sklearn.base import (
 )
 
 from pytools.api import AllTracker, inheritdoc, public_module_prefix
+from pytools.fit import fitted_only
 
 from sklearndf import (
     ClassifierDF,
@@ -882,9 +883,10 @@ class ClassifierWrapperDF(
     __native_base_class__ = ClassifierMixin
 
     @property
+    @fitted_only(not_fitted_error=AttributeError)
     def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
         """[see superclass]"""
-        self.ensure_fitted()
+
         # noinspection PyUnresolvedReferences
         return cast(
             Union[npt.NDArray[Any], List[npt.NDArray[Any]]],
@@ -1028,7 +1030,7 @@ class ClusterWrapperDF(
     @property
     def labels_(self) -> pd.Series:
         """[see superclass]"""
-        self.ensure_fitted()
+
         raw_labels = self._native_estimator.labels_
 
         return pd.Series(data=raw_labels, name=self.COL_LABELS, index=self._x_index)
