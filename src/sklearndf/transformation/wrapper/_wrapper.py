@@ -35,7 +35,6 @@ from ... import (
     __sklearn_1_0__,
     __sklearn_1_1__,
     __sklearn_1_2__,
-    __sklearn_1_4__,
     __sklearn_version__,
 )
 from ...wrapper import TransformerWrapperDF
@@ -574,26 +573,6 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
     """
     DF wrapper for :class:`sklearn.preprocessing.OneHotEncoder`.
     """
-
-    def _validate_delegate_estimator(self) -> None:
-        sparse: bool
-        attr_sparse: str
-
-        if __sklearn_version__ < __sklearn_1_2__:
-            sparse = self.native_estimator.sparse
-            attr_sparse = "sparse"
-        else:
-            attr_sparse = "sparse_output"
-            sparse = self.native_estimator.sparse_output
-            if __sklearn_version__ < __sklearn_1_4__ and isinstance(
-                self.native_estimator.sparse, bool
-            ):
-                sparse = self.native_estimator.sparse
-
-        if sparse:
-            raise NotImplementedError(
-                f"sparse matrices not supported; use {attr_sparse}=False"
-            )
 
     def _get_features_original(self) -> pd.Series:
         # Return the series mapping output column names to original column names.

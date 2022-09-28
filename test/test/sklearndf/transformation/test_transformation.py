@@ -1,4 +1,4 @@
-from typing import Any, List, Type, cast
+from typing import Any, Dict, List, Type, cast
 
 import numpy as np
 import pandas as pd
@@ -122,10 +122,6 @@ def test_wrapped_constructor(sklearndf_cls: Type[TransformerDF]) -> None:
 
 def test_special_wrapped_constructors() -> None:
     rf = RandomForestClassifierDF()
-
-    with pytest.raises(NotImplementedError):
-        OneHotEncoderDF()
-    OneHotEncoderDF(sparse=False)
 
     SelectFromModelDF(estimator=rf)
 
@@ -431,11 +427,20 @@ def df_outlier() -> pd.DataFrame:
     )
 
 
-def test_one_hot_encoding(test_data_categorical: pd.DataFrame) -> None:
+@pytest.mark.parametrize(argnames="sparse", argvalues=[True, False])  # type: ignore
+def test_one_hot_encoding(test_data_categorical: pd.DataFrame, sparse: bool) -> None:
+    def _make_frame(data: Dict[str, List[float]]) -> pd.DataFrame:
+        if sparse:
+            df = pd.DataFrame(
+                data={k: pd.SparseArray(v, fill_value=0) for k, v in data.items()}
+            )
+        else:
+            df = pd.DataFrame(data=data)
+        return df.rename_axis(columns="feature_out")
 
     assert_frame_equal(
-        OneHotEncoderDF(drop=None, sparse=False).fit_transform(test_data_categorical),
-        pd.DataFrame(
+        OneHotEncoderDF(drop=None, sparse=sparse).fit_transform(test_data_categorical),
+        _make_frame(
             {
                 "a_no": [0.0, 0.0, 1.0],
                 "a_yes": [1.0, 1.0, 0.0],
@@ -446,7 +451,7 @@ def test_one_hot_encoding(test_data_categorical: pd.DataFrame) -> None:
                 "c_father": [0.0, 1.0, 0.0],
                 "c_mother": [0.0, 0.0, 1.0],
             }
-        ).rename_axis(columns="feature_out"),
+        ),
     )
 
     assert_frame_equal(
@@ -481,10 +486,10 @@ def test_one_hot_encoding(test_data_categorical: pd.DataFrame) -> None:
 
     if __sklearn_version__ >= __sklearn_0_23__:
         assert_frame_equal(
-            OneHotEncoderDF(drop="if_binary", sparse=False).fit_transform(
+            OneHotEncoderDF(drop="if_binary", sparse=sparse).fit_transform(
                 test_data_categorical
             ),
-            pd.DataFrame(
+            _make_frame(
                 {
                     "a_yes": [1.0, 1.0, 0.0],
                     "b_blue": [0.0, 1.0, 0.0],
@@ -494,7 +499,7 @@ def test_one_hot_encoding(test_data_categorical: pd.DataFrame) -> None:
                     "c_father": [0.0, 1.0, 0.0],
                     "c_mother": [0.0, 0.0, 1.0],
                 }
-            ).rename_axis(columns="feature_out"),
+            ),
         )
 
     if __sklearn_version__ >= __sklearn_1_1__:
@@ -514,10 +519,10 @@ def test_one_hot_encoding(test_data_categorical: pd.DataFrame) -> None:
         )
 
         assert_frame_equal(
-            OneHotEncoderDF(max_categories=2, sparse=False).fit_transform(
+            OneHotEncoderDF(max_categories=2, sparse=sparse).fit_transform(
                 test_data_categorical
             ),
-            pd.DataFrame(
+            _make_frame(
                 {
                     "a_yes": [1.0, 1.0, 0.0],
                     "a_infrequent_sklearn": [0.0, 0.0, 1.0],
@@ -526,14 +531,14 @@ def test_one_hot_encoding(test_data_categorical: pd.DataFrame) -> None:
                     "c_mother": [0.0, 0.0, 1.0],
                     "c_infrequent_sklearn": [1.0, 1.0, 0.0],
                 }
-            ).rename_axis(columns="feature_out"),
+            ),
         )
 
         assert_frame_equal(
-            OneHotEncoderDF(max_categories=10, sparse=False).fit_transform(
+            OneHotEncoderDF(max_categories=10, sparse=sparse).fit_transform(
                 test_data_categorical
             ),
-            pd.DataFrame(
+            _make_frame(
                 {
                     "a_no": [0.0, 0.0, 1.0],
                     "a_yes": [1.0, 1.0, 0.0],
@@ -587,5 +592,5 @@ def test_one_hot_encoding(test_data_categorical: pd.DataFrame) -> None:
                     "b_infrequent_sklearn": [0.0, 1.0, 1.0],
                     "c_infrequent_sklearn": [1.0, 1.0, 0.0],
                 }
-            ).rename_axis(columns="feature_out"),
+            ),
         )
