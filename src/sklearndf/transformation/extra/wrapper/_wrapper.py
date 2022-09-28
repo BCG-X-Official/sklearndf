@@ -46,6 +46,10 @@ if BorutaPy:
         def _get_features_out(self) -> pd.Index:
             return self.feature_names_in_[self.native_estimator.support_]
 
+        def _get_sparse_threshold(self) -> float:
+            # don't allow sparse input
+            return 0.0
+
 else:
     __all__.remove("BorutaPyWrapperDF")
 

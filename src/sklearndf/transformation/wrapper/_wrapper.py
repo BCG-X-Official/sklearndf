@@ -109,13 +109,41 @@ class NumpyTransformerWrapperDF(
     def _adjust_X_type_for_delegate(
         self,
         X: pd.DataFrame,
-    ) -> npt.NDArray[Any]:
-        return cast(npt.NDArray[Any], X.values)
+    ) -> Union[npt.NDArray[Any], sparse.csr_matrix]:
+        return self._frame_or_series_to_array(X)
 
     def _adjust_y_type_for_delegate(
         self, y: Union[pd.Series, pd.DataFrame, None]
-    ) -> Optional[npt.NDArray[Any]]:
-        return None if y is None else cast(npt.NDArray[Any], y.values)
+    ) -> Union[npt.NDArray[Any], pd.arrays.SparseArray, sparse.csr_matrix, None]:
+        return None if y is None else self._frame_or_series_to_array(y)
+
+    def _frame_or_series_to_array(
+        self, df: Union[pd.Series, pd.DataFrame]
+    ) -> Union[npt.NDArray[Any], pd.arrays.SparseArray, sparse.csr_matrix]:
+
+        if df.ndim == 1:
+            return df.values
+
+        sparse_threshold = self._get_sparse_threshold()
+
+        if sparse_threshold > 0.0 and sparse_frame_density(df) < sparse_threshold:
+            return sparse.hstack(
+                [
+                    sr.to_frame().sparse.to_coo()
+                    if isinstance(sr.dtype, pd.SparseDtype)
+                    else sr.values.reshape(-1, 1)
+                    for _, sr in df.items()
+                ]
+            ).tocsr()
+
+        else:
+            return df.values
+
+    def _get_sparse_threshold(self) -> float:
+        # return the density below which _frame_or_series_to_array will
+        # convert series and data frames to sparse matrices instead of
+        # dense arrays
+        return 0.3
 
 
 class ColumnSubsetTransformerWrapperDF(
@@ -730,3 +758,30 @@ def _get_native_feature_names_out(
 #
 
 __tracker.validate()
+
+
+#
+# auxiliary methods
+#
+
+
+def sparse_frame_density(frame: pd.DataFrame) -> float:
+    """
+    Compute the density of a data frame.
+
+    The density of a data frame is the average density of its columns.
+    The density of a sparse column is the ratio of non-sparse points to total (dense)
+    data points.
+    The density of a dense column is 1.
+
+    :param frame: a data frame
+    :return: the density of the data frame
+    """
+
+    def _density(sr: pd.Series) -> float:
+        if isinstance(sr.dtype, pd.SparseDtype):
+            return cast(float, sr.sparse.density)
+        else:
+            return 1.0
+
+    return sum(_density(sr) for _, sr in frame.items()) / len(frame.columns)
