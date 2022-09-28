@@ -471,7 +471,7 @@ class TransformerDF(
     def _get_features_out(self) -> pd.Index:
         # return a pandas index with this transformer's output columns
         # default behaviour: get index returned by feature_names_original_
-        return self.feature_names_original_.index
+        return self._get_features_original().index
 
 
 class RegressorDF(
