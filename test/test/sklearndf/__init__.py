@@ -6,6 +6,7 @@ from typing import Dict, Iterable, List, Optional, Set, Type, Union
 import pandas as pd
 import sklearn
 from sklearn.base import BaseEstimator
+from sklearn.compose import ColumnTransformer
 
 from sklearndf import (
     EstimatorDF,
@@ -14,7 +15,12 @@ from sklearndf import (
     __sklearn_0_22__,
     __sklearn_version__,
 )
+from sklearndf.transformation.wrapper import ColumnTransformerSparseFrames
 from sklearndf.wrapper import EstimatorWrapperDF
+
+OVERRIDDEN_SKLEARN_CLASSES = {
+    ColumnTransformerSparseFrames: ColumnTransformer,
+}
 
 
 def find_all_classes(
@@ -53,7 +59,9 @@ def sklearn_delegate_classes(
     classes.
     """
     return {
-        df_class.__wrapped__: df_class
+        OVERRIDDEN_SKLEARN_CLASSES.get(
+            df_class.__wrapped__, df_class.__wrapped__
+        ): df_class
         for df_class in find_all_classes(module)
         # we only consider non-abstract wrapper classes wrapping a specific native class
         if issubclass(df_class, EstimatorWrapperDF) and hasattr(df_class, "__wrapped__")

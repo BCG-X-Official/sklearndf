@@ -255,12 +255,11 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
             remainder=remainder,
             **transformer_args,
         )
-        transformed_native = col_tx_native.fit_transform(X=data)
-
-        assert_frame_equal(
-            transformed_df,
-            pd.DataFrame(transformed_native, columns=feature_names_out_expected),
+        transformed_native = pd.DataFrame(
+            col_tx_native.fit_transform(X=data), columns=feature_names_out_expected
         )
+
+        assert_frame_equal(transformed_df, transformed_native, check_dtype=False)
 
         assert col_tx_df.feature_names_in_.equals(feature_names_in_expected)
         assert col_tx_df.feature_names_out_.equals(feature_names_out_expected)

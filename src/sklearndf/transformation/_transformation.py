@@ -4,7 +4,6 @@ Core implementation of :mod:`sklearndf.transformation`
 
 import logging
 
-from sklearn.compose import ColumnTransformer
 from sklearn.cross_decomposition import PLSSVD
 from sklearn.decomposition import (
     NMF,
@@ -74,6 +73,7 @@ from pytools.api import AllTracker
 from .wrapper import (
     AdditiveChi2SamplerWrapperDF,
     ColumnPreservingTransformerWrapperDF,
+    ColumnTransformerSparseFrames,
     ColumnTransformerWrapperDF,
     ComponentsDimensionalityReductionWrapperDF,
     FeatureSelectionWrapperDF,
@@ -169,7 +169,9 @@ __tracker = AllTracker(globals())
 #
 
 
-class ColumnTransformerDF(ColumnTransformerWrapperDF, native=ColumnTransformer):
+class ColumnTransformerDF(
+    ColumnTransformerWrapperDF, native=ColumnTransformerSparseFrames
+):
     """Stub for DF wrapper of class ``ColumnTransformer``"""
 
 

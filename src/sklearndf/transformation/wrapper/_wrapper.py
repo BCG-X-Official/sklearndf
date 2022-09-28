@@ -20,6 +20,7 @@ from typing import (
 import numpy as np
 import numpy.typing as npt
 import pandas as pd
+from scipy import sparse
 from sklearn.base import TransformerMixin
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import MissingIndicator, SimpleImputer
@@ -42,23 +43,24 @@ from ...wrapper import TransformerWrapperDF
 log = logging.getLogger(__name__)
 
 __all__ = [
+    "AdditiveChi2SamplerWrapperDF",
     "BaseMultiOutputWrapperDF",
     "BaseMultipleInputsPerOutputTransformerWrapperDF",
     "ColumnPreservingTransformerWrapperDF",
     "ColumnSubsetTransformerWrapperDF",
+    "ColumnTransformerSparseFrames",
+    "ColumnTransformerWrapperDF",
     "ComponentsDimensionalityReductionWrapperDF",
     "EmbeddingWrapperDF",
     "FeatureSelectionWrapperDF",
+    "ImputerWrapperDF",
+    "IsomapWrapperDF",
+    "KBinsDiscretizerWrapperDF",
+    "MissingIndicatorWrapperDF",
     "NComponentsDimensionalityReductionWrapperDF",
     "NumpyTransformerWrapperDF",
-    "ColumnTransformerWrapperDF",
-    "IsomapWrapperDF",
-    "ImputerWrapperDF",
-    "MissingIndicatorWrapperDF",
-    "AdditiveChi2SamplerWrapperDF",
-    "KBinsDiscretizerWrapperDF",
-    "PolynomialTransformerWrapperDF",
     "OneHotEncoderWrapperDF",
+    "PolynomialTransformerWrapperDF",
 ]
 
 
@@ -265,6 +267,30 @@ class FeatureSelectionWrapperDF(
         get_support = getattr(self.native_estimator, self._ATTR_GET_SUPPORT)
         return self.feature_names_in_[get_support()]
 
+    # noinspection PyPep8Naming
+
+
+class ColumnTransformerSparseFrames(
+    ColumnTransformer,  # type:ignore
+):
+    """
+    ColumnTransformer that returns sparse data frames instead of arrays if one or more
+    of its transformers return a sparse data frame.
+    """
+
+    # noinspection PyPep8Naming
+    def _hstack(
+        self, Xs: List[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]]
+    ) -> Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]:
+        if all(isinstance(X, pd.DataFrame) for X in Xs):
+            self.sparse_output_ = any(
+                any(isinstance(dtype, pd.SparseDtype) for dtype in X.dtypes)
+                for X in cast(List[pd.DataFrame], Xs)
+            )
+            return pd.concat(Xs, axis=1)
+        else:
+            return super()._hstack(Xs)
+
 
 class ColumnTransformerWrapperDF(
     TransformerWrapperDF[ColumnTransformer], metaclass=ABCMeta
@@ -294,7 +320,7 @@ class ColumnTransformerWrapperDF(
             not in ColumnTransformerWrapperDF.__SPECIAL_TRANSFORMERS
         ):
             raise ValueError(
-                f"unsupported value for arg remainder: ({column_transformer.remainder})"
+                f"unsupported value for arg remainder: {column_transformer.remainder!r}"
             )
 
         non_compliant_transformers: List[str] = [
@@ -341,7 +367,7 @@ class ColumnTransformerWrapperDF(
 
             if df_transformer == ColumnTransformerWrapperDF.PASSTHROUGH:
                 # we may get positional indices for columns selected by the
-                # 'passthrough' transformer, and in that case so need to look up the
+                # 'passthrough' transformer, and in that case need to look up the
                 # associated column names
                 if all(isinstance(column, int) for column in columns):
                     output_column_names = self._get_features_in().to_numpy()[columns]
@@ -355,7 +381,7 @@ class ColumnTransformerWrapperDF(
                     f"{type(df_transformer).__name__}: {df_transformer!r}"
                 )
                 feature_names_original_: pd.Series = (
-                    df_transformer.feature_names_original_
+                    df_transformer._get_features_original()
                 )
                 if verbose_feature_names_out:
                     input_column_names = feature_names_original_.to_numpy()
@@ -385,6 +411,18 @@ class ColumnTransformerWrapperDF(
                 )
             ]
         )
+
+    @staticmethod
+    def _transformed_to_df(
+        transformed: Union[pd.DataFrame, npt.NDArray[Any]],
+        index: pd.Index,
+        columns: pd.Index,
+    ) -> pd.DataFrame:
+        if isinstance(transformed, pd.DataFrame):
+            transformed = transformed.set_axis(columns, axis=1, inplace=False)
+        return super(
+            ColumnTransformerWrapperDF, ColumnTransformerWrapperDF
+        )._transformed_to_df(transformed, index, columns)
 
 
 class ImputerWrapperDF(TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
