@@ -181,11 +181,23 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
         else:
             return self.final_estimator.feature_names_in_
 
+    def _get_n_features_in(self) -> int:
+        if self.preprocessing is not None:
+            return self.preprocessing.n_features_in_
+        else:
+            return self.final_estimator.n_features_in_
+
+    def _get_outputs(self) -> Optional[List[str]]:
+        if self.preprocessing is not None:
+            return self.preprocessing._get_outputs()
+        else:
+            return self.final_estimator._get_outputs()
+
     def _get_n_outputs(self) -> int:
         if self.preprocessing is not None:
-            return self.preprocessing.n_outputs_
+            return self.preprocessing._get_n_outputs()
         else:
-            return self.final_estimator.n_outputs_
+            return self.final_estimator._get_n_outputs()
 
     # noinspection PyPep8Naming
     def _pre_transform(self, X: pd.DataFrame) -> pd.DataFrame:

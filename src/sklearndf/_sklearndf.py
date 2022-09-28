@@ -16,7 +16,6 @@ from sklearn.base import (
     TransformerMixin,
     clone,
 )
-from sklearn.exceptions import NotFittedError
 from sklearn.utils import is_scalar_nan
 
 from pytools.api import AllTracker, inheritdoc
@@ -131,6 +130,28 @@ class EstimatorDF(
         return self._get_features_in().rename(self.COL_FEATURE_IN)
 
     @property
+    def output_names_(self) -> Optional[List[str]]:
+        """
+        The name(s) of the output(s) this estimator was fitted to,
+        or ``None`` if this estimator was not fitted to any outputs.
+
+        :raises AttributeError: if this estimator is not fitted
+        """
+        self.ensure_fitted()
+        return self._get_outputs()
+
+    @property
+    def n_features_in_(self) -> int:
+        """
+        The number of features used to fit this estimator.
+
+        :raises AttributeError: if this estimator is not fitted
+        :return: the number of features
+        """
+        self.ensure_fitted()
+        return self._get_n_features_in()
+
+    @property
     @fitted_only(not_fitted_error=AttributeError)
     def n_outputs_(self) -> int:
         """
@@ -176,10 +197,19 @@ class EstimatorDF(
         # get the input columns as a pandas Index
         pass
 
+    def _get_n_features_in(self) -> int:
+        # get the number of inputs this estimator has been fitted to
+        return len(self._get_features_in())
+
     @abstractmethod
+    def _get_outputs(self) -> Optional[List[str]]:
+        # get the output columns as a list of strings, or None if this estimator
+        # was not fitted to any outputs
+        pass
+
     def _get_n_outputs(self) -> int:
         # get the number of outputs this estimator has been fitted to
-        pass
+        return len(self._get_outputs() or [])
 
     def to_expression(self) -> Expression:
         """[see superclass]"""
@@ -305,6 +335,17 @@ class SupervisedLearnerDF(LearnerDF, metaclass=ABCMeta):
         :return: the score
         """
         pass
+
+    @property
+    def output_names_(self) -> List[str]:
+        """
+        The name(s) of the output(s) this supervised learner was fitted to.
+
+        :raises sklearn.exceptions.NotFittedError: this estimator is not fitted
+        """
+        output_names = super().output_names_
+        assert output_names is not None, "Supervised learners must be fitted to outputs"
+        return output_names
 
 
 class TransformerDF(

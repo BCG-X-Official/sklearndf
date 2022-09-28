@@ -292,6 +292,14 @@ class _StackableSupervisedLearnerDF(
         # noinspection PyProtectedMember
         return self.delegate._get_features_in()
 
+    def _get_n_features_in(self) -> int:
+        # noinspection PyProtectedMember
+        return self.delegate._get_n_features_in()
+
+    def _get_outputs(self) -> Optional[List[str]]:
+        # noinspection PyProtectedMember
+        return self.delegate._get_outputs()
+
     def _get_n_outputs(self) -> int:
         # noinspection PyProtectedMember
         return self.delegate._get_n_outputs()

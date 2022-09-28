@@ -12,6 +12,7 @@ from sklearndf import (
     ClassifierDF,
     __sklearn_0_22__,
     __sklearn_1_0__,
+    __sklearn_1_2__,
     __sklearn_version__,
 )
 from test.sklearndf import check_expected_not_fitted_error, iterate_classes
@@ -35,9 +36,15 @@ def test_classifier_count() -> None:
         assert n == 41
 
 
+if __sklearn_version__ < __sklearn_1_2__:
+    BASE_ESTIMATOR = "base_estimator"
+else:
+    BASE_ESTIMATOR = "estimator"
+
+
 CLASSIFIER_INIT_PARAMETERS: Dict[str, Dict[str, Any]] = {
     "CalibratedClassifierCVDF": {
-        "base_estimator": classification.RandomForestClassifierDF()
+        BASE_ESTIMATOR: classification.RandomForestClassifierDF()
     },
     "ClassifierChainDF": {"base_estimator": classification.RandomForestClassifierDF()},
     "MultiOutputClassifierDF": {"estimator": classification.RandomForestClassifierDF()},
@@ -138,9 +145,19 @@ def test_wrapped_fit_predict(
 
             if is_multi_output:
                 assert isinstance(predictions, list)
+                assert classifier.output_names_ == iris_targets_df.columns.tolist()
                 assert classifier.n_outputs_ == len(predictions)
             else:
-                assert classifier.n_outputs_ == predictions.shape[1] if is_chain else 1
+                if is_chain:
+                    assert (
+                        classifier.output_names_
+                        == iris_targets_binary_df.columns.tolist()
+                    )
+                    assert classifier.n_outputs_ == predictions.shape[1]
+                else:
+                    assert classifier.output_names_ == [iris_target_sr.name]
+                    assert classifier.n_outputs_ == 1
+
                 predictions = [predictions]
 
             for prediction in predictions:

@@ -29,17 +29,25 @@ from sklearn.preprocessing import KBinsDiscretizer, OneHotEncoder
 
 from pytools.api import AllTracker
 
-from ... import TransformerDF, __sklearn_1_0__, __sklearn_version__
+from ... import (
+    TransformerDF,
+    __sklearn_1_0__,
+    __sklearn_1_1__,
+    __sklearn_1_2__,
+    __sklearn_1_4__,
+    __sklearn_version__,
+)
 from ...wrapper import TransformerWrapperDF
 
 log = logging.getLogger(__name__)
 
 __all__ = [
-    "BaseDimensionalityReductionWrapperDF",
+    "BaseMultiOutputWrapperDF",
     "BaseMultipleInputsPerOutputTransformerWrapperDF",
     "ColumnPreservingTransformerWrapperDF",
     "ColumnSubsetTransformerWrapperDF",
     "ComponentsDimensionalityReductionWrapperDF",
+    "EmbeddingWrapperDF",
     "FeatureSelectionWrapperDF",
     "NComponentsDimensionalityReductionWrapperDF",
     "NumpyTransformerWrapperDF",
@@ -166,7 +174,7 @@ class BaseMultipleInputsPerOutputTransformerWrapperDF(
         )
 
 
-class BaseDimensionalityReductionWrapperDF(
+class BaseMultiOutputWrapperDF(
     BaseMultipleInputsPerOutputTransformerWrapperDF[T_Transformer],
     Generic[T_Transformer],
     metaclass=ABCMeta,
@@ -187,7 +195,7 @@ class BaseDimensionalityReductionWrapperDF(
 
 
 class NComponentsDimensionalityReductionWrapperDF(
-    BaseDimensionalityReductionWrapperDF[T_Transformer],
+    BaseMultiOutputWrapperDF[T_Transformer],
     Generic[T_Transformer],
     metaclass=ABCMeta,
 ):
@@ -209,7 +217,7 @@ class NComponentsDimensionalityReductionWrapperDF(
 
 
 class ComponentsDimensionalityReductionWrapperDF(
-    BaseDimensionalityReductionWrapperDF[T_Transformer],
+    BaseMultiOutputWrapperDF[T_Transformer],
     Generic[T_Transformer],
     metaclass=ABCMeta,
 ):
@@ -447,11 +455,14 @@ class MissingIndicatorWrapperDF(
         features_original: npt.NDArray[Any] = self.feature_names_in_[
             self.native_estimator.features_
         ].values
-        features_out = pd.Index([f"{name}__missing" for name in features_original])
+        # noinspection SpellCheckingInspection
+        features_out = pd.Index(
+            [f"missingindicator_{name}" for name in features_original]
+        )
         return pd.Series(index=features_out, data=features_original)
 
 
-class IsomapWrapperDF(BaseDimensionalityReductionWrapperDF[Isomap], metaclass=ABCMeta):
+class IsomapWrapperDF(BaseMultiOutputWrapperDF[Isomap], metaclass=ABCMeta):
     """
     DF wrapper for :class:`sklearn.manifold.Isomap`.
     """
@@ -462,7 +473,7 @@ class IsomapWrapperDF(BaseDimensionalityReductionWrapperDF[Isomap], metaclass=AB
 
 
 class AdditiveChi2SamplerWrapperDF(
-    BaseDimensionalityReductionWrapperDF[AdditiveChi2Sampler], metaclass=ABCMeta
+    BaseMultiOutputWrapperDF[AdditiveChi2Sampler], metaclass=ABCMeta
 ):
     """
     DF wrapper for :class:`sklearn.kernel_approximation.AdditiveChi2Sampler`.
@@ -499,8 +510,24 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
     """
 
     def _validate_delegate_estimator(self) -> None:
-        if self.native_estimator.sparse:
-            raise NotImplementedError("sparse matrices not supported; use sparse=False")
+        sparse: bool
+        attr_sparse: str
+
+        if __sklearn_version__ < __sklearn_1_2__:
+            sparse = self.native_estimator.sparse
+            attr_sparse = "sparse"
+        else:
+            attr_sparse = "sparse_output"
+            sparse = self.native_estimator.sparse_output
+            if __sklearn_version__ < __sklearn_1_4__ and isinstance(
+                self.native_estimator.sparse, bool
+            ):
+                sparse = self.native_estimator.sparse
+
+        if sparse:
+            raise NotImplementedError(
+                f"sparse matrices not supported; use {attr_sparse}=False"
+            )
 
     def _get_features_original(self) -> pd.Series:
         # Return the series mapping output column names to original column names.
@@ -535,6 +562,26 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
             [len(categories) for categories in native_estimator.categories_],
             dtype=np.int_,
         )
+
+        if __sklearn_version__ >= __sklearn_1_1__ and not (
+            self.max_categories is None and self.min_frequency is None
+        ):
+            # count number of infrequent categories per column
+            n_infrequent = np.array(
+                [
+                    1
+                    if infrequent_categories_for_column is None
+                    else len(infrequent_categories_for_column)
+                    for infrequent_categories_for_column in (
+                        self.native_estimator.infrequent_categories_
+                    )
+                ],
+                dtype=np.int_,
+            )
+            # all infrequent categories will be aggregated, so deduct number of
+            # infrequent categories, except one for the aggregated category
+            n_features_in -= n_infrequent - 1
+
         _adjust_n_features_in(n_features_in)
 
         feature_names_in_mapped = itertools.chain(
@@ -588,6 +635,34 @@ class KBinsDiscretizerWrapperDF(
             raise ValueError(
                 f"unexpected value for property encode={self.native_estimator.encode}"
             )
+
+
+class EmbeddingWrapperDF(
+    BaseMultiOutputWrapperDF[T_Transformer],
+    Generic[T_Transformer],
+    metaclass=ABCMeta,
+):
+    """
+    Base class of DF wrappers for dimensionality-reducing transformers.
+
+    The native transformer is considered to map all input columns to each output column.
+    """
+
+    if __sklearn_version__ < __sklearn_1_2__:
+        # n_features_ is deprecated as of sklearn 1.0,
+        # and will be removed in sklearn 1.2
+        @property
+        def n_features_(self) -> int:
+            """
+            The number of features when :meth:`.fit` is performed.
+            """
+            return cast(int, self.native_estimator.n_features_)
+
+    def _get_n_outputs(self) -> int:
+        return cast(int, self.native_estimator.n_outputs_)
+
+    def _n_components_(self) -> int:
+        return self.n_outputs_
 
 
 #
