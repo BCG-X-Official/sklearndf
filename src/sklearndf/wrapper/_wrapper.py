@@ -40,6 +40,7 @@ import numpy as np
 import numpy.typing as npt
 import pandas as pd
 import sklearn.utils.metaestimators as sklearn_meta
+from scipy import sparse
 from sklearn.base import (
     BaseEstimator,
     ClassifierMixin,
@@ -515,7 +516,7 @@ class EstimatorWrapperDF(
 
     def _prepare_y_for_delegate(
         self, y: Optional[Union[pd.Series, pd.DataFrame]]
-    ) -> Any:
+    ) -> Union[pd.Series, pd.DataFrame, npt.NDArray[Any], sparse.csr_matrix, None]:
         return self._adjust_y_type_for_delegate(y)
 
     # noinspection PyPep8Naming
@@ -535,14 +536,14 @@ class EstimatorWrapperDF(
     # noinspection PyPep8Naming
     def _adjust_X_type_for_delegate(
         self, X: pd.DataFrame
-    ) -> Union[pd.DataFrame, npt.NDArray[Any]]:
+    ) -> Union[pd.DataFrame, npt.NDArray[Any], sparse.csr_matrix]:
         # Convert X before passing it to the delegate estimator.
         # By default, does nothing, but can be overridden.
         return X
 
     def _adjust_y_type_for_delegate(
         self, y: Union[pd.Series, pd.DataFrame, None]
-    ) -> Union[pd.Series, pd.DataFrame, npt.NDArray[Any], None]:
+    ) -> Union[pd.Series, pd.DataFrame, npt.NDArray[Any], sparse.csr_matrix, None]:
         # convert y before passing it to the delegate estimator
         return y
 
@@ -738,23 +739,28 @@ class TransformerWrapperDF(
                 expected_index=index,
             )
             return transformed
+        elif isinstance(transformed, sparse.spmatrix):
+            return pd.DataFrame.sparse.from_spmatrix(
+                data=transformed, index=index, columns=columns
+            )
         else:
             return pd.DataFrame(data=transformed, index=index, columns=columns)
 
     # noinspection PyPep8Naming
-    def _transform(self, X: pd.DataFrame) -> npt.NDArray[Any]:
-        # noinspection PyUnresolvedReferences
+    def _transform(
+        self, X: pd.DataFrame
+    ) -> Union[npt.NDArray[Any], sparse.csr_matrix, pd.DataFrame]:
         return cast(
-            npt.NDArray[Any],
+            Union[npt.NDArray[Any], sparse.csr_matrix, pd.DataFrame],
             self.native_estimator.transform(self._prepare_X_for_delegate(X)),
         )
 
     # noinspection PyPep8Naming
     def _fit_transform(
         self, X: pd.DataFrame, y: Optional[pd.Series], **fit_params: Any
-    ) -> npt.NDArray[Any]:
+    ) -> Union[npt.NDArray[Any], sparse.csr_matrix, pd.DataFrame]:
         return cast(
-            npt.NDArray[Any],
+            Union[npt.NDArray[Any], sparse.csr_matrix, pd.DataFrame],
             self.native_estimator.fit_transform(
                 self._prepare_X_for_delegate(X),
                 self._prepare_y_for_delegate(y),
