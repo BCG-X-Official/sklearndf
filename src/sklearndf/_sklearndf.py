@@ -130,25 +130,24 @@ class EstimatorDF(
         return self._get_features_in().rename(self.COL_FEATURE_IN)
 
     @property
+    @fitted_only(not_fitted_error=AttributeError)
     def output_names_(self) -> Optional[List[str]]:
         """
         The name(s) of the output(s) this estimator was fitted to,
         or ``None`` if this estimator was not fitted to any outputs.
 
-        :raises AttributeError: if this estimator is not fitted
+        :raises AttributeError: this estimator is not fitted
         """
-        self.ensure_fitted()
         return self._get_outputs()
 
     @property
+    @fitted_only(not_fitted_error=AttributeError)
     def n_features_in_(self) -> int:
         """
         The number of features used to fit this estimator.
 
-        :raises AttributeError: if this estimator is not fitted
-        :return: the number of features
+        :raises AttributeError: this estimator is not fitted
         """
-        self.ensure_fitted()
         return self._get_n_features_in()
 
     @property
