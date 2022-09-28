@@ -14,7 +14,7 @@ dist-name = "sklearndf"
 license = "Apache Software License v2.0"
 
 requires = [
-    "gamma-pytools  ~=2.1",
+    "gamma-pytools  ~=2.1rc",
     "numpy          >=1.21,<2a",  # cannot use ~= due to conda bug
     "packaging      >=20",
     "pandas         >=1,<2a",  # cannot use ~= due to conda bug
@@ -71,7 +71,7 @@ no-binary.min = ["matplotlib"]
 [build.matrix.min]
 # direct requirements of sklearndf
 boruta         = "~=0.3.0"
-gamma-pytools  = "~=2.1.0"
+gamma-pytools  = "~=2.1rc"
 lightgbm       = "~=3.0.0"
 numpy          = "==1.21.6"  # cannot use ~= due to conda bug
 packaging      = "~=20.9"
@@ -88,7 +88,7 @@ typing_inspect = "~=0.4.0"
 [build.matrix.max]
 # direct requirements of sklearndf
 boruta         = "~=0.3"
-gamma-pytools  = "~=2.1"
+gamma-pytools  = "~=2.1rc"
 lightgbm       = "~=3.3"
 numpy          = ">=1.23,<2a"  # cannot use ~= due to conda bug
 packaging      = ">=20"
