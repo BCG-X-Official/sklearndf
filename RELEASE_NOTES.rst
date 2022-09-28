@@ -19,6 +19,8 @@ API.
 
 - API: new property :attr:`.EstimatorDF.output_names_` to get the names of the output
   columns the estimator was fitted with.
+- API: DF estimators now support native estimators using sparse matrices as input or output, and automatically
+  convert them to/from sparse :class:`~pandas.DataFrame` objects
 
 
 *sklearndf* 2.1
