@@ -10,6 +10,7 @@ import pandas as pd
 from sklearn.cluster import FeatureAgglomeration, KMeans, MiniBatchKMeans
 
 from pytools.api import AllTracker
+from pytools.fit import fitted_only
 
 from sklearndf.transformation.wrapper import ColumnPreservingTransformerWrapperDF
 from sklearndf.wrapper import ClusterWrapperDF
@@ -52,13 +53,14 @@ class KMeansBaseWrapperDF(
     IDX_CLUSTER = "cluster"
 
     @property
+    @fitted_only(not_fitted_error=AttributeError)
     def cluster_centers_(self) -> pd.DataFrame:
         """
         The cluster centers as a data frame, with clusters as rows and feature values
         as columns.
-        """
 
-        self.ensure_fitted()
+        :raises AttributeError: the clusterer is not fitted
+        """
 
         raw_cluster_centers = self._native_estimator.cluster_centers_
         return pd.DataFrame(

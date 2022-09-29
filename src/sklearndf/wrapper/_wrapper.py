@@ -945,11 +945,7 @@ class ClassifierWrapperDF(
 
     __native_base_class__ = ClassifierMixin
 
-    @property
-    def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
-        """[see superclass]"""
-        self.ensure_fitted()
-        # noinspection PyUnresolvedReferences
+    def _get_classes(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
         return cast(
             Union[npt.NDArray[Any], List[npt.NDArray[Any]]],
             self._native_estimator.classes_,
@@ -1089,13 +1085,12 @@ class ClusterWrapperDF(
         super().__init__(*args, **kwargs)
         self._x_index: Optional[pd.Index] = None
 
-    @property
-    def labels_(self) -> pd.Series:
-        """[see superclass]"""
-        self.ensure_fitted()
-        raw_labels = self._native_estimator.labels_
-
-        return pd.Series(data=raw_labels, name=self.COL_LABELS, index=self._x_index)
+    def _get_labels(self) -> pd.Series:
+        return pd.Series(
+            data=self._native_estimator.labels_,
+            name=self.COL_LABELS,
+            index=self._x_index,
+        )
 
     def fit_predict(
         self,
