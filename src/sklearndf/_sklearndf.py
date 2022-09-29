@@ -502,7 +502,7 @@ class ClassifierDF(
     """
 
     @property
-    @abstractmethod
+    @fitted_only(not_fitted_error=AttributeError)
     def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
         """
         Get the classes predicted by this classifier as a numpy array of class labels
@@ -510,7 +510,7 @@ class ClassifierDF(
 
         :raises AttributeError: this classifier is not fitted
         """
-        pass
+        return self._get_classes()
 
     # noinspection PyPep8Naming
     @abstractmethod
@@ -588,6 +588,10 @@ class ClassifierDF(
     # we cannot get the docstring via the @inheritdoc mechanism because
     # ClassifierMixin precedes SupervisedLearnerDF in the MRO
     score.__doc__ = SupervisedLearnerDF.score.__doc__
+
+    @abstractmethod
+    def _get_classes(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+        pass
 
 
 class ClusterDF(
