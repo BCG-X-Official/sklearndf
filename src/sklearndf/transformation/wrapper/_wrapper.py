@@ -37,6 +37,7 @@ from ... import (
     __sklearn_1_2__,
     __sklearn_version__,
 )
+from ..._util import hstack_frames, is_sparse_frame, sparse_frame_density
 from ...wrapper import TransformerWrapperDF
 
 log = logging.getLogger(__name__)
@@ -309,14 +310,12 @@ class ColumnTransformerSparseFrames(
     def _hstack(
         self, Xs: List[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]]
     ) -> Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]:
-        if all(isinstance(X, pd.DataFrame) for X in Xs):
-            self.sparse_output_ = any(
-                any(isinstance(dtype, pd.SparseDtype) for dtype in X.dtypes)
-                for X in cast(List[pd.DataFrame], Xs)
-            )
-            return pd.concat(Xs, axis=1)
-        else:
+        stacked = hstack_frames(Xs)
+        if stacked is None:
             return super()._hstack(Xs)
+        else:
+            self.sparse_output_ = is_sparse_frame(stacked)
+            return stacked
 
 
 class ColumnTransformerWrapperDF(
@@ -737,30 +736,3 @@ def _get_native_feature_names_out(
 #
 
 __tracker.validate()
-
-
-#
-# auxiliary methods
-#
-
-
-def sparse_frame_density(frame: pd.DataFrame) -> float:
-    """
-    Compute the density of a data frame.
-
-    The density of a data frame is the average density of its columns.
-    The density of a sparse column is the ratio of non-sparse points to total (dense)
-    data points.
-    The density of a dense column is 1.
-
-    :param frame: a data frame
-    :return: the density of the data frame
-    """
-
-    def _density(sr: pd.Series) -> float:
-        if isinstance(sr.dtype, pd.SparseDtype):
-            return cast(float, sr.sparse.density)
-        else:
-            return 1.0
-
-    return sum(_density(sr) for _, sr in frame.items()) / len(frame.columns)

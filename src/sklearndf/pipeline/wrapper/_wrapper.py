@@ -9,11 +9,13 @@ from typing import Any, Dict, Iterator, List, Sequence, Tuple, Union, cast
 import numpy.typing as npt
 import pandas as pd
 from pandas.core.arrays import ExtensionArray
+from scipy import sparse
 from sklearn.pipeline import FeatureUnion, Pipeline
 from sklearn.preprocessing import FunctionTransformer
 
 from pytools.api import AllTracker
 
+from ..._util import hstack_frames
 from sklearndf import EstimatorDF, TransformerDF
 from sklearndf.wrapper import (
     ClassifierWrapperDF,
@@ -23,7 +25,11 @@ from sklearndf.wrapper import (
 
 log = logging.getLogger(__name__)
 
-__all__ = ["PipelineWrapperDF", "FeatureUnionWrapperDF"]
+__all__ = [
+    "FeatureUnionSparseFrames",
+    "FeatureUnionWrapperDF",
+    "PipelineWrapperDF",
+]
 
 
 #
@@ -213,7 +219,25 @@ class PipelineWrapperDF(
         )
 
 
-class FeatureUnionWrapperDF(TransformerWrapperDF[FeatureUnion], metaclass=ABCMeta):
+class FeatureUnionSparseFrames(
+    FeatureUnion,  # type:ignore
+):
+    """
+    FeatureUnion transformer that returns sparse data frames instead of arrays if one or
+    more of its transformers return a sparse data frame.
+    """
+
+    # noinspection PyPep8Naming
+    def _hstack(
+        self, Xs: List[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]]
+    ) -> Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]:
+        stacked = hstack_frames(Xs)
+        return stacked if stacked is None else super()._hstack(Xs)
+
+
+class FeatureUnionWrapperDF(
+    TransformerWrapperDF[FeatureUnionSparseFrames], metaclass=ABCMeta
+):
     """
     DF wrapper for `scikit-learn` class :class:`~sklearn.pipeline.FeatureUnion`.
     """
