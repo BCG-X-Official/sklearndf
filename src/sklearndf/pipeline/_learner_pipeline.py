@@ -348,10 +348,8 @@ class ClassifierPipelineDF(
         """[see superclass]"""
         return "classifier"
 
-    @property
-    def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
-        """[see superclass]"""
-        return self.final_estimator.classes_
+    def _get_classes(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+        return self.final_estimator._get_classes()
 
     # noinspection PyPep8Naming
     def predict_proba(
@@ -421,9 +419,9 @@ class ClusterPipelineDF(
         return "cluster"
 
     @property
-    def labels_(self) -> pd.Series:
+    def _get_labels(self) -> pd.Series:
         """[see superclass]"""
-        return self.final_estimator.labels_
+        return self.final_estimator._get_labels()
 
     # noinspection PyPep8Naming
     def fit_predict(
