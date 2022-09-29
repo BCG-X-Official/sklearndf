@@ -1085,13 +1085,12 @@ class ClusterWrapperDF(
         super().__init__(*args, **kwargs)
         self._x_index: Optional[pd.Index] = None
 
-    @property
-    def labels_(self) -> pd.Series:
-        """[see superclass]"""
-
-        raw_labels = self._native_estimator.labels_
-
-        return pd.Series(data=raw_labels, name=self.COL_LABELS, index=self._x_index)
+    def _get_labels(self) -> pd.Series:
+        return pd.Series(
+            data=self._native_estimator.labels_,
+            name=self.COL_LABELS,
+            index=self._x_index,
+        )
 
     def fit_predict(
         self,

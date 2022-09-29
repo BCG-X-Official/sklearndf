@@ -606,7 +606,7 @@ class ClusterDF(
     """
 
     @property
-    @abstractmethod
+    @fitted_only(not_fitted_error=AttributeError)
     def labels_(self) -> pd.Series:
         # noinspection GrazieInspection
         """
@@ -614,7 +614,7 @@ class ClusterDF(
 
         :raises AttributeError: this clusterer is not fitted
         """
-        pass
+        return self._get_labels()
 
     # noinspection PyPep8Naming
     @abstractmethod
@@ -634,6 +634,10 @@ class ClusterDF(
         :return: predicted cluster labels for all observations as a series,
             or as a data frame in case of multiple outputs
         """
+        pass
+
+    @abstractmethod
+    def _get_labels(self) -> pd.Series:
         pass
 
 
