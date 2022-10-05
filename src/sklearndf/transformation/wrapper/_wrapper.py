@@ -63,6 +63,7 @@ __all__ = [
     "OneHotEncoderWrapperDF",
     "PolynomialTransformerWrapperDF",
     "SingleColumnTransformerWrapperDF",
+    "VectorizerWrapperDF",
 ]
 
 
@@ -83,6 +84,7 @@ from sklearn.impute._iterative import IterativeImputer
 
 T_Imputer = TypeVar("T_Imputer", SimpleImputer, IterativeImputer)
 T_Polynomial = TypeVar("T_Polynomial", bound=TransformerMixin)
+T_Vectorizer = TypeVar("T_Vectorizer", bound=TransformerMixin)
 
 #
 # Ensure all symbols introduced below are included in __all__
@@ -757,6 +759,42 @@ def _get_native_feature_names_out(
         get_feature_names_out_fn = native_estimator.get_feature_names
 
     return pd.Index(get_feature_names_out_fn(feature_names_in_.to_numpy().astype(str)))
+
+
+class VectorizerWrapperDF(
+    SingleColumnTransformerWrapperDF[T_Transformer], Generic[T_Transformer]
+):
+    """
+    DF wrapper for vectorizers, specifically
+    :class:`~sklearn.feature_extraction.text.CountVectorizer` and
+    :class:`~sklearn.feature_extraction.text.TfidfVectorizer`.
+    """
+
+    def _get_features_original(self) -> pd.Series:
+        return pd.Series(
+            index=self._get_features_out(), data=self._get_features_in()[0]
+        )
+
+    def _get_features_out(self) -> pd.Index:
+        try:
+            feature_names = self.native_estimator.get_feature_names()
+        except AttributeError:
+            try:
+                n_features = self.native_estimator.n_features
+            except AttributeError:
+                raise TypeError(
+                    f"native vectorizer {type(self.native_estimator).__name__} "
+                    "has no method get_feature_names() or attribute n_features"
+                )
+            else:
+                return pd.RangeIndex(n_features)
+        else:
+            return pd.Index(feature_names)
+
+    # noinspection PyPep8Naming
+    def _adjust_X_type_for_delegate(self, X: pd.DataFrame) -> npt.NDArray[Any]:
+        assert len(X.columns) == 1
+        return cast(npt.NDArray[Any], X.iloc[:, 0].values)
 
 
 #

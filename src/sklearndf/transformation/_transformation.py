@@ -84,6 +84,7 @@ from .wrapper import (
     NComponentsDimensionalityReductionWrapperDF,
     OneHotEncoderWrapperDF,
     PolynomialTransformerWrapperDF,
+    VectorizerWrapperDF,
 )
 
 log = logging.getLogger(__name__)
@@ -190,14 +191,12 @@ class FeatureHasherDF(
     """Stub for DF wrapper of class ``FeatureHasher``"""
 
 
-class DictVectorizerDF(
-    ColumnPreservingTransformerWrapperDF[DictVectorizer], native=DictVectorizer
-):
+class DictVectorizerDF(VectorizerWrapperDF[DictVectorizer], native=DictVectorizer):
     """Stub for DF wrapper of class ``DictVectorizer``"""
 
 
 class HashingVectorizerDF(
-    ColumnPreservingTransformerWrapperDF[HashingVectorizer], native=HashingVectorizer
+    VectorizerWrapperDF[HashingVectorizer], native=HashingVectorizer
 ):
     """Stub for DF wrapper of class ``HashingVectorizer``"""
 
