@@ -12,6 +12,7 @@ from typing import (
     List,
     Optional,
     Sequence,
+    Tuple,
     TypeVar,
     Union,
     cast,
@@ -61,11 +62,12 @@ __all__ = [
     "NumpyTransformerWrapperDF",
     "OneHotEncoderWrapperDF",
     "PolynomialTransformerWrapperDF",
+    "SingleColumnTransformerWrapperDF",
 ]
 
 
 #
-# type variables
+# Type variables
 #
 
 T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
@@ -144,6 +146,32 @@ class NumpyTransformerWrapperDF(
         # convert series and data frames to sparse matrices instead of
         # dense arrays
         return 0.3
+
+
+class SingleColumnTransformerWrapperDF(
+    TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
+):
+    """
+    Abstract base class of DF wrappers for transformers that only accept single-column
+    inputs.
+    """
+
+    # noinspection PyPep8Naming
+    def _validate_parameter_types(
+        self,
+        X: Union[pd.Series, pd.DataFrame],
+        y: Optional[pd.Series],
+        *,
+        expected_columns: pd.Index = None,
+    ) -> Tuple[pd.DataFrame, Union[pd.Series, pd.DataFrame]]:
+        X, y = super()._validate_parameter_types(
+            X, y, expected_columns=expected_columns
+        )
+        if X.shape[1] != 1:
+            raise ValueError(
+                f"arg X expected to have exactly 1 column but has {X.shape[1]} columns"
+            )
+        return X, y
 
 
 class ColumnSubsetTransformerWrapperDF(

@@ -14,9 +14,11 @@ from sklearn.multioutput import MultiOutputRegressor
 
 from pytools.api import AllTracker
 
+from ... import __sklearn_0_24__, __sklearn_version__
 from ...transformation.wrapper import (
     ColumnPreservingTransformerWrapperDF,
     NumpyTransformerWrapperDF,
+    SingleColumnTransformerWrapperDF,
 )
 from ...wrapper import MetaEstimatorWrapperDF, RegressorWrapperDF
 
@@ -149,6 +151,7 @@ class RegressorTransformerWrapperDF(
 
 class IsotonicRegressionWrapperDF(
     RegressorTransformerWrapperDF[IsotonicRegression],
+    SingleColumnTransformerWrapperDF[IsotonicRegression],
     NumpyTransformerWrapperDF[IsotonicRegression],
     metaclass=ABCMeta,
 ):
@@ -157,22 +160,13 @@ class IsotonicRegressionWrapperDF(
     """
 
     # noinspection PyPep8Naming
-    def _check_parameter_types(
-        self,
-        X: pd.DataFrame,
-        y: Optional[pd.Series],
-        *,
-        expected_columns: pd.Index = None,
-    ) -> None:
-        super()._check_parameter_types(X, y, expected_columns=expected_columns)
-        if X.shape[1] != 1:
-            raise ValueError(
-                f"arg X expected to have exactly 1 column but has {X.shape[1]} columns"
-            )
-
-    # noinspection PyPep8Naming
     def _adjust_X_type_for_delegate(self, X: pd.DataFrame) -> npt.NDArray[Any]:
-        return super()._adjust_X_type_for_delegate(X).ravel()
+        arr = super()._adjust_X_type_for_delegate(X)
+        if __sklearn_version__ >= __sklearn_0_24__:
+            # we can return a 1D array as of sklearn 0.24
+            return arr.ravel()
+        else:
+            return arr
 
 
 #
