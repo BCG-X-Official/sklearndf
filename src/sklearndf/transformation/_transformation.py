@@ -4,6 +4,7 @@ Core implementation of :mod:`sklearndf.transformation`
 
 import logging
 
+from sklearn.base import TransformerMixin
 from sklearn.cross_decomposition import PLSSVD
 from sklearn.decomposition import (
     NMF,
@@ -21,7 +22,12 @@ from sklearn.decomposition import (
     TruncatedSVD,
 )
 from sklearn.feature_extraction import DictVectorizer, FeatureHasher
-from sklearn.feature_extraction.text import HashingVectorizer, TfidfTransformer
+from sklearn.feature_extraction.text import (
+    CountVectorizer,
+    HashingVectorizer,
+    TfidfTransformer,
+    TfidfVectorizer,
+)
 from sklearn.feature_selection import (
     RFE,
     RFECV,
@@ -94,6 +100,8 @@ __all__ = [
     "BernoulliRBMDF",
     "BinarizerDF",
     "ColumnTransformerDF",
+    "CountVectorizerDF",
+    "CountVectorizerTx",
     "DictVectorizerDF",
     "DictionaryLearningDF",
     "FactorAnalysisDF",
@@ -147,9 +155,12 @@ __all__ = [
     "SparseRandomProjectionDF",
     "StandardScalerDF",
     "TfidfTransformerDF",
+    "TfidfVectorizerDF",
+    "TfidfVectorizerTx",
     "TruncatedSVDDF",
     "VarianceThresholdDF",
 ]
+
 
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
 
@@ -185,6 +196,11 @@ class PLSSVDDF(ColumnPreservingTransformerWrapperDF[PLSSVD], native=PLSSVD):
     """Stub for DF wrapper of class ``PLSSVD``"""
 
 
+#
+# feature_extraction
+#
+
+
 class FeatureHasherDF(
     ColumnPreservingTransformerWrapperDF[FeatureHasher], native=FeatureHasher
 ):
@@ -199,6 +215,36 @@ class HashingVectorizerDF(
     VectorizerWrapperDF[HashingVectorizer], native=HashingVectorizer
 ):
     """Stub for DF wrapper of class ``HashingVectorizer``"""
+
+
+class CountVectorizerTx(
+    CountVectorizer,  # type: ignore
+    TransformerMixin,  # type: ignore
+):
+    """
+    Subclass of ``CountVectorizer`` that makes it a transformer.
+    """
+
+
+class CountVectorizerDF(
+    VectorizerWrapperDF[CountVectorizerTx], native=CountVectorizerTx
+):
+    """Stub for DF wrapper of class ``CountVectorizer``"""
+
+
+class TfidfVectorizerTx(
+    TfidfVectorizer,  # type: ignore
+    TransformerMixin,  # type: ignore
+):
+    """
+    Subclass of ``CountVectorizer`` that makes it a transformer.
+    """
+
+
+class TfidfVectorizerDF(
+    VectorizerWrapperDF[TfidfVectorizerTx], native=TfidfVectorizerTx
+):
+    """Stub for DF wrapper of class ``TfidfVectorizer``"""
 
 
 class TfidfTransformerDF(
@@ -554,7 +600,7 @@ __estimators = {
     if sym.endswith("DF")
     and sym not in __imported_estimators
     and not sym.startswith("_")
-}
+} | {CountVectorizerTx.__name__, TfidfVectorizerTx.__name__}
 
 if __estimators != set(__all__):
     raise RuntimeError(

@@ -75,15 +75,15 @@ def test_transformer_count() -> None:
 
     print(f"Testing {n} transformers.")
     if __sklearn_version__ < __sklearn_0_22__:
-        assert n == 53
-    elif __sklearn_version__ < __sklearn_0_24__:
-        assert n == 54
-    elif __sklearn_version__ < __sklearn_1_0__:
         assert n == 55
-    elif __sklearn_version__ < __sklearn_1_1__:
+    elif __sklearn_version__ < __sklearn_0_24__:
         assert n == 56
-    else:
+    elif __sklearn_version__ < __sklearn_1_0__:
+        assert n == 57
+    elif __sklearn_version__ < __sklearn_1_1__:
         assert n == 58
+    else:
+        assert n == 60
 
 
 @pytest.fixture  # type: ignore
