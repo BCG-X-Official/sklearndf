@@ -377,7 +377,7 @@ class EstimatorWrapperDF(
     # noinspection PyPep8Naming
     def fit(
         self: T_EstimatorWrapperDF,
-        X: pd.DataFrame,
+        X: Union[pd.DataFrame, pd.Series],
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
     ) -> T_EstimatorWrapperDF:
@@ -386,7 +386,7 @@ class EstimatorWrapperDF(
         self._reset_fit()
 
         try:
-            self._check_parameter_types(X, y)
+            X, y = self._validate_parameter_types(X, y)
             self._fit(X, y, **fit_params)
             self._post_fit(X, y, **fit_params)
 
@@ -444,14 +444,28 @@ class EstimatorWrapperDF(
             self._outputs = y.columns.tolist()
 
     # noinspection PyPep8Naming
-    def _check_parameter_types(
+    def _validate_parameter_types(
         self,
-        X: pd.DataFrame,
+        X: Union[pd.Series, pd.DataFrame],
         y: Optional[Union[pd.Series, pd.DataFrame]],
         *,
         expected_columns: pd.Index = None,
-    ) -> None:
-        if not isinstance(X, pd.DataFrame):
+    ) -> Tuple[pd.DataFrame, Union[pd.Series, pd.DataFrame]]:
+        # Check that the X and y parameters are valid data frames and series,
+        # and return X as a data frame and y as a series or data frame.
+        #
+        # If X is a series, convert it to a data frame with a single column.
+        #
+        # If expected_columns is not None, check that the columns of X match
+        # the expected columns.
+
+        if isinstance(X, pd.Series):
+            if X.name is None:
+                raise ValueError(
+                    "the name of the series passed as arg X must not be None"
+                )
+            X = X.to_frame()
+        elif not isinstance(X, pd.DataFrame):
             raise TypeError("arg X must be a DataFrame")
 
         if self.is_fitted:
@@ -467,6 +481,8 @@ class EstimatorWrapperDF(
 
         if y is not None and not isinstance(y, (pd.Series, pd.DataFrame)):
             raise TypeError("arg y must be None, or a pandas series or data frame")
+
+        return X, y
 
     @staticmethod
     def _verify_df(
@@ -621,9 +637,9 @@ class TransformerWrapperDF(
         return feature_names_original_
 
     # noinspection PyPep8Naming
-    def transform(self, X: pd.DataFrame) -> pd.DataFrame:
+    def transform(self, X: Union[pd.Series, pd.DataFrame]) -> pd.DataFrame:
         """[see superclass]"""
-        self._check_parameter_types(X, None)
+        X, y = self._validate_parameter_types(X, None)
 
         transformed = self._transform(X)
 
@@ -633,13 +649,16 @@ class TransformerWrapperDF(
 
     # noinspection PyPep8Naming
     def fit_transform(
-        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params: Any
+        self,
+        X: Union[pd.Series, pd.DataFrame],
+        y: Optional[pd.Series] = None,
+        **fit_params: Any,
     ) -> pd.DataFrame:
         """[see superclass]"""
         self._reset_fit()
 
         try:
-            self._check_parameter_types(X, y)
+            X, y = self._validate_parameter_types(X, y)
             transformed = self._fit_transform(X, y, **fit_params)
             self._post_fit(X, y, **fit_params)
 
@@ -654,9 +673,11 @@ class TransformerWrapperDF(
         )
 
     # noinspection PyPep8Naming
-    def inverse_transform(self, X: pd.DataFrame) -> pd.DataFrame:
+    def inverse_transform(self, X: Union[pd.Series, pd.DataFrame]) -> pd.DataFrame:
         """[see superclass]"""
-        self._check_parameter_types(X, None, expected_columns=self.feature_names_out_)
+        X, y = self._validate_parameter_types(
+            X, None, expected_columns=self.feature_names_out_
+        )
 
         transformed = self._inverse_transform(X)
 
@@ -726,7 +747,7 @@ class TransformerWrapperDF(
 
     @staticmethod
     def _transformed_to_df(
-        transformed: Union[pd.DataFrame, npt.NDArray[Any]],
+        transformed: Union[pd.DataFrame, npt.NDArray[Any], sparse.spmatrix],
         index: pd.Index,
         columns: pd.Index,
     ) -> pd.DataFrame:
@@ -804,10 +825,10 @@ class LearnerWrapperDF(
 
     # noinspection PyPep8Naming
     def predict(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
-        self._check_parameter_types(X, None)
+        X, y = self._validate_parameter_types(X, None)
 
         # noinspection PyUnresolvedReferences
         return self._prediction_to_series_or_frame(
@@ -893,10 +914,13 @@ class SupervisedLearnerWrapperDF(
 
     # noinspection PyPep8Naming
     def score(
-        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+        self,
+        X: Union[pd.Series, pd.DataFrame],
+        y: pd.Series,
+        sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see superclass]"""
-        self._check_parameter_types(X, y)
+        X, y = self._validate_parameter_types(X, y)
         if y is None:
             raise ValueError("arg y must not be None")
         if sample_weight is not None and not isinstance(sample_weight, pd.Series):
@@ -928,7 +952,10 @@ class RegressorWrapperDF(
 
     # noinspection PyPep8Naming
     def score(
-        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+        self,
+        X: Union[pd.Series, pd.DataFrame],
+        y: pd.Series,
+        sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see superclass]"""
         return cast(
@@ -959,13 +986,13 @@ class ClassifierWrapperDF(
 
     # noinspection PyPep8Naming
     def predict_proba(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """[see superclass]"""
 
         self._ensure_delegate_method("predict_proba")
 
-        self._check_parameter_types(X, None)
+        X, _ = self._validate_parameter_types(X, None)
 
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
@@ -977,13 +1004,13 @@ class ClassifierWrapperDF(
 
     # noinspection PyPep8Naming
     def predict_log_proba(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """[see superclass]"""
 
         self._ensure_delegate_method("predict_log_proba")
 
-        self._check_parameter_types(X, None)
+        X, _ = self._validate_parameter_types(X, None)
 
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
@@ -995,13 +1022,13 @@ class ClassifierWrapperDF(
 
     # noinspection PyPep8Naming
     def decision_function(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
 
         self._ensure_delegate_method("decision_function")
 
-        self._check_parameter_types(X, None)
+        X, _ = self._validate_parameter_types(X, None)
 
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
@@ -1060,7 +1087,10 @@ class ClassifierWrapperDF(
 
     # noinspection PyPep8Naming
     def score(
-        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+        self,
+        X: Union[pd.Series, pd.DataFrame],
+        y: pd.Series,
+        sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see superclass]"""
         return cast(
@@ -1100,7 +1130,7 @@ class ClusterWrapperDF(
 
     def fit_predict(
         self,
-        X: pd.DataFrame,
+        X: Union[pd.Series, pd.DataFrame],
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_predict_params: Any,
     ) -> Union[pd.Series, pd.DataFrame]:
@@ -1109,7 +1139,7 @@ class ClusterWrapperDF(
         self._reset_fit()
 
         try:
-            self._check_parameter_types(X, y)
+            X, y = self._validate_parameter_types(X, y)
 
             # fitting a clusterer produces a single output column for labels
             self._outputs = [ClusterWrapperDF.COL_LABELS]

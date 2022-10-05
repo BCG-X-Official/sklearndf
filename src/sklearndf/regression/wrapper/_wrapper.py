@@ -81,7 +81,7 @@ class PartialFitRegressorWrapperDF(
     # noinspection PyPep8Naming
     def partial_fit(
         self: T_PartialFitRegressorWrapperDF,
-        X: pd.DataFrame,
+        X: Union[pd.Series, pd.DataFrame],
         y: Union[pd.Series, pd.DataFrame],
         sample_weight: Optional[pd.Series] = None,
     ) -> T_PartialFitRegressorWrapperDF:
@@ -97,7 +97,7 @@ class PartialFitRegressorWrapperDF(
         :param sample_weight: optional weights applied to individual samples
         :return: ``self``
         """
-        self._check_parameter_types(X, y)
+        X, y = self._validate_parameter_types(X, y)
         self._partial_fit(X, y, sample_weight=sample_weight)
 
         return self
