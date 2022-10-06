@@ -475,7 +475,10 @@ class ColumnTransformerWrapperDF(
         columns: pd.Index,
     ) -> pd.DataFrame:
         if isinstance(transformed, pd.DataFrame):
-            transformed = transformed.set_axis(columns, axis=1, inplace=False)
+            # Our overloaded version of method _hstack in ColumnTransformerSparseFrames
+            # returns a DataFrame if all transformers return a DataFrame, but does not
+            # update the column names. We do that here.
+            transformed = transformed.set_axis(columns, axis=1)
         return super(
             ColumnTransformerWrapperDF, ColumnTransformerWrapperDF
         )._transformed_to_df(transformed, index, columns)
