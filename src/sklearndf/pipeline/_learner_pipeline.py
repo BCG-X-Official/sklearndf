@@ -107,35 +107,6 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
         """
         pass
 
-    @property
-    def feature_names_out_(self) -> pd.Index:
-        """
-        Pandas column index of all features resulting from the preprocessing step.
-
-        Same as :attr:`.feature_names_in_` if the preprocessing step is ``None``.
-        """
-        if self.preprocessing is not None:
-            return self.preprocessing.feature_names_out_
-        else:
-            return self.feature_names_in_.rename(TransformerDF.COL_FEATURE_OUT)
-
-    @property
-    def feature_names_original_(self) -> pd.Series:
-        """
-        Pandas series mapping the names of all features resulting from the preprocessing
-        step to the names of the input features they were derived from.
-
-        Returns an identity mapping of :attr:`.feature_names_in_` onto itself
-        if the preprocessing step is ``None``.
-        """
-        if self.preprocessing is not None:
-            return self.preprocessing.feature_names_original_
-        else:
-            feature_names_in_ = self.feature_names_in_
-            return feature_names_in_.to_series(index=feature_names_in_).rename_axis(
-                index=TransformerDF.COL_FEATURE_OUT
-            )
-
     # noinspection PyPep8Naming
     def fit(
         self: T_EstimatorPipelineDF,
@@ -175,6 +146,21 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
             self.preprocessing is None or self.preprocessing.is_fitted
         ) and self.final_estimator.is_fitted
 
+    # noinspection PyPep8Naming
+    def preprocess(self, X: pd.DataFrame) -> pd.DataFrame:
+        """
+        Preprocess the given feature values using this pipeline's preprocessing step.
+
+        If the pipeline has no preprocessing step, return the input unchanged.
+
+        :param X: input data frame with observations as rows and features as columns
+        :return: the preprocessed input data frame
+        """
+        if self.preprocessing is not None:
+            return self.preprocessing.transform(X)
+        else:
+            return X
+
     def _get_features_in(self) -> pd.Index:
         if self.preprocessing is not None:
             return self.preprocessing.feature_names_in_
@@ -198,13 +184,6 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
             return self.preprocessing._get_n_outputs()
         else:
             return self.final_estimator._get_n_outputs()
-
-    # noinspection PyPep8Naming
-    def _pre_transform(self, X: pd.DataFrame) -> pd.DataFrame:
-        if self.preprocessing is not None:
-            return self.preprocessing.transform(X)
-        else:
-            return X
 
     # noinspection PyPep8Naming
     def _pre_fit_transform(
@@ -233,7 +212,7 @@ class LearnerPipelineDF(
         self, X: pd.DataFrame, **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
-        return self.final_estimator.predict(self._pre_transform(X), **predict_params)
+        return self.final_estimator.predict(self.preprocess(X), **predict_params)
 
 
 @inheritdoc(match="[see superclass]")
@@ -257,10 +236,10 @@ class SupervisedLearnerPipelineDF(
     ) -> float:
         """[see superclass]"""
         if sample_weight is None:
-            return self.final_estimator.score(self._pre_transform(X), y)
+            return self.final_estimator.score(self.preprocess(X), y)
         else:
             return self.final_estimator.score(
-                self._pre_transform(X), y, sample_weight=sample_weight
+                self.preprocess(X), y, sample_weight=sample_weight
             )
 
 
@@ -356,25 +335,21 @@ class ClassifierPipelineDF(
         self, X: pd.DataFrame, **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """[see superclass]"""
-        return self.classifier.predict_proba(self._pre_transform(X), **predict_params)
+        return self.classifier.predict_proba(self.preprocess(X), **predict_params)
 
     # noinspection PyPep8Naming
     def predict_log_proba(
         self, X: pd.DataFrame, **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """[see superclass]"""
-        return self.classifier.predict_log_proba(
-            self._pre_transform(X), **predict_params
-        )
+        return self.classifier.predict_log_proba(self.preprocess(X), **predict_params)
 
     # noinspection PyPep8Naming
     def decision_function(
         self, X: pd.DataFrame, **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
-        return self.classifier.decision_function(
-            self._pre_transform(X), **predict_params
-        )
+        return self.classifier.decision_function(self.preprocess(X), **predict_params)
 
 
 @inheritdoc(match="[see superclass]")
@@ -431,9 +406,7 @@ class ClusterPipelineDF(
         **fit_predict_params: Any,
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
-        return self.clusterer.fit_predict(
-            self._pre_transform(X), y, **fit_predict_params
-        )
+        return self.clusterer.fit_predict(self.preprocess(X), y, **fit_predict_params)
 
 
 __tracker.validate()
