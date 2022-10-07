@@ -24,6 +24,7 @@ import pandas as pd
 from scipy import sparse
 from sklearn.base import TransformerMixin
 from sklearn.compose import ColumnTransformer
+from sklearn.decomposition import PCA
 from sklearn.impute import MissingIndicator, SimpleImputer
 from sklearn.kernel_approximation import AdditiveChi2Sampler
 from sklearn.manifold import Isomap
@@ -61,6 +62,7 @@ __all__ = [
     "NComponentsDimensionalityReductionWrapperDF",
     "NumpyTransformerWrapperDF",
     "OneHotEncoderWrapperDF",
+    "PCAWrapperDF",
     "PolynomialTransformerWrapperDF",
     "SingleColumnTransformerWrapperDF",
     "VectorizerWrapperDF",
@@ -269,11 +271,34 @@ class NComponentsDimensionalityReductionWrapperDF(
     _ATTR_N_COMPONENTS = "n_components"
 
     def _validate_delegate_estimator(self) -> None:
-        self._validate_delegate_attribute(attribute_name=self._ATTR_N_COMPONENTS)
+        self._validate_delegate_attribute(
+            attribute_name=(
+                NComponentsDimensionalityReductionWrapperDF._ATTR_N_COMPONENTS
+            )
+        )
 
     @property
     def _n_components_(self) -> int:
-        return cast(int, getattr(self.native_estimator, self._ATTR_N_COMPONENTS))
+        return cast(
+            int,
+            getattr(
+                self.native_estimator,
+                NComponentsDimensionalityReductionWrapperDF._ATTR_N_COMPONENTS,
+            ),
+        )
+
+
+class PCAWrapperDF(NComponentsDimensionalityReductionWrapperDF[PCA]):
+    """
+    DF wrapper for :class:`sklearn.decomposition.PCA`.
+
+    Uses attribute :attr:`~sklearn.decomposition.PCA.n_components_` to get the number
+    of components, which may be determined by the estimator during fitting.
+    """
+
+    @property
+    def _n_components_(self) -> int:
+        return cast(int, self._native_estimator.n_components_)
 
 
 class ComponentsDimensionalityReductionWrapperDF(

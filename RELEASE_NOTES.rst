@@ -58,6 +58,12 @@ API.
 adds data frame support for clusterers along with additional API enhancements and
 improvements, and is now subject to static type checking with |mypy|.
 
+2.0.2
+~~~~~
+
+- FIX: property :attr:`.PCADF.n_components_` now returns the value of :attr:`~sklearndf.decomposition.PCA.n_components_`, not :attr:`~sklearndf.decomposition.PCA.n_components`
+
+
 2.0.1
 ~~~~~
 

@@ -92,6 +92,7 @@ from .wrapper import (
     PolynomialTransformerWrapperDF,
     VectorizerWrapperDF,
 )
+from .wrapper._wrapper import PCAWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -461,7 +462,7 @@ class NMFDF(ComponentsDimensionalityReductionWrapperDF[NMF], native=NMF):
     """Stub for DF wrapper of class ``NMF``"""
 
 
-class PCADF(NComponentsDimensionalityReductionWrapperDF[PCA], native=PCA):
+class PCADF(PCAWrapperDF, native=PCA):
     """Stub for DF wrapper of class ``PCA``"""
 
 
