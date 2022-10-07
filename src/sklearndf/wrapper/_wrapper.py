@@ -644,7 +644,7 @@ class TransformerWrapperDF(
     # noinspection PyPep8Naming
     def transform(self, X: Union[pd.Series, pd.DataFrame]) -> pd.DataFrame:
         """[see superclass]"""
-        X, y = self._validate_parameter_types(X, None)
+        X, _ = self._validate_parameter_types(X, None)
 
         transformed = self._transform(X)
 
@@ -680,7 +680,7 @@ class TransformerWrapperDF(
     # noinspection PyPep8Naming
     def inverse_transform(self, X: Union[pd.Series, pd.DataFrame]) -> pd.DataFrame:
         """[see superclass]"""
-        X, y = self._validate_parameter_types(
+        X, _ = self._validate_parameter_types(
             X, None, expected_columns=self.feature_names_out_
         )
 
@@ -833,7 +833,7 @@ class LearnerWrapperDF(
         self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
-        X, y = self._validate_parameter_types(X, None)
+        X, _ = self._validate_parameter_types(X, None)
 
         # noinspection PyUnresolvedReferences
         return self._prediction_to_series_or_frame(
