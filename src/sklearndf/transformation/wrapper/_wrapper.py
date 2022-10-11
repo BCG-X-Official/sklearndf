@@ -805,14 +805,17 @@ class VectorizerWrapperDF(
 
     def _get_features_out(self) -> pd.Index:
         try:
-            feature_names = self.native_estimator.get_feature_names()
+            if __sklearn_version__ >= __sklearn_1_0__:
+                feature_names = self.native_estimator.get_feature_names_out()
+            else:
+                feature_names = self.native_estimator.get_feature_names()
         except AttributeError:
             try:
                 n_features = self.native_estimator.n_features
             except AttributeError:
                 raise TypeError(
                     f"native vectorizer {type(self.native_estimator).__name__} "
-                    "has no method get_feature_names() or attribute n_features"
+                    "has no method get_feature_names_out() or attribute n_features"
                 )
             else:
                 return pd.RangeIndex(n_features)

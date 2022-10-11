@@ -47,7 +47,7 @@ def test_tfidf() -> None:
 
     word_counts_sparse_df = word_counter.fit_transform(corpus_named)
 
-    assert word_counter.get_feature_names() == word_feature_names
+    assert word_counter.feature_names_out_.to_list() == word_feature_names
     assert all(
         isinstance(dtype, pd.SparseDtype) for dtype in word_counts_sparse_df.dtypes
     )
@@ -66,31 +66,29 @@ def test_tfidf() -> None:
 
     bigram_counter = CountVectorizerDF(analyzer="word", ngram_range=(2, 2))
     x2 = bigram_counter.fit_transform(corpus_named)
-    assert bigram_counter.get_feature_names() == bigram_feature_names
+    assert bigram_counter.feature_names_out_.to_list() == bigram_feature_names
     assert all(isinstance(dtype, pd.SparseDtype) for dtype in x2.dtypes)
 
     # create a pipeline that combines the word and bigram counter
     # and computes the tf-idf values for every word and bigram
 
-    pipe = PipelineDF(
+    vectorize = FeatureUnionDF(
         [
-            (
-                "vectorize",
-                FeatureUnionDF(
-                    [
-                        ("words", word_counter),
-                        ("bigrams", bigram_counter),
-                    ]
-                ),
-            ),
+            ("words", word_counter),
+            ("bigrams", bigram_counter),
+        ]
+    )
+    pipeline = PipelineDF(
+        [
+            ("vectorize", vectorize),
             ("tfidf", tfidf),
         ]
     )
 
-    tfidf = pipe.fit_transform(corpus_named)
+    tfidf = pipeline.fit_transform(corpus_named)
     assert all(isinstance(dtype, pd.SparseDtype) for dtype in tfidf.dtypes)
     assert_series_equal(
-        pipe.feature_names_original_,
+        pipeline.feature_names_original_,
         pd.Series(
             index=pd.Index(
                 [f"words__{name}" for name in word_feature_names]
