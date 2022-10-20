@@ -17,10 +17,10 @@ API.
 2.2.0
 ~~~~~
 
-- API: new property :attr:`.EstimatorDF.output_names_` to get the names of the output
-  columns the estimator was fitted with
 - API: DF estimators now support native estimators using sparse matrices as input or output, and automatically
   convert them to/from sparse :class:`~pandas.DataFrame` objects
+- API: new property :attr:`.EstimatorDF.output_names_` to get the names of the output
+  columns the estimator was fitted with
 - API: new method :attr:`.LearnerPipelineDF.preprocess` to apply the preprocessing step
   to a data frame
 - API: remove properties ``feature_names_out_`` and ``feature_names_original_`` from
