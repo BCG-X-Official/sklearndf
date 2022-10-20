@@ -18,7 +18,11 @@ API.
 ~~~~~
 
 - API: new property :attr:`.EstimatorDF.output_names_` to get the names of the output
-  columns the estimator was fitted with.
+  columns the estimator was fitted with
+- API: new method :attr:`.LearnerPipelineDF.preprocess` to apply the preprocessing step
+  to a data frame
+- API: remove properties ``feature_names_out_`` and ``feature_names_original_`` from
+  class :class:`.LearnerPipelineDF`
 
 
 *sklearndf* 2.1
