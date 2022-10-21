@@ -18,18 +18,18 @@ from test.sklearndf.pipeline import make_simple_transformer
     argnames="regressor_df_cls", argvalues=[RandomForestRegressorDF, LGBMRegressorDF]
 )
 def test_regression_pipeline_df(
-    boston_features: pd.DataFrame,
-    boston_target_sr: pd.Series,
+    diabetes_features: pd.DataFrame,
+    diabetes_target_sr: pd.Series,
     regressor_df_cls: Type[RegressorDF],
 ) -> None:
 
     rpdf = RegressorPipelineDF(
         regressor=regressor_df_cls(),
         preprocessing=make_simple_transformer(
-            impute_median_columns=boston_features.select_dtypes(
+            impute_median_columns=diabetes_features.select_dtypes(
                 include=np.number
             ).columns,
-            one_hot_encode_columns=boston_features.select_dtypes(
+            one_hot_encode_columns=diabetes_features.select_dtypes(
                 include=object
             ).columns,
         ),
@@ -37,8 +37,8 @@ def test_regression_pipeline_df(
 
     assert is_regressor(rpdf)
 
-    rpdf.fit(X=boston_features, y=boston_target_sr)
-    rpdf.predict(X=boston_features)
+    rpdf.fit(X=diabetes_features, y=diabetes_target_sr)
+    rpdf.predict(X=diabetes_features)
 
     # test type check within constructor
     with pytest.raises(TypeError):
