@@ -79,9 +79,9 @@ REGRESSORS_PARTIAL_FIT = [
 )
 def test_wrapped_fit_predict(
     sklearndf_cls: Type[RegressorDF],
-    boston_features: pd.DataFrame,
-    boston_target_sr: pd.Series,
-    boston_target_df: pd.DataFrame,
+    diabetes_features: pd.DataFrame,
+    diabetes_target_sr: pd.Series,
+    diabetes_target_df: pd.DataFrame,
 ) -> None:
     """Test fit & predict of wrapped sklearn regressors"""
     parameters: Dict[str, Any] = DEFAULT_REGRESSOR_PARAMETERS.get(
@@ -100,23 +100,23 @@ def test_wrapped_fit_predict(
         or isinstance(regressor.native_estimator, MultiOutputRegressor)
         or isinstance(regressor.native_estimator, RegressorChain)
     ):
-        regressor.fit(X=boston_features, y=boston_target_df)
+        regressor.fit(X=diabetes_features, y=diabetes_target_df)
 
     else:
         if isinstance(regressor, IsotonicRegressionDF):
             # fit will fail when we have more than one feature
             with pytest.raises(ValueError):
-                regressor.fit(X=boston_features, y=boston_target_sr)
+                regressor.fit(X=diabetes_features, y=diabetes_target_sr)
             # eliminate all features except one then continue testing
-            boston_features = boston_features.loc[:, ["LSTAT"]]
+            diabetes_features = diabetes_features.loc[:, ["bmi"]]
 
-        regressor.fit(X=boston_features, y=boston_target_sr)
+        regressor.fit(X=diabetes_features, y=diabetes_target_sr)
 
-    predictions = regressor.predict(X=boston_features)
+    predictions = regressor.predict(X=diabetes_features)
 
     # test predictions data-type, length and values
     assert isinstance(predictions, (pd.Series, pd.DataFrame))
-    assert len(predictions) == len(boston_target_sr)
+    assert len(predictions) == len(diabetes_target_sr)
 
 
 @pytest.mark.parametrize(  # type: ignore
@@ -124,9 +124,9 @@ def test_wrapped_fit_predict(
 )
 def test_wrapped_partial_fit(
     sklearndf_cls: Type[RegressorDF],
-    boston_features: pd.DataFrame,
-    boston_target_sr: pd.Series,
-    boston_target_df: pd.DataFrame,
+    diabetes_features: pd.DataFrame,
+    diabetes_target_sr: pd.Series,
+    diabetes_target_df: pd.DataFrame,
 ) -> None:
 
     # noinspection PyArgumentList
@@ -135,6 +135,6 @@ def test_wrapped_partial_fit(
     )
 
     is_multi_output = isinstance(regressor.native_estimator, MultiOutputRegressor)
-    boston_target = boston_target_df if is_multi_output else boston_target_sr
+    diabetes_target = diabetes_target_df if is_multi_output else diabetes_target_sr
 
-    regressor.partial_fit(boston_features, boston_target)
+    regressor.partial_fit(diabetes_features, diabetes_target)

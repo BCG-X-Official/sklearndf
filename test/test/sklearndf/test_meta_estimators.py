@@ -74,14 +74,14 @@ def test_meta_estimators() -> None:
     reason="stacking estimators are not implemented by current version of sklearn",
 )
 def test_stacking_regressor(
-    boston_features: pd.DataFrame, boston_target_sr: pd.Series
+    diabetes_features: pd.DataFrame, diabetes_target_sr: pd.Series
 ) -> None:
     from sklearndf.regression import StackingRegressorDF
 
     # basic building blocks
     model1 = LinearRegressionDF()
     model2 = ElasticNetDF()
-    feature_names = list(boston_features.columns)
+    feature_names = list(diabetes_features.columns)
     preprocessing = ColumnTransformerDF(
         [
             ("scaled", StandardScalerDF(), feature_names[1:]),
@@ -108,8 +108,8 @@ def test_stacking_regressor(
 
     assert is_regressor(pipeline)
 
-    pipeline.fit(boston_features, boston_target_sr)
-    print(pipeline.predict(boston_features))
+    pipeline.fit(diabetes_features, diabetes_target_sr)
+    print(pipeline.predict(diabetes_features))
 
     # Stack of Pipelines doesn't
     stack_of_pipelines = StackingRegressorDF(
@@ -129,9 +129,9 @@ def test_stacking_regressor(
 
     assert is_regressor(stack_of_pipelines)
 
-    stack_of_pipelines.fit(boston_features, boston_target_sr)
+    stack_of_pipelines.fit(diabetes_features, diabetes_target_sr)
 
-    pred = stack_of_pipelines.predict(boston_features)
+    pred = stack_of_pipelines.predict(diabetes_features)
     assert isinstance(pred, pd.Series)
 
     assert not stack_of_pipelines.final_estimator.is_fitted
