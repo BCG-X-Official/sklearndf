@@ -25,8 +25,8 @@ def test_boruta_df() -> None:
     boruta_df.fit(x, y)
 
 
-def test_boruta_pipeline(boston_df: pd.DataFrame, boston_target: str) -> None:
-    """Test a pipeline with on the boston dataset"""
+def test_boruta_pipeline(diabetes_df: pd.DataFrame, diabetes_target: str) -> None:
+    """Test a pipeline with on the diabetes dataset"""
 
     boruta_selector = PipelineDF(
         steps=[
@@ -60,7 +60,7 @@ def test_boruta_pipeline(boston_df: pd.DataFrame, boston_target: str) -> None:
         ]
     )
 
-    x = boston_df.drop(columns=boston_target)
-    y = boston_df.loc[:, boston_target]
+    x = diabetes_df.drop(columns=diabetes_target)
+    y = diabetes_df.loc[:, diabetes_target]
 
     boruta_selector.fit(x, y)
