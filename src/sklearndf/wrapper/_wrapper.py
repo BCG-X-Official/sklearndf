@@ -471,7 +471,7 @@ class EstimatorWrapperDF(
                 )
             X = X.to_frame()
         elif not isinstance(X, pd.DataFrame):
-            raise TypeError("arg X must be a DataFrame")
+            raise TypeError("arg X must be a DataFrame or a Series")
 
         if self.is_fitted:
             EstimatorWrapperDF._verify_df(
