@@ -73,19 +73,14 @@ __all__ = [
 # Type variables
 #
 
-T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
-
-# T_Imputer is needed because scikit-learn's _BaseImputer only exists from v0.22
-# onwards.
-# Once we drop support for sklearn 0.21, _BaseImputer can be used instead.
-# The following TypeVar helps to annotate availability of "add_indicator" and
-# "missing_values" attributes on an imputer instance for ImputerWrapperDF below.
 
 # noinspection PyProtectedMember
 from sklearn.impute._iterative import IterativeImputer
 
+# Once we drop support for sklearn 0.21, T_Imputer can be bound to _BaseImputer
 T_Imputer = TypeVar("T_Imputer", SimpleImputer, IterativeImputer)
 T_Polynomial = TypeVar("T_Polynomial", bound=TransformerMixin)
+T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
 T_Vectorizer = TypeVar("T_Vectorizer", bound=TransformerMixin)
 
 #
@@ -502,7 +497,9 @@ class ColumnTransformerWrapperDF(
         )
 
 
-class ImputerWrapperDF(TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
+class ImputerWrapperDF(
+    TransformerWrapperDF[T_Imputer], Generic[T_Imputer], metaclass=ABCMeta
+):
     """
     DF wrapper for imputation transformers, e.g., :class:`sklearn.impute.SimpleImputer`.
     """
