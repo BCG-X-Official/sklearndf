@@ -245,6 +245,8 @@ class FeatureUnionWrapperDF(
     DROP = "drop"
     PASSTHROUGH = "passthrough"
 
+    __native_base_class__ = FeatureUnionSparseFrames
+
     @staticmethod
     def _prepend_features_out(features_out: pd.Index, name_prefix: str) -> pd.Index:
         return pd.Index(data=f"{name_prefix}__" + features_out.astype(str))
