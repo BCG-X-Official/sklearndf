@@ -252,7 +252,7 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
             **transformer_args,
         )
         transformed_native = pd.DataFrame(
-            col_tx_native.fit_transform(X=data), columns=feature_names_out_expected
+            col_tx_native.fit_transform(X=data), columns=names_out
         )
 
         assert_frame_equal(transformed_df, transformed_native, check_dtype=False)

@@ -356,7 +356,7 @@ def test_feature_union(test_data_categorical: pd.DataFrame, sparse: bool) -> Non
                 one_hot__c_father=[0.0, 1.0, 0.0],
                 one_hot__c_mother=[0.0, 0.0, 1.0],
             ),
-        ).rename_axis(columns="feature"),
+        ).rename_axis(columns="feature_out"),
     )
 
     if __sklearn_version__ >= __sklearn_1_1__:
@@ -397,5 +397,5 @@ def test_feature_union(test_data_categorical: pd.DataFrame, sparse: bool) -> Non
                     test_data_categorical.add_prefix("pass_again__"),
                 ],
                 axis=1,
-            ).rename_axis(columns="feature_out"),
+            ),
         )
