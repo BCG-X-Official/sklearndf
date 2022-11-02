@@ -18,8 +18,8 @@ from pytools.expression.atomic import Id
 from sklearndf.classification import SVCDF, DecisionTreeClassifierDF
 from sklearndf.clustering.wrapper import KMeansBaseWrapperDF
 from sklearndf.pipeline import PipelineDF
-from sklearndf.pipeline.wrapper import FeatureUnionWrapperDF
 from sklearndf.transformation import OneHotEncoderDF
+from sklearndf.transformation.wrapper import ImputerWrapperDF
 from sklearndf.wrapper import (
     ClassifierWrapperDF,
     EstimatorWrapperDF,
@@ -254,7 +254,7 @@ def test_native_class_validation() -> None:
     ):
 
         class MismatchedNativeClass4(
-            FeatureUnionWrapperDF, native=RandomForestRegressor
+            ImputerWrapperDF[Any], native=RandomForestRegressor
         ):
             pass
 

@@ -365,7 +365,15 @@ class ColumnTransformerSparseFrames(
     def _hstack(
         self, Xs: List[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]]
     ) -> Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]:
-        stacked = hstack_frames(Xs)
+        if __sklearn_version__ >= __sklearn_1_0__ and self.verbose_feature_names_out:
+            prefixes = [name for name, _, _ in self.transformers]
+            if self._remainder[2] and self.remainder != "drop":
+                # remainder columns exist and are not being dropped
+                prefixes.append("remainder")
+            stacked = hstack_frames(Xs, prefixes=prefixes)
+        else:
+            stacked = hstack_frames(Xs)
+
         if stacked is None:
             return super()._hstack(Xs)
         else:
@@ -492,21 +500,6 @@ class ColumnTransformerWrapperDF(
                 )
             ]
         )
-
-    @staticmethod
-    def _transformed_to_df(
-        transformed: Union[pd.DataFrame, npt.NDArray[Any]],
-        index: pd.Index,
-        columns: pd.Index,
-    ) -> pd.DataFrame:
-        if isinstance(transformed, pd.DataFrame):
-            # Our overloaded version of method _hstack in ColumnTransformerSparseFrames
-            # returns a DataFrame if all transformers return a DataFrame, but does not
-            # update the column names. We do that here.
-            transformed = transformed.set_axis(columns, axis=1)
-        return super(
-            ColumnTransformerWrapperDF, ColumnTransformerWrapperDF
-        )._transformed_to_df(transformed, index, columns)
 
 
 class ImputerWrapperDF(TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):

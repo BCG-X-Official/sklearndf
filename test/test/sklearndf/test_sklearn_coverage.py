@@ -161,9 +161,9 @@ def sklearn_clusterer_classes() -> List[type]:
 def _check_unexpected_sklearn_class(cls: type) -> None:
     f_cls_name = f"{cls.__module__}.{cls.__name__}"
     if cls.__name__ in UNSUPPORTED_SKLEARN_CLASSES:
-        pytest.skip(f"Class '{f_cls_name} is not wrapped but marked as unsupported' ")
+        pytest.skip(f"Class {f_cls_name} is not wrapped but marked as unsupported")
     else:
-        raise ValueError(f"Class '{f_cls_name}' is not wrapped")
+        raise ValueError(f"Class {f_cls_name} is not wrapped")
 
 
 @pytest.mark.parametrize(  # type: ignore

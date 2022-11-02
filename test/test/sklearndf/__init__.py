@@ -7,6 +7,7 @@ import pandas as pd
 import sklearn
 from sklearn.base import BaseEstimator
 from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import FeatureUnion
 
 from sklearndf import (
     EstimatorDF,
@@ -15,11 +16,13 @@ from sklearndf import (
     __sklearn_0_22__,
     __sklearn_version__,
 )
+from sklearndf.pipeline.wrapper import FeatureUnionSparseFrames
 from sklearndf.transformation.wrapper import ColumnTransformerSparseFrames
 from sklearndf.wrapper import EstimatorWrapperDF
 
 OVERRIDDEN_SKLEARN_CLASSES = {
     ColumnTransformerSparseFrames: ColumnTransformer,
+    FeatureUnionSparseFrames: FeatureUnion,
 }
 
 

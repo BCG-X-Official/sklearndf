@@ -231,8 +231,13 @@ class FeatureUnionSparseFrames(
     def _hstack(
         self, Xs: List[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]]
     ) -> Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]:
-        stacked = hstack_frames(Xs)
-        return stacked if stacked is not None else super()._hstack(Xs)
+        stacked_frames = hstack_frames(
+            Xs, prefixes=[name for name, _ in self.transformer_list]
+        )
+        if stacked_frames is None:
+            return super()._hstack(Xs)
+        else:
+            return stacked_frames
 
 
 class FeatureUnionWrapperDF(

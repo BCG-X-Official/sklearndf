@@ -10,16 +10,30 @@ from scipy import sparse
 
 
 def hstack_frames(
-    frames: List[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]]
+    frames: List[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]],
+    *,
+    prefixes: Optional[List[str]] = None,
 ) -> Optional[pd.DataFrame]:
     """
     If only data frames are passed, stack them horizontally.
 
     :param frames: a list of array-likes
+    :param prefixes: an optional list of prefixes to use for the columns of each data
+        frame in arg ``frames``; must have the same length as arg ``frames``
     :return: the stacked data frame if all elements of ``frames`` are data frames;
         ``None`` otherwise
     """
-    if all(isinstance(X, pd.DataFrame) for X in frames):
+    if all(isinstance(frame, pd.DataFrame) for frame in frames):
+        # all frames are data frames
+        frames = cast(List[pd.DataFrame], frames)
+        if prefixes is not None:
+            assert len(prefixes) == len(
+                frames
+            ), "number of prefixes must match number of frames"
+            frames = [
+                frame.add_prefix(f"{prefix}__")
+                for frame, prefix in zip(frames, prefixes)
+            ]
         return pd.concat(frames, axis=1)
     else:
         return None
