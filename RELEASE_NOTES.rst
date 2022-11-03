@@ -30,10 +30,10 @@ API.
 - API: remove properties ``feature_names_out_`` and ``feature_names_original_`` from
   class :class:`.LearnerPipelineDF`
 - API: :class:`~pandas.Index` instances obtained from
-  :meth:`.EstimatorDF.feature_names_in_` and :meth:`.TransformerDF.feature_names_out_`
+  :attr:`.EstimatorDF.feature_names_in_` and :attr:`.TransformerDF.feature_names_out_`
   are now named ``"feature"`` instead of ``"feature_in"`` and ``"feature_out"``,
   respectively, and :class:`~pandas.Series` instances obtained from
-  :meth:`.TransformerDF.feature_names_original_` are now named ``"feature_original"``
+  :attr:`.TransformerDF.feature_names_original_` are now named ``"feature_original"``
   instead of ``"feature_in"``, and their indices are now named ``"feature"`` instead
   of ``"feature_out"``; this is to separate the semantics of the originating property
   from the column index, which may be used in other contexts
