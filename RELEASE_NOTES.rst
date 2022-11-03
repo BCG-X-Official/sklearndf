@@ -12,6 +12,12 @@ Release Notes
 
 *sklearndf* 2.1 adds support for `scikit-learn |nbsp| 1.1 <https://scikit-learn.org/1.1>`_.
 
+2.1.1
+~~~~~
+
+This is a maintenance release to catch up with *sklearndf* |nbsp| 2.0.2.
+
+
 2.1.0
 ~~~~~
 
