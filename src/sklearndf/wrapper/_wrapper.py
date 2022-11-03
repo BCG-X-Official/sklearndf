@@ -85,6 +85,7 @@ __all__ = [
 
 T = TypeVar("T")
 T_Callable = TypeVar("T_Callable", bound=Callable[..., Any])
+T_Target = TypeVar("T_Target", bound=Union[pd.Series, pd.DataFrame, None])
 
 T_NativeEstimator = TypeVar("T_NativeEstimator", bound=BaseEstimator)
 T_NativeTransformer = TypeVar("T_NativeTransformer", bound=TransformerMixin)
@@ -452,10 +453,10 @@ class EstimatorWrapperDF(
     def _validate_parameter_types(
         self,
         X: Union[pd.Series, pd.DataFrame],
-        y: Optional[Union[pd.Series, pd.DataFrame]],
+        y: T_Target,
         *,
         expected_columns: pd.Index = None,
-    ) -> Tuple[pd.DataFrame, Union[pd.Series, pd.DataFrame]]:
+    ) -> Tuple[pd.DataFrame, T_Target]:
         # Check that the X and y parameters are valid data frames and series,
         # and return X as a data frame and y as a series or data frame.
         #
@@ -1215,40 +1216,43 @@ class MetaEstimatorWrapperDF(
     """
 
     def _validate_delegate_estimator(self) -> None:
-        def _unwrap_estimator(estimator: BaseEstimator) -> BaseEstimator:
-            native_estimator = (
-                estimator.native_estimator
-                if isinstance(estimator, EstimatorWrapperDF)
-                else estimator
-            )
-            # noinspection PyProtectedMember
-            if isinstance(
-                native_estimator, (EstimatorDF, sklearn_meta._BaseComposition)
-            ) or not isinstance(native_estimator, (RegressorMixin, ClassifierMixin)):
-                raise TypeError(
-                    "sklearndf meta-estimators only accept simple regressors and "
-                    f"classifiers, but got: {type(estimator).__name__}"
-                )
-            return cast(BaseEstimator, native_estimator)
+        meta_estimator = self.native_estimator
 
-        delegate_estimator = self.native_estimator
-
-        estimator = getattr(delegate_estimator, "estimator", None)
+        estimator = getattr(meta_estimator, "estimator", None)
         if estimator is not None:
-            delegate_estimator.estimator = _unwrap_estimator(estimator)
+            meta_estimator.estimator = self._native_learner(estimator)
 
-        base_estimator = getattr(delegate_estimator, "base_estimator", None)
+        base_estimator = getattr(meta_estimator, "base_estimator", None)
         # attribute base_estimator is deprecated as of scikit-learn 1.2, with the
         # default value of "deprecated"
-
         if base_estimator is not None and base_estimator != "deprecated":
-            delegate_estimator.base_estimator = _unwrap_estimator(base_estimator)
+            meta_estimator.base_estimator = self._native_learner(base_estimator)
 
-        estimators = getattr(delegate_estimator, "estimators", None)
+        estimators = getattr(meta_estimator, "estimators", None)
         if estimators is not None:
-            delegate_estimator.estimators = [
-                (name, _unwrap_estimator(estimator)) for name, estimator in estimators
+            meta_estimator.estimators = [
+                (name, self._native_learner(estimator))
+                for name, estimator in estimators
             ]
+
+    @staticmethod
+    def _native_learner(
+        estimator_wrapper: BaseEstimator,
+    ) -> Union[RegressorMixin, ClassifierMixin]:
+        native_estimator: BaseEstimator = (
+            estimator_wrapper.native_estimator
+            if isinstance(estimator_wrapper, EstimatorWrapperDF)
+            else estimator_wrapper
+        )
+        # noinspection PyProtectedMember
+        if isinstance(
+            native_estimator, (EstimatorDF, sklearn_meta._BaseComposition)
+        ) or not isinstance(native_estimator, (RegressorMixin, ClassifierMixin)):
+            raise TypeError(
+                "sklearndf meta-estimators only accept simple regressors and "
+                f"classifiers, but got: {type(estimator_wrapper).__name__}"
+            )
+        return native_estimator
 
 
 #

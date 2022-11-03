@@ -80,6 +80,7 @@ from sklearn.impute._iterative import IterativeImputer
 # Once we drop support for sklearn 0.21, T_Imputer can be bound to _BaseImputer
 T_Imputer = TypeVar("T_Imputer", SimpleImputer, IterativeImputer)
 T_Polynomial = TypeVar("T_Polynomial", bound=TransformerMixin)
+T_Target = TypeVar("T_Target", bound=Union[pd.Series, pd.DataFrame, None])
 T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
 T_Vectorizer = TypeVar("T_Vectorizer", bound=TransformerMixin)
 
@@ -159,10 +160,10 @@ class SingleColumnTransformerWrapperDF(
     def _validate_parameter_types(
         self,
         X: Union[pd.Series, pd.DataFrame],
-        y: Optional[pd.Series],
+        y: T_Target,
         *,
         expected_columns: pd.Index = None,
-    ) -> Tuple[pd.DataFrame, Union[pd.Series, pd.DataFrame]]:
+    ) -> Tuple[pd.DataFrame, T_Target]:
         X, y = super()._validate_parameter_types(
             X, y, expected_columns=expected_columns
         )
