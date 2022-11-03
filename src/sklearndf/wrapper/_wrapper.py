@@ -591,7 +591,7 @@ class TransformerWrapperDF(
     def feature_names_out_(self) -> pd.Index:
         """[see superclass]"""
         return self._check_feature_names_out(
-            self._get_features_in(), super().feature_names_out_, warning_stacklevel=2
+            super().feature_names_out_, warning_stacklevel=2
         )
 
     @property
@@ -599,9 +599,7 @@ class TransformerWrapperDF(
         """[see superclass]"""
         feature_names_original_ = super().feature_names_original_
         self._check_feature_names_out(
-            self._get_features_in().values,
-            feature_names_original_.index,
-            warning_stacklevel=2,
+            feature_names_original_.index, warning_stacklevel=2
         )
         return feature_names_original_
 
@@ -650,18 +648,14 @@ class TransformerWrapperDF(
         )
 
     def _check_feature_names_out(
-        self,
-        feature_names_in: npt.NDArray[Any],
-        wrapper_feature_names_out: pd.Index,
-        *,
-        warning_stacklevel: int,
+        self, wrapper_feature_names_out: pd.Index, *, warning_stacklevel: int
     ) -> pd.Index:
         if __sklearn_version__ < __sklearn_1_0__:
             return wrapper_feature_names_out
         # noinspection PyBroadException
         try:
             native_feature_names_out = self.native_estimator.get_feature_names_out(
-                feature_names_in
+                self._get_features_in().values
             )
         except Exception:
             return wrapper_feature_names_out
