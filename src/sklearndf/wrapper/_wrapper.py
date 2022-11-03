@@ -452,29 +452,40 @@ class EstimatorWrapperDF(
         expected_index: pd.Index = None,
     ) -> None:
         def _verify_labels(axis: str, actual: pd.Index, expected: pd.Index) -> None:
-            error_message = f"{df_name} data frame does not have expected {axis}"
             missing_columns = expected.difference(actual)
             extra_columns = actual.difference(expected)
-            error_detail = []
+            error_detail: List[str] = []
+
+            # check that we have the expected number of columns
             if len(actual) != len(expected):
                 error_detail.append(
-                    f"expected {len(expected)} columns but got {len(actual)}"
+                    f"expected {len(expected)} elements but got {len(actual)}"
                 )
-                if len(missing_columns) > 0:
-                    error_detail.append(
-                        f"missing columns: "
-                        f"{', '.join(str(item) for item in missing_columns)}"
-                    )
-                if len(extra_columns) > 0:
-                    error_detail.append(
-                        f"extra columns: "
-                        f"{', '.join(str(item) for item in extra_columns)}"
-                    )
-                raise ValueError(f"{error_message} ({'; '.join(error_detail)})")
 
-        _verify_labels(axis="columns", actual=df.columns, expected=expected_columns)
+            # check that all the expected columns are in place
+            if len(missing_columns) > 0:
+                error_detail.append(
+                    f"missing elements: "
+                    f"{', '.join(str(item) for item in missing_columns)}"
+                )
+
+            # check that there are no unexpected columns
+            if len(extra_columns) > 0:
+                error_detail.append(
+                    f"extra elements: "
+                    f"{', '.join(str(item) for item in extra_columns)}"
+                )
+
+            # raise an exception if we have encountered any errors
+            if error_detail:
+                raise ValueError(
+                    f"{df_name} data frame does not have expected {axis} index "
+                    f"({'; '.join(error_detail)})"
+                )
+
+        _verify_labels(axis="column", actual=df.columns, expected=expected_columns)
         if expected_index is not None:
-            _verify_labels(axis="index", actual=df.index, expected=expected_index)
+            _verify_labels(axis="row", actual=df.index, expected=expected_index)
 
     def _validate_delegate_attribute(self, attribute_name: str) -> None:
         if not hasattr(self.native_estimator, attribute_name):
