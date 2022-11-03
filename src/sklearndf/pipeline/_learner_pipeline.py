@@ -110,7 +110,7 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
     # noinspection PyPep8Naming
     def fit(
         self: T_EstimatorPipelineDF,
-        X: pd.DataFrame,
+        X: Union[pd.DataFrame, pd.Series],
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         *,
         sample_weight: Optional[pd.Series] = None,
@@ -209,7 +209,7 @@ class LearnerPipelineDF(
 
     # noinspection PyPep8Naming
     def predict(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
         return self.final_estimator.predict(self.preprocess(X), **predict_params)
@@ -230,7 +230,7 @@ class SupervisedLearnerPipelineDF(
     # noinspection PyPep8Naming
     def score(
         self,
-        X: pd.DataFrame,
+        X: Union[pd.Series, pd.DataFrame],
         y: Optional[pd.Series] = None,
         sample_weight: Optional[Any] = None,
     ) -> float:
@@ -332,21 +332,21 @@ class ClassifierPipelineDF(
 
     # noinspection PyPep8Naming
     def predict_proba(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """[see superclass]"""
         return self.classifier.predict_proba(self.preprocess(X), **predict_params)
 
     # noinspection PyPep8Naming
     def predict_log_proba(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """[see superclass]"""
         return self.classifier.predict_log_proba(self.preprocess(X), **predict_params)
 
     # noinspection PyPep8Naming
     def decision_function(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
         return self.classifier.decision_function(self.preprocess(X), **predict_params)
@@ -401,7 +401,7 @@ class ClusterPipelineDF(
     # noinspection PyPep8Naming
     def fit_predict(
         self,
-        X: pd.DataFrame,
+        X: Union[pd.Series, pd.DataFrame],
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_predict_params: Any,
     ) -> Union[pd.Series, pd.DataFrame]:

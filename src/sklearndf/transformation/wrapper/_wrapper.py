@@ -12,6 +12,7 @@ from typing import (
     List,
     Optional,
     Sequence,
+    Tuple,
     TypeVar,
     Union,
     cast,
@@ -20,6 +21,7 @@ from typing import (
 import numpy as np
 import numpy.typing as npt
 import pandas as pd
+from scipy import sparse
 from sklearn.base import TransformerMixin
 from sklearn.compose import ColumnTransformer
 from sklearn.decomposition import PCA
@@ -35,9 +37,9 @@ from ... import (
     __sklearn_1_0__,
     __sklearn_1_1__,
     __sklearn_1_2__,
-    __sklearn_1_4__,
     __sklearn_version__,
 )
+from ..._util import hstack_frames, is_sparse_frame, sparse_frame_density
 from ...wrapper import TransformerWrapperDF
 
 log = logging.getLogger(__name__)
@@ -48,6 +50,7 @@ __all__ = [
     "BaseMultipleInputsPerOutputTransformerWrapperDF",
     "ColumnPreservingTransformerWrapperDF",
     "ColumnSubsetTransformerWrapperDF",
+    "ColumnTransformerSparseFrames",
     "ColumnTransformerWrapperDF",
     "ComponentsDimensionalityReductionWrapperDF",
     "EmbeddingWrapperDF",
@@ -61,25 +64,25 @@ __all__ = [
     "OneHotEncoderWrapperDF",
     "PCAWrapperDF",
     "PolynomialTransformerWrapperDF",
+    "SingleColumnTransformerWrapperDF",
+    "VectorizerWrapperDF",
 ]
 
+
 #
-# type variables
+# Type variables
 #
 
-T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
-
-# T_Imputer is needed because scikit-learn's _BaseImputer only exists from v0.22
-# onwards.
-# Once we drop support for sklearn 0.21, _BaseImputer can be used instead.
-# The following TypeVar helps to annotate availability of "add_indicator" and
-# "missing_values" attributes on an imputer instance for ImputerWrapperDF below.
 
 # noinspection PyProtectedMember
 from sklearn.impute._iterative import IterativeImputer
 
+# Once we drop support for sklearn 0.21, T_Imputer can be bound to _BaseImputer
 T_Imputer = TypeVar("T_Imputer", SimpleImputer, IterativeImputer)
 T_Polynomial = TypeVar("T_Polynomial", bound=TransformerMixin)
+T_Target = TypeVar("T_Target", bound=Union[pd.Series, pd.DataFrame, None])
+T_Transformer = TypeVar("T_Transformer", bound=TransformerMixin)
+T_Vectorizer = TypeVar("T_Vectorizer", bound=TransformerMixin)
 
 #
 # Ensure all symbols introduced below are included in __all__
@@ -108,13 +111,67 @@ class NumpyTransformerWrapperDF(
     def _adjust_X_type_for_delegate(
         self,
         X: pd.DataFrame,
-    ) -> npt.NDArray[Any]:
-        return cast(npt.NDArray[Any], X.values)
+    ) -> Union[npt.NDArray[Any], sparse.csr_matrix]:
+        return self._frame_or_series_to_array(X)
 
     def _adjust_y_type_for_delegate(
         self, y: Union[pd.Series, pd.DataFrame, None]
-    ) -> Optional[npt.NDArray[Any]]:
-        return None if y is None else cast(npt.NDArray[Any], y.values)
+    ) -> Union[npt.NDArray[Any], pd.arrays.SparseArray, sparse.csr_matrix, None]:
+        return None if y is None else self._frame_or_series_to_array(y)
+
+    def _frame_or_series_to_array(
+        self, df: Union[pd.Series, pd.DataFrame]
+    ) -> Union[npt.NDArray[Any], pd.arrays.SparseArray, sparse.csr_matrix]:
+
+        if df.ndim == 1:
+            return df.values
+
+        sparse_threshold = self._get_sparse_threshold()
+
+        if sparse_threshold > 0.0 and sparse_frame_density(df) < sparse_threshold:
+            return sparse.hstack(
+                [
+                    sr.to_frame().sparse.to_coo()
+                    if isinstance(sr.dtype, pd.SparseDtype)
+                    else sr.values.reshape(-1, 1)
+                    for _, sr in df.items()
+                ]
+            ).tocsr()
+
+        else:
+            return df.values
+
+    def _get_sparse_threshold(self) -> float:
+        # return the density below which _frame_or_series_to_array will
+        # convert series and data frames to sparse matrices instead of
+        # dense arrays
+        return 0.3
+
+
+class SingleColumnTransformerWrapperDF(
+    TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
+):
+    """
+    Abstract base class of DF wrappers for transformers that only accept single-column
+    inputs.
+    """
+
+    # noinspection PyPep8Naming
+    def _validate_parameter_types(
+        self,
+        X: Union[pd.Series, pd.DataFrame],
+        y: T_Target,
+        *,
+        expected_columns: pd.Index = None,
+    ) -> Tuple[pd.DataFrame, T_Target]:
+        X, y = super()._validate_parameter_types(
+            X, y, expected_columns=expected_columns
+        )
+        if X.shape[1] != 1:
+            raise ValueError(
+                f"arg X expected to have exactly 1 column but has {X.shape[1]} columns"
+            )
+        return X, y
 
 
 class ColumnSubsetTransformerWrapperDF(
@@ -289,6 +346,36 @@ class FeatureSelectionWrapperDF(
         get_support = getattr(self.native_estimator, self._ATTR_GET_SUPPORT)
         return self.feature_names_in_[get_support()]
 
+    # noinspection PyPep8Naming
+
+
+class ColumnTransformerSparseFrames(
+    ColumnTransformer,  # type:ignore
+):
+    """
+    ColumnTransformer that returns sparse data frames instead of arrays if one or more
+    of its transformers return a sparse data frame.
+    """
+
+    # noinspection PyPep8Naming
+    def _hstack(
+        self, Xs: List[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]]
+    ) -> Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]:
+        if __sklearn_version__ >= __sklearn_1_0__ and self.verbose_feature_names_out:
+            prefixes = [name for name, _, _ in self.transformers]
+            if self._remainder[2] and self.remainder != "drop":
+                # remainder columns exist and are not being dropped
+                prefixes.append("remainder")
+            stacked = hstack_frames(Xs, prefixes=prefixes)
+        else:
+            stacked = hstack_frames(Xs)
+
+        if stacked is None:
+            return super()._hstack(Xs)
+        else:
+            self.sparse_output_ = is_sparse_frame(stacked)
+            return stacked
+
 
 class ColumnTransformerWrapperDF(
     TransformerWrapperDF[ColumnTransformer], metaclass=ABCMeta
@@ -318,7 +405,7 @@ class ColumnTransformerWrapperDF(
             not in ColumnTransformerWrapperDF.__SPECIAL_TRANSFORMERS
         ):
             raise ValueError(
-                f"unsupported value for arg remainder: ({column_transformer.remainder})"
+                f"unsupported value for arg remainder: {column_transformer.remainder!r}"
             )
 
         non_compliant_transformers: List[str] = [
@@ -365,7 +452,7 @@ class ColumnTransformerWrapperDF(
 
             if df_transformer == ColumnTransformerWrapperDF.PASSTHROUGH:
                 # we may get positional indices for columns selected by the
-                # 'passthrough' transformer, and in that case so need to look up the
+                # 'passthrough' transformer, and in that case need to look up the
                 # associated column names
                 if all(isinstance(column, int) for column in columns):
                     output_column_names = self._get_features_in().to_numpy()[columns]
@@ -379,7 +466,7 @@ class ColumnTransformerWrapperDF(
                     f"{type(df_transformer).__name__}: {df_transformer!r}"
                 )
                 feature_names_original_: pd.Series = (
-                    df_transformer.feature_names_original_
+                    df_transformer._get_features_original()
                 )
                 if verbose_feature_names_out:
                     input_column_names = feature_names_original_.to_numpy()
@@ -411,7 +498,9 @@ class ColumnTransformerWrapperDF(
         )
 
 
-class ImputerWrapperDF(TransformerWrapperDF[T_Imputer], metaclass=ABCMeta):
+class ImputerWrapperDF(
+    TransformerWrapperDF[T_Imputer], Generic[T_Imputer], metaclass=ABCMeta
+):
     """
     DF wrapper for imputation transformers, e.g., :class:`sklearn.impute.SimpleImputer`.
     """
@@ -532,26 +621,6 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
     """
     DF wrapper for :class:`sklearn.preprocessing.OneHotEncoder`.
     """
-
-    def _validate_delegate_estimator(self) -> None:
-        sparse: bool
-        attr_sparse: str
-
-        if __sklearn_version__ < __sklearn_1_2__:
-            sparse = self.native_estimator.sparse
-            attr_sparse = "sparse"
-        else:
-            attr_sparse = "sparse_output"
-            sparse = self.native_estimator.sparse_output
-            if __sklearn_version__ < __sklearn_1_4__ and isinstance(
-                self.native_estimator.sparse, bool
-            ):
-                sparse = self.native_estimator.sparse
-
-        if sparse:
-            raise NotImplementedError(
-                f"sparse matrices not supported; use {attr_sparse}=False"
-            )
 
     def _get_features_original(self) -> pd.Series:
         # Return the series mapping output column names to original column names.
@@ -709,6 +778,45 @@ def _get_native_feature_names_out(
         get_feature_names_out_fn = native_estimator.get_feature_names
 
     return pd.Index(get_feature_names_out_fn(feature_names_in_.to_numpy().astype(str)))
+
+
+class VectorizerWrapperDF(
+    SingleColumnTransformerWrapperDF[T_Transformer], Generic[T_Transformer]
+):
+    """
+    DF wrapper for vectorizers, specifically
+    :class:`~sklearn.feature_extraction.text.CountVectorizer` and
+    :class:`~sklearn.feature_extraction.text.TfidfVectorizer`.
+    """
+
+    def _get_features_original(self) -> pd.Series:
+        return pd.Series(
+            index=self._get_features_out(), data=self._get_features_in()[0]
+        )
+
+    def _get_features_out(self) -> pd.Index:
+        try:
+            if __sklearn_version__ >= __sklearn_1_0__:
+                feature_names = self.native_estimator.get_feature_names_out()
+            else:
+                feature_names = self.native_estimator.get_feature_names()
+        except AttributeError:
+            try:
+                n_features = self.native_estimator.n_features
+            except AttributeError:
+                raise TypeError(
+                    f"native vectorizer {type(self.native_estimator).__name__} "
+                    "has no method get_feature_names_out() or attribute n_features"
+                )
+            else:
+                return pd.RangeIndex(n_features)
+        else:
+            return pd.Index(feature_names)
+
+    # noinspection PyPep8Naming
+    def _adjust_X_type_for_delegate(self, X: pd.DataFrame) -> npt.NDArray[Any]:
+        assert len(X.columns) == 1
+        return cast(npt.NDArray[Any], X.iloc[:, 0].values)
 
 
 #

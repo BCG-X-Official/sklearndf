@@ -90,7 +90,7 @@ class PartialFitClassifierWrapperDF(
     # noinspection PyPep8Naming
     def partial_fit(
         self: T_PartialFitClassifierWrapperDF,
-        X: pd.DataFrame,
+        X: Union[pd.Series, pd.DataFrame],
         y: Union[pd.Series, pd.DataFrame],
         classes: Optional[Sequence[Any]] = None,
         sample_weight: Optional[pd.Series] = None,
@@ -109,7 +109,7 @@ class PartialFitClassifierWrapperDF(
         :param sample_weight: optional weights applied to individual samples
         :return: ``self``
         """
-        self._check_parameter_types(X, y)
+        X, y = self._validate_parameter_types(X, y)
         self._partial_fit(X, y, classes=classes, sample_weight=sample_weight)
 
         return self

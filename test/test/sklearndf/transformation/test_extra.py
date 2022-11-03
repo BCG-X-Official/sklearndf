@@ -4,7 +4,11 @@ from sklearn.ensemble import RandomForestRegressor
 
 from sklearndf.pipeline import PipelineDF
 from sklearndf.regression import RandomForestRegressorDF
-from sklearndf.transformation import SimpleImputerDF
+from sklearndf.transformation import (
+    ColumnTransformerDF,
+    OneHotEncoderDF,
+    SimpleImputerDF,
+)
 from sklearndf.transformation.extra import BorutaDF
 
 
@@ -26,7 +30,27 @@ def test_boruta_pipeline(diabetes_df: pd.DataFrame, diabetes_target: str) -> Non
 
     boruta_selector = PipelineDF(
         steps=[
-            ("preprocess", SimpleImputerDF(strategy="median")),
+            (
+                "preprocess",
+                PipelineDF(
+                    steps=[
+                        ("imputer", SimpleImputerDF()),
+                        (
+                            "onehot",
+                            ColumnTransformerDF(
+                                [
+                                    (
+                                        "onehot",
+                                        OneHotEncoderDF(drop="if_binary"),
+                                        ["sex"],
+                                    ),
+                                ],
+                                remainder="passthrough",
+                            ),
+                        ),
+                    ]
+                ),
+            ),
             (
                 "boruta",
                 BorutaDF(

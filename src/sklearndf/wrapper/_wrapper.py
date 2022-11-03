@@ -40,6 +40,7 @@ import numpy as np
 import numpy.typing as npt
 import pandas as pd
 import sklearn.utils.metaestimators as sklearn_meta
+from scipy import sparse
 from sklearn.base import (
     BaseEstimator,
     ClassifierMixin,
@@ -84,6 +85,7 @@ __all__ = [
 
 T = TypeVar("T")
 T_Callable = TypeVar("T_Callable", bound=Callable[..., Any])
+T_Target = TypeVar("T_Target", bound=Union[pd.Series, pd.DataFrame, None])
 
 T_NativeEstimator = TypeVar("T_NativeEstimator", bound=BaseEstimator)
 T_NativeTransformer = TypeVar("T_NativeTransformer", bound=TransformerMixin)
@@ -381,7 +383,7 @@ class EstimatorWrapperDF(
     # noinspection PyPep8Naming
     def fit(
         self: T_EstimatorWrapperDF,
-        X: pd.DataFrame,
+        X: Union[pd.DataFrame, pd.Series],
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
     ) -> T_EstimatorWrapperDF:
@@ -390,7 +392,7 @@ class EstimatorWrapperDF(
         self._reset_fit()
 
         try:
-            self._check_parameter_types(X, y)
+            X, y = self._validate_parameter_types(X, y)
             self._fit(X, y, **fit_params)
             self._post_fit(X, y, **fit_params)
 
@@ -448,15 +450,29 @@ class EstimatorWrapperDF(
             self._outputs = y.columns.tolist()
 
     # noinspection PyPep8Naming
-    def _check_parameter_types(
+    def _validate_parameter_types(
         self,
-        X: pd.DataFrame,
-        y: Optional[Union[pd.Series, pd.DataFrame]],
+        X: Union[pd.Series, pd.DataFrame],
+        y: T_Target,
         *,
         expected_columns: pd.Index = None,
-    ) -> None:
-        if not isinstance(X, pd.DataFrame):
-            raise TypeError("arg X must be a DataFrame")
+    ) -> Tuple[pd.DataFrame, T_Target]:
+        # Check that the X and y parameters are valid data frames and series,
+        # and return X as a data frame and y as a series or data frame.
+        #
+        # If X is a series, convert it to a data frame with a single column.
+        #
+        # If expected_columns is not None, check that the columns of X match
+        # the expected columns.
+
+        if isinstance(X, pd.Series):
+            if X.name is None:
+                raise ValueError(
+                    "the name of the series passed as arg X must not be None"
+                )
+            X = X.to_frame()
+        elif not isinstance(X, pd.DataFrame):
+            raise TypeError("arg X must be a DataFrame or a Series")
 
         if self.is_fitted:
             EstimatorWrapperDF._verify_df(
@@ -471,6 +487,8 @@ class EstimatorWrapperDF(
 
         if y is not None and not isinstance(y, (pd.Series, pd.DataFrame)):
             raise TypeError("arg y must be None, or a pandas series or data frame")
+
+        return X, y
 
     @staticmethod
     def _verify_df(
@@ -520,7 +538,7 @@ class EstimatorWrapperDF(
 
     def _prepare_y_for_delegate(
         self, y: Optional[Union[pd.Series, pd.DataFrame]]
-    ) -> Any:
+    ) -> Union[pd.Series, pd.DataFrame, npt.NDArray[Any], sparse.csr_matrix, None]:
         return self._adjust_y_type_for_delegate(y)
 
     # noinspection PyPep8Naming
@@ -540,14 +558,14 @@ class EstimatorWrapperDF(
     # noinspection PyPep8Naming
     def _adjust_X_type_for_delegate(
         self, X: pd.DataFrame
-    ) -> Union[pd.DataFrame, npt.NDArray[Any]]:
+    ) -> Union[pd.DataFrame, npt.NDArray[Any], sparse.csr_matrix]:
         # Convert X before passing it to the delegate estimator.
         # By default, does nothing, but can be overridden.
         return X
 
     def _adjust_y_type_for_delegate(
         self, y: Union[pd.Series, pd.DataFrame, None]
-    ) -> Union[pd.Series, pd.DataFrame, npt.NDArray[Any], None]:
+    ) -> Union[pd.Series, pd.DataFrame, npt.NDArray[Any], sparse.csr_matrix, None]:
         # convert y before passing it to the delegate estimator
         return y
 
@@ -625,9 +643,9 @@ class TransformerWrapperDF(
         return feature_names_original_
 
     # noinspection PyPep8Naming
-    def transform(self, X: pd.DataFrame) -> pd.DataFrame:
+    def transform(self, X: Union[pd.Series, pd.DataFrame]) -> pd.DataFrame:
         """[see superclass]"""
-        self._check_parameter_types(X, None)
+        X, _ = self._validate_parameter_types(X, None)
 
         transformed = self._transform(X)
 
@@ -637,13 +655,16 @@ class TransformerWrapperDF(
 
     # noinspection PyPep8Naming
     def fit_transform(
-        self, X: pd.DataFrame, y: Optional[pd.Series] = None, **fit_params: Any
+        self,
+        X: Union[pd.Series, pd.DataFrame],
+        y: Optional[pd.Series] = None,
+        **fit_params: Any,
     ) -> pd.DataFrame:
         """[see superclass]"""
         self._reset_fit()
 
         try:
-            self._check_parameter_types(X, y)
+            X, y = self._validate_parameter_types(X, y)
             transformed = self._fit_transform(X, y, **fit_params)
             self._post_fit(X, y, **fit_params)
 
@@ -658,9 +679,11 @@ class TransformerWrapperDF(
         )
 
     # noinspection PyPep8Naming
-    def inverse_transform(self, X: pd.DataFrame) -> pd.DataFrame:
+    def inverse_transform(self, X: Union[pd.Series, pd.DataFrame]) -> pd.DataFrame:
         """[see superclass]"""
-        self._check_parameter_types(X, None, expected_columns=self.feature_names_out_)
+        X, _ = self._validate_parameter_types(
+            X, None, expected_columns=self.feature_names_out_
+        )
 
         transformed = self._inverse_transform(X)
 
@@ -730,7 +753,7 @@ class TransformerWrapperDF(
 
     @staticmethod
     def _transformed_to_df(
-        transformed: Union[pd.DataFrame, npt.NDArray[Any]],
+        transformed: Union[pd.DataFrame, npt.NDArray[Any], sparse.spmatrix],
         index: pd.Index,
         columns: pd.Index,
     ) -> pd.DataFrame:
@@ -743,23 +766,28 @@ class TransformerWrapperDF(
                 expected_index=index,
             )
             return transformed
+        elif isinstance(transformed, sparse.spmatrix):
+            return pd.DataFrame.sparse.from_spmatrix(
+                data=transformed, index=index, columns=columns
+            )
         else:
             return pd.DataFrame(data=transformed, index=index, columns=columns)
 
     # noinspection PyPep8Naming
-    def _transform(self, X: pd.DataFrame) -> npt.NDArray[Any]:
-        # noinspection PyUnresolvedReferences
+    def _transform(
+        self, X: pd.DataFrame
+    ) -> Union[npt.NDArray[Any], sparse.csr_matrix, pd.DataFrame]:
         return cast(
-            npt.NDArray[Any],
+            Union[npt.NDArray[Any], sparse.csr_matrix, pd.DataFrame],
             self.native_estimator.transform(self._prepare_X_for_delegate(X)),
         )
 
     # noinspection PyPep8Naming
     def _fit_transform(
         self, X: pd.DataFrame, y: Optional[pd.Series], **fit_params: Any
-    ) -> npt.NDArray[Any]:
+    ) -> Union[npt.NDArray[Any], sparse.csr_matrix, pd.DataFrame]:
         return cast(
-            npt.NDArray[Any],
+            Union[npt.NDArray[Any], sparse.csr_matrix, pd.DataFrame],
             self.native_estimator.fit_transform(
                 self._prepare_X_for_delegate(X),
                 self._prepare_y_for_delegate(y),
@@ -803,10 +831,10 @@ class LearnerWrapperDF(
 
     # noinspection PyPep8Naming
     def predict(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
-        self._check_parameter_types(X, None)
+        X, _ = self._validate_parameter_types(X, None)
 
         # noinspection PyUnresolvedReferences
         return self._prediction_to_series_or_frame(
@@ -892,10 +920,13 @@ class SupervisedLearnerWrapperDF(
 
     # noinspection PyPep8Naming
     def score(
-        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+        self,
+        X: Union[pd.Series, pd.DataFrame],
+        y: pd.Series,
+        sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see superclass]"""
-        self._check_parameter_types(X, y)
+        X, y = self._validate_parameter_types(X, y)
         if y is None:
             raise ValueError("arg y must not be None")
         if sample_weight is not None and not isinstance(sample_weight, pd.Series):
@@ -927,7 +958,10 @@ class RegressorWrapperDF(
 
     # noinspection PyPep8Naming
     def score(
-        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+        self,
+        X: Union[pd.Series, pd.DataFrame],
+        y: pd.Series,
+        sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see superclass]"""
         return cast(
@@ -958,13 +992,13 @@ class ClassifierWrapperDF(
 
     # noinspection PyPep8Naming
     def predict_proba(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """[see superclass]"""
 
         self._ensure_delegate_method("predict_proba")
 
-        self._check_parameter_types(X, None)
+        X, _ = self._validate_parameter_types(X, None)
 
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
@@ -976,13 +1010,13 @@ class ClassifierWrapperDF(
 
     # noinspection PyPep8Naming
     def predict_log_proba(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """[see superclass]"""
 
         self._ensure_delegate_method("predict_log_proba")
 
-        self._check_parameter_types(X, None)
+        X, _ = self._validate_parameter_types(X, None)
 
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
@@ -994,13 +1028,13 @@ class ClassifierWrapperDF(
 
     # noinspection PyPep8Naming
     def decision_function(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """[see superclass]"""
 
         self._ensure_delegate_method("decision_function")
 
-        self._check_parameter_types(X, None)
+        X, _ = self._validate_parameter_types(X, None)
 
         # noinspection PyUnresolvedReferences
         return self._prediction_with_class_labels(
@@ -1059,7 +1093,10 @@ class ClassifierWrapperDF(
 
     # noinspection PyPep8Naming
     def score(
-        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+        self,
+        X: Union[pd.Series, pd.DataFrame],
+        y: pd.Series,
+        sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see superclass]"""
         return cast(
@@ -1099,7 +1136,7 @@ class ClusterWrapperDF(
 
     def fit_predict(
         self,
-        X: pd.DataFrame,
+        X: Union[pd.Series, pd.DataFrame],
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_predict_params: Any,
     ) -> Union[pd.Series, pd.DataFrame]:
@@ -1108,7 +1145,7 @@ class ClusterWrapperDF(
         self._reset_fit()
 
         try:
-            self._check_parameter_types(X, y)
+            X, y = self._validate_parameter_types(X, y)
 
             # fitting a clusterer produces a single output column for labels
             self._outputs = [ClusterWrapperDF.COL_LABELS]
@@ -1177,40 +1214,43 @@ class MetaEstimatorWrapperDF(
     """
 
     def _validate_delegate_estimator(self) -> None:
-        def _unwrap_estimator(estimator: BaseEstimator) -> BaseEstimator:
-            native_estimator = (
-                estimator.native_estimator
-                if isinstance(estimator, EstimatorWrapperDF)
-                else estimator
-            )
-            # noinspection PyProtectedMember
-            if isinstance(
-                native_estimator, (EstimatorDF, sklearn_meta._BaseComposition)
-            ) or not isinstance(native_estimator, (RegressorMixin, ClassifierMixin)):
-                raise TypeError(
-                    "sklearndf meta-estimators only accept simple regressors and "
-                    f"classifiers, but got: {type(estimator).__name__}"
-                )
-            return cast(BaseEstimator, native_estimator)
+        meta_estimator = self.native_estimator
 
-        delegate_estimator = self.native_estimator
-
-        estimator = getattr(delegate_estimator, "estimator", None)
+        estimator = getattr(meta_estimator, "estimator", None)
         if estimator is not None:
-            delegate_estimator.estimator = _unwrap_estimator(estimator)
+            meta_estimator.estimator = self._native_learner(estimator)
 
-        base_estimator = getattr(delegate_estimator, "base_estimator", None)
+        base_estimator = getattr(meta_estimator, "base_estimator", None)
         # attribute base_estimator is deprecated as of scikit-learn 1.2, with the
         # default value of "deprecated"
-
         if base_estimator is not None and base_estimator != "deprecated":
-            delegate_estimator.base_estimator = _unwrap_estimator(base_estimator)
+            meta_estimator.base_estimator = self._native_learner(base_estimator)
 
-        estimators = getattr(delegate_estimator, "estimators", None)
+        estimators = getattr(meta_estimator, "estimators", None)
         if estimators is not None:
-            delegate_estimator.estimators = [
-                (name, _unwrap_estimator(estimator)) for name, estimator in estimators
+            meta_estimator.estimators = [
+                (name, self._native_learner(estimator))
+                for name, estimator in estimators
             ]
+
+    @staticmethod
+    def _native_learner(
+        estimator_wrapper: BaseEstimator,
+    ) -> Union[RegressorMixin, ClassifierMixin]:
+        native_estimator: BaseEstimator = (
+            estimator_wrapper.native_estimator
+            if isinstance(estimator_wrapper, EstimatorWrapperDF)
+            else estimator_wrapper
+        )
+        # noinspection PyProtectedMember
+        if isinstance(
+            native_estimator, (EstimatorDF, sklearn_meta._BaseComposition)
+        ) or not isinstance(native_estimator, (RegressorMixin, ClassifierMixin)):
+            raise TypeError(
+                "sklearndf meta-estimators only accept simple regressors and "
+                f"classifiers, but got: {type(estimator_wrapper).__name__}"
+            )
+        return native_estimator
 
 
 #

@@ -95,7 +95,7 @@ class EstimatorDF(
     @abstractmethod
     def fit(
         self: T_EstimatorDF,
-        X: pd.DataFrame,
+        X: Union[pd.DataFrame, pd.Series],
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
     ) -> T_EstimatorDF:
@@ -292,7 +292,7 @@ class LearnerDF(EstimatorDF, metaclass=ABCMeta):
     # noinspection PyPep8Naming
     @abstractmethod
     def predict(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """
         Predict outputs for the given inputs.
@@ -321,7 +321,10 @@ class SupervisedLearnerDF(LearnerDF, metaclass=ABCMeta):
     # noinspection PyPep8Naming
     @abstractmethod
     def score(
-        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+        self,
+        X: Union[pd.Series, pd.DataFrame],
+        y: pd.Series,
+        sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """
         Score this learner using the given inputs and outputs.
@@ -407,7 +410,7 @@ class TransformerDF(
 
     # noinspection PyPep8Naming
     @abstractmethod
-    def transform(self, X: pd.DataFrame) -> pd.DataFrame:
+    def transform(self, X: Union[pd.Series, pd.DataFrame]) -> pd.DataFrame:
         """
         Transform the given inputs.
 
@@ -424,7 +427,7 @@ class TransformerDF(
     # noinspection PyPep8Naming
     def fit_transform(
         self,
-        X: pd.DataFrame,
+        X: Union[pd.Series, pd.DataFrame],
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
     ) -> pd.DataFrame:
@@ -441,7 +444,7 @@ class TransformerDF(
 
     # noinspection PyPep8Naming
     @abstractmethod
-    def inverse_transform(self, X: pd.DataFrame) -> pd.DataFrame:
+    def inverse_transform(self, X: Union[pd.Series, pd.DataFrame]) -> pd.DataFrame:
         """
         Inverse-transform the given inputs.
 
@@ -464,7 +467,7 @@ class TransformerDF(
     def _get_features_out(self) -> pd.Index:
         # return a pandas index with this transformer's output columns
         # default behaviour: get index returned by feature_names_original_
-        return self.feature_names_original_.index
+        return self._get_features_original().index
 
 
 class RegressorDF(
@@ -481,7 +484,10 @@ class RegressorDF(
     # noinspection PyPep8Naming
     @abstractmethod
     def score(
-        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+        self,
+        X: Union[pd.Series, pd.DataFrame],
+        y: pd.Series,
+        sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see SupervisedLearnerDF]"""
 
@@ -515,7 +521,7 @@ class ClassifierDF(
     # noinspection PyPep8Naming
     @abstractmethod
     def predict_proba(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """
         Predict class probabilities for the given inputs.
@@ -537,7 +543,7 @@ class ClassifierDF(
     # noinspection PyPep8Naming
     @abstractmethod
     def predict_log_proba(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """
         Predict class log-probabilities for the given inputs.
@@ -559,7 +565,7 @@ class ClassifierDF(
     # noinspection PyPep8Naming
     @abstractmethod
     def decision_function(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """
         Compute the decision function for the given inputs.
@@ -581,7 +587,10 @@ class ClassifierDF(
     # noinspection PyPep8Naming
     @abstractmethod
     def score(
-        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+        self,
+        X: Union[pd.Series, pd.DataFrame],
+        y: pd.Series,
+        sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see SupervisedLearnerDF]"""
 
@@ -620,7 +629,7 @@ class ClusterDF(
     @abstractmethod
     def fit_predict(
         self,
-        X: pd.DataFrame,
+        X: Union[pd.Series, pd.DataFrame],
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_predict_params: Any,
     ) -> Union[pd.Series, pd.DataFrame]:
