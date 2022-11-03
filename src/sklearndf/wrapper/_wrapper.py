@@ -440,7 +440,7 @@ class EstimatorWrapperDF(
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
     ) -> None:
-        self._features_in = X.columns.rename(self.COL_FEATURE_IN)
+        self._features_in = X.columns.rename(self.COL_FEATURE)
         if y is None:
             self._outputs = None
         elif isinstance(y, pd.Series):
@@ -757,6 +757,8 @@ class TransformerWrapperDF(
         columns: pd.Index,
     ) -> pd.DataFrame:
         if isinstance(transformed, pd.DataFrame):
+            if transformed.columns.name != EstimatorDF.COL_FEATURE:
+                transformed = transformed.rename_axis(columns=EstimatorDF.COL_FEATURE)
             # noinspection PyProtectedMember
             TransformerWrapperDF._verify_df(
                 df_name="transformed",

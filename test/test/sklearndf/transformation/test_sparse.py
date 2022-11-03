@@ -93,9 +93,9 @@ def test_tfidf() -> None:
             index=pd.Index(
                 [f"words__{name}" for name in word_feature_names]
                 + [f"bigrams__{name}" for name in bigram_feature_names],
-                name="feature_out",
+                name="feature",
             ),
             data="document",  # all features share the same input column, "document"
-            name="feature_in",
+            name="feature_original",
         ),
     )
