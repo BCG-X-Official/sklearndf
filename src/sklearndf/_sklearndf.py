@@ -74,11 +74,11 @@ class EstimatorDF(
     """
 
     #: Name assigned to an :class:`~pandas.Index` or a :class:`~pandas.Series`
-    #: containing the names of the features used to fit a :class:`.EstimatorDF`.
+    #: with the names of the features used to fit a :class:`.EstimatorDF`.
     #:
     #: See :meth:`.feature_names_in_` and
     #: :meth:`~.TransformerDF.feature_names_original_`.
-    COL_FEATURE_IN = "feature_in"
+    COL_FEATURE = "feature"
 
     @property
     def native_estimator(self) -> BaseEstimator:
@@ -127,7 +127,7 @@ class EstimatorDF(
 
         :raises AttributeError: this estimator is not fitted
         """
-        return self._get_features_in().rename(self.COL_FEATURE_IN)
+        return self._get_features_in().rename(self.COL_FEATURE)
 
     @property
     @fitted_only(not_fitted_error=AttributeError)
@@ -361,12 +361,11 @@ class TransformerDF(
     Provides enhanced support for data frames.
     """
 
-    #: Name assigned to a :class:`~pandas.Index` containing the names of the features
-    #: produced by a :class:`.TransformerDF`.
+    #: Name assigned to a :class:`~pandas.Series` with the original feature names
+    #: before transformation.
     #:
-    #: See :meth:`~.TransformerDF.feature_names_out_` and
-    #: :meth:`.feature_names_original_`.
-    COL_FEATURE_OUT = "feature_out"
+    #: See :meth:`.feature_names_original_`.
+    COL_FEATURE_ORIGINAL = "feature_original"
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """
@@ -392,8 +391,8 @@ class TransformerDF(
         if self._features_original is None:
             self._features_original = (
                 self._get_features_original()
-                .rename(self.COL_FEATURE_IN)
-                .rename_axis(index=self.COL_FEATURE_OUT)
+                .rename(TransformerDF.COL_FEATURE_ORIGINAL)
+                .rename_axis(index=EstimatorDF.COL_FEATURE)
             )
         return self._features_original
 
@@ -406,7 +405,7 @@ class TransformerDF(
 
         :raises AttributeError: this transformer is not fitted
         """
-        return self._get_features_out().rename(self.COL_FEATURE_OUT)
+        return self._get_features_out().rename(EstimatorDF.COL_FEATURE)
 
     # noinspection PyPep8Naming
     @abstractmethod

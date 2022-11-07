@@ -191,9 +191,7 @@ def test_fit_transform(
     # test inverse transform
 
     inverse_transformed_df = transformer_df.inverse_transform(X=transformed_df)
-    assert_frame_equal(
-        inverse_transformed_df, test_data.rename_axis(columns="feature_in")
-    )
+    assert_frame_equal(inverse_transformed_df, test_data.rename_axis(columns="feature"))
 
     # test feature names in and out
     if __sklearn_version__ >= __sklearn_1_0__:
@@ -220,15 +218,16 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
 
     # noinspection PyShadowingNames
     def _test_transformer(
+        *,
         remainder: str,
         names_in: List[str],
         names_original: List[str],
         names_out: List[str],
         **transformer_args: Any,
     ) -> None:
-        feature_names_out_expected = pd.Index(names_out, name="feature_out")
+        feature_names_out_expected = pd.Index(names_out, name="feature")
         data = test_data.loc[:, names_in]
-        feature_names_in_expected = data.columns.rename("feature_in")
+        feature_names_in_expected = data.columns.rename("feature")
 
         # test fit-transform in connection with ColumnTransformer(DF)
         tx_df = StandardScalerDF()
@@ -252,7 +251,7 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
             **transformer_args,
         )
         transformed_native = pd.DataFrame(
-            col_tx_native.fit_transform(X=data), columns=names_out
+            col_tx_native.fit_transform(X=data), columns=feature_names_out_expected
         )
 
         assert_frame_equal(transformed_df, transformed_native, check_dtype=False)
@@ -335,7 +334,7 @@ def test_normalizer_df() -> None:
 
     transformed_non_df = pd.DataFrame(
         non_df_normalizer.fit_transform(X=x),
-        columns=pd.Index(["a", "b", "c", "d"], name="feature_out"),
+        columns=pd.Index(["a", "b", "c", "d"], name="feature"),
     )
 
     # test fit_trannsform
@@ -361,7 +360,7 @@ def test_simple_imputer_df() -> None:
     x = np.array(
         [[4.0, 1.0, 2.0, np.nan], [1.0, np.nan, 9.0, 3.0], [np.nan, np.nan, 5.0, 1.0]]
     )
-    x_df = pd.DataFrame(x, columns=pd.Index(["a", "b", "c", "d"], name="feature_in"))
+    x_df = pd.DataFrame(x, columns=pd.Index(["a", "b", "c", "d"], name="feature"))
 
     imputer_native = SimpleImputer(add_indicator=True)
     imputer_df = SimpleImputerDF(add_indicator=True)
@@ -379,7 +378,7 @@ def test_simple_imputer_df() -> None:
                 "missingindicator_b",
                 "missingindicator_d",
             ],
-            name="feature_out",
+            name="feature",
         ),
     )
 
@@ -436,7 +435,7 @@ def test_one_hot_encoding(test_data_categorical: pd.DataFrame, sparse: bool) -> 
             )
         else:
             df = pd.DataFrame(data=data)
-        return df.rename_axis(columns="feature_out")
+        return df.rename_axis(columns="feature")
 
     assert_frame_equal(
         OneHotEncoderDF(drop=None, sparse=sparse).fit_transform(test_data_categorical),

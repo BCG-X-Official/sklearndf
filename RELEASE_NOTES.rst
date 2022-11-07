@@ -17,14 +17,27 @@ API.
 2.2.0
 ~~~~~
 
-- API: DF estimators now support native estimators using sparse matrices as input or output, and automatically
-  convert them to/from sparse :class:`~pandas.DataFrame` objects
+*sklearndf* 2.2 adds support for
+`scikit-learn |nbsp| 1.2 <https://scikit-learn.org/1.2>`_.
+
+- API: DF estimators now support native estimators using sparse matrices as input or
+  output, and automatically convert them to or from sparse :class:`~pandas.DataFrame`
+  objects
 - API: new property :attr:`.EstimatorDF.output_names_` to get the names of the output
   columns the estimator was fitted with
 - API: new method :attr:`.LearnerPipelineDF.preprocess` to apply the preprocessing step
   to a data frame
 - API: remove properties ``feature_names_out_`` and ``feature_names_original_`` from
   class :class:`.LearnerPipelineDF`
+- API: :class:`~pandas.Index` instances obtained from
+  :attr:`.EstimatorDF.feature_names_in_` and :attr:`.TransformerDF.feature_names_out_`
+  are now named ``"feature"`` instead of ``"feature_in"`` and ``"feature_out"``,
+  respectively, and :class:`~pandas.Series` instances obtained from
+  :attr:`.TransformerDF.feature_names_original_` are now named ``"feature_original"``
+  instead of ``"feature_in"``, and their indices are now named ``"feature"`` instead
+  of ``"feature_out"``; this is to separate the semantics of the originating property
+  from the column index, which may be used in other contexts
+
 
 
 *sklearndf* 2.1
