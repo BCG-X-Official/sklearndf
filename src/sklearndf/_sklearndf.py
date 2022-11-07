@@ -74,7 +74,7 @@ class EstimatorDF(
     """
 
     #: Name assigned to an :class:`~pandas.Index` or a :class:`~pandas.Series`
-    #: containing the names of the features used to fit a :class:`.EstimatorDF`.
+    #: with the names of the features used to fit a :class:`.EstimatorDF`.
     #:
     #: See :meth:`.feature_names_in_` and
     #: :meth:`~.TransformerDF.feature_names_original_`.
@@ -361,7 +361,7 @@ class TransformerDF(
     Provides enhanced support for data frames.
     """
 
-    #: Name assigned to a :class:`~pandas.Series` containing the original feature names
+    #: Name assigned to a :class:`~pandas.Series` with the original feature names
     #: before transformation.
     #:
     #: See :meth:`.feature_names_original_`.
