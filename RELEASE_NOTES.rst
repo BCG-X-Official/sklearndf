@@ -46,6 +46,12 @@ API.
 *sklearndf* 2.1 adds support for
 `scikit-learn |nbsp| 1.1 <https://scikit-learn.org/1.1>`_.
 
+2.1.1
+~~~~~
+
+This is a maintenance release to catch up with *sklearndf* |nbsp| 2.0.2.
+
+
 2.1.0
 ~~~~~
 
@@ -74,8 +80,11 @@ improvements, and is now subject to static type checking with |mypy|.
 2.0.2
 ~~~~~
 
-- FIX: property :attr:`.PCADF.n_components_` now returns the value of :attr:`~sklearndf.decomposition.PCA.n_components_`, not :attr:`~sklearndf.decomposition.PCA.n_components`
-
+- FIX: property :attr:`.PCADF.n_components_` now returns the value of
+  :attr:`~sklearndf.decomposition.PCA.n_components_`, not
+  :attr:`~sklearndf.decomposition.PCA.n_components`
+- FIX: detect missing and extra columns when validating data frames resulting from
+  transforms, even when the total column count is correct
 
 2.0.1
 ~~~~~
