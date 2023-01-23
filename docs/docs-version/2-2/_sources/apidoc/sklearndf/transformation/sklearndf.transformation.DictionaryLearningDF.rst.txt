@@ -17,12 +17,12 @@ sklearndf.transformation.DictionaryLearningDF
       :nosignatures:
    
       ~DictionaryLearningDF.clone
-      ~DictionaryLearningDF.ensure_fitted
       ~DictionaryLearningDF.fit
       ~DictionaryLearningDF.fit_transform
       ~DictionaryLearningDF.from_fitted
       ~DictionaryLearningDF.get_params
       ~DictionaryLearningDF.inverse_transform
+      ~DictionaryLearningDF.set_output
       ~DictionaryLearningDF.set_params
       ~DictionaryLearningDF.to_expression
       ~DictionaryLearningDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.DictionaryLearningDF
 
    .. autosummary::
    
-      ~DictionaryLearningDF.COL_FEATURE_IN
-      ~DictionaryLearningDF.COL_FEATURE_OUT
+      ~DictionaryLearningDF.COL_FEATURE
+      ~DictionaryLearningDF.COL_FEATURE_ORIGINAL
       ~DictionaryLearningDF.feature_names_in_
       ~DictionaryLearningDF.feature_names_original_
       ~DictionaryLearningDF.feature_names_out_

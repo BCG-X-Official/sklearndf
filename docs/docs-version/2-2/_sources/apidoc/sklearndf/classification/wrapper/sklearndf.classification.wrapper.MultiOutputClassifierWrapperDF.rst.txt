@@ -18,7 +18,6 @@ sklearndf.classification.wrapper.MultiOutputClassifierWrapperDF
    
       ~MultiOutputClassifierWrapperDF.clone
       ~MultiOutputClassifierWrapperDF.decision_function
-      ~MultiOutputClassifierWrapperDF.ensure_fitted
       ~MultiOutputClassifierWrapperDF.fit
       ~MultiOutputClassifierWrapperDF.from_fitted
       ~MultiOutputClassifierWrapperDF.get_params
@@ -38,7 +37,7 @@ sklearndf.classification.wrapper.MultiOutputClassifierWrapperDF
 
    .. autosummary::
    
-      ~MultiOutputClassifierWrapperDF.COL_FEATURE_IN
+      ~MultiOutputClassifierWrapperDF.COL_FEATURE
       ~MultiOutputClassifierWrapperDF.COL_PREDICTION
       ~MultiOutputClassifierWrapperDF.classes_
       ~MultiOutputClassifierWrapperDF.feature_names_in_

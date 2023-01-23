@@ -18,7 +18,6 @@ sklearndf.classification.DecisionTreeClassifierDF
    
       ~DecisionTreeClassifierDF.clone
       ~DecisionTreeClassifierDF.decision_function
-      ~DecisionTreeClassifierDF.ensure_fitted
       ~DecisionTreeClassifierDF.fit
       ~DecisionTreeClassifierDF.from_fitted
       ~DecisionTreeClassifierDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.DecisionTreeClassifierDF
 
    .. autosummary::
    
-      ~DecisionTreeClassifierDF.COL_FEATURE_IN
+      ~DecisionTreeClassifierDF.COL_FEATURE
       ~DecisionTreeClassifierDF.COL_PREDICTION
       ~DecisionTreeClassifierDF.classes_
       ~DecisionTreeClassifierDF.feature_names_in_

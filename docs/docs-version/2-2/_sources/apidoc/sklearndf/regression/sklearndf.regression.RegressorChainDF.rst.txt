@@ -17,7 +17,6 @@ sklearndf.regression.RegressorChainDF
       :nosignatures:
    
       ~RegressorChainDF.clone
-      ~RegressorChainDF.ensure_fitted
       ~RegressorChainDF.fit
       ~RegressorChainDF.from_fitted
       ~RegressorChainDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.RegressorChainDF
 
    .. autosummary::
    
-      ~RegressorChainDF.COL_FEATURE_IN
+      ~RegressorChainDF.COL_FEATURE
       ~RegressorChainDF.COL_PREDICTION
       ~RegressorChainDF.feature_names_in_
       ~RegressorChainDF.is_fitted

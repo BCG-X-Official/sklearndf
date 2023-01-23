@@ -17,7 +17,6 @@ sklearndf.regression.LinearRegressionDF
       :nosignatures:
    
       ~LinearRegressionDF.clone
-      ~LinearRegressionDF.ensure_fitted
       ~LinearRegressionDF.fit
       ~LinearRegressionDF.from_fitted
       ~LinearRegressionDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.LinearRegressionDF
 
    .. autosummary::
    
-      ~LinearRegressionDF.COL_FEATURE_IN
+      ~LinearRegressionDF.COL_FEATURE
       ~LinearRegressionDF.COL_PREDICTION
       ~LinearRegressionDF.feature_names_in_
       ~LinearRegressionDF.is_fitted

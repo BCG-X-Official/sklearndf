@@ -17,12 +17,12 @@ sklearndf.transformation.PLSSVDDF
       :nosignatures:
    
       ~PLSSVDDF.clone
-      ~PLSSVDDF.ensure_fitted
       ~PLSSVDDF.fit
       ~PLSSVDDF.fit_transform
       ~PLSSVDDF.from_fitted
       ~PLSSVDDF.get_params
       ~PLSSVDDF.inverse_transform
+      ~PLSSVDDF.set_output
       ~PLSSVDDF.set_params
       ~PLSSVDDF.to_expression
       ~PLSSVDDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.PLSSVDDF
 
    .. autosummary::
    
-      ~PLSSVDDF.COL_FEATURE_IN
-      ~PLSSVDDF.COL_FEATURE_OUT
+      ~PLSSVDDF.COL_FEATURE
+      ~PLSSVDDF.COL_FEATURE_ORIGINAL
       ~PLSSVDDF.feature_names_in_
       ~PLSSVDDF.feature_names_original_
       ~PLSSVDDF.feature_names_out_

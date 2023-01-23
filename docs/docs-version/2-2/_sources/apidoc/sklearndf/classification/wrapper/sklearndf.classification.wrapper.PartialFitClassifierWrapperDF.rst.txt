@@ -18,7 +18,6 @@ sklearndf.classification.wrapper.PartialFitClassifierWrapperDF
    
       ~PartialFitClassifierWrapperDF.clone
       ~PartialFitClassifierWrapperDF.decision_function
-      ~PartialFitClassifierWrapperDF.ensure_fitted
       ~PartialFitClassifierWrapperDF.fit
       ~PartialFitClassifierWrapperDF.from_fitted
       ~PartialFitClassifierWrapperDF.get_params
@@ -38,7 +37,7 @@ sklearndf.classification.wrapper.PartialFitClassifierWrapperDF
 
    .. autosummary::
    
-      ~PartialFitClassifierWrapperDF.COL_FEATURE_IN
+      ~PartialFitClassifierWrapperDF.COL_FEATURE
       ~PartialFitClassifierWrapperDF.COL_PREDICTION
       ~PartialFitClassifierWrapperDF.classes_
       ~PartialFitClassifierWrapperDF.feature_names_in_

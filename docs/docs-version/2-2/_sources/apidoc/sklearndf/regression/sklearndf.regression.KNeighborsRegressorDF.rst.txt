@@ -17,7 +17,6 @@ sklearndf.regression.KNeighborsRegressorDF
       :nosignatures:
    
       ~KNeighborsRegressorDF.clone
-      ~KNeighborsRegressorDF.ensure_fitted
       ~KNeighborsRegressorDF.fit
       ~KNeighborsRegressorDF.from_fitted
       ~KNeighborsRegressorDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.KNeighborsRegressorDF
 
    .. autosummary::
    
-      ~KNeighborsRegressorDF.COL_FEATURE_IN
+      ~KNeighborsRegressorDF.COL_FEATURE
       ~KNeighborsRegressorDF.COL_PREDICTION
       ~KNeighborsRegressorDF.feature_names_in_
       ~KNeighborsRegressorDF.is_fitted

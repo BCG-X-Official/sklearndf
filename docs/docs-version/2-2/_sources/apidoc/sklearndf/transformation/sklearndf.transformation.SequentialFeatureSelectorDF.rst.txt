@@ -17,12 +17,12 @@ sklearndf.transformation.SequentialFeatureSelectorDF
       :nosignatures:
    
       ~SequentialFeatureSelectorDF.clone
-      ~SequentialFeatureSelectorDF.ensure_fitted
       ~SequentialFeatureSelectorDF.fit
       ~SequentialFeatureSelectorDF.fit_transform
       ~SequentialFeatureSelectorDF.from_fitted
       ~SequentialFeatureSelectorDF.get_params
       ~SequentialFeatureSelectorDF.inverse_transform
+      ~SequentialFeatureSelectorDF.set_output
       ~SequentialFeatureSelectorDF.set_params
       ~SequentialFeatureSelectorDF.to_expression
       ~SequentialFeatureSelectorDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.SequentialFeatureSelectorDF
 
    .. autosummary::
    
-      ~SequentialFeatureSelectorDF.COL_FEATURE_IN
-      ~SequentialFeatureSelectorDF.COL_FEATURE_OUT
+      ~SequentialFeatureSelectorDF.COL_FEATURE
+      ~SequentialFeatureSelectorDF.COL_FEATURE_ORIGINAL
       ~SequentialFeatureSelectorDF.feature_names_in_
       ~SequentialFeatureSelectorDF.feature_names_original_
       ~SequentialFeatureSelectorDF.feature_names_out_

@@ -17,7 +17,6 @@ sklearndf.wrapper.RegressorWrapperDF
       :nosignatures:
    
       ~RegressorWrapperDF.clone
-      ~RegressorWrapperDF.ensure_fitted
       ~RegressorWrapperDF.fit
       ~RegressorWrapperDF.from_fitted
       ~RegressorWrapperDF.get_params
@@ -34,7 +33,7 @@ sklearndf.wrapper.RegressorWrapperDF
 
    .. autosummary::
    
-      ~RegressorWrapperDF.COL_FEATURE_IN
+      ~RegressorWrapperDF.COL_FEATURE
       ~RegressorWrapperDF.COL_PREDICTION
       ~RegressorWrapperDF.feature_names_in_
       ~RegressorWrapperDF.is_fitted

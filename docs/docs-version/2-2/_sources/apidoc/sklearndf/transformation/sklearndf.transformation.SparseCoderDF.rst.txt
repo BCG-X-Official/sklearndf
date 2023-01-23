@@ -17,12 +17,12 @@ sklearndf.transformation.SparseCoderDF
       :nosignatures:
    
       ~SparseCoderDF.clone
-      ~SparseCoderDF.ensure_fitted
       ~SparseCoderDF.fit
       ~SparseCoderDF.fit_transform
       ~SparseCoderDF.from_fitted
       ~SparseCoderDF.get_params
       ~SparseCoderDF.inverse_transform
+      ~SparseCoderDF.set_output
       ~SparseCoderDF.set_params
       ~SparseCoderDF.to_expression
       ~SparseCoderDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.SparseCoderDF
 
    .. autosummary::
    
-      ~SparseCoderDF.COL_FEATURE_IN
-      ~SparseCoderDF.COL_FEATURE_OUT
+      ~SparseCoderDF.COL_FEATURE
+      ~SparseCoderDF.COL_FEATURE_ORIGINAL
       ~SparseCoderDF.feature_names_in_
       ~SparseCoderDF.feature_names_original_
       ~SparseCoderDF.feature_names_out_

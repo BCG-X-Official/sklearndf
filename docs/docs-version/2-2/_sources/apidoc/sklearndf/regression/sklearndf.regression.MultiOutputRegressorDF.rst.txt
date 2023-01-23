@@ -17,7 +17,6 @@ sklearndf.regression.MultiOutputRegressorDF
       :nosignatures:
    
       ~MultiOutputRegressorDF.clone
-      ~MultiOutputRegressorDF.ensure_fitted
       ~MultiOutputRegressorDF.fit
       ~MultiOutputRegressorDF.from_fitted
       ~MultiOutputRegressorDF.get_params
@@ -35,7 +34,7 @@ sklearndf.regression.MultiOutputRegressorDF
 
    .. autosummary::
    
-      ~MultiOutputRegressorDF.COL_FEATURE_IN
+      ~MultiOutputRegressorDF.COL_FEATURE
       ~MultiOutputRegressorDF.COL_PREDICTION
       ~MultiOutputRegressorDF.feature_names_in_
       ~MultiOutputRegressorDF.is_fitted

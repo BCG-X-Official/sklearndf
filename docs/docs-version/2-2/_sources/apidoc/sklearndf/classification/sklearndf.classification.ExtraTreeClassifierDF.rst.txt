@@ -18,7 +18,6 @@ sklearndf.classification.ExtraTreeClassifierDF
    
       ~ExtraTreeClassifierDF.clone
       ~ExtraTreeClassifierDF.decision_function
-      ~ExtraTreeClassifierDF.ensure_fitted
       ~ExtraTreeClassifierDF.fit
       ~ExtraTreeClassifierDF.from_fitted
       ~ExtraTreeClassifierDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.ExtraTreeClassifierDF
 
    .. autosummary::
    
-      ~ExtraTreeClassifierDF.COL_FEATURE_IN
+      ~ExtraTreeClassifierDF.COL_FEATURE
       ~ExtraTreeClassifierDF.COL_PREDICTION
       ~ExtraTreeClassifierDF.classes_
       ~ExtraTreeClassifierDF.feature_names_in_

@@ -17,12 +17,12 @@ sklearndf.transformation.wrapper.AdditiveChi2SamplerWrapperDF
       :nosignatures:
    
       ~AdditiveChi2SamplerWrapperDF.clone
-      ~AdditiveChi2SamplerWrapperDF.ensure_fitted
       ~AdditiveChi2SamplerWrapperDF.fit
       ~AdditiveChi2SamplerWrapperDF.fit_transform
       ~AdditiveChi2SamplerWrapperDF.from_fitted
       ~AdditiveChi2SamplerWrapperDF.get_params
       ~AdditiveChi2SamplerWrapperDF.inverse_transform
+      ~AdditiveChi2SamplerWrapperDF.set_output
       ~AdditiveChi2SamplerWrapperDF.set_params
       ~AdditiveChi2SamplerWrapperDF.to_expression
       ~AdditiveChi2SamplerWrapperDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.wrapper.AdditiveChi2SamplerWrapperDF
 
    .. autosummary::
    
-      ~AdditiveChi2SamplerWrapperDF.COL_FEATURE_IN
-      ~AdditiveChi2SamplerWrapperDF.COL_FEATURE_OUT
+      ~AdditiveChi2SamplerWrapperDF.COL_FEATURE
+      ~AdditiveChi2SamplerWrapperDF.COL_FEATURE_ORIGINAL
       ~AdditiveChi2SamplerWrapperDF.feature_names_in_
       ~AdditiveChi2SamplerWrapperDF.feature_names_original_
       ~AdditiveChi2SamplerWrapperDF.feature_names_out_

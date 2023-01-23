@@ -17,7 +17,6 @@ sklearndf.regression.HuberRegressorDF
       :nosignatures:
    
       ~HuberRegressorDF.clone
-      ~HuberRegressorDF.ensure_fitted
       ~HuberRegressorDF.fit
       ~HuberRegressorDF.from_fitted
       ~HuberRegressorDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.HuberRegressorDF
 
    .. autosummary::
    
-      ~HuberRegressorDF.COL_FEATURE_IN
+      ~HuberRegressorDF.COL_FEATURE
       ~HuberRegressorDF.COL_PREDICTION
       ~HuberRegressorDF.feature_names_in_
       ~HuberRegressorDF.is_fitted

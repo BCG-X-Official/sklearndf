@@ -18,7 +18,6 @@ sklearndf.wrapper.stacking.StackingClassifierWrapperDF
    
       ~StackingClassifierWrapperDF.clone
       ~StackingClassifierWrapperDF.decision_function
-      ~StackingClassifierWrapperDF.ensure_fitted
       ~StackingClassifierWrapperDF.fit
       ~StackingClassifierWrapperDF.from_fitted
       ~StackingClassifierWrapperDF.get_params
@@ -37,7 +36,7 @@ sklearndf.wrapper.stacking.StackingClassifierWrapperDF
 
    .. autosummary::
    
-      ~StackingClassifierWrapperDF.COL_FEATURE_IN
+      ~StackingClassifierWrapperDF.COL_FEATURE
       ~StackingClassifierWrapperDF.COL_PREDICTION
       ~StackingClassifierWrapperDF.classes_
       ~StackingClassifierWrapperDF.feature_names_in_

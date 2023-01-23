@@ -202,12 +202,16 @@
         <span class="n">NumpyTransformerWrapperDF</span><span class="p">[</span><span class="n">BorutaPy</span><span class="p">],</span>
         <span class="n">ColumnSubsetTransformerWrapperDF</span><span class="p">[</span><span class="n">BorutaPy</span><span class="p">],</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        DF wrapper for :class:`~boruta.BorutaPy`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="nf">_get_features_out</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">support_</span><span class="p">]</span></div>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">support_</span><span class="p">]</span>
+
+        <span class="k">def</span> <span class="nf">_get_sparse_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+            <span class="c1"># don&#39;t allow sparse input</span>
+            <span class="k">return</span> <span class="mf">0.0</span></div>
 
 <span class="k">else</span><span class="p">:</span>
     <span class="n">__all__</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;BorutaPyWrapperDF&quot;</span><span class="p">)</span>

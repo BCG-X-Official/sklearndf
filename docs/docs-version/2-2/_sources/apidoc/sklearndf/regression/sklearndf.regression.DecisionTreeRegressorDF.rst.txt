@@ -17,7 +17,6 @@ sklearndf.regression.DecisionTreeRegressorDF
       :nosignatures:
    
       ~DecisionTreeRegressorDF.clone
-      ~DecisionTreeRegressorDF.ensure_fitted
       ~DecisionTreeRegressorDF.fit
       ~DecisionTreeRegressorDF.from_fitted
       ~DecisionTreeRegressorDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.DecisionTreeRegressorDF
 
    .. autosummary::
    
-      ~DecisionTreeRegressorDF.COL_FEATURE_IN
+      ~DecisionTreeRegressorDF.COL_FEATURE
       ~DecisionTreeRegressorDF.COL_PREDICTION
       ~DecisionTreeRegressorDF.feature_names_in_
       ~DecisionTreeRegressorDF.is_fitted

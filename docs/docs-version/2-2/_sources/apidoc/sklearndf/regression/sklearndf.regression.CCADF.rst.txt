@@ -17,7 +17,6 @@ sklearndf.regression.CCADF
       :nosignatures:
    
       ~CCADF.clone
-      ~CCADF.ensure_fitted
       ~CCADF.fit
       ~CCADF.fit_transform
       ~CCADF.from_fitted
@@ -25,6 +24,7 @@ sklearndf.regression.CCADF
       ~CCADF.inverse_transform
       ~CCADF.predict
       ~CCADF.score
+      ~CCADF.set_output
       ~CCADF.set_params
       ~CCADF.to_expression
       ~CCADF.transform
@@ -37,8 +37,8 @@ sklearndf.regression.CCADF
 
    .. autosummary::
    
-      ~CCADF.COL_FEATURE_IN
-      ~CCADF.COL_FEATURE_OUT
+      ~CCADF.COL_FEATURE
+      ~CCADF.COL_FEATURE_ORIGINAL
       ~CCADF.COL_PREDICTION
       ~CCADF.feature_names_in_
       ~CCADF.feature_names_original_

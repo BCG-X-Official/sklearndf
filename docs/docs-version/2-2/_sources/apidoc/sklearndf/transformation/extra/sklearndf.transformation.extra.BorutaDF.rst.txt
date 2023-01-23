@@ -17,12 +17,12 @@ sklearndf.transformation.extra.BorutaDF
       :nosignatures:
    
       ~BorutaDF.clone
-      ~BorutaDF.ensure_fitted
       ~BorutaDF.fit
       ~BorutaDF.fit_transform
       ~BorutaDF.from_fitted
       ~BorutaDF.get_params
       ~BorutaDF.inverse_transform
+      ~BorutaDF.set_output
       ~BorutaDF.set_params
       ~BorutaDF.to_expression
       ~BorutaDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.extra.BorutaDF
 
    .. autosummary::
    
-      ~BorutaDF.COL_FEATURE_IN
-      ~BorutaDF.COL_FEATURE_OUT
+      ~BorutaDF.COL_FEATURE
+      ~BorutaDF.COL_FEATURE_ORIGINAL
       ~BorutaDF.feature_names_in_
       ~BorutaDF.feature_names_original_
       ~BorutaDF.feature_names_out_

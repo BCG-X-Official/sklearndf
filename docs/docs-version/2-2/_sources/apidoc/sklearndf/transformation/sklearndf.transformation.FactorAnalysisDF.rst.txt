@@ -17,7 +17,6 @@ sklearndf.transformation.FactorAnalysisDF
       :nosignatures:
    
       ~FactorAnalysisDF.clone
-      ~FactorAnalysisDF.ensure_fitted
       ~FactorAnalysisDF.fit
       ~FactorAnalysisDF.fit_transform
       ~FactorAnalysisDF.from_fitted
@@ -27,6 +26,7 @@ sklearndf.transformation.FactorAnalysisDF
       ~FactorAnalysisDF.inverse_transform
       ~FactorAnalysisDF.score
       ~FactorAnalysisDF.score_samples
+      ~FactorAnalysisDF.set_output
       ~FactorAnalysisDF.set_params
       ~FactorAnalysisDF.to_expression
       ~FactorAnalysisDF.transform
@@ -39,8 +39,8 @@ sklearndf.transformation.FactorAnalysisDF
 
    .. autosummary::
    
-      ~FactorAnalysisDF.COL_FEATURE_IN
-      ~FactorAnalysisDF.COL_FEATURE_OUT
+      ~FactorAnalysisDF.COL_FEATURE
+      ~FactorAnalysisDF.COL_FEATURE_ORIGINAL
       ~FactorAnalysisDF.feature_names_in_
       ~FactorAnalysisDF.feature_names_original_
       ~FactorAnalysisDF.feature_names_out_

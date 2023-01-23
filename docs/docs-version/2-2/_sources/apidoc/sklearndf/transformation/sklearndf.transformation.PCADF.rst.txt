@@ -17,7 +17,6 @@ sklearndf.transformation.PCADF
       :nosignatures:
    
       ~PCADF.clone
-      ~PCADF.ensure_fitted
       ~PCADF.fit
       ~PCADF.fit_transform
       ~PCADF.from_fitted
@@ -25,6 +24,7 @@ sklearndf.transformation.PCADF
       ~PCADF.inverse_transform
       ~PCADF.score
       ~PCADF.score_samples
+      ~PCADF.set_output
       ~PCADF.set_params
       ~PCADF.to_expression
       ~PCADF.transform
@@ -37,8 +37,8 @@ sklearndf.transformation.PCADF
 
    .. autosummary::
    
-      ~PCADF.COL_FEATURE_IN
-      ~PCADF.COL_FEATURE_OUT
+      ~PCADF.COL_FEATURE
+      ~PCADF.COL_FEATURE_ORIGINAL
       ~PCADF.feature_names_in_
       ~PCADF.feature_names_original_
       ~PCADF.feature_names_out_

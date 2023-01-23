@@ -18,7 +18,6 @@ sklearndf.classification.HistGradientBoostingClassifierDF
    
       ~HistGradientBoostingClassifierDF.clone
       ~HistGradientBoostingClassifierDF.decision_function
-      ~HistGradientBoostingClassifierDF.ensure_fitted
       ~HistGradientBoostingClassifierDF.fit
       ~HistGradientBoostingClassifierDF.from_fitted
       ~HistGradientBoostingClassifierDF.get_params
@@ -40,7 +39,7 @@ sklearndf.classification.HistGradientBoostingClassifierDF
 
    .. autosummary::
    
-      ~HistGradientBoostingClassifierDF.COL_FEATURE_IN
+      ~HistGradientBoostingClassifierDF.COL_FEATURE
       ~HistGradientBoostingClassifierDF.COL_PREDICTION
       ~HistGradientBoostingClassifierDF.classes_
       ~HistGradientBoostingClassifierDF.feature_names_in_

@@ -18,8 +18,8 @@ sklearndf.classification.StackingClassifierDF
    
       ~StackingClassifierDF.clone
       ~StackingClassifierDF.decision_function
-      ~StackingClassifierDF.ensure_fitted
       ~StackingClassifierDF.fit
+      ~StackingClassifierDF.fit_transform
       ~StackingClassifierDF.from_fitted
       ~StackingClassifierDF.get_params
       ~StackingClassifierDF.predict
@@ -38,7 +38,7 @@ sklearndf.classification.StackingClassifierDF
 
    .. autosummary::
    
-      ~StackingClassifierDF.COL_FEATURE_IN
+      ~StackingClassifierDF.COL_FEATURE
       ~StackingClassifierDF.COL_PREDICTION
       ~StackingClassifierDF.classes_
       ~StackingClassifierDF.feature_names_in_

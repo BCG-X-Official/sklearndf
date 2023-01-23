@@ -18,7 +18,6 @@ sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF
    
       ~LinearDiscriminantAnalysisWrapperDF.clone
       ~LinearDiscriminantAnalysisWrapperDF.decision_function
-      ~LinearDiscriminantAnalysisWrapperDF.ensure_fitted
       ~LinearDiscriminantAnalysisWrapperDF.fit
       ~LinearDiscriminantAnalysisWrapperDF.fit_transform
       ~LinearDiscriminantAnalysisWrapperDF.from_fitted
@@ -28,6 +27,7 @@ sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF
       ~LinearDiscriminantAnalysisWrapperDF.predict_log_proba
       ~LinearDiscriminantAnalysisWrapperDF.predict_proba
       ~LinearDiscriminantAnalysisWrapperDF.score
+      ~LinearDiscriminantAnalysisWrapperDF.set_output
       ~LinearDiscriminantAnalysisWrapperDF.set_params
       ~LinearDiscriminantAnalysisWrapperDF.to_expression
       ~LinearDiscriminantAnalysisWrapperDF.transform
@@ -40,8 +40,8 @@ sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF
 
    .. autosummary::
    
-      ~LinearDiscriminantAnalysisWrapperDF.COL_FEATURE_IN
-      ~LinearDiscriminantAnalysisWrapperDF.COL_FEATURE_OUT
+      ~LinearDiscriminantAnalysisWrapperDF.COL_FEATURE
+      ~LinearDiscriminantAnalysisWrapperDF.COL_FEATURE_ORIGINAL
       ~LinearDiscriminantAnalysisWrapperDF.COL_PREDICTION
       ~LinearDiscriminantAnalysisWrapperDF.classes_
       ~LinearDiscriminantAnalysisWrapperDF.feature_names_in_

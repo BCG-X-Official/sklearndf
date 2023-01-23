@@ -18,7 +18,6 @@ sklearndf.classification.SVCDF
    
       ~SVCDF.clone
       ~SVCDF.decision_function
-      ~SVCDF.ensure_fitted
       ~SVCDF.fit
       ~SVCDF.from_fitted
       ~SVCDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.SVCDF
 
    .. autosummary::
    
-      ~SVCDF.COL_FEATURE_IN
+      ~SVCDF.COL_FEATURE
       ~SVCDF.COL_PREDICTION
       ~SVCDF.classes_
       ~SVCDF.feature_names_in_

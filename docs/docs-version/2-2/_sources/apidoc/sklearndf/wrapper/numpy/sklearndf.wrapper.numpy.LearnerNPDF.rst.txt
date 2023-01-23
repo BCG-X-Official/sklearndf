@@ -17,7 +17,6 @@ sklearndf.wrapper.numpy.LearnerNPDF
       :nosignatures:
    
       ~LearnerNPDF.clone
-      ~LearnerNPDF.ensure_fitted
       ~LearnerNPDF.fit
       ~LearnerNPDF.get_params
       ~LearnerNPDF.predict
@@ -32,7 +31,7 @@ sklearndf.wrapper.numpy.LearnerNPDF
 
    .. autosummary::
    
-      ~LearnerNPDF.COL_FEATURE_IN
+      ~LearnerNPDF.COL_FEATURE
       ~LearnerNPDF.feature_names_in_
       ~LearnerNPDF.is_fitted
       ~LearnerNPDF.n_features_in_

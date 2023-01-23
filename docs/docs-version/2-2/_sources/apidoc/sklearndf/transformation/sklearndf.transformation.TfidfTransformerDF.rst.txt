@@ -17,12 +17,12 @@ sklearndf.transformation.TfidfTransformerDF
       :nosignatures:
    
       ~TfidfTransformerDF.clone
-      ~TfidfTransformerDF.ensure_fitted
       ~TfidfTransformerDF.fit
       ~TfidfTransformerDF.fit_transform
       ~TfidfTransformerDF.from_fitted
       ~TfidfTransformerDF.get_params
       ~TfidfTransformerDF.inverse_transform
+      ~TfidfTransformerDF.set_output
       ~TfidfTransformerDF.set_params
       ~TfidfTransformerDF.to_expression
       ~TfidfTransformerDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.TfidfTransformerDF
 
    .. autosummary::
    
-      ~TfidfTransformerDF.COL_FEATURE_IN
-      ~TfidfTransformerDF.COL_FEATURE_OUT
+      ~TfidfTransformerDF.COL_FEATURE
+      ~TfidfTransformerDF.COL_FEATURE_ORIGINAL
       ~TfidfTransformerDF.feature_names_in_
       ~TfidfTransformerDF.feature_names_original_
       ~TfidfTransformerDF.feature_names_out_

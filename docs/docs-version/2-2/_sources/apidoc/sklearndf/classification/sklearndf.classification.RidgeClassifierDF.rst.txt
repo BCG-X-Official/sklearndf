@@ -18,7 +18,6 @@ sklearndf.classification.RidgeClassifierDF
    
       ~RidgeClassifierDF.clone
       ~RidgeClassifierDF.decision_function
-      ~RidgeClassifierDF.ensure_fitted
       ~RidgeClassifierDF.fit
       ~RidgeClassifierDF.from_fitted
       ~RidgeClassifierDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.RidgeClassifierDF
 
    .. autosummary::
    
-      ~RidgeClassifierDF.COL_FEATURE_IN
+      ~RidgeClassifierDF.COL_FEATURE
       ~RidgeClassifierDF.COL_PREDICTION
       ~RidgeClassifierDF.classes_
       ~RidgeClassifierDF.feature_names_in_

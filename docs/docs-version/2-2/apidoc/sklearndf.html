@@ -598,6 +598,11 @@
     </label>
     <ul>
      <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf/pipeline/wrapper/sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.html">
+       sklearndf.pipeline.wrapper.FeatureUnionSparseFrames
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="sklearndf/pipeline/wrapper/sklearndf.pipeline.wrapper.FeatureUnionWrapperDF.html">
        sklearndf.pipeline.wrapper.FeatureUnionWrapperDF
       </a>
@@ -988,6 +993,16 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="sklearndf/transformation/sklearndf.transformation.CountVectorizerDF.html">
+     sklearndf.transformation.CountVectorizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="sklearndf/transformation/sklearndf.transformation.CountVectorizerTx.html">
+     sklearndf.transformation.CountVectorizerTx
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="sklearndf/transformation/sklearndf.transformation.DictVectorizerDF.html">
      sklearndf.transformation.DictVectorizerDF
     </a>
@@ -1283,6 +1298,16 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="sklearndf/transformation/sklearndf.transformation.TfidfVectorizerDF.html">
+     sklearndf.transformation.TfidfVectorizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="sklearndf/transformation/sklearndf.transformation.TfidfVectorizerTx.html">
+     sklearndf.transformation.TfidfVectorizerTx
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="sklearndf/transformation/sklearndf.transformation.TruncatedSVDDF.html">
      sklearndf.transformation.TruncatedSVDDF
     </a>
@@ -1362,6 +1387,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.ColumnTransformerSparseFrames.html">
+       sklearndf.transformation.wrapper.ColumnTransformerSparseFrames
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.ColumnTransformerWrapperDF.html">
        sklearndf.transformation.wrapper.ColumnTransformerWrapperDF
       </a>
@@ -1417,8 +1447,23 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.PCAWrapperDF.html">
+       sklearndf.transformation.wrapper.PCAWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF.html">
        sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.SingleColumnTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.SingleColumnTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.VectorizerWrapperDF.html">
+       sklearndf.transformation.wrapper.VectorizerWrapperDF
       </a>
      </li>
     </ul>
@@ -1617,13 +1662,13 @@
 native support of data frames, while leaving the original API intact.</p>
 <p>Augmented scikit-learn classes are named after their native scikit-learn counterparts,
 with <cite>DF</cite> added as a suffix:
-<a class="reference internal" href="sklearndf/transformation/sklearndf.transformation.SimpleImputerDF.html#sklearndf.transformation.SimpleImputerDF" title="sklearndf.transformation.SimpleImputerDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleImputerDF</span></code></a> takes the place of <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html#sklearn.impute.SimpleImputer" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleImputer</span></code></a>,
+<a class="reference internal" href="sklearndf/transformation/sklearndf.transformation.SimpleImputerDF.html#sklearndf.transformation.SimpleImputerDF" title="sklearndf.transformation.SimpleImputerDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleImputerDF</span></code></a> takes the place of <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html#sklearn.impute.SimpleImputer" title="(in scikit-learn v1.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleImputer</span></code></a>,
 <a class="reference internal" href="sklearndf/regression/sklearndf.regression.RandomForestRegressorDF.html#sklearndf.regression.RandomForestRegressorDF" title="sklearndf.regression.RandomForestRegressorDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">RandomForestRegressorDF</span></code></a> takes the place of
-<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html#sklearn.ensemble.RandomForestRegressor" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code></a>, and so on.</p>
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html#sklearn.ensemble.RandomForestRegressor" title="(in scikit-learn v1.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RandomForestRegressor</span></code></a>, and so on.</p>
 <p>For all methods expecting an <cite>X</cite> argument for a feature matrix and potentially a
 <cite>y</cite> argument for one or more targets, <cite>sklearndf</cite> estimators expect a pandas
-<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> for <cite>X</cite> and a pandas <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a> for a
-1‑dimensional <cite>y</cite>, or a pandas <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> for <cite>y</cite> when fitting to
+<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> for <cite>X</cite> and a pandas <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a> for a
+1‑dimensional <cite>y</cite>, or a pandas <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> for <cite>y</cite> when fitting to
 multiple targets or outputs.
 This includes methods such as <a class="reference internal" href="sklearndf/sklearndf.EstimatorDF.html#sklearndf.EstimatorDF.fit" title="sklearndf.EstimatorDF.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a>,
 <a class="reference internal" href="sklearndf/sklearndf.TransformerDF.html#sklearndf.TransformerDF.transform" title="sklearndf.TransformerDF.transform"><code class="xref py py-meth docutils literal notranslate"><span class="pre">transform()</span></code></a>, and <a class="reference internal" href="sklearndf/sklearndf.LearnerDF.html#sklearndf.LearnerDF.predict" title="sklearndf.LearnerDF.predict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict()</span></code></a>.</p>

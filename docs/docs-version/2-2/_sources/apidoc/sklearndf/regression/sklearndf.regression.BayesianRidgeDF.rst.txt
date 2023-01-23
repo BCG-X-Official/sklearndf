@@ -17,7 +17,6 @@ sklearndf.regression.BayesianRidgeDF
       :nosignatures:
    
       ~BayesianRidgeDF.clone
-      ~BayesianRidgeDF.ensure_fitted
       ~BayesianRidgeDF.fit
       ~BayesianRidgeDF.from_fitted
       ~BayesianRidgeDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.BayesianRidgeDF
 
    .. autosummary::
    
-      ~BayesianRidgeDF.COL_FEATURE_IN
+      ~BayesianRidgeDF.COL_FEATURE
       ~BayesianRidgeDF.COL_PREDICTION
       ~BayesianRidgeDF.feature_names_in_
       ~BayesianRidgeDF.is_fitted

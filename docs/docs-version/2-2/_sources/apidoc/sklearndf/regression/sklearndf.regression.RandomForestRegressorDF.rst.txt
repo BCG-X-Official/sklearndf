@@ -17,7 +17,6 @@ sklearndf.regression.RandomForestRegressorDF
       :nosignatures:
    
       ~RandomForestRegressorDF.clone
-      ~RandomForestRegressorDF.ensure_fitted
       ~RandomForestRegressorDF.fit
       ~RandomForestRegressorDF.from_fitted
       ~RandomForestRegressorDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.RandomForestRegressorDF
 
    .. autosummary::
    
-      ~RandomForestRegressorDF.COL_FEATURE_IN
+      ~RandomForestRegressorDF.COL_FEATURE
       ~RandomForestRegressorDF.COL_PREDICTION
       ~RandomForestRegressorDF.feature_names_in_
       ~RandomForestRegressorDF.is_fitted

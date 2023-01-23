@@ -17,12 +17,12 @@ sklearndf.transformation.MiniBatchSparsePCADF
       :nosignatures:
    
       ~MiniBatchSparsePCADF.clone
-      ~MiniBatchSparsePCADF.ensure_fitted
       ~MiniBatchSparsePCADF.fit
       ~MiniBatchSparsePCADF.fit_transform
       ~MiniBatchSparsePCADF.from_fitted
       ~MiniBatchSparsePCADF.get_params
       ~MiniBatchSparsePCADF.inverse_transform
+      ~MiniBatchSparsePCADF.set_output
       ~MiniBatchSparsePCADF.set_params
       ~MiniBatchSparsePCADF.to_expression
       ~MiniBatchSparsePCADF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.MiniBatchSparsePCADF
 
    .. autosummary::
    
-      ~MiniBatchSparsePCADF.COL_FEATURE_IN
-      ~MiniBatchSparsePCADF.COL_FEATURE_OUT
+      ~MiniBatchSparsePCADF.COL_FEATURE
+      ~MiniBatchSparsePCADF.COL_FEATURE_ORIGINAL
       ~MiniBatchSparsePCADF.feature_names_in_
       ~MiniBatchSparsePCADF.feature_names_original_
       ~MiniBatchSparsePCADF.feature_names_out_

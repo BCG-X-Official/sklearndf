@@ -17,7 +17,6 @@ sklearndf.transformation.LatentDirichletAllocationDF
       :nosignatures:
    
       ~LatentDirichletAllocationDF.clone
-      ~LatentDirichletAllocationDF.ensure_fitted
       ~LatentDirichletAllocationDF.fit
       ~LatentDirichletAllocationDF.fit_transform
       ~LatentDirichletAllocationDF.from_fitted
@@ -26,6 +25,7 @@ sklearndf.transformation.LatentDirichletAllocationDF
       ~LatentDirichletAllocationDF.partial_fit
       ~LatentDirichletAllocationDF.perplexity
       ~LatentDirichletAllocationDF.score
+      ~LatentDirichletAllocationDF.set_output
       ~LatentDirichletAllocationDF.set_params
       ~LatentDirichletAllocationDF.to_expression
       ~LatentDirichletAllocationDF.transform
@@ -38,8 +38,8 @@ sklearndf.transformation.LatentDirichletAllocationDF
 
    .. autosummary::
    
-      ~LatentDirichletAllocationDF.COL_FEATURE_IN
-      ~LatentDirichletAllocationDF.COL_FEATURE_OUT
+      ~LatentDirichletAllocationDF.COL_FEATURE
+      ~LatentDirichletAllocationDF.COL_FEATURE_ORIGINAL
       ~LatentDirichletAllocationDF.feature_names_in_
       ~LatentDirichletAllocationDF.feature_names_original_
       ~LatentDirichletAllocationDF.feature_names_out_

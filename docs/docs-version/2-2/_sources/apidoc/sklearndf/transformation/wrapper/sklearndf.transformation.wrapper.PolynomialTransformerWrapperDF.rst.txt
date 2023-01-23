@@ -17,12 +17,12 @@ sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF
       :nosignatures:
    
       ~PolynomialTransformerWrapperDF.clone
-      ~PolynomialTransformerWrapperDF.ensure_fitted
       ~PolynomialTransformerWrapperDF.fit
       ~PolynomialTransformerWrapperDF.fit_transform
       ~PolynomialTransformerWrapperDF.from_fitted
       ~PolynomialTransformerWrapperDF.get_params
       ~PolynomialTransformerWrapperDF.inverse_transform
+      ~PolynomialTransformerWrapperDF.set_output
       ~PolynomialTransformerWrapperDF.set_params
       ~PolynomialTransformerWrapperDF.to_expression
       ~PolynomialTransformerWrapperDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF
 
    .. autosummary::
    
-      ~PolynomialTransformerWrapperDF.COL_FEATURE_IN
-      ~PolynomialTransformerWrapperDF.COL_FEATURE_OUT
+      ~PolynomialTransformerWrapperDF.COL_FEATURE
+      ~PolynomialTransformerWrapperDF.COL_FEATURE_ORIGINAL
       ~PolynomialTransformerWrapperDF.feature_names_in_
       ~PolynomialTransformerWrapperDF.feature_names_original_
       ~PolynomialTransformerWrapperDF.feature_names_out_

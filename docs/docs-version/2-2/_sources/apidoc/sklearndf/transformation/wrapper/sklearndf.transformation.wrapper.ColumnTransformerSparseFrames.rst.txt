@@ -1,0 +1,40 @@
+sklearndf.transformation.wrapper.ColumnTransformerSparseFrames
+==============================================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: ColumnTransformerSparseFrames
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ColumnTransformerSparseFrames.fit
+      ~ColumnTransformerSparseFrames.fit_transform
+      ~ColumnTransformerSparseFrames.get_feature_names_out
+      ~ColumnTransformerSparseFrames.get_params
+      ~ColumnTransformerSparseFrames.set_output
+      ~ColumnTransformerSparseFrames.set_params
+      ~ColumnTransformerSparseFrames.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ColumnTransformerSparseFrames.named_transformers_
+      ~ColumnTransformerSparseFrames.steps
+   
+   
+
+   .. rubric:: Definitions

@@ -17,7 +17,6 @@ sklearndf.regression.OrthogonalMatchingPursuitDF
       :nosignatures:
    
       ~OrthogonalMatchingPursuitDF.clone
-      ~OrthogonalMatchingPursuitDF.ensure_fitted
       ~OrthogonalMatchingPursuitDF.fit
       ~OrthogonalMatchingPursuitDF.from_fitted
       ~OrthogonalMatchingPursuitDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.OrthogonalMatchingPursuitDF
 
    .. autosummary::
    
-      ~OrthogonalMatchingPursuitDF.COL_FEATURE_IN
+      ~OrthogonalMatchingPursuitDF.COL_FEATURE
       ~OrthogonalMatchingPursuitDF.COL_PREDICTION
       ~OrthogonalMatchingPursuitDF.feature_names_in_
       ~OrthogonalMatchingPursuitDF.is_fitted

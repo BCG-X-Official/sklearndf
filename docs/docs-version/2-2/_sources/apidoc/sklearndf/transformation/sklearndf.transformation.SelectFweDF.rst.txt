@@ -17,12 +17,12 @@ sklearndf.transformation.SelectFweDF
       :nosignatures:
    
       ~SelectFweDF.clone
-      ~SelectFweDF.ensure_fitted
       ~SelectFweDF.fit
       ~SelectFweDF.fit_transform
       ~SelectFweDF.from_fitted
       ~SelectFweDF.get_params
       ~SelectFweDF.inverse_transform
+      ~SelectFweDF.set_output
       ~SelectFweDF.set_params
       ~SelectFweDF.to_expression
       ~SelectFweDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.SelectFweDF
 
    .. autosummary::
    
-      ~SelectFweDF.COL_FEATURE_IN
-      ~SelectFweDF.COL_FEATURE_OUT
+      ~SelectFweDF.COL_FEATURE
+      ~SelectFweDF.COL_FEATURE_ORIGINAL
       ~SelectFweDF.feature_names_in_
       ~SelectFweDF.feature_names_original_
       ~SelectFweDF.feature_names_out_

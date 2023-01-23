@@ -17,12 +17,12 @@ sklearndf.transformation.NormalizerDF
       :nosignatures:
    
       ~NormalizerDF.clone
-      ~NormalizerDF.ensure_fitted
       ~NormalizerDF.fit
       ~NormalizerDF.fit_transform
       ~NormalizerDF.from_fitted
       ~NormalizerDF.get_params
       ~NormalizerDF.inverse_transform
+      ~NormalizerDF.set_output
       ~NormalizerDF.set_params
       ~NormalizerDF.to_expression
       ~NormalizerDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.NormalizerDF
 
    .. autosummary::
    
-      ~NormalizerDF.COL_FEATURE_IN
-      ~NormalizerDF.COL_FEATURE_OUT
+      ~NormalizerDF.COL_FEATURE
+      ~NormalizerDF.COL_FEATURE_ORIGINAL
       ~NormalizerDF.feature_names_in_
       ~NormalizerDF.feature_names_original_
       ~NormalizerDF.feature_names_out_

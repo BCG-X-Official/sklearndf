@@ -21,6 +21,8 @@ sklearndf.transformation
       BernoulliRBMDF
       BinarizerDF
       ColumnTransformerDF
+      CountVectorizerDF
+      CountVectorizerTx
       DictVectorizerDF
       DictionaryLearningDF
       FactorAnalysisDF
@@ -80,6 +82,8 @@ sklearndf.transformation
       SplineTransformerDF
       StandardScalerDF
       TfidfTransformerDF
+      TfidfVectorizerDF
+      TfidfVectorizerTx
       TruncatedSVDDF
       VarianceThresholdDF
    

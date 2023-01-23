@@ -18,7 +18,6 @@ sklearndf.classification.ComplementNBDF
    
       ~ComplementNBDF.clone
       ~ComplementNBDF.decision_function
-      ~ComplementNBDF.ensure_fitted
       ~ComplementNBDF.fit
       ~ComplementNBDF.from_fitted
       ~ComplementNBDF.get_params
@@ -38,7 +37,7 @@ sklearndf.classification.ComplementNBDF
 
    .. autosummary::
    
-      ~ComplementNBDF.COL_FEATURE_IN
+      ~ComplementNBDF.COL_FEATURE
       ~ComplementNBDF.COL_PREDICTION
       ~ComplementNBDF.classes_
       ~ComplementNBDF.feature_names_in_

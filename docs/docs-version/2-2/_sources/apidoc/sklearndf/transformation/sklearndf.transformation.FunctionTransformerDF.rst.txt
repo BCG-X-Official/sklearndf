@@ -17,12 +17,12 @@ sklearndf.transformation.FunctionTransformerDF
       :nosignatures:
    
       ~FunctionTransformerDF.clone
-      ~FunctionTransformerDF.ensure_fitted
       ~FunctionTransformerDF.fit
       ~FunctionTransformerDF.fit_transform
       ~FunctionTransformerDF.from_fitted
       ~FunctionTransformerDF.get_params
       ~FunctionTransformerDF.inverse_transform
+      ~FunctionTransformerDF.set_output
       ~FunctionTransformerDF.set_params
       ~FunctionTransformerDF.to_expression
       ~FunctionTransformerDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.FunctionTransformerDF
 
    .. autosummary::
    
-      ~FunctionTransformerDF.COL_FEATURE_IN
-      ~FunctionTransformerDF.COL_FEATURE_OUT
+      ~FunctionTransformerDF.COL_FEATURE
+      ~FunctionTransformerDF.COL_FEATURE_ORIGINAL
       ~FunctionTransformerDF.feature_names_in_
       ~FunctionTransformerDF.feature_names_original_
       ~FunctionTransformerDF.feature_names_out_

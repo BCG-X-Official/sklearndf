@@ -17,13 +17,13 @@ sklearndf.transformation.MissingIndicatorDF
       :nosignatures:
    
       ~MissingIndicatorDF.clone
-      ~MissingIndicatorDF.ensure_fitted
       ~MissingIndicatorDF.fit
       ~MissingIndicatorDF.fit_transform
       ~MissingIndicatorDF.from_fitted
       ~MissingIndicatorDF.get_feature_names_out
       ~MissingIndicatorDF.get_params
       ~MissingIndicatorDF.inverse_transform
+      ~MissingIndicatorDF.set_output
       ~MissingIndicatorDF.set_params
       ~MissingIndicatorDF.to_expression
       ~MissingIndicatorDF.transform
@@ -36,8 +36,8 @@ sklearndf.transformation.MissingIndicatorDF
 
    .. autosummary::
    
-      ~MissingIndicatorDF.COL_FEATURE_IN
-      ~MissingIndicatorDF.COL_FEATURE_OUT
+      ~MissingIndicatorDF.COL_FEATURE
+      ~MissingIndicatorDF.COL_FEATURE_ORIGINAL
       ~MissingIndicatorDF.feature_names_in_
       ~MissingIndicatorDF.feature_names_original_
       ~MissingIndicatorDF.feature_names_out_

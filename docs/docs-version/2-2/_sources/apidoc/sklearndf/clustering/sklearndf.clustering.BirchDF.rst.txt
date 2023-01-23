@@ -17,9 +17,9 @@ sklearndf.clustering.BirchDF
       :nosignatures:
    
       ~BirchDF.clone
-      ~BirchDF.ensure_fitted
       ~BirchDF.fit
       ~BirchDF.fit_predict
+      ~BirchDF.fit_transform
       ~BirchDF.from_fitted
       ~BirchDF.get_params
       ~BirchDF.partial_fit
@@ -36,7 +36,7 @@ sklearndf.clustering.BirchDF
 
    .. autosummary::
    
-      ~BirchDF.COL_FEATURE_IN
+      ~BirchDF.COL_FEATURE
       ~BirchDF.COL_LABELS
       ~BirchDF.COL_PREDICTION
       ~BirchDF.feature_names_in_

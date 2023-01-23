@@ -18,7 +18,6 @@ sklearndf.classification.BernoulliNBDF
    
       ~BernoulliNBDF.clone
       ~BernoulliNBDF.decision_function
-      ~BernoulliNBDF.ensure_fitted
       ~BernoulliNBDF.fit
       ~BernoulliNBDF.from_fitted
       ~BernoulliNBDF.get_params
@@ -38,7 +37,7 @@ sklearndf.classification.BernoulliNBDF
 
    .. autosummary::
    
-      ~BernoulliNBDF.COL_FEATURE_IN
+      ~BernoulliNBDF.COL_FEATURE
       ~BernoulliNBDF.COL_PREDICTION
       ~BernoulliNBDF.classes_
       ~BernoulliNBDF.feature_names_in_

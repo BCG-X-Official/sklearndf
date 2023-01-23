@@ -177,9 +177,11 @@
 
 <span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span>
 
+<span class="kn">from</span> <span class="nn">...</span> <span class="kn">import</span> <span class="n">__sklearn_0_24__</span><span class="p">,</span> <span class="n">__sklearn_version__</span>
 <span class="kn">from</span> <span class="nn">...transformation.wrapper</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">,</span>
     <span class="n">NumpyTransformerWrapperDF</span><span class="p">,</span>
+    <span class="n">SingleColumnTransformerWrapperDF</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">...wrapper</span> <span class="kn">import</span> <span class="n">MetaEstimatorWrapperDF</span><span class="p">,</span> <span class="n">RegressorWrapperDF</span>
 
@@ -223,7 +225,7 @@
     <span class="n">Generic</span><span class="p">[</span><span class="n">T_NativeRegressor</span><span class="p">],</span>
     <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abstract base class of DF wrappers for regressors implementing</span>
 <span class="sd">    :class:`sklearn.base.MetaEstimatorMixin`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -236,7 +238,7 @@
     <span class="n">Generic</span><span class="p">[</span><span class="n">T_NativeRegressor</span><span class="p">],</span>
     <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abstract base class of DF wrappers for regressors implementing</span>
 <span class="sd">    method ``partial_fit()``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -244,11 +246,11 @@
     <span class="c1"># noinspection PyPep8Naming</span>
 <div class="viewcode-block" id="PartialFitRegressorWrapperDF.partial_fit"><a class="viewcode-back" href="../../../../apidoc/sklearndf/regression/wrapper/sklearndf.regression.wrapper.PartialFitRegressorWrapperDF.html#sklearndf.regression.wrapper.PartialFitRegressorWrapperDF.partial_fit">[docs]</a>    <span class="k">def</span> <span class="nf">partial_fit</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">:</span> <span class="n">T_PartialFitRegressorWrapperDF</span><span class="p">,</span>
-        <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span>
         <span class="n">y</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span>
         <span class="n">sample_weight</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T_PartialFitRegressorWrapperDF</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform incremental fit on a batch of samples.</span>
 
 <span class="sd">        This method is meant to be called multiple times for subsets of training</span>
@@ -260,7 +262,7 @@
 <span class="sd">        :param sample_weight: optional weights applied to individual samples</span>
 <span class="sd">        :return: ``self``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_check_parameter_types</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_parameter_types</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_partial_fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span></div>
@@ -290,7 +292,7 @@
     <span class="n">MetaRegressorWrapperDF</span><span class="p">[</span><span class="n">MultiOutputRegressor</span><span class="p">],</span>
     <span class="n">PartialFitRegressorWrapperDF</span><span class="p">[</span><span class="n">MultiOutputRegressor</span><span class="p">],</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abstract base class of DF wrappers for multi-output regressors.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -303,7 +305,7 @@
     <span class="n">Generic</span><span class="p">[</span><span class="n">T_NativeRegressor</span><span class="p">],</span>
     <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for combined regressors and column preserving transformers.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -312,30 +314,22 @@
 
 <div class="viewcode-block" id="IsotonicRegressionWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/regression/wrapper/sklearndf.regression.wrapper.IsotonicRegressionWrapperDF.html#sklearndf.regression.wrapper.IsotonicRegressionWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">IsotonicRegressionWrapperDF</span><span class="p">(</span>
     <span class="n">RegressorTransformerWrapperDF</span><span class="p">[</span><span class="n">IsotonicRegression</span><span class="p">],</span>
+    <span class="n">SingleColumnTransformerWrapperDF</span><span class="p">[</span><span class="n">IsotonicRegression</span><span class="p">],</span>
     <span class="n">NumpyTransformerWrapperDF</span><span class="p">[</span><span class="n">IsotonicRegression</span><span class="p">],</span>
     <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for :class:`sklearn.isotonic.IsotonicRegression`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># noinspection PyPep8Naming</span>
-    <span class="k">def</span> <span class="nf">_check_parameter_types</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
-        <span class="n">y</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">],</span>
-        <span class="o">*</span><span class="p">,</span>
-        <span class="n">expected_columns</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_check_parameter_types</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">expected_columns</span><span class="o">=</span><span class="n">expected_columns</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;arg X expected to have exactly 1 column but has </span><span class="si">{</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns&quot;</span>
-            <span class="p">)</span>
-
-    <span class="c1"># noinspection PyPep8Naming</span>
     <span class="k">def</span> <span class="nf">_adjust_X_type_for_delegate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_adjust_X_type_for_delegate</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span></div>
+        <span class="n">arr</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_adjust_X_type_for_delegate</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">__sklearn_version__</span> <span class="o">&gt;=</span> <span class="n">__sklearn_0_24__</span><span class="p">:</span>
+            <span class="c1"># we can return a 1D array as of sklearn 0.24</span>
+            <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">arr</span></div>
 
 
 <span class="c1">#</span>

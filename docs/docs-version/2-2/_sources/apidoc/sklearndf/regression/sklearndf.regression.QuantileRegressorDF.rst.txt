@@ -17,7 +17,6 @@ sklearndf.regression.QuantileRegressorDF
       :nosignatures:
    
       ~QuantileRegressorDF.clone
-      ~QuantileRegressorDF.ensure_fitted
       ~QuantileRegressorDF.fit
       ~QuantileRegressorDF.from_fitted
       ~QuantileRegressorDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.QuantileRegressorDF
 
    .. autosummary::
    
-      ~QuantileRegressorDF.COL_FEATURE_IN
+      ~QuantileRegressorDF.COL_FEATURE
       ~QuantileRegressorDF.COL_PREDICTION
       ~QuantileRegressorDF.feature_names_in_
       ~QuantileRegressorDF.is_fitted

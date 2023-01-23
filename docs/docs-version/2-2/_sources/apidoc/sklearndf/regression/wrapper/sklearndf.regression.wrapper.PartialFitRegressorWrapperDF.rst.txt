@@ -17,7 +17,6 @@ sklearndf.regression.wrapper.PartialFitRegressorWrapperDF
       :nosignatures:
    
       ~PartialFitRegressorWrapperDF.clone
-      ~PartialFitRegressorWrapperDF.ensure_fitted
       ~PartialFitRegressorWrapperDF.fit
       ~PartialFitRegressorWrapperDF.from_fitted
       ~PartialFitRegressorWrapperDF.get_params
@@ -35,7 +34,7 @@ sklearndf.regression.wrapper.PartialFitRegressorWrapperDF
 
    .. autosummary::
    
-      ~PartialFitRegressorWrapperDF.COL_FEATURE_IN
+      ~PartialFitRegressorWrapperDF.COL_FEATURE
       ~PartialFitRegressorWrapperDF.COL_PREDICTION
       ~PartialFitRegressorWrapperDF.feature_names_in_
       ~PartialFitRegressorWrapperDF.is_fitted

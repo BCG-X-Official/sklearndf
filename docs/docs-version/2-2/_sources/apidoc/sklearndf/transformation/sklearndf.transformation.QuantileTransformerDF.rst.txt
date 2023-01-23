@@ -17,12 +17,12 @@ sklearndf.transformation.QuantileTransformerDF
       :nosignatures:
    
       ~QuantileTransformerDF.clone
-      ~QuantileTransformerDF.ensure_fitted
       ~QuantileTransformerDF.fit
       ~QuantileTransformerDF.fit_transform
       ~QuantileTransformerDF.from_fitted
       ~QuantileTransformerDF.get_params
       ~QuantileTransformerDF.inverse_transform
+      ~QuantileTransformerDF.set_output
       ~QuantileTransformerDF.set_params
       ~QuantileTransformerDF.to_expression
       ~QuantileTransformerDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.QuantileTransformerDF
 
    .. autosummary::
    
-      ~QuantileTransformerDF.COL_FEATURE_IN
-      ~QuantileTransformerDF.COL_FEATURE_OUT
+      ~QuantileTransformerDF.COL_FEATURE
+      ~QuantileTransformerDF.COL_FEATURE_ORIGINAL
       ~QuantileTransformerDF.feature_names_in_
       ~QuantileTransformerDF.feature_names_original_
       ~QuantileTransformerDF.feature_names_out_

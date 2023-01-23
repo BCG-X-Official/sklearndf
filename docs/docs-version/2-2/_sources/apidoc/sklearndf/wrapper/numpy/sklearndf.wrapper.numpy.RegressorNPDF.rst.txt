@@ -17,7 +17,6 @@ sklearndf.wrapper.numpy.RegressorNPDF
       :nosignatures:
    
       ~RegressorNPDF.clone
-      ~RegressorNPDF.ensure_fitted
       ~RegressorNPDF.fit
       ~RegressorNPDF.get_params
       ~RegressorNPDF.predict
@@ -33,7 +32,7 @@ sklearndf.wrapper.numpy.RegressorNPDF
 
    .. autosummary::
    
-      ~RegressorNPDF.COL_FEATURE_IN
+      ~RegressorNPDF.COL_FEATURE
       ~RegressorNPDF.feature_names_in_
       ~RegressorNPDF.is_fitted
       ~RegressorNPDF.n_features_in_

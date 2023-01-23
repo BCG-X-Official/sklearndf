@@ -17,8 +17,8 @@ sklearndf.regression.VotingRegressorDF
       :nosignatures:
    
       ~VotingRegressorDF.clone
-      ~VotingRegressorDF.ensure_fitted
       ~VotingRegressorDF.fit
+      ~VotingRegressorDF.fit_transform
       ~VotingRegressorDF.from_fitted
       ~VotingRegressorDF.get_feature_names_out
       ~VotingRegressorDF.get_params
@@ -36,7 +36,7 @@ sklearndf.regression.VotingRegressorDF
 
    .. autosummary::
    
-      ~VotingRegressorDF.COL_FEATURE_IN
+      ~VotingRegressorDF.COL_FEATURE
       ~VotingRegressorDF.COL_PREDICTION
       ~VotingRegressorDF.feature_names_in_
       ~VotingRegressorDF.is_fitted

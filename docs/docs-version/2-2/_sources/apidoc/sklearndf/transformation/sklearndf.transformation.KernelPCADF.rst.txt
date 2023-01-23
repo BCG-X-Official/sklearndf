@@ -17,12 +17,12 @@ sklearndf.transformation.KernelPCADF
       :nosignatures:
    
       ~KernelPCADF.clone
-      ~KernelPCADF.ensure_fitted
       ~KernelPCADF.fit
       ~KernelPCADF.fit_transform
       ~KernelPCADF.from_fitted
       ~KernelPCADF.get_params
       ~KernelPCADF.inverse_transform
+      ~KernelPCADF.set_output
       ~KernelPCADF.set_params
       ~KernelPCADF.to_expression
       ~KernelPCADF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.KernelPCADF
 
    .. autosummary::
    
-      ~KernelPCADF.COL_FEATURE_IN
-      ~KernelPCADF.COL_FEATURE_OUT
+      ~KernelPCADF.COL_FEATURE
+      ~KernelPCADF.COL_FEATURE_ORIGINAL
       ~KernelPCADF.feature_names_in_
       ~KernelPCADF.feature_names_original_
       ~KernelPCADF.feature_names_out_

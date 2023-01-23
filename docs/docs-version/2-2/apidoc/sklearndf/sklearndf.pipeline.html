@@ -598,6 +598,11 @@
     </label>
     <ul>
      <li class="toctree-l3">
+      <a class="reference internal" href="pipeline/wrapper/sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.html">
+       sklearndf.pipeline.wrapper.FeatureUnionSparseFrames
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="pipeline/wrapper/sklearndf.pipeline.wrapper.FeatureUnionWrapperDF.html">
        sklearndf.pipeline.wrapper.FeatureUnionWrapperDF
       </a>
@@ -988,6 +993,16 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="transformation/sklearndf.transformation.CountVectorizerDF.html">
+     sklearndf.transformation.CountVectorizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="transformation/sklearndf.transformation.CountVectorizerTx.html">
+     sklearndf.transformation.CountVectorizerTx
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="transformation/sklearndf.transformation.DictVectorizerDF.html">
      sklearndf.transformation.DictVectorizerDF
     </a>
@@ -1283,6 +1298,16 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="transformation/sklearndf.transformation.TfidfVectorizerDF.html">
+     sklearndf.transformation.TfidfVectorizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="transformation/sklearndf.transformation.TfidfVectorizerTx.html">
+     sklearndf.transformation.TfidfVectorizerTx
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="transformation/sklearndf.transformation.TruncatedSVDDF.html">
      sklearndf.transformation.TruncatedSVDDF
     </a>
@@ -1362,6 +1387,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="transformation/wrapper/sklearndf.transformation.wrapper.ColumnTransformerSparseFrames.html">
+       sklearndf.transformation.wrapper.ColumnTransformerSparseFrames
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="transformation/wrapper/sklearndf.transformation.wrapper.ColumnTransformerWrapperDF.html">
        sklearndf.transformation.wrapper.ColumnTransformerWrapperDF
       </a>
@@ -1417,8 +1447,23 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="transformation/wrapper/sklearndf.transformation.wrapper.PCAWrapperDF.html">
+       sklearndf.transformation.wrapper.PCAWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="transformation/wrapper/sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF.html">
        sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="transformation/wrapper/sklearndf.transformation.wrapper.SingleColumnTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.SingleColumnTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="transformation/wrapper/sklearndf.transformation.wrapper.VectorizerWrapperDF.html">
+       sklearndf.transformation.wrapper.VectorizerWrapperDF
       </a>
      </li>
     </ul>
@@ -1629,7 +1674,7 @@ frames.</p>
 <td><p>A data frame enabled pipeline with an optional preprocessing step and a mandatory clustering step.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="pipeline/sklearndf.pipeline.FeatureUnionDF.html#sklearndf.pipeline.FeatureUnionDF" title="sklearndf.pipeline.FeatureUnionDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureUnionDF</span></code></a></p></td>
-<td><p>Concatenates results of multiple transformer objects.</p></td>
+<td><p>FeatureUnion transformer that returns sparse data frames instead of arrays if one or more of its transformers return a sparse data frame.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="pipeline/sklearndf.pipeline.LearnerPipelineDF.html#sklearndf.pipeline.LearnerPipelineDF" title="sklearndf.pipeline.LearnerPipelineDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LearnerPipelineDF</span></code></a></p></td>
 <td><p>A data frame enabled pipeline with an optional preprocessing step and a mandatory learner step.</p></td>

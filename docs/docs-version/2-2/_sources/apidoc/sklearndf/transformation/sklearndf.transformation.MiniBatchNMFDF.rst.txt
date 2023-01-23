@@ -17,13 +17,13 @@ sklearndf.transformation.MiniBatchNMFDF
       :nosignatures:
    
       ~MiniBatchNMFDF.clone
-      ~MiniBatchNMFDF.ensure_fitted
       ~MiniBatchNMFDF.fit
       ~MiniBatchNMFDF.fit_transform
       ~MiniBatchNMFDF.from_fitted
       ~MiniBatchNMFDF.get_params
       ~MiniBatchNMFDF.inverse_transform
       ~MiniBatchNMFDF.partial_fit
+      ~MiniBatchNMFDF.set_output
       ~MiniBatchNMFDF.set_params
       ~MiniBatchNMFDF.to_expression
       ~MiniBatchNMFDF.transform
@@ -36,8 +36,8 @@ sklearndf.transformation.MiniBatchNMFDF
 
    .. autosummary::
    
-      ~MiniBatchNMFDF.COL_FEATURE_IN
-      ~MiniBatchNMFDF.COL_FEATURE_OUT
+      ~MiniBatchNMFDF.COL_FEATURE
+      ~MiniBatchNMFDF.COL_FEATURE_ORIGINAL
       ~MiniBatchNMFDF.feature_names_in_
       ~MiniBatchNMFDF.feature_names_original_
       ~MiniBatchNMFDF.feature_names_out_

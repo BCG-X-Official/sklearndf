@@ -17,12 +17,12 @@ sklearndf.transformation.SelectFdrDF
       :nosignatures:
    
       ~SelectFdrDF.clone
-      ~SelectFdrDF.ensure_fitted
       ~SelectFdrDF.fit
       ~SelectFdrDF.fit_transform
       ~SelectFdrDF.from_fitted
       ~SelectFdrDF.get_params
       ~SelectFdrDF.inverse_transform
+      ~SelectFdrDF.set_output
       ~SelectFdrDF.set_params
       ~SelectFdrDF.to_expression
       ~SelectFdrDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.SelectFdrDF
 
    .. autosummary::
    
-      ~SelectFdrDF.COL_FEATURE_IN
-      ~SelectFdrDF.COL_FEATURE_OUT
+      ~SelectFdrDF.COL_FEATURE
+      ~SelectFdrDF.COL_FEATURE_ORIGINAL
       ~SelectFdrDF.feature_names_in_
       ~SelectFdrDF.feature_names_original_
       ~SelectFdrDF.feature_names_out_

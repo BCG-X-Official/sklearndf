@@ -17,7 +17,6 @@ sklearndf.regression.wrapper.MetaRegressorWrapperDF
       :nosignatures:
    
       ~MetaRegressorWrapperDF.clone
-      ~MetaRegressorWrapperDF.ensure_fitted
       ~MetaRegressorWrapperDF.fit
       ~MetaRegressorWrapperDF.from_fitted
       ~MetaRegressorWrapperDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.wrapper.MetaRegressorWrapperDF
 
    .. autosummary::
    
-      ~MetaRegressorWrapperDF.COL_FEATURE_IN
+      ~MetaRegressorWrapperDF.COL_FEATURE
       ~MetaRegressorWrapperDF.COL_PREDICTION
       ~MetaRegressorWrapperDF.feature_names_in_
       ~MetaRegressorWrapperDF.is_fitted

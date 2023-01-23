@@ -17,15 +17,16 @@ sklearndf.clustering.MiniBatchKMeansDF
       :nosignatures:
    
       ~MiniBatchKMeansDF.clone
-      ~MiniBatchKMeansDF.ensure_fitted
       ~MiniBatchKMeansDF.fit
       ~MiniBatchKMeansDF.fit_predict
+      ~MiniBatchKMeansDF.fit_transform
       ~MiniBatchKMeansDF.from_fitted
       ~MiniBatchKMeansDF.get_params
       ~MiniBatchKMeansDF.partial_fit
       ~MiniBatchKMeansDF.predict
       ~MiniBatchKMeansDF.set_params
       ~MiniBatchKMeansDF.to_expression
+      ~MiniBatchKMeansDF.transform
    
    
 
@@ -35,7 +36,7 @@ sklearndf.clustering.MiniBatchKMeansDF
 
    .. autosummary::
    
-      ~MiniBatchKMeansDF.COL_FEATURE_IN
+      ~MiniBatchKMeansDF.COL_FEATURE
       ~MiniBatchKMeansDF.COL_LABELS
       ~MiniBatchKMeansDF.COL_PREDICTION
       ~MiniBatchKMeansDF.IDX_CLUSTER

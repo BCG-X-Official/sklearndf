@@ -17,7 +17,6 @@ sklearndf.regression.AdaBoostRegressorDF
       :nosignatures:
    
       ~AdaBoostRegressorDF.clone
-      ~AdaBoostRegressorDF.ensure_fitted
       ~AdaBoostRegressorDF.fit
       ~AdaBoostRegressorDF.from_fitted
       ~AdaBoostRegressorDF.get_params
@@ -35,7 +34,7 @@ sklearndf.regression.AdaBoostRegressorDF
 
    .. autosummary::
    
-      ~AdaBoostRegressorDF.COL_FEATURE_IN
+      ~AdaBoostRegressorDF.COL_FEATURE
       ~AdaBoostRegressorDF.COL_PREDICTION
       ~AdaBoostRegressorDF.feature_names_in_
       ~AdaBoostRegressorDF.is_fitted

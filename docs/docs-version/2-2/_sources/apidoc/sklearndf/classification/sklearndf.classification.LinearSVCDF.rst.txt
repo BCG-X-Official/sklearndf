@@ -18,7 +18,6 @@ sklearndf.classification.LinearSVCDF
    
       ~LinearSVCDF.clone
       ~LinearSVCDF.decision_function
-      ~LinearSVCDF.ensure_fitted
       ~LinearSVCDF.fit
       ~LinearSVCDF.from_fitted
       ~LinearSVCDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.LinearSVCDF
 
    .. autosummary::
    
-      ~LinearSVCDF.COL_FEATURE_IN
+      ~LinearSVCDF.COL_FEATURE
       ~LinearSVCDF.COL_PREDICTION
       ~LinearSVCDF.classes_
       ~LinearSVCDF.feature_names_in_

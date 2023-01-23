@@ -17,7 +17,6 @@ sklearndf.regression.DummyRegressorDF
       :nosignatures:
    
       ~DummyRegressorDF.clone
-      ~DummyRegressorDF.ensure_fitted
       ~DummyRegressorDF.fit
       ~DummyRegressorDF.from_fitted
       ~DummyRegressorDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.DummyRegressorDF
 
    .. autosummary::
    
-      ~DummyRegressorDF.COL_FEATURE_IN
+      ~DummyRegressorDF.COL_FEATURE
       ~DummyRegressorDF.COL_PREDICTION
       ~DummyRegressorDF.feature_names_in_
       ~DummyRegressorDF.is_fitted

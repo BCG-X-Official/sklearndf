@@ -17,15 +17,14 @@ sklearndf.transformation.DictVectorizerDF
       :nosignatures:
    
       ~DictVectorizerDF.clone
-      ~DictVectorizerDF.ensure_fitted
       ~DictVectorizerDF.fit
       ~DictVectorizerDF.fit_transform
       ~DictVectorizerDF.from_fitted
-      ~DictVectorizerDF.get_feature_names
       ~DictVectorizerDF.get_feature_names_out
       ~DictVectorizerDF.get_params
       ~DictVectorizerDF.inverse_transform
       ~DictVectorizerDF.restrict
+      ~DictVectorizerDF.set_output
       ~DictVectorizerDF.set_params
       ~DictVectorizerDF.to_expression
       ~DictVectorizerDF.transform
@@ -38,8 +37,8 @@ sklearndf.transformation.DictVectorizerDF
 
    .. autosummary::
    
-      ~DictVectorizerDF.COL_FEATURE_IN
-      ~DictVectorizerDF.COL_FEATURE_OUT
+      ~DictVectorizerDF.COL_FEATURE
+      ~DictVectorizerDF.COL_FEATURE_ORIGINAL
       ~DictVectorizerDF.feature_names_in_
       ~DictVectorizerDF.feature_names_original_
       ~DictVectorizerDF.feature_names_out_

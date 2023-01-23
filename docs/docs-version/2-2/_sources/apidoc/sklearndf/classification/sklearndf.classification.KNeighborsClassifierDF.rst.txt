@@ -18,7 +18,6 @@ sklearndf.classification.KNeighborsClassifierDF
    
       ~KNeighborsClassifierDF.clone
       ~KNeighborsClassifierDF.decision_function
-      ~KNeighborsClassifierDF.ensure_fitted
       ~KNeighborsClassifierDF.fit
       ~KNeighborsClassifierDF.from_fitted
       ~KNeighborsClassifierDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.KNeighborsClassifierDF
 
    .. autosummary::
    
-      ~KNeighborsClassifierDF.COL_FEATURE_IN
+      ~KNeighborsClassifierDF.COL_FEATURE
       ~KNeighborsClassifierDF.COL_PREDICTION
       ~KNeighborsClassifierDF.classes_
       ~KNeighborsClassifierDF.feature_names_in_

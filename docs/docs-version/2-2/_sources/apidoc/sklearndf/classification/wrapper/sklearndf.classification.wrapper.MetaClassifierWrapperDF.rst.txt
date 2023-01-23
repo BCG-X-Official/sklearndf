@@ -18,7 +18,6 @@ sklearndf.classification.wrapper.MetaClassifierWrapperDF
    
       ~MetaClassifierWrapperDF.clone
       ~MetaClassifierWrapperDF.decision_function
-      ~MetaClassifierWrapperDF.ensure_fitted
       ~MetaClassifierWrapperDF.fit
       ~MetaClassifierWrapperDF.from_fitted
       ~MetaClassifierWrapperDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.wrapper.MetaClassifierWrapperDF
 
    .. autosummary::
    
-      ~MetaClassifierWrapperDF.COL_FEATURE_IN
+      ~MetaClassifierWrapperDF.COL_FEATURE
       ~MetaClassifierWrapperDF.COL_PREDICTION
       ~MetaClassifierWrapperDF.classes_
       ~MetaClassifierWrapperDF.feature_names_in_

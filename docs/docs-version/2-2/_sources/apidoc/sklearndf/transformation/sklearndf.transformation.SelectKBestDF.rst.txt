@@ -17,12 +17,12 @@ sklearndf.transformation.SelectKBestDF
       :nosignatures:
    
       ~SelectKBestDF.clone
-      ~SelectKBestDF.ensure_fitted
       ~SelectKBestDF.fit
       ~SelectKBestDF.fit_transform
       ~SelectKBestDF.from_fitted
       ~SelectKBestDF.get_params
       ~SelectKBestDF.inverse_transform
+      ~SelectKBestDF.set_output
       ~SelectKBestDF.set_params
       ~SelectKBestDF.to_expression
       ~SelectKBestDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.SelectKBestDF
 
    .. autosummary::
    
-      ~SelectKBestDF.COL_FEATURE_IN
-      ~SelectKBestDF.COL_FEATURE_OUT
+      ~SelectKBestDF.COL_FEATURE
+      ~SelectKBestDF.COL_FEATURE_ORIGINAL
       ~SelectKBestDF.feature_names_in_
       ~SelectKBestDF.feature_names_original_
       ~SelectKBestDF.feature_names_out_

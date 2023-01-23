@@ -17,7 +17,6 @@ sklearndf.clustering.wrapper.KMeansBaseWrapperDF
       :nosignatures:
    
       ~KMeansBaseWrapperDF.clone
-      ~KMeansBaseWrapperDF.ensure_fitted
       ~KMeansBaseWrapperDF.fit
       ~KMeansBaseWrapperDF.fit_predict
       ~KMeansBaseWrapperDF.from_fitted
@@ -34,7 +33,7 @@ sklearndf.clustering.wrapper.KMeansBaseWrapperDF
 
    .. autosummary::
    
-      ~KMeansBaseWrapperDF.COL_FEATURE_IN
+      ~KMeansBaseWrapperDF.COL_FEATURE
       ~KMeansBaseWrapperDF.COL_LABELS
       ~KMeansBaseWrapperDF.COL_PREDICTION
       ~KMeansBaseWrapperDF.IDX_CLUSTER

@@ -18,7 +18,6 @@ sklearndf.classification.GaussianNBDF
    
       ~GaussianNBDF.clone
       ~GaussianNBDF.decision_function
-      ~GaussianNBDF.ensure_fitted
       ~GaussianNBDF.fit
       ~GaussianNBDF.from_fitted
       ~GaussianNBDF.get_params
@@ -38,7 +37,7 @@ sklearndf.classification.GaussianNBDF
 
    .. autosummary::
    
-      ~GaussianNBDF.COL_FEATURE_IN
+      ~GaussianNBDF.COL_FEATURE
       ~GaussianNBDF.COL_PREDICTION
       ~GaussianNBDF.classes_
       ~GaussianNBDF.feature_names_in_

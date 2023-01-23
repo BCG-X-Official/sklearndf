@@ -17,7 +17,6 @@ sklearndf.regression.SVRDF
       :nosignatures:
    
       ~SVRDF.clone
-      ~SVRDF.ensure_fitted
       ~SVRDF.fit
       ~SVRDF.from_fitted
       ~SVRDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.SVRDF
 
    .. autosummary::
    
-      ~SVRDF.COL_FEATURE_IN
+      ~SVRDF.COL_FEATURE
       ~SVRDF.COL_PREDICTION
       ~SVRDF.class_weight_
       ~SVRDF.feature_names_in_

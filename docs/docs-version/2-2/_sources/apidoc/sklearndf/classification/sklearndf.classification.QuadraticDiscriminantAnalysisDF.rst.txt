@@ -18,7 +18,6 @@ sklearndf.classification.QuadraticDiscriminantAnalysisDF
    
       ~QuadraticDiscriminantAnalysisDF.clone
       ~QuadraticDiscriminantAnalysisDF.decision_function
-      ~QuadraticDiscriminantAnalysisDF.ensure_fitted
       ~QuadraticDiscriminantAnalysisDF.fit
       ~QuadraticDiscriminantAnalysisDF.from_fitted
       ~QuadraticDiscriminantAnalysisDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.QuadraticDiscriminantAnalysisDF
 
    .. autosummary::
    
-      ~QuadraticDiscriminantAnalysisDF.COL_FEATURE_IN
+      ~QuadraticDiscriminantAnalysisDF.COL_FEATURE
       ~QuadraticDiscriminantAnalysisDF.COL_PREDICTION
       ~QuadraticDiscriminantAnalysisDF.classes_
       ~QuadraticDiscriminantAnalysisDF.feature_names_in_

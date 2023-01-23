@@ -17,12 +17,12 @@ sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF
       :nosignatures:
    
       ~BaseMultiOutputWrapperDF.clone
-      ~BaseMultiOutputWrapperDF.ensure_fitted
       ~BaseMultiOutputWrapperDF.fit
       ~BaseMultiOutputWrapperDF.fit_transform
       ~BaseMultiOutputWrapperDF.from_fitted
       ~BaseMultiOutputWrapperDF.get_params
       ~BaseMultiOutputWrapperDF.inverse_transform
+      ~BaseMultiOutputWrapperDF.set_output
       ~BaseMultiOutputWrapperDF.set_params
       ~BaseMultiOutputWrapperDF.to_expression
       ~BaseMultiOutputWrapperDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF
 
    .. autosummary::
    
-      ~BaseMultiOutputWrapperDF.COL_FEATURE_IN
-      ~BaseMultiOutputWrapperDF.COL_FEATURE_OUT
+      ~BaseMultiOutputWrapperDF.COL_FEATURE
+      ~BaseMultiOutputWrapperDF.COL_FEATURE_ORIGINAL
       ~BaseMultiOutputWrapperDF.feature_names_in_
       ~BaseMultiOutputWrapperDF.feature_names_original_
       ~BaseMultiOutputWrapperDF.feature_names_out_

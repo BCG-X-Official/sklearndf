@@ -17,7 +17,6 @@ sklearndf.wrapper.SupervisedLearnerWrapperDF
       :nosignatures:
    
       ~SupervisedLearnerWrapperDF.clone
-      ~SupervisedLearnerWrapperDF.ensure_fitted
       ~SupervisedLearnerWrapperDF.fit
       ~SupervisedLearnerWrapperDF.from_fitted
       ~SupervisedLearnerWrapperDF.get_params
@@ -34,7 +33,7 @@ sklearndf.wrapper.SupervisedLearnerWrapperDF
 
    .. autosummary::
    
-      ~SupervisedLearnerWrapperDF.COL_FEATURE_IN
+      ~SupervisedLearnerWrapperDF.COL_FEATURE
       ~SupervisedLearnerWrapperDF.COL_PREDICTION
       ~SupervisedLearnerWrapperDF.feature_names_in_
       ~SupervisedLearnerWrapperDF.is_fitted

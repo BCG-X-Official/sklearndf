@@ -18,7 +18,6 @@ sklearndf.classification.LabelSpreadingDF
    
       ~LabelSpreadingDF.clone
       ~LabelSpreadingDF.decision_function
-      ~LabelSpreadingDF.ensure_fitted
       ~LabelSpreadingDF.fit
       ~LabelSpreadingDF.from_fitted
       ~LabelSpreadingDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.LabelSpreadingDF
 
    .. autosummary::
    
-      ~LabelSpreadingDF.COL_FEATURE_IN
+      ~LabelSpreadingDF.COL_FEATURE
       ~LabelSpreadingDF.COL_PREDICTION
       ~LabelSpreadingDF.classes_
       ~LabelSpreadingDF.feature_names_in_

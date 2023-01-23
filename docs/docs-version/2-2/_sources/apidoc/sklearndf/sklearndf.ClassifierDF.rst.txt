@@ -18,7 +18,6 @@ sklearndf.ClassifierDF
    
       ~ClassifierDF.clone
       ~ClassifierDF.decision_function
-      ~ClassifierDF.ensure_fitted
       ~ClassifierDF.fit
       ~ClassifierDF.get_params
       ~ClassifierDF.predict
@@ -36,7 +35,7 @@ sklearndf.ClassifierDF
 
    .. autosummary::
    
-      ~ClassifierDF.COL_FEATURE_IN
+      ~ClassifierDF.COL_FEATURE
       ~ClassifierDF.classes_
       ~ClassifierDF.feature_names_in_
       ~ClassifierDF.is_fitted

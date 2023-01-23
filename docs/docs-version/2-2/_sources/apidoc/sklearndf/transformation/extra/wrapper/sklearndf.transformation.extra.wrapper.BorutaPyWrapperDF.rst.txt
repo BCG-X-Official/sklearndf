@@ -17,12 +17,12 @@ sklearndf.transformation.extra.wrapper.BorutaPyWrapperDF
       :nosignatures:
    
       ~BorutaPyWrapperDF.clone
-      ~BorutaPyWrapperDF.ensure_fitted
       ~BorutaPyWrapperDF.fit
       ~BorutaPyWrapperDF.fit_transform
       ~BorutaPyWrapperDF.from_fitted
       ~BorutaPyWrapperDF.get_params
       ~BorutaPyWrapperDF.inverse_transform
+      ~BorutaPyWrapperDF.set_output
       ~BorutaPyWrapperDF.set_params
       ~BorutaPyWrapperDF.to_expression
       ~BorutaPyWrapperDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.extra.wrapper.BorutaPyWrapperDF
 
    .. autosummary::
    
-      ~BorutaPyWrapperDF.COL_FEATURE_IN
-      ~BorutaPyWrapperDF.COL_FEATURE_OUT
+      ~BorutaPyWrapperDF.COL_FEATURE
+      ~BorutaPyWrapperDF.COL_FEATURE_ORIGINAL
       ~BorutaPyWrapperDF.feature_names_in_
       ~BorutaPyWrapperDF.feature_names_original_
       ~BorutaPyWrapperDF.feature_names_out_

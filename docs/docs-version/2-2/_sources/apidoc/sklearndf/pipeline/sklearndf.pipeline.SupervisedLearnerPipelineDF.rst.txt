@@ -17,10 +17,10 @@ sklearndf.pipeline.SupervisedLearnerPipelineDF
       :nosignatures:
    
       ~SupervisedLearnerPipelineDF.clone
-      ~SupervisedLearnerPipelineDF.ensure_fitted
       ~SupervisedLearnerPipelineDF.fit
       ~SupervisedLearnerPipelineDF.get_params
       ~SupervisedLearnerPipelineDF.predict
+      ~SupervisedLearnerPipelineDF.preprocess
       ~SupervisedLearnerPipelineDF.score
       ~SupervisedLearnerPipelineDF.set_params
       ~SupervisedLearnerPipelineDF.to_expression
@@ -33,10 +33,8 @@ sklearndf.pipeline.SupervisedLearnerPipelineDF
 
    .. autosummary::
    
-      ~SupervisedLearnerPipelineDF.COL_FEATURE_IN
+      ~SupervisedLearnerPipelineDF.COL_FEATURE
       ~SupervisedLearnerPipelineDF.feature_names_in_
-      ~SupervisedLearnerPipelineDF.feature_names_original_
-      ~SupervisedLearnerPipelineDF.feature_names_out_
       ~SupervisedLearnerPipelineDF.final_estimator
       ~SupervisedLearnerPipelineDF.final_estimator_name
       ~SupervisedLearnerPipelineDF.is_fitted

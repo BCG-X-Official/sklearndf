@@ -17,12 +17,12 @@ sklearndf.transformation.RobustScalerDF
       :nosignatures:
    
       ~RobustScalerDF.clone
-      ~RobustScalerDF.ensure_fitted
       ~RobustScalerDF.fit
       ~RobustScalerDF.fit_transform
       ~RobustScalerDF.from_fitted
       ~RobustScalerDF.get_params
       ~RobustScalerDF.inverse_transform
+      ~RobustScalerDF.set_output
       ~RobustScalerDF.set_params
       ~RobustScalerDF.to_expression
       ~RobustScalerDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.RobustScalerDF
 
    .. autosummary::
    
-      ~RobustScalerDF.COL_FEATURE_IN
-      ~RobustScalerDF.COL_FEATURE_OUT
+      ~RobustScalerDF.COL_FEATURE
+      ~RobustScalerDF.COL_FEATURE_ORIGINAL
       ~RobustScalerDF.feature_names_in_
       ~RobustScalerDF.feature_names_original_
       ~RobustScalerDF.feature_names_out_

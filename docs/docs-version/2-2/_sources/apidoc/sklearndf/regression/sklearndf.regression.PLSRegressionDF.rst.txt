@@ -17,7 +17,6 @@ sklearndf.regression.PLSRegressionDF
       :nosignatures:
    
       ~PLSRegressionDF.clone
-      ~PLSRegressionDF.ensure_fitted
       ~PLSRegressionDF.fit
       ~PLSRegressionDF.fit_transform
       ~PLSRegressionDF.from_fitted
@@ -25,6 +24,7 @@ sklearndf.regression.PLSRegressionDF
       ~PLSRegressionDF.inverse_transform
       ~PLSRegressionDF.predict
       ~PLSRegressionDF.score
+      ~PLSRegressionDF.set_output
       ~PLSRegressionDF.set_params
       ~PLSRegressionDF.to_expression
       ~PLSRegressionDF.transform
@@ -37,8 +37,8 @@ sklearndf.regression.PLSRegressionDF
 
    .. autosummary::
    
-      ~PLSRegressionDF.COL_FEATURE_IN
-      ~PLSRegressionDF.COL_FEATURE_OUT
+      ~PLSRegressionDF.COL_FEATURE
+      ~PLSRegressionDF.COL_FEATURE_ORIGINAL
       ~PLSRegressionDF.COL_PREDICTION
       ~PLSRegressionDF.feature_names_in_
       ~PLSRegressionDF.feature_names_original_

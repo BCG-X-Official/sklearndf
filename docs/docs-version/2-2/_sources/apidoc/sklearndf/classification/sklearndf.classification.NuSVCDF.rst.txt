@@ -18,7 +18,6 @@ sklearndf.classification.NuSVCDF
    
       ~NuSVCDF.clone
       ~NuSVCDF.decision_function
-      ~NuSVCDF.ensure_fitted
       ~NuSVCDF.fit
       ~NuSVCDF.from_fitted
       ~NuSVCDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.NuSVCDF
 
    .. autosummary::
    
-      ~NuSVCDF.COL_FEATURE_IN
+      ~NuSVCDF.COL_FEATURE
       ~NuSVCDF.COL_PREDICTION
       ~NuSVCDF.classes_
       ~NuSVCDF.feature_names_in_

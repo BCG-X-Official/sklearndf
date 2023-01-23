@@ -17,12 +17,12 @@ sklearndf.pipeline.wrapper.FeatureUnionWrapperDF
       :nosignatures:
    
       ~FeatureUnionWrapperDF.clone
-      ~FeatureUnionWrapperDF.ensure_fitted
       ~FeatureUnionWrapperDF.fit
       ~FeatureUnionWrapperDF.fit_transform
       ~FeatureUnionWrapperDF.from_fitted
       ~FeatureUnionWrapperDF.get_params
       ~FeatureUnionWrapperDF.inverse_transform
+      ~FeatureUnionWrapperDF.set_output
       ~FeatureUnionWrapperDF.set_params
       ~FeatureUnionWrapperDF.to_expression
       ~FeatureUnionWrapperDF.transform
@@ -35,8 +35,8 @@ sklearndf.pipeline.wrapper.FeatureUnionWrapperDF
 
    .. autosummary::
    
-      ~FeatureUnionWrapperDF.COL_FEATURE_IN
-      ~FeatureUnionWrapperDF.COL_FEATURE_OUT
+      ~FeatureUnionWrapperDF.COL_FEATURE
+      ~FeatureUnionWrapperDF.COL_FEATURE_ORIGINAL
       ~FeatureUnionWrapperDF.DROP
       ~FeatureUnionWrapperDF.PASSTHROUGH
       ~FeatureUnionWrapperDF.feature_names_in_

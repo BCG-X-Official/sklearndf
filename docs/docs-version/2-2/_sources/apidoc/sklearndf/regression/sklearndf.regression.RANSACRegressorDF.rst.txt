@@ -17,7 +17,6 @@ sklearndf.regression.RANSACRegressorDF
       :nosignatures:
    
       ~RANSACRegressorDF.clone
-      ~RANSACRegressorDF.ensure_fitted
       ~RANSACRegressorDF.fit
       ~RANSACRegressorDF.from_fitted
       ~RANSACRegressorDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.RANSACRegressorDF
 
    .. autosummary::
    
-      ~RANSACRegressorDF.COL_FEATURE_IN
+      ~RANSACRegressorDF.COL_FEATURE
       ~RANSACRegressorDF.COL_PREDICTION
       ~RANSACRegressorDF.feature_names_in_
       ~RANSACRegressorDF.is_fitted

@@ -17,7 +17,6 @@ sklearndf.regression.NuSVRDF
       :nosignatures:
    
       ~NuSVRDF.clone
-      ~NuSVRDF.ensure_fitted
       ~NuSVRDF.fit
       ~NuSVRDF.from_fitted
       ~NuSVRDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.NuSVRDF
 
    .. autosummary::
    
-      ~NuSVRDF.COL_FEATURE_IN
+      ~NuSVRDF.COL_FEATURE
       ~NuSVRDF.COL_PREDICTION
       ~NuSVRDF.class_weight_
       ~NuSVRDF.feature_names_in_

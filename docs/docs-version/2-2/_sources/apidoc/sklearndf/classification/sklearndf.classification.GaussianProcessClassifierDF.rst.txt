@@ -18,7 +18,6 @@ sklearndf.classification.GaussianProcessClassifierDF
    
       ~GaussianProcessClassifierDF.clone
       ~GaussianProcessClassifierDF.decision_function
-      ~GaussianProcessClassifierDF.ensure_fitted
       ~GaussianProcessClassifierDF.fit
       ~GaussianProcessClassifierDF.from_fitted
       ~GaussianProcessClassifierDF.get_params
@@ -38,7 +37,7 @@ sklearndf.classification.GaussianProcessClassifierDF
 
    .. autosummary::
    
-      ~GaussianProcessClassifierDF.COL_FEATURE_IN
+      ~GaussianProcessClassifierDF.COL_FEATURE
       ~GaussianProcessClassifierDF.COL_PREDICTION
       ~GaussianProcessClassifierDF.classes_
       ~GaussianProcessClassifierDF.feature_names_in_

@@ -17,13 +17,13 @@ sklearndf.transformation.StandardScalerDF
       :nosignatures:
    
       ~StandardScalerDF.clone
-      ~StandardScalerDF.ensure_fitted
       ~StandardScalerDF.fit
       ~StandardScalerDF.fit_transform
       ~StandardScalerDF.from_fitted
       ~StandardScalerDF.get_params
       ~StandardScalerDF.inverse_transform
       ~StandardScalerDF.partial_fit
+      ~StandardScalerDF.set_output
       ~StandardScalerDF.set_params
       ~StandardScalerDF.to_expression
       ~StandardScalerDF.transform
@@ -36,8 +36,8 @@ sklearndf.transformation.StandardScalerDF
 
    .. autosummary::
    
-      ~StandardScalerDF.COL_FEATURE_IN
-      ~StandardScalerDF.COL_FEATURE_OUT
+      ~StandardScalerDF.COL_FEATURE
+      ~StandardScalerDF.COL_FEATURE_ORIGINAL
       ~StandardScalerDF.feature_names_in_
       ~StandardScalerDF.feature_names_original_
       ~StandardScalerDF.feature_names_out_

@@ -17,7 +17,6 @@ sklearndf.wrapper.numpy.EstimatorNPDF
       :nosignatures:
    
       ~EstimatorNPDF.clone
-      ~EstimatorNPDF.ensure_fitted
       ~EstimatorNPDF.fit
       ~EstimatorNPDF.get_params
       ~EstimatorNPDF.set_params
@@ -31,7 +30,7 @@ sklearndf.wrapper.numpy.EstimatorNPDF
 
    .. autosummary::
    
-      ~EstimatorNPDF.COL_FEATURE_IN
+      ~EstimatorNPDF.COL_FEATURE
       ~EstimatorNPDF.feature_names_in_
       ~EstimatorNPDF.is_fitted
       ~EstimatorNPDF.n_features_in_

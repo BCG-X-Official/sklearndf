@@ -17,13 +17,13 @@ sklearndf.transformation.MaxAbsScalerDF
       :nosignatures:
    
       ~MaxAbsScalerDF.clone
-      ~MaxAbsScalerDF.ensure_fitted
       ~MaxAbsScalerDF.fit
       ~MaxAbsScalerDF.fit_transform
       ~MaxAbsScalerDF.from_fitted
       ~MaxAbsScalerDF.get_params
       ~MaxAbsScalerDF.inverse_transform
       ~MaxAbsScalerDF.partial_fit
+      ~MaxAbsScalerDF.set_output
       ~MaxAbsScalerDF.set_params
       ~MaxAbsScalerDF.to_expression
       ~MaxAbsScalerDF.transform
@@ -36,8 +36,8 @@ sklearndf.transformation.MaxAbsScalerDF
 
    .. autosummary::
    
-      ~MaxAbsScalerDF.COL_FEATURE_IN
-      ~MaxAbsScalerDF.COL_FEATURE_OUT
+      ~MaxAbsScalerDF.COL_FEATURE
+      ~MaxAbsScalerDF.COL_FEATURE_ORIGINAL
       ~MaxAbsScalerDF.feature_names_in_
       ~MaxAbsScalerDF.feature_names_original_
       ~MaxAbsScalerDF.feature_names_out_

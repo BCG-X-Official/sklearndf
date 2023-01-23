@@ -172,11 +172,13 @@
 <span class="kn">import</span> <span class="nn">numpy.typing</span> <span class="k">as</span> <span class="nn">npt</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pandas.core.arrays</span> <span class="kn">import</span> <span class="n">ExtensionArray</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">sparse</span>
 <span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">FeatureUnion</span><span class="p">,</span> <span class="n">Pipeline</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">FunctionTransformer</span>
 
 <span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span>
 
+<span class="kn">from</span> <span class="nn">..._util</span> <span class="kn">import</span> <span class="n">hstack_frames</span>
 <span class="kn">from</span> <span class="nn">sklearndf</span> <span class="kn">import</span> <span class="n">EstimatorDF</span><span class="p">,</span> <span class="n">TransformerDF</span>
 <span class="kn">from</span> <span class="nn">sklearndf.wrapper</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ClassifierWrapperDF</span><span class="p">,</span>
@@ -186,7 +188,11 @@
 
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;PipelineWrapperDF&quot;</span><span class="p">,</span> <span class="s2">&quot;FeatureUnionWrapperDF&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;FeatureUnionSparseFrames&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;FeatureUnionWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PipelineWrapperDF&quot;</span><span class="p">,</span>
+<span class="p">]</span>
 
 
 <span class="c1">#</span>
@@ -207,7 +213,7 @@
     <span class="n">TransformerWrapperDF</span><span class="p">[</span><span class="n">Pipeline</span><span class="p">],</span>
     <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for `scikit-learn` class :class:`~sklearn.pipeline.Pipeline`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -251,7 +257,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">steps</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">EstimatorDF</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The ``steps`` attribute of the underlying :class:`~sklearn.pipeline.Pipeline`.</span>
 
 <span class="sd">        List of (name, transformer) tuples (transformers implement fit/transform).</span>
@@ -259,11 +265,11 @@
         <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">EstimatorDF</span><span class="p">]],</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">steps</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;The number of steps of the pipeline.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The number of steps of the pipeline.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">steps</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ind</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">slice</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">EstimatorDF</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a sub-pipeline or a single estimator in the pipeline</span>
 
 <span class="sd">        Indexing with an integer will return an estimator; using a slice</span>
@@ -376,13 +382,38 @@
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="FeatureUnionWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/pipeline/wrapper/sklearndf.pipeline.wrapper.FeatureUnionWrapperDF.html#sklearndf.pipeline.wrapper.FeatureUnionWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">FeatureUnionWrapperDF</span><span class="p">(</span><span class="n">TransformerWrapperDF</span><span class="p">[</span><span class="n">FeatureUnion</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FeatureUnionSparseFrames"><a class="viewcode-back" href="../../../../apidoc/sklearndf/pipeline/wrapper/sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.html#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames">[docs]</a><span class="k">class</span> <span class="nc">FeatureUnionSparseFrames</span><span class="p">(</span>
+    <span class="n">FeatureUnion</span><span class="p">,</span>  <span class="c1"># type:ignore</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    FeatureUnion transformer that returns sparse data frames instead of arrays if one or</span>
+<span class="sd">    more of its transformers return a sparse data frame.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_hstack</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">Xs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">sparse</span><span class="o">.</span><span class="n">spmatrix</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">sparse</span><span class="o">.</span><span class="n">spmatrix</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+        <span class="n">stacked_frames</span> <span class="o">=</span> <span class="n">hstack_frames</span><span class="p">(</span>
+            <span class="n">Xs</span><span class="p">,</span> <span class="n">prefixes</span><span class="o">=</span><span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformer_list</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">stacked_frames</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_hstack</span><span class="p">(</span><span class="n">Xs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">stacked_frames</span></div>
+
+
+<div class="viewcode-block" id="FeatureUnionWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/pipeline/wrapper/sklearndf.pipeline.wrapper.FeatureUnionWrapperDF.html#sklearndf.pipeline.wrapper.FeatureUnionWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">FeatureUnionWrapperDF</span><span class="p">(</span>
+    <span class="n">TransformerWrapperDF</span><span class="p">[</span><span class="n">FeatureUnionSparseFrames</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for `scikit-learn` class :class:`~sklearn.pipeline.FeatureUnion`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">DROP</span> <span class="o">=</span> <span class="s2">&quot;drop&quot;</span>
     <span class="n">PASSTHROUGH</span> <span class="o">=</span> <span class="s2">&quot;passthrough&quot;</span>
+
+    <span class="n">__native_base_class__</span> <span class="o">=</span> <span class="n">FeatureUnionSparseFrames</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_prepend_features_out</span><span class="p">(</span><span class="n">features_out</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span> <span class="n">name_prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>

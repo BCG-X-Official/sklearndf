@@ -17,12 +17,12 @@ sklearndf.transformation.FastICADF
       :nosignatures:
    
       ~FastICADF.clone
-      ~FastICADF.ensure_fitted
       ~FastICADF.fit
       ~FastICADF.fit_transform
       ~FastICADF.from_fitted
       ~FastICADF.get_params
       ~FastICADF.inverse_transform
+      ~FastICADF.set_output
       ~FastICADF.set_params
       ~FastICADF.to_expression
       ~FastICADF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.FastICADF
 
    .. autosummary::
    
-      ~FastICADF.COL_FEATURE_IN
-      ~FastICADF.COL_FEATURE_OUT
+      ~FastICADF.COL_FEATURE
+      ~FastICADF.COL_FEATURE_ORIGINAL
       ~FastICADF.feature_names_in_
       ~FastICADF.feature_names_original_
       ~FastICADF.feature_names_out_

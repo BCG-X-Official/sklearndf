@@ -17,12 +17,12 @@ sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF
       :nosignatures:
    
       ~ComponentsDimensionalityReductionWrapperDF.clone
-      ~ComponentsDimensionalityReductionWrapperDF.ensure_fitted
       ~ComponentsDimensionalityReductionWrapperDF.fit
       ~ComponentsDimensionalityReductionWrapperDF.fit_transform
       ~ComponentsDimensionalityReductionWrapperDF.from_fitted
       ~ComponentsDimensionalityReductionWrapperDF.get_params
       ~ComponentsDimensionalityReductionWrapperDF.inverse_transform
+      ~ComponentsDimensionalityReductionWrapperDF.set_output
       ~ComponentsDimensionalityReductionWrapperDF.set_params
       ~ComponentsDimensionalityReductionWrapperDF.to_expression
       ~ComponentsDimensionalityReductionWrapperDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF
 
    .. autosummary::
    
-      ~ComponentsDimensionalityReductionWrapperDF.COL_FEATURE_IN
-      ~ComponentsDimensionalityReductionWrapperDF.COL_FEATURE_OUT
+      ~ComponentsDimensionalityReductionWrapperDF.COL_FEATURE
+      ~ComponentsDimensionalityReductionWrapperDF.COL_FEATURE_ORIGINAL
       ~ComponentsDimensionalityReductionWrapperDF.feature_names_in_
       ~ComponentsDimensionalityReductionWrapperDF.feature_names_original_
       ~ComponentsDimensionalityReductionWrapperDF.feature_names_out_

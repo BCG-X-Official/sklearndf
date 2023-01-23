@@ -17,13 +17,13 @@ sklearndf.transformation.KBinsDiscretizerDF
       :nosignatures:
    
       ~KBinsDiscretizerDF.clone
-      ~KBinsDiscretizerDF.ensure_fitted
       ~KBinsDiscretizerDF.fit
       ~KBinsDiscretizerDF.fit_transform
       ~KBinsDiscretizerDF.from_fitted
       ~KBinsDiscretizerDF.get_feature_names_out
       ~KBinsDiscretizerDF.get_params
       ~KBinsDiscretizerDF.inverse_transform
+      ~KBinsDiscretizerDF.set_output
       ~KBinsDiscretizerDF.set_params
       ~KBinsDiscretizerDF.to_expression
       ~KBinsDiscretizerDF.transform
@@ -36,8 +36,8 @@ sklearndf.transformation.KBinsDiscretizerDF
 
    .. autosummary::
    
-      ~KBinsDiscretizerDF.COL_FEATURE_IN
-      ~KBinsDiscretizerDF.COL_FEATURE_OUT
+      ~KBinsDiscretizerDF.COL_FEATURE
+      ~KBinsDiscretizerDF.COL_FEATURE_ORIGINAL
       ~KBinsDiscretizerDF.feature_names_in_
       ~KBinsDiscretizerDF.feature_names_original_
       ~KBinsDiscretizerDF.feature_names_out_

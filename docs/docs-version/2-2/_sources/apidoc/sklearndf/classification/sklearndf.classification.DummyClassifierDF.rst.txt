@@ -18,7 +18,6 @@ sklearndf.classification.DummyClassifierDF
    
       ~DummyClassifierDF.clone
       ~DummyClassifierDF.decision_function
-      ~DummyClassifierDF.ensure_fitted
       ~DummyClassifierDF.fit
       ~DummyClassifierDF.from_fitted
       ~DummyClassifierDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.DummyClassifierDF
 
    .. autosummary::
    
-      ~DummyClassifierDF.COL_FEATURE_IN
+      ~DummyClassifierDF.COL_FEATURE
       ~DummyClassifierDF.COL_PREDICTION
       ~DummyClassifierDF.classes_
       ~DummyClassifierDF.feature_names_in_

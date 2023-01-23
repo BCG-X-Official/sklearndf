@@ -17,12 +17,12 @@ sklearndf.transformation.wrapper.ImputerWrapperDF
       :nosignatures:
    
       ~ImputerWrapperDF.clone
-      ~ImputerWrapperDF.ensure_fitted
       ~ImputerWrapperDF.fit
       ~ImputerWrapperDF.fit_transform
       ~ImputerWrapperDF.from_fitted
       ~ImputerWrapperDF.get_params
       ~ImputerWrapperDF.inverse_transform
+      ~ImputerWrapperDF.set_output
       ~ImputerWrapperDF.set_params
       ~ImputerWrapperDF.to_expression
       ~ImputerWrapperDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.wrapper.ImputerWrapperDF
 
    .. autosummary::
    
-      ~ImputerWrapperDF.COL_FEATURE_IN
-      ~ImputerWrapperDF.COL_FEATURE_OUT
+      ~ImputerWrapperDF.COL_FEATURE
+      ~ImputerWrapperDF.COL_FEATURE_ORIGINAL
       ~ImputerWrapperDF.feature_names_in_
       ~ImputerWrapperDF.feature_names_original_
       ~ImputerWrapperDF.feature_names_out_

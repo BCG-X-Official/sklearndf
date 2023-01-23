@@ -600,6 +600,11 @@
     </label>
     <ul>
      <li class="toctree-l3">
+      <a class="reference internal" href="pipeline/wrapper/sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.html">
+       sklearndf.pipeline.wrapper.FeatureUnionSparseFrames
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="pipeline/wrapper/sklearndf.pipeline.wrapper.FeatureUnionWrapperDF.html">
        sklearndf.pipeline.wrapper.FeatureUnionWrapperDF
       </a>
@@ -990,6 +995,16 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="transformation/sklearndf.transformation.CountVectorizerDF.html">
+     sklearndf.transformation.CountVectorizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="transformation/sklearndf.transformation.CountVectorizerTx.html">
+     sklearndf.transformation.CountVectorizerTx
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="transformation/sklearndf.transformation.DictVectorizerDF.html">
      sklearndf.transformation.DictVectorizerDF
     </a>
@@ -1285,6 +1300,16 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="transformation/sklearndf.transformation.TfidfVectorizerDF.html">
+     sklearndf.transformation.TfidfVectorizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="transformation/sklearndf.transformation.TfidfVectorizerTx.html">
+     sklearndf.transformation.TfidfVectorizerTx
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="transformation/sklearndf.transformation.TruncatedSVDDF.html">
      sklearndf.transformation.TruncatedSVDDF
     </a>
@@ -1364,6 +1389,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="transformation/wrapper/sklearndf.transformation.wrapper.ColumnTransformerSparseFrames.html">
+       sklearndf.transformation.wrapper.ColumnTransformerSparseFrames
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="transformation/wrapper/sklearndf.transformation.wrapper.ColumnTransformerWrapperDF.html">
        sklearndf.transformation.wrapper.ColumnTransformerWrapperDF
       </a>
@@ -1419,8 +1449,23 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="transformation/wrapper/sklearndf.transformation.wrapper.PCAWrapperDF.html">
+       sklearndf.transformation.wrapper.PCAWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="transformation/wrapper/sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF.html">
        sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="transformation/wrapper/sklearndf.transformation.wrapper.SingleColumnTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.SingleColumnTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="transformation/wrapper/sklearndf.transformation.wrapper.VectorizerWrapperDF.html">
+       sklearndf.transformation.wrapper.VectorizerWrapperDF
       </a>
      </li>
     </ul>
@@ -1634,7 +1679,13 @@ frames.</p>
 <td><p>Binarize data (set feature values to 0 or 1) according to a threshold.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.ColumnTransformerDF.html#sklearndf.transformation.ColumnTransformerDF" title="sklearndf.transformation.ColumnTransformerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColumnTransformerDF</span></code></a></p></td>
-<td><p>Applies transformers to columns of an array or pandas DataFrame.</p></td>
+<td><p>ColumnTransformer that returns sparse data frames instead of arrays if one or more of its transformers return a sparse data frame.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.CountVectorizerDF.html#sklearndf.transformation.CountVectorizerDF" title="sklearndf.transformation.CountVectorizerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CountVectorizerDF</span></code></a></p></td>
+<td><p>Subclass of <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code> that makes it a transformer.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.CountVectorizerTx.html#sklearndf.transformation.CountVectorizerTx" title="sklearndf.transformation.CountVectorizerTx"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CountVectorizerTx</span></code></a></p></td>
+<td><p>Subclass of <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code> that makes it a transformer.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.DictVectorizerDF.html#sklearndf.transformation.DictVectorizerDF" title="sklearndf.transformation.DictVectorizerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DictVectorizerDF</span></code></a></p></td>
 <td><p>Transforms lists of feature-value mappings to vectors.</p></td>
@@ -1812,6 +1863,12 @@ frames.</p>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.TfidfTransformerDF.html#sklearndf.transformation.TfidfTransformerDF" title="sklearndf.transformation.TfidfTransformerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TfidfTransformerDF</span></code></a></p></td>
 <td><p>Transform a count matrix to a normalized tf or tf-idf representation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.TfidfVectorizerDF.html#sklearndf.transformation.TfidfVectorizerDF" title="sklearndf.transformation.TfidfVectorizerDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TfidfVectorizerDF</span></code></a></p></td>
+<td><p>Subclass of <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code> that makes it a transformer.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.TfidfVectorizerTx.html#sklearndf.transformation.TfidfVectorizerTx" title="sklearndf.transformation.TfidfVectorizerTx"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TfidfVectorizerTx</span></code></a></p></td>
+<td><p>Subclass of <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code> that makes it a transformer.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="transformation/sklearndf.transformation.TruncatedSVDDF.html#sklearndf.transformation.TruncatedSVDDF" title="sklearndf.transformation.TruncatedSVDDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TruncatedSVDDF</span></code></a></p></td>
 <td><p>Dimensionality reduction using truncated SVD (aka LSA).</p></td>

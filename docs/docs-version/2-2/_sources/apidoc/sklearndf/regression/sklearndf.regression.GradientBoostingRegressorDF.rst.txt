@@ -18,7 +18,6 @@ sklearndf.regression.GradientBoostingRegressorDF
    
       ~GradientBoostingRegressorDF.apply
       ~GradientBoostingRegressorDF.clone
-      ~GradientBoostingRegressorDF.ensure_fitted
       ~GradientBoostingRegressorDF.fit
       ~GradientBoostingRegressorDF.from_fitted
       ~GradientBoostingRegressorDF.get_params
@@ -36,7 +35,7 @@ sklearndf.regression.GradientBoostingRegressorDF
 
    .. autosummary::
    
-      ~GradientBoostingRegressorDF.COL_FEATURE_IN
+      ~GradientBoostingRegressorDF.COL_FEATURE
       ~GradientBoostingRegressorDF.COL_PREDICTION
       ~GradientBoostingRegressorDF.feature_names_in_
       ~GradientBoostingRegressorDF.is_fitted

@@ -17,12 +17,12 @@ sklearndf.transformation.RFECVDF
       :nosignatures:
    
       ~RFECVDF.clone
-      ~RFECVDF.ensure_fitted
       ~RFECVDF.fit
       ~RFECVDF.fit_transform
       ~RFECVDF.from_fitted
       ~RFECVDF.get_params
       ~RFECVDF.inverse_transform
+      ~RFECVDF.set_output
       ~RFECVDF.set_params
       ~RFECVDF.to_expression
       ~RFECVDF.transform
@@ -35,12 +35,11 @@ sklearndf.transformation.RFECVDF
 
    .. autosummary::
    
-      ~RFECVDF.COL_FEATURE_IN
-      ~RFECVDF.COL_FEATURE_OUT
+      ~RFECVDF.COL_FEATURE
+      ~RFECVDF.COL_FEATURE_ORIGINAL
       ~RFECVDF.feature_names_in_
       ~RFECVDF.feature_names_original_
       ~RFECVDF.feature_names_out_
-      ~RFECVDF.grid_scores_
       ~RFECVDF.is_fitted
       ~RFECVDF.n_features_in_
       ~RFECVDF.n_outputs_

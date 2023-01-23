@@ -17,7 +17,6 @@ sklearndf.regression.PassiveAggressiveRegressorDF
       :nosignatures:
    
       ~PassiveAggressiveRegressorDF.clone
-      ~PassiveAggressiveRegressorDF.ensure_fitted
       ~PassiveAggressiveRegressorDF.fit
       ~PassiveAggressiveRegressorDF.from_fitted
       ~PassiveAggressiveRegressorDF.get_params
@@ -35,7 +34,7 @@ sklearndf.regression.PassiveAggressiveRegressorDF
 
    .. autosummary::
    
-      ~PassiveAggressiveRegressorDF.COL_FEATURE_IN
+      ~PassiveAggressiveRegressorDF.COL_FEATURE
       ~PassiveAggressiveRegressorDF.COL_PREDICTION
       ~PassiveAggressiveRegressorDF.feature_names_in_
       ~PassiveAggressiveRegressorDF.is_fitted

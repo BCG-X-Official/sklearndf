@@ -17,12 +17,12 @@ sklearndf.transformation.wrapper.EmbeddingWrapperDF
       :nosignatures:
    
       ~EmbeddingWrapperDF.clone
-      ~EmbeddingWrapperDF.ensure_fitted
       ~EmbeddingWrapperDF.fit
       ~EmbeddingWrapperDF.fit_transform
       ~EmbeddingWrapperDF.from_fitted
       ~EmbeddingWrapperDF.get_params
       ~EmbeddingWrapperDF.inverse_transform
+      ~EmbeddingWrapperDF.set_output
       ~EmbeddingWrapperDF.set_params
       ~EmbeddingWrapperDF.to_expression
       ~EmbeddingWrapperDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.wrapper.EmbeddingWrapperDF
 
    .. autosummary::
    
-      ~EmbeddingWrapperDF.COL_FEATURE_IN
-      ~EmbeddingWrapperDF.COL_FEATURE_OUT
+      ~EmbeddingWrapperDF.COL_FEATURE
+      ~EmbeddingWrapperDF.COL_FEATURE_ORIGINAL
       ~EmbeddingWrapperDF.feature_names_in_
       ~EmbeddingWrapperDF.feature_names_original_
       ~EmbeddingWrapperDF.feature_names_out_

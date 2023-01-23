@@ -17,7 +17,6 @@ sklearndf.regression.MultiTaskElasticNetDF
       :nosignatures:
    
       ~MultiTaskElasticNetDF.clone
-      ~MultiTaskElasticNetDF.ensure_fitted
       ~MultiTaskElasticNetDF.fit
       ~MultiTaskElasticNetDF.from_fitted
       ~MultiTaskElasticNetDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.MultiTaskElasticNetDF
 
    .. autosummary::
    
-      ~MultiTaskElasticNetDF.COL_FEATURE_IN
+      ~MultiTaskElasticNetDF.COL_FEATURE
       ~MultiTaskElasticNetDF.COL_PREDICTION
       ~MultiTaskElasticNetDF.feature_names_in_
       ~MultiTaskElasticNetDF.is_fitted

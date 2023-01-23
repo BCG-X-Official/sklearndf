@@ -17,7 +17,6 @@ sklearndf.regression.ElasticNetDF
       :nosignatures:
    
       ~ElasticNetDF.clone
-      ~ElasticNetDF.ensure_fitted
       ~ElasticNetDF.fit
       ~ElasticNetDF.from_fitted
       ~ElasticNetDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.ElasticNetDF
 
    .. autosummary::
    
-      ~ElasticNetDF.COL_FEATURE_IN
+      ~ElasticNetDF.COL_FEATURE
       ~ElasticNetDF.COL_PREDICTION
       ~ElasticNetDF.feature_names_in_
       ~ElasticNetDF.is_fitted

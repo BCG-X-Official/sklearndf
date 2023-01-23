@@ -17,14 +17,15 @@ sklearndf.clustering.KMeansDF
       :nosignatures:
    
       ~KMeansDF.clone
-      ~KMeansDF.ensure_fitted
       ~KMeansDF.fit
       ~KMeansDF.fit_predict
+      ~KMeansDF.fit_transform
       ~KMeansDF.from_fitted
       ~KMeansDF.get_params
       ~KMeansDF.predict
       ~KMeansDF.set_params
       ~KMeansDF.to_expression
+      ~KMeansDF.transform
    
    
 
@@ -34,7 +35,7 @@ sklearndf.clustering.KMeansDF
 
    .. autosummary::
    
-      ~KMeansDF.COL_FEATURE_IN
+      ~KMeansDF.COL_FEATURE
       ~KMeansDF.COL_LABELS
       ~KMeansDF.COL_PREDICTION
       ~KMeansDF.IDX_CLUSTER

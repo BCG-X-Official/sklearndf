@@ -18,12 +18,12 @@ sklearndf.pipeline.ClassifierPipelineDF
    
       ~ClassifierPipelineDF.clone
       ~ClassifierPipelineDF.decision_function
-      ~ClassifierPipelineDF.ensure_fitted
       ~ClassifierPipelineDF.fit
       ~ClassifierPipelineDF.get_params
       ~ClassifierPipelineDF.predict
       ~ClassifierPipelineDF.predict_log_proba
       ~ClassifierPipelineDF.predict_proba
+      ~ClassifierPipelineDF.preprocess
       ~ClassifierPipelineDF.score
       ~ClassifierPipelineDF.set_params
       ~ClassifierPipelineDF.to_expression
@@ -36,11 +36,9 @@ sklearndf.pipeline.ClassifierPipelineDF
 
    .. autosummary::
    
-      ~ClassifierPipelineDF.COL_FEATURE_IN
+      ~ClassifierPipelineDF.COL_FEATURE
       ~ClassifierPipelineDF.classes_
       ~ClassifierPipelineDF.feature_names_in_
-      ~ClassifierPipelineDF.feature_names_original_
-      ~ClassifierPipelineDF.feature_names_out_
       ~ClassifierPipelineDF.final_estimator
       ~ClassifierPipelineDF.final_estimator_name
       ~ClassifierPipelineDF.is_fitted

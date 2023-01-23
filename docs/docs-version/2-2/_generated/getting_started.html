@@ -287,9 +287,9 @@ Changes and additions to new versions are summarized in the
 We recommend to install <em>sklearndf</em> into a dedicated environment.</p>
 <section id="anaconda">
 <h3>Anaconda<a class="headerlink" href="#anaconda" title="Permalink to this headline">#</a></h3>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>conda create -n sklearndf
-conda activate sklearndf
-conda install -c bcg_gamma -c conda-forge sklearndf
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>sklearndf
+conda<span class="w"> </span>activate<span class="w"> </span>sklearndf
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>bcg_gamma<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>sklearndf
 </pre></div>
 </div>
 </section>
@@ -297,9 +297,9 @@ conda install -c bcg_gamma -c conda-forge sklearndf
 <h3>Pip<a class="headerlink" href="#pip" title="Permalink to this headline">#</a></h3>
 <section id="macos-and-linux">
 <h4>macOS and Linux:<a class="headerlink" href="#macos-and-linux" title="Permalink to this headline">#</a></h4>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python -m venv sklearndf
-<span class="nb">source</span> sklearndf/bin/activate
-pip install sklearndf
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>sklearndf
+<span class="nb">source</span><span class="w"> </span>sklearndf/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>sklearndf
 </pre></div>
 </div>
 </section>
@@ -533,7 +533,7 @@ on a test set.</p>
     <span class="n">titanic_X</span><span class="p">,</span> <span class="n">titanic_y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
 <span class="p">)</span>
 <span class="n">pipeline_df</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model score: </span><span class="si">{</span><span class="n">pipeline_df</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">df_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;model score: </span><span class="si">{</span><span class="n">pipeline_df</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">df_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_test</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="line-block">

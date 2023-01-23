@@ -18,7 +18,6 @@ sklearndf.classification.CategoricalNBDF
    
       ~CategoricalNBDF.clone
       ~CategoricalNBDF.decision_function
-      ~CategoricalNBDF.ensure_fitted
       ~CategoricalNBDF.fit
       ~CategoricalNBDF.from_fitted
       ~CategoricalNBDF.get_params
@@ -38,7 +37,7 @@ sklearndf.classification.CategoricalNBDF
 
    .. autosummary::
    
-      ~CategoricalNBDF.COL_FEATURE_IN
+      ~CategoricalNBDF.COL_FEATURE
       ~CategoricalNBDF.COL_PREDICTION
       ~CategoricalNBDF.classes_
       ~CategoricalNBDF.feature_names_in_

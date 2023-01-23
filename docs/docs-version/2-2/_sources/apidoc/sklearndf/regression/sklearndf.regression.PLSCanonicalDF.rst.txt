@@ -17,7 +17,6 @@ sklearndf.regression.PLSCanonicalDF
       :nosignatures:
    
       ~PLSCanonicalDF.clone
-      ~PLSCanonicalDF.ensure_fitted
       ~PLSCanonicalDF.fit
       ~PLSCanonicalDF.fit_transform
       ~PLSCanonicalDF.from_fitted
@@ -25,6 +24,7 @@ sklearndf.regression.PLSCanonicalDF
       ~PLSCanonicalDF.inverse_transform
       ~PLSCanonicalDF.predict
       ~PLSCanonicalDF.score
+      ~PLSCanonicalDF.set_output
       ~PLSCanonicalDF.set_params
       ~PLSCanonicalDF.to_expression
       ~PLSCanonicalDF.transform
@@ -37,8 +37,8 @@ sklearndf.regression.PLSCanonicalDF
 
    .. autosummary::
    
-      ~PLSCanonicalDF.COL_FEATURE_IN
-      ~PLSCanonicalDF.COL_FEATURE_OUT
+      ~PLSCanonicalDF.COL_FEATURE
+      ~PLSCanonicalDF.COL_FEATURE_ORIGINAL
       ~PLSCanonicalDF.COL_PREDICTION
       ~PLSCanonicalDF.feature_names_in_
       ~PLSCanonicalDF.feature_names_original_

@@ -17,7 +17,6 @@ sklearndf.regression.MultiTaskLassoDF
       :nosignatures:
    
       ~MultiTaskLassoDF.clone
-      ~MultiTaskLassoDF.ensure_fitted
       ~MultiTaskLassoDF.fit
       ~MultiTaskLassoDF.from_fitted
       ~MultiTaskLassoDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.MultiTaskLassoDF
 
    .. autosummary::
    
-      ~MultiTaskLassoDF.COL_FEATURE_IN
+      ~MultiTaskLassoDF.COL_FEATURE
       ~MultiTaskLassoDF.COL_PREDICTION
       ~MultiTaskLassoDF.feature_names_in_
       ~MultiTaskLassoDF.is_fitted

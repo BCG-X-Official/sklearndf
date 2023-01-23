@@ -17,13 +17,13 @@ sklearndf.transformation.KNNImputerDF
       :nosignatures:
    
       ~KNNImputerDF.clone
-      ~KNNImputerDF.ensure_fitted
       ~KNNImputerDF.fit
       ~KNNImputerDF.fit_transform
       ~KNNImputerDF.from_fitted
       ~KNNImputerDF.get_feature_names_out
       ~KNNImputerDF.get_params
       ~KNNImputerDF.inverse_transform
+      ~KNNImputerDF.set_output
       ~KNNImputerDF.set_params
       ~KNNImputerDF.to_expression
       ~KNNImputerDF.transform
@@ -36,8 +36,8 @@ sklearndf.transformation.KNNImputerDF
 
    .. autosummary::
    
-      ~KNNImputerDF.COL_FEATURE_IN
-      ~KNNImputerDF.COL_FEATURE_OUT
+      ~KNNImputerDF.COL_FEATURE
+      ~KNNImputerDF.COL_FEATURE_ORIGINAL
       ~KNNImputerDF.feature_names_in_
       ~KNNImputerDF.feature_names_original_
       ~KNNImputerDF.feature_names_out_

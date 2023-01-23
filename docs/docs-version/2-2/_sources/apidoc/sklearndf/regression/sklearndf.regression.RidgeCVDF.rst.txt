@@ -17,7 +17,6 @@ sklearndf.regression.RidgeCVDF
       :nosignatures:
    
       ~RidgeCVDF.clone
-      ~RidgeCVDF.ensure_fitted
       ~RidgeCVDF.fit
       ~RidgeCVDF.from_fitted
       ~RidgeCVDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.RidgeCVDF
 
    .. autosummary::
    
-      ~RidgeCVDF.COL_FEATURE_IN
+      ~RidgeCVDF.COL_FEATURE
       ~RidgeCVDF.COL_PREDICTION
       ~RidgeCVDF.feature_names_in_
       ~RidgeCVDF.is_fitted

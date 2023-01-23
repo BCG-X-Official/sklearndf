@@ -17,7 +17,6 @@ sklearndf.regression.KernelRidgeDF
       :nosignatures:
    
       ~KernelRidgeDF.clone
-      ~KernelRidgeDF.ensure_fitted
       ~KernelRidgeDF.fit
       ~KernelRidgeDF.from_fitted
       ~KernelRidgeDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.KernelRidgeDF
 
    .. autosummary::
    
-      ~KernelRidgeDF.COL_FEATURE_IN
+      ~KernelRidgeDF.COL_FEATURE
       ~KernelRidgeDF.COL_PREDICTION
       ~KernelRidgeDF.feature_names_in_
       ~KernelRidgeDF.is_fitted

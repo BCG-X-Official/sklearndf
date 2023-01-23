@@ -17,7 +17,6 @@ sklearndf.clustering.SpectralClusteringDF
       :nosignatures:
    
       ~SpectralClusteringDF.clone
-      ~SpectralClusteringDF.ensure_fitted
       ~SpectralClusteringDF.fit
       ~SpectralClusteringDF.fit_predict
       ~SpectralClusteringDF.from_fitted
@@ -34,7 +33,7 @@ sklearndf.clustering.SpectralClusteringDF
 
    .. autosummary::
    
-      ~SpectralClusteringDF.COL_FEATURE_IN
+      ~SpectralClusteringDF.COL_FEATURE
       ~SpectralClusteringDF.COL_LABELS
       ~SpectralClusteringDF.COL_PREDICTION
       ~SpectralClusteringDF.feature_names_in_

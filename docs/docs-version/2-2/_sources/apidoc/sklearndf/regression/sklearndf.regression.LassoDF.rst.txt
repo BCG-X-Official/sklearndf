@@ -17,7 +17,6 @@ sklearndf.regression.LassoDF
       :nosignatures:
    
       ~LassoDF.clone
-      ~LassoDF.ensure_fitted
       ~LassoDF.fit
       ~LassoDF.from_fitted
       ~LassoDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.LassoDF
 
    .. autosummary::
    
-      ~LassoDF.COL_FEATURE_IN
+      ~LassoDF.COL_FEATURE
       ~LassoDF.COL_PREDICTION
       ~LassoDF.feature_names_in_
       ~LassoDF.is_fitted

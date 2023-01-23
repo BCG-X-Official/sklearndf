@@ -17,7 +17,6 @@ sklearndf.clustering.AgglomerativeClusteringDF
       :nosignatures:
    
       ~AgglomerativeClusteringDF.clone
-      ~AgglomerativeClusteringDF.ensure_fitted
       ~AgglomerativeClusteringDF.fit
       ~AgglomerativeClusteringDF.fit_predict
       ~AgglomerativeClusteringDF.from_fitted
@@ -34,7 +33,7 @@ sklearndf.clustering.AgglomerativeClusteringDF
 
    .. autosummary::
    
-      ~AgglomerativeClusteringDF.COL_FEATURE_IN
+      ~AgglomerativeClusteringDF.COL_FEATURE
       ~AgglomerativeClusteringDF.COL_LABELS
       ~AgglomerativeClusteringDF.COL_PREDICTION
       ~AgglomerativeClusteringDF.feature_names_in_

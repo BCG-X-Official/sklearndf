@@ -18,7 +18,6 @@ sklearndf.classification.RadiusNeighborsClassifierDF
    
       ~RadiusNeighborsClassifierDF.clone
       ~RadiusNeighborsClassifierDF.decision_function
-      ~RadiusNeighborsClassifierDF.ensure_fitted
       ~RadiusNeighborsClassifierDF.fit
       ~RadiusNeighborsClassifierDF.from_fitted
       ~RadiusNeighborsClassifierDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.RadiusNeighborsClassifierDF
 
    .. autosummary::
    
-      ~RadiusNeighborsClassifierDF.COL_FEATURE_IN
+      ~RadiusNeighborsClassifierDF.COL_FEATURE
       ~RadiusNeighborsClassifierDF.COL_PREDICTION
       ~RadiusNeighborsClassifierDF.classes_
       ~RadiusNeighborsClassifierDF.feature_names_in_

@@ -17,12 +17,12 @@ sklearndf.transformation.wrapper.IsomapWrapperDF
       :nosignatures:
    
       ~IsomapWrapperDF.clone
-      ~IsomapWrapperDF.ensure_fitted
       ~IsomapWrapperDF.fit
       ~IsomapWrapperDF.fit_transform
       ~IsomapWrapperDF.from_fitted
       ~IsomapWrapperDF.get_params
       ~IsomapWrapperDF.inverse_transform
+      ~IsomapWrapperDF.set_output
       ~IsomapWrapperDF.set_params
       ~IsomapWrapperDF.to_expression
       ~IsomapWrapperDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.wrapper.IsomapWrapperDF
 
    .. autosummary::
    
-      ~IsomapWrapperDF.COL_FEATURE_IN
-      ~IsomapWrapperDF.COL_FEATURE_OUT
+      ~IsomapWrapperDF.COL_FEATURE
+      ~IsomapWrapperDF.COL_FEATURE_ORIGINAL
       ~IsomapWrapperDF.feature_names_in_
       ~IsomapWrapperDF.feature_names_original_
       ~IsomapWrapperDF.feature_names_out_

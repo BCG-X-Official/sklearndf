@@ -17,13 +17,13 @@ sklearndf.transformation.HashingVectorizerDF
       :nosignatures:
    
       ~HashingVectorizerDF.clone
-      ~HashingVectorizerDF.ensure_fitted
       ~HashingVectorizerDF.fit
       ~HashingVectorizerDF.fit_transform
       ~HashingVectorizerDF.from_fitted
       ~HashingVectorizerDF.get_params
       ~HashingVectorizerDF.inverse_transform
       ~HashingVectorizerDF.partial_fit
+      ~HashingVectorizerDF.set_output
       ~HashingVectorizerDF.set_params
       ~HashingVectorizerDF.to_expression
       ~HashingVectorizerDF.transform
@@ -36,8 +36,8 @@ sklearndf.transformation.HashingVectorizerDF
 
    .. autosummary::
    
-      ~HashingVectorizerDF.COL_FEATURE_IN
-      ~HashingVectorizerDF.COL_FEATURE_OUT
+      ~HashingVectorizerDF.COL_FEATURE
+      ~HashingVectorizerDF.COL_FEATURE_ORIGINAL
       ~HashingVectorizerDF.feature_names_in_
       ~HashingVectorizerDF.feature_names_original_
       ~HashingVectorizerDF.feature_names_out_

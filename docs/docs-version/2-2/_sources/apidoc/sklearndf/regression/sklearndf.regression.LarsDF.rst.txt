@@ -17,7 +17,6 @@ sklearndf.regression.LarsDF
       :nosignatures:
    
       ~LarsDF.clone
-      ~LarsDF.ensure_fitted
       ~LarsDF.fit
       ~LarsDF.from_fitted
       ~LarsDF.get_params
@@ -34,7 +33,7 @@ sklearndf.regression.LarsDF
 
    .. autosummary::
    
-      ~LarsDF.COL_FEATURE_IN
+      ~LarsDF.COL_FEATURE
       ~LarsDF.COL_PREDICTION
       ~LarsDF.feature_names_in_
       ~LarsDF.is_fitted

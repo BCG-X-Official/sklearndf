@@ -598,6 +598,11 @@
     </label>
     <ul>
      <li class="toctree-l3">
+      <a class="reference internal" href="../pipeline/wrapper/sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.html">
+       sklearndf.pipeline.wrapper.FeatureUnionSparseFrames
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../pipeline/wrapper/sklearndf.pipeline.wrapper.FeatureUnionWrapperDF.html">
        sklearndf.pipeline.wrapper.FeatureUnionWrapperDF
       </a>
@@ -988,6 +993,16 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../transformation/sklearndf.transformation.CountVectorizerDF.html">
+     sklearndf.transformation.CountVectorizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../transformation/sklearndf.transformation.CountVectorizerTx.html">
+     sklearndf.transformation.CountVectorizerTx
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../transformation/sklearndf.transformation.DictVectorizerDF.html">
      sklearndf.transformation.DictVectorizerDF
     </a>
@@ -1283,6 +1298,16 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="../transformation/sklearndf.transformation.TfidfVectorizerDF.html">
+     sklearndf.transformation.TfidfVectorizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../transformation/sklearndf.transformation.TfidfVectorizerTx.html">
+     sklearndf.transformation.TfidfVectorizerTx
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../transformation/sklearndf.transformation.TruncatedSVDDF.html">
      sklearndf.transformation.TruncatedSVDDF
     </a>
@@ -1362,6 +1387,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../transformation/wrapper/sklearndf.transformation.wrapper.ColumnTransformerSparseFrames.html">
+       sklearndf.transformation.wrapper.ColumnTransformerSparseFrames
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../transformation/wrapper/sklearndf.transformation.wrapper.ColumnTransformerWrapperDF.html">
        sklearndf.transformation.wrapper.ColumnTransformerWrapperDF
       </a>
@@ -1417,8 +1447,23 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../transformation/wrapper/sklearndf.transformation.wrapper.PCAWrapperDF.html">
+       sklearndf.transformation.wrapper.PCAWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../transformation/wrapper/sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF.html">
        sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../transformation/wrapper/sklearndf.transformation.wrapper.SingleColumnTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.SingleColumnTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../transformation/wrapper/sklearndf.transformation.wrapper.VectorizerWrapperDF.html">
+       sklearndf.transformation.wrapper.VectorizerWrapperDF
       </a>
      </li>
     </ul>
@@ -1607,7 +1652,7 @@ estimator.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/abc.html#abc.ABCMeta" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABCMeta</span></code></a></p>
 </dd>
 <dt class="field-even">Generic types</dt>
-<dd class="field-even"><p>~T_NativeEstimator(bound= <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></a>)</p>
+<dd class="field-even"><p>~T_NativeEstimator(bound= <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="(in scikit-learn v1.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></a>)</p>
 </dd>
 </dl>
 <p class="rubric">Method summary</p>
@@ -1662,7 +1707,7 @@ estimator.</p>
 <dd><p>The type of native estimator that instances of this wrapper class delegate to.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Type" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code></a>[<a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.TypeVar" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">T_NativeEstimator</span></code>, bound= <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="(in scikit-learn v1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></a>)]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Type" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code></a>[<a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.TypeVar" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">T_NativeEstimator</span></code>, bound= <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="(in scikit-learn v1.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code></a>)]</p>
 </dd>
 </dl>
 </dd></dl>

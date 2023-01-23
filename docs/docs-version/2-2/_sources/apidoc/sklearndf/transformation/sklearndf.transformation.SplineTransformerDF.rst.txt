@@ -17,14 +17,13 @@ sklearndf.transformation.SplineTransformerDF
       :nosignatures:
    
       ~SplineTransformerDF.clone
-      ~SplineTransformerDF.ensure_fitted
       ~SplineTransformerDF.fit
       ~SplineTransformerDF.fit_transform
       ~SplineTransformerDF.from_fitted
-      ~SplineTransformerDF.get_feature_names
       ~SplineTransformerDF.get_feature_names_out
       ~SplineTransformerDF.get_params
       ~SplineTransformerDF.inverse_transform
+      ~SplineTransformerDF.set_output
       ~SplineTransformerDF.set_params
       ~SplineTransformerDF.to_expression
       ~SplineTransformerDF.transform
@@ -37,8 +36,8 @@ sklearndf.transformation.SplineTransformerDF
 
    .. autosummary::
    
-      ~SplineTransformerDF.COL_FEATURE_IN
-      ~SplineTransformerDF.COL_FEATURE_OUT
+      ~SplineTransformerDF.COL_FEATURE
+      ~SplineTransformerDF.COL_FEATURE_ORIGINAL
       ~SplineTransformerDF.feature_names_in_
       ~SplineTransformerDF.feature_names_original_
       ~SplineTransformerDF.feature_names_out_

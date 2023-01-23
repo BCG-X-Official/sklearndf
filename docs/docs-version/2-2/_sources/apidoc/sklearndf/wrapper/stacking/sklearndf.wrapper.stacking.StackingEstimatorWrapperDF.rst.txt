@@ -17,7 +17,6 @@ sklearndf.wrapper.stacking.StackingEstimatorWrapperDF
       :nosignatures:
    
       ~StackingEstimatorWrapperDF.clone
-      ~StackingEstimatorWrapperDF.ensure_fitted
       ~StackingEstimatorWrapperDF.fit
       ~StackingEstimatorWrapperDF.from_fitted
       ~StackingEstimatorWrapperDF.get_params
@@ -34,7 +33,7 @@ sklearndf.wrapper.stacking.StackingEstimatorWrapperDF
 
    .. autosummary::
    
-      ~StackingEstimatorWrapperDF.COL_FEATURE_IN
+      ~StackingEstimatorWrapperDF.COL_FEATURE
       ~StackingEstimatorWrapperDF.COL_PREDICTION
       ~StackingEstimatorWrapperDF.feature_names_in_
       ~StackingEstimatorWrapperDF.is_fitted

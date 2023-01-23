@@ -17,12 +17,12 @@ sklearndf.transformation.VarianceThresholdDF
       :nosignatures:
    
       ~VarianceThresholdDF.clone
-      ~VarianceThresholdDF.ensure_fitted
       ~VarianceThresholdDF.fit
       ~VarianceThresholdDF.fit_transform
       ~VarianceThresholdDF.from_fitted
       ~VarianceThresholdDF.get_params
       ~VarianceThresholdDF.inverse_transform
+      ~VarianceThresholdDF.set_output
       ~VarianceThresholdDF.set_params
       ~VarianceThresholdDF.to_expression
       ~VarianceThresholdDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.VarianceThresholdDF
 
    .. autosummary::
    
-      ~VarianceThresholdDF.COL_FEATURE_IN
-      ~VarianceThresholdDF.COL_FEATURE_OUT
+      ~VarianceThresholdDF.COL_FEATURE
+      ~VarianceThresholdDF.COL_FEATURE_ORIGINAL
       ~VarianceThresholdDF.feature_names_in_
       ~VarianceThresholdDF.feature_names_original_
       ~VarianceThresholdDF.feature_names_out_

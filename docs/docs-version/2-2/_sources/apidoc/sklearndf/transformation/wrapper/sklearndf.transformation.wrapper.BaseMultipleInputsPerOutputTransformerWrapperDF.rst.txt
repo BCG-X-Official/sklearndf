@@ -17,12 +17,12 @@ sklearndf.transformation.wrapper.BaseMultipleInputsPerOutputTransformerWrapperDF
       :nosignatures:
    
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.clone
-      ~BaseMultipleInputsPerOutputTransformerWrapperDF.ensure_fitted
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.fit
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.fit_transform
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.from_fitted
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.get_params
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.inverse_transform
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.set_output
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.set_params
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.to_expression
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.wrapper.BaseMultipleInputsPerOutputTransformerWrapperDF
 
    .. autosummary::
    
-      ~BaseMultipleInputsPerOutputTransformerWrapperDF.COL_FEATURE_IN
-      ~BaseMultipleInputsPerOutputTransformerWrapperDF.COL_FEATURE_OUT
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.COL_FEATURE
+      ~BaseMultipleInputsPerOutputTransformerWrapperDF.COL_FEATURE_ORIGINAL
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.feature_names_in_
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.feature_names_original_
       ~BaseMultipleInputsPerOutputTransformerWrapperDF.feature_names_out_
