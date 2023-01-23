@@ -42,7 +42,7 @@ def test_boruta_pipeline(diabetes_df: pd.DataFrame, diabetes_target: str) -> Non
                                     (
                                         "onehot",
                                         OneHotEncoderDF(
-                                            drop="if_binary", categories="auto"
+                                            drop="first", categories="auto"
                                         ),
                                         ["sex"],
                                     ),
