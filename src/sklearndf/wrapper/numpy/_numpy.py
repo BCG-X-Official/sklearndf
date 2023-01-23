@@ -8,6 +8,7 @@ from typing import Any, Callable, Generic, List, Optional, Sequence, TypeVar, Un
 import numpy as np
 import numpy.typing as npt
 import pandas as pd
+from scipy import sparse
 
 from pytools.api import AllTracker, inheritdoc, subsdoc
 
@@ -101,7 +102,7 @@ class EstimatorNPDF(
 
     def fit(
         self: T_EstimatorNPDF,
-        X: Union[npt.NDArray[Any], pd.DataFrame],
+        X: Union[npt.NDArray[Any], sparse.spmatrix, pd.Series, pd.DataFrame],
         y: Optional[Union[npt.NDArray[Any], pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
     ) -> T_EstimatorNPDF:
@@ -123,31 +124,47 @@ class EstimatorNPDF(
     def _get_n_outputs(self) -> int:
         return self.delegate._get_n_outputs()
 
-    def _ensure_X_frame(self, X: Union[npt.NDArray[Any], pd.DataFrame]) -> pd.DataFrame:
+    def _ensure_X_frame(
+        self, X: Union[npt.NDArray[Any], sparse.spmatrix, pd.Series, pd.DataFrame]
+    ) -> pd.DataFrame:
         column_names = self.column_names
         if callable(column_names):
             column_names = column_names()
 
-        if isinstance(X, np.ndarray):
-            if X.ndim != 2:
-                raise TypeError(
-                    f"expected 2-dimensional array but got {X.ndim} dimensions"
+        if isinstance(X, pd.Series):
+            if column_names and (len(column_names) != 1 or column_names[0] != X.name):
+                raise ValueError(
+                    f"expected column name {column_names[0]} but got {X.name}"
                 )
-            if column_names:
-                if X.shape[1] != len(column_names):
-                    raise ValueError(
-                        f"expected {len(column_names)} columns but got {X.shape[1]}"
-                    )
-                return pd.DataFrame(X, columns=column_names)
-            else:
-                return pd.DataFrame(X)
-        else:
+            return X.to_frame()
+        elif isinstance(X, pd.DataFrame):
             if column_names and X.columns.to_list() != column_names:
                 raise ValueError(
                     f"expected column names {column_names} "
                     f"but got {X.columns.to_list()}"
                 )
             return X
+        else:
+            try:
+                ndim = X.ndim
+            except AttributeError:
+                raise TypeError(
+                    f"expected numpy array, sparse matrix, pandas series or data frame "
+                    f"but got a {type(X).__name__}"
+                )
+            if ndim != 2:
+                raise TypeError(
+                    f"expected 2-dimensional array but got {ndim} dimensions"
+                )
+            if column_names is not None:
+                if X.shape[1] != len(column_names):
+                    raise ValueError(
+                        f"expected {len(column_names)} columns but got {X.shape[1]}"
+                    )
+            if isinstance(X, sparse.spmatrix):
+                return pd.DataFrame.sparse.from_spmatrix(X, columns=column_names)
+            else:
+                return pd.DataFrame(X, columns=column_names)
 
     @staticmethod
     def _ensure_y_series_or_frame(
@@ -227,10 +244,8 @@ class ClassifierNPDF(
     delegate: T_DelegateClassifierDF
     column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
 
-    @property
-    def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
-        """[see superclass]"""
-        return self.delegate.classes_
+    def _get_classes(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+        return self.delegate._get_classes()
 
     def predict_proba(
         self, X: Union[npt.NDArray[Any], pd.DataFrame], **predict_params: Any

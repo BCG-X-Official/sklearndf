@@ -17,8 +17,27 @@ API.
 2.2.0
 ~~~~~
 
+*sklearndf* 2.2 adds support for
+`scikit-learn |nbsp| 1.2 <https://scikit-learn.org/1.2>`_.
+
+- API: DF estimators now support native estimators using sparse matrices as input or
+  output, and automatically convert them to or from sparse :class:`~pandas.DataFrame`
+  objects
 - API: new property :attr:`.EstimatorDF.output_names_` to get the names of the output
-  columns the estimator was fitted with.
+  columns the estimator was fitted with
+- API: new method :attr:`.LearnerPipelineDF.preprocess` to apply the preprocessing step
+  to a data frame
+- API: remove properties ``feature_names_out_`` and ``feature_names_original_`` from
+  class :class:`.LearnerPipelineDF`
+- API: :class:`~pandas.Index` instances obtained from
+  :attr:`.EstimatorDF.feature_names_in_` and :attr:`.TransformerDF.feature_names_out_`
+  are now named ``"feature"`` instead of ``"feature_in"`` and ``"feature_out"``,
+  respectively, and :class:`~pandas.Series` instances obtained from
+  :attr:`.TransformerDF.feature_names_original_` are now named ``"feature_original"``
+  instead of ``"feature_in"``, and their indices are now named ``"feature"`` instead
+  of ``"feature_out"``; this is to separate the semantics of the originating property
+  from the column index, which may be used in other contexts
+
 
 
 *sklearndf* 2.1
@@ -26,6 +45,12 @@ API.
 
 *sklearndf* 2.1 adds support for
 `scikit-learn |nbsp| 1.1 <https://scikit-learn.org/1.1>`_.
+
+2.1.1
+~~~~~
+
+This is a maintenance release to catch up with *sklearndf* |nbsp| 2.0.2.
+
 
 2.1.0
 ~~~~~
@@ -51,6 +76,15 @@ API.
 `scikit-learn |nbsp| 1.0 <https://scikit-learn.org/1.0>`_,
 adds data frame support for clusterers along with additional API enhancements and
 improvements, and is now subject to static type checking with |mypy|.
+
+2.0.2
+~~~~~
+
+- FIX: property :attr:`.PCADF.n_components_` now returns the value of
+  :attr:`~sklearndf.decomposition.PCA.n_components_`, not
+  :attr:`~sklearndf.decomposition.PCA.n_components`
+- FIX: detect missing and extra columns when validating data frames resulting from
+  transforms, even when the total column count is correct
 
 2.0.1
 ~~~~~

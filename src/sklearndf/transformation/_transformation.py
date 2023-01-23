@@ -4,7 +4,7 @@ Core implementation of :mod:`sklearndf.transformation`
 
 import logging
 
-from sklearn.compose import ColumnTransformer
+from sklearn.base import TransformerMixin
 from sklearn.cross_decomposition import PLSSVD
 from sklearn.decomposition import (
     NMF,
@@ -22,7 +22,12 @@ from sklearn.decomposition import (
     TruncatedSVD,
 )
 from sklearn.feature_extraction import DictVectorizer, FeatureHasher
-from sklearn.feature_extraction.text import HashingVectorizer, TfidfTransformer
+from sklearn.feature_extraction.text import (
+    CountVectorizer,
+    HashingVectorizer,
+    TfidfTransformer,
+    TfidfVectorizer,
+)
 from sklearn.feature_selection import (
     RFE,
     RFECV,
@@ -74,6 +79,7 @@ from pytools.api import AllTracker
 from .wrapper import (
     AdditiveChi2SamplerWrapperDF,
     ColumnPreservingTransformerWrapperDF,
+    ColumnTransformerSparseFrames,
     ColumnTransformerWrapperDF,
     ComponentsDimensionalityReductionWrapperDF,
     FeatureSelectionWrapperDF,
@@ -84,7 +90,9 @@ from .wrapper import (
     NComponentsDimensionalityReductionWrapperDF,
     OneHotEncoderWrapperDF,
     PolynomialTransformerWrapperDF,
+    VectorizerWrapperDF,
 )
+from .wrapper._wrapper import PCAWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -93,6 +101,8 @@ __all__ = [
     "BernoulliRBMDF",
     "BinarizerDF",
     "ColumnTransformerDF",
+    "CountVectorizerDF",
+    "CountVectorizerTx",
     "DictVectorizerDF",
     "DictionaryLearningDF",
     "FactorAnalysisDF",
@@ -146,9 +156,12 @@ __all__ = [
     "SparseRandomProjectionDF",
     "StandardScalerDF",
     "TfidfTransformerDF",
+    "TfidfVectorizerDF",
+    "TfidfVectorizerTx",
     "TruncatedSVDDF",
     "VarianceThresholdDF",
 ]
+
 
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
 
@@ -169,7 +182,9 @@ __tracker = AllTracker(globals())
 #
 
 
-class ColumnTransformerDF(ColumnTransformerWrapperDF, native=ColumnTransformer):
+class ColumnTransformerDF(
+    ColumnTransformerWrapperDF, native=ColumnTransformerSparseFrames
+):
     """Stub for DF wrapper of class ``ColumnTransformer``"""
 
 
@@ -182,22 +197,55 @@ class PLSSVDDF(ColumnPreservingTransformerWrapperDF[PLSSVD], native=PLSSVD):
     """Stub for DF wrapper of class ``PLSSVD``"""
 
 
+#
+# feature_extraction
+#
+
+
 class FeatureHasherDF(
     ColumnPreservingTransformerWrapperDF[FeatureHasher], native=FeatureHasher
 ):
     """Stub for DF wrapper of class ``FeatureHasher``"""
 
 
-class DictVectorizerDF(
-    ColumnPreservingTransformerWrapperDF[DictVectorizer], native=DictVectorizer
-):
+class DictVectorizerDF(VectorizerWrapperDF[DictVectorizer], native=DictVectorizer):
     """Stub for DF wrapper of class ``DictVectorizer``"""
 
 
 class HashingVectorizerDF(
-    ColumnPreservingTransformerWrapperDF[HashingVectorizer], native=HashingVectorizer
+    VectorizerWrapperDF[HashingVectorizer], native=HashingVectorizer
 ):
     """Stub for DF wrapper of class ``HashingVectorizer``"""
+
+
+class CountVectorizerTx(
+    CountVectorizer,  # type: ignore
+    TransformerMixin,  # type: ignore
+):
+    """
+    Subclass of ``CountVectorizer`` that makes it a transformer.
+    """
+
+
+class CountVectorizerDF(
+    VectorizerWrapperDF[CountVectorizerTx], native=CountVectorizerTx
+):
+    """Stub for DF wrapper of class ``CountVectorizer``"""
+
+
+class TfidfVectorizerTx(
+    TfidfVectorizer,  # type: ignore
+    TransformerMixin,  # type: ignore
+):
+    """
+    Subclass of ``CountVectorizer`` that makes it a transformer.
+    """
+
+
+class TfidfVectorizerDF(
+    VectorizerWrapperDF[TfidfVectorizerTx], native=TfidfVectorizerTx
+):
+    """Stub for DF wrapper of class ``TfidfVectorizer``"""
 
 
 class TfidfTransformerDF(
@@ -414,7 +462,7 @@ class NMFDF(ComponentsDimensionalityReductionWrapperDF[NMF], native=NMF):
     """Stub for DF wrapper of class ``NMF``"""
 
 
-class PCADF(NComponentsDimensionalityReductionWrapperDF[PCA], native=PCA):
+class PCADF(PCAWrapperDF, native=PCA):
     """Stub for DF wrapper of class ``PCA``"""
 
 
@@ -553,7 +601,7 @@ __estimators = {
     if sym.endswith("DF")
     and sym not in __imported_estimators
     and not sym.startswith("_")
-}
+} | {CountVectorizerTx.__name__, TfidfVectorizerTx.__name__}
 
 if __estimators != set(__all__):
     raise RuntimeError(

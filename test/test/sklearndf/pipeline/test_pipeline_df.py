@@ -135,7 +135,7 @@ def test_pipeline_df_memory(
         pipe = PipelineDF([("tx", clone(tx)), ("svc", clf)])
         cached_pipe = PipelineDF([("tx", tx), ("svc", clf)], memory=memory)
 
-        # Memoize the transformer at the first fit
+        # Memorize the transformer at the first fit
         cached_pipe.fit(iris_features, iris_target_sr)
         pipe.fit(iris_features, iris_target_sr)
         # Get the time stamp of the transformer in the cached pipeline
@@ -323,52 +323,79 @@ def test_pipeline_df_raise_set_params_error() -> None:
         pipe.set_params(fake__estimator="nope")
 
 
-def test_feature_union(test_data_categorical: pd.DataFrame) -> None:
+@pytest.mark.parametrize(argnames="sparse", argvalues=[True, False])  # type: ignore
+def test_feature_union(test_data_categorical: pd.DataFrame, sparse: bool) -> None:
+    # the expected column dtype, depending on arg sparse
+    dtype_expected = pd.SparseDtype(np.float_, fill_value=0) if sparse else np.float_
+
+    # apply the test data to a simple feature union
     feature_union = FeatureUnionDF(
         [
-            ("oh", OneHotEncoderDF(drop="first", sparse=False)),
+            ("one_hot", OneHotEncoderDF(drop="first", sparse=sparse)),
         ]
     )
+    transformed = feature_union.fit_transform(test_data_categorical)
 
+    # assert that all columns of the data frame are sparse
+    assert all(
+        col_dtype == dtype_expected for col_dtype in transformed.dtypes
+    ), f"all columns should be of type {dtype_expected}: {transformed.dtypes}"
+
+    # if the output is sparse, make it dense
+    if sparse:
+        transformed = transformed.sparse.to_dense()
+
+    # assert that the one-hot encoding is as expected
     assert_frame_equal(
-        feature_union.fit_transform(test_data_categorical),
+        transformed,
         pd.DataFrame(
             dict(
-                oh__a_yes=[1.0, 1.0, 0.0],
-                oh__b_green=[0.0, 0.0, 1.0],
-                oh__b_red=[1.0, 0.0, 0.0],
-                oh__c_father=[0.0, 1.0, 0.0],
-                oh__c_mother=[0.0, 0.0, 1.0],
+                one_hot__a_yes=[1.0, 1.0, 0.0],
+                one_hot__b_green=[0.0, 0.0, 1.0],
+                one_hot__b_red=[1.0, 0.0, 0.0],
+                one_hot__c_father=[0.0, 1.0, 0.0],
+                one_hot__c_mother=[0.0, 0.0, 1.0],
             ),
-        ).rename_axis(columns="feature_out"),
+        ).rename_axis(columns="feature"),
     )
 
     if __sklearn_version__ >= __sklearn_1_1__:
+        # test the passthrough option introduced in sklearn 1.1
+
+        # apply the test data to a simple feature union
         feature_union = FeatureUnionDF(
             [
-                ("oh", OneHotEncoderDF(drop="first", sparse=False)),
+                ("one_hot", OneHotEncoderDF(drop="first", sparse=sparse)),
                 ("pass", "passthrough"),
                 ("pass_again", "passthrough"),
-            ]
+            ],
+        )
+        transformed = feature_union.fit_transform(test_data_categorical)
+
+        # assert that all one-hot-encoded columns of the data frame are sparse
+        assert all(
+            dtype == (dtype_expected if column.startswith("one_hot__") else np.object_)
+            for column, dtype in zip(transformed.columns, transformed.dtypes)
         )
 
+        # assert that the one-hot encoding is as expected
         assert_frame_equal(
-            feature_union.fit_transform(test_data_categorical),
+            transformed,
             pd.concat(
                 [
                     pd.DataFrame(
                         dict(
-                            oh__a_yes=[1.0, 1.0, 0.0],
-                            oh__b_green=[0.0, 0.0, 1.0],
-                            oh__b_red=[1.0, 0.0, 0.0],
-                            oh__c_father=[0.0, 1.0, 0.0],
-                            oh__c_mother=[0.0, 0.0, 1.0],
+                            one_hot__a_yes=[1.0, 1.0, 0.0],
+                            one_hot__b_green=[0.0, 0.0, 1.0],
+                            one_hot__b_red=[1.0, 0.0, 0.0],
+                            one_hot__c_father=[0.0, 1.0, 0.0],
+                            one_hot__c_mother=[0.0, 0.0, 1.0],
                         ),
-                        dtype=object,
+                        dtype=dtype_expected,
                     ),
                     test_data_categorical.add_prefix("pass__"),
                     test_data_categorical.add_prefix("pass_again__"),
                 ],
                 axis=1,
-            ).rename_axis(columns="feature_out"),
+            ).rename_axis(columns="feature"),
         )

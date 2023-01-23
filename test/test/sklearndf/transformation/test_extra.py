@@ -4,7 +4,11 @@ from sklearn.ensemble import RandomForestRegressor
 
 from sklearndf.pipeline import PipelineDF
 from sklearndf.regression import RandomForestRegressorDF
-from sklearndf.transformation import SimpleImputerDF
+from sklearndf.transformation import (
+    ColumnTransformerDF,
+    OneHotEncoderDF,
+    SimpleImputerDF,
+)
 from sklearndf.transformation.extra import BorutaDF
 
 
@@ -21,12 +25,34 @@ def test_boruta_df() -> None:
     boruta_df.fit(x, y)
 
 
-def test_boruta_pipeline(boston_df: pd.DataFrame, boston_target: str) -> None:
-    """Test a pipeline with on the boston dataset"""
+def test_boruta_pipeline(diabetes_df: pd.DataFrame, diabetes_target: str) -> None:
+    """Test a pipeline with on the diabetes dataset"""
 
     boruta_selector = PipelineDF(
         steps=[
-            ("preprocess", SimpleImputerDF(strategy="median")),
+            (
+                "preprocess",
+                PipelineDF(
+                    steps=[
+                        ("imputer", SimpleImputerDF()),
+                        (
+                            "onehot",
+                            ColumnTransformerDF(
+                                [
+                                    (
+                                        "onehot",
+                                        OneHotEncoderDF(
+                                            drop="first", categories="auto"
+                                        ),
+                                        ["sex"],
+                                    ),
+                                ],
+                                remainder="passthrough",
+                            ),
+                        ),
+                    ]
+                ),
+            ),
             (
                 "boruta",
                 BorutaDF(
@@ -36,7 +62,7 @@ def test_boruta_pipeline(boston_df: pd.DataFrame, boston_target: str) -> None:
         ]
     )
 
-    x = boston_df.drop(columns=boston_target)
-    y = boston_df.loc[:, boston_target]
+    x = diabetes_df.drop(columns=diabetes_target)
+    y = diabetes_df.loc[:, diabetes_target]
 
     boruta_selector.fit(x, y)

@@ -16,12 +16,12 @@ from sklearn.base import (
     TransformerMixin,
     clone,
 )
-from sklearn.exceptions import NotFittedError
 from sklearn.utils import is_scalar_nan
 
 from pytools.api import AllTracker, inheritdoc
 from pytools.expression import Expression, HasExpressionRepr, make_expression
 from pytools.expression.atomic import Id
+from pytools.fit import fitted_only
 
 log = logging.getLogger(__name__)
 
@@ -74,11 +74,11 @@ class EstimatorDF(
     """
 
     #: Name assigned to an :class:`~pandas.Index` or a :class:`~pandas.Series`
-    #: containing the names of the features used to fit a :class:`.EstimatorDF`.
+    #: with the names of the features used to fit a :class:`.EstimatorDF`.
     #:
     #: See :meth:`.feature_names_in_` and
     #: :meth:`~.TransformerDF.feature_names_original_`.
-    COL_FEATURE_IN = "feature_in"
+    COL_FEATURE = "feature"
 
     @property
     def native_estimator(self) -> BaseEstimator:
@@ -95,7 +95,7 @@ class EstimatorDF(
     @abstractmethod
     def fit(
         self: T_EstimatorDF,
-        X: pd.DataFrame,
+        X: Union[pd.DataFrame, pd.Series],
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
     ) -> T_EstimatorDF:
@@ -118,57 +118,46 @@ class EstimatorDF(
         """
         pass
 
-    def ensure_fitted(self) -> None:
-        """
-        Raise a :class:`~sklearn.exceptions.NotFittedError` if this estimator is not
-        fitted.
-
-        :raise sklearn.exceptions.NotFittedError: this estimator is not fitted
-        """
-        if not self.is_fitted:
-            raise NotFittedError(f"{type(self).__name__} is not fitted")
-
     @property
+    @fitted_only(not_fitted_error=AttributeError)
     def feature_names_in_(self) -> pd.Index:
         """
         The pandas column index with the names of the features used to fit this
         estimator.
 
-        :raises AttributeError: if this estimator is not fitted
+        :raises AttributeError: this estimator is not fitted
         """
-        self.ensure_fitted()
-        return self._get_features_in().rename(self.COL_FEATURE_IN)
+        return self._get_features_in().rename(self.COL_FEATURE)
 
     @property
+    @fitted_only(not_fitted_error=AttributeError)
     def output_names_(self) -> Optional[List[str]]:
         """
         The name(s) of the output(s) this estimator was fitted to,
         or ``None`` if this estimator was not fitted to any outputs.
 
-        :raises AttributeError: if this estimator is not fitted
+        :raises AttributeError: this estimator is not fitted
         """
-        self.ensure_fitted()
         return self._get_outputs()
 
     @property
+    @fitted_only(not_fitted_error=AttributeError)
     def n_features_in_(self) -> int:
         """
         The number of features used to fit this estimator.
 
-        :raises AttributeError: if this estimator is not fitted
-        :return: the number of features
+        :raises AttributeError: this estimator is not fitted
         """
-        self.ensure_fitted()
         return self._get_n_features_in()
 
     @property
+    @fitted_only(not_fitted_error=AttributeError)
     def n_outputs_(self) -> int:
         """
         The number of outputs used to fit this estimator.
 
-        :raises AttributeError: if this estimator is not fitted
+        :raises AttributeError: this estimator is not fitted
         """
-        self.ensure_fitted()
         return self._get_n_outputs()
 
     def get_params(self, deep: bool = True) -> Mapping[str, Any]:
@@ -303,7 +292,7 @@ class LearnerDF(EstimatorDF, metaclass=ABCMeta):
     # noinspection PyPep8Naming
     @abstractmethod
     def predict(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """
         Predict outputs for the given inputs.
@@ -332,7 +321,10 @@ class SupervisedLearnerDF(LearnerDF, metaclass=ABCMeta):
     # noinspection PyPep8Naming
     @abstractmethod
     def score(
-        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+        self,
+        X: Union[pd.Series, pd.DataFrame],
+        y: pd.Series,
+        sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """
         Score this learner using the given inputs and outputs.
@@ -369,12 +361,11 @@ class TransformerDF(
     Provides enhanced support for data frames.
     """
 
-    #: Name assigned to a :class:`~pandas.Index` containing the names of the features
-    #: produced by a :class:`.TransformerDF`.
+    #: Name assigned to a :class:`~pandas.Series` with the original feature names
+    #: before transformation.
     #:
-    #: See :meth:`~.TransformerDF.feature_names_out_` and
-    #: :meth:`.feature_names_original_`.
-    COL_FEATURE_OUT = "feature_out"
+    #: See :meth:`.feature_names_original_`.
+    COL_FEATURE_ORIGINAL = "feature_original"
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """
@@ -385,6 +376,7 @@ class TransformerDF(
         self._features_original = None
 
     @property
+    @fitted_only(not_fitted_error=AttributeError)
     def feature_names_original_(self) -> pd.Series:
         # noinspection GrazieInspection
         """
@@ -393,28 +385,31 @@ class TransformerDF(
 
         The index of the resulting series consists of the names of the output features;
         the corresponding values are the names of the original input features.
+
+        :raises AttributeError: this transformer is not fitted
         """
-        self.ensure_fitted()
         if self._features_original is None:
             self._features_original = (
                 self._get_features_original()
-                .rename(self.COL_FEATURE_IN)
-                .rename_axis(index=self.COL_FEATURE_OUT)
+                .rename(TransformerDF.COL_FEATURE_ORIGINAL)
+                .rename_axis(index=EstimatorDF.COL_FEATURE)
             )
         return self._features_original
 
     @property
+    @fitted_only(not_fitted_error=AttributeError)
     def feature_names_out_(self) -> pd.Index:
         """
         A pandas column index with the names of the features produced by this
         transformer
+
+        :raises AttributeError: this transformer is not fitted
         """
-        self.ensure_fitted()
-        return self._get_features_out().rename(self.COL_FEATURE_OUT)
+        return self._get_features_out().rename(EstimatorDF.COL_FEATURE)
 
     # noinspection PyPep8Naming
     @abstractmethod
-    def transform(self, X: pd.DataFrame) -> pd.DataFrame:
+    def transform(self, X: Union[pd.Series, pd.DataFrame]) -> pd.DataFrame:
         """
         Transform the given inputs.
 
@@ -431,7 +426,7 @@ class TransformerDF(
     # noinspection PyPep8Naming
     def fit_transform(
         self,
-        X: pd.DataFrame,
+        X: Union[pd.Series, pd.DataFrame],
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
     ) -> pd.DataFrame:
@@ -448,7 +443,7 @@ class TransformerDF(
 
     # noinspection PyPep8Naming
     @abstractmethod
-    def inverse_transform(self, X: pd.DataFrame) -> pd.DataFrame:
+    def inverse_transform(self, X: Union[pd.Series, pd.DataFrame]) -> pd.DataFrame:
         """
         Inverse-transform the given inputs.
 
@@ -471,7 +466,7 @@ class TransformerDF(
     def _get_features_out(self) -> pd.Index:
         # return a pandas index with this transformer's output columns
         # default behaviour: get index returned by feature_names_original_
-        return self.feature_names_original_.index
+        return self._get_features_original().index
 
 
 class RegressorDF(
@@ -488,7 +483,10 @@ class RegressorDF(
     # noinspection PyPep8Naming
     @abstractmethod
     def score(
-        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+        self,
+        X: Union[pd.Series, pd.DataFrame],
+        y: pd.Series,
+        sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see SupervisedLearnerDF]"""
 
@@ -509,20 +507,20 @@ class ClassifierDF(
     """
 
     @property
-    @abstractmethod
+    @fitted_only(not_fitted_error=AttributeError)
     def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
         """
-        Get the classes predicted by this classifier.
+        Get the classes predicted by this classifier as a numpy array of class labels
+        for single-output problems, or a list of such arrays for multi-output problems
 
-        :return: a numpy array of class labels for single-output problems, or a list
-            of such arrays for multi-output problems
+        :raises AttributeError: this classifier is not fitted
         """
-        pass
+        return self._get_classes()
 
     # noinspection PyPep8Naming
     @abstractmethod
     def predict_proba(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """
         Predict class probabilities for the given inputs.
@@ -544,7 +542,7 @@ class ClassifierDF(
     # noinspection PyPep8Naming
     @abstractmethod
     def predict_log_proba(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """
         Predict class log-probabilities for the given inputs.
@@ -566,7 +564,7 @@ class ClassifierDF(
     # noinspection PyPep8Naming
     @abstractmethod
     def decision_function(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[pd.Series, pd.DataFrame]:
         """
         Compute the decision function for the given inputs.
@@ -588,13 +586,20 @@ class ClassifierDF(
     # noinspection PyPep8Naming
     @abstractmethod
     def score(
-        self, X: pd.DataFrame, y: pd.Series, sample_weight: Optional[pd.Series] = None
+        self,
+        X: Union[pd.Series, pd.DataFrame],
+        y: pd.Series,
+        sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see SupervisedLearnerDF]"""
 
     # we cannot get the docstring via the @inheritdoc mechanism because
     # ClassifierMixin precedes SupervisedLearnerDF in the MRO
     score.__doc__ = SupervisedLearnerDF.score.__doc__
+
+    @abstractmethod
+    def _get_classes(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+        pass
 
 
 class ClusterDF(
@@ -609,19 +614,21 @@ class ClusterDF(
     """
 
     @property
-    @abstractmethod
+    @fitted_only(not_fitted_error=AttributeError)
     def labels_(self) -> pd.Series:
         # noinspection GrazieInspection
         """
         A pandas series, mapping the index of the input data frame to cluster labels.
+
+        :raises AttributeError: this clusterer is not fitted
         """
-        pass
+        return self._get_labels()
 
     # noinspection PyPep8Naming
     @abstractmethod
     def fit_predict(
         self,
-        X: pd.DataFrame,
+        X: Union[pd.Series, pd.DataFrame],
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_predict_params: Any,
     ) -> Union[pd.Series, pd.DataFrame]:
@@ -635,6 +642,10 @@ class ClusterDF(
         :return: predicted cluster labels for all observations as a series,
             or as a data frame in case of multiple outputs
         """
+        pass
+
+    @abstractmethod
+    def _get_labels(self) -> pd.Series:
         pass
 
 

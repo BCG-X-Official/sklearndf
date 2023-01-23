@@ -19,8 +19,8 @@ UNSUPPORTED_SKLEARN_PACKAGES = [sklearn.manifold, sklearn.neighbors]
 
 
 @pytest.fixture  # type: ignore
-def boston_target() -> str:
-    return "price"
+def diabetes_target() -> str:
+    return "disease_progression_1yr"
 
 
 @pytest.fixture  # type: ignore
@@ -34,30 +34,30 @@ def n_jobs() -> int:
 
 
 @pytest.fixture  # type: ignore
-def boston_df(boston_target: str) -> pd.DataFrame:
+def diabetes_df(diabetes_target: str) -> pd.DataFrame:
     #  load sklearn test-data and convert to pd
-    boston: Bunch = datasets.load_boston()
+    diabetes: Bunch = datasets.load_diabetes()
 
     return pd.DataFrame(
-        data=np.c_[boston.data, boston.target],
-        columns=[*map(str, boston.feature_names), boston_target],
+        data=np.c_[diabetes.data, diabetes.target],
+        columns=[*map(str, diabetes.feature_names), diabetes_target],
     )
 
 
 @pytest.fixture  # type: ignore
-def boston_features(boston_df: pd.DataFrame, boston_target: str) -> pd.DataFrame:
-    return boston_df.drop(labels=[boston_target], axis=1)
+def diabetes_features(diabetes_df: pd.DataFrame, diabetes_target: str) -> pd.DataFrame:
+    return diabetes_df.drop(labels=[diabetes_target], axis=1)
 
 
 @pytest.fixture  # type: ignore
-def boston_target_sr(boston_df: pd.DataFrame, boston_target: str) -> pd.Series:
-    return boston_df.loc[:, boston_target]
+def diabetes_target_sr(diabetes_df: pd.DataFrame, diabetes_target: str) -> pd.Series:
+    return diabetes_df.loc[:, diabetes_target]
 
 
 @pytest.fixture  # type: ignore
-def boston_target_df(boston_df: pd.DataFrame, boston_target: str) -> pd.DataFrame:
-    target = boston_df.loc[:, [boston_target]]
-    target.loc[:, f"{boston_target}_2"] = target.loc[:, boston_target] * 2
+def diabetes_target_df(diabetes_df: pd.DataFrame, diabetes_target: str) -> pd.DataFrame:
+    target = diabetes_df.loc[:, [diabetes_target]]
+    target.loc[:, f"{diabetes_target}_2"] = target.loc[:, diabetes_target] * 2
     return target
 
 

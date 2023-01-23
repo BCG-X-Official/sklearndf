@@ -14,11 +14,11 @@ dist-name = "sklearndf"
 license = "Apache Software License v2.0"
 
 requires = [
-    "gamma-pytools  ~=2.0,!=2.0.0",
-    "numpy          >=1.21,<2a",  # cannot use ~= due to conda bug
+    "gamma-pytools  ~=2.1rc",
+    "numpy          >=1.21,<1.24a",  # cannot use ~= due to conda bug
     "packaging      >=20",
-    "pandas         >=1,<2a",  # cannot use ~= due to conda bug
-    "scikit-learn   >=0.21,<1.3a",
+    "pandas         >=1.0,<2a",  # cannot use ~= due to conda bug
+    "scikit-learn   >=0.24,<1.3a",
     "scipy          ~=1.4",
 ]
 
@@ -71,14 +71,14 @@ no-binary.min = ["matplotlib"]
 [build.matrix.min]
 # direct requirements of sklearndf
 boruta         = "~=0.3.0"
-gamma-pytools  = "~=2.0.1"
+gamma-pytools  = "~=2.1rc"
 lightgbm       = "~=3.0.0"
 numpy          = "==1.21.6"  # cannot use ~= due to conda bug
 packaging      = "~=20.9"
-pandas         = "~=1.0.5"
+pandas         = "~=1.1.5"
 python         = ">=3.7.12,<3.8a"    # cannot use ~= due to conda bug
 scipy          = "~=1.4.1"
-scikit-learn   = "~=0.21.3"
+scikit-learn   = "~=0.24.2"
 xgboost        = "~=1.0.2"
 # additional minimum requirements of gamma-pytools
 joblib         = "~=0.14.1"
@@ -88,9 +88,9 @@ typing_inspect = "~=0.4.0"
 [build.matrix.max]
 # direct requirements of sklearndf
 boruta         = "~=0.3"
-gamma-pytools  = "~=2.0,!=2.0.0"
+gamma-pytools  = "~=2.1rc"
 lightgbm       = "~=3.3"
-numpy          = ">=1.23,<2a"  # cannot use ~= due to conda bug
+numpy          = ">=1.23,<1.24a"  # cannot use ~= due to conda bug
 packaging      = ">=20"
 pandas         = "~=1.4"
 python         = ">=3.9,<4a"   # cannot use ~= due to conda bug

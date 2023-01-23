@@ -4,11 +4,11 @@ Core implementation of :mod:`sklearndf.pipeline`
 
 import logging
 
-from sklearn.pipeline import FeatureUnion, Pipeline
+from sklearn.pipeline import Pipeline
 
 from pytools.api import AllTracker
 
-from .wrapper import FeatureUnionWrapperDF, PipelineWrapperDF
+from .wrapper import FeatureUnionSparseFrames, FeatureUnionWrapperDF, PipelineWrapperDF
 
 log = logging.getLogger(__name__)
 
@@ -31,7 +31,7 @@ class PipelineDF(PipelineWrapperDF, native=Pipeline):
     """Stub for DF wrapper of class ``Pipeline``"""
 
 
-class FeatureUnionDF(FeatureUnionWrapperDF, native=FeatureUnion):
+class FeatureUnionDF(FeatureUnionWrapperDF, native=FeatureUnionSparseFrames):
     """Stub for DF wrapper of class ``FeatureUnion``"""
 
 

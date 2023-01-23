@@ -98,7 +98,7 @@ class StackingEstimatorWrapperDF(
 
     def fit(
         self: T_StackingEstimatorWrapperDF,
-        X: pd.DataFrame,
+        X: Union[pd.DataFrame, pd.Series],
         y: Optional[Union[pd.Series, pd.DataFrame]] = None,
         **fit_params: Any,
     ) -> T_StackingEstimatorWrapperDF:
@@ -256,7 +256,7 @@ class _StackableSupervisedLearnerDF(
     @subsdoc(pattern="", replacement="", using=SupervisedLearnerDF.fit)
     def fit(
         self: T_StackableSupervisedLearnerDF,
-        X: pd.DataFrame,
+        X: Union[pd.Series, pd.DataFrame],
         y: Optional[npt.NDArray[Any]] = None,
         **fit_params: Any,
     ) -> T_StackableSupervisedLearnerDF:
@@ -270,7 +270,9 @@ class _StackableSupervisedLearnerDF(
         replacement="predictions as a numpy array",
         using=SupervisedLearnerDF.predict,
     )
-    def predict(self, X: pd.DataFrame, **predict_params: Any) -> npt.NDArray[Any]:
+    def predict(
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
+    ) -> npt.NDArray[Any]:
         """[see SupervisedLearnerDF.predict]"""
         return cast(
             npt.NDArray[Any],
@@ -278,15 +280,16 @@ class _StackableSupervisedLearnerDF(
         )
 
     # noinspection PyPep8Naming
-    @subsdoc(pattern="", replacement="", using=SupervisedLearnerDF.score)
     def score(
         self,
-        X: pd.DataFrame,
+        X: Union[pd.Series, pd.DataFrame],
         y: npt.NDArray["np.floating[Any]"],
         sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see SupervisedLearnerDF.score]"""
         return self.delegate.score(X, self._convert_y_to_series(X, y), sample_weight)
+
+    score.__doc__ = SupervisedLearnerDF.score.__doc__
 
     def _get_features_in(self) -> pd.Index:
         # noinspection PyProtectedMember
@@ -341,13 +344,11 @@ class _StackableSupervisedLearnerDF(
 class _StackableClassifierDF(_StackableSupervisedLearnerDF[ClassifierDF], ClassifierDF):
     """[see superclass]"""
 
-    @property
-    def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
-        """[see superclass]"""
-        return self.delegate.classes_
+    def _get_classes(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+        return self.delegate._get_classes()
 
     def predict_proba(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
         """[see superclass]"""
         return self._convert_prediction_to_numpy(
@@ -355,7 +356,7 @@ class _StackableClassifierDF(_StackableSupervisedLearnerDF[ClassifierDF], Classi
         )
 
     def predict_log_proba(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
         """[see superclass]"""
         return self._convert_prediction_to_numpy(
@@ -363,7 +364,7 @@ class _StackableClassifierDF(_StackableSupervisedLearnerDF[ClassifierDF], Classi
         )
 
     def decision_function(
-        self, X: pd.DataFrame, **predict_params: Any
+        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
     ) -> npt.NDArray[np.floating[Any]]:
         """[see superclass]"""
         return cast(
