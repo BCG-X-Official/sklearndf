@@ -112,7 +112,7 @@ def test_wrapped_fit_predict(
             with pytest.raises(ValueError):
                 regressor.fit(X=diabetes_features, y=diabetes_target_sr)
             # eliminate all features except one then continue testing
-            diabetes_features = diabetes_features.loc[:, ["bmi"]]
+            diabetes_features = diabetes_features.loc[:, "bmi"]
 
         regressor.fit(X=diabetes_features, y=diabetes_target_sr)
 
