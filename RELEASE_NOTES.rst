@@ -19,6 +19,8 @@ API.
 
 *sklearndf* 2.2 adds support for
 `scikit-learn |nbsp| 1.2 <https://scikit-learn.org/1.2>`_.
+It drops support for *scikit-learn* |nbsp| 0.23 and earlier due to incomplete
+support of sparse output (see below).
 
 - API: DF estimators now support native estimators using sparse matrices as input or
   output, and automatically convert them to or from sparse :class:`~pandas.DataFrame`

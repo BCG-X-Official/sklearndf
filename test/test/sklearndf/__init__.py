@@ -9,13 +9,7 @@ from sklearn.base import BaseEstimator
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import FeatureUnion
 
-from sklearndf import (
-    EstimatorDF,
-    LearnerDF,
-    TransformerDF,
-    __sklearn_0_22__,
-    __sklearn_version__,
-)
+from sklearndf import EstimatorDF, LearnerDF, TransformerDF, __sklearn_version__
 from sklearndf.pipeline.wrapper import FeatureUnionSparseFrames
 from sklearndf.transformation.wrapper import ColumnTransformerSparseFrames
 from sklearndf.wrapper import EstimatorWrapperDF
@@ -106,9 +100,7 @@ def get_sklearndf_wrapper_class(
 
 
 def check_expected_not_fitted_error(estimator: EstimatorDF) -> None:
-    """Check if transformers & learners raise NotFittedError (since sklearn 0.22)"""
-    if __sklearn_version__ < __sklearn_0_22__:
-        return
+    """Check if transformers & learners raise NotFittedError"""
 
     test_x = pd.DataFrame(data=list(range(10)))
 

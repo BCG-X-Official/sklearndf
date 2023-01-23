@@ -5,7 +5,6 @@ import pytest
 from sklearn.base import is_classifier, is_regressor
 from sklearn.impute import SimpleImputer
 
-from sklearndf import __sklearn_0_22__, __sklearn_version__
 from sklearndf.classification import (
     ClassifierChainDF,
     LogisticRegressionCVDF,
@@ -69,10 +68,6 @@ def test_meta_estimators() -> None:
         ClassifierChainDF(base_estimator=SimpleImputer())
 
 
-@pytest.mark.skipif(  # type: ignore
-    condition=__sklearn_version__ < __sklearn_0_22__,
-    reason="stacking estimators are not implemented by current version of sklearn",
-)
 def test_stacking_regressor(
     diabetes_features: pd.DataFrame, diabetes_target_sr: pd.Series
 ) -> None:
@@ -142,10 +137,6 @@ def test_stacking_regressor(
     ]
 
 
-@pytest.mark.skipif(  # type: ignore
-    condition=__sklearn_version__ < __sklearn_0_22__,
-    reason="stacking estimators are not implemented by current version of sklearn",
-)
 def test_stacking_classifier(
     iris_features: pd.DataFrame, iris_target_sr: pd.Series
 ) -> None:
