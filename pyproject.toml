@@ -17,8 +17,8 @@ requires = [
     "gamma-pytools  ~=2.1rc",
     "numpy          >=1.21,<1.24a",  # cannot use ~= due to conda bug
     "packaging      >=20",
-    "pandas         >=1.1,<2a",  # cannot use ~= due to conda bug
-    "scikit-learn   >=0.21,<1.3a",
+    "pandas         >=1.0,<2a",  # cannot use ~= due to conda bug
+    "scikit-learn   >=0.24,<1.3a",
     "scipy          ~=1.4",
 ]
 
