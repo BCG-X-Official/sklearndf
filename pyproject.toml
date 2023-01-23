@@ -17,7 +17,7 @@ requires = [
     "gamma-pytools  ~=2.1rc",
     "numpy          >=1.21,<1.24a",  # cannot use ~= due to conda bug
     "packaging      >=20",
-    "pandas         >=1,<2a",  # cannot use ~= due to conda bug
+    "pandas         >=1.1,<2a",  # cannot use ~= due to conda bug
     "scikit-learn   >=0.21,<1.3a",
     "scipy          ~=1.4",
 ]
@@ -75,7 +75,7 @@ gamma-pytools  = "~=2.1rc"
 lightgbm       = "~=3.0.0"
 numpy          = "==1.21.6"  # cannot use ~= due to conda bug
 packaging      = "~=20.9"
-pandas         = "~=1.0.5"
+pandas         = "~=1.1.5"
 python         = ">=3.7.12,<3.8a"    # cannot use ~= due to conda bug
 scipy          = "~=1.4.1"
 scikit-learn   = "~=0.21.3"
