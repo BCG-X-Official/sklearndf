@@ -244,7 +244,6 @@ class ClassifierNPDF(
     delegate: T_DelegateClassifierDF
     column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
 
-    @property
     def _get_classes(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
         return self.delegate._get_classes()
 

@@ -754,6 +754,7 @@ class EmbeddingWrapperDF(
     def _get_n_outputs(self) -> int:
         return cast(int, self.native_estimator.n_outputs_)
 
+    @property
     def _n_components_(self) -> int:
         return self.n_outputs_
 
