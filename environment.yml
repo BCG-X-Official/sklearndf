@@ -9,17 +9,12 @@ dependencies:
   - joblib ~= 1.1
   - lightgbm ~= 3.3
   - matplotlib ~= 3.5
-  - numpy ~= 1.23
+  - numpy ~= 1.23.5
   - pandas ~= 1.4
   - python ~= 3.9
-# - scikit-learn ~= 1.1,<1.3a
+  - scikit-learn ~= 1.2.0
   - scipy ~= 1.8
   - xgboost ~= 1.5
-  - pip
-  - pip:
-      - --pre
-      - --extra-index-url https://pypi.anaconda.org/scipy-wheels-nightly/simple
-      - scikit-learn~=1.2dev
   # build/test
   - conda-build ~= 3.21
   - conda-verify ~= 3.1
