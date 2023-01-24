@@ -21,8 +21,6 @@ from sklearndf import (
     ClassifierDF,
     RegressorDF,
     TransformerDF,
-    __sklearn_0_22__,
-    __sklearn_0_23__,
     __sklearn_0_24__,
     __sklearn_1_0__,
     __sklearn_1_1__,
@@ -74,9 +72,7 @@ def test_transformer_count() -> None:
     n = len(TRANSFORMERS_TO_TEST)
 
     print(f"Testing {n} transformers.")
-    if __sklearn_version__ < __sklearn_0_22__:
-        assert n == 55
-    elif __sklearn_version__ < __sklearn_0_24__:
+    if __sklearn_version__ < __sklearn_0_24__:
         assert n == 56
     elif __sklearn_version__ < __sklearn_1_0__:
         assert n == 57
@@ -483,23 +479,22 @@ def test_one_hot_encoding(test_data_categorical: pd.DataFrame, sparse: bool) -> 
         ),
     )
 
-    if __sklearn_version__ >= __sklearn_0_23__:
-        assert_frame_equal(
-            OneHotEncoderDF(drop="if_binary", sparse=sparse).fit_transform(
-                test_data_categorical
-            ),
-            _make_frame(
-                {
-                    "a_yes": [1.0, 1.0, 0.0],
-                    "b_blue": [0.0, 1.0, 0.0],
-                    "b_green": [0.0, 0.0, 1.0],
-                    "b_red": [1.0, 0.0, 0.0],
-                    "c_child": [1.0, 0.0, 0.0],
-                    "c_father": [0.0, 1.0, 0.0],
-                    "c_mother": [0.0, 0.0, 1.0],
-                }
-            ),
-        )
+    assert_frame_equal(
+        OneHotEncoderDF(drop="if_binary", sparse=sparse).fit_transform(
+            test_data_categorical
+        ),
+        _make_frame(
+            {
+                "a_yes": [1.0, 1.0, 0.0],
+                "b_blue": [0.0, 1.0, 0.0],
+                "b_green": [0.0, 0.0, 1.0],
+                "b_red": [1.0, 0.0, 0.0],
+                "c_child": [1.0, 0.0, 0.0],
+                "c_father": [0.0, 1.0, 0.0],
+                "c_mother": [0.0, 0.0, 1.0],
+            }
+        ),
+    )
 
     if __sklearn_version__ >= __sklearn_1_1__:
 
