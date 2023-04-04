@@ -1274,7 +1274,7 @@ def _mirror_attributes(
 
     for name, member in vars(native_estimator).items():
 
-        if member is None or name.startswith("_") or name in wrapper_attributes:
+        if member is None or name in wrapper_attributes:
             continue
 
         alias = _make_alias(
