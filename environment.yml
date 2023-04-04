@@ -4,15 +4,15 @@ channels:
   - bcg_gamma
 dependencies:
   # run
-  - gamma-pytools ~= 2.1rc, <3a
+  - gamma-pytools ~= 2.1rc1, <3a
   - joblib ~= 1.2
-  - lightgbm ~= 3.3.4
+  - lightgbm ~= 3.3.5
   - matplotlib ~= 3.6.3
   - numpy ~= 1.23.5
   - pandas ~= 1.5.3
-  - python ~= 3.9.15
-  - scikit-learn ~= 1.2.0
-  - scipy ~= 1.10.0
+  - python ~= 3.9.16
+  - scikit-learn ~= 1.2.2
+  - scipy ~= 1.10.1
   - xgboost ~= 1.7.1
   - pip ~= 23.0
   - pip:
@@ -27,7 +27,7 @@ dependencies:
   - m2r ~= 0.3.1
   - pluggy ~= 0.13.1
   - pre-commit ~= 2.21.0
-  - pytest ~= 7.2.1
+  - pytest ~= 7.2.2
   - pytest-cov ~= 2.12.1
   - pyyaml ~= 5.4.1
   - toml ~= 0.10.2
@@ -39,6 +39,6 @@ dependencies:
   - sphinx-autodoc-typehints ~= 1.19.2
   - pydata-sphinx-theme ~= 0.8.1
   # notebooks
-  - jupyterlab ~= 3.5.2
+  - jupyterlab ~= 3.5.3
   - openpyxl ~= 3.0.10
   - seaborn ~= 0.12.2
