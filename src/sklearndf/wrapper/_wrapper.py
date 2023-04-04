@@ -1220,6 +1220,13 @@ class MetaEstimatorWrapperDF(
     copy of the `X` and `y` parameters, so we need to make sure that these are converted
     back to data frames.
 
+    We also ensure that the embedded estimator is a native sci-kit learn estimator.
+    If it is a DF estimator, we replace it with its wrapped native estimator and
+    re-assign it to the attribute `estimator` or `base_estimator` (depending on the
+    meta-estimator).
+    In that case, we issue a warning that the wrapped estimator is being used instead
+    of the DF version.
+
     This class covers three variants used in sklearn:
 
     - one delegate estimator in attribute `estimator`
@@ -1228,24 +1235,35 @@ class MetaEstimatorWrapperDF(
     """
 
     def _validate_delegate_estimator(self) -> None:
-        meta_estimator = self.native_estimator
+        substituted: List[str] = []
 
-        estimator = getattr(meta_estimator, "estimator", None)
+        estimator = getattr(self, "estimator", None)
         if estimator is not None:
-            meta_estimator.estimator = self._native_learner(estimator)
+            self.estimator = self._native_learner(estimator)
+            substituted.append(estimator)
 
-        base_estimator = getattr(meta_estimator, "base_estimator", None)
+        base_estimator = getattr(self, "base_estimator", None)
         # attribute base_estimator is deprecated as of scikit-learn 1.2, with the
         # default value of "deprecated"
         if base_estimator is not None and base_estimator != "deprecated":
-            meta_estimator.base_estimator = self._native_learner(base_estimator)
+            self.base_estimator = self._native_learner(base_estimator)
+            substituted.append(base_estimator)
 
-        estimators = getattr(meta_estimator, "estimators", None)
+        estimators = getattr(self, "estimators", None)
         if estimators is not None:
-            meta_estimator.estimators = [
+            self.estimators = [
                 (name, self._native_learner(estimator))
                 for name, estimator in estimators
             ]
+            substituted.extend(estimators)
+
+        if substituted:
+            warnings.warn(
+                f"the following attributes of {type(self).__name__} "
+                f"have been replaced with their native scikit-learn counterparts: "
+                f"{', '.join(substituted)}",
+                stacklevel=-2,
+            )
 
     @staticmethod
     def _native_learner(
