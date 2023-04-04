@@ -1240,14 +1240,14 @@ class MetaEstimatorWrapperDF(
         estimator = getattr(self, "estimator", None)
         if estimator is not None:
             self.estimator = self._native_learner(estimator)
-            substituted.append(estimator)
+            substituted.append("estimator")
 
         base_estimator = getattr(self, "base_estimator", None)
         # attribute base_estimator is deprecated as of scikit-learn 1.2, with the
         # default value of "deprecated"
         if base_estimator is not None and base_estimator != "deprecated":
             self.base_estimator = self._native_learner(base_estimator)
-            substituted.append(base_estimator)
+            substituted.append("base_estimator")
 
         estimators = getattr(self, "estimators", None)
         if estimators is not None:
@@ -1255,7 +1255,7 @@ class MetaEstimatorWrapperDF(
                 (name, self._native_learner(estimator))
                 for name, estimator in estimators
             ]
-            substituted.extend(estimators)
+            substituted.append("estimators")
 
         if substituted:
             warnings.warn(
