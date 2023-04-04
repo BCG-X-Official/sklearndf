@@ -616,7 +616,15 @@ class EstimatorWrapperDF(
         if name.startswith("_"):
             super().__setattr__(name, value)
         else:
-            setattr(self._native_estimator, name, value)
+            try:
+                self.__getattribute__(name)
+            except AttributeError:
+                # set the attribute in the native estimator if it is not defined in this
+                # wrapper object
+                setattr(self._native_estimator, name, value)
+            else:
+                # otherwise, overwrite the attribute in this wrapper object
+                super().__setattr__(name, value)
 
 
 @inheritdoc(match="[see superclass]")
