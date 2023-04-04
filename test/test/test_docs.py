@@ -20,8 +20,12 @@ def test_doc() -> None:
                     r"(?:classification|regression)\.extra\.LGBM.*",
                     # XGBoost estimators in the '.extra' packages
                     r"(?:classification|regression)\.extra\.XGB.*",
-                    # BorutaDF
+                    # BorutaPy package
                     r"transformation\.extra\.BorutaDF",
+                    # ARFS package
+                    r"transformation\.extra\.BoostAGrootaDF",
+                    r"transformation\.extra\.GrootCVDF",
+                    r"transformation\.extra\.LeshyDF",
                     # scikit-learn pipeline classes
                     r"pipeline\.(PipelineDF|FeatureUnionDF).*",
                     # sparse frames version of FeatureUnion
