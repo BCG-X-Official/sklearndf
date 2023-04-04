@@ -219,9 +219,9 @@ class EstimatorWrapperDF(
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """
-        :param args: positional arguments to use when initializing a new new delegate
+        :param args: positional arguments to use when initializing a new delegate
             estimator
-        :param kwargs: keyword arguments to use when initializing a new new delegate
+        :param kwargs: keyword arguments to use when initializing a new delegate
             estimator
         """
         super().__init__()
@@ -403,7 +403,8 @@ class EstimatorWrapperDF(
         return self
 
     def _validate_delegate_estimator(self) -> None:
-        # no validation required by default; to be overloaded as needed
+        # Called as the last step of the estimator wrapper's constructor.
+        # No validation required by default; to be overloaded as needed.
         pass
 
     def _get_features_in(self) -> pd.Index:
