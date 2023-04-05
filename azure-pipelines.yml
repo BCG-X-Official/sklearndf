@@ -160,7 +160,7 @@ stages:
                 export MAMBA_ROOT_PREFIX=~/micromamba
                 eval "$(./bin/micromamba shell hook -s posix)"
 
-                micromamba env create -f environment.yml
+                micromamba env create --yes --file environment.yml
                 micromamba activate $(project_name)-develop
 
                 export PYTHONPATH=$(System.DefaultWorkingDirectory)/src/
