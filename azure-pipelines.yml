@@ -113,6 +113,7 @@ stages:
                 echo Repo: $(Build.DefinitionName)
                 echo Version: $(Build.SourceVersion)
                 git log --oneline --graph --decorate --all -10 $(Build.SourceVersion)
+                git diff $(Build.SourceVersion)^@
                 files_changed=$(git diff $(Build.SourceVersion)^@ --name-only)
                 echo "Files changed since last commit: ${files_changed}"
                 n_files_changed=$(git diff $(Build.SourceVersion)^@ --name-only | grep -i -E 'meta\.yaml|pyproject\.toml|azure-pipelines\.yml|tox\.ini|make\.py'  | wc -l | xargs)
