@@ -155,7 +155,8 @@ stages:
                 set -eux
                 eval "$(conda shell.bash hook)"
 
-                conda env create --verbose
+                conda install -c conda-forge mamba~=1.4.1
+                mamba env create
                 conda activate $(project_name)-develop
 
                 export PYTHONPATH=$(System.DefaultWorkingDirectory)/src/
@@ -647,7 +648,8 @@ stages:
                 echo "Checking out $(branchName)"
                 git checkout $(branchName)
 
-                conda env create
+                conda install -c conda-forge mamba~=1.4.1
+                mamba env create
                 conda activate $(project_name)-develop
 
                 export PYTHONPATH=$(System.DefaultWorkingDirectory)/src/
