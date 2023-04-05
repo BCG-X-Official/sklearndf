@@ -157,6 +157,7 @@ stages:
                 # Install micromamba
                 curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
                 
+                export MAMBA_ROOT_PREFIX=~/micromamba
                 eval "$(./bin/micromamba shell hook -s posix)"
 
                 micromamba env create
