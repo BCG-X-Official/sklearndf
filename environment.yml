@@ -5,7 +5,7 @@ channels:
 dependencies:
   # run
   - gamma-pytools ~= 2.1rc1, <3a
-  - joblib ~= 1.2
+  - joblib ~= 1.2.0
   - lightgbm ~= 3.3.5
   - matplotlib ~= 3.6.3
   - numpy ~= 1.23.5
@@ -14,9 +14,10 @@ dependencies:
   - scikit-learn ~= 1.2.2
   - scipy ~= 1.10.1
   - xgboost ~= 1.7.1
-  - pip ~= 23.0
+  - pip ~= 23.0.1
   - pip:
     - arfs ~= 1.0.5
+    - shap ~= 0.41.0
   # build/test
   - conda-build ~= 3.23.3
   - conda-verify ~= 3.1.1
@@ -34,7 +35,7 @@ dependencies:
   - tox ~= 3.27.1
   - yaml ~= 0.2.5
   # sphinx
-  - nbsphinx ~= 0.8.9
+  - nbsphinx ~= 0.8.12
   - sphinx ~= 4.5.0
   - sphinx-autodoc-typehints ~= 1.19.2
   - pydata-sphinx-theme ~= 0.8.1
