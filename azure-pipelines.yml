@@ -141,8 +141,8 @@ stages:
         steps:
           - task: UsePythonVersion@0
             inputs:
-              versionSpec: '3.8'
-            displayName: 'use Python 3.8'
+              versionSpec: '3.9'
+            displayName: 'use Python 3.9'
 
           - checkout: self
 
@@ -153,10 +153,14 @@ stages:
               targetType: 'inline'
               script: |
                 set -eux
-                eval "$(conda shell.bash hook)"
 
-                conda env create
-                conda activate $(project_name)-develop
+                # Install micromamba
+                curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+                
+                eval "$(./bin/micromamba shell hook -s posix)"
+
+                micromamba env create
+                micromamba activate $(project_name)-develop
 
                 export PYTHONPATH=$(System.DefaultWorkingDirectory)/src/
                 export RUN_PACKAGE_VERSION_TEST=$(project_name)
