@@ -107,7 +107,10 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
+                set -eux
+
                 echo Repo: $(Build.DefinitionName)
+                echo Source Version: $(Build.SourceVersion)
                 cd $(System.DefaultWorkingDirectory)
                 files_changed=$(git diff $(Build.SourceVersion)^! --name-only)
                 echo "Files changed since last commit: ${files_changed}"
