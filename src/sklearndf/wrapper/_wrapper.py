@@ -1227,7 +1227,7 @@ class MetaEstimatorWrapperDF(
     In that case, we issue a warning that the wrapped estimator is being used instead
     of the DF version.
 
-    This class covers three variants used in sklearn:
+    This class covers three variants used in scikit-learn:
 
     - one delegate estimator in attribute `estimator`
     - one delegate estimator in attribute `base_estimator`
