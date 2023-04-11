@@ -15,7 +15,7 @@ license = "Apache Software License v2.0"
 
 requires = [
     "gamma-pytools  ~=2.0,!=2.0.0",
-    "numpy          >=1.21,<2a",  # cannot use ~= due to conda bug
+    "numpy          >=1.21,<1.24a",  # cannot use ~= due to conda bug
     "packaging      >=20",
     "pandas         >=1,<2a",  # cannot use ~= due to conda bug
     "scikit-learn   >=0.21,<1.2a",
@@ -90,9 +90,9 @@ typing_inspect = "~=0.4.0"
 boruta         = "~=0.3"
 gamma-pytools  = "~=2.0,!=2.0.0"
 lightgbm       = "~=3.3"
-numpy          = ">=1.23,<2a"  # cannot use ~= due to conda bug
+numpy          = ">=1.23,<1.24a"  # cannot use ~= due to conda bug
 packaging      = ">=20"
-pandas         = "~=1.4"
+pandas         = "~=1.5"
 python         = ">=3.9,<4a"   # cannot use ~= due to conda bug
 scikit-learn   = "~=1.1.2"
 scipy          = "~=1.8"
