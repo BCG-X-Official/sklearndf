@@ -92,7 +92,7 @@ gamma-pytools  = "~=2.1rc"
 lightgbm       = "~=3.3"
 numpy          = ">=1.23,<1.24a"  # cannot use ~= due to conda bug
 packaging      = ">=20"
-pandas         = "~=1.4"
+pandas         = "~=1.5"
 python         = ">=3.9,<4a"   # cannot use ~= due to conda bug
 scikit-learn   = "~=1.1,<1.3a" # todo: replace with ~=1.2.0 once it is released
 scipy          = "~=1.8"
