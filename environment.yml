@@ -7,14 +7,14 @@ dependencies:
   - boruta_py ~= 0.3
   - gamma-pytools ~= 2.1rc, <3a
   - joblib ~= 1.2
-  - lightgbm ~= 3.3.4
-  - matplotlib ~= 3.6.3
+  - lightgbm ~= 3.3
+  - matplotlib ~= 3.6
   - numpy ~= 1.23.5
-  - pandas ~= 1.5.3
-  - python ~= 3.9.15
+  - pandas ~= 1.5
+  - python ~= 3.9
   - scikit-learn ~= 1.2.0
-  - scipy ~= 1.10.0
-  - xgboost ~= 1.7.1
+  - scipy ~= 1.10
+  - xgboost ~= 1.7
   # build/test
   - conda-build ~= 3.23.3
   - conda-verify ~= 3.1.1
