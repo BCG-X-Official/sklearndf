@@ -5,12 +5,12 @@ channels:
 dependencies:
   # run
   - boruta_py ~= 0.3
-  - gamma-pytools ~= 2.0, != 2.0.0
+  - gamma-pytools ~= 2.0, >= 2.0.6
   - joblib ~= 1.2
   - lightgbm ~= 3.3.4
   - matplotlib ~= 3.6.3
   - numpy ~= 1.23.5
-  - pandas ~= 1.5.3
+  - pandas ~= 2.0
   - python ~= 3.9.15
   - scikit-learn ~= 1.0.2
   - scipy ~= 1.10.0

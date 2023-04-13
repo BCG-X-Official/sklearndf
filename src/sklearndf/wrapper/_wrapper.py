@@ -978,7 +978,7 @@ class ClassifierWrapperDF(
                 classes = pd.RangeIndex(self._get_n_outputs())
 
         if isinstance(prediction, pd.DataFrame):
-            return prediction.set_axis(classes, axis=1, inplace=False)
+            return prediction.set_axis(classes, axis=1)
 
         elif isinstance(prediction, np.ndarray):
             if len(prediction) == len(X):
