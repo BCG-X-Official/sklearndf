@@ -17,7 +17,7 @@ requires = [
     "gamma-pytools  ~=2.0,!=2.0.0",
     "numpy          >=1.21,<1.24a",  # cannot use ~= due to conda bug
     "packaging      >=20",
-    "pandas         >=1,<2a",  # cannot use ~= due to conda bug
+    "pandas         >=1",
     "scikit-learn   >=0.21,<1.1a",
     "scipy          ~=1.4",
 ]
@@ -45,7 +45,7 @@ testing = [
     "boruta ~=0.3",
     "lightgbm ~= 3.3",
     "pytest ~= 7.1",
-    "pytest-cov ~= 2.8",
+    "pytest-cov ~= 2.12",
     "xgboost ~= 1.5",
 ]
 docs = [
@@ -88,11 +88,11 @@ typing_inspect = "~=0.4.0"
 [build.matrix.max]
 # direct requirements of sklearndf
 boruta         = "~=0.3"
-gamma-pytools  = "~=2.0,!=2.0.0"
+gamma-pytools  = "~=2.0,>=2.0.6"
 lightgbm       = "~=3.3"
 numpy          = ">=1.23,<1.24a"  # cannot use ~= due to conda bug
 packaging      = ">=20"
-pandas         = "~=1.5"
+pandas         = "~=2.0"
 python         = ">=3.9,<4a"   # cannot use ~= due to conda bug
 scikit-learn   = "~=1.0.2"
 scipy          = "~=1.8"
