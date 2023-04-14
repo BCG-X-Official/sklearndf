@@ -42,11 +42,11 @@ classifiers = [
 
 [tool.flit.metadata.requires-extra]
 testing = [
-    "boruta ~=0.3",
+    "arfs ~= 1.0.5",
     "lightgbm ~= 3.3",
     "pytest ~= 7.1",
     "pytest-cov ~= 2.12",
-    "xgboost ~= 1.5",
+    "xgboost ~= 1.7",
 ]
 docs = [
     "sphinx ~= 4.5",
@@ -87,7 +87,7 @@ typing_inspect = "~=0.4.0"
 
 [build.matrix.max]
 # direct requirements of sklearndf
-boruta         = "~=0.3"
+arfs           = "~=1.0.5"
 gamma-pytools  = ">=2.1rc2,<3a"
 lightgbm       = "~=3.3"
 numpy          = ">=1.23,<1.24a"  # cannot use ~= due to conda bug

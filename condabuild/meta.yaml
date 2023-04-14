@@ -1,3 +1,6 @@
+{% set boruta = environ.get('FACET_V_BORUTA') is not None %}
+{% set arfs = environ.get('FACET_V_ARFS') is not None %}
+
 package:
   name: sklearndf
   version: {{ environ.get('FACET_BUILD_SKLEARNDF_VERSION') }}
@@ -17,7 +20,6 @@ requirements:
     - flit>=3.0.*
     - packaging>=20
   run:
-    - boruta_py     {{ environ.get('FACET_V_BORUTA') }}
     - gamma-pytools {{ environ.get('FACET_V_GAMMA_PYTOOLS') }}
     - numpy         {{ environ.get('FACET_V_NUMPY') }}
     - packaging     {{ environ.get('FACET_V_PACKAGING') }}
@@ -38,8 +40,11 @@ test:
   requires:
     - pytest ~= 7.1
     # optional libraries of sklearndf, needed for testing
-    - lightgbm {{ environ.get('FACET_V_LIGHTGBM') }}
-    - xgboost  {{ environ.get('FACET_V_XGBOOST') }}
+    - lightgbm   {{ environ.get('FACET_V_LIGHTGBM') }}
+    - xgboost    {{ environ.get('FACET_V_XGBOOST') }}
+    - boruta_py  {{ environ.get('FACET_V_BORUTA') }}  # [boruta]
+    - arfs       {{ environ.get('FACET_V_ARFS') }}    # [arfs]
+
     # additional requirements of gamma-pytools
     - joblib          {{ environ.get('FACET_V_JOBLIB') }}
     - matplotlib-base {{ environ.get('FACET_V_MATPLOTLIB') }}
