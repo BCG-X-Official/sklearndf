@@ -114,6 +114,6 @@ def test_feature_selection_pipeline_df(
         pass
     assert set(feature_selection_pipeline.feature_names_out_) in [
         {"bmi", "bp", "s3", "s5"},
-        *({"bmi", "bp", "s3", "s5", extra} for extra in ["sex", "s1", "s6"]),
+        *({"bmi", "bp", "s3", "s5", extra} for extra in ["sex", "s1", "s2", "s6"]),
         {"bmi", "bp", "s2", "s5", "s6"},
     ]
