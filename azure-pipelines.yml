@@ -674,6 +674,7 @@ stages:
               script: |
                 set -eux
                 eval "$(./bin/micromamba shell hook -s posix)"
+                export MAMBA_ROOT_PREFIX=~/micromamba
 
                 # install the tree utility
                 sudo apt-get install tree
