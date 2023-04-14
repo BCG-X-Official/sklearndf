@@ -5,6 +5,7 @@ import pandas as pd
 import pytest
 import sklearn
 from numpy.testing import assert_array_equal
+from pandas.arrays import SparseArray
 from pandas.testing import assert_frame_equal
 from sklearn.base import BaseEstimator, TransformerMixin, is_classifier, is_regressor
 from sklearn.compose import ColumnTransformer
@@ -427,7 +428,7 @@ def test_one_hot_encoding(test_data_categorical: pd.DataFrame, sparse: bool) -> 
     def _make_frame(data: Dict[str, List[float]]) -> pd.DataFrame:
         if sparse:
             df = pd.DataFrame(
-                data={k: pd.SparseArray(v, fill_value=0) for k, v in data.items()}
+                data={k: SparseArray(v, fill_value=0) for k, v in data.items()}
             )
         else:
             df = pd.DataFrame(data=data)
