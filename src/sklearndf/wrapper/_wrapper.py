@@ -601,30 +601,41 @@ class EstimatorWrapperDF(
         }
 
     def __getattr__(self, name: str) -> Any:
-        # get a non-private attribute of the delegate estimator
+        # This method is only called if the attribute name is not found in the
+        # instance's dictionary, and __getattribute__() has raised an AttributeError.
+
+        # For private attributes, give up and raise attribute error.
         if name.startswith("_"):
-            # raise attribute error
+            # The following will raise an AttributeError
             self.__getattribute__(name)
         else:
+            # For public attributes, try to get the attribute from the delegate
+            # estimator. If the attribute is not found, raise an attribute error.
             try:
                 return getattr(self._native_estimator, name)
             except AttributeError:
-                # raise attribute error
+                # The following will raise an AttributeError
                 self.__getattribute__(name)
 
     def __setattr__(self, name: str, value: Any) -> None:
-        # set a public attribute of the delegate estimator
+        # This method is called whenever an attribute assignment is attempted.
+
+        # For private attributes, set the attribute in this wrapper object.
         if name.startswith("_"):
             super().__setattr__(name, value)
         else:
+            # For public attributes, set the attribute in this wrapper object only
+            # if it is already defined. Otherwise, set the attribute in the delegate
+            # estimator.
+
             try:
                 self.__getattribute__(name)
             except AttributeError:
-                # set the attribute in the native estimator if it is not defined in this
-                # wrapper object
+                # The attribute is not defined in this wrapper object, so set it in
+                # the delegate estimator.
                 setattr(self._native_estimator, name, value)
             else:
-                # otherwise, overwrite the attribute in this wrapper object
+                # The attribute is defined in this wrapper object, so set it here.
                 super().__setattr__(name, value)
 
 
