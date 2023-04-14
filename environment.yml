@@ -4,17 +4,20 @@ channels:
   - bcg_gamma
 dependencies:
   # run
-  - boruta_py ~= 0.3
-  - gamma-pytools ~= 2.1rc, <3a
+  - gamma-pytools ~= 2.1rc1, <3a
   - joblib ~= 1.2
   - lightgbm ~= 3.3
   - matplotlib ~= 3.6
-  - numpy ~= 1.23.5
-  - pandas ~= 2.0
+  - numpy ~= 1.24
+  - pandas ~=1.5|~=2.0
   - python ~= 3.9
-  - scikit-learn ~= 1.2.0
+  - scikit-learn ~= 1.2.2
   - scipy ~= 1.10.0
   - xgboost ~= 1.7
+  - pip ~= 23.0.1
+  - pip:
+    - arfs ~= 1.0.5
+    - shap ~= 0.41.0
   # build/test
   - conda-build ~= 3.23.3
   - conda-verify ~= 3.1.1
@@ -25,18 +28,18 @@ dependencies:
   - m2r ~= 0.3.1
   - pluggy ~= 0.13.1
   - pre-commit ~= 2.21.0
-  - pytest ~= 7.2.1
+  - pytest ~= 7.2.2
   - pytest-cov ~= 2.12.1
   - pyyaml ~= 5.4.1
   - toml ~= 0.10.2
   - tox ~= 3.27.1
   - yaml ~= 0.2.5
   # sphinx
-  - nbsphinx ~= 0.8.9
+  - nbsphinx ~= 0.8.12
   - sphinx ~= 4.5.0
   - sphinx-autodoc-typehints ~= 1.19.2
   - pydata-sphinx-theme ~= 0.8.1
   # notebooks
-  - jupyterlab ~= 3.5.2
+  - jupyterlab ~= 3.5.3
   - openpyxl ~= 3.0.10
   - seaborn ~= 0.12.2

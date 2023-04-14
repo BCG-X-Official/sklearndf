@@ -219,9 +219,9 @@ class EstimatorWrapperDF(
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """
-        :param args: positional arguments to use when initializing a new new delegate
+        :param args: positional arguments to use when initializing a new delegate
             estimator
-        :param kwargs: keyword arguments to use when initializing a new new delegate
+        :param kwargs: keyword arguments to use when initializing a new delegate
             estimator
         """
         super().__init__()
@@ -403,7 +403,8 @@ class EstimatorWrapperDF(
         return self
 
     def _validate_delegate_estimator(self) -> None:
-        # no validation required by default; to be overloaded as needed
+        # Called as the last step of the estimator wrapper's constructor.
+        # No validation required by default; to be overloaded as needed.
         pass
 
     def _get_features_in(self) -> pd.Index:
@@ -600,23 +601,42 @@ class EstimatorWrapperDF(
         }
 
     def __getattr__(self, name: str) -> Any:
-        # get a non-private attribute of the delegate estimator
+        # This method is only called if the attribute name is not found in the
+        # instance's dictionary, and __getattribute__() has raised an AttributeError.
+
+        # For private attributes, give up and raise attribute error.
         if name.startswith("_"):
-            # raise attribute error
+            # The following will raise an AttributeError
             self.__getattribute__(name)
         else:
+            # For public attributes, try to get the attribute from the delegate
+            # estimator. If the attribute is not found, raise an attribute error.
             try:
                 return getattr(self._native_estimator, name)
             except AttributeError:
-                # raise attribute error
+                # The following will raise an AttributeError
                 self.__getattribute__(name)
 
     def __setattr__(self, name: str, value: Any) -> None:
-        # set a public attribute of the delegate estimator
+        # This method is called whenever an attribute assignment is attempted.
+
+        # For private attributes, set the attribute in this wrapper object.
         if name.startswith("_"):
             super().__setattr__(name, value)
         else:
-            setattr(self._native_estimator, name, value)
+            # For public attributes, set the attribute in this wrapper object only
+            # if it is already defined. Otherwise, set the attribute in the delegate
+            # estimator.
+
+            try:
+                self.__getattribute__(name)
+            except AttributeError:
+                # The attribute is not defined in this wrapper object, so set it in
+                # the delegate estimator.
+                setattr(self._native_estimator, name, value)
+            else:
+                # The attribute is defined in this wrapper object, so set it here.
+                super().__setattr__(name, value)
 
 
 @inheritdoc(match="[see superclass]")
@@ -1211,7 +1231,14 @@ class MetaEstimatorWrapperDF(
     copy of the `X` and `y` parameters, so we need to make sure that these are converted
     back to data frames.
 
-    This class covers three variants used in sklearn:
+    We also ensure that the embedded estimator is a native sci-kit learn estimator.
+    If it is a DF estimator, we replace it with its wrapped native estimator and
+    re-assign it to the attribute `estimator` or `base_estimator` (depending on the
+    meta-estimator).
+    In that case, we issue a warning that the wrapped estimator is being used instead
+    of the DF version.
+
+    This class covers three variants used in scikit-learn:
 
     - one delegate estimator in attribute `estimator`
     - one delegate estimator in attribute `base_estimator`
@@ -1219,24 +1246,35 @@ class MetaEstimatorWrapperDF(
     """
 
     def _validate_delegate_estimator(self) -> None:
-        meta_estimator = self.native_estimator
+        substituted: List[str] = []
 
-        estimator = getattr(meta_estimator, "estimator", None)
+        estimator = getattr(self, "estimator", None)
         if estimator is not None:
-            meta_estimator.estimator = self._native_learner(estimator)
+            self.estimator = self._native_learner(estimator)
+            substituted.append("estimator")
 
-        base_estimator = getattr(meta_estimator, "base_estimator", None)
+        base_estimator = getattr(self, "base_estimator", None)
         # attribute base_estimator is deprecated as of scikit-learn 1.2, with the
         # default value of "deprecated"
         if base_estimator is not None and base_estimator != "deprecated":
-            meta_estimator.base_estimator = self._native_learner(base_estimator)
+            self.base_estimator = self._native_learner(base_estimator)
+            substituted.append("base_estimator")
 
-        estimators = getattr(meta_estimator, "estimators", None)
+        estimators = getattr(self, "estimators", None)
         if estimators is not None:
-            meta_estimator.estimators = [
+            self.estimators = [
                 (name, self._native_learner(estimator))
                 for name, estimator in estimators
             ]
+            substituted.append("estimators")
+
+        if substituted:
+            warnings.warn(
+                f"the following attributes of {type(self).__name__} "
+                f"have been replaced with their native scikit-learn counterparts: "
+                f"{', '.join(substituted)}",
+                stacklevel=-2,
+            )
 
     @staticmethod
     def _native_learner(
@@ -1274,7 +1312,7 @@ def _mirror_attributes(
 
     for name, member in vars(native_estimator).items():
 
-        if member is None or name.startswith("_") or name in wrapper_attributes:
+        if member is None or name in wrapper_attributes:
             continue
 
         alias = _make_alias(
