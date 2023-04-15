@@ -42,11 +42,8 @@ classifiers = [
 
 [tool.flit.metadata.requires-extra]
 testing = [
-    "arfs ~= 1.0.5",
-    "lightgbm ~= 3.3",
     "pytest ~= 7.1",
     "pytest-cov ~= 2.12",
-    "xgboost ~= 1.7",
 ]
 docs = [
     "sphinx ~= 4.5",
