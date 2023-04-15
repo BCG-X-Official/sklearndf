@@ -1,5 +1,5 @@
-{% set boruta = 'FACET_V_BORUTA' in environ %}
-{% set arfs = 'FACET_V_ARFS' in environ %}
+{% set boruta = environ.get('FACET_V_BORUTA') not in [none, ''] %}
+{% set arfs = environ.get('FACET_V_ARFS') not in [none, ''] %}
 
 package:
   name: sklearndf
