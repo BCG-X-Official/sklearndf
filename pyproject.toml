@@ -44,6 +44,10 @@ classifiers = [
 testing = [
     "pytest ~= 7.1",
     "pytest-cov ~= 2.12",
+    # optional requirements for testing sklearndf
+    "arfs ~= 1.0",
+    "lightgbm ~= 3.0",
+    "xgboost ~= 1.0",
 ]
 docs = [
     "sphinx ~= 4.5",
