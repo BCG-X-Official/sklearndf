@@ -1,5 +1,10 @@
 {% set boruta = environ.get('FACET_V_BORUTA') not in [none, ''] %}
 {% set arfs = environ.get('FACET_V_ARFS') not in [none, ''] %}
+{% set lightgbm = environ.get('FACET_V_LIGHTGBM') not in [none, ''] %}
+{% set xgboost = environ.get('FACET_V_XGBOOST') not in [none, ''] %}
+{% set joblib = environ.get('FACET_V_JOBLIB') not in [none, ''] %}
+{% set matplotlib_base = environ.get('FACET_V_MATPLOTLIB') not in [none, ''] %}
+{% set typing_inspect = environ.get('FACET_V_TYPING_INSPECT') not in [none, ''] %}
 
 package:
   name: sklearndf
@@ -40,15 +45,15 @@ test:
   requires:
     - pytest ~= 7.1
     # optional libraries of sklearndf, needed for testing
-    - lightgbm   {{ environ.get('FACET_V_LIGHTGBM') }}
-    - xgboost    {{ environ.get('FACET_V_XGBOOST') }}
-    - boruta_py  {{ environ.get('FACET_V_BORUTA') }}  # [boruta]
-    - arfs       {{ environ.get('FACET_V_ARFS') }}    # [arfs]
+    - lightgbm   {{ environ.get('FACET_V_LIGHTGBM') }}  # [lightgbm]
+    - xgboost    {{ environ.get('FACET_V_XGBOOST') }}   # [xgboost]
+    - boruta_py  {{ environ.get('FACET_V_BORUTA') }}    # [boruta]
+    - arfs       {{ environ.get('FACET_V_ARFS') }}      # [arfs]
 
     # additional requirements of gamma-pytools
-    - joblib          {{ environ.get('FACET_V_JOBLIB') }}
-    - matplotlib-base {{ environ.get('FACET_V_MATPLOTLIB') }}
-    - typing_inspect  {{ environ.get('FACET_V_TYPING_INSPECT') }}
+    - joblib          {{ environ.get('FACET_V_JOBLIB') }}          # [joblib]
+    - matplotlib-base {{ environ.get('FACET_V_MATPLOTLIB') }}      # [matplotlib_base]
+    - typing_inspect  {{ environ.get('FACET_V_TYPING_INSPECT') }}  # [typing_inspect]
   commands:
     - conda list
     - python -c 'import sklearndf;
