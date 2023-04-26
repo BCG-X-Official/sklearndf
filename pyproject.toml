@@ -82,6 +82,12 @@ joblib         = "~=0.14.1"
 matplotlib     = "~=3.0.3"
 typing_inspect = "~=0.4.0"
 
+[build.matrix.default]
+# optional requirements of sklearndf
+arfs           = "~=1.0"
+lightgbm       = "~=3.0"
+xgboost        = "~=1.0"
+
 [build.matrix.max]
 # direct requirements of sklearndf
 arfs           = "~=1.0.5"
