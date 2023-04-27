@@ -93,7 +93,7 @@ lightgbm       = "~=3.3"
 numpy          = ">=1.23,<1.24a"  # cannot use ~= due to conda bug
 packaging      = ">=20"
 pandas         = "~=2.0"
-python         = ">=3.9,<4a"   # cannot use ~= due to conda bug
+python         = ">=3.9,<3.11a"   # cannot use ~= due to conda bug; arfs <=1.0.7 does not support python >=3.11
 scikit-learn   = "~=1.1,<1.3a" # todo: replace with ~=1.2.0 once it is released
 scipy          = "~=1.8"
 xgboost        = "~=1.5"
