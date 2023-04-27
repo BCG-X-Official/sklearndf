@@ -40,6 +40,9 @@ test:
     - pip # {{ '[False]' if not environ.get('FACET_V_ARFS') }}
     # optional libraries of sklearndf, needed for testing
     - boruta_py  {{ environ.get('FACET_V_BORUTA', '[False]') }}
+    - xgboost    {{ environ.get('FACET_V_XGBOOST', '[False]') }}
+    # we always need lightgbm for testing; version spec is optional
+    - lightgbm   {{ environ.get('FACET_V_LIGHTGBM', '') }}
     # additional requirements of gamma-pytools
     - joblib          {{ environ.get('FACET_V_JOBLIB', '[False]') }}
     - matplotlib-base {{ environ.get('FACET_V_MATPLOTLIB', '[False]') }}
@@ -51,7 +54,7 @@ test:
                  assert sklearndf.__version__ == os.environ["PKG_VERSION"]'
     # optional PyPi package ARFS needed for testing
     {% if environ.get('FACET_V_ARFS') -%}
-    - pip install "arfs=={{ environ.get('FACET_V_ARFS') }}"
+    - pip install 'arfs{{ environ.get("FACET_V_ARFS") }}'
     {%- endif %}
     # run the test suite
     - cd "${FACET_PATH}/sklearndf"
