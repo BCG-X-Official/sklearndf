@@ -18,7 +18,6 @@ sklearndf.regression.VotingRegressorDF
    
       ~VotingRegressorDF.clone
       ~VotingRegressorDF.fit
-      ~VotingRegressorDF.fit_transform
       ~VotingRegressorDF.from_fitted
       ~VotingRegressorDF.get_feature_names_out
       ~VotingRegressorDF.get_params

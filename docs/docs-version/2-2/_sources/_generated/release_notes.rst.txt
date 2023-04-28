@@ -21,6 +21,8 @@ API.
 
 *sklearndf* 2.2 adds support for
 `scikit-learn |nbsp| 1.2 <https://scikit-learn.org/1.2>`_.
+It drops support for *scikit-learn* |nbsp| 0.23 and earlier due to incomplete
+support of sparse output (see below).
 
 - API: DF estimators now support native estimators using sparse matrices as input or
   output, and automatically convert them to or from sparse :class:`~pandas.DataFrame`
@@ -79,14 +81,17 @@ This is a maintenance release to catch up with *sklearndf* |nbsp| 2.0.2.
 adds data frame support for clusterers along with additional API enhancements and
 improvements, and is now subject to static type checking with |mypy|.
 
+
 2.0.2
 ~~~~~
 
+- BUILD: add support for :mod:`pandas` 2.0 and above
 - FIX: property :attr:`.PCADF.n_components_` now returns the value of
   :attr:`~sklearndf.decomposition.PCA.n_components_`, not
   :attr:`~sklearndf.decomposition.PCA.n_components`
 - FIX: detect missing and extra columns when validating data frames resulting from
   transforms, even when the total column count is correct
+
 
 2.0.1
 ~~~~~

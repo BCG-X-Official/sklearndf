@@ -19,13 +19,11 @@ sklearndf.clustering.KMeansDF
       ~KMeansDF.clone
       ~KMeansDF.fit
       ~KMeansDF.fit_predict
-      ~KMeansDF.fit_transform
       ~KMeansDF.from_fitted
       ~KMeansDF.get_params
       ~KMeansDF.predict
       ~KMeansDF.set_params
       ~KMeansDF.to_expression
-      ~KMeansDF.transform
    
    
 

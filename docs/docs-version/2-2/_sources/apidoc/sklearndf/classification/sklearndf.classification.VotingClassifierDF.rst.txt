@@ -19,7 +19,6 @@ sklearndf.classification.VotingClassifierDF
       ~VotingClassifierDF.clone
       ~VotingClassifierDF.decision_function
       ~VotingClassifierDF.fit
-      ~VotingClassifierDF.fit_transform
       ~VotingClassifierDF.from_fitted
       ~VotingClassifierDF.get_feature_names_out
       ~VotingClassifierDF.get_params

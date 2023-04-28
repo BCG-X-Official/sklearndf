@@ -17,6 +17,7 @@ sklearndf.transformation.extra.wrapper
       :template: custom-class-template.rst
       :nosignatures:
    
+      ARFSWrapperDF
       BorutaPyWrapperDF
    
    

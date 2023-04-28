@@ -19,14 +19,12 @@ sklearndf.clustering.MiniBatchKMeansDF
       ~MiniBatchKMeansDF.clone
       ~MiniBatchKMeansDF.fit
       ~MiniBatchKMeansDF.fit_predict
-      ~MiniBatchKMeansDF.fit_transform
       ~MiniBatchKMeansDF.from_fitted
       ~MiniBatchKMeansDF.get_params
       ~MiniBatchKMeansDF.partial_fit
       ~MiniBatchKMeansDF.predict
       ~MiniBatchKMeansDF.set_params
       ~MiniBatchKMeansDF.to_expression
-      ~MiniBatchKMeansDF.transform
    
    
 

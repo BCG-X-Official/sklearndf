@@ -19,7 +19,6 @@ sklearndf.clustering.BirchDF
       ~BirchDF.clone
       ~BirchDF.fit
       ~BirchDF.fit_predict
-      ~BirchDF.fit_transform
       ~BirchDF.from_fitted
       ~BirchDF.get_params
       ~BirchDF.partial_fit

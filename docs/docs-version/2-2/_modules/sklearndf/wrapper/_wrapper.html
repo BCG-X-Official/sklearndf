@@ -382,9 +382,9 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :param args: positional arguments to use when initializing a new new delegate</span>
+<span class="sd">        :param args: positional arguments to use when initializing a new delegate</span>
 <span class="sd">            estimator</span>
-<span class="sd">        :param kwargs: keyword arguments to use when initializing a new new delegate</span>
+<span class="sd">        :param kwargs: keyword arguments to use when initializing a new delegate</span>
 <span class="sd">            estimator</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -566,7 +566,8 @@
         <span class="k">return</span> <span class="bp">self</span></div>
 
     <span class="k">def</span> <span class="nf">_validate_delegate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># no validation required by default; to be overloaded as needed</span>
+        <span class="c1"># Called as the last step of the estimator wrapper&#39;s constructor.</span>
+        <span class="c1"># No validation required by default; to be overloaded as needed.</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">_get_features_in</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
@@ -763,23 +764,42 @@
         <span class="p">}</span>
 
     <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="c1"># get a non-private attribute of the delegate estimator</span>
+        <span class="c1"># This method is only called if the attribute name is not found in the</span>
+        <span class="c1"># instance&#39;s dictionary, and __getattribute__() has raised an AttributeError.</span>
+
+        <span class="c1"># For private attributes, give up and raise attribute error.</span>
         <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
-            <span class="c1"># raise attribute error</span>
+            <span class="c1"># The following will raise an AttributeError</span>
             <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># For public attributes, try to get the attribute from the delegate</span>
+            <span class="c1"># estimator. If the attribute is not found, raise an attribute error.</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-                <span class="c1"># raise attribute error</span>
+                <span class="c1"># The following will raise an AttributeError</span>
                 <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># set a public attribute of the delegate estimator</span>
+        <span class="c1"># This method is called whenever an attribute assignment is attempted.</span>
+
+        <span class="c1"># For private attributes, set the attribute in this wrapper object.</span>
         <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
             <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+            <span class="c1"># For public attributes, set the attribute in this wrapper object only</span>
+            <span class="c1"># if it is already defined. Otherwise, set the attribute in the delegate</span>
+            <span class="c1"># estimator.</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="c1"># The attribute is not defined in this wrapper object, so set it in</span>
+                <span class="c1"># the delegate estimator.</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># The attribute is defined in this wrapper object, so set it here.</span>
+                <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TransformerWrapperDF"><a class="viewcode-back" href="../../../apidoc/sklearndf/wrapper/sklearndf.wrapper.TransformerWrapperDF.html#sklearndf.wrapper.TransformerWrapperDF">[docs]</a><span class="nd">@inheritdoc</span><span class="p">(</span><span class="n">match</span><span class="o">=</span><span class="s2">&quot;[see superclass]&quot;</span><span class="p">)</span>
@@ -1235,7 +1255,7 @@
                 <span class="n">classes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">RangeIndex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_n_outputs</span><span class="p">())</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">prediction</span><span class="o">.</span><span class="n">set_axis</span><span class="p">(</span><span class="n">classes</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">prediction</span><span class="o">.</span><span class="n">set_axis</span><span class="p">(</span><span class="n">classes</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">prediction</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
@@ -1374,7 +1394,14 @@
 <span class="sd">    copy of the `X` and `y` parameters, so we need to make sure that these are converted</span>
 <span class="sd">    back to data frames.</span>
 
-<span class="sd">    This class covers three variants used in sklearn:</span>
+<span class="sd">    We also ensure that the embedded estimator is a native sci-kit learn estimator.</span>
+<span class="sd">    If it is a DF estimator, we replace it with its wrapped native estimator and</span>
+<span class="sd">    re-assign it to the attribute `estimator` or `base_estimator` (depending on the</span>
+<span class="sd">    meta-estimator).</span>
+<span class="sd">    In that case, we issue a warning that the wrapped estimator is being used instead</span>
+<span class="sd">    of the DF version.</span>
+
+<span class="sd">    This class covers three variants used in scikit-learn:</span>
 
 <span class="sd">    - one delegate estimator in attribute `estimator`</span>
 <span class="sd">    - one delegate estimator in attribute `base_estimator`</span>
@@ -1382,24 +1409,35 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">_validate_delegate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">meta_estimator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span>
+        <span class="n">substituted</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="n">estimator</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">meta_estimator</span><span class="p">,</span> <span class="s2">&quot;estimator&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">estimator</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;estimator&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">estimator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">meta_estimator</span><span class="o">.</span><span class="n">estimator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_native_learner</span><span class="p">(</span><span class="n">estimator</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_native_learner</span><span class="p">(</span><span class="n">estimator</span><span class="p">)</span>
+            <span class="n">substituted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;estimator&quot;</span><span class="p">)</span>
 
-        <span class="n">base_estimator</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">meta_estimator</span><span class="p">,</span> <span class="s2">&quot;base_estimator&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">base_estimator</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;base_estimator&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="c1"># attribute base_estimator is deprecated as of scikit-learn 1.2, with the</span>
         <span class="c1"># default value of &quot;deprecated&quot;</span>
         <span class="k">if</span> <span class="n">base_estimator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">base_estimator</span> <span class="o">!=</span> <span class="s2">&quot;deprecated&quot;</span><span class="p">:</span>
-            <span class="n">meta_estimator</span><span class="o">.</span><span class="n">base_estimator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_native_learner</span><span class="p">(</span><span class="n">base_estimator</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_estimator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_native_learner</span><span class="p">(</span><span class="n">base_estimator</span><span class="p">)</span>
+            <span class="n">substituted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;base_estimator&quot;</span><span class="p">)</span>
 
-        <span class="n">estimators</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">meta_estimator</span><span class="p">,</span> <span class="s2">&quot;estimators&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">estimators</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;estimators&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">estimators</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">meta_estimator</span><span class="o">.</span><span class="n">estimators</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">estimators</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_native_learner</span><span class="p">(</span><span class="n">estimator</span><span class="p">))</span>
                 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">estimator</span> <span class="ow">in</span> <span class="n">estimators</span>
             <span class="p">]</span>
+            <span class="n">substituted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;estimators&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">substituted</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;the following attributes of </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;have been replaced with their native scikit-learn counterparts: &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">substituted</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">stacklevel</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span>
+            <span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_native_learner</span><span class="p">(</span>
@@ -1437,7 +1475,7 @@
 
     <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">member</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="n">native_estimator</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 
-        <span class="k">if</span> <span class="n">member</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">wrapper_attributes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">member</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">wrapper_attributes</span><span class="p">:</span>
             <span class="k">continue</span>
 
         <span class="n">alias</span> <span class="o">=</span> <span class="n">_make_alias</span><span class="p">(</span>

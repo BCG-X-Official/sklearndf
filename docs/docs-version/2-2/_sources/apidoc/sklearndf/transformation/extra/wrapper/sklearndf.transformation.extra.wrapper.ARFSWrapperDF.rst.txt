@@ -1,0 +1,51 @@
+sklearndf.transformation.extra.wrapper.ARFSWrapperDF
+====================================================
+
+.. currentmodule:: sklearndf.transformation.extra.wrapper
+
+.. autoclass:: ARFSWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ARFSWrapperDF.clone
+      ~ARFSWrapperDF.fit
+      ~ARFSWrapperDF.fit_transform
+      ~ARFSWrapperDF.from_fitted
+      ~ARFSWrapperDF.get_params
+      ~ARFSWrapperDF.inverse_transform
+      ~ARFSWrapperDF.set_output
+      ~ARFSWrapperDF.set_params
+      ~ARFSWrapperDF.to_expression
+      ~ARFSWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ARFSWrapperDF.COL_FEATURE
+      ~ARFSWrapperDF.COL_FEATURE_ORIGINAL
+      ~ARFSWrapperDF.feature_names_in_
+      ~ARFSWrapperDF.feature_names_original_
+      ~ARFSWrapperDF.feature_names_out_
+      ~ARFSWrapperDF.is_fitted
+      ~ARFSWrapperDF.n_features_in_
+      ~ARFSWrapperDF.n_outputs_
+      ~ARFSWrapperDF.native_estimator
+      ~ARFSWrapperDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

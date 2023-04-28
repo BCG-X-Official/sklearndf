@@ -19,7 +19,6 @@ sklearndf.classification.StackingClassifierDF
       ~StackingClassifierDF.clone
       ~StackingClassifierDF.decision_function
       ~StackingClassifierDF.fit
-      ~StackingClassifierDF.fit_transform
       ~StackingClassifierDF.from_fitted
       ~StackingClassifierDF.get_params
       ~StackingClassifierDF.predict
