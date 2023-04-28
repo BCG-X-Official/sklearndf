@@ -10,7 +10,6 @@ from sklearn.multioutput import ClassifierChain, MultiOutputClassifier
 import sklearndf.classification as classification
 from sklearndf import (
     ClassifierDF,
-    __sklearn_0_22__,
     __sklearn_1_0__,
     __sklearn_1_2__,
     __sklearn_version__,
@@ -28,9 +27,7 @@ def test_classifier_count() -> None:
     n = len(CLASSIFIERS_TO_TEST)
 
     print(f"Testing {n} classifiers.")
-    if __sklearn_version__ < __sklearn_0_22__:
-        assert n == 38
-    elif __sklearn_version__ < __sklearn_1_0__:
+    if __sklearn_version__ < __sklearn_1_0__:
         assert n == 40
     else:
         assert n == 41
@@ -78,9 +75,8 @@ CLASSIFIERS_PARTIAL_FIT = [
     classification.GaussianNBDF,
     classification.ComplementNBDF,
     classification.MultiOutputClassifierDF,
+    classification.CategoricalNBDF,
 ]
-if __sklearn_version__ >= __sklearn_0_22__:
-    CLASSIFIERS_PARTIAL_FIT.append(classification.CategoricalNBDF)
 
 
 @pytest.mark.parametrize(  # type: ignore

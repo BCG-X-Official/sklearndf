@@ -20,8 +20,8 @@ import sklearndf.pipeline
 import sklearndf.regression
 import sklearndf.transformation
 from ..conftest import UNSUPPORTED_SKLEARN_PACKAGES
-from ..sklearndf import find_all_submodules, iterate_classes, sklearn_delegate_classes
-from sklearndf import EstimatorDF, __sklearn_0_23__, __sklearn_version__
+from . import find_all_submodules, iterate_classes, sklearn_delegate_classes
+from sklearndf import EstimatorDF
 
 T = TypeVar("T")
 
@@ -39,11 +39,9 @@ CLASSIFIER_COVERAGE_EXCLUSIONS = {
     *GENERAL_COVERAGE_EXCLUSIONS,
     # Base classes and Mixins not following the convention
     "ForestClassifier",
+    "_IdentityClassifier",
 }
 
-if __sklearn_version__ >= __sklearn_0_23__:
-    added_in_v023 = ("_IdentityClassifier",)
-    CLASSIFIER_COVERAGE_EXCLUSIONS.update(added_in_v023)
 
 REGRESSOR_COVERAGE_EXCLUSIONS = {
     *GENERAL_COVERAGE_EXCLUSIONS,

@@ -17,7 +17,6 @@ requirements:
     - flit>=3.0.*
     - packaging>=20
   run:
-    - boruta_py     {{ environ.get('FACET_V_BORUTA') }}
     - gamma-pytools {{ environ.get('FACET_V_GAMMA_PYTOOLS') }}
     - numpy         {{ environ.get('FACET_V_NUMPY') }}
     - packaging     {{ environ.get('FACET_V_PACKAGING') }}
@@ -37,18 +36,27 @@ test:
     - sklearndf.transformation.extra
   requires:
     - pytest ~= 7.1
+    # we need pip to install arfs
+    - pip # {{ '[False]' if not environ.get('FACET_V_ARFS') }}
     # optional libraries of sklearndf, needed for testing
-    - lightgbm {{ environ.get('FACET_V_LIGHTGBM') }}
-    - xgboost  {{ environ.get('FACET_V_XGBOOST') }}
+    - boruta_py  {{ environ.get('FACET_V_BORUTA', '[False]') }}
+    - xgboost    {{ environ.get('FACET_V_XGBOOST', '[False]') }}
+    # we always need lightgbm for testing; version spec is optional
+    - lightgbm   {{ environ.get('FACET_V_LIGHTGBM', '') }}
     # additional requirements of gamma-pytools
-    - joblib          {{ environ.get('FACET_V_JOBLIB') }}
-    - matplotlib-base {{ environ.get('FACET_V_MATPLOTLIB') }}
-    - typing_inspect  {{ environ.get('FACET_V_TYPING_INSPECT') }}
+    - joblib          {{ environ.get('FACET_V_JOBLIB', '[False]') }}
+    - matplotlib-base {{ environ.get('FACET_V_MATPLOTLIB', '[False]') }}
+    - typing_inspect  {{ environ.get('FACET_V_TYPING_INSPECT', '[False]') }}
   commands:
     - conda list
     - python -c 'import sklearndf;
                  import os;
                  assert sklearndf.__version__ == os.environ["PKG_VERSION"]'
+    # optional PyPi package ARFS needed for testing
+    {% if environ.get('FACET_V_ARFS') -%}
+    - pip install 'arfs{{ environ.get("FACET_V_ARFS") }}'
+    {%- endif %}
+    # run the test suite
     - cd "${FACET_PATH}/sklearndf"
     - pytest -vs test
 

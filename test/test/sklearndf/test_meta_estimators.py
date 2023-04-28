@@ -5,7 +5,6 @@ import pytest
 from sklearn.base import is_classifier, is_regressor
 from sklearn.impute import SimpleImputer
 
-from sklearndf import __sklearn_0_22__, __sklearn_version__
 from sklearndf.classification import (
     ClassifierChainDF,
     LogisticRegressionCVDF,
@@ -27,7 +26,14 @@ log = logging.getLogger(__name__)
 
 
 def test_meta_estimators() -> None:
-    VotingClassifierDF(estimators=[("rf", RandomForestClassifierDF())])
+    with pytest.warns(
+        expected_warning=UserWarning,
+        match=(
+            "^the following attributes of VotingClassifierDF have been replaced with "
+            "their native scikit-learn counterparts: estimators$"
+        ),
+    ):
+        VotingClassifierDF(estimators=[("rf", RandomForestClassifierDF())])
 
     with pytest.raises(
         TypeError,
@@ -42,7 +48,14 @@ def test_meta_estimators() -> None:
             ]
         )
 
-    regressor = MultiOutputRegressorDF(estimator=RandomForestRegressorDF())
+    with pytest.warns(
+        expected_warning=UserWarning,
+        match=(
+            "^the following attributes of MultiOutputRegressorDF have been replaced "
+            "with their native scikit-learn counterparts: estimator$"
+        ),
+    ):
+        regressor = MultiOutputRegressorDF(estimator=RandomForestRegressorDF())
     assert is_regressor(regressor)
 
     with pytest.raises(
@@ -56,7 +69,14 @@ def test_meta_estimators() -> None:
             estimator=RegressorPipelineDF(regressor=RandomForestRegressorDF())
         )
 
-    classifier = ClassifierChainDF(base_estimator=RandomForestClassifierDF())
+    with pytest.warns(
+        expected_warning=UserWarning,
+        match=(
+            "^the following attributes of ClassifierChainDF have been replaced "
+            "with their native scikit-learn counterparts: base_estimator$"
+        ),
+    ):
+        classifier = ClassifierChainDF(base_estimator=RandomForestClassifierDF())
     assert is_classifier(classifier)
 
     with pytest.raises(
@@ -69,10 +89,6 @@ def test_meta_estimators() -> None:
         ClassifierChainDF(base_estimator=SimpleImputer())
 
 
-@pytest.mark.skipif(  # type: ignore
-    condition=__sklearn_version__ < __sklearn_0_22__,
-    reason="stacking estimators are not implemented by current version of sklearn",
-)
 def test_stacking_regressor(
     diabetes_features: pd.DataFrame, diabetes_target_sr: pd.Series
 ) -> None:
@@ -142,10 +158,6 @@ def test_stacking_regressor(
     ]
 
 
-@pytest.mark.skipif(  # type: ignore
-    condition=__sklearn_version__ < __sklearn_0_22__,
-    reason="stacking estimators are not implemented by current version of sklearn",
-)
 def test_stacking_classifier(
     iris_features: pd.DataFrame, iris_target_sr: pd.Series
 ) -> None:

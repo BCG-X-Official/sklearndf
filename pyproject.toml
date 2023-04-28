@@ -14,10 +14,10 @@ dist-name = "sklearndf"
 license = "Apache Software License v2.0"
 
 requires = [
-    "gamma-pytools  ~=2.1rc",
+    "gamma-pytools  >=2.1rc2,<3a",
     "numpy          >=1.21,<1.24a",  # cannot use ~= due to conda bug
     "packaging      >=20",
-    "pandas         >=1.0,<2a",  # cannot use ~= due to conda bug
+    "pandas         >=1",
     "scikit-learn   >=0.24,<1.3a",
     "scipy          ~=1.4",
 ]
@@ -42,11 +42,11 @@ classifiers = [
 
 [tool.flit.metadata.requires-extra]
 testing = [
-    "boruta ~=0.3",
-    "lightgbm ~= 3.3",
     "pytest ~= 7.1",
-    "pytest-cov ~= 2.8",
-    "xgboost ~= 1.5",
+    "pytest-cov ~= 2.12",
+    # optional requirements for testing sklearndf
+    "lightgbm ~= 3.0",
+    "xgboost ~= 1.0",
 ]
 docs = [
     "sphinx ~= 4.5",
@@ -71,7 +71,7 @@ no-binary.min = ["matplotlib"]
 [build.matrix.min]
 # direct requirements of sklearndf
 boruta         = "~=0.3.0"
-gamma-pytools  = "~=2.1rc"
+gamma-pytools  = "~=2.1rc2"
 lightgbm       = "~=3.0.0"
 numpy          = "==1.21.6"  # cannot use ~= due to conda bug
 packaging      = "~=20.9"
@@ -87,13 +87,13 @@ typing_inspect = "~=0.4.0"
 
 [build.matrix.max]
 # direct requirements of sklearndf
-boruta         = "~=0.3"
-gamma-pytools  = "~=2.1rc"
+arfs           = "~=1.0.5"
+gamma-pytools  = ">=2.1rc2,<3a"
 lightgbm       = "~=3.3"
 numpy          = ">=1.23,<1.24a"  # cannot use ~= due to conda bug
 packaging      = ">=20"
-pandas         = "~=1.4"
-python         = ">=3.9,<4a"   # cannot use ~= due to conda bug
+pandas         = "~=2.0"
+python         = ">=3.9,<3.11a"   # cannot use ~= due to conda bug; arfs <=1.0.7 does not support python >=3.11
 scikit-learn   = "~=1.1,<1.3a" # todo: replace with ~=1.2.0 once it is released
 scipy          = "~=1.8"
 xgboost        = "~=1.5"
