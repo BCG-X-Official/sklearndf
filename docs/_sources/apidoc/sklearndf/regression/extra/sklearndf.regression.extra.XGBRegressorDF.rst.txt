@@ -17,7 +17,6 @@ sklearndf.regression.extra.XGBRegressorDF
       :nosignatures:
    
       ~XGBRegressorDF.clone
-      ~XGBRegressorDF.ensure_fitted
       ~XGBRegressorDF.fit
       ~XGBRegressorDF.from_fitted
       ~XGBRegressorDF.get_params
@@ -34,13 +33,14 @@ sklearndf.regression.extra.XGBRegressorDF
 
    .. autosummary::
    
-      ~XGBRegressorDF.COL_FEATURE_IN
+      ~XGBRegressorDF.COL_FEATURE
       ~XGBRegressorDF.COL_PREDICTION
       ~XGBRegressorDF.feature_names_in_
       ~XGBRegressorDF.is_fitted
       ~XGBRegressorDF.n_features_in_
       ~XGBRegressorDF.n_outputs_
       ~XGBRegressorDF.native_estimator
+      ~XGBRegressorDF.output_names_
    
    
 

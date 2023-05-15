@@ -17,13 +17,13 @@ sklearndf.transformation.IncrementalPCADF
       :nosignatures:
    
       ~IncrementalPCADF.clone
-      ~IncrementalPCADF.ensure_fitted
       ~IncrementalPCADF.fit
       ~IncrementalPCADF.fit_transform
       ~IncrementalPCADF.from_fitted
       ~IncrementalPCADF.get_params
       ~IncrementalPCADF.inverse_transform
       ~IncrementalPCADF.partial_fit
+      ~IncrementalPCADF.set_output
       ~IncrementalPCADF.set_params
       ~IncrementalPCADF.to_expression
       ~IncrementalPCADF.transform
@@ -36,8 +36,8 @@ sklearndf.transformation.IncrementalPCADF
 
    .. autosummary::
    
-      ~IncrementalPCADF.COL_FEATURE_IN
-      ~IncrementalPCADF.COL_FEATURE_OUT
+      ~IncrementalPCADF.COL_FEATURE
+      ~IncrementalPCADF.COL_FEATURE_ORIGINAL
       ~IncrementalPCADF.feature_names_in_
       ~IncrementalPCADF.feature_names_original_
       ~IncrementalPCADF.feature_names_out_
@@ -45,6 +45,7 @@ sklearndf.transformation.IncrementalPCADF
       ~IncrementalPCADF.n_features_in_
       ~IncrementalPCADF.n_outputs_
       ~IncrementalPCADF.native_estimator
+      ~IncrementalPCADF.output_names_
    
    
 

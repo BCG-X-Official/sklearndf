@@ -18,7 +18,6 @@ sklearndf.classification.AdaBoostClassifierDF
    
       ~AdaBoostClassifierDF.clone
       ~AdaBoostClassifierDF.decision_function
-      ~AdaBoostClassifierDF.ensure_fitted
       ~AdaBoostClassifierDF.fit
       ~AdaBoostClassifierDF.from_fitted
       ~AdaBoostClassifierDF.get_params
@@ -40,7 +39,7 @@ sklearndf.classification.AdaBoostClassifierDF
 
    .. autosummary::
    
-      ~AdaBoostClassifierDF.COL_FEATURE_IN
+      ~AdaBoostClassifierDF.COL_FEATURE
       ~AdaBoostClassifierDF.COL_PREDICTION
       ~AdaBoostClassifierDF.classes_
       ~AdaBoostClassifierDF.feature_names_in_
@@ -48,6 +47,7 @@ sklearndf.classification.AdaBoostClassifierDF
       ~AdaBoostClassifierDF.n_features_in_
       ~AdaBoostClassifierDF.n_outputs_
       ~AdaBoostClassifierDF.native_estimator
+      ~AdaBoostClassifierDF.output_names_
    
    
 

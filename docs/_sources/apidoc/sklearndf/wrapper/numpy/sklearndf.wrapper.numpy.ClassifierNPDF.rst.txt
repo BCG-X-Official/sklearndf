@@ -18,7 +18,6 @@ sklearndf.wrapper.numpy.ClassifierNPDF
    
       ~ClassifierNPDF.clone
       ~ClassifierNPDF.decision_function
-      ~ClassifierNPDF.ensure_fitted
       ~ClassifierNPDF.fit
       ~ClassifierNPDF.get_params
       ~ClassifierNPDF.predict
@@ -36,13 +35,14 @@ sklearndf.wrapper.numpy.ClassifierNPDF
 
    .. autosummary::
    
-      ~ClassifierNPDF.COL_FEATURE_IN
+      ~ClassifierNPDF.COL_FEATURE
       ~ClassifierNPDF.classes_
       ~ClassifierNPDF.feature_names_in_
       ~ClassifierNPDF.is_fitted
       ~ClassifierNPDF.n_features_in_
       ~ClassifierNPDF.n_outputs_
       ~ClassifierNPDF.native_estimator
+      ~ClassifierNPDF.output_names_
       ~ClassifierNPDF.delegate
       ~ClassifierNPDF.column_names
    

@@ -17,12 +17,12 @@ sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF
       :nosignatures:
    
       ~KBinsDiscretizerWrapperDF.clone
-      ~KBinsDiscretizerWrapperDF.ensure_fitted
       ~KBinsDiscretizerWrapperDF.fit
       ~KBinsDiscretizerWrapperDF.fit_transform
       ~KBinsDiscretizerWrapperDF.from_fitted
       ~KBinsDiscretizerWrapperDF.get_params
       ~KBinsDiscretizerWrapperDF.inverse_transform
+      ~KBinsDiscretizerWrapperDF.set_output
       ~KBinsDiscretizerWrapperDF.set_params
       ~KBinsDiscretizerWrapperDF.to_expression
       ~KBinsDiscretizerWrapperDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF
 
    .. autosummary::
    
-      ~KBinsDiscretizerWrapperDF.COL_FEATURE_IN
-      ~KBinsDiscretizerWrapperDF.COL_FEATURE_OUT
+      ~KBinsDiscretizerWrapperDF.COL_FEATURE
+      ~KBinsDiscretizerWrapperDF.COL_FEATURE_ORIGINAL
       ~KBinsDiscretizerWrapperDF.feature_names_in_
       ~KBinsDiscretizerWrapperDF.feature_names_original_
       ~KBinsDiscretizerWrapperDF.feature_names_out_
@@ -44,6 +44,7 @@ sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF
       ~KBinsDiscretizerWrapperDF.n_features_in_
       ~KBinsDiscretizerWrapperDF.n_outputs_
       ~KBinsDiscretizerWrapperDF.native_estimator
+      ~KBinsDiscretizerWrapperDF.output_names_
    
    
 

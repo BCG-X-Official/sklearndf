@@ -18,7 +18,6 @@ sklearndf.classification.SGDClassifierDF
    
       ~SGDClassifierDF.clone
       ~SGDClassifierDF.decision_function
-      ~SGDClassifierDF.ensure_fitted
       ~SGDClassifierDF.fit
       ~SGDClassifierDF.from_fitted
       ~SGDClassifierDF.get_params
@@ -38,7 +37,7 @@ sklearndf.classification.SGDClassifierDF
 
    .. autosummary::
    
-      ~SGDClassifierDF.COL_FEATURE_IN
+      ~SGDClassifierDF.COL_FEATURE
       ~SGDClassifierDF.COL_PREDICTION
       ~SGDClassifierDF.classes_
       ~SGDClassifierDF.feature_names_in_
@@ -46,6 +45,7 @@ sklearndf.classification.SGDClassifierDF
       ~SGDClassifierDF.n_features_in_
       ~SGDClassifierDF.n_outputs_
       ~SGDClassifierDF.native_estimator
+      ~SGDClassifierDF.output_names_
    
    
 

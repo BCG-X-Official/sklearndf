@@ -17,7 +17,6 @@ sklearndf.regression.SGDRegressorDF
       :nosignatures:
    
       ~SGDRegressorDF.clone
-      ~SGDRegressorDF.ensure_fitted
       ~SGDRegressorDF.fit
       ~SGDRegressorDF.from_fitted
       ~SGDRegressorDF.get_params
@@ -35,13 +34,14 @@ sklearndf.regression.SGDRegressorDF
 
    .. autosummary::
    
-      ~SGDRegressorDF.COL_FEATURE_IN
+      ~SGDRegressorDF.COL_FEATURE
       ~SGDRegressorDF.COL_PREDICTION
       ~SGDRegressorDF.feature_names_in_
       ~SGDRegressorDF.is_fitted
       ~SGDRegressorDF.n_features_in_
       ~SGDRegressorDF.n_outputs_
       ~SGDRegressorDF.native_estimator
+      ~SGDRegressorDF.output_names_
    
    
 

@@ -18,7 +18,6 @@ sklearndf.classification.OneVsRestClassifierDF
    
       ~OneVsRestClassifierDF.clone
       ~OneVsRestClassifierDF.decision_function
-      ~OneVsRestClassifierDF.ensure_fitted
       ~OneVsRestClassifierDF.fit
       ~OneVsRestClassifierDF.from_fitted
       ~OneVsRestClassifierDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.OneVsRestClassifierDF
 
    .. autosummary::
    
-      ~OneVsRestClassifierDF.COL_FEATURE_IN
+      ~OneVsRestClassifierDF.COL_FEATURE
       ~OneVsRestClassifierDF.COL_PREDICTION
       ~OneVsRestClassifierDF.classes_
       ~OneVsRestClassifierDF.feature_names_in_
@@ -47,6 +46,7 @@ sklearndf.classification.OneVsRestClassifierDF
       ~OneVsRestClassifierDF.n_features_in_
       ~OneVsRestClassifierDF.n_outputs_
       ~OneVsRestClassifierDF.native_estimator
+      ~OneVsRestClassifierDF.output_names_
    
    
 

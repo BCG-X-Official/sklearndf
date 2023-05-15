@@ -17,7 +17,6 @@ sklearndf.regression.MLPRegressorDF
       :nosignatures:
    
       ~MLPRegressorDF.clone
-      ~MLPRegressorDF.ensure_fitted
       ~MLPRegressorDF.fit
       ~MLPRegressorDF.from_fitted
       ~MLPRegressorDF.get_params
@@ -35,13 +34,14 @@ sklearndf.regression.MLPRegressorDF
 
    .. autosummary::
    
-      ~MLPRegressorDF.COL_FEATURE_IN
+      ~MLPRegressorDF.COL_FEATURE
       ~MLPRegressorDF.COL_PREDICTION
       ~MLPRegressorDF.feature_names_in_
       ~MLPRegressorDF.is_fitted
       ~MLPRegressorDF.n_features_in_
       ~MLPRegressorDF.n_outputs_
       ~MLPRegressorDF.native_estimator
+      ~MLPRegressorDF.output_names_
    
    
 

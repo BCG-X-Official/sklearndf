@@ -17,7 +17,6 @@ sklearndf.LearnerDF
       :nosignatures:
    
       ~LearnerDF.clone
-      ~LearnerDF.ensure_fitted
       ~LearnerDF.fit
       ~LearnerDF.get_params
       ~LearnerDF.predict
@@ -32,12 +31,13 @@ sklearndf.LearnerDF
 
    .. autosummary::
    
-      ~LearnerDF.COL_FEATURE_IN
+      ~LearnerDF.COL_FEATURE
       ~LearnerDF.feature_names_in_
       ~LearnerDF.is_fitted
       ~LearnerDF.n_features_in_
       ~LearnerDF.n_outputs_
       ~LearnerDF.native_estimator
+      ~LearnerDF.output_names_
    
    
 

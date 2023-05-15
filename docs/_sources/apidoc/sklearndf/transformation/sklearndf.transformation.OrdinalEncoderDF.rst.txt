@@ -17,12 +17,12 @@ sklearndf.transformation.OrdinalEncoderDF
       :nosignatures:
    
       ~OrdinalEncoderDF.clone
-      ~OrdinalEncoderDF.ensure_fitted
       ~OrdinalEncoderDF.fit
       ~OrdinalEncoderDF.fit_transform
       ~OrdinalEncoderDF.from_fitted
       ~OrdinalEncoderDF.get_params
       ~OrdinalEncoderDF.inverse_transform
+      ~OrdinalEncoderDF.set_output
       ~OrdinalEncoderDF.set_params
       ~OrdinalEncoderDF.to_expression
       ~OrdinalEncoderDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.OrdinalEncoderDF
 
    .. autosummary::
    
-      ~OrdinalEncoderDF.COL_FEATURE_IN
-      ~OrdinalEncoderDF.COL_FEATURE_OUT
+      ~OrdinalEncoderDF.COL_FEATURE
+      ~OrdinalEncoderDF.COL_FEATURE_ORIGINAL
       ~OrdinalEncoderDF.feature_names_in_
       ~OrdinalEncoderDF.feature_names_original_
       ~OrdinalEncoderDF.feature_names_out_
@@ -44,6 +44,7 @@ sklearndf.transformation.OrdinalEncoderDF
       ~OrdinalEncoderDF.n_features_in_
       ~OrdinalEncoderDF.n_outputs_
       ~OrdinalEncoderDF.native_estimator
+      ~OrdinalEncoderDF.output_names_
    
    
 

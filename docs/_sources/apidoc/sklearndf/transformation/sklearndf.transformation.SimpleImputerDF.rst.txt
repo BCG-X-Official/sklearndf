@@ -17,13 +17,13 @@ sklearndf.transformation.SimpleImputerDF
       :nosignatures:
    
       ~SimpleImputerDF.clone
-      ~SimpleImputerDF.ensure_fitted
       ~SimpleImputerDF.fit
       ~SimpleImputerDF.fit_transform
       ~SimpleImputerDF.from_fitted
       ~SimpleImputerDF.get_feature_names_out
       ~SimpleImputerDF.get_params
       ~SimpleImputerDF.inverse_transform
+      ~SimpleImputerDF.set_output
       ~SimpleImputerDF.set_params
       ~SimpleImputerDF.to_expression
       ~SimpleImputerDF.transform
@@ -36,8 +36,8 @@ sklearndf.transformation.SimpleImputerDF
 
    .. autosummary::
    
-      ~SimpleImputerDF.COL_FEATURE_IN
-      ~SimpleImputerDF.COL_FEATURE_OUT
+      ~SimpleImputerDF.COL_FEATURE
+      ~SimpleImputerDF.COL_FEATURE_ORIGINAL
       ~SimpleImputerDF.feature_names_in_
       ~SimpleImputerDF.feature_names_original_
       ~SimpleImputerDF.feature_names_out_
@@ -45,6 +45,7 @@ sklearndf.transformation.SimpleImputerDF
       ~SimpleImputerDF.n_features_in_
       ~SimpleImputerDF.n_outputs_
       ~SimpleImputerDF.native_estimator
+      ~SimpleImputerDF.output_names_
    
    
 

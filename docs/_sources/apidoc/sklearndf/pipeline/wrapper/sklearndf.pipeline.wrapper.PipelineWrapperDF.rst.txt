@@ -18,7 +18,6 @@ sklearndf.pipeline.wrapper.PipelineWrapperDF
    
       ~PipelineWrapperDF.clone
       ~PipelineWrapperDF.decision_function
-      ~PipelineWrapperDF.ensure_fitted
       ~PipelineWrapperDF.fit
       ~PipelineWrapperDF.fit_transform
       ~PipelineWrapperDF.from_fitted
@@ -28,6 +27,7 @@ sklearndf.pipeline.wrapper.PipelineWrapperDF
       ~PipelineWrapperDF.predict_log_proba
       ~PipelineWrapperDF.predict_proba
       ~PipelineWrapperDF.score
+      ~PipelineWrapperDF.set_output
       ~PipelineWrapperDF.set_params
       ~PipelineWrapperDF.to_expression
       ~PipelineWrapperDF.transform
@@ -40,8 +40,8 @@ sklearndf.pipeline.wrapper.PipelineWrapperDF
 
    .. autosummary::
    
-      ~PipelineWrapperDF.COL_FEATURE_IN
-      ~PipelineWrapperDF.COL_FEATURE_OUT
+      ~PipelineWrapperDF.COL_FEATURE
+      ~PipelineWrapperDF.COL_FEATURE_ORIGINAL
       ~PipelineWrapperDF.COL_PREDICTION
       ~PipelineWrapperDF.PASSTHROUGH
       ~PipelineWrapperDF.classes_
@@ -52,6 +52,7 @@ sklearndf.pipeline.wrapper.PipelineWrapperDF
       ~PipelineWrapperDF.n_features_in_
       ~PipelineWrapperDF.n_outputs_
       ~PipelineWrapperDF.native_estimator
+      ~PipelineWrapperDF.output_names_
       ~PipelineWrapperDF.steps
    
    

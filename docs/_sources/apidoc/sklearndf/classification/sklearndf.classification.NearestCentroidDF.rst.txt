@@ -18,7 +18,6 @@ sklearndf.classification.NearestCentroidDF
    
       ~NearestCentroidDF.clone
       ~NearestCentroidDF.decision_function
-      ~NearestCentroidDF.ensure_fitted
       ~NearestCentroidDF.fit
       ~NearestCentroidDF.from_fitted
       ~NearestCentroidDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.NearestCentroidDF
 
    .. autosummary::
    
-      ~NearestCentroidDF.COL_FEATURE_IN
+      ~NearestCentroidDF.COL_FEATURE
       ~NearestCentroidDF.COL_PREDICTION
       ~NearestCentroidDF.classes_
       ~NearestCentroidDF.feature_names_in_
@@ -45,6 +44,7 @@ sklearndf.classification.NearestCentroidDF
       ~NearestCentroidDF.n_features_in_
       ~NearestCentroidDF.n_outputs_
       ~NearestCentroidDF.native_estimator
+      ~NearestCentroidDF.output_names_
    
    
 

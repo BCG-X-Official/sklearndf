@@ -17,7 +17,6 @@ sklearndf.RegressorDF
       :nosignatures:
    
       ~RegressorDF.clone
-      ~RegressorDF.ensure_fitted
       ~RegressorDF.fit
       ~RegressorDF.get_params
       ~RegressorDF.predict
@@ -33,12 +32,13 @@ sklearndf.RegressorDF
 
    .. autosummary::
    
-      ~RegressorDF.COL_FEATURE_IN
+      ~RegressorDF.COL_FEATURE
       ~RegressorDF.feature_names_in_
       ~RegressorDF.is_fitted
       ~RegressorDF.n_features_in_
       ~RegressorDF.n_outputs_
       ~RegressorDF.native_estimator
+      ~RegressorDF.output_names_
    
    
 

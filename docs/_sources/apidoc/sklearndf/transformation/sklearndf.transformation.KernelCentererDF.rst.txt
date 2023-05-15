@@ -17,12 +17,12 @@ sklearndf.transformation.KernelCentererDF
       :nosignatures:
    
       ~KernelCentererDF.clone
-      ~KernelCentererDF.ensure_fitted
       ~KernelCentererDF.fit
       ~KernelCentererDF.fit_transform
       ~KernelCentererDF.from_fitted
       ~KernelCentererDF.get_params
       ~KernelCentererDF.inverse_transform
+      ~KernelCentererDF.set_output
       ~KernelCentererDF.set_params
       ~KernelCentererDF.to_expression
       ~KernelCentererDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.KernelCentererDF
 
    .. autosummary::
    
-      ~KernelCentererDF.COL_FEATURE_IN
-      ~KernelCentererDF.COL_FEATURE_OUT
+      ~KernelCentererDF.COL_FEATURE
+      ~KernelCentererDF.COL_FEATURE_ORIGINAL
       ~KernelCentererDF.feature_names_in_
       ~KernelCentererDF.feature_names_original_
       ~KernelCentererDF.feature_names_out_
@@ -44,6 +44,7 @@ sklearndf.transformation.KernelCentererDF
       ~KernelCentererDF.n_features_in_
       ~KernelCentererDF.n_outputs_
       ~KernelCentererDF.native_estimator
+      ~KernelCentererDF.output_names_
    
    
 

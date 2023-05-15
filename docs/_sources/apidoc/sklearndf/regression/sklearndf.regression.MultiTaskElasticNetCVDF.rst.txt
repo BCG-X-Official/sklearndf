@@ -17,7 +17,6 @@ sklearndf.regression.MultiTaskElasticNetCVDF
       :nosignatures:
    
       ~MultiTaskElasticNetCVDF.clone
-      ~MultiTaskElasticNetCVDF.ensure_fitted
       ~MultiTaskElasticNetCVDF.fit
       ~MultiTaskElasticNetCVDF.from_fitted
       ~MultiTaskElasticNetCVDF.get_params
@@ -34,13 +33,14 @@ sklearndf.regression.MultiTaskElasticNetCVDF
 
    .. autosummary::
    
-      ~MultiTaskElasticNetCVDF.COL_FEATURE_IN
+      ~MultiTaskElasticNetCVDF.COL_FEATURE
       ~MultiTaskElasticNetCVDF.COL_PREDICTION
       ~MultiTaskElasticNetCVDF.feature_names_in_
       ~MultiTaskElasticNetCVDF.is_fitted
       ~MultiTaskElasticNetCVDF.n_features_in_
       ~MultiTaskElasticNetCVDF.n_outputs_
       ~MultiTaskElasticNetCVDF.native_estimator
+      ~MultiTaskElasticNetCVDF.output_names_
    
    
 

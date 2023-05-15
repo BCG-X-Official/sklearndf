@@ -18,7 +18,6 @@ sklearndf.classification.extra.XGBClassifierDF
    
       ~XGBClassifierDF.clone
       ~XGBClassifierDF.decision_function
-      ~XGBClassifierDF.ensure_fitted
       ~XGBClassifierDF.fit
       ~XGBClassifierDF.from_fitted
       ~XGBClassifierDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.extra.XGBClassifierDF
 
    .. autosummary::
    
-      ~XGBClassifierDF.COL_FEATURE_IN
+      ~XGBClassifierDF.COL_FEATURE
       ~XGBClassifierDF.COL_PREDICTION
       ~XGBClassifierDF.classes_
       ~XGBClassifierDF.feature_names_in_
@@ -45,6 +44,7 @@ sklearndf.classification.extra.XGBClassifierDF
       ~XGBClassifierDF.n_features_in_
       ~XGBClassifierDF.n_outputs_
       ~XGBClassifierDF.native_estimator
+      ~XGBClassifierDF.output_names_
    
    
 

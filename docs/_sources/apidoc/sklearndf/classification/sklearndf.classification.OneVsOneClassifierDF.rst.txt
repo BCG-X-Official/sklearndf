@@ -18,7 +18,6 @@ sklearndf.classification.OneVsOneClassifierDF
    
       ~OneVsOneClassifierDF.clone
       ~OneVsOneClassifierDF.decision_function
-      ~OneVsOneClassifierDF.ensure_fitted
       ~OneVsOneClassifierDF.fit
       ~OneVsOneClassifierDF.from_fitted
       ~OneVsOneClassifierDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.OneVsOneClassifierDF
 
    .. autosummary::
    
-      ~OneVsOneClassifierDF.COL_FEATURE_IN
+      ~OneVsOneClassifierDF.COL_FEATURE
       ~OneVsOneClassifierDF.COL_PREDICTION
       ~OneVsOneClassifierDF.classes_
       ~OneVsOneClassifierDF.feature_names_in_
@@ -46,6 +45,7 @@ sklearndf.classification.OneVsOneClassifierDF
       ~OneVsOneClassifierDF.n_features_in_
       ~OneVsOneClassifierDF.n_outputs_
       ~OneVsOneClassifierDF.native_estimator
+      ~OneVsOneClassifierDF.output_names_
    
    
 

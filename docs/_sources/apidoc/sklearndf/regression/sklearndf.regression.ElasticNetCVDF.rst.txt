@@ -17,7 +17,6 @@ sklearndf.regression.ElasticNetCVDF
       :nosignatures:
    
       ~ElasticNetCVDF.clone
-      ~ElasticNetCVDF.ensure_fitted
       ~ElasticNetCVDF.fit
       ~ElasticNetCVDF.from_fitted
       ~ElasticNetCVDF.get_params
@@ -34,13 +33,14 @@ sklearndf.regression.ElasticNetCVDF
 
    .. autosummary::
    
-      ~ElasticNetCVDF.COL_FEATURE_IN
+      ~ElasticNetCVDF.COL_FEATURE
       ~ElasticNetCVDF.COL_PREDICTION
       ~ElasticNetCVDF.feature_names_in_
       ~ElasticNetCVDF.is_fitted
       ~ElasticNetCVDF.n_features_in_
       ~ElasticNetCVDF.n_outputs_
       ~ElasticNetCVDF.native_estimator
+      ~ElasticNetCVDF.output_names_
    
    
 

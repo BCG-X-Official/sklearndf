@@ -175,6 +175,7 @@
     <span class="n">List</span><span class="p">,</span>
     <span class="n">Optional</span><span class="p">,</span>
     <span class="n">Sequence</span><span class="p">,</span>
+    <span class="n">Tuple</span><span class="p">,</span>
     <span class="n">TypeVar</span><span class="p">,</span>
     <span class="n">Union</span><span class="p">,</span>
     <span class="n">cast</span><span class="p">,</span>
@@ -183,8 +184,10 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">numpy.typing</span> <span class="k">as</span> <span class="nn">npt</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">sparse</span>
 <span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">TransformerMixin</span>
 <span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
 <span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">MissingIndicator</span><span class="p">,</span> <span class="n">SimpleImputer</span>
 <span class="kn">from</span> <span class="nn">sklearn.kernel_approximation</span> <span class="kn">import</span> <span class="n">AdditiveChi2Sampler</span>
 <span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">Isomap</span>
@@ -199,48 +202,50 @@
     <span class="n">__sklearn_1_2__</span><span class="p">,</span>
     <span class="n">__sklearn_version__</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span> <span class="nn">..._util</span> <span class="kn">import</span> <span class="n">hstack_frames</span><span class="p">,</span> <span class="n">is_sparse_frame</span><span class="p">,</span> <span class="n">sparse_frame_density</span>
 <span class="kn">from</span> <span class="nn">...wrapper</span> <span class="kn">import</span> <span class="n">TransformerWrapperDF</span>
 
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;AdditiveChi2SamplerWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;BaseMultiOutputWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;BaseMultipleInputsPerOutputTransformerWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ColumnPreservingTransformerWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ColumnSubsetTransformerWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ColumnTransformerSparseFrames&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ColumnTransformerWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ComponentsDimensionalityReductionWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;EmbeddingWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;FeatureSelectionWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ImputerWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;IsomapWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;KBinsDiscretizerWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MissingIndicatorWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;NComponentsDimensionalityReductionWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;NumpyTransformerWrapperDF&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ColumnTransformerWrapperDF&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;IsomapWrapperDF&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;ImputerWrapperDF&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;MissingIndicatorWrapperDF&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;AdditiveChi2SamplerWrapperDF&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;KBinsDiscretizerWrapperDF&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;PolynomialTransformerWrapperDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;OneHotEncoderWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PCAWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;PolynomialTransformerWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SingleColumnTransformerWrapperDF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;VectorizerWrapperDF&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
 <span class="c1">#</span>
-<span class="c1"># type variables</span>
+<span class="c1"># Type variables</span>
 <span class="c1">#</span>
 
-<span class="n">T_Transformer</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_Transformer&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">TransformerMixin</span><span class="p">)</span>
-
-<span class="c1"># T_Imputer is needed because scikit-learn&#39;s _BaseImputer only exists from v0.22</span>
-<span class="c1"># onwards.</span>
-<span class="c1"># Once we drop support for sklearn 0.21, _BaseImputer can be used instead.</span>
-<span class="c1"># The following TypeVar helps to annotate availability of &quot;add_indicator&quot; and</span>
-<span class="c1"># &quot;missing_values&quot; attributes on an imputer instance for ImputerWrapperDF below.</span>
 
 <span class="c1"># noinspection PyProtectedMember</span>
 <span class="kn">from</span> <span class="nn">sklearn.impute._iterative</span> <span class="kn">import</span> <span class="n">IterativeImputer</span>
 
+<span class="c1"># Once we drop support for sklearn 0.21, T_Imputer can be bound to _BaseImputer</span>
 <span class="n">T_Imputer</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_Imputer&quot;</span><span class="p">,</span> <span class="n">SimpleImputer</span><span class="p">,</span> <span class="n">IterativeImputer</span><span class="p">)</span>
 <span class="n">T_Polynomial</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_Polynomial&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">TransformerMixin</span><span class="p">)</span>
+<span class="n">T_Target</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_Target&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
+<span class="n">T_Transformer</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_Transformer&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">TransformerMixin</span><span class="p">)</span>
+<span class="n">T_Vectorizer</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_Vectorizer&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">TransformerMixin</span><span class="p">)</span>
 
 <span class="c1">#</span>
 <span class="c1"># Ensure all symbols introduced below are included in __all__</span>
@@ -257,7 +262,7 @@
 <div class="viewcode-block" id="NumpyTransformerWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.NumpyTransformerWrapperDF.html#sklearndf.transformation.wrapper.NumpyTransformerWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">NumpyTransformerWrapperDF</span><span class="p">(</span>
     <span class="n">TransformerWrapperDF</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span> <span class="n">Generic</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abstract base class of DF wrappers for transformers that only accept numpy arrays.</span>
 
 <span class="sd">    Converts data frames to numpy arrays before handing off to the native transformer.</span>
@@ -269,19 +274,73 @@
     <span class="k">def</span> <span class="nf">_adjust_X_type_for_delegate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_frame_or_series_to_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_adjust_y_type_for_delegate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
-        <span class="k">return</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">cast</span><span class="p">(</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">y</span><span class="o">.</span><span class="n">values</span><span class="p">)</span></div>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">pd</span><span class="o">.</span><span class="n">arrays</span><span class="o">.</span><span class="n">SparseArray</span><span class="p">,</span> <span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_frame_or_series_to_array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_frame_or_series_to_array</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">pd</span><span class="o">.</span><span class="n">arrays</span><span class="o">.</span><span class="n">SparseArray</span><span class="p">,</span> <span class="n">sparse</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">]:</span>
+
+        <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span>
+
+        <span class="n">sparse_threshold</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_sparse_threshold</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">sparse_threshold</span> <span class="o">&gt;</span> <span class="mf">0.0</span> <span class="ow">and</span> <span class="n">sparse_frame_density</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">sparse_threshold</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sparse</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">sr</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">to_coo</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sr</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">SparseDtype</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="n">sr</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">sr</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="p">]</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">tocsr</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="k">def</span> <span class="nf">_get_sparse_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="c1"># return the density below which _frame_or_series_to_array will</span>
+        <span class="c1"># convert series and data frames to sparse matrices instead of</span>
+        <span class="c1"># dense arrays</span>
+        <span class="k">return</span> <span class="mf">0.3</span></div>
+
+
+<div class="viewcode-block" id="SingleColumnTransformerWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.SingleColumnTransformerWrapperDF.html#sklearndf.transformation.wrapper.SingleColumnTransformerWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">SingleColumnTransformerWrapperDF</span><span class="p">(</span>
+    <span class="n">TransformerWrapperDF</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span> <span class="n">Generic</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract base class of DF wrappers for transformers that only accept single-column</span>
+<span class="sd">    inputs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_validate_parameter_types</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">],</span>
+        <span class="n">y</span><span class="p">:</span> <span class="n">T_Target</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">expected_columns</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">T_Target</span><span class="p">]:</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_validate_parameter_types</span><span class="p">(</span>
+            <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">expected_columns</span><span class="o">=</span><span class="n">expected_columns</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;arg X expected to have exactly 1 column but has </span><span class="si">{</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> columns&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span></div>
 
 
 <div class="viewcode-block" id="ColumnSubsetTransformerWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.ColumnSubsetTransformerWrapperDF.html#sklearndf.transformation.wrapper.ColumnSubsetTransformerWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">ColumnSubsetTransformerWrapperDF</span><span class="p">(</span>
     <span class="n">TransformerWrapperDF</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span> <span class="n">Generic</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abstract base class of DF wrappers for transformers that do not change column names,</span>
 <span class="sd">    but that may remove one or more columns.</span>
 
@@ -303,7 +362,7 @@
     <span class="n">ColumnSubsetTransformerWrapperDF</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
     <span class="n">Generic</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for transformers whose output columns match the input columns.</span>
 
 <span class="sd">    The native transformer must not add, remove, reorder, or rename any of the input</span>
@@ -317,7 +376,7 @@
 <div class="viewcode-block" id="BaseMultipleInputsPerOutputTransformerWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.BaseMultipleInputsPerOutputTransformerWrapperDF.html#sklearndf.transformation.wrapper.BaseMultipleInputsPerOutputTransformerWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">BaseMultipleInputsPerOutputTransformerWrapperDF</span><span class="p">(</span>
     <span class="n">TransformerWrapperDF</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span> <span class="n">Generic</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">]</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for transformers mapping multiple input columns to individual output</span>
 <span class="sd">    columns.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -341,7 +400,7 @@
     <span class="n">Generic</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
     <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class of DF wrappers for dimensionality-reducing transformers.</span>
 
 <span class="sd">    The native transformer is considered to map all input columns to each output column.</span>
@@ -361,7 +420,7 @@
     <span class="n">Generic</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
     <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class of DF wrappers for dimensionality-reducing transformers supporting the</span>
 <span class="sd">    :attr:`n_components` attribute.</span>
 
@@ -371,11 +430,34 @@
     <span class="n">_ATTR_N_COMPONENTS</span> <span class="o">=</span> <span class="s2">&quot;n_components&quot;</span>
 
     <span class="k">def</span> <span class="nf">_validate_delegate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_delegate_attribute</span><span class="p">(</span><span class="n">attribute_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_ATTR_N_COMPONENTS</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_delegate_attribute</span><span class="p">(</span>
+            <span class="n">attribute_name</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">NComponentsDimensionalityReductionWrapperDF</span><span class="o">.</span><span class="n">_ATTR_N_COMPONENTS</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_n_components_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ATTR_N_COMPONENTS</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span>
+            <span class="nb">int</span><span class="p">,</span>
+            <span class="nb">getattr</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="p">,</span>
+                <span class="n">NComponentsDimensionalityReductionWrapperDF</span><span class="o">.</span><span class="n">_ATTR_N_COMPONENTS</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PCAWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.PCAWrapperDF.html#sklearndf.transformation.wrapper.PCAWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">PCAWrapperDF</span><span class="p">(</span><span class="n">NComponentsDimensionalityReductionWrapperDF</span><span class="p">[</span><span class="n">PCA</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DF wrapper for :class:`sklearn.decomposition.PCA`.</span>
+
+<span class="sd">    Uses attribute :attr:`~sklearn.decomposition.PCA.n_components_` to get the number</span>
+<span class="sd">    of components, which may be determined by the estimator during fitting.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_n_components_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_native_estimator</span><span class="o">.</span><span class="n">n_components_</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ComponentsDimensionalityReductionWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF.html#sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">ComponentsDimensionalityReductionWrapperDF</span><span class="p">(</span>
@@ -383,7 +465,7 @@
     <span class="n">Generic</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
     <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class of DF wrappers for dimensionality-reducing transformers supporting the</span>
 <span class="sd">    ``components_`` attribute.</span>
 
@@ -411,7 +493,7 @@
     <span class="n">Generic</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
     <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for feature selection transformers.</span>
 
 <span class="sd">    The native transformer must implement a ``get_support`` method, providing the</span>
@@ -427,11 +509,41 @@
         <span class="n">get_support</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ATTR_GET_SUPPORT</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">[</span><span class="n">get_support</span><span class="p">()]</span></div>
 
+    <span class="c1"># noinspection PyPep8Naming</span>
+
+
+<div class="viewcode-block" id="ColumnTransformerSparseFrames"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.ColumnTransformerSparseFrames.html#sklearndf.transformation.wrapper.ColumnTransformerSparseFrames">[docs]</a><span class="k">class</span> <span class="nc">ColumnTransformerSparseFrames</span><span class="p">(</span>
+    <span class="n">ColumnTransformer</span><span class="p">,</span>  <span class="c1"># type:ignore</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ColumnTransformer that returns sparse data frames instead of arrays if one or more</span>
+<span class="sd">    of its transformers return a sparse data frame.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_hstack</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">Xs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">sparse</span><span class="o">.</span><span class="n">spmatrix</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">sparse</span><span class="o">.</span><span class="n">spmatrix</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">__sklearn_version__</span> <span class="o">&gt;=</span> <span class="n">__sklearn_1_0__</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_feature_names_out</span><span class="p">:</span>
+            <span class="n">prefixes</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformers</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remainder</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">remainder</span> <span class="o">!=</span> <span class="s2">&quot;drop&quot;</span><span class="p">:</span>
+                <span class="c1"># remainder columns exist and are not being dropped</span>
+                <span class="n">prefixes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;remainder&quot;</span><span class="p">)</span>
+            <span class="n">stacked</span> <span class="o">=</span> <span class="n">hstack_frames</span><span class="p">(</span><span class="n">Xs</span><span class="p">,</span> <span class="n">prefixes</span><span class="o">=</span><span class="n">prefixes</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">stacked</span> <span class="o">=</span> <span class="n">hstack_frames</span><span class="p">(</span><span class="n">Xs</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">stacked</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_hstack</span><span class="p">(</span><span class="n">Xs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sparse_output_</span> <span class="o">=</span> <span class="n">is_sparse_frame</span><span class="p">(</span><span class="n">stacked</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">stacked</span></div>
+
 
 <div class="viewcode-block" id="ColumnTransformerWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.ColumnTransformerWrapperDF.html#sklearndf.transformation.wrapper.ColumnTransformerWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">ColumnTransformerWrapperDF</span><span class="p">(</span>
     <span class="n">TransformerWrapperDF</span><span class="p">[</span><span class="n">ColumnTransformer</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for :class:`sklearn.compose.ColumnTransformer`.</span>
 
 <span class="sd">    Requires all transformers passed as the ``transformers`` parameter to implement</span>
@@ -456,7 +568,7 @@
             <span class="ow">not</span> <span class="ow">in</span> <span class="n">ColumnTransformerWrapperDF</span><span class="o">.</span><span class="n">__SPECIAL_TRANSFORMERS</span>
         <span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;unsupported value for arg remainder: (</span><span class="si">{</span><span class="n">column_transformer</span><span class="o">.</span><span class="n">remainder</span><span class="si">}</span><span class="s2">)&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;unsupported value for arg remainder: </span><span class="si">{</span><span class="n">column_transformer</span><span class="o">.</span><span class="n">remainder</span><span class="si">!r}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
 
         <span class="n">non_compliant_transformers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
@@ -479,7 +591,7 @@
             <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_features_original</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the series mapping output column names to original columns names.</span>
 
 <span class="sd">        :return: the series with index the column names of the output dataframe and</span>
@@ -503,7 +615,7 @@
 
             <span class="k">if</span> <span class="n">df_transformer</span> <span class="o">==</span> <span class="n">ColumnTransformerWrapperDF</span><span class="o">.</span><span class="n">PASSTHROUGH</span><span class="p">:</span>
                 <span class="c1"># we may get positional indices for columns selected by the</span>
-                <span class="c1"># &#39;passthrough&#39; transformer, and in that case so need to look up the</span>
+                <span class="c1"># &#39;passthrough&#39; transformer, and in that case need to look up the</span>
                 <span class="c1"># associated column names</span>
                 <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">):</span>
                     <span class="n">output_column_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_features_in</span><span class="p">()</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()[</span><span class="n">columns</span><span class="p">]</span>
@@ -517,7 +629,7 @@
                     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">df_transformer</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">df_transformer</span><span class="si">!r}</span><span class="s2">&quot;</span>
                 <span class="p">)</span>
                 <span class="n">feature_names_original_</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span> <span class="o">=</span> <span class="p">(</span>
-                    <span class="n">df_transformer</span><span class="o">.</span><span class="n">feature_names_original_</span>
+                    <span class="n">df_transformer</span><span class="o">.</span><span class="n">_get_features_original</span><span class="p">()</span>
                 <span class="p">)</span>
                 <span class="k">if</span> <span class="n">verbose_feature_names_out</span><span class="p">:</span>
                     <span class="n">input_column_names</span> <span class="o">=</span> <span class="n">feature_names_original_</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
@@ -549,8 +661,10 @@
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ImputerWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.ImputerWrapperDF.html#sklearndf.transformation.wrapper.ImputerWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">ImputerWrapperDF</span><span class="p">(</span><span class="n">TransformerWrapperDF</span><span class="p">[</span><span class="n">T_Imputer</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ImputerWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.ImputerWrapperDF.html#sklearndf.transformation.wrapper.ImputerWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">ImputerWrapperDF</span><span class="p">(</span>
+    <span class="n">TransformerWrapperDF</span><span class="p">[</span><span class="n">T_Imputer</span><span class="p">],</span> <span class="n">Generic</span><span class="p">[</span><span class="n">T_Imputer</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for imputation transformers, e.g., :class:`sklearn.impute.SimpleImputer`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -609,7 +723,7 @@
 <div class="viewcode-block" id="MissingIndicatorWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.MissingIndicatorWrapperDF.html#sklearndf.transformation.wrapper.MissingIndicatorWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">MissingIndicatorWrapperDF</span><span class="p">(</span>
     <span class="n">TransformerWrapperDF</span><span class="p">[</span><span class="n">MissingIndicator</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for :class:`sklearn.impute.MissingIndicator`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -625,7 +739,7 @@
 
 
 <div class="viewcode-block" id="IsomapWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.IsomapWrapperDF.html#sklearndf.transformation.wrapper.IsomapWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">IsomapWrapperDF</span><span class="p">(</span><span class="n">BaseMultiOutputWrapperDF</span><span class="p">[</span><span class="n">Isomap</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for :class:`sklearn.manifold.Isomap`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -637,7 +751,7 @@
 <div class="viewcode-block" id="AdditiveChi2SamplerWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.AdditiveChi2SamplerWrapperDF.html#sklearndf.transformation.wrapper.AdditiveChi2SamplerWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">AdditiveChi2SamplerWrapperDF</span><span class="p">(</span>
     <span class="n">BaseMultiOutputWrapperDF</span><span class="p">[</span><span class="n">AdditiveChi2Sampler</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for :class:`sklearn.kernel_approximation.AdditiveChi2Sampler`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -654,7 +768,7 @@
     <span class="n">Generic</span><span class="p">[</span><span class="n">T_Polynomial</span><span class="p">],</span>
     <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for :class:`sklearn.preprocessing.PolynomialFeatures`</span>
 <span class="sd">    and :class:`sklearn.preprocessing.SplineTransformer`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -667,13 +781,9 @@
 
 
 <div class="viewcode-block" id="OneHotEncoderWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.OneHotEncoderWrapperDF.html#sklearndf.transformation.wrapper.OneHotEncoderWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">OneHotEncoderWrapperDF</span><span class="p">(</span><span class="n">TransformerWrapperDF</span><span class="p">[</span><span class="n">OneHotEncoder</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for :class:`sklearn.preprocessing.OneHotEncoder`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">_validate_delegate_estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">sparse</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;sparse matrices not supported; use sparse=False&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_features_original</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
         <span class="c1"># Return the series mapping output column names to original column names.</span>
@@ -740,7 +850,7 @@
 <div class="viewcode-block" id="KBinsDiscretizerWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF.html#sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">KBinsDiscretizerWrapperDF</span><span class="p">(</span>
     <span class="n">TransformerWrapperDF</span><span class="p">[</span><span class="n">KBinsDiscretizer</span><span class="p">],</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF wrapper for :class:`sklearn.preprocessing.KBinsDiscretizer`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -752,7 +862,7 @@
             <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_get_features_original</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the series mapping output column names to original columns names.</span>
 
 <span class="sd">        :return: the series with index the column names of the output dataframe and</span>
@@ -788,7 +898,7 @@
     <span class="n">Generic</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span>
     <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base class of DF wrappers for dimensionality-reducing transformers.</span>
 
 <span class="sd">    The native transformer is considered to map all input columns to each output column.</span>
@@ -799,18 +909,15 @@
         <span class="c1"># and will be removed in sklearn 1.2</span>
         <span class="nd">@property</span>
         <span class="k">def</span> <span class="nf">n_features_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-            <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">            The number of features when :meth:`.fit` is performed.</span>
 <span class="sd">            &quot;&quot;&quot;</span>
             <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">n_features_</span><span class="p">)</span>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">n_outputs_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The number of outputs when :meth:`.fit` is performed.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_get_n_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">n_outputs_</span><span class="p">)</span>
 
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_n_components_</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_outputs_</span></div>
 
@@ -835,6 +942,45 @@
         <span class="n">get_feature_names_out_fn</span> <span class="o">=</span> <span class="n">native_estimator</span><span class="o">.</span><span class="n">get_feature_names</span>
 
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">get_feature_names_out_fn</span><span class="p">(</span><span class="n">feature_names_in_</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)))</span>
+
+
+<div class="viewcode-block" id="VectorizerWrapperDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/wrapper/sklearndf.transformation.wrapper.VectorizerWrapperDF.html#sklearndf.transformation.wrapper.VectorizerWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">VectorizerWrapperDF</span><span class="p">(</span>
+    <span class="n">SingleColumnTransformerWrapperDF</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">],</span> <span class="n">Generic</span><span class="p">[</span><span class="n">T_Transformer</span><span class="p">]</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DF wrapper for vectorizers, specifically</span>
+<span class="sd">    :class:`~sklearn.feature_extraction.text.CountVectorizer` and</span>
+<span class="sd">    :class:`~sklearn.feature_extraction.text.TfidfVectorizer`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_get_features_original</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+            <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_features_out</span><span class="p">(),</span> <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_features_in</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_features_out</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">__sklearn_version__</span> <span class="o">&gt;=</span> <span class="n">__sklearn_1_0__</span><span class="p">:</span>
+                <span class="n">feature_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">feature_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">n_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">n_features</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;native vectorizer </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &quot;</span>
+                    <span class="s2">&quot;has no method get_feature_names_out() or attribute n_features&quot;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">RangeIndex</span><span class="p">(</span><span class="n">n_features</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">feature_names</span><span class="p">)</span>
+
+    <span class="c1"># noinspection PyPep8Naming</span>
+    <span class="k">def</span> <span class="nf">_adjust_X_type_for_delegate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span></div>
 
 
 <span class="c1">#</span>

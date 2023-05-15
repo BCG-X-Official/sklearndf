@@ -17,12 +17,12 @@ sklearndf.transformation.FeatureHasherDF
       :nosignatures:
    
       ~FeatureHasherDF.clone
-      ~FeatureHasherDF.ensure_fitted
       ~FeatureHasherDF.fit
       ~FeatureHasherDF.fit_transform
       ~FeatureHasherDF.from_fitted
       ~FeatureHasherDF.get_params
       ~FeatureHasherDF.inverse_transform
+      ~FeatureHasherDF.set_output
       ~FeatureHasherDF.set_params
       ~FeatureHasherDF.to_expression
       ~FeatureHasherDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.FeatureHasherDF
 
    .. autosummary::
    
-      ~FeatureHasherDF.COL_FEATURE_IN
-      ~FeatureHasherDF.COL_FEATURE_OUT
+      ~FeatureHasherDF.COL_FEATURE
+      ~FeatureHasherDF.COL_FEATURE_ORIGINAL
       ~FeatureHasherDF.feature_names_in_
       ~FeatureHasherDF.feature_names_original_
       ~FeatureHasherDF.feature_names_out_
@@ -44,6 +44,7 @@ sklearndf.transformation.FeatureHasherDF
       ~FeatureHasherDF.n_features_in_
       ~FeatureHasherDF.n_outputs_
       ~FeatureHasherDF.native_estimator
+      ~FeatureHasherDF.output_names_
    
    
 

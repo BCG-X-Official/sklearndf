@@ -17,12 +17,12 @@ sklearndf.transformation.NMFDF
       :nosignatures:
    
       ~NMFDF.clone
-      ~NMFDF.ensure_fitted
       ~NMFDF.fit
       ~NMFDF.fit_transform
       ~NMFDF.from_fitted
       ~NMFDF.get_params
       ~NMFDF.inverse_transform
+      ~NMFDF.set_output
       ~NMFDF.set_params
       ~NMFDF.to_expression
       ~NMFDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.NMFDF
 
    .. autosummary::
    
-      ~NMFDF.COL_FEATURE_IN
-      ~NMFDF.COL_FEATURE_OUT
+      ~NMFDF.COL_FEATURE
+      ~NMFDF.COL_FEATURE_ORIGINAL
       ~NMFDF.feature_names_in_
       ~NMFDF.feature_names_original_
       ~NMFDF.feature_names_out_
@@ -44,6 +44,7 @@ sklearndf.transformation.NMFDF
       ~NMFDF.n_features_in_
       ~NMFDF.n_outputs_
       ~NMFDF.native_estimator
+      ~NMFDF.output_names_
    
    
 

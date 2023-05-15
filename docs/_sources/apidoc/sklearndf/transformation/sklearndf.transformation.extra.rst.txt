@@ -17,7 +17,10 @@ sklearndf.transformation.extra
       :template: custom-class-template.rst
       :nosignatures:
    
+      BoostAGrootaDF
       BorutaDF
+      GrootCVDF
+      LeshyDF
    
    
 

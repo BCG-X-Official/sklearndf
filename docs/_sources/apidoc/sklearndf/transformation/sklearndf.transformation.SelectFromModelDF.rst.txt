@@ -17,12 +17,12 @@ sklearndf.transformation.SelectFromModelDF
       :nosignatures:
    
       ~SelectFromModelDF.clone
-      ~SelectFromModelDF.ensure_fitted
       ~SelectFromModelDF.fit
       ~SelectFromModelDF.fit_transform
       ~SelectFromModelDF.from_fitted
       ~SelectFromModelDF.get_params
       ~SelectFromModelDF.inverse_transform
+      ~SelectFromModelDF.set_output
       ~SelectFromModelDF.set_params
       ~SelectFromModelDF.to_expression
       ~SelectFromModelDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.SelectFromModelDF
 
    .. autosummary::
    
-      ~SelectFromModelDF.COL_FEATURE_IN
-      ~SelectFromModelDF.COL_FEATURE_OUT
+      ~SelectFromModelDF.COL_FEATURE
+      ~SelectFromModelDF.COL_FEATURE_ORIGINAL
       ~SelectFromModelDF.feature_names_in_
       ~SelectFromModelDF.feature_names_original_
       ~SelectFromModelDF.feature_names_out_
@@ -44,6 +44,7 @@ sklearndf.transformation.SelectFromModelDF
       ~SelectFromModelDF.n_features_in_
       ~SelectFromModelDF.n_outputs_
       ~SelectFromModelDF.native_estimator
+      ~SelectFromModelDF.output_names_
       ~SelectFromModelDF.threshold_
    
    

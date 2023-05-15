@@ -17,7 +17,6 @@ sklearndf.regression.wrapper.IsotonicRegressionWrapperDF
       :nosignatures:
    
       ~IsotonicRegressionWrapperDF.clone
-      ~IsotonicRegressionWrapperDF.ensure_fitted
       ~IsotonicRegressionWrapperDF.fit
       ~IsotonicRegressionWrapperDF.fit_transform
       ~IsotonicRegressionWrapperDF.from_fitted
@@ -25,6 +24,7 @@ sklearndf.regression.wrapper.IsotonicRegressionWrapperDF
       ~IsotonicRegressionWrapperDF.inverse_transform
       ~IsotonicRegressionWrapperDF.predict
       ~IsotonicRegressionWrapperDF.score
+      ~IsotonicRegressionWrapperDF.set_output
       ~IsotonicRegressionWrapperDF.set_params
       ~IsotonicRegressionWrapperDF.to_expression
       ~IsotonicRegressionWrapperDF.transform
@@ -37,8 +37,8 @@ sklearndf.regression.wrapper.IsotonicRegressionWrapperDF
 
    .. autosummary::
    
-      ~IsotonicRegressionWrapperDF.COL_FEATURE_IN
-      ~IsotonicRegressionWrapperDF.COL_FEATURE_OUT
+      ~IsotonicRegressionWrapperDF.COL_FEATURE
+      ~IsotonicRegressionWrapperDF.COL_FEATURE_ORIGINAL
       ~IsotonicRegressionWrapperDF.COL_PREDICTION
       ~IsotonicRegressionWrapperDF.feature_names_in_
       ~IsotonicRegressionWrapperDF.feature_names_original_
@@ -47,6 +47,7 @@ sklearndf.regression.wrapper.IsotonicRegressionWrapperDF
       ~IsotonicRegressionWrapperDF.n_features_in_
       ~IsotonicRegressionWrapperDF.n_outputs_
       ~IsotonicRegressionWrapperDF.native_estimator
+      ~IsotonicRegressionWrapperDF.output_names_
    
    
 

@@ -17,7 +17,6 @@ sklearndf.clustering.AffinityPropagationDF
       :nosignatures:
    
       ~AffinityPropagationDF.clone
-      ~AffinityPropagationDF.ensure_fitted
       ~AffinityPropagationDF.fit
       ~AffinityPropagationDF.fit_predict
       ~AffinityPropagationDF.from_fitted
@@ -34,7 +33,7 @@ sklearndf.clustering.AffinityPropagationDF
 
    .. autosummary::
    
-      ~AffinityPropagationDF.COL_FEATURE_IN
+      ~AffinityPropagationDF.COL_FEATURE
       ~AffinityPropagationDF.COL_LABELS
       ~AffinityPropagationDF.COL_PREDICTION
       ~AffinityPropagationDF.feature_names_in_
@@ -43,6 +42,7 @@ sklearndf.clustering.AffinityPropagationDF
       ~AffinityPropagationDF.n_features_in_
       ~AffinityPropagationDF.n_outputs_
       ~AffinityPropagationDF.native_estimator
+      ~AffinityPropagationDF.output_names_
    
    
 

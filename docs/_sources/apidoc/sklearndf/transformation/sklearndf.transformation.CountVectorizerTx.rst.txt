@@ -1,0 +1,39 @@
+sklearndf.transformation.CountVectorizerTx
+==========================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: CountVectorizerTx
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~CountVectorizerTx.build_analyzer
+      ~CountVectorizerTx.build_preprocessor
+      ~CountVectorizerTx.build_tokenizer
+      ~CountVectorizerTx.decode
+      ~CountVectorizerTx.fit
+      ~CountVectorizerTx.fit_transform
+      ~CountVectorizerTx.get_feature_names_out
+      ~CountVectorizerTx.get_params
+      ~CountVectorizerTx.get_stop_words
+      ~CountVectorizerTx.inverse_transform
+      ~CountVectorizerTx.set_output
+      ~CountVectorizerTx.set_params
+      ~CountVectorizerTx.transform
+   
+   
+
+   
+   
+   
+
+   .. rubric:: Definitions

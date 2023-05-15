@@ -17,7 +17,6 @@ sklearndf.regression.GammaRegressorDF
       :nosignatures:
    
       ~GammaRegressorDF.clone
-      ~GammaRegressorDF.ensure_fitted
       ~GammaRegressorDF.fit
       ~GammaRegressorDF.from_fitted
       ~GammaRegressorDF.get_params
@@ -34,13 +33,14 @@ sklearndf.regression.GammaRegressorDF
 
    .. autosummary::
    
-      ~GammaRegressorDF.COL_FEATURE_IN
+      ~GammaRegressorDF.COL_FEATURE
       ~GammaRegressorDF.COL_PREDICTION
       ~GammaRegressorDF.feature_names_in_
       ~GammaRegressorDF.is_fitted
       ~GammaRegressorDF.n_features_in_
       ~GammaRegressorDF.n_outputs_
       ~GammaRegressorDF.native_estimator
+      ~GammaRegressorDF.output_names_
    
    
 

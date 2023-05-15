@@ -17,12 +17,12 @@ sklearndf.transformation.BinarizerDF
       :nosignatures:
    
       ~BinarizerDF.clone
-      ~BinarizerDF.ensure_fitted
       ~BinarizerDF.fit
       ~BinarizerDF.fit_transform
       ~BinarizerDF.from_fitted
       ~BinarizerDF.get_params
       ~BinarizerDF.inverse_transform
+      ~BinarizerDF.set_output
       ~BinarizerDF.set_params
       ~BinarizerDF.to_expression
       ~BinarizerDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.BinarizerDF
 
    .. autosummary::
    
-      ~BinarizerDF.COL_FEATURE_IN
-      ~BinarizerDF.COL_FEATURE_OUT
+      ~BinarizerDF.COL_FEATURE
+      ~BinarizerDF.COL_FEATURE_ORIGINAL
       ~BinarizerDF.feature_names_in_
       ~BinarizerDF.feature_names_original_
       ~BinarizerDF.feature_names_out_
@@ -44,6 +44,7 @@ sklearndf.transformation.BinarizerDF
       ~BinarizerDF.n_features_in_
       ~BinarizerDF.n_outputs_
       ~BinarizerDF.native_estimator
+      ~BinarizerDF.output_names_
    
    
 

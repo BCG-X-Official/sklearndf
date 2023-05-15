@@ -17,7 +17,6 @@ sklearndf.ClusterDF
       :nosignatures:
    
       ~ClusterDF.clone
-      ~ClusterDF.ensure_fitted
       ~ClusterDF.fit
       ~ClusterDF.fit_predict
       ~ClusterDF.get_params
@@ -33,13 +32,14 @@ sklearndf.ClusterDF
 
    .. autosummary::
    
-      ~ClusterDF.COL_FEATURE_IN
+      ~ClusterDF.COL_FEATURE
       ~ClusterDF.feature_names_in_
       ~ClusterDF.is_fitted
       ~ClusterDF.labels_
       ~ClusterDF.n_features_in_
       ~ClusterDF.n_outputs_
       ~ClusterDF.native_estimator
+      ~ClusterDF.output_names_
    
    
 

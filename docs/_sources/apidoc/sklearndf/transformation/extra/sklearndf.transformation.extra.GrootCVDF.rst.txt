@@ -1,0 +1,52 @@
+sklearndf.transformation.extra.GrootCVDF
+========================================
+
+.. currentmodule:: sklearndf.transformation.extra
+
+.. autoclass:: GrootCVDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~GrootCVDF.clone
+      ~GrootCVDF.fit
+      ~GrootCVDF.fit_transform
+      ~GrootCVDF.from_fitted
+      ~GrootCVDF.get_params
+      ~GrootCVDF.inverse_transform
+      ~GrootCVDF.plot_importance
+      ~GrootCVDF.set_output
+      ~GrootCVDF.set_params
+      ~GrootCVDF.to_expression
+      ~GrootCVDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~GrootCVDF.COL_FEATURE
+      ~GrootCVDF.COL_FEATURE_ORIGINAL
+      ~GrootCVDF.feature_names_in_
+      ~GrootCVDF.feature_names_original_
+      ~GrootCVDF.feature_names_out_
+      ~GrootCVDF.is_fitted
+      ~GrootCVDF.n_features_in_
+      ~GrootCVDF.n_outputs_
+      ~GrootCVDF.native_estimator
+      ~GrootCVDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

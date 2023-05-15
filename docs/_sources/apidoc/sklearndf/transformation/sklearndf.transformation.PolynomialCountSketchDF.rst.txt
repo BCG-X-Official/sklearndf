@@ -17,12 +17,12 @@ sklearndf.transformation.PolynomialCountSketchDF
       :nosignatures:
    
       ~PolynomialCountSketchDF.clone
-      ~PolynomialCountSketchDF.ensure_fitted
       ~PolynomialCountSketchDF.fit
       ~PolynomialCountSketchDF.fit_transform
       ~PolynomialCountSketchDF.from_fitted
       ~PolynomialCountSketchDF.get_params
       ~PolynomialCountSketchDF.inverse_transform
+      ~PolynomialCountSketchDF.set_output
       ~PolynomialCountSketchDF.set_params
       ~PolynomialCountSketchDF.to_expression
       ~PolynomialCountSketchDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.PolynomialCountSketchDF
 
    .. autosummary::
    
-      ~PolynomialCountSketchDF.COL_FEATURE_IN
-      ~PolynomialCountSketchDF.COL_FEATURE_OUT
+      ~PolynomialCountSketchDF.COL_FEATURE
+      ~PolynomialCountSketchDF.COL_FEATURE_ORIGINAL
       ~PolynomialCountSketchDF.feature_names_in_
       ~PolynomialCountSketchDF.feature_names_original_
       ~PolynomialCountSketchDF.feature_names_out_
@@ -44,6 +44,7 @@ sklearndf.transformation.PolynomialCountSketchDF
       ~PolynomialCountSketchDF.n_features_in_
       ~PolynomialCountSketchDF.n_outputs_
       ~PolynomialCountSketchDF.native_estimator
+      ~PolynomialCountSketchDF.output_names_
    
    
 

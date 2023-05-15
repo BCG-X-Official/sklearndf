@@ -17,6 +17,7 @@ sklearndf.pipeline.wrapper
       :template: custom-class-template.rst
       :nosignatures:
    
+      FeatureUnionSparseFrames
       FeatureUnionWrapperDF
       PipelineWrapperDF
    

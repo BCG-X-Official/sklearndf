@@ -17,7 +17,6 @@ sklearndf.SupervisedLearnerDF
       :nosignatures:
    
       ~SupervisedLearnerDF.clone
-      ~SupervisedLearnerDF.ensure_fitted
       ~SupervisedLearnerDF.fit
       ~SupervisedLearnerDF.get_params
       ~SupervisedLearnerDF.predict
@@ -33,12 +32,13 @@ sklearndf.SupervisedLearnerDF
 
    .. autosummary::
    
-      ~SupervisedLearnerDF.COL_FEATURE_IN
+      ~SupervisedLearnerDF.COL_FEATURE
       ~SupervisedLearnerDF.feature_names_in_
       ~SupervisedLearnerDF.is_fitted
       ~SupervisedLearnerDF.n_features_in_
       ~SupervisedLearnerDF.n_outputs_
       ~SupervisedLearnerDF.native_estimator
+      ~SupervisedLearnerDF.output_names_
    
    
 

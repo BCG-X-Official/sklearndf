@@ -17,7 +17,6 @@ sklearndf.wrapper.MetaEstimatorWrapperDF
       :nosignatures:
    
       ~MetaEstimatorWrapperDF.clone
-      ~MetaEstimatorWrapperDF.ensure_fitted
       ~MetaEstimatorWrapperDF.fit
       ~MetaEstimatorWrapperDF.from_fitted
       ~MetaEstimatorWrapperDF.get_params
@@ -32,12 +31,13 @@ sklearndf.wrapper.MetaEstimatorWrapperDF
 
    .. autosummary::
    
-      ~MetaEstimatorWrapperDF.COL_FEATURE_IN
+      ~MetaEstimatorWrapperDF.COL_FEATURE
       ~MetaEstimatorWrapperDF.feature_names_in_
       ~MetaEstimatorWrapperDF.is_fitted
       ~MetaEstimatorWrapperDF.n_features_in_
       ~MetaEstimatorWrapperDF.n_outputs_
       ~MetaEstimatorWrapperDF.native_estimator
+      ~MetaEstimatorWrapperDF.output_names_
    
    
 

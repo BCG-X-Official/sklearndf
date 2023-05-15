@@ -167,8 +167,10 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">TypeVar</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">SelectorMixin</span>
 
 <span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span>
 
@@ -177,7 +179,7 @@
 
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;BorutaPyWrapperDF&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;BorutaPyWrapperDF&quot;</span><span class="p">,</span> <span class="s2">&quot;ARFSWrapperDF&quot;</span><span class="p">]</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="c1"># import boruta classes only if installed</span>
@@ -185,32 +187,59 @@
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="n">BorutaPy</span> <span class="o">=</span> <span class="kc">None</span>
 
+
+<span class="c1">#</span>
+<span class="c1"># Type variables</span>
+<span class="c1">#</span>
+
+<span class="n">T_FeatureSelector</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T_FeatureSelector&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">SelectorMixin</span><span class="p">)</span>
+
+
 <span class="c1">#</span>
 <span class="c1"># Ensure all symbols introduced below are included in __all__</span>
 <span class="c1">#</span>
 
 <span class="n">__tracker</span> <span class="o">=</span> <span class="n">AllTracker</span><span class="p">(</span><span class="nb">globals</span><span class="p">())</span>
 
+
 <span class="c1">#</span>
 <span class="c1"># Class definitions</span>
 <span class="c1">#</span>
 
-<span class="k">if</span> <span class="n">BorutaPy</span><span class="p">:</span>
 
-<div class="viewcode-block" id="BorutaPyWrapperDF"><a class="viewcode-back" href="../../../../../apidoc/sklearndf/transformation/extra/wrapper/sklearndf.transformation.extra.wrapper.BorutaPyWrapperDF.html#sklearndf.transformation.extra.wrapper.BorutaPyWrapperDF">[docs]</a>    <span class="k">class</span> <span class="nc">BorutaPyWrapperDF</span><span class="p">(</span>
-        <span class="n">MetaEstimatorWrapperDF</span><span class="p">[</span><span class="n">BorutaPy</span><span class="p">],</span>
-        <span class="n">NumpyTransformerWrapperDF</span><span class="p">[</span><span class="n">BorutaPy</span><span class="p">],</span>
-        <span class="n">ColumnSubsetTransformerWrapperDF</span><span class="p">[</span><span class="n">BorutaPy</span><span class="p">],</span>
-    <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        DF wrapper for :class:`~boruta.BorutaPy`.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BorutaPyWrapperDF"><a class="viewcode-back" href="../../../../../apidoc/sklearndf/transformation/extra/wrapper/sklearndf.transformation.extra.wrapper.BorutaPyWrapperDF.html#sklearndf.transformation.extra.wrapper.BorutaPyWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">BorutaPyWrapperDF</span><span class="p">(</span>
+    <span class="n">MetaEstimatorWrapperDF</span><span class="p">[</span><span class="n">BorutaPy</span><span class="p">],</span>
+    <span class="n">NumpyTransformerWrapperDF</span><span class="p">[</span><span class="n">BorutaPy</span><span class="p">],</span>
+    <span class="n">ColumnSubsetTransformerWrapperDF</span><span class="p">[</span><span class="n">BorutaPy</span><span class="p">],</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DF wrapper for :class:`~boruta.BorutaPy`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-        <span class="k">def</span> <span class="nf">_get_features_out</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">support_</span><span class="p">]</span></div>
+    <span class="k">def</span> <span class="nf">_get_features_out</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">support_</span><span class="p">]</span>
 
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">__all__</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;BorutaPyWrapperDF&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_get_sparse_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="c1"># don&#39;t allow sparse input</span>
+        <span class="k">return</span> <span class="mf">0.0</span></div>
+
+
+<div class="viewcode-block" id="ARFSWrapperDF"><a class="viewcode-back" href="../../../../../apidoc/sklearndf/transformation/extra/wrapper/sklearndf.transformation.extra.wrapper.ARFSWrapperDF.html#sklearndf.transformation.extra.wrapper.ARFSWrapperDF">[docs]</a><span class="k">class</span> <span class="nc">ARFSWrapperDF</span><span class="p">(</span>
+    <span class="n">MetaEstimatorWrapperDF</span><span class="p">[</span><span class="n">T_FeatureSelector</span><span class="p">],</span>
+    <span class="n">ColumnSubsetTransformerWrapperDF</span><span class="p">[</span><span class="n">T_FeatureSelector</span><span class="p">],</span>
+    <span class="n">Generic</span><span class="p">[</span><span class="n">T_FeatureSelector</span><span class="p">],</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DF wrapper for :class:`~boruta.BorutaPy`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_get_features_out</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">support_</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_get_sparse_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="c1"># don&#39;t allow sparse input</span>
+        <span class="k">return</span> <span class="mf">0.0</span></div>
+
 
 <span class="n">__tracker</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
 </pre></div>

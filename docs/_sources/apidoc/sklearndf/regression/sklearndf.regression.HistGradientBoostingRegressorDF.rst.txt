@@ -17,7 +17,6 @@ sklearndf.regression.HistGradientBoostingRegressorDF
       :nosignatures:
    
       ~HistGradientBoostingRegressorDF.clone
-      ~HistGradientBoostingRegressorDF.ensure_fitted
       ~HistGradientBoostingRegressorDF.fit
       ~HistGradientBoostingRegressorDF.from_fitted
       ~HistGradientBoostingRegressorDF.get_params
@@ -35,13 +34,14 @@ sklearndf.regression.HistGradientBoostingRegressorDF
 
    .. autosummary::
    
-      ~HistGradientBoostingRegressorDF.COL_FEATURE_IN
+      ~HistGradientBoostingRegressorDF.COL_FEATURE
       ~HistGradientBoostingRegressorDF.COL_PREDICTION
       ~HistGradientBoostingRegressorDF.feature_names_in_
       ~HistGradientBoostingRegressorDF.is_fitted
       ~HistGradientBoostingRegressorDF.n_features_in_
       ~HistGradientBoostingRegressorDF.n_outputs_
       ~HistGradientBoostingRegressorDF.native_estimator
+      ~HistGradientBoostingRegressorDF.output_names_
    
    
 

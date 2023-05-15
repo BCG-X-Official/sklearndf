@@ -17,10 +17,10 @@ sklearndf.pipeline.RegressorPipelineDF
       :nosignatures:
    
       ~RegressorPipelineDF.clone
-      ~RegressorPipelineDF.ensure_fitted
       ~RegressorPipelineDF.fit
       ~RegressorPipelineDF.get_params
       ~RegressorPipelineDF.predict
+      ~RegressorPipelineDF.preprocess
       ~RegressorPipelineDF.score
       ~RegressorPipelineDF.set_params
       ~RegressorPipelineDF.to_expression
@@ -33,16 +33,15 @@ sklearndf.pipeline.RegressorPipelineDF
 
    .. autosummary::
    
-      ~RegressorPipelineDF.COL_FEATURE_IN
+      ~RegressorPipelineDF.COL_FEATURE
       ~RegressorPipelineDF.feature_names_in_
-      ~RegressorPipelineDF.feature_names_original_
-      ~RegressorPipelineDF.feature_names_out_
       ~RegressorPipelineDF.final_estimator
       ~RegressorPipelineDF.final_estimator_name
       ~RegressorPipelineDF.is_fitted
       ~RegressorPipelineDF.n_features_in_
       ~RegressorPipelineDF.n_outputs_
       ~RegressorPipelineDF.native_estimator
+      ~RegressorPipelineDF.output_names_
       ~RegressorPipelineDF.preprocessing
       ~RegressorPipelineDF.preprocessing_name
    

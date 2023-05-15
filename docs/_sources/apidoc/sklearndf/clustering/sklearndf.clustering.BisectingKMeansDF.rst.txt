@@ -17,7 +17,6 @@ sklearndf.clustering.BisectingKMeansDF
       :nosignatures:
    
       ~BisectingKMeansDF.clone
-      ~BisectingKMeansDF.ensure_fitted
       ~BisectingKMeansDF.fit
       ~BisectingKMeansDF.fit_predict
       ~BisectingKMeansDF.from_fitted
@@ -34,7 +33,7 @@ sklearndf.clustering.BisectingKMeansDF
 
    .. autosummary::
    
-      ~BisectingKMeansDF.COL_FEATURE_IN
+      ~BisectingKMeansDF.COL_FEATURE
       ~BisectingKMeansDF.COL_LABELS
       ~BisectingKMeansDF.COL_PREDICTION
       ~BisectingKMeansDF.IDX_CLUSTER
@@ -45,6 +44,7 @@ sklearndf.clustering.BisectingKMeansDF
       ~BisectingKMeansDF.n_features_in_
       ~BisectingKMeansDF.n_outputs_
       ~BisectingKMeansDF.native_estimator
+      ~BisectingKMeansDF.output_names_
    
    
 

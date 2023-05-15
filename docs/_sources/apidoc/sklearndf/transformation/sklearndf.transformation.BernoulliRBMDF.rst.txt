@@ -17,7 +17,6 @@ sklearndf.transformation.BernoulliRBMDF
       :nosignatures:
    
       ~BernoulliRBMDF.clone
-      ~BernoulliRBMDF.ensure_fitted
       ~BernoulliRBMDF.fit
       ~BernoulliRBMDF.fit_transform
       ~BernoulliRBMDF.from_fitted
@@ -26,6 +25,7 @@ sklearndf.transformation.BernoulliRBMDF
       ~BernoulliRBMDF.inverse_transform
       ~BernoulliRBMDF.partial_fit
       ~BernoulliRBMDF.score_samples
+      ~BernoulliRBMDF.set_output
       ~BernoulliRBMDF.set_params
       ~BernoulliRBMDF.to_expression
       ~BernoulliRBMDF.transform
@@ -38,8 +38,8 @@ sklearndf.transformation.BernoulliRBMDF
 
    .. autosummary::
    
-      ~BernoulliRBMDF.COL_FEATURE_IN
-      ~BernoulliRBMDF.COL_FEATURE_OUT
+      ~BernoulliRBMDF.COL_FEATURE
+      ~BernoulliRBMDF.COL_FEATURE_ORIGINAL
       ~BernoulliRBMDF.feature_names_in_
       ~BernoulliRBMDF.feature_names_original_
       ~BernoulliRBMDF.feature_names_out_
@@ -47,6 +47,7 @@ sklearndf.transformation.BernoulliRBMDF
       ~BernoulliRBMDF.n_features_in_
       ~BernoulliRBMDF.n_outputs_
       ~BernoulliRBMDF.native_estimator
+      ~BernoulliRBMDF.output_names_
    
    
 

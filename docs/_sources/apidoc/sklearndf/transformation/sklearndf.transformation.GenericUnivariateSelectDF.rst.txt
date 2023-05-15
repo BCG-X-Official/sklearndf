@@ -17,12 +17,12 @@ sklearndf.transformation.GenericUnivariateSelectDF
       :nosignatures:
    
       ~GenericUnivariateSelectDF.clone
-      ~GenericUnivariateSelectDF.ensure_fitted
       ~GenericUnivariateSelectDF.fit
       ~GenericUnivariateSelectDF.fit_transform
       ~GenericUnivariateSelectDF.from_fitted
       ~GenericUnivariateSelectDF.get_params
       ~GenericUnivariateSelectDF.inverse_transform
+      ~GenericUnivariateSelectDF.set_output
       ~GenericUnivariateSelectDF.set_params
       ~GenericUnivariateSelectDF.to_expression
       ~GenericUnivariateSelectDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.GenericUnivariateSelectDF
 
    .. autosummary::
    
-      ~GenericUnivariateSelectDF.COL_FEATURE_IN
-      ~GenericUnivariateSelectDF.COL_FEATURE_OUT
+      ~GenericUnivariateSelectDF.COL_FEATURE
+      ~GenericUnivariateSelectDF.COL_FEATURE_ORIGINAL
       ~GenericUnivariateSelectDF.feature_names_in_
       ~GenericUnivariateSelectDF.feature_names_original_
       ~GenericUnivariateSelectDF.feature_names_out_
@@ -44,6 +44,7 @@ sklearndf.transformation.GenericUnivariateSelectDF
       ~GenericUnivariateSelectDF.n_features_in_
       ~GenericUnivariateSelectDF.n_outputs_
       ~GenericUnivariateSelectDF.native_estimator
+      ~GenericUnivariateSelectDF.output_names_
    
    
 

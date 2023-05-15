@@ -17,13 +17,13 @@ sklearndf.transformation.MinMaxScalerDF
       :nosignatures:
    
       ~MinMaxScalerDF.clone
-      ~MinMaxScalerDF.ensure_fitted
       ~MinMaxScalerDF.fit
       ~MinMaxScalerDF.fit_transform
       ~MinMaxScalerDF.from_fitted
       ~MinMaxScalerDF.get_params
       ~MinMaxScalerDF.inverse_transform
       ~MinMaxScalerDF.partial_fit
+      ~MinMaxScalerDF.set_output
       ~MinMaxScalerDF.set_params
       ~MinMaxScalerDF.to_expression
       ~MinMaxScalerDF.transform
@@ -36,8 +36,8 @@ sklearndf.transformation.MinMaxScalerDF
 
    .. autosummary::
    
-      ~MinMaxScalerDF.COL_FEATURE_IN
-      ~MinMaxScalerDF.COL_FEATURE_OUT
+      ~MinMaxScalerDF.COL_FEATURE
+      ~MinMaxScalerDF.COL_FEATURE_ORIGINAL
       ~MinMaxScalerDF.feature_names_in_
       ~MinMaxScalerDF.feature_names_original_
       ~MinMaxScalerDF.feature_names_out_
@@ -45,6 +45,7 @@ sklearndf.transformation.MinMaxScalerDF
       ~MinMaxScalerDF.n_features_in_
       ~MinMaxScalerDF.n_outputs_
       ~MinMaxScalerDF.native_estimator
+      ~MinMaxScalerDF.output_names_
    
    
 

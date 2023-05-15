@@ -17,7 +17,6 @@ sklearndf.regression.PoissonRegressorDF
       :nosignatures:
    
       ~PoissonRegressorDF.clone
-      ~PoissonRegressorDF.ensure_fitted
       ~PoissonRegressorDF.fit
       ~PoissonRegressorDF.from_fitted
       ~PoissonRegressorDF.get_params
@@ -34,13 +33,14 @@ sklearndf.regression.PoissonRegressorDF
 
    .. autosummary::
    
-      ~PoissonRegressorDF.COL_FEATURE_IN
+      ~PoissonRegressorDF.COL_FEATURE
       ~PoissonRegressorDF.COL_PREDICTION
       ~PoissonRegressorDF.feature_names_in_
       ~PoissonRegressorDF.is_fitted
       ~PoissonRegressorDF.n_features_in_
       ~PoissonRegressorDF.n_outputs_
       ~PoissonRegressorDF.native_estimator
+      ~PoissonRegressorDF.output_names_
    
    
 

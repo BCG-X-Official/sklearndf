@@ -17,12 +17,12 @@ sklearndf.transformation.NeighborhoodComponentsAnalysisDF
       :nosignatures:
    
       ~NeighborhoodComponentsAnalysisDF.clone
-      ~NeighborhoodComponentsAnalysisDF.ensure_fitted
       ~NeighborhoodComponentsAnalysisDF.fit
       ~NeighborhoodComponentsAnalysisDF.fit_transform
       ~NeighborhoodComponentsAnalysisDF.from_fitted
       ~NeighborhoodComponentsAnalysisDF.get_params
       ~NeighborhoodComponentsAnalysisDF.inverse_transform
+      ~NeighborhoodComponentsAnalysisDF.set_output
       ~NeighborhoodComponentsAnalysisDF.set_params
       ~NeighborhoodComponentsAnalysisDF.to_expression
       ~NeighborhoodComponentsAnalysisDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.NeighborhoodComponentsAnalysisDF
 
    .. autosummary::
    
-      ~NeighborhoodComponentsAnalysisDF.COL_FEATURE_IN
-      ~NeighborhoodComponentsAnalysisDF.COL_FEATURE_OUT
+      ~NeighborhoodComponentsAnalysisDF.COL_FEATURE
+      ~NeighborhoodComponentsAnalysisDF.COL_FEATURE_ORIGINAL
       ~NeighborhoodComponentsAnalysisDF.feature_names_in_
       ~NeighborhoodComponentsAnalysisDF.feature_names_original_
       ~NeighborhoodComponentsAnalysisDF.feature_names_out_
@@ -44,6 +44,7 @@ sklearndf.transformation.NeighborhoodComponentsAnalysisDF
       ~NeighborhoodComponentsAnalysisDF.n_features_in_
       ~NeighborhoodComponentsAnalysisDF.n_outputs_
       ~NeighborhoodComponentsAnalysisDF.native_estimator
+      ~NeighborhoodComponentsAnalysisDF.output_names_
    
    
 

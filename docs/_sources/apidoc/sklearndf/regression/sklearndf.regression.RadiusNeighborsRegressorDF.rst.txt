@@ -17,7 +17,6 @@ sklearndf.regression.RadiusNeighborsRegressorDF
       :nosignatures:
    
       ~RadiusNeighborsRegressorDF.clone
-      ~RadiusNeighborsRegressorDF.ensure_fitted
       ~RadiusNeighborsRegressorDF.fit
       ~RadiusNeighborsRegressorDF.from_fitted
       ~RadiusNeighborsRegressorDF.get_params
@@ -34,13 +33,14 @@ sklearndf.regression.RadiusNeighborsRegressorDF
 
    .. autosummary::
    
-      ~RadiusNeighborsRegressorDF.COL_FEATURE_IN
+      ~RadiusNeighborsRegressorDF.COL_FEATURE
       ~RadiusNeighborsRegressorDF.COL_PREDICTION
       ~RadiusNeighborsRegressorDF.feature_names_in_
       ~RadiusNeighborsRegressorDF.is_fitted
       ~RadiusNeighborsRegressorDF.n_features_in_
       ~RadiusNeighborsRegressorDF.n_outputs_
       ~RadiusNeighborsRegressorDF.native_estimator
+      ~RadiusNeighborsRegressorDF.output_names_
    
    
 

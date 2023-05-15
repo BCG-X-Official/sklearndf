@@ -18,7 +18,6 @@ sklearndf.classification.MultiOutputClassifierDF
    
       ~MultiOutputClassifierDF.clone
       ~MultiOutputClassifierDF.decision_function
-      ~MultiOutputClassifierDF.ensure_fitted
       ~MultiOutputClassifierDF.fit
       ~MultiOutputClassifierDF.from_fitted
       ~MultiOutputClassifierDF.get_params
@@ -38,7 +37,7 @@ sklearndf.classification.MultiOutputClassifierDF
 
    .. autosummary::
    
-      ~MultiOutputClassifierDF.COL_FEATURE_IN
+      ~MultiOutputClassifierDF.COL_FEATURE
       ~MultiOutputClassifierDF.COL_PREDICTION
       ~MultiOutputClassifierDF.classes_
       ~MultiOutputClassifierDF.feature_names_in_
@@ -46,6 +45,7 @@ sklearndf.classification.MultiOutputClassifierDF
       ~MultiOutputClassifierDF.n_features_in_
       ~MultiOutputClassifierDF.n_outputs_
       ~MultiOutputClassifierDF.native_estimator
+      ~MultiOutputClassifierDF.output_names_
    
    
 

@@ -17,13 +17,13 @@ sklearndf.transformation.AdditiveChi2SamplerDF
       :nosignatures:
    
       ~AdditiveChi2SamplerDF.clone
-      ~AdditiveChi2SamplerDF.ensure_fitted
       ~AdditiveChi2SamplerDF.fit
       ~AdditiveChi2SamplerDF.fit_transform
       ~AdditiveChi2SamplerDF.from_fitted
       ~AdditiveChi2SamplerDF.get_feature_names_out
       ~AdditiveChi2SamplerDF.get_params
       ~AdditiveChi2SamplerDF.inverse_transform
+      ~AdditiveChi2SamplerDF.set_output
       ~AdditiveChi2SamplerDF.set_params
       ~AdditiveChi2SamplerDF.to_expression
       ~AdditiveChi2SamplerDF.transform
@@ -36,8 +36,8 @@ sklearndf.transformation.AdditiveChi2SamplerDF
 
    .. autosummary::
    
-      ~AdditiveChi2SamplerDF.COL_FEATURE_IN
-      ~AdditiveChi2SamplerDF.COL_FEATURE_OUT
+      ~AdditiveChi2SamplerDF.COL_FEATURE
+      ~AdditiveChi2SamplerDF.COL_FEATURE_ORIGINAL
       ~AdditiveChi2SamplerDF.feature_names_in_
       ~AdditiveChi2SamplerDF.feature_names_original_
       ~AdditiveChi2SamplerDF.feature_names_out_
@@ -45,6 +45,7 @@ sklearndf.transformation.AdditiveChi2SamplerDF
       ~AdditiveChi2SamplerDF.n_features_in_
       ~AdditiveChi2SamplerDF.n_outputs_
       ~AdditiveChi2SamplerDF.native_estimator
+      ~AdditiveChi2SamplerDF.output_names_
    
    
 

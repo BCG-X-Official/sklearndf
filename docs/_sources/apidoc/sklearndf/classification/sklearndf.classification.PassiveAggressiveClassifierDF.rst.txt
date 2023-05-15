@@ -18,7 +18,6 @@ sklearndf.classification.PassiveAggressiveClassifierDF
    
       ~PassiveAggressiveClassifierDF.clone
       ~PassiveAggressiveClassifierDF.decision_function
-      ~PassiveAggressiveClassifierDF.ensure_fitted
       ~PassiveAggressiveClassifierDF.fit
       ~PassiveAggressiveClassifierDF.from_fitted
       ~PassiveAggressiveClassifierDF.get_params
@@ -38,7 +37,7 @@ sklearndf.classification.PassiveAggressiveClassifierDF
 
    .. autosummary::
    
-      ~PassiveAggressiveClassifierDF.COL_FEATURE_IN
+      ~PassiveAggressiveClassifierDF.COL_FEATURE
       ~PassiveAggressiveClassifierDF.COL_PREDICTION
       ~PassiveAggressiveClassifierDF.classes_
       ~PassiveAggressiveClassifierDF.feature_names_in_
@@ -46,6 +45,7 @@ sklearndf.classification.PassiveAggressiveClassifierDF
       ~PassiveAggressiveClassifierDF.n_features_in_
       ~PassiveAggressiveClassifierDF.n_outputs_
       ~PassiveAggressiveClassifierDF.native_estimator
+      ~PassiveAggressiveClassifierDF.output_names_
    
    
 

@@ -18,7 +18,6 @@ sklearndf.classification.MLPClassifierDF
    
       ~MLPClassifierDF.clone
       ~MLPClassifierDF.decision_function
-      ~MLPClassifierDF.ensure_fitted
       ~MLPClassifierDF.fit
       ~MLPClassifierDF.from_fitted
       ~MLPClassifierDF.get_params
@@ -38,7 +37,7 @@ sklearndf.classification.MLPClassifierDF
 
    .. autosummary::
    
-      ~MLPClassifierDF.COL_FEATURE_IN
+      ~MLPClassifierDF.COL_FEATURE
       ~MLPClassifierDF.COL_PREDICTION
       ~MLPClassifierDF.classes_
       ~MLPClassifierDF.feature_names_in_
@@ -46,6 +45,7 @@ sklearndf.classification.MLPClassifierDF
       ~MLPClassifierDF.n_features_in_
       ~MLPClassifierDF.n_outputs_
       ~MLPClassifierDF.native_estimator
+      ~MLPClassifierDF.output_names_
    
    
 

@@ -18,7 +18,6 @@ sklearndf.classification.BaggingClassifierDF
    
       ~BaggingClassifierDF.clone
       ~BaggingClassifierDF.decision_function
-      ~BaggingClassifierDF.ensure_fitted
       ~BaggingClassifierDF.fit
       ~BaggingClassifierDF.from_fitted
       ~BaggingClassifierDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.BaggingClassifierDF
 
    .. autosummary::
    
-      ~BaggingClassifierDF.COL_FEATURE_IN
+      ~BaggingClassifierDF.COL_FEATURE
       ~BaggingClassifierDF.COL_PREDICTION
       ~BaggingClassifierDF.classes_
       ~BaggingClassifierDF.feature_names_in_
@@ -45,6 +44,7 @@ sklearndf.classification.BaggingClassifierDF
       ~BaggingClassifierDF.n_features_in_
       ~BaggingClassifierDF.n_outputs_
       ~BaggingClassifierDF.native_estimator
+      ~BaggingClassifierDF.output_names_
    
    
 

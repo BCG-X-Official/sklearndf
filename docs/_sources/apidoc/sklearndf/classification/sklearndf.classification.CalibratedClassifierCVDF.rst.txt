@@ -18,7 +18,6 @@ sklearndf.classification.CalibratedClassifierCVDF
    
       ~CalibratedClassifierCVDF.clone
       ~CalibratedClassifierCVDF.decision_function
-      ~CalibratedClassifierCVDF.ensure_fitted
       ~CalibratedClassifierCVDF.fit
       ~CalibratedClassifierCVDF.from_fitted
       ~CalibratedClassifierCVDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.CalibratedClassifierCVDF
 
    .. autosummary::
    
-      ~CalibratedClassifierCVDF.COL_FEATURE_IN
+      ~CalibratedClassifierCVDF.COL_FEATURE
       ~CalibratedClassifierCVDF.COL_PREDICTION
       ~CalibratedClassifierCVDF.classes_
       ~CalibratedClassifierCVDF.feature_names_in_
@@ -45,6 +44,7 @@ sklearndf.classification.CalibratedClassifierCVDF
       ~CalibratedClassifierCVDF.n_features_in_
       ~CalibratedClassifierCVDF.n_outputs_
       ~CalibratedClassifierCVDF.native_estimator
+      ~CalibratedClassifierCVDF.output_names_
    
    
 

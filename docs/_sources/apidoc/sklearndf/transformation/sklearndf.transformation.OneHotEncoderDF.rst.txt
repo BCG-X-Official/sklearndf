@@ -17,14 +17,13 @@ sklearndf.transformation.OneHotEncoderDF
       :nosignatures:
    
       ~OneHotEncoderDF.clone
-      ~OneHotEncoderDF.ensure_fitted
       ~OneHotEncoderDF.fit
       ~OneHotEncoderDF.fit_transform
       ~OneHotEncoderDF.from_fitted
-      ~OneHotEncoderDF.get_feature_names
       ~OneHotEncoderDF.get_feature_names_out
       ~OneHotEncoderDF.get_params
       ~OneHotEncoderDF.inverse_transform
+      ~OneHotEncoderDF.set_output
       ~OneHotEncoderDF.set_params
       ~OneHotEncoderDF.to_expression
       ~OneHotEncoderDF.transform
@@ -37,8 +36,8 @@ sklearndf.transformation.OneHotEncoderDF
 
    .. autosummary::
    
-      ~OneHotEncoderDF.COL_FEATURE_IN
-      ~OneHotEncoderDF.COL_FEATURE_OUT
+      ~OneHotEncoderDF.COL_FEATURE
+      ~OneHotEncoderDF.COL_FEATURE_ORIGINAL
       ~OneHotEncoderDF.feature_names_in_
       ~OneHotEncoderDF.feature_names_original_
       ~OneHotEncoderDF.feature_names_out_
@@ -47,6 +46,7 @@ sklearndf.transformation.OneHotEncoderDF
       ~OneHotEncoderDF.n_features_in_
       ~OneHotEncoderDF.n_outputs_
       ~OneHotEncoderDF.native_estimator
+      ~OneHotEncoderDF.output_names_
    
    
 

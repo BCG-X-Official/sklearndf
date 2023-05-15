@@ -17,12 +17,12 @@ sklearndf.transformation.MultiLabelBinarizerDF
       :nosignatures:
    
       ~MultiLabelBinarizerDF.clone
-      ~MultiLabelBinarizerDF.ensure_fitted
       ~MultiLabelBinarizerDF.fit
       ~MultiLabelBinarizerDF.fit_transform
       ~MultiLabelBinarizerDF.from_fitted
       ~MultiLabelBinarizerDF.get_params
       ~MultiLabelBinarizerDF.inverse_transform
+      ~MultiLabelBinarizerDF.set_output
       ~MultiLabelBinarizerDF.set_params
       ~MultiLabelBinarizerDF.to_expression
       ~MultiLabelBinarizerDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.MultiLabelBinarizerDF
 
    .. autosummary::
    
-      ~MultiLabelBinarizerDF.COL_FEATURE_IN
-      ~MultiLabelBinarizerDF.COL_FEATURE_OUT
+      ~MultiLabelBinarizerDF.COL_FEATURE
+      ~MultiLabelBinarizerDF.COL_FEATURE_ORIGINAL
       ~MultiLabelBinarizerDF.feature_names_in_
       ~MultiLabelBinarizerDF.feature_names_original_
       ~MultiLabelBinarizerDF.feature_names_out_
@@ -44,6 +44,7 @@ sklearndf.transformation.MultiLabelBinarizerDF
       ~MultiLabelBinarizerDF.n_features_in_
       ~MultiLabelBinarizerDF.n_outputs_
       ~MultiLabelBinarizerDF.native_estimator
+      ~MultiLabelBinarizerDF.output_names_
    
    
 

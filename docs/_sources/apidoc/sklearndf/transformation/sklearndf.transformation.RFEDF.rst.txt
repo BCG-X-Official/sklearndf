@@ -17,12 +17,12 @@ sklearndf.transformation.RFEDF
       :nosignatures:
    
       ~RFEDF.clone
-      ~RFEDF.ensure_fitted
       ~RFEDF.fit
       ~RFEDF.fit_transform
       ~RFEDF.from_fitted
       ~RFEDF.get_params
       ~RFEDF.inverse_transform
+      ~RFEDF.set_output
       ~RFEDF.set_params
       ~RFEDF.to_expression
       ~RFEDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.RFEDF
 
    .. autosummary::
    
-      ~RFEDF.COL_FEATURE_IN
-      ~RFEDF.COL_FEATURE_OUT
+      ~RFEDF.COL_FEATURE
+      ~RFEDF.COL_FEATURE_ORIGINAL
       ~RFEDF.classes_
       ~RFEDF.feature_names_in_
       ~RFEDF.feature_names_original_
@@ -45,6 +45,7 @@ sklearndf.transformation.RFEDF
       ~RFEDF.n_features_in_
       ~RFEDF.n_outputs_
       ~RFEDF.native_estimator
+      ~RFEDF.output_names_
    
    
 

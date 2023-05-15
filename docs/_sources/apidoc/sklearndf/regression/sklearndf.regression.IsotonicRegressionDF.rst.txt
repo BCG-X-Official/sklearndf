@@ -17,7 +17,6 @@ sklearndf.regression.IsotonicRegressionDF
       :nosignatures:
    
       ~IsotonicRegressionDF.clone
-      ~IsotonicRegressionDF.ensure_fitted
       ~IsotonicRegressionDF.fit
       ~IsotonicRegressionDF.fit_transform
       ~IsotonicRegressionDF.from_fitted
@@ -26,6 +25,7 @@ sklearndf.regression.IsotonicRegressionDF
       ~IsotonicRegressionDF.inverse_transform
       ~IsotonicRegressionDF.predict
       ~IsotonicRegressionDF.score
+      ~IsotonicRegressionDF.set_output
       ~IsotonicRegressionDF.set_params
       ~IsotonicRegressionDF.to_expression
       ~IsotonicRegressionDF.transform
@@ -38,8 +38,8 @@ sklearndf.regression.IsotonicRegressionDF
 
    .. autosummary::
    
-      ~IsotonicRegressionDF.COL_FEATURE_IN
-      ~IsotonicRegressionDF.COL_FEATURE_OUT
+      ~IsotonicRegressionDF.COL_FEATURE
+      ~IsotonicRegressionDF.COL_FEATURE_ORIGINAL
       ~IsotonicRegressionDF.COL_PREDICTION
       ~IsotonicRegressionDF.feature_names_in_
       ~IsotonicRegressionDF.feature_names_original_
@@ -48,6 +48,7 @@ sklearndf.regression.IsotonicRegressionDF
       ~IsotonicRegressionDF.n_features_in_
       ~IsotonicRegressionDF.n_outputs_
       ~IsotonicRegressionDF.native_estimator
+      ~IsotonicRegressionDF.output_names_
    
    
 

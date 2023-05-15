@@ -17,12 +17,12 @@ sklearndf.transformation.NystroemDF
       :nosignatures:
    
       ~NystroemDF.clone
-      ~NystroemDF.ensure_fitted
       ~NystroemDF.fit
       ~NystroemDF.fit_transform
       ~NystroemDF.from_fitted
       ~NystroemDF.get_params
       ~NystroemDF.inverse_transform
+      ~NystroemDF.set_output
       ~NystroemDF.set_params
       ~NystroemDF.to_expression
       ~NystroemDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.NystroemDF
 
    .. autosummary::
    
-      ~NystroemDF.COL_FEATURE_IN
-      ~NystroemDF.COL_FEATURE_OUT
+      ~NystroemDF.COL_FEATURE
+      ~NystroemDF.COL_FEATURE_ORIGINAL
       ~NystroemDF.feature_names_in_
       ~NystroemDF.feature_names_original_
       ~NystroemDF.feature_names_out_
@@ -44,6 +44,7 @@ sklearndf.transformation.NystroemDF
       ~NystroemDF.n_features_in_
       ~NystroemDF.n_outputs_
       ~NystroemDF.native_estimator
+      ~NystroemDF.output_names_
    
    
 

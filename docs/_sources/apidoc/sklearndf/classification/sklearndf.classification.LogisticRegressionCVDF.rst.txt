@@ -18,7 +18,6 @@ sklearndf.classification.LogisticRegressionCVDF
    
       ~LogisticRegressionCVDF.clone
       ~LogisticRegressionCVDF.decision_function
-      ~LogisticRegressionCVDF.ensure_fitted
       ~LogisticRegressionCVDF.fit
       ~LogisticRegressionCVDF.from_fitted
       ~LogisticRegressionCVDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.LogisticRegressionCVDF
 
    .. autosummary::
    
-      ~LogisticRegressionCVDF.COL_FEATURE_IN
+      ~LogisticRegressionCVDF.COL_FEATURE
       ~LogisticRegressionCVDF.COL_PREDICTION
       ~LogisticRegressionCVDF.classes_
       ~LogisticRegressionCVDF.feature_names_in_
@@ -45,6 +44,7 @@ sklearndf.classification.LogisticRegressionCVDF
       ~LogisticRegressionCVDF.n_features_in_
       ~LogisticRegressionCVDF.n_outputs_
       ~LogisticRegressionCVDF.native_estimator
+      ~LogisticRegressionCVDF.output_names_
    
    
 

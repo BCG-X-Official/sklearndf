@@ -18,7 +18,6 @@ sklearndf.classification.PerceptronDF
    
       ~PerceptronDF.clone
       ~PerceptronDF.decision_function
-      ~PerceptronDF.ensure_fitted
       ~PerceptronDF.fit
       ~PerceptronDF.from_fitted
       ~PerceptronDF.get_params
@@ -38,7 +37,7 @@ sklearndf.classification.PerceptronDF
 
    .. autosummary::
    
-      ~PerceptronDF.COL_FEATURE_IN
+      ~PerceptronDF.COL_FEATURE
       ~PerceptronDF.COL_PREDICTION
       ~PerceptronDF.classes_
       ~PerceptronDF.feature_names_in_
@@ -46,6 +45,7 @@ sklearndf.classification.PerceptronDF
       ~PerceptronDF.n_features_in_
       ~PerceptronDF.n_outputs_
       ~PerceptronDF.native_estimator
+      ~PerceptronDF.output_names_
    
    
 

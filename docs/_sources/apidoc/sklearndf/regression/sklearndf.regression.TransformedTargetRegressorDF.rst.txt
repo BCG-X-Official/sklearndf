@@ -17,7 +17,6 @@ sklearndf.regression.TransformedTargetRegressorDF
       :nosignatures:
    
       ~TransformedTargetRegressorDF.clone
-      ~TransformedTargetRegressorDF.ensure_fitted
       ~TransformedTargetRegressorDF.fit
       ~TransformedTargetRegressorDF.from_fitted
       ~TransformedTargetRegressorDF.get_params
@@ -34,13 +33,14 @@ sklearndf.regression.TransformedTargetRegressorDF
 
    .. autosummary::
    
-      ~TransformedTargetRegressorDF.COL_FEATURE_IN
+      ~TransformedTargetRegressorDF.COL_FEATURE
       ~TransformedTargetRegressorDF.COL_PREDICTION
       ~TransformedTargetRegressorDF.feature_names_in_
       ~TransformedTargetRegressorDF.is_fitted
       ~TransformedTargetRegressorDF.n_features_in_
       ~TransformedTargetRegressorDF.n_outputs_
       ~TransformedTargetRegressorDF.native_estimator
+      ~TransformedTargetRegressorDF.output_names_
    
    
 

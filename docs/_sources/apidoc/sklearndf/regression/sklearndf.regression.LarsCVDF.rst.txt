@@ -17,7 +17,6 @@ sklearndf.regression.LarsCVDF
       :nosignatures:
    
       ~LarsCVDF.clone
-      ~LarsCVDF.ensure_fitted
       ~LarsCVDF.fit
       ~LarsCVDF.from_fitted
       ~LarsCVDF.get_params
@@ -34,13 +33,14 @@ sklearndf.regression.LarsCVDF
 
    .. autosummary::
    
-      ~LarsCVDF.COL_FEATURE_IN
+      ~LarsCVDF.COL_FEATURE
       ~LarsCVDF.COL_PREDICTION
       ~LarsCVDF.feature_names_in_
       ~LarsCVDF.is_fitted
       ~LarsCVDF.n_features_in_
       ~LarsCVDF.n_outputs_
       ~LarsCVDF.native_estimator
+      ~LarsCVDF.output_names_
    
    
 

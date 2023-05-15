@@ -17,7 +17,6 @@ sklearndf.EstimatorDF
       :nosignatures:
    
       ~EstimatorDF.clone
-      ~EstimatorDF.ensure_fitted
       ~EstimatorDF.fit
       ~EstimatorDF.get_params
       ~EstimatorDF.set_params
@@ -31,12 +30,13 @@ sklearndf.EstimatorDF
 
    .. autosummary::
    
-      ~EstimatorDF.COL_FEATURE_IN
+      ~EstimatorDF.COL_FEATURE
       ~EstimatorDF.feature_names_in_
       ~EstimatorDF.is_fitted
       ~EstimatorDF.n_features_in_
       ~EstimatorDF.n_outputs_
       ~EstimatorDF.native_estimator
+      ~EstimatorDF.output_names_
    
    
 

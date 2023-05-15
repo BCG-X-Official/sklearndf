@@ -168,7 +168,7 @@
 
 <span class="kn">import</span> <span class="nn">logging</span>
 
-<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">TransformerMixin</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span>
 
 <span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span>
 
@@ -176,7 +176,7 @@
 
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;BorutaDF&quot;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;BoostAGrootaDF&quot;</span><span class="p">,</span> <span class="s2">&quot;BorutaDF&quot;</span><span class="p">,</span> <span class="s2">&quot;GrootCVDF&quot;</span><span class="p">,</span> <span class="s2">&quot;LeshyDF&quot;</span><span class="p">]</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="c1"># import boruta classes only if installed</span>
@@ -188,7 +188,32 @@
         <span class="n">MissingEstimator</span><span class="p">,</span>
         <span class="n">TransformerMixin</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Mock-up for missing estimator.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mock-up for missing estimator.&quot;&quot;&quot;</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># import boruta classes only if installed</span>
+    <span class="kn">from</span> <span class="nn">arfs.feature_selection.allrelevant</span> <span class="kn">import</span> <span class="n">BoostAGroota</span><span class="p">,</span> <span class="n">GrootCV</span><span class="p">,</span> <span class="n">Leshy</span>
+
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+
+    <span class="k">class</span> <span class="nc">BoostAGroota</span><span class="p">(</span>  <span class="c1"># type: ignore</span>
+        <span class="n">MissingEstimator</span><span class="p">,</span>
+        <span class="n">TransformerMixin</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mock-up for missing estimator.&quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">GrootCV</span><span class="p">(</span>  <span class="c1"># type: ignore</span>
+        <span class="n">MissingEstimator</span><span class="p">,</span>
+        <span class="n">TransformerMixin</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mock-up for missing estimator.&quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">Leshy</span><span class="p">(</span>  <span class="c1"># type: ignore</span>
+        <span class="n">MissingEstimator</span><span class="p">,</span>
+        <span class="n">TransformerMixin</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mock-up for missing estimator.&quot;&quot;&quot;</span>
 
 
 <span class="c1">#</span>
@@ -203,12 +228,59 @@
 <span class="c1">#</span>
 
 
+<span class="kn">from</span> <span class="nn">.wrapper</span> <span class="kn">import</span> <span class="n">ARFSWrapperDF</span> <span class="k">as</span> <span class="n">_ARFSWrapperDF</span>
 <span class="kn">from</span> <span class="nn">.wrapper</span> <span class="kn">import</span> <span class="n">BorutaPyWrapperDF</span> <span class="k">as</span> <span class="n">_BorutaPyWrapperDF</span>
 
 
 <div class="viewcode-block" id="BorutaDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/extra/sklearndf.transformation.extra.BorutaDF.html#sklearndf.transformation.extra.BorutaDF">[docs]</a><span class="k">class</span> <span class="nc">BorutaDF</span><span class="p">(</span><span class="n">_BorutaPyWrapperDF</span><span class="p">,</span> <span class="n">native</span><span class="o">=</span><span class="n">BorutaPy</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    DF version of :class:`~boruta.BorutaPy`.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="LeshyDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/extra/sklearndf.transformation.extra.LeshyDF.html#sklearndf.transformation.extra.LeshyDF">[docs]</a><span class="k">class</span> <span class="nc">LeshyDF</span><span class="p">(</span><span class="n">_ARFSWrapperDF</span><span class="p">[</span><span class="n">Leshy</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">Leshy</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DF version of :class:`~arfs.feature_selection.allrelevant.Leshy`.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="BoostAGrootaDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/extra/sklearndf.transformation.extra.BoostAGrootaDF.html#sklearndf.transformation.extra.BoostAGrootaDF">[docs]</a><span class="k">class</span> <span class="nc">BoostAGrootaDF</span><span class="p">(</span><span class="n">_ARFSWrapperDF</span><span class="p">[</span><span class="n">BoostAGroota</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">BoostAGroota</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DF version of :class:`~arfs.feature_selection.allrelevant.BoostAGroota`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseEstimator</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Alias for the native estimator&#39;s :attr:`.est` attribute, to conform with</span>
+<span class="sd">        the :class:`~sklearn.base.MetaEstimatorMixin` interface.</span>
+
+<span class="sd">        :return: the value of the native estimator&#39;s :attr:`.est` attribute</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">est</span>
+
+    <span class="nd">@estimator</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">est</span><span class="p">:</span> <span class="n">BaseEstimator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Alias for the native estimator&#39;s :attr:`.est` attribute, to conform with</span>
+<span class="sd">        the :class:`~sklearn.base.MetaEstimatorMixin` interface.</span>
+
+<span class="sd">        :param est: the new value for the native estimator&#39;s :attr:`.est` attribute</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">est</span> <span class="o">=</span> <span class="n">est</span>
+
+    <span class="nd">@estimator</span><span class="o">.</span><span class="n">deleter</span>
+    <span class="k">def</span> <span class="nf">estimator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Alias for the native estimator&#39;s :attr:`.est` attribute, to conform with</span>
+<span class="sd">        the :class:`~sklearn.base.MetaEstimatorMixin` interface.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">est</span></div>
+
+
+<div class="viewcode-block" id="GrootCVDF"><a class="viewcode-back" href="../../../../apidoc/sklearndf/transformation/extra/sklearndf.transformation.extra.GrootCVDF.html#sklearndf.transformation.extra.GrootCVDF">[docs]</a><span class="k">class</span> <span class="nc">GrootCVDF</span><span class="p">(</span><span class="n">_ARFSWrapperDF</span><span class="p">[</span><span class="n">GrootCV</span><span class="p">],</span> <span class="n">native</span><span class="o">=</span><span class="n">GrootCV</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DF version of :class:`~arfs.feature_selection.allrelevant.GrootCV`.</span>
 <span class="sd">    &quot;&quot;&quot;</span></div>
 
 

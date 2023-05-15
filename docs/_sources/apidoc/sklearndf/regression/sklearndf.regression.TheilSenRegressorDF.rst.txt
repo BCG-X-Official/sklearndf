@@ -17,7 +17,6 @@ sklearndf.regression.TheilSenRegressorDF
       :nosignatures:
    
       ~TheilSenRegressorDF.clone
-      ~TheilSenRegressorDF.ensure_fitted
       ~TheilSenRegressorDF.fit
       ~TheilSenRegressorDF.from_fitted
       ~TheilSenRegressorDF.get_params
@@ -34,13 +33,14 @@ sklearndf.regression.TheilSenRegressorDF
 
    .. autosummary::
    
-      ~TheilSenRegressorDF.COL_FEATURE_IN
+      ~TheilSenRegressorDF.COL_FEATURE
       ~TheilSenRegressorDF.COL_PREDICTION
       ~TheilSenRegressorDF.feature_names_in_
       ~TheilSenRegressorDF.is_fitted
       ~TheilSenRegressorDF.n_features_in_
       ~TheilSenRegressorDF.n_outputs_
       ~TheilSenRegressorDF.native_estimator
+      ~TheilSenRegressorDF.output_names_
    
    
 

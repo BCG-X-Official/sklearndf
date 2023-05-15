@@ -17,11 +17,11 @@ sklearndf.wrapper.numpy.TransformerNPDF
       :nosignatures:
    
       ~TransformerNPDF.clone
-      ~TransformerNPDF.ensure_fitted
       ~TransformerNPDF.fit
       ~TransformerNPDF.fit_transform
       ~TransformerNPDF.get_params
       ~TransformerNPDF.inverse_transform
+      ~TransformerNPDF.set_output
       ~TransformerNPDF.set_params
       ~TransformerNPDF.to_expression
       ~TransformerNPDF.transform
@@ -34,8 +34,8 @@ sklearndf.wrapper.numpy.TransformerNPDF
 
    .. autosummary::
    
-      ~TransformerNPDF.COL_FEATURE_IN
-      ~TransformerNPDF.COL_FEATURE_OUT
+      ~TransformerNPDF.COL_FEATURE
+      ~TransformerNPDF.COL_FEATURE_ORIGINAL
       ~TransformerNPDF.feature_names_in_
       ~TransformerNPDF.feature_names_original_
       ~TransformerNPDF.feature_names_out_
@@ -43,6 +43,7 @@ sklearndf.wrapper.numpy.TransformerNPDF
       ~TransformerNPDF.n_features_in_
       ~TransformerNPDF.n_outputs_
       ~TransformerNPDF.native_estimator
+      ~TransformerNPDF.output_names_
       ~TransformerNPDF.delegate
       ~TransformerNPDF.column_names
    

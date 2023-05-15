@@ -18,7 +18,6 @@ sklearndf.classification.extra.LGBMClassifierDF
    
       ~LGBMClassifierDF.clone
       ~LGBMClassifierDF.decision_function
-      ~LGBMClassifierDF.ensure_fitted
       ~LGBMClassifierDF.fit
       ~LGBMClassifierDF.from_fitted
       ~LGBMClassifierDF.get_params
@@ -37,7 +36,7 @@ sklearndf.classification.extra.LGBMClassifierDF
 
    .. autosummary::
    
-      ~LGBMClassifierDF.COL_FEATURE_IN
+      ~LGBMClassifierDF.COL_FEATURE
       ~LGBMClassifierDF.COL_PREDICTION
       ~LGBMClassifierDF.classes_
       ~LGBMClassifierDF.feature_names_in_
@@ -46,6 +45,7 @@ sklearndf.classification.extra.LGBMClassifierDF
       ~LGBMClassifierDF.n_features_in_
       ~LGBMClassifierDF.n_outputs_
       ~LGBMClassifierDF.native_estimator
+      ~LGBMClassifierDF.output_names_
    
    
 

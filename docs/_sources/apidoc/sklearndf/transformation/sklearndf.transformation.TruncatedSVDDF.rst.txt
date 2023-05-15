@@ -17,12 +17,12 @@ sklearndf.transformation.TruncatedSVDDF
       :nosignatures:
    
       ~TruncatedSVDDF.clone
-      ~TruncatedSVDDF.ensure_fitted
       ~TruncatedSVDDF.fit
       ~TruncatedSVDDF.fit_transform
       ~TruncatedSVDDF.from_fitted
       ~TruncatedSVDDF.get_params
       ~TruncatedSVDDF.inverse_transform
+      ~TruncatedSVDDF.set_output
       ~TruncatedSVDDF.set_params
       ~TruncatedSVDDF.to_expression
       ~TruncatedSVDDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.TruncatedSVDDF
 
    .. autosummary::
    
-      ~TruncatedSVDDF.COL_FEATURE_IN
-      ~TruncatedSVDDF.COL_FEATURE_OUT
+      ~TruncatedSVDDF.COL_FEATURE
+      ~TruncatedSVDDF.COL_FEATURE_ORIGINAL
       ~TruncatedSVDDF.feature_names_in_
       ~TruncatedSVDDF.feature_names_original_
       ~TruncatedSVDDF.feature_names_out_
@@ -44,6 +44,7 @@ sklearndf.transformation.TruncatedSVDDF
       ~TruncatedSVDDF.n_features_in_
       ~TruncatedSVDDF.n_outputs_
       ~TruncatedSVDDF.native_estimator
+      ~TruncatedSVDDF.output_names_
    
    
 

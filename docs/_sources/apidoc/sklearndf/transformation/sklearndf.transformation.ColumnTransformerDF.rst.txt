@@ -17,14 +17,12 @@ sklearndf.transformation.ColumnTransformerDF
       :nosignatures:
    
       ~ColumnTransformerDF.clone
-      ~ColumnTransformerDF.ensure_fitted
       ~ColumnTransformerDF.fit
       ~ColumnTransformerDF.fit_transform
       ~ColumnTransformerDF.from_fitted
-      ~ColumnTransformerDF.get_feature_names
-      ~ColumnTransformerDF.get_feature_names_out
       ~ColumnTransformerDF.get_params
       ~ColumnTransformerDF.inverse_transform
+      ~ColumnTransformerDF.set_output
       ~ColumnTransformerDF.set_params
       ~ColumnTransformerDF.to_expression
       ~ColumnTransformerDF.transform
@@ -37,8 +35,8 @@ sklearndf.transformation.ColumnTransformerDF
 
    .. autosummary::
    
-      ~ColumnTransformerDF.COL_FEATURE_IN
-      ~ColumnTransformerDF.COL_FEATURE_OUT
+      ~ColumnTransformerDF.COL_FEATURE
+      ~ColumnTransformerDF.COL_FEATURE_ORIGINAL
       ~ColumnTransformerDF.DROP
       ~ColumnTransformerDF.PASSTHROUGH
       ~ColumnTransformerDF.feature_names_in_
@@ -47,8 +45,8 @@ sklearndf.transformation.ColumnTransformerDF
       ~ColumnTransformerDF.is_fitted
       ~ColumnTransformerDF.n_features_in_
       ~ColumnTransformerDF.n_outputs_
-      ~ColumnTransformerDF.named_transformers_
       ~ColumnTransformerDF.native_estimator
+      ~ColumnTransformerDF.output_names_
    
    
 

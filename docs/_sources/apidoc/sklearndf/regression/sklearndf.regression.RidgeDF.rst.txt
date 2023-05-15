@@ -17,7 +17,6 @@ sklearndf.regression.RidgeDF
       :nosignatures:
    
       ~RidgeDF.clone
-      ~RidgeDF.ensure_fitted
       ~RidgeDF.fit
       ~RidgeDF.from_fitted
       ~RidgeDF.get_params
@@ -34,13 +33,14 @@ sklearndf.regression.RidgeDF
 
    .. autosummary::
    
-      ~RidgeDF.COL_FEATURE_IN
+      ~RidgeDF.COL_FEATURE
       ~RidgeDF.COL_PREDICTION
       ~RidgeDF.feature_names_in_
       ~RidgeDF.is_fitted
       ~RidgeDF.n_features_in_
       ~RidgeDF.n_outputs_
       ~RidgeDF.native_estimator
+      ~RidgeDF.output_names_
    
    
 

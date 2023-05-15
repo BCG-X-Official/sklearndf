@@ -17,7 +17,6 @@ sklearndf.regression.ARDRegressionDF
       :nosignatures:
    
       ~ARDRegressionDF.clone
-      ~ARDRegressionDF.ensure_fitted
       ~ARDRegressionDF.fit
       ~ARDRegressionDF.from_fitted
       ~ARDRegressionDF.get_params
@@ -34,13 +33,14 @@ sklearndf.regression.ARDRegressionDF
 
    .. autosummary::
    
-      ~ARDRegressionDF.COL_FEATURE_IN
+      ~ARDRegressionDF.COL_FEATURE
       ~ARDRegressionDF.COL_PREDICTION
       ~ARDRegressionDF.feature_names_in_
       ~ARDRegressionDF.is_fitted
       ~ARDRegressionDF.n_features_in_
       ~ARDRegressionDF.n_outputs_
       ~ARDRegressionDF.native_estimator
+      ~ARDRegressionDF.output_names_
    
    
 

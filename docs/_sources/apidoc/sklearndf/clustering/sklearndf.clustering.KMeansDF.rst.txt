@@ -17,7 +17,6 @@ sklearndf.clustering.KMeansDF
       :nosignatures:
    
       ~KMeansDF.clone
-      ~KMeansDF.ensure_fitted
       ~KMeansDF.fit
       ~KMeansDF.fit_predict
       ~KMeansDF.from_fitted
@@ -34,7 +33,7 @@ sklearndf.clustering.KMeansDF
 
    .. autosummary::
    
-      ~KMeansDF.COL_FEATURE_IN
+      ~KMeansDF.COL_FEATURE
       ~KMeansDF.COL_LABELS
       ~KMeansDF.COL_PREDICTION
       ~KMeansDF.IDX_CLUSTER
@@ -45,6 +44,7 @@ sklearndf.clustering.KMeansDF
       ~KMeansDF.n_features_in_
       ~KMeansDF.n_outputs_
       ~KMeansDF.native_estimator
+      ~KMeansDF.output_names_
    
    
 

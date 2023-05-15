@@ -17,12 +17,12 @@ sklearndf.transformation.wrapper.FeatureSelectionWrapperDF
       :nosignatures:
    
       ~FeatureSelectionWrapperDF.clone
-      ~FeatureSelectionWrapperDF.ensure_fitted
       ~FeatureSelectionWrapperDF.fit
       ~FeatureSelectionWrapperDF.fit_transform
       ~FeatureSelectionWrapperDF.from_fitted
       ~FeatureSelectionWrapperDF.get_params
       ~FeatureSelectionWrapperDF.inverse_transform
+      ~FeatureSelectionWrapperDF.set_output
       ~FeatureSelectionWrapperDF.set_params
       ~FeatureSelectionWrapperDF.to_expression
       ~FeatureSelectionWrapperDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.wrapper.FeatureSelectionWrapperDF
 
    .. autosummary::
    
-      ~FeatureSelectionWrapperDF.COL_FEATURE_IN
-      ~FeatureSelectionWrapperDF.COL_FEATURE_OUT
+      ~FeatureSelectionWrapperDF.COL_FEATURE
+      ~FeatureSelectionWrapperDF.COL_FEATURE_ORIGINAL
       ~FeatureSelectionWrapperDF.feature_names_in_
       ~FeatureSelectionWrapperDF.feature_names_original_
       ~FeatureSelectionWrapperDF.feature_names_out_
@@ -44,6 +44,7 @@ sklearndf.transformation.wrapper.FeatureSelectionWrapperDF
       ~FeatureSelectionWrapperDF.n_features_in_
       ~FeatureSelectionWrapperDF.n_outputs_
       ~FeatureSelectionWrapperDF.native_estimator
+      ~FeatureSelectionWrapperDF.output_names_
    
    
 

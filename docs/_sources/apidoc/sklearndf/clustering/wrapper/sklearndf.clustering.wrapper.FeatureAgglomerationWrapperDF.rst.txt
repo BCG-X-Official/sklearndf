@@ -17,7 +17,6 @@ sklearndf.clustering.wrapper.FeatureAgglomerationWrapperDF
       :nosignatures:
    
       ~FeatureAgglomerationWrapperDF.clone
-      ~FeatureAgglomerationWrapperDF.ensure_fitted
       ~FeatureAgglomerationWrapperDF.fit
       ~FeatureAgglomerationWrapperDF.fit_predict
       ~FeatureAgglomerationWrapperDF.fit_transform
@@ -25,6 +24,7 @@ sklearndf.clustering.wrapper.FeatureAgglomerationWrapperDF
       ~FeatureAgglomerationWrapperDF.get_params
       ~FeatureAgglomerationWrapperDF.inverse_transform
       ~FeatureAgglomerationWrapperDF.predict
+      ~FeatureAgglomerationWrapperDF.set_output
       ~FeatureAgglomerationWrapperDF.set_params
       ~FeatureAgglomerationWrapperDF.to_expression
       ~FeatureAgglomerationWrapperDF.transform
@@ -37,8 +37,8 @@ sklearndf.clustering.wrapper.FeatureAgglomerationWrapperDF
 
    .. autosummary::
    
-      ~FeatureAgglomerationWrapperDF.COL_FEATURE_IN
-      ~FeatureAgglomerationWrapperDF.COL_FEATURE_OUT
+      ~FeatureAgglomerationWrapperDF.COL_FEATURE
+      ~FeatureAgglomerationWrapperDF.COL_FEATURE_ORIGINAL
       ~FeatureAgglomerationWrapperDF.COL_LABELS
       ~FeatureAgglomerationWrapperDF.COL_PREDICTION
       ~FeatureAgglomerationWrapperDF.feature_names_in_
@@ -49,6 +49,7 @@ sklearndf.clustering.wrapper.FeatureAgglomerationWrapperDF
       ~FeatureAgglomerationWrapperDF.n_features_in_
       ~FeatureAgglomerationWrapperDF.n_outputs_
       ~FeatureAgglomerationWrapperDF.native_estimator
+      ~FeatureAgglomerationWrapperDF.output_names_
    
    
 

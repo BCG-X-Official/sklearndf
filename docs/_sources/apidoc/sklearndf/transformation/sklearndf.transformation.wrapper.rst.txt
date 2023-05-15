@@ -22,6 +22,7 @@ sklearndf.transformation.wrapper
       BaseMultipleInputsPerOutputTransformerWrapperDF
       ColumnPreservingTransformerWrapperDF
       ColumnSubsetTransformerWrapperDF
+      ColumnTransformerSparseFrames
       ColumnTransformerWrapperDF
       ComponentsDimensionalityReductionWrapperDF
       EmbeddingWrapperDF
@@ -33,7 +34,10 @@ sklearndf.transformation.wrapper
       NComponentsDimensionalityReductionWrapperDF
       NumpyTransformerWrapperDF
       OneHotEncoderWrapperDF
+      PCAWrapperDF
       PolynomialTransformerWrapperDF
+      SingleColumnTransformerWrapperDF
+      VectorizerWrapperDF
    
    
 

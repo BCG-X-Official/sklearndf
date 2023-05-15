@@ -17,11 +17,11 @@ sklearndf.pipeline.ClusterPipelineDF
       :nosignatures:
    
       ~ClusterPipelineDF.clone
-      ~ClusterPipelineDF.ensure_fitted
       ~ClusterPipelineDF.fit
       ~ClusterPipelineDF.fit_predict
       ~ClusterPipelineDF.get_params
       ~ClusterPipelineDF.predict
+      ~ClusterPipelineDF.preprocess
       ~ClusterPipelineDF.set_params
       ~ClusterPipelineDF.to_expression
    
@@ -33,10 +33,8 @@ sklearndf.pipeline.ClusterPipelineDF
 
    .. autosummary::
    
-      ~ClusterPipelineDF.COL_FEATURE_IN
+      ~ClusterPipelineDF.COL_FEATURE
       ~ClusterPipelineDF.feature_names_in_
-      ~ClusterPipelineDF.feature_names_original_
-      ~ClusterPipelineDF.feature_names_out_
       ~ClusterPipelineDF.final_estimator
       ~ClusterPipelineDF.final_estimator_name
       ~ClusterPipelineDF.is_fitted
@@ -44,6 +42,7 @@ sklearndf.pipeline.ClusterPipelineDF
       ~ClusterPipelineDF.n_features_in_
       ~ClusterPipelineDF.n_outputs_
       ~ClusterPipelineDF.native_estimator
+      ~ClusterPipelineDF.output_names_
       ~ClusterPipelineDF.preprocessing
       ~ClusterPipelineDF.preprocessing_name
    

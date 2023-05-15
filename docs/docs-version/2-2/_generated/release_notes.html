@@ -326,12 +326,12 @@
 <section id="sklearndf-2-2">
 <h2><em>sklearndf</em> 2.2<a class="headerlink" href="#sklearndf-2-2" title="Permalink to this headline">#</a></h2>
 <p><em>sklearndf</em> 2.2 adds support for
-<a class="reference external" href="https://scikit-learn.org/1.2">scikit-learn |nbsp| 1.2</a>, and enhances the EstimatorDF
+<a class="reference external" href="https://scikit-learn.org/1.2">scikit-learn 1.2</a>, and enhances the EstimatorDF
 API.</p>
 <section id="id2">
 <h3>2.2.0<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
 <p><em>sklearndf</em> 2.2 adds support for
-<a class="reference external" href="https://scikit-learn.org/1.2">scikit-learn |nbsp| 1.2</a>.
+<a class="reference external" href="https://scikit-learn.org/1.2">scikit-learn 1.2</a>.
 It drops support for <em>scikit-learn</em> 0.23 and earlier due to incomplete
 support of sparse output (see below).</p>
 <ul class="simple">
@@ -358,7 +358,7 @@ from the column index, which may be used in other contexts</p></li>
 <section id="sklearndf-2-1">
 <h2><em>sklearndf</em> 2.1<a class="headerlink" href="#sklearndf-2-1" title="Permalink to this headline">#</a></h2>
 <p><em>sklearndf</em> 2.1 adds support for
-<a class="reference external" href="https://scikit-learn.org/1.1">scikit-learn |nbsp| 1.1</a>.</p>
+<a class="reference external" href="https://scikit-learn.org/1.1">scikit-learn 1.1</a>.</p>
 <section id="id4">
 <h3>2.1.1<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
 <p>This is a maintenance release to catch up with <em>sklearndf</em> 2.0.2.</p>
@@ -384,9 +384,9 @@ a base class and not intended to be used as a regressor of its own</p></li>
 <section id="sklearndf-2-0">
 <h2><em>sklearndf</em> 2.0<a class="headerlink" href="#sklearndf-2-0" title="Permalink to this headline">#</a></h2>
 <p><em>sklearndf</em> 2.0 adds support for
-<a class="reference external" href="https://scikit-learn.org/1.0">scikit-learn |nbsp| 1.0</a>,
+<a class="reference external" href="https://scikit-learn.org/1.0">scikit-learn 1.0</a>,
 adds data frame support for clusterers along with additional API enhancements and
-improvements, and is now subject to static type checking with <a class="reference external" href="https://mypy.readthedocs.io/en/latest/index.html" title="(in mypy v1.4.0+dev.29cc5614b94d2357794fe5c62c64525fd8087e59.dirty)"><span class="xref std std-doc">mypy</span></a>.</p>
+improvements, and is now subject to static type checking with <a class="reference external" href="https://mypy.readthedocs.io/en/latest/index.html" title="(in mypy v1.4.0+dev.acce2709bac5cd65e983b694ce162f42e4a87176.dirty)"><span class="xref std std-doc">mypy</span></a>.</p>
 <section id="id6">
 <h3>2.0.2<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
 <ul class="simple">
@@ -420,8 +420,8 @@ the correct wrapper class <a class="reference internal" href="../apidoc/sklearnd
 which is no longer implemented by <a class="reference internal" href="../apidoc/sklearndf/sklearndf.LearnerDF.html#sklearndf.LearnerDF" title="sklearndf.LearnerDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">LearnerDF</span></code></a></p></li>
 <li><p>API: new class <a class="reference internal" href="../apidoc/sklearndf/sklearndf.ClusterDF.html#sklearndf.ClusterDF" title="sklearndf.ClusterDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClusterDF</span></code></a>, based on <a class="reference internal" href="../apidoc/sklearndf/sklearndf.LearnerDF.html#sklearndf.LearnerDF" title="sklearndf.LearnerDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">LearnerDF</span></code></a></p></li>
 <li><p>API: class <a class="reference internal" href="../apidoc/sklearndf/sklearndf.EstimatorDF.html#sklearndf.EstimatorDF" title="sklearndf.EstimatorDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatorDF</span></code></a> now implements the
-<a class="reference external" href="https://bcg-gamma.github.io/pytools/apidoc/pytools/expression/pytools.expression.HasExpressionRepr.html#pytools.expression.HasExpressionRepr" title="(in pytools v2.0.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">HasExpressionRepr</span></code></a> mix-in, rendering estimator
-representations as <a class="reference external" href="https://bcg-gamma.github.io/pytools/apidoc/pytools/expression/pytools.expression.Expression.html#pytools.expression.Expression" title="(in pytools v2.0.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Expression</span></code></a> objects to enable better
+<a class="reference external" href="https://bcg-gamma.github.io/pytools/apidoc/pytools/expression/pytools.expression.HasExpressionRepr.html#pytools.expression.HasExpressionRepr" title="(in pytools v2.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">HasExpressionRepr</span></code></a> mix-in, rendering estimator
+representations as <a class="reference external" href="https://bcg-gamma.github.io/pytools/apidoc/pytools/expression/pytools.expression.Expression.html#pytools.expression.Expression" title="(in pytools v2.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Expression</span></code></a> objects to enable better
 formatting</p></li>
 <li><p>API: added data frame support for method
 <a class="reference internal" href="../apidoc/sklearndf/regression/wrapper/sklearndf.regression.wrapper.PartialFitRegressorWrapperDF.html#sklearndf.regression.wrapper.PartialFitRegressorWrapperDF.partial_fit" title="sklearndf.regression.wrapper.PartialFitRegressorWrapperDF.partial_fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">partial_fit()</span></code></a></p></li>
@@ -431,7 +431,7 @@ formatting</p></li>
 <li><p>API: added support for <a class="reference external" href="https://xgboost.readthedocs.io/en/latest/index.html" title="(in xgboost v2.0.0-dev)"><span class="xref std std-doc">xgboost</span></a>: <a class="reference internal" href="../apidoc/sklearndf/classification/extra/sklearndf.classification.extra.XGBClassifierDF.html#sklearndf.classification.extra.XGBClassifierDF" title="sklearndf.classification.extra.XGBClassifierDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">XGBClassifierDF</span></code></a> and
 <a class="reference internal" href="../apidoc/sklearndf/classification/extra/sklearndf.classification.extra.XGBClassifierDF.html#sklearndf.classification.extra.XGBClassifierDF" title="sklearndf.classification.extra.XGBClassifierDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">XGBClassifierDF</span></code></a> are available if <a class="reference external" href="https://xgboost.readthedocs.io/en/latest/index.html" title="(in xgboost v2.0.0-dev)"><span class="xref std std-doc">xgboost</span></a> is installed</p></li>
 <li><p>API: DF wrapper classes are now created using proper class declarations to better
-conform with Python type conventions checked by <a class="reference external" href="https://mypy.readthedocs.io/en/latest/index.html" title="(in mypy v1.4.0+dev.29cc5614b94d2357794fe5c62c64525fd8087e59.dirty)"><span class="xref std std-doc">mypy</span></a>;
+conform with Python type conventions checked by <a class="reference external" href="https://mypy.readthedocs.io/en/latest/index.html" title="(in mypy v1.4.0+dev.acce2709bac5cd65e983b694ce162f42e4a87176.dirty)"><span class="xref std std-doc">mypy</span></a>;
 see <a class="reference internal" href="../apidoc/sklearndf/sklearndf.wrapper.html#module-sklearndf.wrapper" title="sklearndf.wrapper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sklearndf.wrapper</span></code></a> for details</p></li>
 <li><p>API: remove functions <code class="docutils literal notranslate"><span class="pre">make_df_estimator</span></code>, <code class="docutils literal notranslate"><span class="pre">make_df_classifier</span></code>,
 <code class="docutils literal notranslate"><span class="pre">make_df_regressor</span></code>, and <code class="docutils literal notranslate"><span class="pre">make_df_transformer</span></code> which are now obsolete</p></li>

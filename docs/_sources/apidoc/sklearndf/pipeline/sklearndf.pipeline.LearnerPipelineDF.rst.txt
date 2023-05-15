@@ -17,10 +17,10 @@ sklearndf.pipeline.LearnerPipelineDF
       :nosignatures:
    
       ~LearnerPipelineDF.clone
-      ~LearnerPipelineDF.ensure_fitted
       ~LearnerPipelineDF.fit
       ~LearnerPipelineDF.get_params
       ~LearnerPipelineDF.predict
+      ~LearnerPipelineDF.preprocess
       ~LearnerPipelineDF.set_params
       ~LearnerPipelineDF.to_expression
    
@@ -32,16 +32,15 @@ sklearndf.pipeline.LearnerPipelineDF
 
    .. autosummary::
    
-      ~LearnerPipelineDF.COL_FEATURE_IN
+      ~LearnerPipelineDF.COL_FEATURE
       ~LearnerPipelineDF.feature_names_in_
-      ~LearnerPipelineDF.feature_names_original_
-      ~LearnerPipelineDF.feature_names_out_
       ~LearnerPipelineDF.final_estimator
       ~LearnerPipelineDF.final_estimator_name
       ~LearnerPipelineDF.is_fitted
       ~LearnerPipelineDF.n_features_in_
       ~LearnerPipelineDF.n_outputs_
       ~LearnerPipelineDF.native_estimator
+      ~LearnerPipelineDF.output_names_
       ~LearnerPipelineDF.preprocessing
       ~LearnerPipelineDF.preprocessing_name
    

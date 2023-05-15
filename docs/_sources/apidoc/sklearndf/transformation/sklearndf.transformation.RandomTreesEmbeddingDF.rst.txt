@@ -17,13 +17,13 @@ sklearndf.transformation.RandomTreesEmbeddingDF
       :nosignatures:
    
       ~RandomTreesEmbeddingDF.clone
-      ~RandomTreesEmbeddingDF.ensure_fitted
       ~RandomTreesEmbeddingDF.fit
       ~RandomTreesEmbeddingDF.fit_transform
       ~RandomTreesEmbeddingDF.from_fitted
       ~RandomTreesEmbeddingDF.get_feature_names_out
       ~RandomTreesEmbeddingDF.get_params
       ~RandomTreesEmbeddingDF.inverse_transform
+      ~RandomTreesEmbeddingDF.set_output
       ~RandomTreesEmbeddingDF.set_params
       ~RandomTreesEmbeddingDF.to_expression
       ~RandomTreesEmbeddingDF.transform
@@ -36,16 +36,16 @@ sklearndf.transformation.RandomTreesEmbeddingDF
 
    .. autosummary::
    
-      ~RandomTreesEmbeddingDF.COL_FEATURE_IN
-      ~RandomTreesEmbeddingDF.COL_FEATURE_OUT
+      ~RandomTreesEmbeddingDF.COL_FEATURE
+      ~RandomTreesEmbeddingDF.COL_FEATURE_ORIGINAL
       ~RandomTreesEmbeddingDF.feature_names_in_
       ~RandomTreesEmbeddingDF.feature_names_original_
       ~RandomTreesEmbeddingDF.feature_names_out_
       ~RandomTreesEmbeddingDF.is_fitted
-      ~RandomTreesEmbeddingDF.n_features_
       ~RandomTreesEmbeddingDF.n_features_in_
       ~RandomTreesEmbeddingDF.n_outputs_
       ~RandomTreesEmbeddingDF.native_estimator
+      ~RandomTreesEmbeddingDF.output_names_
    
    
 

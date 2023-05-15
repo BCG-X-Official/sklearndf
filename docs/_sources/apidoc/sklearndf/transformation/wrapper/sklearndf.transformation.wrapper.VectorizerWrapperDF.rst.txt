@@ -1,0 +1,51 @@
+sklearndf.transformation.wrapper.VectorizerWrapperDF
+====================================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: VectorizerWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~VectorizerWrapperDF.clone
+      ~VectorizerWrapperDF.fit
+      ~VectorizerWrapperDF.fit_transform
+      ~VectorizerWrapperDF.from_fitted
+      ~VectorizerWrapperDF.get_params
+      ~VectorizerWrapperDF.inverse_transform
+      ~VectorizerWrapperDF.set_output
+      ~VectorizerWrapperDF.set_params
+      ~VectorizerWrapperDF.to_expression
+      ~VectorizerWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~VectorizerWrapperDF.COL_FEATURE
+      ~VectorizerWrapperDF.COL_FEATURE_ORIGINAL
+      ~VectorizerWrapperDF.feature_names_in_
+      ~VectorizerWrapperDF.feature_names_original_
+      ~VectorizerWrapperDF.feature_names_out_
+      ~VectorizerWrapperDF.is_fitted
+      ~VectorizerWrapperDF.n_features_in_
+      ~VectorizerWrapperDF.n_outputs_
+      ~VectorizerWrapperDF.native_estimator
+      ~VectorizerWrapperDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

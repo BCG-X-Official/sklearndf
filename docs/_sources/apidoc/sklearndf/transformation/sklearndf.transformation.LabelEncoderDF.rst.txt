@@ -17,12 +17,12 @@ sklearndf.transformation.LabelEncoderDF
       :nosignatures:
    
       ~LabelEncoderDF.clone
-      ~LabelEncoderDF.ensure_fitted
       ~LabelEncoderDF.fit
       ~LabelEncoderDF.fit_transform
       ~LabelEncoderDF.from_fitted
       ~LabelEncoderDF.get_params
       ~LabelEncoderDF.inverse_transform
+      ~LabelEncoderDF.set_output
       ~LabelEncoderDF.set_params
       ~LabelEncoderDF.to_expression
       ~LabelEncoderDF.transform
@@ -35,8 +35,8 @@ sklearndf.transformation.LabelEncoderDF
 
    .. autosummary::
    
-      ~LabelEncoderDF.COL_FEATURE_IN
-      ~LabelEncoderDF.COL_FEATURE_OUT
+      ~LabelEncoderDF.COL_FEATURE
+      ~LabelEncoderDF.COL_FEATURE_ORIGINAL
       ~LabelEncoderDF.feature_names_in_
       ~LabelEncoderDF.feature_names_original_
       ~LabelEncoderDF.feature_names_out_
@@ -44,6 +44,7 @@ sklearndf.transformation.LabelEncoderDF
       ~LabelEncoderDF.n_features_in_
       ~LabelEncoderDF.n_outputs_
       ~LabelEncoderDF.native_estimator
+      ~LabelEncoderDF.output_names_
    
    
 

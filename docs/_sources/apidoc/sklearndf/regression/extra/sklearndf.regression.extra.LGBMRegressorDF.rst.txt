@@ -17,7 +17,6 @@ sklearndf.regression.extra.LGBMRegressorDF
       :nosignatures:
    
       ~LGBMRegressorDF.clone
-      ~LGBMRegressorDF.ensure_fitted
       ~LGBMRegressorDF.fit
       ~LGBMRegressorDF.from_fitted
       ~LGBMRegressorDF.get_params
@@ -34,13 +33,14 @@ sklearndf.regression.extra.LGBMRegressorDF
 
    .. autosummary::
    
-      ~LGBMRegressorDF.COL_FEATURE_IN
+      ~LGBMRegressorDF.COL_FEATURE
       ~LGBMRegressorDF.COL_PREDICTION
       ~LGBMRegressorDF.feature_names_in_
       ~LGBMRegressorDF.is_fitted
       ~LGBMRegressorDF.n_features_in_
       ~LGBMRegressorDF.n_outputs_
       ~LGBMRegressorDF.native_estimator
+      ~LGBMRegressorDF.output_names_
    
    
 

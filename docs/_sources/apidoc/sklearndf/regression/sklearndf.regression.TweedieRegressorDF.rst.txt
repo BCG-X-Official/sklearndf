@@ -17,7 +17,6 @@ sklearndf.regression.TweedieRegressorDF
       :nosignatures:
    
       ~TweedieRegressorDF.clone
-      ~TweedieRegressorDF.ensure_fitted
       ~TweedieRegressorDF.fit
       ~TweedieRegressorDF.from_fitted
       ~TweedieRegressorDF.get_params
@@ -34,13 +33,14 @@ sklearndf.regression.TweedieRegressorDF
 
    .. autosummary::
    
-      ~TweedieRegressorDF.COL_FEATURE_IN
+      ~TweedieRegressorDF.COL_FEATURE
       ~TweedieRegressorDF.COL_PREDICTION
       ~TweedieRegressorDF.feature_names_in_
       ~TweedieRegressorDF.is_fitted
       ~TweedieRegressorDF.n_features_in_
       ~TweedieRegressorDF.n_outputs_
       ~TweedieRegressorDF.native_estimator
+      ~TweedieRegressorDF.output_names_
    
    
 

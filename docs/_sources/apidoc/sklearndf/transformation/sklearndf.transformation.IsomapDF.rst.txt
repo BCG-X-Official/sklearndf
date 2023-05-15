@@ -17,13 +17,13 @@ sklearndf.transformation.IsomapDF
       :nosignatures:
    
       ~IsomapDF.clone
-      ~IsomapDF.ensure_fitted
       ~IsomapDF.fit
       ~IsomapDF.fit_transform
       ~IsomapDF.from_fitted
       ~IsomapDF.get_params
       ~IsomapDF.inverse_transform
       ~IsomapDF.reconstruction_error
+      ~IsomapDF.set_output
       ~IsomapDF.set_params
       ~IsomapDF.to_expression
       ~IsomapDF.transform
@@ -36,8 +36,8 @@ sklearndf.transformation.IsomapDF
 
    .. autosummary::
    
-      ~IsomapDF.COL_FEATURE_IN
-      ~IsomapDF.COL_FEATURE_OUT
+      ~IsomapDF.COL_FEATURE
+      ~IsomapDF.COL_FEATURE_ORIGINAL
       ~IsomapDF.feature_names_in_
       ~IsomapDF.feature_names_original_
       ~IsomapDF.feature_names_out_
@@ -45,6 +45,7 @@ sklearndf.transformation.IsomapDF
       ~IsomapDF.n_features_in_
       ~IsomapDF.n_outputs_
       ~IsomapDF.native_estimator
+      ~IsomapDF.output_names_
    
    
 

@@ -17,7 +17,6 @@ sklearndf.regression.ExtraTreesRegressorDF
       :nosignatures:
    
       ~ExtraTreesRegressorDF.clone
-      ~ExtraTreesRegressorDF.ensure_fitted
       ~ExtraTreesRegressorDF.fit
       ~ExtraTreesRegressorDF.from_fitted
       ~ExtraTreesRegressorDF.get_params
@@ -34,13 +33,14 @@ sklearndf.regression.ExtraTreesRegressorDF
 
    .. autosummary::
    
-      ~ExtraTreesRegressorDF.COL_FEATURE_IN
+      ~ExtraTreesRegressorDF.COL_FEATURE
       ~ExtraTreesRegressorDF.COL_PREDICTION
       ~ExtraTreesRegressorDF.feature_names_in_
       ~ExtraTreesRegressorDF.is_fitted
       ~ExtraTreesRegressorDF.n_features_in_
       ~ExtraTreesRegressorDF.n_outputs_
       ~ExtraTreesRegressorDF.native_estimator
+      ~ExtraTreesRegressorDF.output_names_
    
    
 

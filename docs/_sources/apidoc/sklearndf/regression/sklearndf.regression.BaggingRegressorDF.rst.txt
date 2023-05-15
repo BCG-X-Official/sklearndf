@@ -17,7 +17,6 @@ sklearndf.regression.BaggingRegressorDF
       :nosignatures:
    
       ~BaggingRegressorDF.clone
-      ~BaggingRegressorDF.ensure_fitted
       ~BaggingRegressorDF.fit
       ~BaggingRegressorDF.from_fitted
       ~BaggingRegressorDF.get_params
@@ -34,13 +33,14 @@ sklearndf.regression.BaggingRegressorDF
 
    .. autosummary::
    
-      ~BaggingRegressorDF.COL_FEATURE_IN
+      ~BaggingRegressorDF.COL_FEATURE
       ~BaggingRegressorDF.COL_PREDICTION
       ~BaggingRegressorDF.feature_names_in_
       ~BaggingRegressorDF.is_fitted
       ~BaggingRegressorDF.n_features_in_
       ~BaggingRegressorDF.n_outputs_
       ~BaggingRegressorDF.native_estimator
+      ~BaggingRegressorDF.output_names_
    
    
 

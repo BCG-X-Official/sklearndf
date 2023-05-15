@@ -17,7 +17,6 @@ sklearndf.wrapper.numpy.SupervisedLearnerNPDF
       :nosignatures:
    
       ~SupervisedLearnerNPDF.clone
-      ~SupervisedLearnerNPDF.ensure_fitted
       ~SupervisedLearnerNPDF.fit
       ~SupervisedLearnerNPDF.get_params
       ~SupervisedLearnerNPDF.predict
@@ -33,12 +32,13 @@ sklearndf.wrapper.numpy.SupervisedLearnerNPDF
 
    .. autosummary::
    
-      ~SupervisedLearnerNPDF.COL_FEATURE_IN
+      ~SupervisedLearnerNPDF.COL_FEATURE
       ~SupervisedLearnerNPDF.feature_names_in_
       ~SupervisedLearnerNPDF.is_fitted
       ~SupervisedLearnerNPDF.n_features_in_
       ~SupervisedLearnerNPDF.n_outputs_
       ~SupervisedLearnerNPDF.native_estimator
+      ~SupervisedLearnerNPDF.output_names_
       ~SupervisedLearnerNPDF.delegate
       ~SupervisedLearnerNPDF.column_names
    

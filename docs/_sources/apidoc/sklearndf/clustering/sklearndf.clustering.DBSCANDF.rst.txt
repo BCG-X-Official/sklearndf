@@ -17,7 +17,6 @@ sklearndf.clustering.DBSCANDF
       :nosignatures:
    
       ~DBSCANDF.clone
-      ~DBSCANDF.ensure_fitted
       ~DBSCANDF.fit
       ~DBSCANDF.fit_predict
       ~DBSCANDF.from_fitted
@@ -34,7 +33,7 @@ sklearndf.clustering.DBSCANDF
 
    .. autosummary::
    
-      ~DBSCANDF.COL_FEATURE_IN
+      ~DBSCANDF.COL_FEATURE
       ~DBSCANDF.COL_LABELS
       ~DBSCANDF.COL_PREDICTION
       ~DBSCANDF.feature_names_in_
@@ -43,6 +42,7 @@ sklearndf.clustering.DBSCANDF
       ~DBSCANDF.n_features_in_
       ~DBSCANDF.n_outputs_
       ~DBSCANDF.native_estimator
+      ~DBSCANDF.output_names_
    
    
 

@@ -18,7 +18,6 @@ sklearndf.classification.VotingClassifierDF
    
       ~VotingClassifierDF.clone
       ~VotingClassifierDF.decision_function
-      ~VotingClassifierDF.ensure_fitted
       ~VotingClassifierDF.fit
       ~VotingClassifierDF.from_fitted
       ~VotingClassifierDF.get_feature_names_out
@@ -39,7 +38,7 @@ sklearndf.classification.VotingClassifierDF
 
    .. autosummary::
    
-      ~VotingClassifierDF.COL_FEATURE_IN
+      ~VotingClassifierDF.COL_FEATURE
       ~VotingClassifierDF.COL_PREDICTION
       ~VotingClassifierDF.classes_
       ~VotingClassifierDF.feature_names_in_
@@ -47,6 +46,7 @@ sklearndf.classification.VotingClassifierDF
       ~VotingClassifierDF.n_features_in_
       ~VotingClassifierDF.n_outputs_
       ~VotingClassifierDF.native_estimator
+      ~VotingClassifierDF.output_names_
    
    
 

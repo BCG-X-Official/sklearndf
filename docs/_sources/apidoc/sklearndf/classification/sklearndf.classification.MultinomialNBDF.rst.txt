@@ -18,7 +18,6 @@ sklearndf.classification.MultinomialNBDF
    
       ~MultinomialNBDF.clone
       ~MultinomialNBDF.decision_function
-      ~MultinomialNBDF.ensure_fitted
       ~MultinomialNBDF.fit
       ~MultinomialNBDF.from_fitted
       ~MultinomialNBDF.get_params
@@ -38,7 +37,7 @@ sklearndf.classification.MultinomialNBDF
 
    .. autosummary::
    
-      ~MultinomialNBDF.COL_FEATURE_IN
+      ~MultinomialNBDF.COL_FEATURE
       ~MultinomialNBDF.COL_PREDICTION
       ~MultinomialNBDF.classes_
       ~MultinomialNBDF.feature_names_in_
@@ -46,6 +45,7 @@ sklearndf.classification.MultinomialNBDF
       ~MultinomialNBDF.n_features_in_
       ~MultinomialNBDF.n_outputs_
       ~MultinomialNBDF.native_estimator
+      ~MultinomialNBDF.output_names_
    
    
 

@@ -1,0 +1,45 @@
+sklearndf.transformation.TfidfVectorizerTx
+==========================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: TfidfVectorizerTx
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~TfidfVectorizerTx.build_analyzer
+      ~TfidfVectorizerTx.build_preprocessor
+      ~TfidfVectorizerTx.build_tokenizer
+      ~TfidfVectorizerTx.decode
+      ~TfidfVectorizerTx.fit
+      ~TfidfVectorizerTx.fit_transform
+      ~TfidfVectorizerTx.get_feature_names_out
+      ~TfidfVectorizerTx.get_params
+      ~TfidfVectorizerTx.get_stop_words
+      ~TfidfVectorizerTx.inverse_transform
+      ~TfidfVectorizerTx.set_output
+      ~TfidfVectorizerTx.set_params
+      ~TfidfVectorizerTx.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~TfidfVectorizerTx.idf_
+   
+   
+
+   .. rubric:: Definitions

@@ -17,7 +17,6 @@ sklearndf.clustering.OPTICSDF
       :nosignatures:
    
       ~OPTICSDF.clone
-      ~OPTICSDF.ensure_fitted
       ~OPTICSDF.fit
       ~OPTICSDF.fit_predict
       ~OPTICSDF.from_fitted
@@ -34,7 +33,7 @@ sklearndf.clustering.OPTICSDF
 
    .. autosummary::
    
-      ~OPTICSDF.COL_FEATURE_IN
+      ~OPTICSDF.COL_FEATURE
       ~OPTICSDF.COL_LABELS
       ~OPTICSDF.COL_PREDICTION
       ~OPTICSDF.feature_names_in_
@@ -43,6 +42,7 @@ sklearndf.clustering.OPTICSDF
       ~OPTICSDF.n_features_in_
       ~OPTICSDF.n_outputs_
       ~OPTICSDF.native_estimator
+      ~OPTICSDF.output_names_
    
    
 

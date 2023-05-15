@@ -17,8 +17,8 @@ sklearndf.regression.StackingRegressorDF
       :nosignatures:
    
       ~StackingRegressorDF.clone
-      ~StackingRegressorDF.ensure_fitted
       ~StackingRegressorDF.fit
+      ~StackingRegressorDF.fit_transform
       ~StackingRegressorDF.from_fitted
       ~StackingRegressorDF.get_params
       ~StackingRegressorDF.predict
@@ -35,13 +35,14 @@ sklearndf.regression.StackingRegressorDF
 
    .. autosummary::
    
-      ~StackingRegressorDF.COL_FEATURE_IN
+      ~StackingRegressorDF.COL_FEATURE
       ~StackingRegressorDF.COL_PREDICTION
       ~StackingRegressorDF.feature_names_in_
       ~StackingRegressorDF.is_fitted
       ~StackingRegressorDF.n_features_in_
       ~StackingRegressorDF.n_outputs_
       ~StackingRegressorDF.native_estimator
+      ~StackingRegressorDF.output_names_
    
    
 
