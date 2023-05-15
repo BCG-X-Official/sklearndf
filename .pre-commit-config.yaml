@@ -42,4 +42,4 @@ repos:
         language_version: python39
         additional_dependencies:
           - numpy~=1.22
-          - gamma-pytools~=2.1rc
+          - gamma-pytools~=2.1

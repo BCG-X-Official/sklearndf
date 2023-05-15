@@ -11,14 +11,14 @@ Release Notes
 ---------------
 
 *sklearndf* 2.2 adds support for
-`scikit-learn |nbsp| 1.2 <https://scikit-learn.org/1.2>`_, and enhances the EstimatorDF
+`scikit-learn 1.2 <https://scikit-learn.org/1.2>`_, and enhances the EstimatorDF
 API.
 
 2.2.0
 ~~~~~
 
 *sklearndf* 2.2 adds support for
-`scikit-learn |nbsp| 1.2 <https://scikit-learn.org/1.2>`_.
+`scikit-learn 1.2 <https://scikit-learn.org/1.2>`_.
 It drops support for *scikit-learn* |nbsp| 0.23 and earlier due to incomplete
 support of sparse output (see below).
 
@@ -46,7 +46,7 @@ support of sparse output (see below).
 ---------------
 
 *sklearndf* 2.1 adds support for
-`scikit-learn |nbsp| 1.1 <https://scikit-learn.org/1.1>`_.
+`scikit-learn 1.1 <https://scikit-learn.org/1.1>`_.
 
 2.1.1
 ~~~~~
@@ -75,7 +75,7 @@ This is a maintenance release to catch up with *sklearndf* |nbsp| 2.0.2.
 ---------------
 
 *sklearndf* 2.0 adds support for
-`scikit-learn |nbsp| 1.0 <https://scikit-learn.org/1.0>`_,
+`scikit-learn 1.0 <https://scikit-learn.org/1.0>`_,
 adds data frame support for clusterers along with additional API enhancements and
 improvements, and is now subject to static type checking with |mypy|.
 
