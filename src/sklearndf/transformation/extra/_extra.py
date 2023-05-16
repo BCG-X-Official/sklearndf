@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import logging
 
+import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 
 from pytools.api import AllTracker
@@ -18,6 +19,16 @@ __all__ = ["BoostAGrootaDF", "BorutaDF", "GrootCVDF", "LeshyDF"]
 try:
     # import boruta classes only if installed
     from boruta import BorutaPy
+
+    # Apply a hack to address boruta's incompatibility with numpy >= 1.24:
+    # boruta uses np.float_ which is deprecated in numpy >= 1.20 and removed in 1.24.
+    #
+    # We check these types are already defined in numpy, and if not, we define them
+    # as aliases to the corresponding new types with a trailing underscore.
+
+    for __attr in ["bool", "int", "float"]:
+        if not hasattr(np, __attr):
+            setattr(np, __attr, getattr(np, f"{__attr}_"))
 
 except ImportError:
 
