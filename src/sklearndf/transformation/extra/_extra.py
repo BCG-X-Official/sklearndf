@@ -29,6 +29,7 @@ try:
     for __attr in ["bool", "int", "float"]:
         if not hasattr(np, __attr):
             setattr(np, __attr, getattr(np, f"{__attr}_"))
+    del __attr
 
 except ImportError:
 
