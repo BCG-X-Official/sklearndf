@@ -87,7 +87,7 @@ typing_inspect = "~=0.4.0"
 
 [build.matrix.max]
 # direct requirements of sklearndf
-arfs           = "~=1.0.5"
+arfs           = "~=1.1"
 gamma-pytools  = "~=2.1"
 lightgbm       = "~=3.3"
 numpy          = ">=1.23"  # cannot use ~= due to conda bug
