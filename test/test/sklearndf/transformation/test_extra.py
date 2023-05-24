@@ -1,9 +1,10 @@
-from typing import Any, Callable, Dict, Type
+from typing import Any, Callable, Dict, Optional, Type
 
 import numpy as np
 import pandas as pd
 import pytest
 from lightgbm import LGBMRegressor
+from packaging.version import Version
 
 from sklearndf import TransformerDF
 from sklearndf.pipeline import PipelineDF
@@ -12,6 +13,20 @@ from sklearndf.regression.extra import LGBMRegressorDF
 from sklearndf.transformation import SimpleImputerDF
 from sklearndf.transformation.extra import BoostAGrootaDF, BorutaDF, GrootCVDF, LeshyDF
 from sklearndf.wrapper import MissingEstimator
+
+# get the version of the arfs package
+__arfs_version__: Optional[Version]
+try:
+    import arfs
+
+    # get the version of the arfs package
+    __arfs_version__ = Version(arfs.__version__)
+except ImportError:
+    __arfs_version__ = None
+
+__arfs_1_1__ = Version("1.1")
+
+# set up a regressors for use in the feature selection tests
 
 regressor_params = dict(max_depth=5, n_jobs=-3, random_state=42, n_estimators=100)
 lgbm_regressor = LGBMRegressor(**regressor_params)
@@ -37,12 +52,22 @@ parametrize_feature_selector_cls: Callable[
             # Various ARFS selectors
             (LeshyDF, dict(estimator=lgbm_regressor, random_state=42, perc=90)),
             (LeshyDF, dict(estimator=lgbm_regressor_df, random_state=42, perc=90)),
-            (BoostAGrootaDF, dict(est=lgbm_regressor, cutoff=1.1)),
+            (
+                BoostAGrootaDF,
+                dict(est=lgbm_regressor, cutoff=1.1)
+                if __arfs_version__ is None or __arfs_version__ < __arfs_1_1__
+                else dict(estimator=lgbm_regressor, cutoff=1.1),
+            ),
             (GrootCVDF, dict()),
         ]
         if not issubclass(cls.__wrapped__, MissingEstimator)
     ],
 )
+
+
+#
+# Test the feature selection classes
+#
 
 
 @parametrize_feature_selector_cls
