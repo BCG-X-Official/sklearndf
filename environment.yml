@@ -4,42 +4,27 @@ channels:
   - bcg_gamma
 dependencies:
   # run
-  - gamma-pytools ~= 2.1
-  - joblib ~= 1.2
-  - lightgbm ~= 3.3
-  - matplotlib ~= 3.6
-  - numpy ~= 1.24
-  - pandas ~=1.5|~=2.0
-  - python ~= 3.9
-  - scikit-learn ~= 1.2.2
-  - scipy ~= 1.10.0
-  - xgboost ~= 1.7
-  - pip ~= 23.0.1
-  - pip:
-    - arfs ~= 1.0.5
-    - shap ~= 0.41.0
-  # build/test
-  - conda-build ~= 3.23.3
-  - conda-verify ~= 3.1.1
-  - docutils ~= 0.17.1
-  - flit ~= 3.8.0
-  - jinja2 ~= 2.11.3
-  - markupsafe ~= 2.0.1  # markupsafe 2.1 breaks support for jinja2
-  - m2r ~= 0.3.1
-  - pluggy ~= 0.13.1
-  - pre-commit ~= 2.21.0
-  - pytest ~= 7.2.2
+  - gamma-pytools     ~= 2.1
+  - joblib            ~= 1.2
+  - lightgbm          ~= 3.3
+  - matplotlib        ~= 3.7
+  - numpy             ~= 1.24
+  - pandas            ~= 2.0
+  - python            ~= 3.9
+  - scikit-learn      ~= 1.2.0
+  - scipy             ~= 1.10
+  - xgboost           ~= 1.7
+  # test
+  - pytest     ~= 7.2.1
   - pytest-cov ~= 2.12.1
-  - pyyaml ~= 5.4.1
-  - toml ~= 0.10.2
-  - tox ~= 3.27.1
-  - yaml ~= 0.2.5
   # sphinx
-  - nbsphinx ~= 0.8.12
-  - sphinx ~= 4.5.0
+  - nbsphinx                 ~= 0.8.9
+  - sphinx                   ~= 4.5.0
   - sphinx-autodoc-typehints ~= 1.19.2
-  - pydata-sphinx-theme ~= 0.8.1
+  - pydata-sphinx-theme      ~= 0.8.1
   # notebooks
-  - jupyterlab ~= 3.5.3
-  - openpyxl ~= 3.0.10
-  - seaborn ~= 0.12.2
+  - ipywidgets ~= 8.0
+  - jupyterlab ~= 3.5
+  - openpyxl   ~= 3.0
+  - seaborn    ~= 0.12
+  - tableone   ~= 0.7
