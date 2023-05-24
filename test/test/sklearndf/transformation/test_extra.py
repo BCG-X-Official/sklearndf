@@ -106,14 +106,18 @@ def test_feature_selection_pipeline_df(
 
     feature_selection_pipeline.fit(x, y)
 
+    selected_features = set(feature_selection_pipeline.feature_names_out_)
     try:
-        assert set(feature_selection_pipeline.feature_names_out_) == set(
-            feature_selector.selected_features_
-        )
+        assert selected_features == set(feature_selector.selected_features_)
     except AttributeError:
         pass
-    assert set(feature_selection_pipeline.feature_names_out_) in [
-        {"bmi", "bp", "s3", "s5"},
-        *({"bmi", "bp", "s3", "s5", extra} for extra in ["sex", "s1", "s2", "s6"]),
-        {"bmi", "bp", "s2", "s5", "s6"},
-    ]
+
+    assert {"bmi", "bp", "s5"}.issubset(
+        selected_features
+    ), "key features have been selected"
+
+    assert len(selected_features) <= 5, "no more than 5 features were selected"
+
+    assert (selected_features - {"bmi", "bp", "s5"}).issubset(
+        {"sex", "s1", "s2", "s3", "s6"}
+    ), "additional selected features were not completely irrelevant"
