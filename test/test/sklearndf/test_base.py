@@ -1,5 +1,7 @@
 # inspired by:
 # https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/tests/test_base.py
+
+import re
 from typing import Any
 
 import numpy as np
@@ -18,7 +20,8 @@ from pytools.expression.atomic import Id
 from sklearndf.classification import SVCDF, DecisionTreeClassifierDF
 from sklearndf.clustering.wrapper import KMeansBaseWrapperDF
 from sklearndf.pipeline import PipelineDF
-from sklearndf.transformation import OneHotEncoderDF
+from sklearndf.regression import RandomForestRegressorDF
+from sklearndf.transformation import OneHotEncoderDF, SimpleImputerDF
 from sklearndf.transformation.wrapper import ImputerWrapperDF
 from sklearndf.wrapper import (
     ClassifierWrapperDF,
@@ -159,6 +162,53 @@ def test_str() -> None:
     # Smoke test the str of the base estimator
     my_estimator = DummyEstimatorDF()
     str(my_estimator)
+
+
+def test_html_repr() -> None:
+    # store the original display config
+    # display_original = get_config()["display"]
+
+    # set the display config to use diagrams
+    # set_config(display="diagram")
+
+    try:
+        pipeline_df = PipelineDF(
+            [
+                (
+                    "preprocess",
+                    PipelineDF(
+                        [
+                            ("impute", SimpleImputerDF()),
+                        ]
+                    ),
+                ),
+                ("rf", RandomForestRegressorDF(n_estimators=120)),
+            ]
+        )
+
+        labels_expected = [
+            "PipelineDF",
+            "preprocess: PipelineDF",
+            "SimpleImputerDF",
+            "RandomForestRegressorDF",
+        ]
+
+        repr_html_expected = ".*".join(
+            f"<label.+?>{label}</label>" for label in labels_expected
+        )
+
+        html_ = pipeline_df._repr_html_()
+        print(html_)
+        assert re.search(
+            repr_html_expected,
+            html_,
+            re.DOTALL,  # dot in regex also matches newline
+        )
+
+    finally:
+        # reset the display config to its original value
+        # set_config(display=display_original)
+        pass
 
 
 def test_get_params() -> None:
