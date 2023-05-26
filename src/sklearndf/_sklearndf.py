@@ -4,7 +4,7 @@ Core implementation of :mod:`sklearndf`
 import inspect
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import Any, Dict, List, Mapping, Optional, TypeVar, Union, cast
+from typing import Any, Callable, Dict, List, Mapping, Optional, TypeVar, Union, cast
 
 import numpy.typing as npt
 import pandas as pd
@@ -209,6 +209,18 @@ class EstimatorDF(
     def _get_n_outputs(self) -> int:
         # get the number of outputs this estimator has been fitted to
         return len(self._get_outputs() or [])
+
+    def _repr_html_(self) -> str:
+        try:
+            # class HasExpressionRepr defines a _repr_html_ method; we want to
+            # skip that one and call the _repr_html_ method of the superclass
+            sklearn_repr_html: Callable[[], str] = super(
+                HasExpressionRepr, self
+            )._repr_html_
+        except AttributeError:
+            return super()._repr_html_()
+        else:
+            return sklearn_repr_html()
 
     def to_expression(self) -> Expression:
         """[see superclass]"""

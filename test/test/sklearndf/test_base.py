@@ -1,16 +1,19 @@
 # inspired by:
 # https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/tests/test_base.py
+
+import re
 from typing import Any
 
 import numpy as np
 import pytest
 import scipy.sparse as sp
+import sklearn
 from numpy.testing import assert_array_equal
-from sklearn import clone
 from sklearn.base import BaseEstimator, is_classifier
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
+from sklearn.utils import estimator_html_repr
 
 from pytools.expression import freeze, make_expression
 from pytools.expression.atomic import Id
@@ -18,7 +21,8 @@ from pytools.expression.atomic import Id
 from sklearndf.classification import SVCDF, DecisionTreeClassifierDF
 from sklearndf.clustering.wrapper import KMeansBaseWrapperDF
 from sklearndf.pipeline import PipelineDF
-from sklearndf.transformation import OneHotEncoderDF
+from sklearndf.regression import RandomForestRegressorDF
+from sklearndf.transformation import OneHotEncoderDF, SimpleImputerDF
 from sklearndf.transformation.wrapper import ImputerWrapperDF
 from sklearndf.wrapper import (
     ClassifierWrapperDF,
@@ -75,7 +79,7 @@ def test_clone() -> None:
     assert encoder.get_params() == new_encoder.get_params()
 
     encoder = OneHotEncoderDF(handle_unknown="ignore", sparse=False)
-    new_encoder = clone(encoder)
+    new_encoder = sklearn.clone(encoder)
 
     assert encoder is not new_encoder
 
@@ -159,6 +163,45 @@ def test_str() -> None:
     # Smoke test the str of the base estimator
     my_estimator = DummyEstimatorDF()
     str(my_estimator)
+
+
+def test_html_repr() -> None:
+    # store the original display config
+    display_original = sklearn.get_config()["display"]
+
+    # set the display config to use diagrams
+    sklearn.set_config(display="diagram")
+
+    try:
+        pipeline_df = PipelineDF(
+            [
+                (
+                    "preprocess",
+                    PipelineDF(
+                        [
+                            ("impute", SimpleImputerDF()),
+                        ]
+                    ),
+                ),
+                ("rf", RandomForestRegressorDF(n_estimators=120)),
+            ]
+        )
+
+        def _replace_ids(_html: str) -> str:
+            # scikit-learn generates new ids on subsequent calls to estimator_html_repr,
+            # so we replace them with a placeholder
+            return re.sub(
+                r'(?<=id-)\d+|(?:(?<=sk-)|(?<=id=")|(?<=for="))\w+(?:-\w+)*', "#", _html
+            )
+
+        assert _replace_ids(pipeline_df._repr_html_()) == _replace_ids(
+            estimator_html_repr(pipeline_df)
+        )
+
+    finally:
+        # reset the display config to its original value
+        sklearn.set_config(display=display_original)
+        pass
 
 
 def test_get_params() -> None:
