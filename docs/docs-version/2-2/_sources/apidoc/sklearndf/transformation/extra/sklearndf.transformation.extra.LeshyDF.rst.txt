@@ -23,6 +23,7 @@ sklearndf.transformation.extra.LeshyDF
       ~LeshyDF.get_params
       ~LeshyDF.inverse_transform
       ~LeshyDF.plot_importance
+      ~LeshyDF.select_features
       ~LeshyDF.set_output
       ~LeshyDF.set_params
       ~LeshyDF.to_expression

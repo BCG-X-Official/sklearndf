@@ -1664,7 +1664,7 @@
 <h1>sklearndf.transformation.extra.BoostAGrootaDF<a class="headerlink" href="#sklearndf-transformation-extra-boostagrootadf" title="Permalink to this headline">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="sklearndf.transformation.extra.BoostAGrootaDF">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sklearndf.transformation.extra.</span></span><span class="sig-name descname"><span class="pre">BoostAGrootaDF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">est</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_rounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">silent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">importance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'shap'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/sklearndf/transformation/extra/_extra.html#BoostAGrootaDF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sklearndf.transformation.extra.BoostAGrootaDF" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sklearndf.transformation.extra.</span></span><span class="sig-name descname"><span class="pre">BoostAGrootaDF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_rounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">silent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">importance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'shap'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/sklearndf/transformation/extra/_extra.html#BoostAGrootaDF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sklearndf.transformation.extra.BoostAGrootaDF" title="Permalink to this definition">#</a></dt>
 <dd><p>BoostARoota becomes BoostAGroota, I’m Groot. BoostAGroota is an all relevant
 feature selection method, while most other are minimal optimal;
 this means it tries to find all features carrying
@@ -1674,7 +1674,55 @@ Why bother with all relevant feature selection?
 When you try to understand the phenomenon that made your data, you should
 care about all factors that contribute to it, not just the bluntest signs
 of it in context of your methodology (minimal optimal set of features
-by definition depends on your estimator choice).</p>
+by definition depends on your estimator choice).
+Parameters
+———-
+estimator : sklear estimator
+the model to train, lightGBM recommended, see the reduce lightgbm method
+cutoff : float
+the value by which the max of shadow imp is divided, to compare to real importance
+iters : int (&gt;0)
+The number of iterations to average for the feature importance (on the same split),
+to reduce the variance
+max_rounds : int (&gt;0)
+The number of times the core BoostARoota algorithm will run.
+Each round eliminates more and more features
+delta : float (0 &lt; delta &lt;= 1)
+Stopping criteria for whether another round is started
+silent : bool
+Set to True if don’t want to see the BoostARoota output printed.
+importance : str, default=’shap’
+the kind of feature importance to use. Possible values: ‘shap’ (Shapley values),
+‘pimp’ (permutation importance) and ‘native’ (Gini/impurity)
+Attributes
+———-
+<a href="#id1"><span class="problematic" id="id2">selected_features_</span></a> : list of str
+the list of columns to keep
+<a href="#id3"><span class="problematic" id="id4">ranking_</span></a> : array of shape [n_features]
+The feature ranking, such that <code class="docutils literal notranslate"><span class="pre">ranking_[i]</span></code> corresponds to the
+ranking position of the i-th feature. Selected (i.e., estimated
+best) features are assigned rank 1 and tentative features are assigned
+rank 2.
+<a href="#id5"><span class="problematic" id="id6">ranking_absolutes_</span></a> : array of shape [n_features]
+The absolute feature ranking as ordered by selection process. It does not guarantee
+that this order is correct for all models. For a model agnostic ranking, see the
+the attribute <code class="docutils literal notranslate"><span class="pre">ranking</span></code>
+sha_cutoff_df : dataframe
+feature importance of the real+shadow predictors over iterations
+mean_shadow : float
+the threshold below which the predictors are rejected
+Examples
+——–
+&gt;&gt;&gt; X = df[filtered_features].copy()
+&gt;&gt;&gt; y = df[‘target’].copy()
+&gt;&gt;&gt; w = df[‘weight’].copy()
+&gt;&gt;&gt;
+&gt;&gt;&gt; model = LGBMRegressor(n_jobs=-1, n_estimators=100, objective=’rmse’,
+&gt;&gt;&gt;                       random_state=42, verbose=0)
+&gt;&gt;&gt; feat_selector = BoostAGroota(est=model, cutoff=1, iters=10, max_rounds=10, delta=0.1, importance=’shap’)
+&gt;&gt;&gt; feat_selector.fit(X, y, sample_weight=None)
+&gt;&gt;&gt; print(<a href="#id7"><span class="problematic" id="id8">feat_selector.selected_features_</span></a>)
+&gt;&gt;&gt; feat_selector.plot_importance(n_feat_per_inch=5)</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This class is a wrapper around class <code class="xref py py-class docutils literal notranslate"><span class="pre">arfs.feature_selection.allrelevant.BoostAGroota</span></code>.

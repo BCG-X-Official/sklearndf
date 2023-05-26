@@ -1669,7 +1669,54 @@
 The lightGBM is fitted using repeated cross-validation, the feature importance
 is extracted each time and averaged to smooth out the noise.
 If the feature importance is larger than the average shadow feature importance then the predictors
-are rejected, the others are kept.</p>
+are rejected, the others are kept.
+- Cross-validated feature importance to smooth out the noise, based on lightGBM only
+(which is, most of the time, the fastest and more accurate Boosting).
+- the feature importance is derived using SHAP importance
+- Taking the max of median of the shadow var. imp over folds otherwise not enough conservative and
+it improves the convergence (needs less evaluation to find a threshold)
+- Not based on a given percentage of cols needed to be deleted
+- Plot method for var. imp
+Parameters
+———-
+objective: str
+the lightGBM objective
+cutoff: float
+the value by which the max of shadow imp is divided, to compare to real importance
+n_folds: int, default=5
+the number of folds for the cross-val
+n_iter: int, default=5
+the number of times the cross-validation is repeated
+silent: bool, default=False
+print out details or not
+rf: bool, default=False
+the lightGBM implementation of the random forest
+Attributes
+———-
+<a href="#id1"><span class="problematic" id="id2">selected_features_</span></a>: list of str
+the list of columns to keep
+<a href="#id3"><span class="problematic" id="id4">ranking_</span></a> : array of shape [n_features]
+The feature ranking, such that <code class="docutils literal notranslate"><span class="pre">ranking_[i]</span></code> corresponds to the
+ranking position of the i-th feature. Selected (i.e., estimated
+best) features are assigned rank 1 and tentative features are assigned
+rank 2.
+<a href="#id5"><span class="problematic" id="id6">ranking_absolutes_</span></a> : array of shape [n_features]
+The absolute feature ranking as ordered by selection process. It does not guarantee
+that this order is correct for all models. For a model agnostic ranking, see the
+the attribute <code class="docutils literal notranslate"><span class="pre">ranking</span></code>
+cv_df: dataframe
+the statistics of the feature importance over the different repeats of the X-val
+sha_cutoff: float
+the threshold below which the predictors are rejected
+Examples
+——-
+&gt;&gt;&gt; X = df[filtered_features].copy()
+&gt;&gt;&gt; y = df[‘target’].copy()
+&gt;&gt;&gt; w = df[‘weight’].copy()
+&gt;&gt;&gt;
+&gt;&gt;&gt; feat_selector = arfsgroot.GrootCV(objective=’rmse’, cutoff = 1, n_folds=5, n_iter=5)
+&gt;&gt;&gt; feat_selector.fit(X, y, sample_weight=None)
+&gt;&gt;&gt; feat_selector.plot_importance(n_feat_per_inch=5)</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This class is a wrapper around class <code class="xref py py-class docutils literal notranslate"><span class="pre">arfs.feature_selection.allrelevant.GrootCV</span></code>.

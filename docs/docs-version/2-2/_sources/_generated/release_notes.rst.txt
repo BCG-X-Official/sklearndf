@@ -9,12 +9,20 @@ Release Notes
 .. |nbsp| unicode:: 0xA0
    :trim:
 
+
 *sklearndf* 2.2
 ---------------
 
 *sklearndf* 2.2 adds support for
 `scikit-learn 1.2 <https://scikit-learn.org/1.2>`_, and enhances the EstimatorDF
 API.
+
+
+2.2.1
+~~~~~
+
+- VIZ: use *scikit-learn*'s native HTML representation of estimators, if available
+
 
 2.2.0
 ~~~~~
@@ -49,6 +57,7 @@ support of sparse output (see below).
 
 *sklearndf* 2.1 adds support for
 `scikit-learn 1.1 <https://scikit-learn.org/1.1>`_.
+
 
 2.1.1
 ~~~~~
