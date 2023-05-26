@@ -7,8 +7,8 @@ from typing import Any
 import numpy as np
 import pytest
 import scipy.sparse as sp
+import sklearn
 from numpy.testing import assert_array_equal
-from sklearn import clone
 from sklearn.base import BaseEstimator, is_classifier
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
@@ -79,7 +79,7 @@ def test_clone() -> None:
     assert encoder.get_params() == new_encoder.get_params()
 
     encoder = OneHotEncoderDF(handle_unknown="ignore", sparse=False)
-    new_encoder = clone(encoder)
+    new_encoder = sklearn.clone(encoder)
 
     assert encoder is not new_encoder
 
@@ -167,10 +167,10 @@ def test_str() -> None:
 
 def test_html_repr() -> None:
     # store the original display config
-    # display_original = get_config()["display"]
+    display_original = sklearn.get_config()["display"]
 
     # set the display config to use diagrams
-    # set_config(display="diagram")
+    sklearn.set_config(display="diagram")
 
     try:
         pipeline_df = PipelineDF(
@@ -188,9 +188,11 @@ def test_html_repr() -> None:
         )
 
         def _replace_ids(_html: str) -> str:
-            # scikit-learn generates new incides for ids on subsequent calls
-            # to estimator_html_repr, so we replace them with a placeholder
-            return re.sub(r"-id-(\d+)", "#", _html)
+            # scikit-learn generates new ids on subsequent calls to estimator_html_repr,
+            # so we replace them with a placeholder
+            return re.sub(
+                r'(?<=id-)\d+|(?:(?<=sk-)|(?<=id=")|(?<=for="))\w+(?:-\w+)*', "#", _html
+            )
 
         assert _replace_ids(pipeline_df._repr_html_()) == _replace_ids(
             estimator_html_repr(pipeline_df)
@@ -198,7 +200,7 @@ def test_html_repr() -> None:
 
     finally:
         # reset the display config to its original value
-        # set_config(display=display_original)
+        sklearn.set_config(display=display_original)
         pass
 
 
