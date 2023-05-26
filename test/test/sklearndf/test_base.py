@@ -13,6 +13,7 @@ from sklearn.base import BaseEstimator, is_classifier
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
+from sklearn.utils import estimator_html_repr
 
 from pytools.expression import freeze, make_expression
 from pytools.expression.atomic import Id
@@ -186,23 +187,13 @@ def test_html_repr() -> None:
             ]
         )
 
-        labels_expected = [
-            "PipelineDF",
-            "preprocess: PipelineDF",
-            "SimpleImputerDF",
-            "RandomForestRegressorDF",
-        ]
+        def _replace_ids(_html: str) -> str:
+            # scikit-learn generates new incides for ids on subsequent calls
+            # to estimator_html_repr, so we replace them with a placeholder
+            return re.sub(r"-id-(\d+)", "#", _html)
 
-        repr_html_expected = ".*".join(
-            f"<label.+?>{label}</label>" for label in labels_expected
-        )
-
-        html_ = pipeline_df._repr_html_()
-        print(html_)
-        assert re.search(
-            repr_html_expected,
-            html_,
-            re.DOTALL,  # dot in regex also matches newline
+        assert _replace_ids(pipeline_df._repr_html_()) == _replace_ids(
+            estimator_html_repr(pipeline_df)
         )
 
     finally:
