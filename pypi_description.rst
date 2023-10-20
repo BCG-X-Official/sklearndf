@@ -23,7 +23,7 @@ License
 ---------------------------
 
 *sklearndf* is licensed under Apache 2.0 as described in the
-`LICENSE <https://github.com/BCG-Gamma/sklearndf/blob/develop/LICENSE>`_ file.
+`LICENSE <https://github.com/BCG-X-Official/sklearndf/blob/develop/LICENSE>`_ file.
 
 .. Begin-Badges
 

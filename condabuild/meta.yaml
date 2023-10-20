@@ -61,7 +61,7 @@ test:
     - pytest -vs test
 
 about:
-  home: https://github.com/BCG-Gamma/sklearndf
+  home: https://github.com/BCG-X-Official/sklearndf
   license: Apache Software License v2.0
   license_file: LICENSE
   description: |
@@ -69,6 +69,6 @@ about:
     scikit-learn: the outputs of transformers are numpy arrays, even when the input
     is a data frame. However, to inspect a model it is essential to keep track of
     the feature names.
-  dev_url: https://github.com/BCG-Gamma/sklearndf
+  dev_url: https://github.com/BCG-X-Official/sklearndf
   doc_url: https://bcg-gamma.github.io/sklearndf/
-  doc_source_url: https://github.com/BCG-Gamma/sklearndf/blob/develop/README.rst
+  doc_source_url: https://github.com/BCG-X-Official/sklearndf/blob/develop/README.rst
