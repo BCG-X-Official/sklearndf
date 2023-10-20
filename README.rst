@@ -284,7 +284,7 @@ or have a look at
 .. |pypi| image:: https://badge.fury.io/py/sklearndf.svg
    :target: https://pypi.org/project/sklearndf/
 
-.. |azure_build| image:: https://dev.azure.com/gamma-facet/facet/_apis/build/status/BCG-X-Official.sklearndf?repoName=BCG-Gamma%2Fsklearndf&branchName=develop
+.. |azure_build| image:: https://dev.azure.com/gamma-facet/facet/_apis/build/status/BCG-X-Official.sklearndf?repoName=BCG-X-Official%2Fsklearndf&branchName=develop
    :target: https://dev.azure.com/gamma-facet/facet/_build?definitionId=8&_a=summary
 
 .. |azure_code_cov| image:: https://img.shields.io/azure-devops/coverage/gamma-facet/facet/8/2.0.x
