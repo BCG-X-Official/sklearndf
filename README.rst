@@ -31,9 +31,9 @@ To this end, *sklearndf* enhances scikit-learn's estimators as follows:
 The following quickstart guide provides a minimal example workflow to get up and running
 with *sklearndf*.
 For additional tutorials and the API reference,
-see the `sklearndf documentation <https://bcg-gamma.github.io/sklearndf/>`__.
+see the `sklearndf documentation <https://bcg-x-official.github.io/sklearndf/>`__.
 Changes and additions to new versions are summarized in the
-`release notes <https://bcg-gamma.github.io/sklearndf/release_notes.html>`__.
+`release notes <https://bcg-x-official.github.io/sklearndf/release_notes.html>`__.
 
 
 Installation
@@ -249,7 +249,7 @@ so, please open a PR addressing the issue.
 We do ask that for any major changes please discuss these with us first via an issue.
 
 For further information on contributing please see our
-`contribution guide <https://bcg-gamma.github.io/sklearndf/contribution_guide.html>`__.
+`contribution guide <https://bcg-x-official.github.io/sklearndf/contribution_guide.html>`__.
 
 
 License
@@ -297,7 +297,7 @@ or have a look at
    :target: https://github.com/psf/black
 
 .. |made_with_sphinx_doc| image:: https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg
-   :target: https://bcg-gamma.github.io/sklearndf/index.html
+   :target: https://bcg-x-official.github.io/sklearndf/index.html
 
 .. |license_badge| image:: https://img.shields.io/badge/License-Apache%202.0-olivegreen.svg
    :target: https://opensource.org/licenses/Apache-2.0
