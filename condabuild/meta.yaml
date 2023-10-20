@@ -62,5 +62,5 @@ about:
     is a data frame. However, to inspect a model it is essential to keep track of
     the feature names.
   dev_url: https://github.com/BCG-X-Official/sklearndf
-  doc_url: https://bcg-gamma.github.io/sklearndf/
+  doc_url: https://bcg-x-official.github.io/sklearndf/
   doc_source_url: https://github.com/BCG-X-Official/sklearndf/blob/develop/README.rst

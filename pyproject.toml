@@ -61,7 +61,7 @@ docs = [
 ]
 
 [tool.flit.metadata.urls]
-Documentation = "https://bcg-gamma.github.io/sklearndf/"
+Documentation = "https://bcg-x-official.github.io/sklearndf/"
 Repository = "https://github.com/BCG-X-Official/sklearndf"
 
 [build]
