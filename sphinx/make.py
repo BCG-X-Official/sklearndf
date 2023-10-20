@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
     # run the common make file available in the pytools repo
     with request.urlopen(
-        f"https://raw.githubusercontent.com/BCG-Gamma/pytools/{BRANCH}"
+        f"https://raw.githubusercontent.com/BCG-X-Official/pytools/{BRANCH}"
         f"/sphinx/base/bootstrap.py"
     ) as response:
         exec(response.read().decode("utf-8"), globals())
