@@ -95,7 +95,7 @@ packaging      = ">=20"
 pandas         = "~=2.0"
 python         = ">=3.9,<4a"   # cannot use ~= due to conda bug
 scikit-learn   = "~=1.1.2"
-scipy          = "~=1.8"
+scipy          = "~=1.11"
 xgboost        = "~=1.5"
 # additional maximum requirements of gamma-pytools
 joblib         = "~=1.1"
