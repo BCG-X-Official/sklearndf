@@ -9,7 +9,6 @@ BRANCH = "2.1.x"
 
 
 if __name__ == "__main__":
-
     # noinspection PyUnusedLocal
     def run_make(branch: str, working_directory: str) -> None:
         """Stub, overwritten by bootstrap.py"""

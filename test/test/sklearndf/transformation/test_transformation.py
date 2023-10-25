@@ -498,7 +498,6 @@ def test_one_hot_encoding(test_data_categorical: pd.DataFrame, sparse: bool) -> 
     )
 
     if __sklearn_version__ >= __sklearn_1_1__:
-
         assert_frame_equal(
             OneHotEncoderDF(min_frequency=2, sparse=sparse).fit_transform(
                 test_data_categorical

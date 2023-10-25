@@ -114,7 +114,6 @@ def sklearn_regressor_classes() -> List[type]:
 
 
 def sklearn_pipeline_classes() -> List[type]:
-
     pipeline_modules = find_all_submodules(sklearn.pipeline)
     pipeline_modules.add(sklearn.pipeline)
 

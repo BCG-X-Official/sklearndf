@@ -122,7 +122,6 @@ class NumpyTransformerWrapperDF(
     def _frame_or_series_to_array(
         self, df: Union[pd.Series, pd.DataFrame]
     ) -> Union[npt.NDArray[Any], pd.arrays.SparseArray, sparse.csr_matrix]:
-
         if df.ndim == 1:
             return df.values
 

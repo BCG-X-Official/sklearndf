@@ -1085,7 +1085,6 @@ class ClassifierWrapperDF(
         ],
         classes: Optional[Sequence[Any]] = None,
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
-
         if classes is None:
             classes = getattr(self.native_estimator, "classes_", None)
             if classes is None:
@@ -1306,12 +1305,10 @@ def _mirror_attributes(
     native_estimator: Type[T_NativeEstimator],
     wrapper_module: str,
 ) -> None:
-
     wrapper_name = wrapper_class.__name__
     wrapper_attributes: Set[str] = set(dir(wrapper_class))
 
     for name, member in vars(native_estimator).items():
-
         if member is None or name in wrapper_attributes:
             continue
 

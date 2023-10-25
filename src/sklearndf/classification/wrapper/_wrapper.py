@@ -153,7 +153,6 @@ class MultiOutputClassifierWrapperDF(
         ],
         classes: Optional[Sequence[Any]] = None,
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
-
         # if we have a multi-output classifier, prediction of probabilities
         # yields a list of NumPy arrays
         if not isinstance(prediction, list):

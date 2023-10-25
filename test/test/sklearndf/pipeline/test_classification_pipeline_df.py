@@ -23,7 +23,6 @@ def test_classification_pipeline_df(
     iris_target_sr: pd.DataFrame,
     classifier_df_cls: Type[ClassifierDF],
 ) -> None:
-
     cls_p_df = ClassifierPipelineDF(
         classifier=classifier_df_cls(),
         preprocessing=make_simple_transformer(

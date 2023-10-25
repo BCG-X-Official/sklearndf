@@ -22,7 +22,6 @@ def test_regression_pipeline_df(
     diabetes_target_sr: pd.Series,
     regressor_df_cls: Type[RegressorDF],
 ) -> None:
-
     rpdf = RegressorPipelineDF(
         regressor=regressor_df_cls(),
         preprocessing=make_simple_transformer(
