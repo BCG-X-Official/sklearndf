@@ -57,6 +57,8 @@ DEFAULT_REGRESSOR_PARAMETERS: Dict[str, Dict[str, Any]] = {
     "CCADF": dict(n_components=1),
     # the rank of Y is 1, so n_components needs to be 1
     "PLSCanonicalDF": dict(n_components=1),
+    # use a solver that is still supported with scipy 1.11
+    "QuantileRegressorDF": dict(solver="highs"),
 }
 
 REGRESSORS_PARTIAL_FIT = [
@@ -121,7 +123,6 @@ def test_wrapped_partial_fit(
     diabetes_target_sr: pd.Series,
     diabetes_target_df: pd.DataFrame,
 ) -> None:
-
     # noinspection PyArgumentList
     regressor = sklearndf_cls(
         **DEFAULT_REGRESSOR_PARAMETERS.get(f"{sklearndf_cls.__name__}_partial_fit", {})
