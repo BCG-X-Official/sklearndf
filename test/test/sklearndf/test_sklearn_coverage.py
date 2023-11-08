@@ -76,7 +76,7 @@ UNSUPPORTED_SKLEARN_CLASSES = {
     sklearn_class.__name__
     for sklearn_class in iterate_classes(
         from_modules=itertools.chain.from_iterable(
-            find_all_submodules(p) for p in UNSUPPORTED_SKLEARN_PACKAGES
+            (p, *find_all_submodules(p)) for p in UNSUPPORTED_SKLEARN_PACKAGES
         ),
         matching=".*",
     )
