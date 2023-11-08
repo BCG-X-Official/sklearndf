@@ -60,8 +60,6 @@ from sklearndf import (
     RegressorDF,
     SupervisedLearnerDF,
     TransformerDF,
-    __sklearn_1_0__,
-    __sklearn_version__,
 )
 
 log = logging.getLogger(__name__)
@@ -721,8 +719,6 @@ class TransformerWrapperDF(
     def _check_feature_names_out(
         self, wrapper_feature_names_out: pd.Index, *, warning_stacklevel: int
     ) -> pd.Index:
-        if __sklearn_version__ < __sklearn_1_0__:
-            return wrapper_feature_names_out
         # noinspection PyBroadException
         try:
             native_feature_names_out = self.native_estimator.get_feature_names_out(

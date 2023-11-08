@@ -92,6 +92,8 @@ from .wrapper import (
     PolynomialTransformerWrapperDF,
     VectorizerWrapperDF,
 )
+
+# noinspection PyProtectedMember
 from .wrapper._wrapper import PCAWrapperDF
 
 log = logging.getLogger(__name__)

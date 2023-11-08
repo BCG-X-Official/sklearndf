@@ -6,7 +6,6 @@ import logging
 from abc import ABCMeta, abstractmethod
 from typing import (
     Any,
-    Callable,
     Generic,
     Iterable,
     List,
@@ -32,13 +31,7 @@ from sklearn.preprocessing import KBinsDiscretizer, OneHotEncoder
 
 from pytools.api import AllTracker
 
-from ... import (
-    TransformerDF,
-    __sklearn_1_0__,
-    __sklearn_1_1__,
-    __sklearn_1_2__,
-    __sklearn_version__,
-)
+from ... import TransformerDF, __sklearn_1_1__, __sklearn_1_2__, __sklearn_version__
 from ..._util import hstack_frames, is_sparse_frame, sparse_frame_density
 from ...wrapper import TransformerWrapperDF
 
@@ -360,7 +353,7 @@ class ColumnTransformerSparseFrames(
     def _hstack(
         self, Xs: List[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]]
     ) -> Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]:
-        if __sklearn_version__ >= __sklearn_1_0__ and self.verbose_feature_names_out:
+        if self.verbose_feature_names_out:
             prefixes = [name for name, _, _ in self.transformers]
             if self._remainder[2] and self.remainder != "drop":
                 # remainder columns exist and are not being dropped
@@ -610,9 +603,10 @@ class PolynomialTransformerWrapperDF(
     """
 
     def _get_features_out(self) -> pd.Index:
-        return _get_native_feature_names_out(
-            feature_names_in_=self.feature_names_in_,
-            native_estimator=self.native_estimator,
+        return pd.Index(
+            self.native_estimator.get_feature_names_out(
+                self.feature_names_in_.to_numpy().astype(str)
+            )
         )
 
 
@@ -626,8 +620,10 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
 
         native_estimator: OneHotEncoder = self.native_estimator
         feature_names_in: pd.Index = self.feature_names_in_
-        feature_names_out: pd.Index = _get_native_feature_names_out(
-            feature_names_in_=feature_names_in, native_estimator=native_estimator
+        feature_names_out: pd.Index = pd.Index(
+            native_estimator.get_feature_names_out(
+                feature_names_in.to_numpy().astype(str)
+            )
         )
 
         def _adjust_n_features_in(n: npt.NDArray[np.int_]) -> None:
@@ -763,23 +759,6 @@ class EmbeddingWrapperDF(
 #
 
 
-def _get_native_feature_names_out(
-    feature_names_in_: pd.Index, native_estimator: TransformerMixin
-) -> pd.Index:
-    # get the output feature names from a native transformer implementing
-    # method get_feature_names() (sklearn 0.x) or get_feature_names_out() (sklearn 1.x)
-
-    get_feature_names_out_fn: Callable[[npt.NDArray[Any]], npt.NDArray[Any]]
-    if __sklearn_version__ >= __sklearn_1_0__:
-        # noinspection PyUnresolvedReferences
-        get_feature_names_out_fn = native_estimator.get_feature_names_out
-    else:
-        # noinspection PyUnresolvedReferences
-        get_feature_names_out_fn = native_estimator.get_feature_names
-
-    return pd.Index(get_feature_names_out_fn(feature_names_in_.to_numpy().astype(str)))
-
-
 class VectorizerWrapperDF(
     SingleColumnTransformerWrapperDF[T_Transformer], Generic[T_Transformer]
 ):
@@ -796,10 +775,7 @@ class VectorizerWrapperDF(
 
     def _get_features_out(self) -> pd.Index:
         try:
-            if __sklearn_version__ >= __sklearn_1_0__:
-                feature_names = self.native_estimator.get_feature_names_out()
-            else:
-                feature_names = self.native_estimator.get_feature_names()
+            feature_names = self.native_estimator.get_feature_names_out()
         except AttributeError:
             try:
                 n_features = self.native_estimator.n_features
