@@ -326,7 +326,7 @@ def test_pipeline_df_raise_set_params_error() -> None:
 @pytest.mark.parametrize(argnames="sparse", argvalues=[True, False])  # type: ignore
 def test_feature_union(test_data_categorical: pd.DataFrame, sparse: bool) -> None:
     # the expected column dtype, depending on arg sparse
-    dtype_expected = pd.SparseDtype(np.float_, fill_value=0) if sparse else np.float_
+    dtype_expected = pd.SparseDtype(np.float64, fill_value=0) if sparse else np.float64
 
     # apply the test data to a simple feature union
     feature_union = FeatureUnionDF(
