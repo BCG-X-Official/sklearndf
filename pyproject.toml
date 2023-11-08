@@ -73,10 +73,10 @@ no-binary.min = ["matplotlib"]
 boruta         = "~=0.3.0"
 gamma-pytools  = "~=2.1.0"
 lightgbm       = "~=3.0.0"
-numpy          = "==1.21.6"  # cannot use ~= due to conda bug
+numpy          = "==1.21.6"        # cannot use ~= due to conda bug
 packaging      = "~=20.9"
 pandas         = "~=1.1.5"
-python         = ">=3.7.12,<3.8a"    # cannot use ~= due to conda bug
+python         = ">=3.7.12,<3.8a"  # cannot use ~= due to conda bug
 scipy          = "~=1.6.3"
 scikit-learn   = "~=1.0.2"
 xgboost        = "~=1.0.2"
@@ -90,10 +90,10 @@ typing_inspect = "~=0.4.0"
 arfs           = "~=1.1"
 gamma-pytools  = "~=2.1"
 lightgbm       = "~=3.3"
-numpy          = "~=1.24"
+numpy          = ">=1.24,<2a"     # cannot use ~= due to conda bug
 packaging      = ">=20"
 pandas         = "~=2.0"
-python         = "~=3.11.0"
+python         = ">=3.11,<3.12a"  # cannot use ~= due to conda bug
 scikit-learn   = "~=1.3.2"
 scipy          = "~=1.11"
 xgboost        = "~=1.5"
