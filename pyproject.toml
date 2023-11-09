@@ -15,7 +15,7 @@ license = "Apache Software License v2.0"
 
 requires = [
     "gamma-pytools  ~=2.1",
-    "numpy          >=1.21",  # cannot use ~= due to conda bug
+    "numpy          >=1.21,<2a",  # cannot use ~= due to conda bug
     "packaging      >=20",
     "pandas         >=1",
     "scikit-learn   >=1,<1.4a",
