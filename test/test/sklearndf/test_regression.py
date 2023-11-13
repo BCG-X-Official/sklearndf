@@ -6,7 +6,7 @@ from sklearn.base import BaseEstimator, is_regressor
 from sklearn.multioutput import MultiOutputRegressor, RegressorChain
 
 import sklearndf.regression
-from sklearndf import RegressorDF, TransformerDF, __sklearn_1_0__, __sklearn_version__
+from sklearndf import RegressorDF, TransformerDF
 from sklearndf.regression import (
     SVRDF,
     IsotonicRegressionDF,
@@ -33,10 +33,7 @@ def test_regressor_count() -> None:
     n = len(REGRESSORS_TO_TEST)
 
     print(f"Testing {n} regressors.")
-    if __sklearn_version__ < __sklearn_1_0__:
-        assert n == 53
-    else:
-        assert n == 55
+    assert n == 55
 
 
 DEFAULT_REGRESSOR_PARAMETERS: Dict[str, Dict[str, Any]] = {
@@ -131,4 +128,5 @@ def test_wrapped_partial_fit(
     is_multi_output = isinstance(regressor.native_estimator, MultiOutputRegressor)
     diabetes_target = diabetes_target_df if is_multi_output else diabetes_target_sr
 
+    # noinspection PyUnresolvedReferences
     regressor.partial_fit(diabetes_features, diabetes_target)
