@@ -14,7 +14,6 @@ from sklearn.multioutput import MultiOutputRegressor
 
 from pytools.api import AllTracker
 
-from ... import __sklearn_0_24__, __sklearn_version__
 from ...transformation.wrapper import (
     ColumnPreservingTransformerWrapperDF,
     NumpyTransformerWrapperDF,
@@ -162,11 +161,7 @@ class IsotonicRegressionWrapperDF(
     # noinspection PyPep8Naming
     def _adjust_X_type_for_delegate(self, X: pd.DataFrame) -> npt.NDArray[Any]:
         arr = super()._adjust_X_type_for_delegate(X)
-        if __sklearn_version__ >= __sklearn_0_24__:
-            # we can return a 1D array as of sklearn 0.24
-            return arr.ravel()
-        else:
-            return arr
+        return arr.ravel()
 
 
 #

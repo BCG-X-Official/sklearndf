@@ -12,7 +12,6 @@ from test.sklearndf.pipeline import make_simple_transformer
 def test_clustering_pipeline_df(
     iris_features: pd.DataFrame, iris_target_sr: pd.DataFrame
 ) -> None:
-
     cls_p_df = ClusterPipelineDF(
         clusterer=KMeansDF(n_clusters=4),
         preprocessing=make_simple_transformer(

@@ -60,8 +60,6 @@ from sklearndf import (
     RegressorDF,
     SupervisedLearnerDF,
     TransformerDF,
-    __sklearn_1_0__,
-    __sklearn_version__,
 )
 
 log = logging.getLogger(__name__)
@@ -721,8 +719,6 @@ class TransformerWrapperDF(
     def _check_feature_names_out(
         self, wrapper_feature_names_out: pd.Index, *, warning_stacklevel: int
     ) -> pd.Index:
-        if __sklearn_version__ < __sklearn_1_0__:
-            return wrapper_feature_names_out
         # noinspection PyBroadException
         try:
             native_feature_names_out = self.native_estimator.get_feature_names_out(
@@ -1085,7 +1081,6 @@ class ClassifierWrapperDF(
         ],
         classes: Optional[Sequence[Any]] = None,
     ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
-
         if classes is None:
             classes = getattr(self.native_estimator, "classes_", None)
             if classes is None:
@@ -1306,12 +1301,10 @@ def _mirror_attributes(
     native_estimator: Type[T_NativeEstimator],
     wrapper_module: str,
 ) -> None:
-
     wrapper_name = wrapper_class.__name__
     wrapper_attributes: Set[str] = set(dir(wrapper_class))
 
     for name, member in vars(native_estimator).items():
-
         if member is None or name in wrapper_attributes:
             continue
 

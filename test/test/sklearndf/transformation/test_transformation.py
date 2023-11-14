@@ -22,9 +22,8 @@ from sklearndf import (
     ClassifierDF,
     RegressorDF,
     TransformerDF,
-    __sklearn_0_24__,
-    __sklearn_1_0__,
     __sklearn_1_1__,
+    __sklearn_1_3__,
     __sklearn_version__,
 )
 from sklearndf.classification import RandomForestClassifierDF
@@ -37,6 +36,7 @@ from sklearndf.transformation import (
     NormalizerDF,
     OneHotEncoderDF,
     SelectFromModelDF,
+    SequentialFeatureSelectorDF,
     SimpleImputerDF,
     SparseCoderDF,
     StandardScalerDF,
@@ -52,13 +52,10 @@ TRANSFORMER_EXCLUSIONS = [
     KBinsDiscretizerDF.__name__,
     RFECVDF.__name__,
     RFEDF.__name__,
+    SequentialFeatureSelectorDF.__name__,
     r".*WrapperDF",
 ]
 
-if __sklearn_version__ >= __sklearn_0_24__:
-    from sklearndf.transformation import SequentialFeatureSelectorDF
-
-    TRANSFORMER_EXCLUSIONS.append(SequentialFeatureSelectorDF.__name__)
 
 # noinspection PyTypeChecker
 TRANSFORMERS_TO_TEST = iterate_classes(
@@ -73,14 +70,12 @@ def test_transformer_count() -> None:
     n = len(TRANSFORMERS_TO_TEST)
 
     print(f"Testing {n} transformers.")
-    if __sklearn_version__ < __sklearn_0_24__:
-        assert n == 56
-    elif __sklearn_version__ < __sklearn_1_0__:
-        assert n == 57
-    elif __sklearn_version__ < __sklearn_1_1__:
+    if __sklearn_version__ < __sklearn_1_1__:
         assert n == 58
-    else:
+    elif __sklearn_version__ < __sklearn_1_3__:
         assert n == 60
+    else:
+        assert n == 61
 
 
 @pytest.fixture  # type: ignore
@@ -134,10 +129,7 @@ def test_special_wrapped_constructors() -> None:
 
     RFEDF(estimator=rf)
 
-    if __sklearn_version__ >= __sklearn_0_24__:
-        from sklearndf.transformation import SequentialFeatureSelectorDF
-
-        SequentialFeatureSelectorDF(estimator=rf)
+    SequentialFeatureSelectorDF(estimator=rf)
 
 
 @pytest.mark.parametrize(  # type: ignore
@@ -191,22 +183,22 @@ def test_fit_transform(
     assert_frame_equal(inverse_transformed_df, test_data.rename_axis(columns="feature"))
 
     # test feature names in and out
-    if __sklearn_version__ >= __sklearn_1_0__:
-        # noinspection PyUnresolvedReferences
-        assert_array_equal(
-            transformer_df.feature_names_in_.values,
-            transformer_native.feature_names_in_,
-        )
-        # noinspection PyUnresolvedReferences
-        assert_array_equal(
-            transformer_df.feature_names_out_.values,
-            transformer_native.get_feature_names_out(),
-        )
-        # noinspection PyUnresolvedReferences
-        assert_array_equal(
-            transformer_df.feature_names_original_.index.values,
-            transformer_native.get_feature_names_out(),
-        )
+
+    # noinspection PyUnresolvedReferences
+    assert_array_equal(
+        transformer_df.feature_names_in_.values,
+        transformer_native.feature_names_in_,
+    )
+    # noinspection PyUnresolvedReferences
+    assert_array_equal(
+        transformer_df.feature_names_out_.values,
+        transformer_native.get_feature_names_out(),
+    )
+    # noinspection PyUnresolvedReferences
+    assert_array_equal(
+        transformer_df.feature_names_original_.index.values,
+        transformer_native.get_feature_names_out(),
+    )
 
 
 def test_column_transformer(test_data: pd.DataFrame) -> None:
@@ -259,67 +251,46 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
             pd.Series(names_original, index=feature_names_out_expected)
         )
 
-        if __sklearn_version__ >= __sklearn_1_0__:
-            # noinspection PyUnresolvedReferences
-            assert_array_equal(
-                col_tx_df.feature_names_in_.values, col_tx_native.feature_names_in_
-            )
+        # noinspection PyUnresolvedReferences
+        assert_array_equal(
+            col_tx_df.feature_names_in_.values, col_tx_native.feature_names_in_
+        )
 
-    if __sklearn_version__ < __sklearn_1_0__:
-        _test_transformer(
-            remainder="passthrough",
-            names_in=["c0", "c2", "c3", "c1"],
-            names_original=["c0", "c2", "c3", "c1"],
-            names_out=["c0", "c2", "c3", "c1"],
-        )
-        _test_transformer(
-            remainder="drop",
-            names_in=["c0", "c2", "c3"],
-            names_original=["c0", "c2", "c3"],
-            names_out=["c0", "c2", "c3"],
-        )
-        _test_transformer(
-            remainder="drop",
-            names_in=["c0", "c2", "c3", "c1"],
-            names_original=["c0", "c2", "c3"],
-            names_out=["c0", "c2", "c3"],
-        )
-    else:
-        # As of scikit-learn 1.0, column transformers have a new boolean parameter
-        # verbose_feature_names_out. We test once with verbosity disabled, once
-        # with verbosity enabled, and once with the default (enabled).
-        _test_transformer(
-            remainder="passthrough",
-            names_in=["c0", "c2", "c3", "c1"],
-            names_original=["c0", "c2", "c3", "c1"],
-            names_out=["tx__c0", "tx__c2", "keep__c3", "remainder__c1"],
-        )
-        _test_transformer(
-            remainder="drop",
-            names_in=["c0", "c2", "c3"],
-            names_original=["c0", "c2", "c3"],
-            names_out=["tx__c0", "tx__c2", "keep__c3"],
-        )
-        _test_transformer(
-            remainder="drop",
-            names_in=["c0", "c2", "c3", "c1"],
-            names_original=["c0", "c2", "c3"],
-            names_out=["tx__c0", "tx__c2", "keep__c3"],
-        )
-        _test_transformer(
-            remainder="drop",
-            names_in=["c0", "c2", "c3", "c1"],
-            names_original=["c0", "c2", "c3"],
-            names_out=["tx__c0", "tx__c2", "keep__c3"],
-            verbose_feature_names_out=True,
-        )
-        _test_transformer(
-            remainder="drop",
-            names_in=["c0", "c2", "c3", "c1"],
-            names_original=["c0", "c2", "c3"],
-            names_out=["c0", "c2", "c3"],
-            verbose_feature_names_out=False,
-        )
+    # As of scikit-learn 1.0, column transformers have a new boolean parameter
+    # verbose_feature_names_out. We test once with verbosity disabled, once
+    # with verbosity enabled, and once with the default (enabled).
+    _test_transformer(
+        remainder="passthrough",
+        names_in=["c0", "c2", "c3", "c1"],
+        names_original=["c0", "c2", "c3", "c1"],
+        names_out=["tx__c0", "tx__c2", "keep__c3", "remainder__c1"],
+    )
+    _test_transformer(
+        remainder="drop",
+        names_in=["c0", "c2", "c3"],
+        names_original=["c0", "c2", "c3"],
+        names_out=["tx__c0", "tx__c2", "keep__c3"],
+    )
+    _test_transformer(
+        remainder="drop",
+        names_in=["c0", "c2", "c3", "c1"],
+        names_original=["c0", "c2", "c3"],
+        names_out=["tx__c0", "tx__c2", "keep__c3"],
+    )
+    _test_transformer(
+        remainder="drop",
+        names_in=["c0", "c2", "c3", "c1"],
+        names_original=["c0", "c2", "c3"],
+        names_out=["tx__c0", "tx__c2", "keep__c3"],
+        verbose_feature_names_out=True,
+    )
+    _test_transformer(
+        remainder="drop",
+        names_in=["c0", "c2", "c3", "c1"],
+        names_original=["c0", "c2", "c3"],
+        names_out=["c0", "c2", "c3"],
+        verbose_feature_names_out=False,
+    )
 
 
 def test_normalizer_df() -> None:
@@ -392,19 +363,15 @@ def test_simple_imputer_df() -> None:
 
     # test inverse transform
 
-    if __sklearn_version__ >= __sklearn_0_24__:
-        inverse_transformed_df = imputer_df.inverse_transform(X=transformed_df)
-        assert_frame_equal(inverse_transformed_df, x_df)
+    inverse_transformed_df = imputer_df.inverse_transform(X=transformed_df)
+    assert_frame_equal(inverse_transformed_df, x_df)
 
     # test feature names in and out
-    if __sklearn_version__ >= __sklearn_1_0__:
-        # noinspection PyUnresolvedReferences
-        assert_array_equal(
-            imputer_df.feature_names_in_.values, imputer_native.feature_names_in_
-        )
+    assert_array_equal(
+        imputer_df.feature_names_in_.values, imputer_native.feature_names_in_
+    )
 
     if __sklearn_version__ >= __sklearn_1_1__:
-        # noinspection PyUnresolvedReferences
         assert_array_equal(
             imputer_df.feature_names_out_.values,
             imputer_native.get_feature_names_out(),
@@ -498,7 +465,6 @@ def test_one_hot_encoding(test_data_categorical: pd.DataFrame, sparse: bool) -> 
     )
 
     if __sklearn_version__ >= __sklearn_1_1__:
-
         assert_frame_equal(
             OneHotEncoderDF(min_frequency=2, sparse=sparse).fit_transform(
                 test_data_categorical

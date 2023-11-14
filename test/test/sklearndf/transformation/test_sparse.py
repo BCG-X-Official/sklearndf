@@ -8,7 +8,6 @@ from sklearndf.transformation import CountVectorizerDF, TfidfTransformerDF
 
 
 def test_tfidf() -> None:
-
     # expected results
 
     word_feature_names = (

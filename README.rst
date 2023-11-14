@@ -31,9 +31,9 @@ To this end, *sklearndf* enhances scikit-learn's estimators as follows:
 The following quickstart guide provides a minimal example workflow to get up and running
 with *sklearndf*.
 For additional tutorials and the API reference,
-see the `sklearndf documentation <https://bcg-gamma.github.io/sklearndf/>`__.
+see the `sklearndf documentation <https://bcg-x-official.github.io/sklearndf/>`__.
 Changes and additions to new versions are summarized in the
-`release notes <https://bcg-gamma.github.io/sklearndf/release_notes.html>`__.
+`release notes <https://bcg-x-official.github.io/sklearndf/release_notes.html>`__.
 
 
 Installation
@@ -243,20 +243,20 @@ Contributing
 
 Contributions to *sklearndf* are welcome and appreciated.
 For any bug reports or feature requests/enhancements please use the appropriate
-`GitHub form <https://github.com/BCG-Gamma/sklearndf/issues>`_, and if you wish to do
+`GitHub form <https://github.com/BCG-X-Official/sklearndf/issues>`_, and if you wish to do
 so, please open a PR addressing the issue.
 
 We do ask that for any major changes please discuss these with us first via an issue.
 
 For further information on contributing please see our
-`contribution guide <https://bcg-gamma.github.io/sklearndf/contribution_guide.html>`__.
+`contribution guide <https://bcg-x-official.github.io/sklearndf/contribution_guide.html>`__.
 
 
 License
 -------
 
 *sklearndf* is licensed under Apache 2.0 as described in the
-`LICENSE <https://github.com/BCG-Gamma/sklearndf/blob/develop/LICENSE>`_ file.
+`LICENSE <https://github.com/BCG-X-Official/sklearndf/blob/develop/LICENSE>`_ file.
 
 
 Acknowledgements
@@ -284,7 +284,7 @@ or have a look at
 .. |pypi| image:: https://badge.fury.io/py/sklearndf.svg
    :target: https://pypi.org/project/sklearndf/
 
-.. |azure_build| image:: https://dev.azure.com/gamma-facet/facet/_apis/build/status/BCG-Gamma.sklearndf?repoName=BCG-Gamma%2Fsklearndf&branchName=develop
+.. |azure_build| image:: https://dev.azure.com/gamma-facet/facet/_apis/build/status/BCG-X-Official.sklearndf?repoName=BCG-X-Official%2Fsklearndf&branchName=develop
    :target: https://dev.azure.com/gamma-facet/facet/_build?definitionId=8&_a=summary
 
 .. |azure_code_cov| image:: https://img.shields.io/azure-devops/coverage/gamma-facet/facet/8/2.1.x
@@ -297,7 +297,7 @@ or have a look at
    :target: https://github.com/psf/black
 
 .. |made_with_sphinx_doc| image:: https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg
-   :target: https://bcg-gamma.github.io/sklearndf/index.html
+   :target: https://bcg-x-official.github.io/sklearndf/index.html
 
 .. |license_badge| image:: https://img.shields.io/badge/License-Apache%202.0-olivegreen.svg
    :target: https://opensource.org/licenses/Apache-2.0

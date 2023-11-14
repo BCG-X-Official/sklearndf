@@ -6,7 +6,7 @@ from sklearn.base import BaseEstimator, is_regressor
 from sklearn.multioutput import MultiOutputRegressor, RegressorChain
 
 import sklearndf.regression
-from sklearndf import RegressorDF, TransformerDF, __sklearn_1_0__, __sklearn_version__
+from sklearndf import RegressorDF, TransformerDF
 from sklearndf.regression import (
     SVRDF,
     IsotonicRegressionDF,
@@ -33,10 +33,7 @@ def test_regressor_count() -> None:
     n = len(REGRESSORS_TO_TEST)
 
     print(f"Testing {n} regressors.")
-    if __sklearn_version__ < __sklearn_1_0__:
-        assert n == 53
-    else:
-        assert n == 55
+    assert n == 55
 
 
 DEFAULT_REGRESSOR_PARAMETERS: Dict[str, Dict[str, Any]] = {
@@ -57,6 +54,8 @@ DEFAULT_REGRESSOR_PARAMETERS: Dict[str, Dict[str, Any]] = {
     "CCADF": dict(n_components=1),
     # the rank of Y is 1, so n_components needs to be 1
     "PLSCanonicalDF": dict(n_components=1),
+    # use a solver that is still supported with scipy 1.11
+    "QuantileRegressorDF": dict(solver="highs"),
 }
 
 REGRESSORS_PARTIAL_FIT = [
@@ -121,7 +120,6 @@ def test_wrapped_partial_fit(
     diabetes_target_sr: pd.Series,
     diabetes_target_df: pd.DataFrame,
 ) -> None:
-
     # noinspection PyArgumentList
     regressor = sklearndf_cls(
         **DEFAULT_REGRESSOR_PARAMETERS.get(f"{sklearndf_cls.__name__}_partial_fit", {})
@@ -130,4 +128,5 @@ def test_wrapped_partial_fit(
     is_multi_output = isinstance(regressor.native_estimator, MultiOutputRegressor)
     diabetes_target = diabetes_target_df if is_multi_output else diabetes_target_sr
 
+    # noinspection PyUnresolvedReferences
     regressor.partial_fit(diabetes_features, diabetes_target)

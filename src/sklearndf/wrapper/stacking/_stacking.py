@@ -77,6 +77,7 @@ __tracker = AllTracker(globals())
 # Stacking Estimator wrappers
 #
 
+
 # noinspection PyPep8Naming
 @inheritdoc(match="""[see superclass]""")
 class StackingEstimatorWrapperDF(
