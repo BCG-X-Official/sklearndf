@@ -1,0 +1,56 @@
+sklearndf.clustering.wrapper.FeatureAgglomerationWrapperDF
+==========================================================
+
+.. currentmodule:: sklearndf.clustering.wrapper
+
+.. autoclass:: FeatureAgglomerationWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~FeatureAgglomerationWrapperDF.clone
+      ~FeatureAgglomerationWrapperDF.fit
+      ~FeatureAgglomerationWrapperDF.fit_predict
+      ~FeatureAgglomerationWrapperDF.fit_transform
+      ~FeatureAgglomerationWrapperDF.from_fitted
+      ~FeatureAgglomerationWrapperDF.get_params
+      ~FeatureAgglomerationWrapperDF.inverse_transform
+      ~FeatureAgglomerationWrapperDF.predict
+      ~FeatureAgglomerationWrapperDF.set_output
+      ~FeatureAgglomerationWrapperDF.set_params
+      ~FeatureAgglomerationWrapperDF.to_expression
+      ~FeatureAgglomerationWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~FeatureAgglomerationWrapperDF.COL_FEATURE
+      ~FeatureAgglomerationWrapperDF.COL_FEATURE_ORIGINAL
+      ~FeatureAgglomerationWrapperDF.COL_LABELS
+      ~FeatureAgglomerationWrapperDF.COL_PREDICTION
+      ~FeatureAgglomerationWrapperDF.feature_names_in_
+      ~FeatureAgglomerationWrapperDF.feature_names_original_
+      ~FeatureAgglomerationWrapperDF.feature_names_out_
+      ~FeatureAgglomerationWrapperDF.is_fitted
+      ~FeatureAgglomerationWrapperDF.labels_
+      ~FeatureAgglomerationWrapperDF.n_features_in_
+      ~FeatureAgglomerationWrapperDF.n_outputs_
+      ~FeatureAgglomerationWrapperDF.native_estimator
+      ~FeatureAgglomerationWrapperDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

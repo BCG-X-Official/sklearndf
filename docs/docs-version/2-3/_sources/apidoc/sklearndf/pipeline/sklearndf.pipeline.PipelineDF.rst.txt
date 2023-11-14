@@ -1,0 +1,62 @@
+sklearndf.pipeline.PipelineDF
+=============================
+
+.. currentmodule:: sklearndf.pipeline
+
+.. autoclass:: PipelineDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PipelineDF.clone
+      ~PipelineDF.decision_function
+      ~PipelineDF.fit
+      ~PipelineDF.fit_transform
+      ~PipelineDF.from_fitted
+      ~PipelineDF.get_feature_names_out
+      ~PipelineDF.get_params
+      ~PipelineDF.inverse_transform
+      ~PipelineDF.predict
+      ~PipelineDF.predict_log_proba
+      ~PipelineDF.predict_proba
+      ~PipelineDF.score
+      ~PipelineDF.set_output
+      ~PipelineDF.set_params
+      ~PipelineDF.to_expression
+      ~PipelineDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~PipelineDF.COL_FEATURE
+      ~PipelineDF.COL_FEATURE_ORIGINAL
+      ~PipelineDF.COL_PREDICTION
+      ~PipelineDF.PASSTHROUGH
+      ~PipelineDF.classes_
+      ~PipelineDF.feature_names_in_
+      ~PipelineDF.feature_names_original_
+      ~PipelineDF.feature_names_out_
+      ~PipelineDF.is_fitted
+      ~PipelineDF.n_features_in_
+      ~PipelineDF.n_outputs_
+      ~PipelineDF.named_steps
+      ~PipelineDF.native_estimator
+      ~PipelineDF.output_names_
+      ~PipelineDF.steps
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,48 @@
+sklearndf.regression.wrapper.PartialFitRegressorWrapperDF
+=========================================================
+
+.. currentmodule:: sklearndf.regression.wrapper
+
+.. autoclass:: PartialFitRegressorWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PartialFitRegressorWrapperDF.clone
+      ~PartialFitRegressorWrapperDF.fit
+      ~PartialFitRegressorWrapperDF.from_fitted
+      ~PartialFitRegressorWrapperDF.get_params
+      ~PartialFitRegressorWrapperDF.partial_fit
+      ~PartialFitRegressorWrapperDF.predict
+      ~PartialFitRegressorWrapperDF.score
+      ~PartialFitRegressorWrapperDF.set_params
+      ~PartialFitRegressorWrapperDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~PartialFitRegressorWrapperDF.COL_FEATURE
+      ~PartialFitRegressorWrapperDF.COL_PREDICTION
+      ~PartialFitRegressorWrapperDF.feature_names_in_
+      ~PartialFitRegressorWrapperDF.is_fitted
+      ~PartialFitRegressorWrapperDF.n_features_in_
+      ~PartialFitRegressorWrapperDF.n_outputs_
+      ~PartialFitRegressorWrapperDF.native_estimator
+      ~PartialFitRegressorWrapperDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

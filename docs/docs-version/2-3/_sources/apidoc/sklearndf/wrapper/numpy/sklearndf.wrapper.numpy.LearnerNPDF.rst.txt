@@ -1,0 +1,46 @@
+sklearndf.wrapper.numpy.LearnerNPDF
+===================================
+
+.. currentmodule:: sklearndf.wrapper.numpy
+
+.. autoclass:: LearnerNPDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~LearnerNPDF.clone
+      ~LearnerNPDF.fit
+      ~LearnerNPDF.get_params
+      ~LearnerNPDF.predict
+      ~LearnerNPDF.set_params
+      ~LearnerNPDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~LearnerNPDF.COL_FEATURE
+      ~LearnerNPDF.feature_names_in_
+      ~LearnerNPDF.is_fitted
+      ~LearnerNPDF.n_features_in_
+      ~LearnerNPDF.n_outputs_
+      ~LearnerNPDF.native_estimator
+      ~LearnerNPDF.output_names_
+      ~LearnerNPDF.delegate
+      ~LearnerNPDF.column_names
+   
+   
+
+   .. rubric:: Definitions

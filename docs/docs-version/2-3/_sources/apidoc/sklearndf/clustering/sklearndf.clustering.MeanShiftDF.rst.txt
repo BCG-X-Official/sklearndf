@@ -1,0 +1,49 @@
+sklearndf.clustering.MeanShiftDF
+================================
+
+.. currentmodule:: sklearndf.clustering
+
+.. autoclass:: MeanShiftDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MeanShiftDF.clone
+      ~MeanShiftDF.fit
+      ~MeanShiftDF.fit_predict
+      ~MeanShiftDF.from_fitted
+      ~MeanShiftDF.get_params
+      ~MeanShiftDF.predict
+      ~MeanShiftDF.set_params
+      ~MeanShiftDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MeanShiftDF.COL_FEATURE
+      ~MeanShiftDF.COL_LABELS
+      ~MeanShiftDF.COL_PREDICTION
+      ~MeanShiftDF.feature_names_in_
+      ~MeanShiftDF.is_fitted
+      ~MeanShiftDF.labels_
+      ~MeanShiftDF.n_features_in_
+      ~MeanShiftDF.n_outputs_
+      ~MeanShiftDF.native_estimator
+      ~MeanShiftDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

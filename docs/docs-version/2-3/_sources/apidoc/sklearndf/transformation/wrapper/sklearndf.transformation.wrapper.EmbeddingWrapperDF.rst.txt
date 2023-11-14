@@ -1,0 +1,51 @@
+sklearndf.transformation.wrapper.EmbeddingWrapperDF
+===================================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: EmbeddingWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~EmbeddingWrapperDF.clone
+      ~EmbeddingWrapperDF.fit
+      ~EmbeddingWrapperDF.fit_transform
+      ~EmbeddingWrapperDF.from_fitted
+      ~EmbeddingWrapperDF.get_params
+      ~EmbeddingWrapperDF.inverse_transform
+      ~EmbeddingWrapperDF.set_output
+      ~EmbeddingWrapperDF.set_params
+      ~EmbeddingWrapperDF.to_expression
+      ~EmbeddingWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~EmbeddingWrapperDF.COL_FEATURE
+      ~EmbeddingWrapperDF.COL_FEATURE_ORIGINAL
+      ~EmbeddingWrapperDF.feature_names_in_
+      ~EmbeddingWrapperDF.feature_names_original_
+      ~EmbeddingWrapperDF.feature_names_out_
+      ~EmbeddingWrapperDF.is_fitted
+      ~EmbeddingWrapperDF.n_features_in_
+      ~EmbeddingWrapperDF.n_outputs_
+      ~EmbeddingWrapperDF.native_estimator
+      ~EmbeddingWrapperDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

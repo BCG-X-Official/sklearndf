@@ -1,0 +1,51 @@
+sklearndf.transformation.wrapper.SingleColumnTransformerWrapperDF
+=================================================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: SingleColumnTransformerWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SingleColumnTransformerWrapperDF.clone
+      ~SingleColumnTransformerWrapperDF.fit
+      ~SingleColumnTransformerWrapperDF.fit_transform
+      ~SingleColumnTransformerWrapperDF.from_fitted
+      ~SingleColumnTransformerWrapperDF.get_params
+      ~SingleColumnTransformerWrapperDF.inverse_transform
+      ~SingleColumnTransformerWrapperDF.set_output
+      ~SingleColumnTransformerWrapperDF.set_params
+      ~SingleColumnTransformerWrapperDF.to_expression
+      ~SingleColumnTransformerWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~SingleColumnTransformerWrapperDF.COL_FEATURE
+      ~SingleColumnTransformerWrapperDF.COL_FEATURE_ORIGINAL
+      ~SingleColumnTransformerWrapperDF.feature_names_in_
+      ~SingleColumnTransformerWrapperDF.feature_names_original_
+      ~SingleColumnTransformerWrapperDF.feature_names_out_
+      ~SingleColumnTransformerWrapperDF.is_fitted
+      ~SingleColumnTransformerWrapperDF.n_features_in_
+      ~SingleColumnTransformerWrapperDF.n_outputs_
+      ~SingleColumnTransformerWrapperDF.native_estimator
+      ~SingleColumnTransformerWrapperDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

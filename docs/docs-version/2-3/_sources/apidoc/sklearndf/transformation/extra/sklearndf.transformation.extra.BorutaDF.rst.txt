@@ -1,0 +1,51 @@
+sklearndf.transformation.extra.BorutaDF
+=======================================
+
+.. currentmodule:: sklearndf.transformation.extra
+
+.. autoclass:: BorutaDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~BorutaDF.clone
+      ~BorutaDF.fit
+      ~BorutaDF.fit_transform
+      ~BorutaDF.from_fitted
+      ~BorutaDF.get_params
+      ~BorutaDF.inverse_transform
+      ~BorutaDF.set_output
+      ~BorutaDF.set_params
+      ~BorutaDF.to_expression
+      ~BorutaDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~BorutaDF.COL_FEATURE
+      ~BorutaDF.COL_FEATURE_ORIGINAL
+      ~BorutaDF.feature_names_in_
+      ~BorutaDF.feature_names_original_
+      ~BorutaDF.feature_names_out_
+      ~BorutaDF.is_fitted
+      ~BorutaDF.n_features_in_
+      ~BorutaDF.n_outputs_
+      ~BorutaDF.native_estimator
+      ~BorutaDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

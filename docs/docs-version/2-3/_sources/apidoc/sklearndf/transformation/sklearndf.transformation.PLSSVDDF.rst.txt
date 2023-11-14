@@ -1,0 +1,51 @@
+sklearndf.transformation.PLSSVDDF
+=================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: PLSSVDDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PLSSVDDF.clone
+      ~PLSSVDDF.fit
+      ~PLSSVDDF.fit_transform
+      ~PLSSVDDF.from_fitted
+      ~PLSSVDDF.get_params
+      ~PLSSVDDF.inverse_transform
+      ~PLSSVDDF.set_output
+      ~PLSSVDDF.set_params
+      ~PLSSVDDF.to_expression
+      ~PLSSVDDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~PLSSVDDF.COL_FEATURE
+      ~PLSSVDDF.COL_FEATURE_ORIGINAL
+      ~PLSSVDDF.feature_names_in_
+      ~PLSSVDDF.feature_names_original_
+      ~PLSSVDDF.feature_names_out_
+      ~PLSSVDDF.is_fitted
+      ~PLSSVDDF.n_features_in_
+      ~PLSSVDDF.n_outputs_
+      ~PLSSVDDF.native_estimator
+      ~PLSSVDDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

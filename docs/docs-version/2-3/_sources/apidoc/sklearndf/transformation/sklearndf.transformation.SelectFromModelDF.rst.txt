@@ -1,0 +1,52 @@
+sklearndf.transformation.SelectFromModelDF
+==========================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: SelectFromModelDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SelectFromModelDF.clone
+      ~SelectFromModelDF.fit
+      ~SelectFromModelDF.fit_transform
+      ~SelectFromModelDF.from_fitted
+      ~SelectFromModelDF.get_params
+      ~SelectFromModelDF.inverse_transform
+      ~SelectFromModelDF.set_output
+      ~SelectFromModelDF.set_params
+      ~SelectFromModelDF.to_expression
+      ~SelectFromModelDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~SelectFromModelDF.COL_FEATURE
+      ~SelectFromModelDF.COL_FEATURE_ORIGINAL
+      ~SelectFromModelDF.feature_names_in_
+      ~SelectFromModelDF.feature_names_original_
+      ~SelectFromModelDF.feature_names_out_
+      ~SelectFromModelDF.is_fitted
+      ~SelectFromModelDF.n_features_in_
+      ~SelectFromModelDF.n_outputs_
+      ~SelectFromModelDF.native_estimator
+      ~SelectFromModelDF.output_names_
+      ~SelectFromModelDF.threshold_
+   
+   
+
+   .. rubric:: Definitions

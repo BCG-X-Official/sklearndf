@@ -1,0 +1,41 @@
+sklearndf.pipeline.wrapper.FeatureUnionSparseFrames
+===================================================
+
+.. currentmodule:: sklearndf.pipeline.wrapper
+
+.. autoclass:: FeatureUnionSparseFrames
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~FeatureUnionSparseFrames.fit
+      ~FeatureUnionSparseFrames.fit_transform
+      ~FeatureUnionSparseFrames.get_feature_names_out
+      ~FeatureUnionSparseFrames.get_params
+      ~FeatureUnionSparseFrames.set_output
+      ~FeatureUnionSparseFrames.set_params
+      ~FeatureUnionSparseFrames.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~FeatureUnionSparseFrames.n_features_in_
+      ~FeatureUnionSparseFrames.named_transformers
+      ~FeatureUnionSparseFrames.steps
+   
+   
+
+   .. rubric:: Definitions

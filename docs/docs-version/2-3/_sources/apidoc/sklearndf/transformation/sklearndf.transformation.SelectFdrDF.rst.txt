@@ -1,0 +1,51 @@
+sklearndf.transformation.SelectFdrDF
+====================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: SelectFdrDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SelectFdrDF.clone
+      ~SelectFdrDF.fit
+      ~SelectFdrDF.fit_transform
+      ~SelectFdrDF.from_fitted
+      ~SelectFdrDF.get_params
+      ~SelectFdrDF.inverse_transform
+      ~SelectFdrDF.set_output
+      ~SelectFdrDF.set_params
+      ~SelectFdrDF.to_expression
+      ~SelectFdrDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~SelectFdrDF.COL_FEATURE
+      ~SelectFdrDF.COL_FEATURE_ORIGINAL
+      ~SelectFdrDF.feature_names_in_
+      ~SelectFdrDF.feature_names_original_
+      ~SelectFdrDF.feature_names_out_
+      ~SelectFdrDF.is_fitted
+      ~SelectFdrDF.n_features_in_
+      ~SelectFdrDF.n_outputs_
+      ~SelectFdrDF.native_estimator
+      ~SelectFdrDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,51 @@
+sklearndf.transformation.wrapper.PCAWrapperDF
+=============================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: PCAWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PCAWrapperDF.clone
+      ~PCAWrapperDF.fit
+      ~PCAWrapperDF.fit_transform
+      ~PCAWrapperDF.from_fitted
+      ~PCAWrapperDF.get_params
+      ~PCAWrapperDF.inverse_transform
+      ~PCAWrapperDF.set_output
+      ~PCAWrapperDF.set_params
+      ~PCAWrapperDF.to_expression
+      ~PCAWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~PCAWrapperDF.COL_FEATURE
+      ~PCAWrapperDF.COL_FEATURE_ORIGINAL
+      ~PCAWrapperDF.feature_names_in_
+      ~PCAWrapperDF.feature_names_original_
+      ~PCAWrapperDF.feature_names_out_
+      ~PCAWrapperDF.is_fitted
+      ~PCAWrapperDF.n_features_in_
+      ~PCAWrapperDF.n_outputs_
+      ~PCAWrapperDF.native_estimator
+      ~PCAWrapperDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

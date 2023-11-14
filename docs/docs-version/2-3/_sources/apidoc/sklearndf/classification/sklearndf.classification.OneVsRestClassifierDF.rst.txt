@@ -1,0 +1,53 @@
+sklearndf.classification.OneVsRestClassifierDF
+==============================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: OneVsRestClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~OneVsRestClassifierDF.clone
+      ~OneVsRestClassifierDF.decision_function
+      ~OneVsRestClassifierDF.fit
+      ~OneVsRestClassifierDF.from_fitted
+      ~OneVsRestClassifierDF.get_params
+      ~OneVsRestClassifierDF.predict
+      ~OneVsRestClassifierDF.predict_log_proba
+      ~OneVsRestClassifierDF.predict_proba
+      ~OneVsRestClassifierDF.score
+      ~OneVsRestClassifierDF.set_params
+      ~OneVsRestClassifierDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~OneVsRestClassifierDF.COL_FEATURE
+      ~OneVsRestClassifierDF.COL_PREDICTION
+      ~OneVsRestClassifierDF.classes_
+      ~OneVsRestClassifierDF.feature_names_in_
+      ~OneVsRestClassifierDF.is_fitted
+      ~OneVsRestClassifierDF.multilabel_
+      ~OneVsRestClassifierDF.n_classes_
+      ~OneVsRestClassifierDF.n_features_in_
+      ~OneVsRestClassifierDF.n_outputs_
+      ~OneVsRestClassifierDF.native_estimator
+      ~OneVsRestClassifierDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

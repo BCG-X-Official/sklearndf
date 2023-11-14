@@ -1,0 +1,52 @@
+sklearndf.clustering.MiniBatchKMeansDF
+======================================
+
+.. currentmodule:: sklearndf.clustering
+
+.. autoclass:: MiniBatchKMeansDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MiniBatchKMeansDF.clone
+      ~MiniBatchKMeansDF.fit
+      ~MiniBatchKMeansDF.fit_predict
+      ~MiniBatchKMeansDF.from_fitted
+      ~MiniBatchKMeansDF.get_params
+      ~MiniBatchKMeansDF.partial_fit
+      ~MiniBatchKMeansDF.predict
+      ~MiniBatchKMeansDF.set_params
+      ~MiniBatchKMeansDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MiniBatchKMeansDF.COL_FEATURE
+      ~MiniBatchKMeansDF.COL_LABELS
+      ~MiniBatchKMeansDF.COL_PREDICTION
+      ~MiniBatchKMeansDF.IDX_CLUSTER
+      ~MiniBatchKMeansDF.cluster_centers_
+      ~MiniBatchKMeansDF.feature_names_in_
+      ~MiniBatchKMeansDF.is_fitted
+      ~MiniBatchKMeansDF.labels_
+      ~MiniBatchKMeansDF.n_features_in_
+      ~MiniBatchKMeansDF.n_outputs_
+      ~MiniBatchKMeansDF.native_estimator
+      ~MiniBatchKMeansDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

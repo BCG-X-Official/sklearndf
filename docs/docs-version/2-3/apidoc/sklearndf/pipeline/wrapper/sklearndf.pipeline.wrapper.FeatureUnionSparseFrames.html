@@ -1,0 +1,1824 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>sklearndf.pipeline.wrapper.FeatureUnionSparseFrames &#8212; sklearndf  documentation</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/gamma.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/gamma.js"></script>
+    <script src="../../../../_static/js/versions.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="sklearndf.pipeline.wrapper.FeatureUnionWrapperDF" href="sklearndf.pipeline.wrapper.FeatureUnionWrapperDF.html" />
+    <link rel="prev" title="sklearndf.pipeline.wrapper" href="../sklearndf.pipeline.wrapper.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="../../../../index.html">
+  <img src="../../../../_static/gamma_sklearndf_logo.png" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../_generated/getting_started.html">
+  Getting started
+ </a>
+</li>
+
+<li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="../../../sklearndf.html">
+  API reference
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../tutorials.html">
+  Tutorials
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../contribution_guide.html">
+  Development Guidelines
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../faqs.html">
+  FAQ
+ </a>
+</li>
+
+<li class="toctree-l1 nav-item">
+ <a class="reference internal nav-link" href="../../../../_generated/release_notes.html">
+  Release Notes
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar">
+              <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sklearndf.ClassifierDF.html">
+   sklearndf.ClassifierDF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sklearndf.ClusterDF.html">
+   sklearndf.ClusterDF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sklearndf.EstimatorDF.html">
+   sklearndf.EstimatorDF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sklearndf.LearnerDF.html">
+   sklearndf.LearnerDF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sklearndf.RegressorDF.html">
+   sklearndf.RegressorDF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sklearndf.SupervisedLearnerDF.html">
+   sklearndf.SupervisedLearnerDF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../sklearndf.TransformerDF.html">
+   sklearndf.TransformerDF
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../sklearndf.classification.html">
+   sklearndf.classification
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.AdaBoostClassifierDF.html">
+     sklearndf.classification.AdaBoostClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.BaggingClassifierDF.html">
+     sklearndf.classification.BaggingClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.BernoulliNBDF.html">
+     sklearndf.classification.BernoulliNBDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.CalibratedClassifierCVDF.html">
+     sklearndf.classification.CalibratedClassifierCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.CategoricalNBDF.html">
+     sklearndf.classification.CategoricalNBDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.ClassifierChainDF.html">
+     sklearndf.classification.ClassifierChainDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.ComplementNBDF.html">
+     sklearndf.classification.ComplementNBDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.DecisionTreeClassifierDF.html">
+     sklearndf.classification.DecisionTreeClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.DummyClassifierDF.html">
+     sklearndf.classification.DummyClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.ExtraTreeClassifierDF.html">
+     sklearndf.classification.ExtraTreeClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.ExtraTreesClassifierDF.html">
+     sklearndf.classification.ExtraTreesClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.GaussianNBDF.html">
+     sklearndf.classification.GaussianNBDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.GaussianProcessClassifierDF.html">
+     sklearndf.classification.GaussianProcessClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.GradientBoostingClassifierDF.html">
+     sklearndf.classification.GradientBoostingClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.HistGradientBoostingClassifierDF.html">
+     sklearndf.classification.HistGradientBoostingClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.KNeighborsClassifierDF.html">
+     sklearndf.classification.KNeighborsClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.LabelPropagationDF.html">
+     sklearndf.classification.LabelPropagationDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.LabelSpreadingDF.html">
+     sklearndf.classification.LabelSpreadingDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.LinearDiscriminantAnalysisDF.html">
+     sklearndf.classification.LinearDiscriminantAnalysisDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.LinearSVCDF.html">
+     sklearndf.classification.LinearSVCDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.LogisticRegressionCVDF.html">
+     sklearndf.classification.LogisticRegressionCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.LogisticRegressionDF.html">
+     sklearndf.classification.LogisticRegressionDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.MLPClassifierDF.html">
+     sklearndf.classification.MLPClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.MultiOutputClassifierDF.html">
+     sklearndf.classification.MultiOutputClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.MultinomialNBDF.html">
+     sklearndf.classification.MultinomialNBDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.NearestCentroidDF.html">
+     sklearndf.classification.NearestCentroidDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.NuSVCDF.html">
+     sklearndf.classification.NuSVCDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.OneVsOneClassifierDF.html">
+     sklearndf.classification.OneVsOneClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.OneVsRestClassifierDF.html">
+     sklearndf.classification.OneVsRestClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.OutputCodeClassifierDF.html">
+     sklearndf.classification.OutputCodeClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.PassiveAggressiveClassifierDF.html">
+     sklearndf.classification.PassiveAggressiveClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.PerceptronDF.html">
+     sklearndf.classification.PerceptronDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.QuadraticDiscriminantAnalysisDF.html">
+     sklearndf.classification.QuadraticDiscriminantAnalysisDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.RadiusNeighborsClassifierDF.html">
+     sklearndf.classification.RadiusNeighborsClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.RandomForestClassifierDF.html">
+     sklearndf.classification.RandomForestClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.RidgeClassifierCVDF.html">
+     sklearndf.classification.RidgeClassifierCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.RidgeClassifierDF.html">
+     sklearndf.classification.RidgeClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.SGDClassifierDF.html">
+     sklearndf.classification.SGDClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.SVCDF.html">
+     sklearndf.classification.SVCDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.StackingClassifierDF.html">
+     sklearndf.classification.StackingClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../classification/sklearndf.classification.VotingClassifierDF.html">
+     sklearndf.classification.VotingClassifierDF
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../classification/sklearndf.classification.extra.html">
+     sklearndf.classification.extra
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../classification/extra/sklearndf.classification.extra.LGBMClassifierDF.html">
+       sklearndf.classification.extra.LGBMClassifierDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../classification/extra/sklearndf.classification.extra.XGBClassifierDF.html">
+       sklearndf.classification.extra.XGBClassifierDF
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../classification/sklearndf.classification.wrapper.html">
+     sklearndf.classification.wrapper
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../classification/wrapper/sklearndf.classification.wrapper.ClassifierChainWrapperDF.html">
+       sklearndf.classification.wrapper.ClassifierChainWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../classification/wrapper/sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF.html">
+       sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../classification/wrapper/sklearndf.classification.wrapper.MetaClassifierWrapperDF.html">
+       sklearndf.classification.wrapper.MetaClassifierWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../classification/wrapper/sklearndf.classification.wrapper.MultiOutputClassifierWrapperDF.html">
+       sklearndf.classification.wrapper.MultiOutputClassifierWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../classification/wrapper/sklearndf.classification.wrapper.PartialFitClassifierWrapperDF.html">
+       sklearndf.classification.wrapper.PartialFitClassifierWrapperDF
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../sklearndf.clustering.html">
+   sklearndf.clustering
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.AffinityPropagationDF.html">
+     sklearndf.clustering.AffinityPropagationDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.AgglomerativeClusteringDF.html">
+     sklearndf.clustering.AgglomerativeClusteringDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.BirchDF.html">
+     sklearndf.clustering.BirchDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.BisectingKMeansDF.html">
+     sklearndf.clustering.BisectingKMeansDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.DBSCANDF.html">
+     sklearndf.clustering.DBSCANDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.FeatureAgglomerationDF.html">
+     sklearndf.clustering.FeatureAgglomerationDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.KMeansDF.html">
+     sklearndf.clustering.KMeansDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.MeanShiftDF.html">
+     sklearndf.clustering.MeanShiftDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.MiniBatchKMeansDF.html">
+     sklearndf.clustering.MiniBatchKMeansDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.OPTICSDF.html">
+     sklearndf.clustering.OPTICSDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.SpectralClusteringDF.html">
+     sklearndf.clustering.SpectralClusteringDF
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../clustering/sklearndf.clustering.wrapper.html">
+     sklearndf.clustering.wrapper
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../clustering/wrapper/sklearndf.clustering.wrapper.FeatureAgglomerationWrapperDF.html">
+       sklearndf.clustering.wrapper.FeatureAgglomerationWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../clustering/wrapper/sklearndf.clustering.wrapper.KMeansBaseWrapperDF.html">
+       sklearndf.clustering.wrapper.KMeansBaseWrapperDF
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../../sklearndf.pipeline.html">
+   sklearndf.pipeline
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.pipeline.ClassifierPipelineDF.html">
+     sklearndf.pipeline.ClassifierPipelineDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.pipeline.ClusterPipelineDF.html">
+     sklearndf.pipeline.ClusterPipelineDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.pipeline.FeatureUnionDF.html">
+     sklearndf.pipeline.FeatureUnionDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.pipeline.LearnerPipelineDF.html">
+     sklearndf.pipeline.LearnerPipelineDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.pipeline.PipelineDF.html">
+     sklearndf.pipeline.PipelineDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.pipeline.RegressorPipelineDF.html">
+     sklearndf.pipeline.RegressorPipelineDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../sklearndf.pipeline.SupervisedLearnerPipelineDF.html">
+     sklearndf.pipeline.SupervisedLearnerPipelineDF
+    </a>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="../sklearndf.pipeline.wrapper.html">
+     sklearndf.pipeline.wrapper
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       sklearndf.pipeline.wrapper.FeatureUnionSparseFrames
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.pipeline.wrapper.FeatureUnionWrapperDF.html">
+       sklearndf.pipeline.wrapper.FeatureUnionWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="sklearndf.pipeline.wrapper.PipelineWrapperDF.html">
+       sklearndf.pipeline.wrapper.PipelineWrapperDF
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../sklearndf.regression.html">
+   sklearndf.regression
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.ARDRegressionDF.html">
+     sklearndf.regression.ARDRegressionDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.AdaBoostRegressorDF.html">
+     sklearndf.regression.AdaBoostRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.BaggingRegressorDF.html">
+     sklearndf.regression.BaggingRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.BayesianRidgeDF.html">
+     sklearndf.regression.BayesianRidgeDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.CCADF.html">
+     sklearndf.regression.CCADF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.DecisionTreeRegressorDF.html">
+     sklearndf.regression.DecisionTreeRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.DummyRegressorDF.html">
+     sklearndf.regression.DummyRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.ElasticNetCVDF.html">
+     sklearndf.regression.ElasticNetCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.ElasticNetDF.html">
+     sklearndf.regression.ElasticNetDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.ExtraTreeRegressorDF.html">
+     sklearndf.regression.ExtraTreeRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.ExtraTreesRegressorDF.html">
+     sklearndf.regression.ExtraTreesRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.GammaRegressorDF.html">
+     sklearndf.regression.GammaRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.GaussianProcessRegressorDF.html">
+     sklearndf.regression.GaussianProcessRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.GradientBoostingRegressorDF.html">
+     sklearndf.regression.GradientBoostingRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.HistGradientBoostingRegressorDF.html">
+     sklearndf.regression.HistGradientBoostingRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.HuberRegressorDF.html">
+     sklearndf.regression.HuberRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.IsotonicRegressionDF.html">
+     sklearndf.regression.IsotonicRegressionDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.KNeighborsRegressorDF.html">
+     sklearndf.regression.KNeighborsRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.KernelRidgeDF.html">
+     sklearndf.regression.KernelRidgeDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LarsCVDF.html">
+     sklearndf.regression.LarsCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LarsDF.html">
+     sklearndf.regression.LarsDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LassoCVDF.html">
+     sklearndf.regression.LassoCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LassoDF.html">
+     sklearndf.regression.LassoDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LassoLarsCVDF.html">
+     sklearndf.regression.LassoLarsCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LassoLarsDF.html">
+     sklearndf.regression.LassoLarsDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LassoLarsICDF.html">
+     sklearndf.regression.LassoLarsICDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LinearRegressionDF.html">
+     sklearndf.regression.LinearRegressionDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.LinearSVRDF.html">
+     sklearndf.regression.LinearSVRDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.MLPRegressorDF.html">
+     sklearndf.regression.MLPRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.MultiOutputRegressorDF.html">
+     sklearndf.regression.MultiOutputRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.MultiTaskElasticNetCVDF.html">
+     sklearndf.regression.MultiTaskElasticNetCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.MultiTaskElasticNetDF.html">
+     sklearndf.regression.MultiTaskElasticNetDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.MultiTaskLassoCVDF.html">
+     sklearndf.regression.MultiTaskLassoCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.MultiTaskLassoDF.html">
+     sklearndf.regression.MultiTaskLassoDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.NuSVRDF.html">
+     sklearndf.regression.NuSVRDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.OrthogonalMatchingPursuitCVDF.html">
+     sklearndf.regression.OrthogonalMatchingPursuitCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.OrthogonalMatchingPursuitDF.html">
+     sklearndf.regression.OrthogonalMatchingPursuitDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.PLSCanonicalDF.html">
+     sklearndf.regression.PLSCanonicalDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.PLSRegressionDF.html">
+     sklearndf.regression.PLSRegressionDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.PassiveAggressiveRegressorDF.html">
+     sklearndf.regression.PassiveAggressiveRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.PoissonRegressorDF.html">
+     sklearndf.regression.PoissonRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.QuantileRegressorDF.html">
+     sklearndf.regression.QuantileRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.RANSACRegressorDF.html">
+     sklearndf.regression.RANSACRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.RadiusNeighborsRegressorDF.html">
+     sklearndf.regression.RadiusNeighborsRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.RandomForestRegressorDF.html">
+     sklearndf.regression.RandomForestRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.RegressorChainDF.html">
+     sklearndf.regression.RegressorChainDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.RidgeCVDF.html">
+     sklearndf.regression.RidgeCVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.RidgeDF.html">
+     sklearndf.regression.RidgeDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.SGDRegressorDF.html">
+     sklearndf.regression.SGDRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.SVRDF.html">
+     sklearndf.regression.SVRDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.StackingRegressorDF.html">
+     sklearndf.regression.StackingRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.TheilSenRegressorDF.html">
+     sklearndf.regression.TheilSenRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.TransformedTargetRegressorDF.html">
+     sklearndf.regression.TransformedTargetRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.TweedieRegressorDF.html">
+     sklearndf.regression.TweedieRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../regression/sklearndf.regression.VotingRegressorDF.html">
+     sklearndf.regression.VotingRegressorDF
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../regression/sklearndf.regression.extra.html">
+     sklearndf.regression.extra
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
+    <label for="toctree-checkbox-9">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../regression/extra/sklearndf.regression.extra.LGBMRegressorDF.html">
+       sklearndf.regression.extra.LGBMRegressorDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../regression/extra/sklearndf.regression.extra.XGBRegressorDF.html">
+       sklearndf.regression.extra.XGBRegressorDF
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../regression/sklearndf.regression.wrapper.html">
+     sklearndf.regression.wrapper
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
+    <label for="toctree-checkbox-10">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../regression/wrapper/sklearndf.regression.wrapper.IsotonicRegressionWrapperDF.html">
+       sklearndf.regression.wrapper.IsotonicRegressionWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../regression/wrapper/sklearndf.regression.wrapper.MetaRegressorWrapperDF.html">
+       sklearndf.regression.wrapper.MetaRegressorWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../regression/wrapper/sklearndf.regression.wrapper.MultiOutputRegressorWrapperDF.html">
+       sklearndf.regression.wrapper.MultiOutputRegressorWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../regression/wrapper/sklearndf.regression.wrapper.PartialFitRegressorWrapperDF.html">
+       sklearndf.regression.wrapper.PartialFitRegressorWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../regression/wrapper/sklearndf.regression.wrapper.RegressorTransformerWrapperDF.html">
+       sklearndf.regression.wrapper.RegressorTransformerWrapperDF
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../sklearndf.transformation.html">
+   sklearndf.transformation
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
+  <label for="toctree-checkbox-11">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.AdditiveChi2SamplerDF.html">
+     sklearndf.transformation.AdditiveChi2SamplerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.BernoulliRBMDF.html">
+     sklearndf.transformation.BernoulliRBMDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.BinarizerDF.html">
+     sklearndf.transformation.BinarizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.ColumnTransformerDF.html">
+     sklearndf.transformation.ColumnTransformerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.CountVectorizerDF.html">
+     sklearndf.transformation.CountVectorizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.CountVectorizerTx.html">
+     sklearndf.transformation.CountVectorizerTx
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.DictVectorizerDF.html">
+     sklearndf.transformation.DictVectorizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.DictionaryLearningDF.html">
+     sklearndf.transformation.DictionaryLearningDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.FactorAnalysisDF.html">
+     sklearndf.transformation.FactorAnalysisDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.FastICADF.html">
+     sklearndf.transformation.FastICADF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.FeatureHasherDF.html">
+     sklearndf.transformation.FeatureHasherDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.FunctionTransformerDF.html">
+     sklearndf.transformation.FunctionTransformerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.GaussianRandomProjectionDF.html">
+     sklearndf.transformation.GaussianRandomProjectionDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.GenericUnivariateSelectDF.html">
+     sklearndf.transformation.GenericUnivariateSelectDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.HashingVectorizerDF.html">
+     sklearndf.transformation.HashingVectorizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.IncrementalPCADF.html">
+     sklearndf.transformation.IncrementalPCADF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.IsomapDF.html">
+     sklearndf.transformation.IsomapDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.IterativeImputerDF.html">
+     sklearndf.transformation.IterativeImputerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.KBinsDiscretizerDF.html">
+     sklearndf.transformation.KBinsDiscretizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.KNNImputerDF.html">
+     sklearndf.transformation.KNNImputerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.KernelCentererDF.html">
+     sklearndf.transformation.KernelCentererDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.KernelPCADF.html">
+     sklearndf.transformation.KernelPCADF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.LabelBinarizerDF.html">
+     sklearndf.transformation.LabelBinarizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.LabelEncoderDF.html">
+     sklearndf.transformation.LabelEncoderDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.LatentDirichletAllocationDF.html">
+     sklearndf.transformation.LatentDirichletAllocationDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.LocallyLinearEmbeddingDF.html">
+     sklearndf.transformation.LocallyLinearEmbeddingDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.MaxAbsScalerDF.html">
+     sklearndf.transformation.MaxAbsScalerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.MinMaxScalerDF.html">
+     sklearndf.transformation.MinMaxScalerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.MiniBatchDictionaryLearningDF.html">
+     sklearndf.transformation.MiniBatchDictionaryLearningDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.MiniBatchNMFDF.html">
+     sklearndf.transformation.MiniBatchNMFDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.MiniBatchSparsePCADF.html">
+     sklearndf.transformation.MiniBatchSparsePCADF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.MissingIndicatorDF.html">
+     sklearndf.transformation.MissingIndicatorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.MultiLabelBinarizerDF.html">
+     sklearndf.transformation.MultiLabelBinarizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.NMFDF.html">
+     sklearndf.transformation.NMFDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.NeighborhoodComponentsAnalysisDF.html">
+     sklearndf.transformation.NeighborhoodComponentsAnalysisDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.NormalizerDF.html">
+     sklearndf.transformation.NormalizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.NystroemDF.html">
+     sklearndf.transformation.NystroemDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.OneHotEncoderDF.html">
+     sklearndf.transformation.OneHotEncoderDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.OrdinalEncoderDF.html">
+     sklearndf.transformation.OrdinalEncoderDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.PCADF.html">
+     sklearndf.transformation.PCADF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.PLSSVDDF.html">
+     sklearndf.transformation.PLSSVDDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.PolynomialCountSketchDF.html">
+     sklearndf.transformation.PolynomialCountSketchDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.PolynomialFeaturesDF.html">
+     sklearndf.transformation.PolynomialFeaturesDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.PowerTransformerDF.html">
+     sklearndf.transformation.PowerTransformerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.QuantileTransformerDF.html">
+     sklearndf.transformation.QuantileTransformerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.RBFSamplerDF.html">
+     sklearndf.transformation.RBFSamplerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.RFECVDF.html">
+     sklearndf.transformation.RFECVDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.RFEDF.html">
+     sklearndf.transformation.RFEDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.RandomTreesEmbeddingDF.html">
+     sklearndf.transformation.RandomTreesEmbeddingDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.RobustScalerDF.html">
+     sklearndf.transformation.RobustScalerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.SelectFdrDF.html">
+     sklearndf.transformation.SelectFdrDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.SelectFprDF.html">
+     sklearndf.transformation.SelectFprDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.SelectFromModelDF.html">
+     sklearndf.transformation.SelectFromModelDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.SelectFweDF.html">
+     sklearndf.transformation.SelectFweDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.SelectKBestDF.html">
+     sklearndf.transformation.SelectKBestDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.SelectPercentileDF.html">
+     sklearndf.transformation.SelectPercentileDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.SequentialFeatureSelectorDF.html">
+     sklearndf.transformation.SequentialFeatureSelectorDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.SimpleImputerDF.html">
+     sklearndf.transformation.SimpleImputerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.SkewedChi2SamplerDF.html">
+     sklearndf.transformation.SkewedChi2SamplerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.SparseCoderDF.html">
+     sklearndf.transformation.SparseCoderDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.SparsePCADF.html">
+     sklearndf.transformation.SparsePCADF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.SparseRandomProjectionDF.html">
+     sklearndf.transformation.SparseRandomProjectionDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.SplineTransformerDF.html">
+     sklearndf.transformation.SplineTransformerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.StandardScalerDF.html">
+     sklearndf.transformation.StandardScalerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.TfidfTransformerDF.html">
+     sklearndf.transformation.TfidfTransformerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.TfidfVectorizerDF.html">
+     sklearndf.transformation.TfidfVectorizerDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.TfidfVectorizerTx.html">
+     sklearndf.transformation.TfidfVectorizerTx
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.TruncatedSVDDF.html">
+     sklearndf.transformation.TruncatedSVDDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.VarianceThresholdDF.html">
+     sklearndf.transformation.VarianceThresholdDF
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.extra.html">
+     sklearndf.transformation.extra
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
+    <label for="toctree-checkbox-12">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/extra/sklearndf.transformation.extra.BoostAGrootaDF.html">
+       sklearndf.transformation.extra.BoostAGrootaDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/extra/sklearndf.transformation.extra.BorutaDF.html">
+       sklearndf.transformation.extra.BorutaDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/extra/sklearndf.transformation.extra.GrootCVDF.html">
+       sklearndf.transformation.extra.GrootCVDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/extra/sklearndf.transformation.extra.LeshyDF.html">
+       sklearndf.transformation.extra.LeshyDF
+      </a>
+     </li>
+     <li class="toctree-l3 has-children">
+      <a class="reference internal" href="../../transformation/extra/sklearndf.transformation.extra.wrapper.html">
+       sklearndf.transformation.extra.wrapper
+      </a>
+      <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
+      <label for="toctree-checkbox-13">
+       <i class="fas fa-chevron-down">
+       </i>
+      </label>
+      <ul>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../transformation/extra/wrapper/sklearndf.transformation.extra.wrapper.ARFSWrapperDF.html">
+         sklearndf.transformation.extra.wrapper.ARFSWrapperDF
+        </a>
+       </li>
+       <li class="toctree-l4">
+        <a class="reference internal" href="../../transformation/extra/wrapper/sklearndf.transformation.extra.wrapper.BorutaPyWrapperDF.html">
+         sklearndf.transformation.extra.wrapper.BorutaPyWrapperDF
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../transformation/sklearndf.transformation.wrapper.html">
+     sklearndf.transformation.wrapper
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
+    <label for="toctree-checkbox-14">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.AdditiveChi2SamplerWrapperDF.html">
+       sklearndf.transformation.wrapper.AdditiveChi2SamplerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF.html">
+       sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.BaseMultipleInputsPerOutputTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.BaseMultipleInputsPerOutputTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.ColumnPreservingTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.ColumnPreservingTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.ColumnSubsetTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.ColumnSubsetTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.ColumnTransformerSparseFrames.html">
+       sklearndf.transformation.wrapper.ColumnTransformerSparseFrames
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.ColumnTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.ColumnTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF.html">
+       sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.EmbeddingWrapperDF.html">
+       sklearndf.transformation.wrapper.EmbeddingWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.FeatureSelectionWrapperDF.html">
+       sklearndf.transformation.wrapper.FeatureSelectionWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.ImputerWrapperDF.html">
+       sklearndf.transformation.wrapper.ImputerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.IsomapWrapperDF.html">
+       sklearndf.transformation.wrapper.IsomapWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF.html">
+       sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.MissingIndicatorWrapperDF.html">
+       sklearndf.transformation.wrapper.MissingIndicatorWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.NComponentsDimensionalityReductionWrapperDF.html">
+       sklearndf.transformation.wrapper.NComponentsDimensionalityReductionWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.NumpyTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.NumpyTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.OneHotEncoderWrapperDF.html">
+       sklearndf.transformation.wrapper.OneHotEncoderWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.PCAWrapperDF.html">
+       sklearndf.transformation.wrapper.PCAWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.SingleColumnTransformerWrapperDF.html">
+       sklearndf.transformation.wrapper.SingleColumnTransformerWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../transformation/wrapper/sklearndf.transformation.wrapper.VectorizerWrapperDF.html">
+       sklearndf.transformation.wrapper.VectorizerWrapperDF
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../sklearndf.wrapper.html">
+   sklearndf.wrapper
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
+  <label for="toctree-checkbox-15">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.ClassifierWrapperDF.html">
+     sklearndf.wrapper.ClassifierWrapperDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.ClusterWrapperDF.html">
+     sklearndf.wrapper.ClusterWrapperDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.EstimatorWrapperDF.html">
+     sklearndf.wrapper.EstimatorWrapperDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.EstimatorWrapperDFMeta.html">
+     sklearndf.wrapper.EstimatorWrapperDFMeta
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.LearnerWrapperDF.html">
+     sklearndf.wrapper.LearnerWrapperDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.MetaEstimatorWrapperDF.html">
+     sklearndf.wrapper.MetaEstimatorWrapperDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.MissingEstimator.html">
+     sklearndf.wrapper.MissingEstimator
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.RegressorWrapperDF.html">
+     sklearndf.wrapper.RegressorWrapperDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.SupervisedLearnerWrapperDF.html">
+     sklearndf.wrapper.SupervisedLearnerWrapperDF
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.TransformerWrapperDF.html">
+     sklearndf.wrapper.TransformerWrapperDF
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.numpy.html">
+     sklearndf.wrapper.numpy
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
+    <label for="toctree-checkbox-16">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/numpy/sklearndf.wrapper.numpy.ClassifierNPDF.html">
+       sklearndf.wrapper.numpy.ClassifierNPDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/numpy/sklearndf.wrapper.numpy.EstimatorNPDF.html">
+       sklearndf.wrapper.numpy.EstimatorNPDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/numpy/sklearndf.wrapper.numpy.LearnerNPDF.html">
+       sklearndf.wrapper.numpy.LearnerNPDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/numpy/sklearndf.wrapper.numpy.RegressorNPDF.html">
+       sklearndf.wrapper.numpy.RegressorNPDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/numpy/sklearndf.wrapper.numpy.SupervisedLearnerNPDF.html">
+       sklearndf.wrapper.numpy.SupervisedLearnerNPDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/numpy/sklearndf.wrapper.numpy.TransformerNPDF.html">
+       sklearndf.wrapper.numpy.TransformerNPDF
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../../wrapper/sklearndf.wrapper.stacking.html">
+     sklearndf.wrapper.stacking
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/>
+    <label for="toctree-checkbox-17">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/stacking/sklearndf.wrapper.stacking.StackingClassifierWrapperDF.html">
+       sklearndf.wrapper.stacking.StackingClassifierWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/stacking/sklearndf.wrapper.stacking.StackingEstimatorWrapperDF.html">
+       sklearndf.wrapper.stacking.StackingEstimatorWrapperDF
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../wrapper/stacking/sklearndf.wrapper.stacking.StackingRegressorWrapperDF.html">
+       sklearndf.wrapper.stacking.StackingRegressorWrapperDF
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+              </div>
+              <div class="sidebar-end-items">
+              </div>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+
+<nav id="bd-toc-nav">
+    
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <section id="sklearndf-pipeline-wrapper-featureunionsparseframes">
+<h1>sklearndf.pipeline.wrapper.FeatureUnionSparseFrames<a class="headerlink" href="#sklearndf-pipeline-wrapper-featureunionsparseframes" title="Permalink to this headline">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sklearndf.pipeline.wrapper.</span></span><span class="sig-name descname"><span class="pre">FeatureUnionSparseFrames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformer_list</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformer_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/sklearndf/pipeline/wrapper/_wrapper.html#FeatureUnionSparseFrames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames" title="Permalink to this definition">#</a></dt>
+<dd><p>FeatureUnion transformer that returns sparse data frames instead of arrays if one or
+more of its transformers return a sparse data frame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Bases</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion" title="(in scikit-learn v1.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">FeatureUnion</span></code></a></p>
+</dd>
+<dt class="field-even">Metaclasses</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3.7/library/abc.html#abc.ABCMeta" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABCMeta</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Method summary</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.fit" title="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a></p></td>
+<td><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion.fit" title="(in scikit-learn v1.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.fit()</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.fit_transform" title="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.fit_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit_transform</span></code></a></p></td>
+<td><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion.fit_transform" title="(in scikit-learn v1.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.fit_transform()</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.get_feature_names_out" title="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.get_feature_names_out"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_feature_names_out</span></code></a></p></td>
+<td><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion.get_feature_names_out" title="(in scikit-learn v1.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.get_feature_names_out()</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.get_params" title="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.get_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_params</span></code></a></p></td>
+<td><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion.get_params" title="(in scikit-learn v1.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.get_params()</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.set_output" title="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.set_output"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_output</span></code></a></p></td>
+<td><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion.set_output" title="(in scikit-learn v1.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.set_output()</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.set_params" title="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.set_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_params</span></code></a></p></td>
+<td><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion.set_params" title="(in scikit-learn v1.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.set_params()</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.transform" title="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a></p></td>
+<td><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion.transform" title="(in scikit-learn v1.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.transform()</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attribute summary</p>
+<table class="autosummary longtable table autosummary">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.n_features_in_" title="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.n_features_in_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_features_in_</span></code></a></p></td>
+<td><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion.n_features_in_" title="(in scikit-learn v1.3)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.n_features_in_</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">named_transformers</span></code></p></td>
+<td><p>See <code class="xref py py-attr docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.named_transformers</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Definitions</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fit_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.fit" title="Permalink to this definition">#</a></dt>
+<dd><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion.fit" title="(in scikit-learn v1.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.fit()</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fit_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.fit_transform" title="Permalink to this definition">#</a></dt>
+<dd><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion.fit_transform" title="(in scikit-learn v1.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.fit_transform()</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.get_feature_names_out">
+<span class="sig-name descname"><span class="pre">get_feature_names_out</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.get_feature_names_out" title="Permalink to this definition">#</a></dt>
+<dd><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion.get_feature_names_out" title="(in scikit-learn v1.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.get_feature_names_out()</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.get_params">
+<span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.get_params" title="Permalink to this definition">#</a></dt>
+<dd><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion.get_params" title="(in scikit-learn v1.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.get_params()</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.set_output">
+<span class="sig-name descname"><span class="pre">set_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.set_output" title="Permalink to this definition">#</a></dt>
+<dd><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion.set_output" title="(in scikit-learn v1.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.set_output()</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.set_params">
+<span class="sig-name descname"><span class="pre">set_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.set_params" title="Permalink to this definition">#</a></dt>
+<dd><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion.set_params" title="(in scikit-learn v1.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.set_params()</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.transform" title="Permalink to this definition">#</a></dt>
+<dd><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion.transform" title="(in scikit-learn v1.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.transform()</span></code></a></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.n_features_in_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_features_in_</span></span><a class="headerlink" href="#sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.n_features_in_" title="Permalink to this definition">#</a></dt>
+<dd><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html#sklearn.pipeline.FeatureUnion.n_features_in_" title="(in scikit-learn v1.3)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sklearn.pipeline.FeatureUnion.n_features_in_</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../sklearndf.pipeline.wrapper.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">sklearndf.pipeline.wrapper</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="sklearndf.pipeline.wrapper.FeatureUnionWrapperDF.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">sklearndf.pipeline.wrapper.FeatureUnionWrapperDF</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2022, Boston Consulting Group (BCG).<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>

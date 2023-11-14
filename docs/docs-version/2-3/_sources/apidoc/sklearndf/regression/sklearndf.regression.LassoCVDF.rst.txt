@@ -1,0 +1,47 @@
+sklearndf.regression.LassoCVDF
+==============================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: LassoCVDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~LassoCVDF.clone
+      ~LassoCVDF.fit
+      ~LassoCVDF.from_fitted
+      ~LassoCVDF.get_params
+      ~LassoCVDF.predict
+      ~LassoCVDF.score
+      ~LassoCVDF.set_params
+      ~LassoCVDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~LassoCVDF.COL_FEATURE
+      ~LassoCVDF.COL_PREDICTION
+      ~LassoCVDF.feature_names_in_
+      ~LassoCVDF.is_fitted
+      ~LassoCVDF.n_features_in_
+      ~LassoCVDF.n_outputs_
+      ~LassoCVDF.native_estimator
+      ~LassoCVDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

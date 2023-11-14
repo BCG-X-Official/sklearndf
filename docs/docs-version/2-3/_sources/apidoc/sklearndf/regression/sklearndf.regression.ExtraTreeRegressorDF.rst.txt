@@ -1,0 +1,47 @@
+sklearndf.regression.ExtraTreeRegressorDF
+=========================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: ExtraTreeRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ExtraTreeRegressorDF.clone
+      ~ExtraTreeRegressorDF.fit
+      ~ExtraTreeRegressorDF.from_fitted
+      ~ExtraTreeRegressorDF.get_params
+      ~ExtraTreeRegressorDF.predict
+      ~ExtraTreeRegressorDF.score
+      ~ExtraTreeRegressorDF.set_params
+      ~ExtraTreeRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ExtraTreeRegressorDF.COL_FEATURE
+      ~ExtraTreeRegressorDF.COL_PREDICTION
+      ~ExtraTreeRegressorDF.feature_names_in_
+      ~ExtraTreeRegressorDF.is_fitted
+      ~ExtraTreeRegressorDF.n_features_in_
+      ~ExtraTreeRegressorDF.n_outputs_
+      ~ExtraTreeRegressorDF.native_estimator
+      ~ExtraTreeRegressorDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

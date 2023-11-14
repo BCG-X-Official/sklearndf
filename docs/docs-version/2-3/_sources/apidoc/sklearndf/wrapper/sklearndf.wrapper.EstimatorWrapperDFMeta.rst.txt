@@ -1,0 +1,34 @@
+sklearndf.wrapper.EstimatorWrapperDFMeta
+========================================
+
+.. currentmodule:: sklearndf.wrapper
+
+.. autoclass:: EstimatorWrapperDFMeta
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~EstimatorWrapperDFMeta.mro
+      ~EstimatorWrapperDFMeta.register
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~EstimatorWrapperDFMeta.native_estimator_type
+   
+   
+
+   .. rubric:: Definitions

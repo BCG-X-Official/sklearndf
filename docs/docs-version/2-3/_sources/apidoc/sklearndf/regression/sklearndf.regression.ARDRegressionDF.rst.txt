@@ -1,0 +1,47 @@
+sklearndf.regression.ARDRegressionDF
+====================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: ARDRegressionDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ARDRegressionDF.clone
+      ~ARDRegressionDF.fit
+      ~ARDRegressionDF.from_fitted
+      ~ARDRegressionDF.get_params
+      ~ARDRegressionDF.predict
+      ~ARDRegressionDF.score
+      ~ARDRegressionDF.set_params
+      ~ARDRegressionDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ARDRegressionDF.COL_FEATURE
+      ~ARDRegressionDF.COL_PREDICTION
+      ~ARDRegressionDF.feature_names_in_
+      ~ARDRegressionDF.is_fitted
+      ~ARDRegressionDF.n_features_in_
+      ~ARDRegressionDF.n_outputs_
+      ~ARDRegressionDF.native_estimator
+      ~ARDRegressionDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

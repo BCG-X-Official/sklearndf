@@ -1,0 +1,53 @@
+sklearndf.transformation.extra.LeshyDF
+======================================
+
+.. currentmodule:: sklearndf.transformation.extra
+
+.. autoclass:: LeshyDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~LeshyDF.clone
+      ~LeshyDF.fit
+      ~LeshyDF.fit_transform
+      ~LeshyDF.from_fitted
+      ~LeshyDF.get_params
+      ~LeshyDF.inverse_transform
+      ~LeshyDF.plot_importance
+      ~LeshyDF.select_features
+      ~LeshyDF.set_output
+      ~LeshyDF.set_params
+      ~LeshyDF.to_expression
+      ~LeshyDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~LeshyDF.COL_FEATURE
+      ~LeshyDF.COL_FEATURE_ORIGINAL
+      ~LeshyDF.feature_names_in_
+      ~LeshyDF.feature_names_original_
+      ~LeshyDF.feature_names_out_
+      ~LeshyDF.is_fitted
+      ~LeshyDF.n_features_in_
+      ~LeshyDF.n_outputs_
+      ~LeshyDF.native_estimator
+      ~LeshyDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

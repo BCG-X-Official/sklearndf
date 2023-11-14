@@ -1,0 +1,54 @@
+sklearndf.transformation.PCADF
+==============================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: PCADF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PCADF.clone
+      ~PCADF.fit
+      ~PCADF.fit_transform
+      ~PCADF.from_fitted
+      ~PCADF.get_params
+      ~PCADF.inverse_transform
+      ~PCADF.score
+      ~PCADF.score_samples
+      ~PCADF.set_output
+      ~PCADF.set_params
+      ~PCADF.to_expression
+      ~PCADF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~PCADF.COL_FEATURE
+      ~PCADF.COL_FEATURE_ORIGINAL
+      ~PCADF.feature_names_in_
+      ~PCADF.feature_names_original_
+      ~PCADF.feature_names_out_
+      ~PCADF.is_fitted
+      ~PCADF.n_features_
+      ~PCADF.n_features_in_
+      ~PCADF.n_outputs_
+      ~PCADF.native_estimator
+      ~PCADF.output_names_
+   
+   
+
+   .. rubric:: Definitions

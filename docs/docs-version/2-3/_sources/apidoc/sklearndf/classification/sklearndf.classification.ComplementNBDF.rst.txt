@@ -1,0 +1,52 @@
+sklearndf.classification.ComplementNBDF
+=======================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: ComplementNBDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ComplementNBDF.clone
+      ~ComplementNBDF.decision_function
+      ~ComplementNBDF.fit
+      ~ComplementNBDF.from_fitted
+      ~ComplementNBDF.get_params
+      ~ComplementNBDF.partial_fit
+      ~ComplementNBDF.predict
+      ~ComplementNBDF.predict_log_proba
+      ~ComplementNBDF.predict_proba
+      ~ComplementNBDF.score
+      ~ComplementNBDF.set_params
+      ~ComplementNBDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ComplementNBDF.COL_FEATURE
+      ~ComplementNBDF.COL_PREDICTION
+      ~ComplementNBDF.classes_
+      ~ComplementNBDF.feature_names_in_
+      ~ComplementNBDF.is_fitted
+      ~ComplementNBDF.n_features_in_
+      ~ComplementNBDF.n_outputs_
+      ~ComplementNBDF.native_estimator
+      ~ComplementNBDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,47 @@
+sklearndf.regression.TweedieRegressorDF
+=======================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: TweedieRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~TweedieRegressorDF.clone
+      ~TweedieRegressorDF.fit
+      ~TweedieRegressorDF.from_fitted
+      ~TweedieRegressorDF.get_params
+      ~TweedieRegressorDF.predict
+      ~TweedieRegressorDF.score
+      ~TweedieRegressorDF.set_params
+      ~TweedieRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~TweedieRegressorDF.COL_FEATURE
+      ~TweedieRegressorDF.COL_PREDICTION
+      ~TweedieRegressorDF.feature_names_in_
+      ~TweedieRegressorDF.is_fitted
+      ~TweedieRegressorDF.n_features_in_
+      ~TweedieRegressorDF.n_outputs_
+      ~TweedieRegressorDF.native_estimator
+      ~TweedieRegressorDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

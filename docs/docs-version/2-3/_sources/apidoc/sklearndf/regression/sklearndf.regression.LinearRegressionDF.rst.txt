@@ -1,0 +1,47 @@
+sklearndf.regression.LinearRegressionDF
+=======================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: LinearRegressionDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~LinearRegressionDF.clone
+      ~LinearRegressionDF.fit
+      ~LinearRegressionDF.from_fitted
+      ~LinearRegressionDF.get_params
+      ~LinearRegressionDF.predict
+      ~LinearRegressionDF.score
+      ~LinearRegressionDF.set_params
+      ~LinearRegressionDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~LinearRegressionDF.COL_FEATURE
+      ~LinearRegressionDF.COL_PREDICTION
+      ~LinearRegressionDF.feature_names_in_
+      ~LinearRegressionDF.is_fitted
+      ~LinearRegressionDF.n_features_in_
+      ~LinearRegressionDF.n_outputs_
+      ~LinearRegressionDF.native_estimator
+      ~LinearRegressionDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

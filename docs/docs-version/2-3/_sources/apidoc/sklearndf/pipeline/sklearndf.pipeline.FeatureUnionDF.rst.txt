@@ -1,0 +1,53 @@
+sklearndf.pipeline.FeatureUnionDF
+=================================
+
+.. currentmodule:: sklearndf.pipeline
+
+.. autoclass:: FeatureUnionDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~FeatureUnionDF.clone
+      ~FeatureUnionDF.fit
+      ~FeatureUnionDF.fit_transform
+      ~FeatureUnionDF.from_fitted
+      ~FeatureUnionDF.get_params
+      ~FeatureUnionDF.inverse_transform
+      ~FeatureUnionDF.set_output
+      ~FeatureUnionDF.set_params
+      ~FeatureUnionDF.to_expression
+      ~FeatureUnionDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~FeatureUnionDF.COL_FEATURE
+      ~FeatureUnionDF.COL_FEATURE_ORIGINAL
+      ~FeatureUnionDF.DROP
+      ~FeatureUnionDF.PASSTHROUGH
+      ~FeatureUnionDF.feature_names_in_
+      ~FeatureUnionDF.feature_names_original_
+      ~FeatureUnionDF.feature_names_out_
+      ~FeatureUnionDF.is_fitted
+      ~FeatureUnionDF.n_features_in_
+      ~FeatureUnionDF.n_outputs_
+      ~FeatureUnionDF.native_estimator
+      ~FeatureUnionDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

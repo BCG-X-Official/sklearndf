@@ -1,0 +1,48 @@
+sklearndf.regression.wrapper.MultiOutputRegressorWrapperDF
+==========================================================
+
+.. currentmodule:: sklearndf.regression.wrapper
+
+.. autoclass:: MultiOutputRegressorWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MultiOutputRegressorWrapperDF.clone
+      ~MultiOutputRegressorWrapperDF.fit
+      ~MultiOutputRegressorWrapperDF.from_fitted
+      ~MultiOutputRegressorWrapperDF.get_params
+      ~MultiOutputRegressorWrapperDF.partial_fit
+      ~MultiOutputRegressorWrapperDF.predict
+      ~MultiOutputRegressorWrapperDF.score
+      ~MultiOutputRegressorWrapperDF.set_params
+      ~MultiOutputRegressorWrapperDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MultiOutputRegressorWrapperDF.COL_FEATURE
+      ~MultiOutputRegressorWrapperDF.COL_PREDICTION
+      ~MultiOutputRegressorWrapperDF.feature_names_in_
+      ~MultiOutputRegressorWrapperDF.is_fitted
+      ~MultiOutputRegressorWrapperDF.n_features_in_
+      ~MultiOutputRegressorWrapperDF.n_outputs_
+      ~MultiOutputRegressorWrapperDF.native_estimator
+      ~MultiOutputRegressorWrapperDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

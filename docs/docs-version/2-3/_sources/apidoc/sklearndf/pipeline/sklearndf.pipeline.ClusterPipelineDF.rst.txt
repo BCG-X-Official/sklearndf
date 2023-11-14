@@ -1,0 +1,51 @@
+sklearndf.pipeline.ClusterPipelineDF
+====================================
+
+.. currentmodule:: sklearndf.pipeline
+
+.. autoclass:: ClusterPipelineDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ClusterPipelineDF.clone
+      ~ClusterPipelineDF.fit
+      ~ClusterPipelineDF.fit_predict
+      ~ClusterPipelineDF.get_params
+      ~ClusterPipelineDF.predict
+      ~ClusterPipelineDF.preprocess
+      ~ClusterPipelineDF.set_params
+      ~ClusterPipelineDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ClusterPipelineDF.COL_FEATURE
+      ~ClusterPipelineDF.feature_names_in_
+      ~ClusterPipelineDF.final_estimator
+      ~ClusterPipelineDF.final_estimator_name
+      ~ClusterPipelineDF.is_fitted
+      ~ClusterPipelineDF.labels_
+      ~ClusterPipelineDF.n_features_in_
+      ~ClusterPipelineDF.n_outputs_
+      ~ClusterPipelineDF.native_estimator
+      ~ClusterPipelineDF.output_names_
+      ~ClusterPipelineDF.preprocessing
+      ~ClusterPipelineDF.preprocessing_name
+   
+   
+
+   .. rubric:: Definitions

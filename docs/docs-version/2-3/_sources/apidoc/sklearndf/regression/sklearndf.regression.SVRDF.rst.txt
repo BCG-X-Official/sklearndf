@@ -1,0 +1,48 @@
+sklearndf.regression.SVRDF
+==========================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: SVRDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SVRDF.clone
+      ~SVRDF.fit
+      ~SVRDF.from_fitted
+      ~SVRDF.get_params
+      ~SVRDF.predict
+      ~SVRDF.score
+      ~SVRDF.set_params
+      ~SVRDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~SVRDF.COL_FEATURE
+      ~SVRDF.COL_PREDICTION
+      ~SVRDF.class_weight_
+      ~SVRDF.feature_names_in_
+      ~SVRDF.is_fitted
+      ~SVRDF.n_features_in_
+      ~SVRDF.n_outputs_
+      ~SVRDF.native_estimator
+      ~SVRDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

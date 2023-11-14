@@ -1,0 +1,47 @@
+sklearndf.regression.LarsDF
+===========================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: LarsDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~LarsDF.clone
+      ~LarsDF.fit
+      ~LarsDF.from_fitted
+      ~LarsDF.get_params
+      ~LarsDF.predict
+      ~LarsDF.score
+      ~LarsDF.set_params
+      ~LarsDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~LarsDF.COL_FEATURE
+      ~LarsDF.COL_PREDICTION
+      ~LarsDF.feature_names_in_
+      ~LarsDF.is_fitted
+      ~LarsDF.n_features_in_
+      ~LarsDF.n_outputs_
+      ~LarsDF.native_estimator
+      ~LarsDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

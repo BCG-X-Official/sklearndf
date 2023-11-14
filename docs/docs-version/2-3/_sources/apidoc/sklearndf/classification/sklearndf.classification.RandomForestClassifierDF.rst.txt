@@ -1,0 +1,51 @@
+sklearndf.classification.RandomForestClassifierDF
+=================================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: RandomForestClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~RandomForestClassifierDF.clone
+      ~RandomForestClassifierDF.decision_function
+      ~RandomForestClassifierDF.fit
+      ~RandomForestClassifierDF.from_fitted
+      ~RandomForestClassifierDF.get_params
+      ~RandomForestClassifierDF.predict
+      ~RandomForestClassifierDF.predict_log_proba
+      ~RandomForestClassifierDF.predict_proba
+      ~RandomForestClassifierDF.score
+      ~RandomForestClassifierDF.set_params
+      ~RandomForestClassifierDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~RandomForestClassifierDF.COL_FEATURE
+      ~RandomForestClassifierDF.COL_PREDICTION
+      ~RandomForestClassifierDF.classes_
+      ~RandomForestClassifierDF.feature_names_in_
+      ~RandomForestClassifierDF.is_fitted
+      ~RandomForestClassifierDF.n_features_in_
+      ~RandomForestClassifierDF.n_outputs_
+      ~RandomForestClassifierDF.native_estimator
+      ~RandomForestClassifierDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

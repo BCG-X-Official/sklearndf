@@ -1,0 +1,51 @@
+sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF
+===============================================================
+
+.. currentmodule:: sklearndf.transformation.wrapper
+
+.. autoclass:: PolynomialTransformerWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~PolynomialTransformerWrapperDF.clone
+      ~PolynomialTransformerWrapperDF.fit
+      ~PolynomialTransformerWrapperDF.fit_transform
+      ~PolynomialTransformerWrapperDF.from_fitted
+      ~PolynomialTransformerWrapperDF.get_params
+      ~PolynomialTransformerWrapperDF.inverse_transform
+      ~PolynomialTransformerWrapperDF.set_output
+      ~PolynomialTransformerWrapperDF.set_params
+      ~PolynomialTransformerWrapperDF.to_expression
+      ~PolynomialTransformerWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~PolynomialTransformerWrapperDF.COL_FEATURE
+      ~PolynomialTransformerWrapperDF.COL_FEATURE_ORIGINAL
+      ~PolynomialTransformerWrapperDF.feature_names_in_
+      ~PolynomialTransformerWrapperDF.feature_names_original_
+      ~PolynomialTransformerWrapperDF.feature_names_out_
+      ~PolynomialTransformerWrapperDF.is_fitted
+      ~PolynomialTransformerWrapperDF.n_features_in_
+      ~PolynomialTransformerWrapperDF.n_outputs_
+      ~PolynomialTransformerWrapperDF.native_estimator
+      ~PolynomialTransformerWrapperDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

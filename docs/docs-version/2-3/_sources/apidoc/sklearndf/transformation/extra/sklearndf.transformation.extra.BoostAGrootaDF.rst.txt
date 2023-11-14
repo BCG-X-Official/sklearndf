@@ -1,0 +1,53 @@
+sklearndf.transformation.extra.BoostAGrootaDF
+=============================================
+
+.. currentmodule:: sklearndf.transformation.extra
+
+.. autoclass:: BoostAGrootaDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~BoostAGrootaDF.clone
+      ~BoostAGrootaDF.fit
+      ~BoostAGrootaDF.fit_transform
+      ~BoostAGrootaDF.from_fitted
+      ~BoostAGrootaDF.get_params
+      ~BoostAGrootaDF.inverse_transform
+      ~BoostAGrootaDF.plot_importance
+      ~BoostAGrootaDF.set_output
+      ~BoostAGrootaDF.set_params
+      ~BoostAGrootaDF.to_expression
+      ~BoostAGrootaDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~BoostAGrootaDF.COL_FEATURE
+      ~BoostAGrootaDF.COL_FEATURE_ORIGINAL
+      ~BoostAGrootaDF.estimator
+      ~BoostAGrootaDF.feature_names_in_
+      ~BoostAGrootaDF.feature_names_original_
+      ~BoostAGrootaDF.feature_names_out_
+      ~BoostAGrootaDF.is_fitted
+      ~BoostAGrootaDF.n_features_in_
+      ~BoostAGrootaDF.n_outputs_
+      ~BoostAGrootaDF.native_estimator
+      ~BoostAGrootaDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

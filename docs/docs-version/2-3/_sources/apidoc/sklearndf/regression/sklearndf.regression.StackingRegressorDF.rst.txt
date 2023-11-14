@@ -1,0 +1,49 @@
+sklearndf.regression.StackingRegressorDF
+========================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: StackingRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~StackingRegressorDF.clone
+      ~StackingRegressorDF.fit
+      ~StackingRegressorDF.fit_transform
+      ~StackingRegressorDF.from_fitted
+      ~StackingRegressorDF.get_params
+      ~StackingRegressorDF.predict
+      ~StackingRegressorDF.score
+      ~StackingRegressorDF.set_params
+      ~StackingRegressorDF.to_expression
+      ~StackingRegressorDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~StackingRegressorDF.COL_FEATURE
+      ~StackingRegressorDF.COL_PREDICTION
+      ~StackingRegressorDF.feature_names_in_
+      ~StackingRegressorDF.is_fitted
+      ~StackingRegressorDF.n_features_in_
+      ~StackingRegressorDF.n_outputs_
+      ~StackingRegressorDF.native_estimator
+      ~StackingRegressorDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

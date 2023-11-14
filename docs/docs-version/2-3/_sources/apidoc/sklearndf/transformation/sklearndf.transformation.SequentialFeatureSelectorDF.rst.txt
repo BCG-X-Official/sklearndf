@@ -1,0 +1,51 @@
+sklearndf.transformation.SequentialFeatureSelectorDF
+====================================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: SequentialFeatureSelectorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SequentialFeatureSelectorDF.clone
+      ~SequentialFeatureSelectorDF.fit
+      ~SequentialFeatureSelectorDF.fit_transform
+      ~SequentialFeatureSelectorDF.from_fitted
+      ~SequentialFeatureSelectorDF.get_params
+      ~SequentialFeatureSelectorDF.inverse_transform
+      ~SequentialFeatureSelectorDF.set_output
+      ~SequentialFeatureSelectorDF.set_params
+      ~SequentialFeatureSelectorDF.to_expression
+      ~SequentialFeatureSelectorDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~SequentialFeatureSelectorDF.COL_FEATURE
+      ~SequentialFeatureSelectorDF.COL_FEATURE_ORIGINAL
+      ~SequentialFeatureSelectorDF.feature_names_in_
+      ~SequentialFeatureSelectorDF.feature_names_original_
+      ~SequentialFeatureSelectorDF.feature_names_out_
+      ~SequentialFeatureSelectorDF.is_fitted
+      ~SequentialFeatureSelectorDF.n_features_in_
+      ~SequentialFeatureSelectorDF.n_outputs_
+      ~SequentialFeatureSelectorDF.native_estimator
+      ~SequentialFeatureSelectorDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

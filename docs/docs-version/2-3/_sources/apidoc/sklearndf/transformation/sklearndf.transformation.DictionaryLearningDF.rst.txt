@@ -1,0 +1,51 @@
+sklearndf.transformation.DictionaryLearningDF
+=============================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: DictionaryLearningDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~DictionaryLearningDF.clone
+      ~DictionaryLearningDF.fit
+      ~DictionaryLearningDF.fit_transform
+      ~DictionaryLearningDF.from_fitted
+      ~DictionaryLearningDF.get_params
+      ~DictionaryLearningDF.inverse_transform
+      ~DictionaryLearningDF.set_output
+      ~DictionaryLearningDF.set_params
+      ~DictionaryLearningDF.to_expression
+      ~DictionaryLearningDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~DictionaryLearningDF.COL_FEATURE
+      ~DictionaryLearningDF.COL_FEATURE_ORIGINAL
+      ~DictionaryLearningDF.feature_names_in_
+      ~DictionaryLearningDF.feature_names_original_
+      ~DictionaryLearningDF.feature_names_out_
+      ~DictionaryLearningDF.is_fitted
+      ~DictionaryLearningDF.n_features_in_
+      ~DictionaryLearningDF.n_outputs_
+      ~DictionaryLearningDF.native_estimator
+      ~DictionaryLearningDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

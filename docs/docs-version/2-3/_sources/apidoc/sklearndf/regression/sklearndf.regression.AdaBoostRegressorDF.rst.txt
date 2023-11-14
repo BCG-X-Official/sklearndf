@@ -1,0 +1,48 @@
+sklearndf.regression.AdaBoostRegressorDF
+========================================
+
+.. currentmodule:: sklearndf.regression
+
+.. autoclass:: AdaBoostRegressorDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~AdaBoostRegressorDF.clone
+      ~AdaBoostRegressorDF.fit
+      ~AdaBoostRegressorDF.from_fitted
+      ~AdaBoostRegressorDF.get_params
+      ~AdaBoostRegressorDF.predict
+      ~AdaBoostRegressorDF.score
+      ~AdaBoostRegressorDF.set_params
+      ~AdaBoostRegressorDF.staged_predict
+      ~AdaBoostRegressorDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~AdaBoostRegressorDF.COL_FEATURE
+      ~AdaBoostRegressorDF.COL_PREDICTION
+      ~AdaBoostRegressorDF.feature_names_in_
+      ~AdaBoostRegressorDF.is_fitted
+      ~AdaBoostRegressorDF.n_features_in_
+      ~AdaBoostRegressorDF.n_outputs_
+      ~AdaBoostRegressorDF.native_estimator
+      ~AdaBoostRegressorDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

@@ -1,0 +1,53 @@
+sklearndf.classification.VotingClassifierDF
+===========================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: VotingClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~VotingClassifierDF.clone
+      ~VotingClassifierDF.decision_function
+      ~VotingClassifierDF.fit
+      ~VotingClassifierDF.from_fitted
+      ~VotingClassifierDF.get_feature_names_out
+      ~VotingClassifierDF.get_params
+      ~VotingClassifierDF.predict
+      ~VotingClassifierDF.predict_log_proba
+      ~VotingClassifierDF.predict_proba
+      ~VotingClassifierDF.score
+      ~VotingClassifierDF.set_params
+      ~VotingClassifierDF.to_expression
+      ~VotingClassifierDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~VotingClassifierDF.COL_FEATURE
+      ~VotingClassifierDF.COL_PREDICTION
+      ~VotingClassifierDF.classes_
+      ~VotingClassifierDF.feature_names_in_
+      ~VotingClassifierDF.is_fitted
+      ~VotingClassifierDF.n_features_in_
+      ~VotingClassifierDF.n_outputs_
+      ~VotingClassifierDF.native_estimator
+      ~VotingClassifierDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

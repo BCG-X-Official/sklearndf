@@ -1,0 +1,49 @@
+sklearndf.clustering.SpectralClusteringDF
+=========================================
+
+.. currentmodule:: sklearndf.clustering
+
+.. autoclass:: SpectralClusteringDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SpectralClusteringDF.clone
+      ~SpectralClusteringDF.fit
+      ~SpectralClusteringDF.fit_predict
+      ~SpectralClusteringDF.from_fitted
+      ~SpectralClusteringDF.get_params
+      ~SpectralClusteringDF.predict
+      ~SpectralClusteringDF.set_params
+      ~SpectralClusteringDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~SpectralClusteringDF.COL_FEATURE
+      ~SpectralClusteringDF.COL_LABELS
+      ~SpectralClusteringDF.COL_PREDICTION
+      ~SpectralClusteringDF.feature_names_in_
+      ~SpectralClusteringDF.is_fitted
+      ~SpectralClusteringDF.labels_
+      ~SpectralClusteringDF.n_features_in_
+      ~SpectralClusteringDF.n_outputs_
+      ~SpectralClusteringDF.native_estimator
+      ~SpectralClusteringDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

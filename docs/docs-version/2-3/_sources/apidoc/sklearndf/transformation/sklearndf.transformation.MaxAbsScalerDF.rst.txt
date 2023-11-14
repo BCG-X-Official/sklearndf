@@ -1,0 +1,52 @@
+sklearndf.transformation.MaxAbsScalerDF
+=======================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: MaxAbsScalerDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~MaxAbsScalerDF.clone
+      ~MaxAbsScalerDF.fit
+      ~MaxAbsScalerDF.fit_transform
+      ~MaxAbsScalerDF.from_fitted
+      ~MaxAbsScalerDF.get_params
+      ~MaxAbsScalerDF.inverse_transform
+      ~MaxAbsScalerDF.partial_fit
+      ~MaxAbsScalerDF.set_output
+      ~MaxAbsScalerDF.set_params
+      ~MaxAbsScalerDF.to_expression
+      ~MaxAbsScalerDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~MaxAbsScalerDF.COL_FEATURE
+      ~MaxAbsScalerDF.COL_FEATURE_ORIGINAL
+      ~MaxAbsScalerDF.feature_names_in_
+      ~MaxAbsScalerDF.feature_names_original_
+      ~MaxAbsScalerDF.feature_names_out_
+      ~MaxAbsScalerDF.is_fitted
+      ~MaxAbsScalerDF.n_features_in_
+      ~MaxAbsScalerDF.n_outputs_
+      ~MaxAbsScalerDF.native_estimator
+      ~MaxAbsScalerDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

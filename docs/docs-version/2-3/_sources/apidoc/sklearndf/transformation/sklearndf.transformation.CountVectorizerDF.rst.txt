@@ -1,0 +1,51 @@
+sklearndf.transformation.CountVectorizerDF
+==========================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: CountVectorizerDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~CountVectorizerDF.clone
+      ~CountVectorizerDF.fit
+      ~CountVectorizerDF.fit_transform
+      ~CountVectorizerDF.from_fitted
+      ~CountVectorizerDF.get_params
+      ~CountVectorizerDF.inverse_transform
+      ~CountVectorizerDF.set_output
+      ~CountVectorizerDF.set_params
+      ~CountVectorizerDF.to_expression
+      ~CountVectorizerDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~CountVectorizerDF.COL_FEATURE
+      ~CountVectorizerDF.COL_FEATURE_ORIGINAL
+      ~CountVectorizerDF.feature_names_in_
+      ~CountVectorizerDF.feature_names_original_
+      ~CountVectorizerDF.feature_names_out_
+      ~CountVectorizerDF.is_fitted
+      ~CountVectorizerDF.n_features_in_
+      ~CountVectorizerDF.n_outputs_
+      ~CountVectorizerDF.native_estimator
+      ~CountVectorizerDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

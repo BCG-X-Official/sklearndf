@@ -1,0 +1,51 @@
+sklearndf.transformation.TfidfVectorizerDF
+==========================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: TfidfVectorizerDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~TfidfVectorizerDF.clone
+      ~TfidfVectorizerDF.fit
+      ~TfidfVectorizerDF.fit_transform
+      ~TfidfVectorizerDF.from_fitted
+      ~TfidfVectorizerDF.get_params
+      ~TfidfVectorizerDF.inverse_transform
+      ~TfidfVectorizerDF.set_output
+      ~TfidfVectorizerDF.set_params
+      ~TfidfVectorizerDF.to_expression
+      ~TfidfVectorizerDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~TfidfVectorizerDF.COL_FEATURE
+      ~TfidfVectorizerDF.COL_FEATURE_ORIGINAL
+      ~TfidfVectorizerDF.feature_names_in_
+      ~TfidfVectorizerDF.feature_names_original_
+      ~TfidfVectorizerDF.feature_names_out_
+      ~TfidfVectorizerDF.is_fitted
+      ~TfidfVectorizerDF.n_features_in_
+      ~TfidfVectorizerDF.n_outputs_
+      ~TfidfVectorizerDF.native_estimator
+      ~TfidfVectorizerDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

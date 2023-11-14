@@ -1,0 +1,53 @@
+sklearndf.pipeline.wrapper.FeatureUnionWrapperDF
+================================================
+
+.. currentmodule:: sklearndf.pipeline.wrapper
+
+.. autoclass:: FeatureUnionWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~FeatureUnionWrapperDF.clone
+      ~FeatureUnionWrapperDF.fit
+      ~FeatureUnionWrapperDF.fit_transform
+      ~FeatureUnionWrapperDF.from_fitted
+      ~FeatureUnionWrapperDF.get_params
+      ~FeatureUnionWrapperDF.inverse_transform
+      ~FeatureUnionWrapperDF.set_output
+      ~FeatureUnionWrapperDF.set_params
+      ~FeatureUnionWrapperDF.to_expression
+      ~FeatureUnionWrapperDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~FeatureUnionWrapperDF.COL_FEATURE
+      ~FeatureUnionWrapperDF.COL_FEATURE_ORIGINAL
+      ~FeatureUnionWrapperDF.DROP
+      ~FeatureUnionWrapperDF.PASSTHROUGH
+      ~FeatureUnionWrapperDF.feature_names_in_
+      ~FeatureUnionWrapperDF.feature_names_original_
+      ~FeatureUnionWrapperDF.feature_names_out_
+      ~FeatureUnionWrapperDF.is_fitted
+      ~FeatureUnionWrapperDF.n_features_in_
+      ~FeatureUnionWrapperDF.n_outputs_
+      ~FeatureUnionWrapperDF.native_estimator
+      ~FeatureUnionWrapperDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

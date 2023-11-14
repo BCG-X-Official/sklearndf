@@ -1,0 +1,51 @@
+sklearndf.classification.DummyClassifierDF
+==========================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: DummyClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~DummyClassifierDF.clone
+      ~DummyClassifierDF.decision_function
+      ~DummyClassifierDF.fit
+      ~DummyClassifierDF.from_fitted
+      ~DummyClassifierDF.get_params
+      ~DummyClassifierDF.predict
+      ~DummyClassifierDF.predict_log_proba
+      ~DummyClassifierDF.predict_proba
+      ~DummyClassifierDF.score
+      ~DummyClassifierDF.set_params
+      ~DummyClassifierDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~DummyClassifierDF.COL_FEATURE
+      ~DummyClassifierDF.COL_PREDICTION
+      ~DummyClassifierDF.classes_
+      ~DummyClassifierDF.feature_names_in_
+      ~DummyClassifierDF.is_fitted
+      ~DummyClassifierDF.n_features_in_
+      ~DummyClassifierDF.n_outputs_
+      ~DummyClassifierDF.native_estimator
+      ~DummyClassifierDF.output_names_
+   
+   
+
+   .. rubric:: Definitions
