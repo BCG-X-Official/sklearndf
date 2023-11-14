@@ -677,6 +677,7 @@ stages:
 
                 cd $(System.DefaultWorkingDirectory)
                 echo "Checking out $(branchName)"
+                git fetch origin $(branchName) --depth=1
                 git checkout $(branchName)
 
                 # install micromamba
