@@ -177,7 +177,6 @@
 
 <span class="kn">from</span> <span class="nn">pytools.api</span> <span class="kn">import</span> <span class="n">AllTracker</span>
 
-<span class="kn">from</span> <span class="nn">...</span> <span class="kn">import</span> <span class="n">__sklearn_0_24__</span><span class="p">,</span> <span class="n">__sklearn_version__</span>
 <span class="kn">from</span> <span class="nn">...transformation.wrapper</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ColumnPreservingTransformerWrapperDF</span><span class="p">,</span>
     <span class="n">NumpyTransformerWrapperDF</span><span class="p">,</span>
@@ -325,11 +324,7 @@
     <span class="c1"># noinspection PyPep8Naming</span>
     <span class="k">def</span> <span class="nf">_adjust_X_type_for_delegate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
         <span class="n">arr</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_adjust_X_type_for_delegate</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">__sklearn_version__</span> <span class="o">&gt;=</span> <span class="n">__sklearn_0_24__</span><span class="p">:</span>
-            <span class="c1"># we can return a 1D array as of sklearn 0.24</span>
-            <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">arr</span></div>
+        <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span></div>
 
 
 <span class="c1">#</span>

@@ -223,8 +223,6 @@
     <span class="n">RegressorDF</span><span class="p">,</span>
     <span class="n">SupervisedLearnerDF</span><span class="p">,</span>
     <span class="n">TransformerDF</span><span class="p">,</span>
-    <span class="n">__sklearn_1_0__</span><span class="p">,</span>
-    <span class="n">__sklearn_version__</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -884,8 +882,6 @@
     <span class="k">def</span> <span class="nf">_check_feature_names_out</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">wrapper_feature_names_out</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">warning_stacklevel</span><span class="p">:</span> <span class="nb">int</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">__sklearn_version__</span> <span class="o">&lt;</span> <span class="n">__sklearn_1_0__</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">wrapper_feature_names_out</span>
         <span class="c1"># noinspection PyBroadException</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">native_feature_names_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">(</span>
@@ -1248,7 +1244,6 @@
         <span class="p">],</span>
         <span class="n">classes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]:</span>
-
         <span class="k">if</span> <span class="n">classes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">classes</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">native_estimator</span><span class="p">,</span> <span class="s2">&quot;classes_&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">classes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1469,12 +1464,10 @@
     <span class="n">native_estimator</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T_NativeEstimator</span><span class="p">],</span>
     <span class="n">wrapper_module</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-
     <span class="n">wrapper_name</span> <span class="o">=</span> <span class="n">wrapper_class</span><span class="o">.</span><span class="vm">__name__</span>
     <span class="n">wrapper_attributes</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">wrapper_class</span><span class="p">))</span>
 
     <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">member</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="n">native_estimator</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-
         <span class="k">if</span> <span class="n">member</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">wrapper_attributes</span><span class="p">:</span>
             <span class="k">continue</span>
 
