@@ -123,9 +123,11 @@ class NumpyTransformerWrapperDF(
         if sparse_threshold > 0.0 and sparse_frame_density(df) < sparse_threshold:
             return sparse.hstack(
                 [
-                    sr.to_frame().sparse.to_coo()
-                    if isinstance(sr.dtype, pd.SparseDtype)
-                    else sr.values.reshape(-1, 1)
+                    (
+                        sr.to_frame().sparse.to_coo()
+                        if isinstance(sr.dtype, pd.SparseDtype)
+                        else sr.values.reshape(-1, 1)
+                    )
                     for _, sr in df.items()
                 ]
             ).tocsr()
@@ -666,9 +668,11 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
             # count number of infrequent categories per column
             n_infrequent = np.array(
                 [
-                    1
-                    if infrequent_categories_for_column is None
-                    else len(infrequent_categories_for_column)
+                    (
+                        1
+                        if infrequent_categories_for_column is None
+                        else len(infrequent_categories_for_column)
+                    )
                     for infrequent_categories_for_column in (
                         self.native_estimator.infrequent_categories_
                     )
