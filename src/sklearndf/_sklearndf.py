@@ -1,11 +1,13 @@
 """
 Core implementation of :mod:`sklearndf`
 """
+
 import inspect
 import logging
 from abc import ABCMeta, abstractmethod
 from typing import Any, Callable, Dict, List, Mapping, Optional, TypeVar, Union, cast
 
+import numpy as np
 import numpy.typing as npt
 import pandas as pd
 from sklearn.base import (
@@ -16,7 +18,6 @@ from sklearn.base import (
     TransformerMixin,
     clone,
 )
-from sklearn.utils import is_scalar_nan
 
 from pytools.api import AllTracker, inheritdoc
 from pytools.expression import Expression, HasExpressionRepr, make_expression
@@ -259,7 +260,7 @@ class EstimatorDF(
                 )
                 and (
                     # both value and default value are np.nan ...
-                    (is_scalar_nan(value) and is_scalar_nan(default_value))
+                    (np.isnan(value) and np.isnan(default_value))
                     or (
                         # ... or both have the same expression.
                         # We cannot compare for equality since we don't know
