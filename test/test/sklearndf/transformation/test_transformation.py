@@ -390,10 +390,14 @@ def df_outlier() -> pd.DataFrame:
     )
 
 
-@pytest.mark.parametrize(argnames="sparse", argvalues=[True, False])  # type: ignore
-def test_one_hot_encoding(test_data_categorical: pd.DataFrame, sparse: bool) -> None:
+@pytest.mark.parametrize(  # type: ignore
+    argnames="sparse_output", argvalues=[True, False]
+)
+def test_one_hot_encoding(
+    test_data_categorical: pd.DataFrame, sparse_output: bool
+) -> None:
     def _make_frame(data: Dict[str, List[float]]) -> pd.DataFrame:
-        if sparse:
+        if sparse_output:
             df = pd.DataFrame(
                 data={k: SparseArray(v, fill_value=0) for k, v in data.items()}
             )
@@ -402,7 +406,104 @@ def test_one_hot_encoding(test_data_categorical: pd.DataFrame, sparse: bool) -> 
         return df.rename_axis(columns="feature")
 
     assert_frame_equal(
-        OneHotEncoderDF(drop=None, sparse=sparse).fit_transform(test_data_categorical),
+        OneHotEncoderDF(drop=None, sparse_output=sparse_output).fit_transform(
+            test_data_categorical
+        ),
+        _make_frame(
+            {
+                "a_no": [0.0, 0.0, 1.0],
+                "a_yes": [1.0, 1.0, 0.0],
+                "b_blue": [0.0, 1.0, 0.0],
+                "b_green": [0.0, 0.0, 1.0],
+                "b_red": [1.0, 0.0, 0.0],
+                "c_child": [1.0, 0.0, 0.0],
+                "c_father": [0.0, 1.0, 0.0],
+                "c_mother": [0.0, 0.0, 1.0],
+            }
+        ),
+    )
+
+    assert_frame_equal(
+        OneHotEncoderDF(drop="first", sparse_output=sparse_output).fit_transform(
+            test_data_categorical
+        ),
+        _make_frame(
+            {
+                "a_yes": [1.0, 1.0, 0.0],
+                "b_green": [0.0, 0.0, 1.0],
+                "b_red": [1.0, 0.0, 0.0],
+                "c_father": [0.0, 1.0, 0.0],
+                "c_mother": [0.0, 0.0, 1.0],
+            }
+        ),
+    )
+
+    assert_frame_equal(
+        OneHotEncoderDF(
+            drop=["yes", "red", "mother"], sparse_output=sparse_output
+        ).fit_transform(test_data_categorical),
+        _make_frame(
+            {
+                "a_no": [0.0, 0.0, 1.0],
+                "b_blue": [0.0, 1.0, 0.0],
+                "b_green": [0.0, 0.0, 1.0],
+                "c_child": [1.0, 0.0, 0.0],
+                "c_father": [0.0, 1.0, 0.0],
+            }
+        ),
+    )
+
+    assert_frame_equal(
+        OneHotEncoderDF(drop="if_binary", sparse_output=sparse_output).fit_transform(
+            test_data_categorical
+        ),
+        _make_frame(
+            {
+                "a_yes": [1.0, 1.0, 0.0],
+                "b_blue": [0.0, 1.0, 0.0],
+                "b_green": [0.0, 0.0, 1.0],
+                "b_red": [1.0, 0.0, 0.0],
+                "c_child": [1.0, 0.0, 0.0],
+                "c_father": [0.0, 1.0, 0.0],
+                "c_mother": [0.0, 0.0, 1.0],
+            }
+        ),
+    )
+
+    assert_frame_equal(
+        OneHotEncoderDF(min_frequency=2, sparse_output=sparse_output).fit_transform(
+            test_data_categorical
+        ),
+        _make_frame(
+            {
+                "a_yes": [1.0, 1.0, 0.0],
+                "a_infrequent_sklearn": [0.0, 0.0, 1.0],
+                "b_infrequent_sklearn": [1.0, 1.0, 1.0],
+                "c_infrequent_sklearn": [1.0, 1.0, 1.0],
+            }
+        ),
+    )
+
+    assert_frame_equal(
+        OneHotEncoderDF(max_categories=2, sparse_output=sparse_output).fit_transform(
+            test_data_categorical
+        ),
+        _make_frame(
+            {
+                "a_yes": [1.0, 1.0, 0.0],
+                "a_infrequent_sklearn": [0.0, 0.0, 1.0],
+                "b_red": [1.0, 0.0, 0.0],
+                "b_infrequent_sklearn": [0.0, 1.0, 1.0],
+                "c_mother": [0.0, 0.0, 1.0],
+                "c_infrequent_sklearn": [1.0, 1.0, 0.0],
+            }
+        ),
+    )
+
+    assert_frame_equal(
+        OneHotEncoderDF(max_categories=10, sparse_output=sparse_output).fit_transform(
+            test_data_categorical
+        ),
         _make_frame(
             {
                 "a_no": [0.0, 0.0, 1.0],
@@ -418,39 +519,9 @@ def test_one_hot_encoding(test_data_categorical: pd.DataFrame, sparse: bool) -> 
     )
 
     assert_frame_equal(
-        OneHotEncoderDF(drop="first", sparse=sparse).fit_transform(
-            test_data_categorical
-        ),
-        _make_frame(
-            {
-                "a_yes": [1.0, 1.0, 0.0],
-                "b_green": [0.0, 0.0, 1.0],
-                "b_red": [1.0, 0.0, 0.0],
-                "c_father": [0.0, 1.0, 0.0],
-                "c_mother": [0.0, 0.0, 1.0],
-            }
-        ),
-    )
-
-    assert_frame_equal(
-        OneHotEncoderDF(drop=["yes", "red", "mother"], sparse=sparse).fit_transform(
-            test_data_categorical
-        ),
-        _make_frame(
-            {
-                "a_no": [0.0, 0.0, 1.0],
-                "b_blue": [0.0, 1.0, 0.0],
-                "b_green": [0.0, 0.0, 1.0],
-                "c_child": [1.0, 0.0, 0.0],
-                "c_father": [0.0, 1.0, 0.0],
-            }
-        ),
-    )
-
-    assert_frame_equal(
-        OneHotEncoderDF(drop="if_binary", sparse=sparse).fit_transform(
-            test_data_categorical
-        ),
+        OneHotEncoderDF(
+            drop="if_binary", max_categories=10, sparse_output=sparse_output
+        ).fit_transform(test_data_categorical),
         _make_frame(
             {
                 "a_yes": [1.0, 1.0, 0.0],
@@ -464,94 +535,28 @@ def test_one_hot_encoding(test_data_categorical: pd.DataFrame, sparse: bool) -> 
         ),
     )
 
-    if __sklearn_version__ >= __sklearn_1_1__:
-        assert_frame_equal(
-            OneHotEncoderDF(min_frequency=2, sparse=sparse).fit_transform(
-                test_data_categorical
-            ),
-            _make_frame(
-                {
-                    "a_yes": [1.0, 1.0, 0.0],
-                    "a_infrequent_sklearn": [0.0, 0.0, 1.0],
-                    "b_infrequent_sklearn": [1.0, 1.0, 1.0],
-                    "c_infrequent_sklearn": [1.0, 1.0, 1.0],
-                }
-            ),
-        )
+    assert_frame_equal(
+        OneHotEncoderDF(
+            drop="first", max_categories=2, sparse_output=sparse_output
+        ).fit_transform(test_data_categorical),
+        _make_frame(
+            {
+                "a_infrequent_sklearn": [0.0, 0.0, 1.0],
+                "b_infrequent_sklearn": [0.0, 1.0, 1.0],
+                "c_infrequent_sklearn": [1.0, 1.0, 0.0],
+            }
+        ),
+    )
 
-        assert_frame_equal(
-            OneHotEncoderDF(max_categories=2, sparse=sparse).fit_transform(
-                test_data_categorical
-            ),
-            _make_frame(
-                {
-                    "a_yes": [1.0, 1.0, 0.0],
-                    "a_infrequent_sklearn": [0.0, 0.0, 1.0],
-                    "b_red": [1.0, 0.0, 0.0],
-                    "b_infrequent_sklearn": [0.0, 1.0, 1.0],
-                    "c_mother": [0.0, 0.0, 1.0],
-                    "c_infrequent_sklearn": [1.0, 1.0, 0.0],
-                }
-            ),
-        )
-
-        assert_frame_equal(
-            OneHotEncoderDF(max_categories=10, sparse=sparse).fit_transform(
-                test_data_categorical
-            ),
-            _make_frame(
-                {
-                    "a_no": [0.0, 0.0, 1.0],
-                    "a_yes": [1.0, 1.0, 0.0],
-                    "b_blue": [0.0, 1.0, 0.0],
-                    "b_green": [0.0, 0.0, 1.0],
-                    "b_red": [1.0, 0.0, 0.0],
-                    "c_child": [1.0, 0.0, 0.0],
-                    "c_father": [0.0, 1.0, 0.0],
-                    "c_mother": [0.0, 0.0, 1.0],
-                }
-            ),
-        )
-
-        assert_frame_equal(
-            OneHotEncoderDF(
-                drop="if_binary", max_categories=10, sparse=sparse
-            ).fit_transform(test_data_categorical),
-            _make_frame(
-                {
-                    "a_yes": [1.0, 1.0, 0.0],
-                    "b_blue": [0.0, 1.0, 0.0],
-                    "b_green": [0.0, 0.0, 1.0],
-                    "b_red": [1.0, 0.0, 0.0],
-                    "c_child": [1.0, 0.0, 0.0],
-                    "c_father": [0.0, 1.0, 0.0],
-                    "c_mother": [0.0, 0.0, 1.0],
-                }
-            ),
-        )
-
-        assert_frame_equal(
-            OneHotEncoderDF(
-                drop="first", max_categories=2, sparse=sparse
-            ).fit_transform(test_data_categorical),
-            _make_frame(
-                {
-                    "a_infrequent_sklearn": [0.0, 0.0, 1.0],
-                    "b_infrequent_sklearn": [0.0, 1.0, 1.0],
-                    "c_infrequent_sklearn": [1.0, 1.0, 0.0],
-                }
-            ),
-        )
-
-        assert_frame_equal(
-            OneHotEncoderDF(
-                drop="if_binary", max_categories=2, sparse=sparse
-            ).fit_transform(test_data_categorical),
-            _make_frame(
-                {
-                    "a_infrequent_sklearn": [0.0, 0.0, 1.0],
-                    "b_infrequent_sklearn": [0.0, 1.0, 1.0],
-                    "c_infrequent_sklearn": [1.0, 1.0, 0.0],
-                }
-            ),
-        )
+    assert_frame_equal(
+        OneHotEncoderDF(
+            drop="if_binary", max_categories=2, sparse_output=sparse_output
+        ).fit_transform(test_data_categorical),
+        _make_frame(
+            {
+                "a_infrequent_sklearn": [0.0, 0.0, 1.0],
+                "b_infrequent_sklearn": [0.0, 1.0, 1.0],
+                "c_infrequent_sklearn": [1.0, 1.0, 0.0],
+            }
+        ),
+    )

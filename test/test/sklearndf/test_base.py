@@ -73,12 +73,12 @@ def test_clone() -> None:
     # (which, in this case, is the current state of the estimator),
     # and check that the obtained copy is a correct deep copy.
 
-    encoder = OneHotEncoderDF(drop="first", sparse=False)
+    encoder = OneHotEncoderDF(drop="first", sparse_output=False)
     new_encoder = encoder.clone()
     assert encoder is not new_encoder
     assert encoder.get_params() == new_encoder.get_params()
 
-    encoder = OneHotEncoderDF(handle_unknown="ignore", sparse=False)
+    encoder = OneHotEncoderDF(handle_unknown="ignore", sparse_output=False)
     new_encoder = sklearn.clone(encoder)
 
     assert encoder is not new_encoder
@@ -90,7 +90,7 @@ def test_clone_2() -> None:
     # make a copy of its original state. Then we check that the copy doesn't
     # have the specific attribute we manually added to the initial estimator.
 
-    encoder = OneHotEncoderDF(drop="first", sparse=False)
+    encoder = OneHotEncoderDF(drop="first", sparse_output=False)
 
     encoder.own_attribute = "test"
     new_encoder = encoder.clone()
