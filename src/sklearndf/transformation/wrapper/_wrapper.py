@@ -27,7 +27,7 @@ from sklearn.decomposition import PCA
 from sklearn.impute import MissingIndicator, SimpleImputer
 from sklearn.kernel_approximation import AdditiveChi2Sampler
 from sklearn.manifold import Isomap
-from sklearn.preprocessing import KBinsDiscretizer, OneHotEncoder
+from sklearn.preprocessing import FunctionTransformer, KBinsDiscretizer, OneHotEncoder
 
 from pytools.api import AllTracker
 
@@ -453,7 +453,13 @@ class ColumnTransformerWrapperDF(
             input_column_names: npt.NDArray[Any]
             output_column_names: npt.NDArray[Any]
 
-            if df_transformer == ColumnTransformerWrapperDF.PASSTHROUGH:
+            if df_transformer == ColumnTransformerWrapperDF.PASSTHROUGH or (
+                # scikit-learn 1.4+ replaces 'passthrough' with a FunctionTransformer
+                # using the identity function (represented by `None`), so we need to
+                # check for that.
+                isinstance(df_transformer, FunctionTransformer)
+                and df_transformer.func is None
+            ):
                 # we may get positional indices for columns selected by the
                 # 'passthrough' transformer, and in that case need to look up the
                 # associated column names
