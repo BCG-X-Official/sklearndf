@@ -323,10 +323,16 @@ def test_pipeline_df_raise_set_params_error() -> None:
         pipe.set_params(fake__estimator="nope")
 
 
-@pytest.mark.parametrize(argnames="sparse", argvalues=[True, False])  # type: ignore
-def test_feature_union(test_data_categorical: pd.DataFrame, sparse: bool) -> None:
+@pytest.mark.parametrize(  # type: ignore
+    argnames="sparse_output", argvalues=[True, False]
+)
+def test_feature_union(
+    test_data_categorical: pd.DataFrame, sparse_output: bool
+) -> None:
     # the expected column dtype, depending on arg sparse
-    dtype_expected = pd.SparseDtype(np.float_, fill_value=0) if sparse else np.float_
+    dtype_expected = (
+        pd.SparseDtype(np.float_, fill_value=0) if sparse_output else np.float_
+    )
 
     # apply the test data to a simple feature union
     feature_union = FeatureUnionDF(
@@ -342,7 +348,7 @@ def test_feature_union(test_data_categorical: pd.DataFrame, sparse: bool) -> Non
     ), f"all columns should be of type {dtype_expected}: {transformed.dtypes}"
 
     # if the output is sparse, make it dense
-    if sparse:
+    if sparse_output:
         transformed = transformed.sparse.to_dense()
 
     # assert that the one-hot encoding is as expected
