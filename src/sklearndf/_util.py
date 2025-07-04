@@ -70,3 +70,18 @@ def sparse_frame_density(frame: pd.DataFrame) -> float:
             return 1.0
 
     return sum(_density(sr) for _, sr in frame.items()) / len(frame.columns)
+
+
+def remove_invalid_lgbm_type_hint(lgbm_type: type[Any]) -> None:
+    """
+    Remove an invalid return annotation from the __sklearn_tags__ of a LightGBM class.
+
+    :param lgbm_type: the LightGBM type to class
+    """
+    __sklearn_tags__ = getattr(lgbm_type, "__sklearn_tags__", None)
+    if __sklearn_tags__ is None:
+        return
+    __annotations__ = getattr(__sklearn_tags__, "__annotations__", {})
+    if __annotations__.get("return") == "_sklearn_Tags":
+        # remove an invalid return annotation: _sklearn_Tags is not a valid type
+        del __annotations__["return"]
