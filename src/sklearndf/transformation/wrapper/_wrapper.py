@@ -351,7 +351,10 @@ class ColumnTransformerSparseFrames(
 
     # noinspection PyPep8Naming
     def _hstack(
-        self, Xs: List[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]]
+        self,
+        Xs: List[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]],
+        *,
+        n_samples: Optional[int] = None,
     ) -> Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]:
         if self.verbose_feature_names_out:
             prefixes = [name for name, _, _ in self.transformers]
@@ -363,7 +366,13 @@ class ColumnTransformerSparseFrames(
             stacked = hstack_frames(Xs)
 
         if stacked is None:
-            return super()._hstack(Xs)
+            if n_samples is None:
+                # Do not pass n_samples if we did not receive it, for backwards
+                # compatibility
+                return super()._hstack(Xs)
+            else:
+                # Only pass n_samples if we receive it
+                return super()._hstack(Xs, n_samples=n_samples)
         else:
             self.sparse_output_ = is_sparse_frame(stacked)
             return stacked
