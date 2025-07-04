@@ -2,6 +2,8 @@
 Auxiliary functions for internal use.
 """
 
+import math
+import numbers
 from typing import Any, List, Optional, Union, cast
 
 import numpy.typing as npt
@@ -85,3 +87,33 @@ def remove_invalid_lgbm_type_hint(lgbm_type: type[Any]) -> None:
     if __annotations__.get("return") == "_sklearn_Tags":
         # remove an invalid return annotation: _sklearn_Tags is not a valid type
         del __annotations__["return"]
+
+
+def is_scalar_nan(x: Any) -> bool:
+    """
+    Test if a given value is a scalar that is NaN.
+
+    Example:
+    .. code-block:: python
+
+        is_scalar_nan(np.nan)
+        # True
+        is_scalar_nan(float("nan"))
+        # True
+        is_scalar_nan(None)
+        # False
+        is_scalar_nan("")
+        # False
+        is_scalar_nan([np.nan])
+        # False
+
+    :param x: the value to test
+    :returns: ``True`` if the value is a scalar NaN, ``False`` otherwise
+
+
+    """
+    return (
+        not isinstance(x, numbers.Integral)
+        and isinstance(x, numbers.Real)
+        and math.isnan(x)
+    )

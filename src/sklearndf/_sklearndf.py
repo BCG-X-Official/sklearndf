@@ -7,7 +7,6 @@ import logging
 from abc import ABCMeta, abstractmethod
 from typing import Any, Callable, Dict, List, Mapping, Optional, TypeVar, Union, cast
 
-import numpy as np
 import numpy.typing as npt
 import pandas as pd
 from sklearn.base import (
@@ -23,6 +22,8 @@ from pytools.api import AllTracker, inheritdoc
 from pytools.expression import Expression, HasExpressionRepr, make_expression
 from pytools.expression.atomic import Id
 from pytools.fit import fitted_only
+
+from ._util import is_scalar_nan
 
 log = logging.getLogger(__name__)
 
@@ -260,7 +261,7 @@ class EstimatorDF(
                 )
                 and (
                     # both value and default value are np.nan ...
-                    (np.isnan(value) and np.isnan(default_value))
+                    (is_scalar_nan(value) and is_scalar_nan(default_value))
                     or (
                         # ... or both have the same expression.
                         # We cannot compare for equality since we don't know
