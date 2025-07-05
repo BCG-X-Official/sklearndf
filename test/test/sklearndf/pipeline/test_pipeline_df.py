@@ -20,7 +20,6 @@ from sklearn import clone
 from sklearn.base import BaseEstimator, TransformerMixin, is_classifier, is_regressor
 from sklearn.feature_selection import f_classif
 
-from sklearndf import __sklearn_1_1__, __sklearn_version__
 from sklearndf.classification import SVCDF, LogisticRegressionDF
 from sklearndf.pipeline import FeatureUnionDF, PipelineDF
 from sklearndf.regression import DummyRegressorDF, LassoDF, LinearRegressionDF
@@ -220,25 +219,14 @@ def test_pipeline_df__init() -> None:
 
     # Check that we can't instantiate pipelines with objects without fit
     # method
-    if __sklearn_version__ < __sklearn_1_1__:
-        with pytest.raises(
-            TypeError,
-            match=(
-                "Last step of Pipeline should implement fit "
-                "or be the string 'passthrough'"
-                ".*NoFit.*"
-            ),
-        ):
-            PipelineDF([("clf", NoFit())])
-    else:
-        with pytest.raises(
-            ValueError,
-            match=(
-                "expected final step 'clf' to be an EstimatorDF or passthrough, "
-                "but found an instance of NoFit"
-            ),
-        ):
-            PipelineDF([("clf", NoFit())])
+    with pytest.raises(
+        ValueError,
+        match=(
+            "expected final step 'clf' to be an EstimatorDF or passthrough, "
+            "but found an instance of NoFit"
+        ),
+    ):
+        PipelineDF([("clf", NoFit())])
 
     # Smoke test with only an estimator
     clf = NoTransformerDF()

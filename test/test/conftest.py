@@ -9,7 +9,6 @@ import sklearn
 from sklearn import datasets
 from sklearn.utils import Bunch
 
-from sklearndf import __sklearn_1_1__, __sklearn_version__
 from sklearndf.transformation import OneHotEncoderDF
 
 logging.basicConfig(level=logging.DEBUG)
@@ -41,11 +40,7 @@ def n_jobs() -> int:
 def diabetes_df(diabetes_target: str) -> pd.DataFrame:
     #  load sklearn test-data and convert to pd
     diabetes: Bunch
-    if __sklearn_version__ >= __sklearn_1_1__:
-        diabetes = datasets.load_diabetes(scaled=False)
-    else:
-        # arg scaled does not exist in scikit-learn < 1.1
-        diabetes = datasets.load_diabetes()
+    diabetes = datasets.load_diabetes(scaled=False)
 
     return pd.DataFrame(
         data=np.c_[diabetes.data, diabetes.target],

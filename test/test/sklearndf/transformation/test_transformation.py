@@ -22,8 +22,8 @@ from sklearndf import (
     ClassifierDF,
     RegressorDF,
     TransformerDF,
-    __sklearn_1_1__,
-    __sklearn_1_3__,
+    __sklearn_1_4__,
+    __sklearn_1_5__,
     __sklearn_version__,
 )
 from sklearndf.classification import RandomForestClassifierDF
@@ -70,12 +70,12 @@ def test_transformer_count() -> None:
     n = len(TRANSFORMERS_TO_TEST)
 
     print(f"Testing {n} transformers.")
-    if __sklearn_version__ < __sklearn_1_1__:
-        assert n == 58
-    elif __sklearn_version__ < __sklearn_1_3__:
-        assert n == 60
-    else:
+    if __sklearn_version__ < __sklearn_1_4__:
         assert n == 61
+    elif __sklearn_version__ < __sklearn_1_5__:
+        assert n == 61
+    else:
+        assert False, f"unexpected sklearn version: {__sklearn_version__}"
 
 
 @pytest.fixture  # type: ignore
@@ -371,11 +371,10 @@ def test_simple_imputer_df() -> None:
         imputer_df.feature_names_in_.values, imputer_native.feature_names_in_
     )
 
-    if __sklearn_version__ >= __sklearn_1_1__:
-        assert_array_equal(
-            imputer_df.feature_names_out_.values,
-            imputer_native.get_feature_names_out(),
-        )
+    assert_array_equal(
+        imputer_df.feature_names_out_.values,
+        imputer_native.get_feature_names_out(),
+    )
 
 
 @pytest.fixture  # type: ignore

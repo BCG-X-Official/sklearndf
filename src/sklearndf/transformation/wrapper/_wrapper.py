@@ -31,7 +31,7 @@ from sklearn.preprocessing import FunctionTransformer, KBinsDiscretizer, OneHotE
 
 from pytools.api import AllTracker
 
-from ... import TransformerDF, __sklearn_1_1__, __sklearn_1_2__, __sklearn_version__
+from ... import TransformerDF
 from ..._util import hstack_frames, is_sparse_frame, sparse_frame_density
 from ...wrapper import TransformerWrapperDF
 
@@ -668,9 +668,7 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
             dtype=np.int_,
         )
 
-        if __sklearn_version__ >= __sklearn_1_1__ and not (
-            self.max_categories is None and self.min_frequency is None
-        ):
+        if self.max_categories is not None or self.min_frequency is not None:
             # count number of infrequent categories per column
             n_infrequent = np.array(
                 [
@@ -754,16 +752,6 @@ class EmbeddingWrapperDF(
 
     The native transformer is considered to map all input columns to each output column.
     """
-
-    if __sklearn_version__ < __sklearn_1_2__:
-        # n_features_ is deprecated as of sklearn 1.0,
-        # and will be removed in sklearn 1.2
-        @property
-        def n_features_(self) -> int:
-            """
-            The number of features when :meth:`.fit` is performed.
-            """
-            return cast(int, self.native_estimator.n_features_)
 
     def _get_n_outputs(self) -> int:
         return cast(int, self.native_estimator.n_outputs_)
