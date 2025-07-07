@@ -4,7 +4,13 @@ import pandas as pd
 import pytest
 
 import sklearndf.clustering
-from sklearndf import ClusterDF, __sklearn_1_4__, __sklearn_1_5__, __sklearn_version__
+from sklearndf import (
+    ClusterDF,
+    __sklearn_1_4__,
+    __sklearn_1_5__,
+    __sklearn_1_6__,
+    __sklearn_version__,
+)
 from sklearndf.clustering import FeatureAgglomerationDF
 from test.sklearndf import iterate_classes
 
@@ -26,6 +32,8 @@ def test_clusterer_count() -> None:
     if __sklearn_version__ < __sklearn_1_4__:
         assert n == 11
     elif __sklearn_version__ < __sklearn_1_5__:
+        assert n == 11
+    elif __sklearn_version__ < __sklearn_1_6__:
         assert n == 11
     else:
         raise AssertionError(f"Unexpected scikit-learn version: {__sklearn_version__}")

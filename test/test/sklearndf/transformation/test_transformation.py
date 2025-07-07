@@ -24,6 +24,7 @@ from sklearndf import (
     TransformerDF,
     __sklearn_1_4__,
     __sklearn_1_5__,
+    __sklearn_1_6__,
     __sklearn_version__,
 )
 from sklearndf.classification import RandomForestClassifierDF
@@ -73,6 +74,8 @@ def test_transformer_count() -> None:
     if __sklearn_version__ < __sklearn_1_4__:
         assert n == 61
     elif __sklearn_version__ < __sklearn_1_5__:
+        assert n == 61
+    elif __sklearn_version__ < __sklearn_1_6__:
         assert n == 61
     else:
         assert False, f"unexpected sklearn version: {__sklearn_version__}"
