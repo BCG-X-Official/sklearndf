@@ -25,6 +25,7 @@ __all__ = [
     "MetaClassifierWrapperDF",
     "MultiOutputClassifierWrapperDF",
     "PartialFitClassifierWrapperDF",
+    "ThresholdClassifierWrapperDF",
 ]
 
 #
@@ -208,6 +209,16 @@ class ClassifierChainWrapperDF(
         return super()._prediction_with_class_labels(
             X, prediction, classes=range(self.n_outputs_)
         )
+
+
+class ThresholdClassifierWrapperDF(
+    MetaClassifierWrapperDF[T_NativeClassifier],
+    Generic[T_NativeClassifier],
+    metaclass=ABCMeta,
+):
+    """
+    DF wrapper for meta-classifiers that manage decision thresholds.
+    """
 
 
 #

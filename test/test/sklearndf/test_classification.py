@@ -8,7 +8,13 @@ from sklearn.base import is_classifier
 from sklearn.multioutput import ClassifierChain, MultiOutputClassifier
 
 import sklearndf.classification as classification
-from sklearndf import ClassifierDF
+from sklearndf import (
+    ClassifierDF,
+    __sklearn_1_5__,
+    __sklearn_1_6__,
+    __sklearn_version__,
+)
+from sklearndf.classification.wrapper import ThresholdClassifierWrapperDF
 from test.sklearndf import check_expected_not_fitted_error, iterate_classes
 
 CLASSIFIERS_TO_TEST = iterate_classes(
@@ -22,15 +28,18 @@ def test_classifier_count() -> None:
     n = len(CLASSIFIERS_TO_TEST)
 
     print(f"Testing {n} classifiers.")
-    assert n == 41
 
-
-BASE_ESTIMATOR = "estimator"
+    if __sklearn_version__ < __sklearn_1_5__:
+        assert n == 41
+    elif __sklearn_version__ < __sklearn_1_6__:
+        assert n == 43
+    else:
+        raise AssertionError(f"Unexpected scikit-learn version: {__sklearn_version__}")
 
 
 CLASSIFIER_INIT_PARAMETERS: Dict[str, Dict[str, Any]] = {
     "CalibratedClassifierCVDF": {
-        BASE_ESTIMATOR: classification.RandomForestClassifierDF()
+        "estimator": classification.RandomForestClassifierDF()
     },
     "ClassifierChainDF": {"base_estimator": classification.RandomForestClassifierDF()},
     "MultiOutputClassifierDF": {"estimator": classification.RandomForestClassifierDF()},
@@ -51,6 +60,13 @@ CLASSIFIER_INIT_PARAMETERS: Dict[str, Dict[str, Any]] = {
             ("Logit", classification.LogisticRegressionCVDF()),
             ("AdaBoost", classification.AdaBoostClassifierDF()),
         )
+    },
+    "TunedThresholdClassifierCVDF": {
+        "estimator": classification.RandomForestClassifierDF()
+    },
+    "FixedThresholdClassifierDF": {
+        "estimator": classification.RandomForestClassifierDF(),
+        "threshold": 0.5,
     },
 }
 
@@ -89,6 +105,7 @@ def test_wrapped_fit_predict(
     assert is_classifier(classifier)
 
     is_chain = isinstance(classifier.native_estimator, ClassifierChain)
+    is_threshold = isinstance(classifier, ThresholdClassifierWrapperDF)
 
     is_multi_output = isinstance(classifier.native_estimator, MultiOutputClassifier)
     check_expected_not_fitted_error(estimator=classifier)
@@ -98,6 +115,10 @@ def test_wrapped_fit_predict(
         # classification can act as input to the next classification
         classes = set(range(iris_targets_binary_df.shape[1]))
         classifier.fit(X=iris_features, y=iris_targets_binary_df)
+    elif is_threshold:
+        # for threshold classifiers, the classes are binary
+        classes = {0, 1}
+        classifier.fit(X=iris_features, y=iris_targets_binary_df.iloc[:, 0])
     elif is_multi_output:
         classes = set(
             chain(
@@ -116,7 +137,8 @@ def test_wrapped_fit_predict(
 
     # test predictions data-type, length and values
     assert isinstance(
-        predictions, pd.DataFrame if is_multi_output or is_chain else pd.Series
+        predictions,
+        pd.DataFrame if is_multi_output or is_chain else pd.Series,
     )
     assert len(predictions) == len(iris_target_sr)
     assert np.all(predictions.isin(classes))
@@ -134,11 +156,19 @@ def test_wrapped_fit_predict(
                 assert classifier.n_outputs_ == len(predictions)
             else:
                 if is_chain:
+                    # for classifier chains and threshold classifiers, we have a binary
+                    # output
                     assert (
                         classifier.output_names_
                         == iris_targets_binary_df.columns.tolist()
                     )
                     assert classifier.n_outputs_ == predictions.shape[1]
+                elif is_threshold:
+                    # for threshold classifiers, we have a single binary output
+                    assert classifier.output_names_ == [
+                        iris_targets_binary_df.columns[0]
+                    ]
+                    assert classifier.n_outputs_ == 1
                 else:
                     assert classifier.output_names_ == [iris_target_sr.name]
                     assert classifier.n_outputs_ == 1
