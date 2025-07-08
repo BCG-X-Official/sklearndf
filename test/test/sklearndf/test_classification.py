@@ -12,6 +12,7 @@ from sklearndf import (
     ClassifierDF,
     __sklearn_1_5__,
     __sklearn_1_6__,
+    __sklearn_1_7__,
     __sklearn_version__,
 )
 from sklearndf.classification.wrapper import ThresholdClassifierWrapperDF
@@ -33,6 +34,8 @@ def test_classifier_count() -> None:
         assert n == 41
     elif __sklearn_version__ < __sklearn_1_6__:
         assert n == 43
+    elif __sklearn_version__ < __sklearn_1_7__:
+        assert n == 44
     else:
         raise AssertionError(f"Unexpected scikit-learn version: {__sklearn_version__}")
 
@@ -67,6 +70,9 @@ CLASSIFIER_INIT_PARAMETERS: Dict[str, Dict[str, Any]] = {
     "FixedThresholdClassifierDF": {
         "estimator": classification.RandomForestClassifierDF(),
         "threshold": 0.5,
+    },
+    "SelfTrainingClassifierDF": {
+        "estimator": classification.RandomForestClassifierDF()
     },
 }
 

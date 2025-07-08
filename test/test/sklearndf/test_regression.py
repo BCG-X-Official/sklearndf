@@ -6,7 +6,7 @@ from sklearn.base import BaseEstimator, is_regressor
 from sklearn.multioutput import MultiOutputRegressor, RegressorChain
 
 import sklearndf.regression
-from sklearndf import RegressorDF, TransformerDF, __sklearn_1_6__, __sklearn_version__
+from sklearndf import RegressorDF, TransformerDF, __sklearn_1_7__, __sklearn_version__
 from sklearndf.regression import (
     SVRDF,
     IsotonicRegressionDF,
@@ -33,7 +33,7 @@ def test_regressor_count() -> None:
     n = len(REGRESSORS_TO_TEST)
 
     print(f"Testing {n} regressors.")
-    if __sklearn_version__ < __sklearn_1_6__:
+    if __sklearn_version__ < __sklearn_1_7__:
         assert n == 55
     else:
         raise AssertionError(f"Unexpected scikit-learn version: {__sklearn_version__}")
