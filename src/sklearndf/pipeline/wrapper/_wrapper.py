@@ -12,17 +12,25 @@ from pandas.core.arrays import ExtensionArray
 from scipy import sparse
 from sklearn.pipeline import FeatureUnion, Pipeline
 from sklearn.preprocessing import FunctionTransformer
-from sklearn.utils import Tags
 
 from pytools.api import AllTracker
 
 from ..._util import hstack_frames
-from sklearndf import EstimatorDF, TransformerDF
+from sklearndf import EstimatorDF, TransformerDF, __sklearn_1_7__, __sklearn_version__
 from sklearndf.wrapper import (
     ClassifierWrapperDF,
     RegressorWrapperDF,
     TransformerWrapperDF,
 )
+
+if __sklearn_version__ >= __sklearn_1_7__:
+    from sklearn.utils import Tags
+
+    __TAGS = True
+else:
+    # Fallback, in case tags are not defined
+    Tags = type("Tags", (), {})
+    __TAGS = False
 
 log = logging.getLogger(__name__)
 
@@ -222,6 +230,11 @@ class PipelineWrapperDF(
         return cast(
             Dict[str, Any], getattr(self.native_estimator, "_more_tags", lambda: {})()
         )
+
+
+if not __TAGS:
+    # Installed version of scikit-learn does not support tags; remove the method
+    del PipelineWrapperDF.__sklearn_tags__
 
 
 class FeatureUnionSparseFrames(

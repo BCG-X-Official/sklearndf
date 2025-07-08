@@ -49,7 +49,6 @@ from sklearn.base import (
     RegressorMixin,
     TransformerMixin,
 )
-from sklearn.utils import Tags
 
 from pytools.api import AllTracker, inheritdoc, public_module_prefix
 
@@ -61,7 +60,19 @@ from sklearndf import (
     RegressorDF,
     SupervisedLearnerDF,
     TransformerDF,
+    __sklearn_1_7__,
+    __sklearn_version__,
 )
+
+if __sklearn_version__ >= __sklearn_1_7__:
+    from sklearn.utils import Tags
+
+    __TAGS = True
+else:
+    # Fallback, in case tags are not defined
+    Tags = type("Tags", (), {})
+    __TAGS = False
+
 
 log = logging.getLogger(__name__)
 
@@ -639,6 +650,11 @@ class EstimatorWrapperDF(
             else:
                 # The attribute is defined in this wrapper object, so set it here.
                 super().__setattr__(name, value)
+
+
+if not __TAGS:
+    # Tags are not supported; delete the
+    del EstimatorWrapperDF.__sklearn_tags__
 
 
 @inheritdoc(match="[see superclass]")
