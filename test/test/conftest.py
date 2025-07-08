@@ -101,8 +101,10 @@ def iris_targets_df(iris_df: pd.DataFrame, iris_target_name: str) -> pd.DataFram
 
 @pytest.fixture  # type: ignore
 def iris_targets_binary_df(iris_target_sr: pd.Series) -> pd.DataFrame:
-    return OneHotEncoderDF(sparse_output=False).fit_transform(
-        X=iris_target_sr.to_frame()
+    return (
+        OneHotEncoderDF(sparse_output=False)
+        .fit_transform(X=iris_target_sr.to_frame())
+        .astype(int)
     )
 
 
