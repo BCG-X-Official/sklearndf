@@ -12,6 +12,7 @@ from pandas.core.arrays import ExtensionArray
 from scipy import sparse
 from sklearn.pipeline import FeatureUnion, Pipeline
 from sklearn.preprocessing import FunctionTransformer
+from sklearn.utils import Tags
 
 from pytools.api import AllTracker
 
@@ -144,7 +145,7 @@ class PipelineWrapperDF(
         # excludes steps whose transformer is ``None`` or ``"passthrough"``
 
         def _iter_not_none(
-            transformer_steps: Sequence[Tuple[str, EstimatorDF]]
+            transformer_steps: Sequence[Tuple[str, EstimatorDF]],
         ) -> Iterator[Tuple[str, TransformerDF]]:
             return (
                 (name, cast(TransformerDF, transformer))
@@ -212,6 +213,10 @@ class PipelineWrapperDF(
     def _estimator_type(self) -> str:
         # noinspection PyProtectedMember
         return cast(str, self.native_estimator._estimator_type)
+
+    def __sklearn_tags__(self) -> Tags:
+        # forward this method call to the native estimator to ensure correct tags
+        return self.native_estimator.__sklearn_tags__()
 
     def _more_tags(self) -> Dict[str, Any]:
         return cast(

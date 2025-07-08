@@ -49,6 +49,7 @@ from sklearn.base import (
     RegressorMixin,
     TransformerMixin,
 )
+from sklearn.utils import Tags
 
 from pytools.api import AllTracker, inheritdoc, public_module_prefix
 
@@ -341,6 +342,9 @@ class EstimatorWrapperDF(
             return cast(str, self.native_estimator._estimator_type)
         except AttributeError:
             return None
+
+    def __sklearn_tags__(self) -> Tags:
+        return self.native_estimator.__sklearn_tags__()
 
     @classmethod
     def from_fitted(
