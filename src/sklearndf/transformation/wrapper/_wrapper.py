@@ -1,6 +1,7 @@
 """
 Core implementation of :mod:`sklearndf.transformation.wrapper`
 """
+
 import itertools
 import logging
 from abc import ABCMeta, abstractmethod
@@ -359,7 +360,9 @@ class ColumnTransformerSparseFrames(
         n_samples: Optional[int] = None,
     ) -> Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]:
         if self.verbose_feature_names_out:
-            prefixes = [name for name, _, _ in self.transformers]
+            # Get the prefixes for the columns of each transformer, unless the
+            # transformer does not process any columns
+            prefixes = [name for name, _, cols in self.transformers if len(cols)]
             if self._remainder[2] and self.remainder != "drop":
                 # remainder columns exist and are not being dropped
                 prefixes.append("remainder")

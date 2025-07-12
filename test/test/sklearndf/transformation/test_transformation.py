@@ -290,6 +290,28 @@ def test_column_transformer(test_data: pd.DataFrame) -> None:
     )
 
 
+def test_column_transformer_with_unmatched_transformation(
+    test_data: pd.DataFrame,
+) -> None:
+    # Test that a ColumnTransformerDF with a transformer that does not match any
+    # columns does not raise an error.
+    numeric_data = test_data.select_dtypes(include=float)
+    numeric_columns: List[str] = numeric_data.columns.tolist()
+    assert numeric_columns == ["c0", "c2"]
+    # noinspection PyShadowingNames
+    tx = ColumnTransformerDF(
+        transformers=[
+            ("tx", StandardScalerDF(), []),
+            ("rest", "passthrough", numeric_columns),
+        ]
+    )
+    transformed_df = tx.fit_transform(X=test_data)
+    # check that the transformed DataFrame is the same as the input DataFrame
+    assert_frame_equal(
+        transformed_df, numeric_data.add_prefix("rest__").rename_axis("feature", axis=1)
+    )
+
+
 def test_normalizer_df() -> None:
     x = [[4.0, 1.0, 2.0, 2.0], [1.0, 3.0, 9.0, 3.0], [5.0, 7.0, 5.0, 1.0]]
     test_df = pd.DataFrame(x, columns=pd.Index(["a", "b", "c", "d"], name="feature_in"))
