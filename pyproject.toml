@@ -87,20 +87,20 @@ typing_inspect = "~=0.4.0"
 
 [build.matrix.max]
 # direct requirements of sklearndf
-arfs           = "~=4.0"
-gamma-pytools  = "~=2.1"
+arfs           = "~=3.0"
+gamma-pytools  = "~=3.0"
 lightgbm       = "~=4.6"
-numpy          = ">=1.24,<2a"     # cannot use ~= due to conda bug
-packaging      = ">=20"
-pandas         = "~=2.2"
+numpy          = ">=2.2,<3a"     # cannot use ~= due to conda bug
+packaging      = ">=25"
+pandas         = "~=2.3"
 python         = ">=3.12,<3.13a"  # cannot use ~= due to conda bug
 scikit-learn   = "~=1.7.0"
-scipy          = "~=1.15"
-xgboost        = "~=1.5"
+scipy          = "~=1.16"
+xgboost        = "~=2.1"
 # additional maximum requirements of gamma-pytools
 joblib         = "~=1.5"
 matplotlib     = "~=3.10"
-typing_inspect = "~=0.7"
+typing_inspect = "~=0.9"
 
 [tool.black]
 # quiet = "True"

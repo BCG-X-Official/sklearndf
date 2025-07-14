@@ -4,19 +4,19 @@ channels:
   - bcg_gamma
 dependencies:
   # run
-  - gamma-pytools     ~= 2.1
+  - gamma-pytools     ~= 3.0
   - joblib            ~= 1.5
-  - lightgbm          ~= 3.3
+  - lightgbm          ~= 4.6
   - matplotlib        ~= 3.7
-  - numpy             ~= 1.26
+  - numpy             ~= 2.3
   - pandas            ~= 2.3
   - pip               ~= 25.1
-  - python            ~= 3.10
+  - python            ~= 3.12.11
   - scikit-learn      ~= 1.7.0
   - scipy             ~= 1.15
   - xgboost           ~= 2.1
   - pip:
-      - arfs          ~= 1.0
+      - arfs          ~= 3.0
       - Boruta        ~= 0.4
 # test
   - pytest            ~= 8.1
