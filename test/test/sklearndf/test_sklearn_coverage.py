@@ -168,9 +168,9 @@ def _check_unexpected_sklearn_class(cls: type) -> None:
 )
 def test_classifier_coverage(sklearn_classifier_cls: Type[ClassifierMixin]) -> None:
     """Check if each sklearn classifier has a wrapped sklearndf counterpart."""
-    sklearn_classes: Dict[
-        Type[BaseEstimator], Type[EstimatorDF]
-    ] = sklearn_delegate_classes(sklearndf.classification)
+    sklearn_classes: Dict[Type[BaseEstimator], Type[EstimatorDF]] = (
+        sklearn_delegate_classes(sklearndf.classification)
+    )
 
     if sklearn_classifier_cls not in sklearn_classes:
         _check_unexpected_sklearn_class(sklearn_classifier_cls)
@@ -181,9 +181,9 @@ def test_classifier_coverage(sklearn_classifier_cls: Type[ClassifierMixin]) -> N
 )
 def test_regressor_coverage(sklearn_regressor_cls: Type[RegressorMixin]) -> None:
     """Check if each sklearn regressor has a wrapped sklearndf counterpart."""
-    sklearn_classes: Dict[
-        Type[BaseEstimator], Type[EstimatorDF]
-    ] = sklearn_delegate_classes(sklearndf.regression)
+    sklearn_classes: Dict[Type[BaseEstimator], Type[EstimatorDF]] = (
+        sklearn_delegate_classes(sklearndf.regression)
+    )
 
     if sklearn_regressor_cls not in sklearn_classes:
         _check_unexpected_sklearn_class(sklearn_regressor_cls)
@@ -195,9 +195,9 @@ def test_regressor_coverage(sklearn_regressor_cls: Type[RegressorMixin]) -> None
 def test_transformer_coverage(sklearn_transformer_cls: Type[TransformerMixin]) -> None:
     """Check if each sklearn transformer has a wrapped sklearndf counterpart."""
 
-    sklearn_classes: Dict[
-        Type[BaseEstimator], Type[EstimatorDF]
-    ] = sklearn_delegate_classes(sklearndf.transformation)
+    sklearn_classes: Dict[Type[BaseEstimator], Type[EstimatorDF]] = (
+        sklearn_delegate_classes(sklearndf.transformation)
+    )
 
     if sklearn_transformer_cls not in sklearn_classes:
         _check_unexpected_sklearn_class(sklearn_transformer_cls)
@@ -222,9 +222,9 @@ def test_pipeline_coverage(sklearn_pipeline_cls: Type[Pipeline]) -> None:
 )
 def test_clusterer_coverage(sklearn_clusterer_cls: Type[ClusterMixin]) -> None:
     """Check if each sklearn clusterer has a wrapped sklearndf counterpart."""
-    sklearn_classes: Dict[
-        Type[BaseEstimator], Type[EstimatorDF]
-    ] = sklearn_delegate_classes(sklearndf.clustering)
+    sklearn_classes: Dict[Type[BaseEstimator], Type[EstimatorDF]] = (
+        sklearn_delegate_classes(sklearndf.clustering)
+    )
 
     if sklearn_clusterer_cls not in sklearn_classes:
         _check_unexpected_sklearn_class(sklearn_clusterer_cls)

@@ -41,7 +41,7 @@ def test_clusterer_fit_predict_call(
 
     assert not clusterer_instance.is_fitted
     result_prediction = clusterer_instance.fit_predict(iris_features)
-    assert type(result_prediction) == pd.Series
+    assert type(result_prediction) is pd.Series
     assert clusterer_instance.is_fitted
 
 

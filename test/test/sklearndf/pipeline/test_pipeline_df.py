@@ -2,6 +2,7 @@
 Test module for PipelineDF inspired by:
 https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/tests/test_pipeline.py
 """
+
 from __future__ import annotations
 
 import shutil

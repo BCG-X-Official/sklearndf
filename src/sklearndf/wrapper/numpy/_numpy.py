@@ -168,7 +168,7 @@ class EstimatorNPDF(
 
     @staticmethod
     def _ensure_y_series_or_frame(
-        y: Optional[Union[npt.NDArray[Any], pd.Series, pd.DataFrame]]
+        y: Optional[Union[npt.NDArray[Any], pd.Series, pd.DataFrame]],
     ) -> Optional[Union[pd.Series, pd.DataFrame]]:
         if isinstance(y, np.ndarray):
             if y.ndim == 1:

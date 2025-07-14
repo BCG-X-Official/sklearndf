@@ -54,9 +54,11 @@ parametrize_feature_selector_cls: Callable[
             (LeshyDF, dict(estimator=lgbm_regressor_df, random_state=42, perc=90)),
             (
                 BoostAGrootaDF,
-                dict(est=lgbm_regressor, cutoff=1.1)
-                if __arfs_version__ is None or __arfs_version__ < __arfs_1_1__
-                else dict(estimator=lgbm_regressor, cutoff=1.1),
+                (
+                    dict(est=lgbm_regressor, cutoff=1.1)
+                    if __arfs_version__ is None or __arfs_version__ < __arfs_1_1__
+                    else dict(estimator=lgbm_regressor, cutoff=1.1)
+                ),
             ),
             (GrootCVDF, dict()),
         ]

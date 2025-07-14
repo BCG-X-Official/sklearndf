@@ -1,6 +1,7 @@
 """
 DF wrapper classes for stacking estimators.
 """
+
 from __future__ import annotations
 
 import logging
@@ -123,9 +124,11 @@ class StackingEstimatorWrapperDF(
             native.estimators = [
                 (
                     name,
-                    self._make_stackable_learner_df(estimator)
-                    if isinstance(estimator, SupervisedLearnerDF)
-                    else estimator,
+                    (
+                        self._make_stackable_learner_df(estimator)
+                        if isinstance(estimator, SupervisedLearnerDF)
+                        else estimator
+                    ),
                 )
                 for name, estimator in native.estimators
             ]
@@ -332,7 +335,7 @@ class _StackableSupervisedLearnerDF(
 
     @staticmethod
     def _convert_prediction_to_numpy(
-        prediction: Union[pd.DataFrame, List[pd.DataFrame]]
+        prediction: Union[pd.DataFrame, List[pd.DataFrame]],
     ) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
         if isinstance(prediction, list):
             return [proba.values for proba in prediction]

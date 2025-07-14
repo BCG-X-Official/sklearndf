@@ -2,6 +2,7 @@
 Additional implementation of :mod:`sklearndf.classification` loaded
 from sklearn 0.22 onwards
 """
+
 import logging
 
 from sklearn.ensemble import StackingClassifier

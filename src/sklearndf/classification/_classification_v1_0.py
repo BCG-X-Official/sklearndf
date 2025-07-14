@@ -2,6 +2,7 @@
 Additional implementation of :mod:`sklearndf.classification` loaded
 from sklearn 1.0 onwards
 """
+
 import logging
 
 from sklearn.ensemble import HistGradientBoostingClassifier

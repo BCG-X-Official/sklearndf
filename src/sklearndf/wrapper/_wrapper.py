@@ -239,8 +239,9 @@ class EstimatorWrapperDF(
         self._outputs: Optional[List[str]] = None
 
         # check if a fitted estimator was passed by class method is_fitted
-        fitted_delegate_context: Tuple[T_NativeEstimator, pd.Index, int] = kwargs.get(
-            EstimatorWrapperDF.__ARG_FITTED_DELEGATE_CONTEXT, None
+        fitted_delegate_context = cast(
+            Tuple[T_NativeEstimator, pd.Index, int],
+            kwargs.get(EstimatorWrapperDF.__ARG_FITTED_DELEGATE_CONTEXT, None),
         )
 
         _native_estimator: T_NativeEstimator
@@ -502,7 +503,7 @@ class EstimatorWrapperDF(
         if y is not None and not isinstance(y, (pd.Series, pd.DataFrame)):
             raise TypeError("arg y must be None, or a pandas series or data frame")
 
-        return X, y
+        return X, cast(T_Target, y)
 
     @staticmethod
     def _verify_df(
