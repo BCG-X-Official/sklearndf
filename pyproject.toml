@@ -83,7 +83,7 @@ xgboost        = "~=1.0.2"
 # additional minimum requirements of gamma-pytools
 joblib         = "~=0.14.1"
 matplotlib     = "~=3.3.4"
-typing_inspect = "~=0.4.0"
+typing_inspect = "~=0.7.0"
 
 [build.matrix.max]
 # direct requirements of sklearndf
