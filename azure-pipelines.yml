@@ -84,8 +84,8 @@ stages:
         steps:
           - task: UsePythonVersion@0
             inputs:
-              versionSpec: '3.9'
-            displayName: 'use Python 3.9'
+              versionSpec: '3.10'
+            displayName: 'use Python 3.10'
           - script: |
               python -m pip install mypy~=1.16.0 numpy~=2.2 gamma-pytools~=3.0
               python -m mypy src
