@@ -81,7 +81,7 @@ scipy          = "~=1.6.3"
 scikit-learn   = "~=1.3.2"
 xgboost        = "~=1.0.2"
 # additional minimum requirements of gamma-pytools
-joblib         = "~=0.14.1"
+joblib         = "~=1.1.1"
 matplotlib     = "~=3.3.4"
 typing_inspect = "~=0.7.0"
 
