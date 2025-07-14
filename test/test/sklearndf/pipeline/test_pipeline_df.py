@@ -217,8 +217,7 @@ def test_pipeline_df__init() -> None:
     with pytest.raises(TypeError):
         PipelineDF()
 
-    # Check that we can't instantiate pipelines with objects without fit
-    # method
+    # Check that we can't instantiate pipelines with objects without a `fit` method
     with pytest.raises(
         ValueError,
         match=(
@@ -319,7 +318,7 @@ def test_feature_union(
 ) -> None:
     # the expected column dtype, depending on arg sparse
     dtype_expected = (
-        pd.SparseDtype(np.float_, fill_value=0) if sparse_output else np.float_
+        pd.SparseDtype(np.float64, fill_value=0) if sparse_output else np.float64
     )
 
     # apply the test data to a simple feature union
