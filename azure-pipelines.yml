@@ -1,9 +1,9 @@
 trigger:
-  - 2.3.x
+  - 2.4.x
   - release/*
 
 pr:
-  - 2.3.x
+  - 2.4.x
   - release/*
 
 pool:
@@ -18,7 +18,7 @@ schedules:
     displayName: Nightly full build
     branches:
       include:
-        - 2.2.x
+        - 2.3.x
 
 resources:
   repositories:
