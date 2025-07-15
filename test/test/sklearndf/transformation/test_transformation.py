@@ -72,7 +72,7 @@ def test_transformer_count() -> None:
     if __sklearn_version__ < __sklearn_1_8__:
         assert n == 61
     else:
-        assert False, f"unexpected sklearn version: {__sklearn_version__}"
+        pytest.fail(f"unexpected sklearn version: {__sklearn_version__}")
 
 
 @pytest.fixture  # type: ignore

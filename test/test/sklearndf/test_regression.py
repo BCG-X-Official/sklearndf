@@ -36,7 +36,7 @@ def test_regressor_count() -> None:
     if __sklearn_version__ < __sklearn_1_8__:
         assert n == 55
     else:
-        raise AssertionError(f"Unexpected scikit-learn version: {__sklearn_version__}")
+        pytest.fail(f"Unexpected scikit-learn version: {__sklearn_version__}")
 
 
 DEFAULT_REGRESSOR_PARAMETERS: Dict[str, Dict[str, Any]] = {

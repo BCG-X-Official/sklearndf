@@ -26,7 +26,7 @@ def test_clusterer_count() -> None:
     if __sklearn_version__ < __sklearn_1_8__:
         assert n == 11
     else:
-        raise AssertionError(f"Unexpected scikit-learn version: {__sklearn_version__}")
+        pytest.fail(f"Unexpected scikit-learn version: {__sklearn_version__}")
 
 
 @pytest.mark.parametrize(  # type: ignore

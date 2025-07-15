@@ -37,7 +37,7 @@ def test_classifier_count() -> None:
     elif __sklearn_version__ < __sklearn_1_8__:
         assert n == 44
     else:
-        raise AssertionError(f"Unexpected scikit-learn version: {__sklearn_version__}")
+        pytest.fail(f"Unexpected scikit-learn version: {__sklearn_version__}")
 
 
 CLASSIFIER_INIT_PARAMETERS: Dict[str, Dict[str, Any]] = {
