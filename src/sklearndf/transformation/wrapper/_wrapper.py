@@ -5,18 +5,8 @@ Core implementation of :mod:`sklearndf.transformation.wrapper`
 import itertools
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import (
-    Any,
-    Generic,
-    Iterable,
-    List,
-    Optional,
-    Sequence,
-    Tuple,
-    TypeVar,
-    Union,
-    cast,
-)
+from collections.abc import Iterable, Sequence
+from typing import Any, Generic, Optional, TypeVar, Union, cast
 
 import numpy as np
 import numpy.typing as npt
@@ -158,7 +148,7 @@ class SingleColumnTransformerWrapperDF(
         y: T_Target,
         *,
         expected_columns: pd.Index = None,
-    ) -> Tuple[pd.DataFrame, T_Target]:
+    ) -> tuple[pd.DataFrame, T_Target]:
         X, y = super()._validate_parameter_types(
             X, y, expected_columns=expected_columns
         )
@@ -355,7 +345,7 @@ class ColumnTransformerSparseFrames(
     # noinspection PyPep8Naming
     def _hstack(
         self,
-        Xs: List[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]],
+        Xs: list[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]],
         *,
         n_samples: Optional[int] = None,
     ) -> Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]:
@@ -414,7 +404,7 @@ class ColumnTransformerWrapperDF(
                 f"unsupported value for arg remainder: {column_transformer.remainder!r}"
             )
 
-        non_compliant_transformers: List[str] = [
+        non_compliant_transformers: list[str] = [
             type(transformer).__name__
             for _, transformer, _ in column_transformer.transformers
             if not (
@@ -521,11 +511,11 @@ class ImputerWrapperDF(
         # get the columns that were dropped during imputation
         delegate_estimator = self.native_estimator
 
-        nan_mask: Union[List[bool], npt.NDArray[Any]] = []
+        nan_mask: Union[list[bool], npt.NDArray[Any]] = []
 
         def _nan_mask_from_statistics(
             stats: npt.NDArray[Any],
-        ) -> Union[List[bool], npt.NDArray[np.bool_]]:
+        ) -> Union[list[bool], npt.NDArray[np.bool_]]:
             if issubclass(stats.dtype.type, float):
                 return cast(npt.NDArray[np.bool_], np.isnan(stats))
             else:

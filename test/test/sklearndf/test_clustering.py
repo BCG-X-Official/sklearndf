@@ -1,5 +1,3 @@
-from typing import Type
-
 import pandas as pd
 import pytest
 
@@ -33,7 +31,7 @@ def test_clusterer_count() -> None:
     argnames="sklearn_clusterer_cls", argvalues=CLUSTERERS_TO_TEST
 )
 def test_clusterer_fit_predict_call(
-    iris_features: pd.DataFrame, sklearn_clusterer_cls: Type[ClusterDF]
+    iris_features: pd.DataFrame, sklearn_clusterer_cls: type[ClusterDF]
 ) -> None:
     """Check if each sklearndf clusterer supports fit_predict method"""
 
@@ -49,7 +47,7 @@ def test_clusterer_fit_predict_call(
     argnames="sklearn_clusterer_cls", argvalues=CLUSTERERS_WITH_AGGLOMERATION
 )
 def test_clusterer_fit_call(
-    iris_features: pd.DataFrame, sklearn_clusterer_cls: Type[ClusterDF]
+    iris_features: pd.DataFrame, sklearn_clusterer_cls: type[ClusterDF]
 ) -> None:
     """Check if each sklearndf clusterer supports fit method"""
 

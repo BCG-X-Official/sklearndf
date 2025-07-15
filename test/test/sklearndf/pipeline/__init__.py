@@ -1,4 +1,5 @@
-from typing import Optional, Sequence
+from collections.abc import Sequence
+from typing import Optional
 
 from sklearndf import TransformerDF
 from sklearndf.transformation import (

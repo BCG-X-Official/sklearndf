@@ -7,8 +7,9 @@ from __future__ import annotations
 
 import shutil
 import time
+from collections.abc import Mapping
 from tempfile import mkdtemp
-from typing import Any, Dict, Mapping, cast
+from typing import Any, cast
 
 import joblib
 import numpy as np
@@ -62,10 +63,10 @@ class NoTransformer(
     def fit(self, X: Any, y: Any = None, **fit_params: Any) -> NoTransformer:
         return self
 
-    def get_params(self, deep: bool = False) -> Dict[str, Any]:
+    def get_params(self, deep: bool = False) -> dict[str, Any]:
         return {"a": self.a, "b": self.b}
 
-    def set_params(self, a: Any = None, **params: Dict[str, Any]) -> NoTransformer:
+    def set_params(self, a: Any = None, **params: dict[str, Any]) -> NoTransformer:
         self.a = a
         return self
 

@@ -6,14 +6,11 @@ from __future__ import annotations
 
 import logging
 from abc import ABCMeta, abstractmethod
+from collections.abc import Sequence
 from typing import (
     Any,
     Callable,
     Generic,
-    List,
-    Optional,
-    Sequence,
-    Tuple,
     TypeVar,
     Union,
     cast,
@@ -100,8 +97,8 @@ class StackingEstimatorWrapperDF(
 
     def fit(
         self: T_StackingEstimatorWrapperDF,
-        X: Union[pd.DataFrame, pd.Series],
-        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        X: pd.DataFrame | pd.Series,
+        y: pd.Series | pd.DataFrame | None = None,
         **fit_params: Any,
     ) -> T_StackingEstimatorWrapperDF:
         """[see superclass]"""
@@ -117,7 +114,7 @@ class StackingEstimatorWrapperDF(
                 return self
 
         native: T_NativeSupervisedLearner = self.native_estimator
-        estimators: Sequence[Tuple[str, BaseEstimator]] = native.estimators
+        estimators: Sequence[tuple[str, BaseEstimator]] = native.estimators
         final_estimator: BaseEstimator = native.final_estimator
 
         try:
@@ -157,10 +154,10 @@ class StackingEstimatorWrapperDF(
     ) -> SupervisedLearnerNPDF[T_SupervisedLearnerDF]:
         pass
 
-    def _get_estimators_features_out(self) -> List[str]:
+    def _get_estimators_features_out(self) -> list[str]:
         return [name for name, estimator in self.estimators if estimator != "drop"]
 
-    def _get_final_estimator_features_in(self) -> List[str]:
+    def _get_final_estimator_features_in(self) -> list[str]:
         names = self._get_estimators_features_out()
         if self.passthrough:
             return [*names, *self.estimators_[0].feature_names_in_]
@@ -184,7 +181,7 @@ class StackingClassifierWrapperDF(
 
         return LogisticRegressionDF()
 
-    def _get_estimators_features_out(self) -> List[str]:
+    def _get_estimators_features_out(self) -> list[str]:
         classes = self.native_estimator.classes_
         names = super()._get_estimators_features_out()
         if len(classes) > 2:
@@ -260,8 +257,8 @@ class _StackableSupervisedLearnerDF(
     @subsdoc(pattern="", replacement="", using=SupervisedLearnerDF.fit)
     def fit(
         self: T_StackableSupervisedLearnerDF,
-        X: Union[pd.Series, pd.DataFrame],
-        y: Optional[npt.NDArray[Any]] = None,
+        X: pd.Series | pd.DataFrame,
+        y: npt.NDArray[Any] | None = None,
         **fit_params: Any,
     ) -> T_StackableSupervisedLearnerDF:
         """[see SupervisedLearnerDF.fit]"""
@@ -275,7 +272,7 @@ class _StackableSupervisedLearnerDF(
         using=SupervisedLearnerDF.predict,
     )
     def predict(
-        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
+        self, X: pd.Series | pd.DataFrame, **predict_params: Any
     ) -> npt.NDArray[Any]:
         """[see SupervisedLearnerDF.predict]"""
         return cast(
@@ -286,9 +283,9 @@ class _StackableSupervisedLearnerDF(
     # noinspection PyPep8Naming
     def score(
         self,
-        X: Union[pd.Series, pd.DataFrame],
-        y: npt.NDArray["np.floating[Any]"],
-        sample_weight: Optional[pd.Series] = None,
+        X: pd.Series | pd.DataFrame,
+        y: npt.NDArray[np.floating[Any]],
+        sample_weight: pd.Series | None = None,
     ) -> float:
         """[see SupervisedLearnerDF.score]"""
         return self.delegate.score(X, self._convert_y_to_series(X, y), sample_weight)
@@ -303,7 +300,7 @@ class _StackableSupervisedLearnerDF(
         # noinspection PyProtectedMember
         return self.delegate._get_n_features_in()
 
-    def _get_outputs(self) -> Optional[List[str]]:
+    def _get_outputs(self) -> list[str] | None:
         # noinspection PyProtectedMember
         return self.delegate._get_outputs()
 
@@ -314,8 +311,8 @@ class _StackableSupervisedLearnerDF(
     # noinspection PyPep8Naming
     @staticmethod
     def _convert_y_to_series(
-        X: pd.DataFrame, y: Optional[npt.NDArray[Any]]
-    ) -> Optional[pd.Series]:
+        X: pd.DataFrame, y: npt.NDArray[Any] | None
+    ) -> pd.Series | None:
         if y is None:
             return y
         if not isinstance(y, np.ndarray):
@@ -335,8 +332,8 @@ class _StackableSupervisedLearnerDF(
 
     @staticmethod
     def _convert_prediction_to_numpy(
-        prediction: Union[pd.DataFrame, List[pd.DataFrame]],
-    ) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+        prediction: pd.DataFrame | list[pd.DataFrame],
+    ) -> npt.NDArray[Any] | list[npt.NDArray[Any]]:
         if isinstance(prediction, list):
             return [proba.values for proba in prediction]
         else:
@@ -348,27 +345,27 @@ class _StackableSupervisedLearnerDF(
 class _StackableClassifierDF(_StackableSupervisedLearnerDF[ClassifierDF], ClassifierDF):
     """[see superclass]"""
 
-    def _get_classes(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+    def _get_classes(self) -> npt.NDArray[Any] | list[npt.NDArray[Any]]:
         return self.delegate._get_classes()
 
     def predict_proba(
-        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+        self, X: pd.Series | pd.DataFrame, **predict_params: Any
+    ) -> npt.NDArray[Any] | list[npt.NDArray[Any]]:
         """[see superclass]"""
         return self._convert_prediction_to_numpy(
             self.delegate.predict_proba(X, **predict_params)
         )
 
     def predict_log_proba(
-        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+        self, X: pd.Series | pd.DataFrame, **predict_params: Any
+    ) -> npt.NDArray[Any] | list[npt.NDArray[Any]]:
         """[see superclass]"""
         return self._convert_prediction_to_numpy(
             self.delegate.predict_log_proba(X, **predict_params)
         )
 
     def decision_function(
-        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
+        self, X: pd.Series | pd.DataFrame, **predict_params: Any
     ) -> npt.NDArray[np.floating[Any]]:
         """[see superclass]"""
         return cast(

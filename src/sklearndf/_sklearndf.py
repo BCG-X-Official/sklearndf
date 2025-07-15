@@ -5,7 +5,8 @@ Core implementation of :mod:`sklearndf`
 import inspect
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import Any, Callable, Dict, List, Mapping, Optional, TypeVar, Union, cast
+from collections.abc import Mapping
+from typing import Any, Callable, Optional, TypeVar, Union, cast
 
 import numpy.typing as npt
 import pandas as pd
@@ -133,7 +134,7 @@ class EstimatorDF(
 
     @property
     @fitted_only(not_fitted_error=AttributeError)
-    def output_names_(self) -> Optional[List[str]]:
+    def output_names_(self) -> Optional[list[str]]:
         """
         The name(s) of the output(s) this estimator was fitted to,
         or ``None`` if this estimator was not fitted to any outputs.
@@ -203,7 +204,7 @@ class EstimatorDF(
         return len(self._get_features_in())
 
     @abstractmethod
-    def _get_outputs(self) -> Optional[List[str]]:
+    def _get_outputs(self) -> Optional[list[str]]:
         # get the output columns as a list of strings, or None if this estimator
         # was not fitted to any outputs
         pass
@@ -282,7 +283,7 @@ class EstimatorDF(
                 # custom value: we return the expression
                 return expression
 
-        kwarg_expressions: Dict[str, Optional[Expression]] = {
+        kwarg_expressions: dict[str, Optional[Expression]] = {
             name: _kwarg_to_expression(name, value)
             for name, value in self.get_params(deep=False).items()
         }
@@ -353,7 +354,7 @@ class SupervisedLearnerDF(LearnerDF, metaclass=ABCMeta):
         pass
 
     @property
-    def output_names_(self) -> List[str]:
+    def output_names_(self) -> list[str]:
         """
         The name(s) of the output(s) this supervised learner was fitted to.
 
@@ -522,7 +523,7 @@ class ClassifierDF(
 
     @property
     @fitted_only(not_fitted_error=AttributeError)
-    def classes_(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+    def classes_(self) -> Union[npt.NDArray[Any], list[npt.NDArray[Any]]]:
         """
         Get the classes predicted by this classifier as a numpy array of class labels
         for single-output problems, or a list of such arrays for multi-output problems
@@ -535,7 +536,7 @@ class ClassifierDF(
     @abstractmethod
     def predict_proba(
         self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+    ) -> Union[pd.DataFrame, list[pd.DataFrame]]:
         """
         Predict class probabilities for the given inputs.
 
@@ -557,7 +558,7 @@ class ClassifierDF(
     @abstractmethod
     def predict_log_proba(
         self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+    ) -> Union[pd.DataFrame, list[pd.DataFrame]]:
         """
         Predict class log-probabilities for the given inputs.
 
@@ -612,7 +613,7 @@ class ClassifierDF(
     score.__doc__ = SupervisedLearnerDF.score.__doc__
 
     @abstractmethod
-    def _get_classes(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+    def _get_classes(self) -> Union[npt.NDArray[Any], list[npt.NDArray[Any]]]:
         pass
 
 

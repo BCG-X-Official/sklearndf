@@ -4,7 +4,7 @@ Auxiliary functions for internal use.
 
 import math
 import numbers
-from typing import Any, List, Optional, Union, cast
+from typing import Any, Optional, Union, cast
 
 import numpy.typing as npt
 import pandas as pd
@@ -12,9 +12,9 @@ from scipy import sparse
 
 
 def hstack_frames(
-    frames: List[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]],
+    frames: list[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]],
     *,
-    prefixes: Optional[List[str]] = None,
+    prefixes: Optional[list[str]] = None,
 ) -> Optional[pd.DataFrame]:
     """
     If only data frames are passed, stack them horizontally.
@@ -27,7 +27,7 @@ def hstack_frames(
     """
     if all(isinstance(frame, pd.DataFrame) for frame in frames):
         # all frames are data frames
-        frames = cast(List[pd.DataFrame], frames)
+        frames = cast(list[pd.DataFrame], frames)
         if prefixes is not None:
             assert len(prefixes) == len(
                 frames
