@@ -948,9 +948,9 @@ class SupervisedLearnerWrapperDF(
     # noinspection PyPep8Naming
     def score(
         self,
-        X: pd.Series | pd.DataFrame,
+        X: Union[pd.Series, pd.DataFrame],
         y: pd.Series,
-        sample_weight: pd.Series | None = None,
+        sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see superclass]"""
         X, y = self._validate_parameter_types(X, y)
@@ -986,9 +986,9 @@ class RegressorWrapperDF(
     # noinspection PyPep8Naming
     def score(
         self,
-        X: pd.Series | pd.DataFrame,
+        X: Union[pd.Series, pd.DataFrame],
         y: pd.Series,
-        sample_weight: pd.Series | None = None,
+        sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see superclass]"""
         return cast(
@@ -1122,7 +1122,7 @@ class ClassifierWrapperDF(
         self,
         X: Union[pd.Series, pd.DataFrame],
         y: pd.Series,
-        sample_weight: pd.Series | None = None,
+        sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see superclass]"""
         return cast(
