@@ -109,9 +109,8 @@ def is_scalar_nan(x: Any) -> bool:
 
     :param x: the value to test
     :returns: ``True`` if the value is a scalar NaN, ``False`` otherwise
-
-
     """
+
     return (
         not isinstance(x, numbers.Integral)
         and isinstance(x, numbers.Real)
