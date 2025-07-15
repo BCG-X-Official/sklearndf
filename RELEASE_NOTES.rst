@@ -7,6 +7,22 @@ Release Notes
 .. |nbsp| unicode:: 0xA0
    :trim:
 
+*sklearndf* 2.3
+---------------
+
+
+2.3.0
+~~~~~
+
+*sklearndf* 2.3 adds support for
+`scikit-learn 1.3 <https://scikit-learn.org/1.3>`_
+and drops support for *scikit-learn* |nbsp| 0.24.
+
+- API: add DF wrapper classe :class:`.HDBSCANDF` for native estimator
+  :class:`~sklearn.cluster.HDBSCAN`
+- API: add DF wrapper class :class:`.TargetEncoderDF` for native estimator
+  :class:`~sklearn.preprocessing.TargetEncoder`
+
 
 *sklearndf* 2.2
 ---------------

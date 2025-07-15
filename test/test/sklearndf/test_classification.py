@@ -8,12 +8,7 @@ from sklearn.base import is_classifier
 from sklearn.multioutput import ClassifierChain, MultiOutputClassifier
 
 import sklearndf.classification as classification
-from sklearndf import (
-    ClassifierDF,
-    __sklearn_1_0__,
-    __sklearn_1_2__,
-    __sklearn_version__,
-)
+from sklearndf import ClassifierDF, __sklearn_1_2__, __sklearn_version__
 from test.sklearndf import check_expected_not_fitted_error, iterate_classes
 
 CLASSIFIERS_TO_TEST = iterate_classes(
@@ -27,10 +22,7 @@ def test_classifier_count() -> None:
     n = len(CLASSIFIERS_TO_TEST)
 
     print(f"Testing {n} classifiers.")
-    if __sklearn_version__ < __sklearn_1_0__:
-        assert n == 40
-    else:
-        assert n == 41
+    assert n == 41
 
 
 if __sklearn_version__ < __sklearn_1_2__:

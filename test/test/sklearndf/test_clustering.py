@@ -4,7 +4,7 @@ import pandas as pd
 import pytest
 
 import sklearndf.clustering
-from sklearndf import ClusterDF, __sklearn_1_1__, __sklearn_version__
+from sklearndf import ClusterDF, __sklearn_1_1__, __sklearn_1_3__, __sklearn_version__
 from sklearndf.clustering import FeatureAgglomerationDF
 from test.sklearndf import iterate_classes
 
@@ -25,8 +25,10 @@ def test_clusterer_count() -> None:
 
     if __sklearn_version__ < __sklearn_1_1__:
         assert n == 9
-    else:
+    elif __sklearn_version__ < __sklearn_1_3__:
         assert n == 10
+    else:
+        assert n == 11
 
 
 @pytest.mark.parametrize(  # type: ignore
