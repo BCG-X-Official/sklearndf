@@ -42,11 +42,11 @@ classifiers = [
 
 [tool.flit.metadata.requires-extra]
 testing = [
-    "pytest ~= 7.1",
-    "pytest-cov ~= 2.12",
+    "pytest ~= 8.1",
+    "pytest-cov ~= 4.1",
     # optional requirements for testing sklearndf
     "lightgbm ~= 3.0",
-    "xgboost ~= 1.0",
+    "xgboost ~= 3.0",
 ]
 docs = [
     "sphinx ~= 4.5",
@@ -96,7 +96,7 @@ pandas         = "~=2.3"
 python         = ">=3.12,<3.13a"  # cannot use ~= due to conda bug
 scikit-learn   = "~=1.7.0"
 scipy          = "~=1.16"
-xgboost        = "~=2.1"
+xgboost        = "~=3.0"
 # additional maximum requirements of gamma-pytools
 joblib         = "~=1.5"
 matplotlib     = "~=3.10"

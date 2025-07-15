@@ -14,7 +14,7 @@ dependencies:
   - python            ~= 3.12.11
   - scikit-learn      ~= 1.7.0
   - scipy             ~= 1.15
-  - xgboost           ~= 2.1
+  - xgboost           ~= 3.0
   - pip:
       - arfs          ~= 3.0
       - Boruta        ~= 0.4
