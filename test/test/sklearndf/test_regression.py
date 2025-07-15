@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type
+from typing import Any
 
 import pandas as pd
 import pytest
@@ -22,7 +22,7 @@ from test.sklearndf import check_expected_not_fitted_error, iterate_classes
 
 # noinspection PyTypeChecker
 # ignore false alert about module type
-REGRESSORS_TO_TEST: List[Type[EstimatorWrapperDF[BaseEstimator]]] = iterate_classes(
+REGRESSORS_TO_TEST: list[type[EstimatorWrapperDF[BaseEstimator]]] = iterate_classes(
     from_modules=sklearndf.regression,
     matching=r".*DF",
     excluding=[RegressorDF.__name__, TransformerDF.__name__, r".*WrapperDF"],
@@ -39,7 +39,7 @@ def test_regressor_count() -> None:
         pytest.fail(f"Unexpected scikit-learn version: {__sklearn_version__}")
 
 
-DEFAULT_REGRESSOR_PARAMETERS: Dict[str, Dict[str, Any]] = {
+DEFAULT_REGRESSOR_PARAMETERS: dict[str, dict[str, Any]] = {
     "MultiOutputRegressorDF": dict(estimator=RandomForestRegressorDF()),
     "MultiOutputRegressorDF_partial_fit": dict(estimator=SGDRegressorDF()),
     "RegressorChainDF": dict(base_estimator=RandomForestRegressorDF()),
@@ -73,13 +73,13 @@ REGRESSORS_PARTIAL_FIT = [
     argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST
 )
 def test_wrapped_fit_predict(
-    sklearndf_cls: Type[RegressorDF],
+    sklearndf_cls: type[RegressorDF],
     diabetes_features: pd.DataFrame,
     diabetes_target_sr: pd.Series,
     diabetes_target_df: pd.DataFrame,
 ) -> None:
     """Test fit & predict of wrapped sklearn regressors"""
-    parameters: Dict[str, Any] = DEFAULT_REGRESSOR_PARAMETERS.get(
+    parameters: dict[str, Any] = DEFAULT_REGRESSOR_PARAMETERS.get(
         sklearndf_cls.__name__, {}
     )
 
@@ -118,7 +118,7 @@ def test_wrapped_fit_predict(
     argnames="sklearndf_cls", argvalues=REGRESSORS_PARTIAL_FIT
 )
 def test_wrapped_partial_fit(
-    sklearndf_cls: Type[RegressorDF],
+    sklearndf_cls: type[RegressorDF],
     diabetes_features: pd.DataFrame,
     diabetes_target_sr: pd.Series,
     diabetes_target_df: pd.DataFrame,

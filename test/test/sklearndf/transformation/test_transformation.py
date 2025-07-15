@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, cast
+from typing import Any, cast
 
 import numpy as np
 import pandas as pd
@@ -90,7 +90,7 @@ def test_data() -> pd.DataFrame:
 @pytest.mark.parametrize(  # type: ignore
     argnames="sklearndf_cls", argvalues=TRANSFORMERS_TO_TEST
 )
-def test_wrapped_constructor(sklearndf_cls: Type[TransformerDF]) -> None:
+def test_wrapped_constructor(sklearndf_cls: type[TransformerDF]) -> None:
     transformer_df: TransformerDF = sklearndf_cls()
 
     if isinstance(transformer_df, RegressorDF):
@@ -137,7 +137,7 @@ def test_special_wrapped_constructors() -> None:
     ),
 )
 def test_fit_transform(
-    sklearn_cls: Type[BaseEstimator], test_data: pd.DataFrame
+    sklearn_cls: type[BaseEstimator], test_data: pd.DataFrame
 ) -> None:
     # we only need the numerical column of the test data
     test_data = test_data.select_dtypes(include=float)
@@ -199,16 +199,16 @@ def test_fit_transform(
 
 
 def test_column_transformer(test_data: pd.DataFrame) -> None:
-    numeric_columns: List[str] = test_data.select_dtypes(include=float).columns.tolist()
+    numeric_columns: list[str] = test_data.select_dtypes(include=float).columns.tolist()
     assert numeric_columns == ["c0", "c2"]
 
     # noinspection PyShadowingNames
     def _test_transformer(
         *,
         remainder: str,
-        names_in: List[str],
-        names_original: List[str],
-        names_out: List[str],
+        names_in: list[str],
+        names_original: list[str],
+        names_out: list[str],
         **transformer_args: Any,
     ) -> None:
         feature_names_out_expected = pd.Index(names_out, name="feature")
@@ -296,7 +296,7 @@ def test_column_transformer_with_unmatched_transformation(
     # Test that a ColumnTransformerDF with a transformer that does not match any
     # columns does not raise an error.
     numeric_data = test_data.select_dtypes(include=float)
-    numeric_columns: List[str] = numeric_data.columns.tolist()
+    numeric_columns: list[str] = numeric_data.columns.tolist()
     assert numeric_columns == ["c0", "c2"]
     # noinspection PyShadowingNames
     tx = ColumnTransformerDF(
@@ -414,7 +414,7 @@ def df_outlier() -> pd.DataFrame:
 def test_one_hot_encoding(
     test_data_categorical: pd.DataFrame, sparse_output: bool
 ) -> None:
-    def _make_frame(data: Dict[str, List[float]]) -> pd.DataFrame:
+    def _make_frame(data: dict[str, list[float]]) -> pd.DataFrame:
         if sparse_output:
             df = pd.DataFrame(
                 data={k: SparseArray(v, fill_value=0) for k, v in data.items()}

@@ -4,7 +4,7 @@ GAMMA custom two-step pipelines
 
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import Any, Generic, List, Optional, TypeVar, Union
+from typing import Any, Generic, Optional, TypeVar, Union
 
 import numpy.typing as npt
 import pandas as pd
@@ -173,7 +173,7 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
         else:
             return self.final_estimator.n_features_in_
 
-    def _get_outputs(self) -> Optional[List[str]]:
+    def _get_outputs(self) -> Optional[list[str]]:
         if self.preprocessing is not None:
             return self.preprocessing._get_outputs()
         else:
@@ -327,20 +327,20 @@ class ClassifierPipelineDF(
         """[see superclass]"""
         return "classifier"
 
-    def _get_classes(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+    def _get_classes(self) -> Union[npt.NDArray[Any], list[npt.NDArray[Any]]]:
         return self.final_estimator._get_classes()
 
     # noinspection PyPep8Naming
     def predict_proba(
         self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+    ) -> Union[pd.DataFrame, list[pd.DataFrame]]:
         """[see superclass]"""
         return self.classifier.predict_proba(self.preprocess(X), **predict_params)
 
     # noinspection PyPep8Naming
     def predict_log_proba(
         self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+    ) -> Union[pd.DataFrame, list[pd.DataFrame]]:
         """[see superclass]"""
         return self.classifier.predict_log_proba(self.preprocess(X), **predict_params)
 

@@ -1,5 +1,5 @@
 from itertools import chain
-from typing import Any, Dict, Type
+from typing import Any
 
 import numpy as np
 import pandas as pd
@@ -40,7 +40,7 @@ def test_classifier_count() -> None:
         pytest.fail(f"Unexpected scikit-learn version: {__sklearn_version__}")
 
 
-CLASSIFIER_INIT_PARAMETERS: Dict[str, Dict[str, Any]] = {
+CLASSIFIER_INIT_PARAMETERS: dict[str, dict[str, Any]] = {
     "CalibratedClassifierCVDF": {
         "estimator": classification.RandomForestClassifierDF()
     },
@@ -94,7 +94,7 @@ CLASSIFIERS_PARTIAL_FIT = [
     argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST
 )
 def test_wrapped_fit_predict(
-    sklearndf_cls: Type[ClassifierDF],
+    sklearndf_cls: type[ClassifierDF],
     iris_features: pd.DataFrame,
     iris_target_sr: pd.Series,
     iris_targets_df: pd.DataFrame,
@@ -102,7 +102,7 @@ def test_wrapped_fit_predict(
 ) -> None:
     """Test fit & predict & predict[_log]_proba of wrapped sklearn classifiers"""
     # noinspection PyArgumentList
-    parameters: Dict[str, Any] = CLASSIFIER_INIT_PARAMETERS.get(
+    parameters: dict[str, Any] = CLASSIFIER_INIT_PARAMETERS.get(
         sklearndf_cls.__name__, {}
     )
     # noinspection PyArgumentList
@@ -197,7 +197,7 @@ def test_wrapped_fit_predict(
     argnames="sklearndf_cls", argvalues=CLASSIFIERS_PARTIAL_FIT
 )
 def test_wrapped_partial_fit(
-    sklearndf_cls: Type[ClassifierDF],
+    sklearndf_cls: type[ClassifierDF],
     iris_features: pd.DataFrame,
     iris_target_sr: pd.Series,
     iris_targets_df: pd.DataFrame,

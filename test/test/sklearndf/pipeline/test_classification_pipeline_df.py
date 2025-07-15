@@ -1,5 +1,3 @@
-from typing import Type
-
 import numpy as np
 import pandas as pd
 import pytest
@@ -21,7 +19,7 @@ from test.sklearndf.pipeline import make_simple_transformer
 def test_classification_pipeline_df(
     iris_features: pd.DataFrame,
     iris_target_sr: pd.DataFrame,
-    classifier_df_cls: Type[ClassifierDF],
+    classifier_df_cls: type[ClassifierDF],
 ) -> None:
     cls_p_df = ClassifierPipelineDF(
         classifier=classifier_df_cls(),
