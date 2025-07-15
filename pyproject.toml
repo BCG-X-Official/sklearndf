@@ -45,8 +45,8 @@ testing = [
     "pytest ~= 8.1",
     "pytest-cov ~= 4.1",
     # optional requirements for testing sklearndf
-    "lightgbm ~= 3.0",
-    "xgboost ~= 3.0",
+    "lightgbm >= 3",
+    "xgboost >= 1",
 ]
 docs = [
     "sphinx ~= 4.5",
