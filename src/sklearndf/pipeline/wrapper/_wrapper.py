@@ -17,21 +17,12 @@ from sklearn.preprocessing import FunctionTransformer
 from pytools.api import AllTracker
 
 from ..._util import hstack_frames
-from sklearndf import EstimatorDF, TransformerDF, __sklearn_1_7__, __sklearn_version__
+from sklearndf import EstimatorDF, TransformerDF, __sklearn_1_6__, __sklearn_version__
 from sklearndf.wrapper import (
     ClassifierWrapperDF,
     RegressorWrapperDF,
     TransformerWrapperDF,
 )
-
-if __sklearn_version__ >= __sklearn_1_7__:
-    from sklearn.utils import Tags
-
-    __TAGS = True
-else:
-    # Fallback, in case tags are not defined
-    Tags = type("Tags", (), {})
-    __TAGS = False
 
 log = logging.getLogger(__name__)
 
@@ -223,19 +214,17 @@ class PipelineWrapperDF(
         # noinspection PyProtectedMember
         return cast(str, self.native_estimator._estimator_type)
 
-    def __sklearn_tags__(self) -> Tags:
-        # forward this method call to the native estimator to ensure correct tags
-        return self.native_estimator.__sklearn_tags__()
+    if __sklearn_version__ >= __sklearn_1_6__:
+        from sklearn.utils import Tags
+
+        def __sklearn_tags__(self) -> Tags:
+            # forward this method call to the native estimator to ensure correct tags
+            return self.native_estimator.__sklearn_tags__()
 
     def _more_tags(self) -> dict[str, Any]:
         return cast(
             dict[str, Any], getattr(self.native_estimator, "_more_tags", lambda: {})()
         )
-
-
-if not __TAGS:
-    # Installed version of scikit-learn does not support tags; remove the method
-    del PipelineWrapperDF.__sklearn_tags__
 
 
 class FeatureUnionSparseFrames(

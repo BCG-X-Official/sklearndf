@@ -18,6 +18,7 @@ from sklearn.utils import estimator_html_repr
 from pytools.expression import freeze, make_expression
 from pytools.expression.atomic import Id
 
+from sklearndf import __sklearn_1_6__, __sklearn_version__
 from sklearndf.classification import SVCDF, DecisionTreeClassifierDF
 from sklearndf.clustering.wrapper import KMeansBaseWrapperDF
 from sklearndf.pipeline import PipelineDF
@@ -313,3 +314,25 @@ def test_native_class_validation() -> None:
 
         class MismatchedNativeClass5(PipelineDF, native=RandomForestRegressor):
             pass
+
+
+@pytest.mark.skipif(  # type: ignore[misc]
+    __sklearn_version__ < __sklearn_1_6__,
+    reason="This test requires scikit-learn 1.6 or later",
+)
+def test_sklearn_tags() -> None:
+    # Check that sklearn tags are correctly set for the DummyEstimatorDF
+    estimator = DummyEstimatorDF()
+    tags = estimator.__sklearn_tags__()
+
+    from sklearn.utils import InputTags
+
+    assert tags.estimator_type is None
+    assert isinstance(tags.input_tags, InputTags)
+    assert tags.transformer_tags is None
+    assert tags.classifier_tags is None
+    assert tags.regressor_tags is None
+    assert not tags.array_api_support
+    assert not tags.no_validation
+    assert not tags.non_deterministic
+    assert tags.requires_fit
