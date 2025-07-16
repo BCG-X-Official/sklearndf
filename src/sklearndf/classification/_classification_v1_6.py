@@ -1,24 +1,23 @@
 """
 Additional implementation of :mod:`sklearndf.classification` loaded
-from sklearn 0.22 onwards
+from sklearn 1.0 onwards
 """
 
 import logging
 
-from sklearn.ensemble import StackingClassifier
-from sklearn.naive_bayes import CategoricalNB
+from sklearn.semi_supervised import SelfTrainingClassifier
 
 from pytools.api import AllTracker
 
-from ..wrapper.stacking import StackingClassifierWrapperDF
-from .wrapper import PartialFitClassifierWrapperDF
+from .wrapper import MetaClassifierWrapperDF
 
 log = logging.getLogger(__name__)
 
-__all__ = ["CategoricalNBDF", "StackingClassifierDF"]
+__all__ = [
+    "SelfTrainingClassifierDF",
+]
 
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
-
 
 #
 # Ensure all symbols introduced below are included in __all__
@@ -26,27 +25,18 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 
 __tracker = AllTracker(globals())
 
-
 #
-# Class definitions
-#
-
-
-#
-# naive bayes
+# threshold classifiers
 #
 
 
-class CategoricalNBDF(
-    PartialFitClassifierWrapperDF[CategoricalNB], native=CategoricalNB
+class SelfTrainingClassifierDF(
+    MetaClassifierWrapperDF[SelfTrainingClassifier],
+    native=SelfTrainingClassifier,
 ):
-    """Stub for DF wrapper of class ``CategoricalNB``"""
-
-
-class StackingClassifierDF(
-    StackingClassifierWrapperDF[StackingClassifier], native=StackingClassifier
-):
-    """Stub for DF wrapper of class ``StackingClassifier``"""
+    """
+    Stub for DF wrapper of class ``SelfTrainingClassifier``.
+    """
 
 
 #

@@ -2,12 +2,14 @@
 Test module for PipelineDF inspired by:
 https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/tests/test_pipeline.py
 """
+
 from __future__ import annotations
 
 import shutil
 import time
+from collections.abc import Mapping
 from tempfile import mkdtemp
-from typing import Any, Dict, Mapping, cast
+from typing import Any, cast
 
 import joblib
 import numpy as np
@@ -20,7 +22,6 @@ from sklearn import clone
 from sklearn.base import BaseEstimator, TransformerMixin, is_classifier, is_regressor
 from sklearn.feature_selection import f_classif
 
-from sklearndf import __sklearn_1_1__, __sklearn_version__
 from sklearndf.classification import SVCDF, LogisticRegressionDF
 from sklearndf.pipeline import FeatureUnionDF, PipelineDF
 from sklearndf.regression import DummyRegressorDF, LassoDF, LinearRegressionDF
@@ -62,10 +63,10 @@ class NoTransformer(
     def fit(self, X: Any, y: Any = None, **fit_params: Any) -> NoTransformer:
         return self
 
-    def get_params(self, deep: bool = False) -> Dict[str, Any]:
+    def get_params(self, deep: bool = False) -> dict[str, Any]:
         return {"a": self.a, "b": self.b}
 
-    def set_params(self, a: Any = None, **params: Dict[str, Any]) -> NoTransformer:
+    def set_params(self, a: Any = None, **params: dict[str, Any]) -> NoTransformer:
         self.a = a
         return self
 
@@ -218,27 +219,15 @@ def test_pipeline_df__init() -> None:
     with pytest.raises(TypeError):
         PipelineDF()
 
-    # Check that we can't instantiate pipelines with objects without fit
-    # method
-    if __sklearn_version__ < __sklearn_1_1__:
-        with pytest.raises(
-            TypeError,
-            match=(
-                "Last step of Pipeline should implement fit "
-                "or be the string 'passthrough'"
-                ".*NoFit.*"
-            ),
-        ):
-            PipelineDF([("clf", NoFit())])
-    else:
-        with pytest.raises(
-            ValueError,
-            match=(
-                "expected final step 'clf' to be an EstimatorDF or passthrough, "
-                "but found an instance of NoFit"
-            ),
-        ):
-            PipelineDF([("clf", NoFit())])
+    # Check that we can't instantiate pipelines with objects without a `fit` method
+    with pytest.raises(
+        ValueError,
+        match=(
+            "expected final step 'clf' to be an EstimatorDF or passthrough, "
+            "but found an instance of NoFit"
+        ),
+    ):
+        PipelineDF([("clf", NoFit())])
 
     # Smoke test with only an estimator
     clf = NoTransformerDF()
@@ -323,15 +312,21 @@ def test_pipeline_df_raise_set_params_error() -> None:
         pipe.set_params(fake__estimator="nope")
 
 
-@pytest.mark.parametrize(argnames="sparse", argvalues=[True, False])  # type: ignore
-def test_feature_union(test_data_categorical: pd.DataFrame, sparse: bool) -> None:
+@pytest.mark.parametrize(  # type: ignore
+    argnames="sparse_output", argvalues=[True, False]
+)
+def test_feature_union(
+    test_data_categorical: pd.DataFrame, sparse_output: bool
+) -> None:
     # the expected column dtype, depending on arg sparse
-    dtype_expected = pd.SparseDtype(np.float_, fill_value=0) if sparse else np.float_
+    dtype_expected = (
+        pd.SparseDtype(np.float64, fill_value=0) if sparse_output else np.float64
+    )
 
     # apply the test data to a simple feature union
     feature_union = FeatureUnionDF(
         [
-            ("one_hot", OneHotEncoderDF(drop="first", sparse=sparse)),
+            ("one_hot", OneHotEncoderDF(drop="first", sparse_output=sparse_output)),
         ]
     )
     transformed = feature_union.fit_transform(test_data_categorical)
@@ -342,7 +337,7 @@ def test_feature_union(test_data_categorical: pd.DataFrame, sparse: bool) -> Non
     ), f"all columns should be of type {dtype_expected}: {transformed.dtypes}"
 
     # if the output is sparse, make it dense
-    if sparse:
+    if sparse_output:
         transformed = transformed.sparse.to_dense()
 
     # assert that the one-hot encoding is as expected
@@ -359,43 +354,42 @@ def test_feature_union(test_data_categorical: pd.DataFrame, sparse: bool) -> Non
         ).rename_axis(columns="feature"),
     )
 
-    if __sklearn_version__ >= __sklearn_1_1__:
-        # test the passthrough option introduced in sklearn 1.1
+    # test the passthrough option introduced in sklearn 1.1
 
-        # apply the test data to a simple feature union
-        feature_union = FeatureUnionDF(
+    # apply the test data to a simple feature union
+    feature_union = FeatureUnionDF(
+        [
+            ("one_hot", OneHotEncoderDF(drop="first", sparse_output=sparse_output)),
+            ("pass", "passthrough"),
+            ("pass_again", "passthrough"),
+        ],
+    )
+    transformed = feature_union.fit_transform(test_data_categorical)
+
+    # assert that all one-hot-encoded columns of the data frame are sparse
+    assert all(
+        dtype == (dtype_expected if column.startswith("one_hot__") else np.object_)
+        for column, dtype in zip(transformed.columns, transformed.dtypes)
+    )
+
+    # assert that the one-hot encoding is as expected
+    assert_frame_equal(
+        transformed,
+        pd.concat(
             [
-                ("one_hot", OneHotEncoderDF(drop="first", sparse=sparse)),
-                ("pass", "passthrough"),
-                ("pass_again", "passthrough"),
-            ],
-        )
-        transformed = feature_union.fit_transform(test_data_categorical)
-
-        # assert that all one-hot-encoded columns of the data frame are sparse
-        assert all(
-            dtype == (dtype_expected if column.startswith("one_hot__") else np.object_)
-            for column, dtype in zip(transformed.columns, transformed.dtypes)
-        )
-
-        # assert that the one-hot encoding is as expected
-        assert_frame_equal(
-            transformed,
-            pd.concat(
-                [
-                    pd.DataFrame(
-                        dict(
-                            one_hot__a_yes=[1.0, 1.0, 0.0],
-                            one_hot__b_green=[0.0, 0.0, 1.0],
-                            one_hot__b_red=[1.0, 0.0, 0.0],
-                            one_hot__c_father=[0.0, 1.0, 0.0],
-                            one_hot__c_mother=[0.0, 0.0, 1.0],
-                        ),
-                        dtype=dtype_expected,
+                pd.DataFrame(
+                    dict(
+                        one_hot__a_yes=[1.0, 1.0, 0.0],
+                        one_hot__b_green=[0.0, 0.0, 1.0],
+                        one_hot__b_red=[1.0, 0.0, 0.0],
+                        one_hot__c_father=[0.0, 1.0, 0.0],
+                        one_hot__c_mother=[0.0, 0.0, 1.0],
                     ),
-                    test_data_categorical.add_prefix("pass__"),
-                    test_data_categorical.add_prefix("pass_again__"),
-                ],
-                axis=1,
-            ).rename_axis(columns="feature"),
-        )
+                    dtype=dtype_expected,
+                ),
+                test_data_categorical.add_prefix("pass__"),
+                test_data_categorical.add_prefix("pass_again__"),
+            ],
+            axis=1,
+        ).rename_axis(columns="feature"),
+    )

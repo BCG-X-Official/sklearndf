@@ -3,7 +3,6 @@ Core implementation of :mod:`sklearndf.transformation` loaded
 from sklearn 0.22 onwards
 """
 
-
 import logging
 
 from sklearn.impute import KNNImputer

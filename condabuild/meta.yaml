@@ -35,7 +35,7 @@ test:
     - sklearndf.transformation
     - sklearndf.transformation.extra
   requires:
-    - pytest ~= 7.1
+    - pytest ~= 8.1
     # we need pip to install arfs
     - pip # {{ '[False]' if not environ.get('FACET_V_ARFS') }}
     # optional libraries of sklearndf, needed for testing

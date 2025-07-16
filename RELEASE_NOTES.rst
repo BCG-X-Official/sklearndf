@@ -7,6 +7,28 @@ Release Notes
 .. |nbsp| unicode:: 0xA0
    :trim:
 
+*skelearndf* 2.4
+----------------
+
+
+2.4.0
+~~~~~
+
+*sklearndf* |nbsp| 2.4 adds support for
+`scikit-learn 1.7 <https://scikit-learn.org/1.7>`_, and drops support for
+*scikit-learn* |nbsp| 1.2 and earlier, and Python |nbsp| 3.8 and earlier.
+
+- API: add DF wrapper classes :class:`.FixedThresholdClassifierDF`
+  and :class:`.TunedThresholdClassifierCVDF` for native classifiers
+  :class:`~sklearn.model_selection.FixedThresholdClassifier` and
+  :class:`~sklearn.model_selection.TunedThresholdClassifierCV`, respectively
+- API: add DF wrapper class :class:`.SelfTrainingClassifierDF` for native classifier
+  :class:`~sklearn.semi_supervised.SelfTrainingClassifier`
+- API: support tag propagation introduced in *scikit-learn* |nbsp| 1.6
+- API: add utility function :func:`.is_scalar_nan` that had been removed from
+  :mod:`sklearndf.utils`
+
+
 *sklearndf* 2.3
 ---------------
 
