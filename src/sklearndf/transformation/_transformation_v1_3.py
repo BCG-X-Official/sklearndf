@@ -3,7 +3,6 @@ Core implementation of :mod:`sklearndf.transformation` loaded
 from sklearn 1.3 onwards
 """
 
-
 import logging
 
 from sklearn.preprocessing import TargetEncoder

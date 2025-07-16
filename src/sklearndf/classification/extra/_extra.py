@@ -1,12 +1,14 @@
 """
 Core implementation of :mod:`sklearndf.classification.extra`
 """
+
 import logging
 
 from sklearn.base import ClassifierMixin
 
 from pytools.api import AllTracker
 
+from ..._util import remove_invalid_lgbm_type_hint
 from ...wrapper import ClassifierWrapperDF, MissingEstimator
 
 log = logging.getLogger(__name__)
@@ -16,6 +18,8 @@ __all__ = ["LGBMClassifierDF", "XGBClassifierDF"]
 try:
     # import lightgbm classes only if installed
     from lightgbm.sklearn import LGBMClassifier
+
+    remove_invalid_lgbm_type_hint(LGBMClassifier)
 except ImportError:
 
     class LGBMClassifier(  # type: ignore

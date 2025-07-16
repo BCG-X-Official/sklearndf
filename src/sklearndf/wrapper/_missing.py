@@ -1,6 +1,7 @@
 """
 Handling of mocked up native estimators.
 """
+
 import logging
 from typing import Any
 

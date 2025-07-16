@@ -9,7 +9,6 @@ import sklearn
 from sklearn import datasets
 from sklearn.utils import Bunch
 
-from sklearndf import __sklearn_1_1__, __sklearn_version__
 from sklearndf.transformation import OneHotEncoderDF
 
 logging.basicConfig(level=logging.DEBUG)
@@ -41,11 +40,7 @@ def n_jobs() -> int:
 def diabetes_df(diabetes_target: str) -> pd.DataFrame:
     #  load sklearn test-data and convert to pd
     diabetes: Bunch
-    if __sklearn_version__ >= __sklearn_1_1__:
-        diabetes = datasets.load_diabetes(scaled=False)
-    else:
-        # arg scaled does not exist in scikit-learn < 1.1
-        diabetes = datasets.load_diabetes()
+    diabetes = datasets.load_diabetes(scaled=False)
 
     return pd.DataFrame(
         data=np.c_[diabetes.data, diabetes.target],
@@ -106,7 +101,11 @@ def iris_targets_df(iris_df: pd.DataFrame, iris_target_name: str) -> pd.DataFram
 
 @pytest.fixture  # type: ignore
 def iris_targets_binary_df(iris_target_sr: pd.Series) -> pd.DataFrame:
-    return OneHotEncoderDF(sparse=False).fit_transform(X=iris_target_sr.to_frame())
+    return (
+        OneHotEncoderDF(sparse_output=False)
+        .fit_transform(X=iris_target_sr.to_frame())
+        .astype(int)
+    )
 
 
 @pytest.fixture  # type:ignore

@@ -1,4 +1,4 @@
-from typing import Any, Callable, Dict, Optional, Type
+from typing import Any, Callable, Optional
 
 import numpy as np
 import pandas as pd
@@ -54,9 +54,11 @@ parametrize_feature_selector_cls: Callable[
             (LeshyDF, dict(estimator=lgbm_regressor_df, random_state=42, perc=90)),
             (
                 BoostAGrootaDF,
-                dict(est=lgbm_regressor, cutoff=1.1)
-                if __arfs_version__ is None or __arfs_version__ < __arfs_1_1__
-                else dict(estimator=lgbm_regressor, cutoff=1.1),
+                (
+                    dict(est=lgbm_regressor, cutoff=1.1)
+                    if __arfs_version__ is None or __arfs_version__ < __arfs_1_1__
+                    else dict(estimator=lgbm_regressor, cutoff=1.1)
+                ),
             ),
             (GrootCVDF, dict()),
         ]
@@ -72,7 +74,7 @@ parametrize_feature_selector_cls: Callable[
 
 @parametrize_feature_selector_cls
 def test_feature_selection_df(
-    feature_selector_cls: Type[TransformerDF], feature_selector_params: Dict[str, Any]
+    feature_selector_cls: type[TransformerDF], feature_selector_params: dict[str, Any]
 ) -> None:
     """
     Test feature selection using the Boruta or ARFS package using a simple synthetic
@@ -93,8 +95,8 @@ def test_feature_selection_df(
 
 @parametrize_feature_selector_cls
 def test_feature_selection_pipeline_df(
-    feature_selector_cls: Type[TransformerDF],
-    feature_selector_params: Dict[str, Any],
+    feature_selector_cls: type[TransformerDF],
+    feature_selector_params: dict[str, Any],
     diabetes_df: pd.DataFrame,
     diabetes_target: str,
 ) -> None:
