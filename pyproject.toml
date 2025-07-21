@@ -124,3 +124,20 @@ exclude = '''
   )/
 )
 '''
+
+[tool.mypy]
+strict = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = [
+    "arfs.*",
+    "boruta.*",
+    "lightgbm.*",
+    "packaging.*",
+    "pandas.*",
+    "scipy.*",
+    "sklearn.*",
+    "xgboost.*"
+]
+ignore_missing_imports = true
