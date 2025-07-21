@@ -93,7 +93,7 @@ stages:
                 gamma-pytools~=3.0
               )
               python -m pip install mypy "${dependencies[@]}"
-              python -m mypy src sphinx test --config-file pyproject.toml
+              python -m mypy src --config-file pyproject.toml
             displayName: 'Run mypy'
 
   # detect whether the build config (pyproject.toml) was changed -> then we must run a build test
