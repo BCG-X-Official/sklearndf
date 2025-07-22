@@ -1,10 +1,8 @@
-from typing import Type
-
 import pandas as pd
 import pytest
 
 import sklearndf.clustering
-from sklearndf import ClusterDF, __sklearn_1_1__, __sklearn_1_3__, __sklearn_version__
+from sklearndf import ClusterDF, __sklearn_1_8__, __sklearn_version__
 from sklearndf.clustering import FeatureAgglomerationDF
 from test.sklearndf import iterate_classes
 
@@ -23,19 +21,17 @@ def test_clusterer_count() -> None:
 
     print(f"Testing {n} clusterers.")
 
-    if __sklearn_version__ < __sklearn_1_1__:
-        assert n == 9
-    elif __sklearn_version__ < __sklearn_1_3__:
-        assert n == 10
-    else:
+    if __sklearn_version__ < __sklearn_1_8__:
         assert n == 11
+    else:
+        pytest.fail(f"Unexpected scikit-learn version: {__sklearn_version__}")
 
 
 @pytest.mark.parametrize(  # type: ignore
     argnames="sklearn_clusterer_cls", argvalues=CLUSTERERS_TO_TEST
 )
 def test_clusterer_fit_predict_call(
-    iris_features: pd.DataFrame, sklearn_clusterer_cls: Type[ClusterDF]
+    iris_features: pd.DataFrame, sklearn_clusterer_cls: type[ClusterDF]
 ) -> None:
     """Check if each sklearndf clusterer supports fit_predict method"""
 
@@ -43,7 +39,7 @@ def test_clusterer_fit_predict_call(
 
     assert not clusterer_instance.is_fitted
     result_prediction = clusterer_instance.fit_predict(iris_features)
-    assert type(result_prediction) == pd.Series
+    assert isinstance(result_prediction, pd.Series)
     assert clusterer_instance.is_fitted
 
 
@@ -51,7 +47,7 @@ def test_clusterer_fit_predict_call(
     argnames="sklearn_clusterer_cls", argvalues=CLUSTERERS_WITH_AGGLOMERATION
 )
 def test_clusterer_fit_call(
-    iris_features: pd.DataFrame, sklearn_clusterer_cls: Type[ClusterDF]
+    iris_features: pd.DataFrame, sklearn_clusterer_cls: type[ClusterDF]
 ) -> None:
     """Check if each sklearndf clusterer supports fit method"""
 

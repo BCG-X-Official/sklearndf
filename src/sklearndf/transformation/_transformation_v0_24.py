@@ -3,7 +3,6 @@ Core implementation of :mod:`sklearndf.transformation` loaded
 from sklearn 0.24 onwards
 """
 
-
 import logging
 
 from sklearn.feature_selection import SequentialFeatureSelector

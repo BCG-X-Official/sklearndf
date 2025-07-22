@@ -14,15 +14,15 @@ dist-name = "sklearndf"
 license = "Apache Software License v2.0"
 
 requires = [
-    "gamma-pytools  ~=2.1",
-    "numpy          >=1.21,<2a",  # cannot use ~= due to conda bug
+    "gamma-pytools  >=2.1,<4a",   # allow pytools 2 and 3
+    "numpy          >=1.21,<3a",
     "packaging      >=20",
     "pandas         >=1",
-    "scikit-learn   >=1,<1.4a",
+    "scikit-learn   >=1.3,<1.8a",
     "scipy          ~=1.6",
 ]
 
-requires-python = ">=3.7,<4a"
+requires-python = ">=3.9,<4a"
 
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -34,19 +34,20 @@ classifiers = [
     "Operating System :: Unix",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering",
 ]
 
 [tool.flit.metadata.requires-extra]
 testing = [
-    "pytest ~= 7.1",
-    "pytest-cov ~= 2.12",
+    "pytest ~= 8.1",
+    "pytest-cov ~= 4.1",
     # optional requirements for testing sklearndf
-    "lightgbm ~= 3.0",
-    "xgboost ~= 1.0",
+    "lightgbm >= 3",
+    "xgboost >= 1",
 ]
 docs = [
     "sphinx ~= 4.5",
@@ -71,36 +72,36 @@ no-binary.min = ["matplotlib"]
 [build.matrix.min]
 # direct requirements of sklearndf
 boruta         = "~=0.3.0"
-gamma-pytools  = "~=2.1.0"
-lightgbm       = "~=3.0.0"
-numpy          = "==1.21.6"        # cannot use ~= due to conda bug
+gamma-pytools  = "~=2.1.3"
+lightgbm       = "~=3.1.1"
+numpy          = "~=1.22.4"
 packaging      = "~=20.9"
 pandas         = "~=1.1.5"
-python         = ">=3.7.12,<3.8a"  # cannot use ~= due to conda bug
+python         = "~=3.9.23"
 scipy          = "~=1.6.3"
-scikit-learn   = "~=1.0.2"
-xgboost        = "~=1.0.2"
+scikit-learn   = "~=1.3.2"
+xgboost        = "~=1.5.1"
 # additional minimum requirements of gamma-pytools
-joblib         = "~=0.14.1"
-matplotlib     = "~=3.0.3"
-typing_inspect = "~=0.4.0"
+joblib         = "~=1.1.1"
+matplotlib     = "~=3.3.4"
+typing_inspect = "~=0.7.0"
 
 [build.matrix.max]
 # direct requirements of sklearndf
-arfs           = "~=1.1"
-gamma-pytools  = "~=2.1"
-lightgbm       = "~=3.3"
-numpy          = ">=1.24,<2a"     # cannot use ~= due to conda bug
-packaging      = ">=20"
-pandas         = "~=2.0"
-python         = ">=3.11,<3.12a"  # cannot use ~= due to conda bug
-scikit-learn   = "~=1.3.2"
-scipy          = "~=1.11"
-xgboost        = "~=1.5"
+arfs           = "~=3.0"
+gamma-pytools  = "~=3.0"
+lightgbm       = "~=4.6"
+numpy          = "~=2.2"
+packaging      = ">=25"
+pandas         = "~=2.3"
+python         = "~=3.12"
+scikit-learn   = "~=1.7.0"
+scipy          = "~=1.16"
+xgboost        = "~=3.0"
 # additional maximum requirements of gamma-pytools
-joblib         = "~=1.1"
-matplotlib     = "~=3.5"
-typing_inspect = "~=0.7"
+joblib         = "~=1.5"
+matplotlib     = "~=3.10"
+typing_inspect = "~=0.9"
 
 [tool.black]
 # quiet = "True"
@@ -123,3 +124,20 @@ exclude = '''
   )/
 )
 '''
+
+[tool.mypy]
+strict = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = [
+    "arfs.*",
+    "boruta.*",
+    "lightgbm.*",
+    "packaging.*",
+    "pandas.*",
+    "scipy.*",
+    "sklearn.*",
+    "xgboost.*"
+]
+ignore_missing_imports = true

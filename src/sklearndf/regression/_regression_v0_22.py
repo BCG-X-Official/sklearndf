@@ -2,6 +2,7 @@
 Core implementation of :mod:`sklearndf.regression` loaded
 from sklearn 0.22 onwards
 """
+
 import logging
 
 from sklearn.ensemble import StackingRegressor

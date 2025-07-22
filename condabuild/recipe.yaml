@@ -1,0 +1,79 @@
+schema_version: 1
+
+package:
+  name: sklearndf
+  version: ${{ env.get('FACET_BUILD_SKLEARNDF_VERSION') }}
+
+source:
+  path: ..
+
+build:
+  noarch: python
+  script: flit install --deps none
+
+requirements:
+  host:
+    - pip       >=25
+    - python    ${{ env.get('FACET_V_PYTHON') }}
+    - numpy     ${{ env.get('FACET_V_NUMPY') }}
+    - flit      =3
+    - packaging >=25
+  run:
+    - gamma-pytools ${{ env.get('FACET_V_GAMMA_PYTOOLS') }}
+    - numpy         ${{ env.get('FACET_V_NUMPY') }}
+    - packaging     ${{ env.get('FACET_V_PACKAGING') }}
+    - pandas        ${{ env.get('FACET_V_PANDAS') }}
+    - python        ${{ env.get('FACET_V_PYTHON') }}
+    - scikit-learn  ${{ env.get('FACET_V_SCIKIT_LEARN') }}
+    - scipy         ${{ env.get('FACET_V_SCIPY') }}
+
+tests:
+  - python:
+      imports:
+        - sklearndf
+        - sklearndf.classification
+        - sklearndf.classification.extra
+        - sklearndf.pipeline
+        - sklearndf.regression
+        - sklearndf.regression.extra
+        - sklearndf.transformation
+        - sklearndf.transformation.extra
+  - requirements:
+      run:
+        - python          ${{ env.get('FACET_V_PYTHON', default='=3.10') }}
+        - pytest          ~= 8.1
+        - pip
+        - if: env.exists('FACET_V_BORUTA')
+          then:
+            - boruta_py ${{ env.get('FACET_V_BORUTA') }}
+        - if: env.exists('FACET_V_XGBOOST')
+          then:
+            - xgboost ${{ env.get('FACET_V_XGBOOST') }}
+        - lightgbm        ${{ env.get('FACET_V_LIGHTGBM', default='') }}
+        - if: env.exists('FACET_V_JOBLIB')
+          then:
+            - joblib ${{ env.get('FACET_V_JOBLIB') }}
+        - if: env.exists('FACET_V_MATPLOTLIB')
+          then:
+            - matplotlib-base ${{ env.get('FACET_V_MATPLOTLIB') }}
+        - if: env.exists('FACET_V_TYPING_INSPECT')
+          then:
+            - typing_inspect ${{ env.get('FACET_V_TYPING_INSPECT') }}
+    script:
+      - conda list
+      - python -c 'import sklearndf; import os; assert sklearndf.__version__ == os.environ["PKG_VERSION"]'
+      - cd "${FACET_PATH}/sklearndf"
+      - pytest -vs test
+
+about:
+  license: OSL-2.0
+  license_file: LICENSE
+  description: |
+    sklearndf is an open source library designed to address a common need with
+    scikit-learn: the outputs of transformers are numpy arrays, even when the input
+    is a data frame. However, to inspect a model it is essential to keep track of
+    the feature names.
+  homepage: https://github.com/BCG-X-Official/sklearndf
+  repository: https://github.com/BCG-X-Official/sklearndf
+  documentation: https://bcg-x-official.github.io/sklearndf/
+

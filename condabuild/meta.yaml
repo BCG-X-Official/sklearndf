@@ -1,3 +1,8 @@
+#
+# This file is deprecated and replaced by recipe.yaml, for use with rattler.
+# Keeping it for reference.
+#
+
 package:
   name: sklearndf
   version: {{ environ.get('FACET_BUILD_SKLEARNDF_VERSION') }}
@@ -35,7 +40,7 @@ test:
     - sklearndf.transformation
     - sklearndf.transformation.extra
   requires:
-    - pytest ~= 7.1
+    - pytest ~= 8.1
     # we need pip to install arfs
     - pip # {{ '[False]' if not environ.get('FACET_V_ARFS') }}
     # optional libraries of sklearndf, needed for testing
@@ -49,9 +54,7 @@ test:
     - typing_inspect  {{ environ.get('FACET_V_TYPING_INSPECT', '[False]') }}
   commands:
     - conda list
-    - python -c 'import sklearndf;
-                 import os;
-                 assert sklearndf.__version__ == os.environ["PKG_VERSION"]'
+    - python -c 'import sklearndf; import os; assert sklearndf.__version__ == os.environ["PKG_VERSION"]'
     # optional PyPi package ARFS needed for testing
     {% if environ.get('FACET_V_ARFS') -%}
     - pip install 'arfs{{ environ.get("FACET_V_ARFS") }}'

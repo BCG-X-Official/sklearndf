@@ -1,22 +1,13 @@
 """
 DF wrapper classes for stacking estimators.
 """
+
 from __future__ import annotations
 
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import (
-    Any,
-    Callable,
-    Generic,
-    List,
-    Optional,
-    Sequence,
-    Tuple,
-    TypeVar,
-    Union,
-    cast,
-)
+from collections.abc import Sequence
+from typing import Any, Callable, Generic, Optional, TypeVar, Union, cast
 
 import numpy as np
 import numpy.typing as npt
@@ -116,16 +107,18 @@ class StackingEstimatorWrapperDF(
                 return self
 
         native: T_NativeSupervisedLearner = self.native_estimator
-        estimators: Sequence[Tuple[str, BaseEstimator]] = native.estimators
+        estimators: Sequence[tuple[str, BaseEstimator]] = native.estimators
         final_estimator: BaseEstimator = native.final_estimator
 
         try:
             native.estimators = [
                 (
                     name,
-                    self._make_stackable_learner_df(estimator)
-                    if isinstance(estimator, SupervisedLearnerDF)
-                    else estimator,
+                    (
+                        self._make_stackable_learner_df(estimator)
+                        if isinstance(estimator, SupervisedLearnerDF)
+                        else estimator
+                    ),
                 )
                 for name, estimator in native.estimators
             ]
@@ -154,10 +147,10 @@ class StackingEstimatorWrapperDF(
     ) -> SupervisedLearnerNPDF[T_SupervisedLearnerDF]:
         pass
 
-    def _get_estimators_features_out(self) -> List[str]:
+    def _get_estimators_features_out(self) -> list[str]:
         return [name for name, estimator in self.estimators if estimator != "drop"]
 
-    def _get_final_estimator_features_in(self) -> List[str]:
+    def _get_final_estimator_features_in(self) -> list[str]:
         names = self._get_estimators_features_out()
         if self.passthrough:
             return [*names, *self.estimators_[0].feature_names_in_]
@@ -181,7 +174,7 @@ class StackingClassifierWrapperDF(
 
         return LogisticRegressionDF()
 
-    def _get_estimators_features_out(self) -> List[str]:
+    def _get_estimators_features_out(self) -> list[str]:
         classes = self.native_estimator.classes_
         names = super()._get_estimators_features_out()
         if len(classes) > 2:
@@ -284,7 +277,7 @@ class _StackableSupervisedLearnerDF(
     def score(
         self,
         X: Union[pd.Series, pd.DataFrame],
-        y: npt.NDArray["np.floating[Any]"],
+        y: npt.NDArray[np.floating[Any]],
         sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see SupervisedLearnerDF.score]"""
@@ -300,7 +293,7 @@ class _StackableSupervisedLearnerDF(
         # noinspection PyProtectedMember
         return self.delegate._get_n_features_in()
 
-    def _get_outputs(self) -> Optional[List[str]]:
+    def _get_outputs(self) -> Optional[list[str]]:
         # noinspection PyProtectedMember
         return self.delegate._get_outputs()
 
@@ -332,8 +325,8 @@ class _StackableSupervisedLearnerDF(
 
     @staticmethod
     def _convert_prediction_to_numpy(
-        prediction: Union[pd.DataFrame, List[pd.DataFrame]]
-    ) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+        prediction: Union[pd.DataFrame, list[pd.DataFrame]],
+    ) -> Union[npt.NDArray[Any], list[npt.NDArray[Any]]]:
         if isinstance(prediction, list):
             return [proba.values for proba in prediction]
         else:
@@ -345,12 +338,12 @@ class _StackableSupervisedLearnerDF(
 class _StackableClassifierDF(_StackableSupervisedLearnerDF[ClassifierDF], ClassifierDF):
     """[see superclass]"""
 
-    def _get_classes(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+    def _get_classes(self) -> Union[npt.NDArray[Any], list[npt.NDArray[Any]]]:
         return self.delegate._get_classes()
 
     def predict_proba(
         self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+    ) -> Union[npt.NDArray[Any], list[npt.NDArray[Any]]]:
         """[see superclass]"""
         return self._convert_prediction_to_numpy(
             self.delegate.predict_proba(X, **predict_params)
@@ -358,7 +351,7 @@ class _StackableClassifierDF(_StackableSupervisedLearnerDF[ClassifierDF], Classi
 
     def predict_log_proba(
         self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+    ) -> Union[npt.NDArray[Any], list[npt.NDArray[Any]]]:
         """[see superclass]"""
         return self._convert_prediction_to_numpy(
             self.delegate.predict_log_proba(X, **predict_params)

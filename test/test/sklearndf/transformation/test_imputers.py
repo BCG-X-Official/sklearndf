@@ -1,6 +1,5 @@
 import itertools
 import logging
-from typing import Type
 
 import numpy as np
 import pandas as pd
@@ -23,7 +22,7 @@ IMPUTERS_TO_TEST = iterate_classes(
     argvalues=itertools.product(IMPUTERS_TO_TEST, [True, False]),
 )
 def test_imputer(
-    imputer_cls: Type[TransformerDF],
+    imputer_cls: type[TransformerDF],
     add_indicator: bool,
 ) -> None:
     """

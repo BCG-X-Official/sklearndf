@@ -3,7 +3,8 @@ Estimator adapter classes to handle numpy arrays in meta-estimators.
 """
 
 import logging
-from typing import Any, Callable, Generic, List, Optional, Sequence, TypeVar, Union
+from collections.abc import Sequence
+from typing import Any, Callable, Generic, Optional, TypeVar, Union
 
 import numpy as np
 import numpy.typing as npt
@@ -118,7 +119,7 @@ class EstimatorNPDF(
     def _get_n_features_in(self) -> int:
         return self.delegate._get_n_features_in()
 
-    def _get_outputs(self) -> Optional[List[str]]:
+    def _get_outputs(self) -> Optional[list[str]]:
         return self.delegate._get_outputs()
 
     def _get_n_outputs(self) -> int:
@@ -168,7 +169,7 @@ class EstimatorNPDF(
 
     @staticmethod
     def _ensure_y_series_or_frame(
-        y: Optional[Union[npt.NDArray[Any], pd.Series, pd.DataFrame]]
+        y: Optional[Union[npt.NDArray[Any], pd.Series, pd.DataFrame]],
     ) -> Optional[Union[pd.Series, pd.DataFrame]]:
         if isinstance(y, np.ndarray):
             if y.ndim == 1:
@@ -244,18 +245,18 @@ class ClassifierNPDF(
     delegate: T_DelegateClassifierDF
     column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
 
-    def _get_classes(self) -> Union[npt.NDArray[Any], List[npt.NDArray[Any]]]:
+    def _get_classes(self) -> Union[npt.NDArray[Any], list[npt.NDArray[Any]]]:
         return self.delegate._get_classes()
 
     def predict_proba(
         self, X: Union[npt.NDArray[Any], pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+    ) -> Union[pd.DataFrame, list[pd.DataFrame]]:
         """[see superclass]"""
         return self.delegate.predict_proba(self._ensure_X_frame(X), **predict_params)
 
     def predict_log_proba(
         self, X: Union[npt.NDArray[Any], pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+    ) -> Union[pd.DataFrame, list[pd.DataFrame]]:
         """[see superclass]"""
         return self.delegate.predict_log_proba(
             self._ensure_X_frame(X), **predict_params

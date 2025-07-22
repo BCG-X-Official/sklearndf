@@ -1,7 +1,8 @@
 import re
 import sys
+from collections.abc import Iterable
 from types import ModuleType
-from typing import Dict, Iterable, List, Optional, Set, Type, Union
+from typing import Optional, Union
 
 import pandas as pd
 import sklearn
@@ -22,12 +23,12 @@ OVERRIDDEN_SKLEARN_CLASSES = {
 
 def find_all_classes(
     *modules: ModuleType,
-) -> Set[Type[EstimatorWrapperDF[BaseEstimator]]]:
+) -> set[type[EstimatorWrapperDF[BaseEstimator]]]:
     """Finds all Class members in given module/modules."""
-    types: Set[Type[EstimatorWrapperDF[BaseEstimator]]] = set()
+    types: set[type[EstimatorWrapperDF[BaseEstimator]]] = set()
 
     def _add_classes_from_module(_m: ModuleType) -> None:
-        member: Type[EstimatorWrapperDF[BaseEstimator]]
+        member: type[EstimatorWrapperDF[BaseEstimator]]
         for member in vars(_m).values():
             if isinstance(member, type):
                 types.add(member)
@@ -38,7 +39,7 @@ def find_all_classes(
     return types
 
 
-def find_all_submodules(parent_module: ModuleType) -> Set[ModuleType]:
+def find_all_submodules(parent_module: ModuleType) -> set[ModuleType]:
     """Finds all submodules for a parent module."""
     parent_name = f"{parent_module.__name__}."
     return {
@@ -50,7 +51,7 @@ def find_all_submodules(parent_module: ModuleType) -> Set[ModuleType]:
 
 def sklearn_delegate_classes(
     module: ModuleType,
-) -> Dict[Type[BaseEstimator], Type[EstimatorWrapperDF[BaseEstimator]]]:
+) -> dict[type[BaseEstimator], type[EstimatorWrapperDF[BaseEstimator]]]:
     """
     Create a dictionary mapping sklearn classes to their corresponding sklearndf
     classes.
@@ -69,7 +70,7 @@ def iterate_classes(
     from_modules: Union[ModuleType, Iterable[ModuleType]],
     matching: str,
     excluding: Optional[Union[str, Iterable[str]]] = None,
-) -> List[Type[EstimatorWrapperDF[BaseEstimator]]]:
+) -> list[type[EstimatorWrapperDF[BaseEstimator]]]:
     """Helper to return all classes with matching name from Python module(s)"""
 
     if not isinstance(from_modules, Iterable):
@@ -87,8 +88,8 @@ def iterate_classes(
 
 
 def get_sklearndf_wrapper_class(
-    to_wrap: Type[BaseEstimator], from_module: ModuleType
-) -> Type[EstimatorWrapperDF[BaseEstimator]]:
+    to_wrap: type[BaseEstimator], from_module: ModuleType
+) -> type[EstimatorWrapperDF[BaseEstimator]]:
     """Helper to return the wrapped counterpart for a sklearn class"""
     try:
         return sklearn_delegate_classes(from_module)[to_wrap]

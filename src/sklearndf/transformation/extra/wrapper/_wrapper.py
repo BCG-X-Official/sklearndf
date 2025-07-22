@@ -1,6 +1,7 @@
 """
 Core implementation of :mod:`sklearndf.transformation.extra.wrapper`
 """
+
 from __future__ import annotations
 
 import logging

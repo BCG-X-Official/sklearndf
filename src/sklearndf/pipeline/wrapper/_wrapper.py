@@ -4,7 +4,8 @@ Core implementation of :mod:`sklearndf.pipeline.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Any, Dict, Iterator, List, Sequence, Tuple, Union, cast
+from collections.abc import Iterator, Sequence
+from typing import Any, Union, cast
 
 import numpy.typing as npt
 import pandas as pd
@@ -16,12 +17,15 @@ from sklearn.preprocessing import FunctionTransformer
 from pytools.api import AllTracker
 
 from ..._util import hstack_frames
-from sklearndf import EstimatorDF, TransformerDF
+from sklearndf import EstimatorDF, TransformerDF, __sklearn_1_6__, __sklearn_version__
 from sklearndf.wrapper import (
     ClassifierWrapperDF,
     RegressorWrapperDF,
     TransformerWrapperDF,
 )
+
+if __sklearn_version__ >= __sklearn_1_6__:
+    from sklearn.utils import Tags
 
 log = logging.getLogger(__name__)
 
@@ -93,13 +97,13 @@ class PipelineWrapperDF(
             )
 
     @property
-    def steps(self) -> List[Tuple[str, EstimatorDF]]:
+    def steps(self) -> list[tuple[str, EstimatorDF]]:
         """
         The ``steps`` attribute of the underlying :class:`~sklearn.pipeline.Pipeline`.
 
         List of (name, transformer) tuples (transformers implement fit/transform).
         """
-        return cast(List[Tuple[str, EstimatorDF]], self.native_estimator.steps)
+        return cast(list[tuple[str, EstimatorDF]], self.native_estimator.steps)
 
     def __len__(self) -> int:
         """The number of steps of the pipeline."""
@@ -138,14 +142,14 @@ class PipelineWrapperDF(
         # in the pipeline
         return estimator is None or estimator == PipelineWrapperDF.PASSTHROUGH
 
-    def _transformer_steps(self) -> Iterator[Tuple[str, TransformerDF]]:
+    def _transformer_steps(self) -> Iterator[tuple[str, TransformerDF]]:
         # make an iterator of all transform steps, i.e., excluding the final step
         # in case it is not a transformer
         # excludes steps whose transformer is ``None`` or ``"passthrough"``
 
         def _iter_not_none(
-            transformer_steps: Sequence[Tuple[str, EstimatorDF]]
-        ) -> Iterator[Tuple[str, TransformerDF]]:
+            transformer_steps: Sequence[tuple[str, EstimatorDF]],
+        ) -> Iterator[tuple[str, TransformerDF]]:
             return (
                 (name, cast(TransformerDF, transformer))
                 for name, transformer in transformer_steps
@@ -213,9 +217,15 @@ class PipelineWrapperDF(
         # noinspection PyProtectedMember
         return cast(str, self.native_estimator._estimator_type)
 
-    def _more_tags(self) -> Dict[str, Any]:
+    if __sklearn_version__ >= __sklearn_1_6__:
+
+        def __sklearn_tags__(self) -> Tags:
+            # forward this method call to the native estimator to ensure correct tags
+            return self.native_estimator.__sklearn_tags__()
+
+    def _more_tags(self) -> dict[str, Any]:
         return cast(
-            Dict[str, Any], getattr(self.native_estimator, "_more_tags", lambda: {})()
+            dict[str, Any], getattr(self.native_estimator, "_more_tags", lambda: {})()
         )
 
 
@@ -229,7 +239,7 @@ class FeatureUnionSparseFrames(
 
     # noinspection PyPep8Naming
     def _hstack(
-        self, Xs: List[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]]
+        self, Xs: list[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]]
     ) -> Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]:
         stacked_frames = hstack_frames(
             Xs, prefixes=[name for name, _ in self.transformer_list]

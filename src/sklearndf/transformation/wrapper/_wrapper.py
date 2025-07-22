@@ -1,21 +1,12 @@
 """
 Core implementation of :mod:`sklearndf.transformation.wrapper`
 """
+
 import itertools
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import (
-    Any,
-    Generic,
-    Iterable,
-    List,
-    Optional,
-    Sequence,
-    Tuple,
-    TypeVar,
-    Union,
-    cast,
-)
+from collections.abc import Iterable, Sequence
+from typing import Any, Generic, Optional, TypeVar, Union, cast
 
 import numpy as np
 import numpy.typing as npt
@@ -27,11 +18,11 @@ from sklearn.decomposition import PCA
 from sklearn.impute import MissingIndicator, SimpleImputer
 from sklearn.kernel_approximation import AdditiveChi2Sampler
 from sklearn.manifold import Isomap
-from sklearn.preprocessing import KBinsDiscretizer, OneHotEncoder
+from sklearn.preprocessing import FunctionTransformer, KBinsDiscretizer, OneHotEncoder
 
 from pytools.api import AllTracker
 
-from ... import TransformerDF, __sklearn_1_1__, __sklearn_1_2__, __sklearn_version__
+from ... import TransformerDF
 from ..._util import hstack_frames, is_sparse_frame, sparse_frame_density
 from ...wrapper import TransformerWrapperDF
 
@@ -123,9 +114,11 @@ class NumpyTransformerWrapperDF(
         if sparse_threshold > 0.0 and sparse_frame_density(df) < sparse_threshold:
             return sparse.hstack(
                 [
-                    sr.to_frame().sparse.to_coo()
-                    if isinstance(sr.dtype, pd.SparseDtype)
-                    else sr.values.reshape(-1, 1)
+                    (
+                        sr.to_frame().sparse.to_coo()
+                        if isinstance(sr.dtype, pd.SparseDtype)
+                        else sr.values.reshape(-1, 1)
+                    )
                     for _, sr in df.items()
                 ]
             ).tocsr()
@@ -155,7 +148,7 @@ class SingleColumnTransformerWrapperDF(
         y: T_Target,
         *,
         expected_columns: pd.Index = None,
-    ) -> Tuple[pd.DataFrame, T_Target]:
+    ) -> tuple[pd.DataFrame, T_Target]:
         X, y = super()._validate_parameter_types(
             X, y, expected_columns=expected_columns
         )
@@ -351,10 +344,15 @@ class ColumnTransformerSparseFrames(
 
     # noinspection PyPep8Naming
     def _hstack(
-        self, Xs: List[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]]
+        self,
+        Xs: list[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]],
+        *,
+        n_samples: Optional[int] = None,
     ) -> Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]:
         if self.verbose_feature_names_out:
-            prefixes = [name for name, _, _ in self.transformers]
+            # Get the prefixes for the columns of each transformer, unless the
+            # transformer does not process any columns
+            prefixes = [name for name, _, cols in self.transformers if len(cols)]
             if self._remainder[2] and self.remainder != "drop":
                 # remainder columns exist and are not being dropped
                 prefixes.append("remainder")
@@ -363,7 +361,13 @@ class ColumnTransformerSparseFrames(
             stacked = hstack_frames(Xs)
 
         if stacked is None:
-            return super()._hstack(Xs)
+            if n_samples is None:
+                # Do not pass n_samples if we did not receive it, for backwards
+                # compatibility
+                return super()._hstack(Xs)
+            else:
+                # Only pass n_samples if we receive it
+                return super()._hstack(Xs, n_samples=n_samples)
         else:
             self.sparse_output_ = is_sparse_frame(stacked)
             return stacked
@@ -400,7 +404,7 @@ class ColumnTransformerWrapperDF(
                 f"unsupported value for arg remainder: {column_transformer.remainder!r}"
             )
 
-        non_compliant_transformers: List[str] = [
+        non_compliant_transformers: list[str] = [
             type(transformer).__name__
             for _, transformer, _ in column_transformer.transformers
             if not (
@@ -442,7 +446,13 @@ class ColumnTransformerWrapperDF(
             input_column_names: npt.NDArray[Any]
             output_column_names: npt.NDArray[Any]
 
-            if df_transformer == ColumnTransformerWrapperDF.PASSTHROUGH:
+            if df_transformer == ColumnTransformerWrapperDF.PASSTHROUGH or (
+                # scikit-learn 1.4+ replaces 'passthrough' with a FunctionTransformer
+                # using the identity function (represented by `None`), so we need to
+                # check for that.
+                isinstance(df_transformer, FunctionTransformer)
+                and df_transformer.func is None
+            ):
                 # we may get positional indices for columns selected by the
                 # 'passthrough' transformer, and in that case need to look up the
                 # associated column names
@@ -501,11 +511,11 @@ class ImputerWrapperDF(
         # get the columns that were dropped during imputation
         delegate_estimator = self.native_estimator
 
-        nan_mask: Union[List[bool], npt.NDArray[Any]] = []
+        nan_mask: Union[list[bool], npt.NDArray[Any]] = []
 
         def _nan_mask_from_statistics(
             stats: npt.NDArray[Any],
-        ) -> Union[List[bool], npt.NDArray[np.bool_]]:
+        ) -> Union[list[bool], npt.NDArray[np.bool_]]:
             if issubclass(stats.dtype.type, float):
                 return cast(npt.NDArray[np.bool_], np.isnan(stats))
             else:
@@ -651,15 +661,15 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
             dtype=np.int_,
         )
 
-        if __sklearn_version__ >= __sklearn_1_1__ and not (
-            self.max_categories is None and self.min_frequency is None
-        ):
+        if self.max_categories is not None or self.min_frequency is not None:
             # count number of infrequent categories per column
             n_infrequent = np.array(
                 [
-                    1
-                    if infrequent_categories_for_column is None
-                    else len(infrequent_categories_for_column)
+                    (
+                        1
+                        if infrequent_categories_for_column is None
+                        else len(infrequent_categories_for_column)
+                    )
                     for infrequent_categories_for_column in (
                         self.native_estimator.infrequent_categories_
                     )
@@ -735,16 +745,6 @@ class EmbeddingWrapperDF(
 
     The native transformer is considered to map all input columns to each output column.
     """
-
-    if __sklearn_version__ < __sklearn_1_2__:
-        # n_features_ is deprecated as of sklearn 1.0,
-        # and will be removed in sklearn 1.2
-        @property
-        def n_features_(self) -> int:
-            """
-            The number of features when :meth:`.fit` is performed.
-            """
-            return cast(int, self.native_estimator.n_features_)
 
     def _get_n_outputs(self) -> int:
         return cast(int, self.native_estimator.n_outputs_)

@@ -3,7 +3,6 @@ Core implementation of :mod:`sklearndf.transformation` loaded
 from sklearn 1.1 onwards
 """
 
-
 import logging
 
 from sklearn.decomposition import MiniBatchNMF

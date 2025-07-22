@@ -1,5 +1,3 @@
-from typing import Type
-
 import numpy as np
 import pandas as pd
 import pytest
@@ -20,7 +18,7 @@ from test.sklearndf.pipeline import make_simple_transformer
 def test_regression_pipeline_df(
     diabetes_features: pd.DataFrame,
     diabetes_target_sr: pd.Series,
-    regressor_df_cls: Type[RegressorDF],
+    regressor_df_cls: type[RegressorDF],
 ) -> None:
     rpdf = RegressorPipelineDF(
         regressor=regressor_df_cls(),

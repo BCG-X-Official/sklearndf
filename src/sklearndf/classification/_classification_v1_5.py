@@ -1,24 +1,24 @@
 """
 Additional implementation of :mod:`sklearndf.classification` loaded
-from sklearn 0.22 onwards
+from sklearn 1.0 onwards
 """
 
 import logging
 
-from sklearn.ensemble import StackingClassifier
-from sklearn.naive_bayes import CategoricalNB
+from sklearn.model_selection import FixedThresholdClassifier, TunedThresholdClassifierCV
 
 from pytools.api import AllTracker
 
-from ..wrapper.stacking import StackingClassifierWrapperDF
-from .wrapper import PartialFitClassifierWrapperDF
+from .wrapper import ThresholdClassifierWrapperDF
 
 log = logging.getLogger(__name__)
 
-__all__ = ["CategoricalNBDF", "StackingClassifierDF"]
+__all__ = [
+    "FixedThresholdClassifierDF",
+    "TunedThresholdClassifierCVDF",
+]
 
 __imported_estimators = {name for name in globals().keys() if name.endswith("DF")}
-
 
 #
 # Ensure all symbols introduced below are included in __all__
@@ -26,27 +26,27 @@ __imported_estimators = {name for name in globals().keys() if name.endswith("DF"
 
 __tracker = AllTracker(globals())
 
-
 #
-# Class definitions
-#
-
-
-#
-# naive bayes
+# threshold classifiers
 #
 
 
-class CategoricalNBDF(
-    PartialFitClassifierWrapperDF[CategoricalNB], native=CategoricalNB
+class FixedThresholdClassifierDF(
+    ThresholdClassifierWrapperDF[FixedThresholdClassifier],
+    native=FixedThresholdClassifier,
 ):
-    """Stub for DF wrapper of class ``CategoricalNB``"""
+    """
+    Stub for DF wrapper of class ``FixedThresholdClassifier``.
+    """
 
 
-class StackingClassifierDF(
-    StackingClassifierWrapperDF[StackingClassifier], native=StackingClassifier
+class TunedThresholdClassifierCVDF(
+    ThresholdClassifierWrapperDF[TunedThresholdClassifierCV],
+    native=TunedThresholdClassifierCV,
 ):
-    """Stub for DF wrapper of class ``StackingClassifier``"""
+    """
+    Stub for DF wrapper of class ``TunedThresholdClassifierCV``.
+    """
 
 
 #

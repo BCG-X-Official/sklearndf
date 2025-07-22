@@ -2,7 +2,9 @@
 Auxiliary functions for internal use.
 """
 
-from typing import Any, List, Optional, Union, cast
+import math
+import numbers
+from typing import Any, Optional, Union, cast
 
 import numpy.typing as npt
 import pandas as pd
@@ -10,9 +12,9 @@ from scipy import sparse
 
 
 def hstack_frames(
-    frames: List[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]],
+    frames: list[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]],
     *,
-    prefixes: Optional[List[str]] = None,
+    prefixes: Optional[list[str]] = None,
 ) -> Optional[pd.DataFrame]:
     """
     If only data frames are passed, stack them horizontally.
@@ -25,7 +27,7 @@ def hstack_frames(
     """
     if all(isinstance(frame, pd.DataFrame) for frame in frames):
         # all frames are data frames
-        frames = cast(List[pd.DataFrame], frames)
+        frames = cast(list[pd.DataFrame], frames)
         if prefixes is not None:
             assert len(prefixes) == len(
                 frames
@@ -70,3 +72,47 @@ def sparse_frame_density(frame: pd.DataFrame) -> float:
             return 1.0
 
     return sum(_density(sr) for _, sr in frame.items()) / len(frame.columns)
+
+
+def remove_invalid_lgbm_type_hint(lgbm_type: type[Any]) -> None:
+    """
+    Remove an invalid return annotation from the __sklearn_tags__ of a LightGBM class.
+
+    :param lgbm_type: the LightGBM type to class
+    """
+    __sklearn_tags__ = getattr(lgbm_type, "__sklearn_tags__", None)
+    if __sklearn_tags__ is None:
+        return
+    __annotations__ = getattr(__sklearn_tags__, "__annotations__", {})
+    if __annotations__.get("return") == "_sklearn_Tags":
+        # remove an invalid return annotation: _sklearn_Tags is not a valid type
+        del __annotations__["return"]
+
+
+def is_scalar_nan(x: Any) -> bool:
+    """
+    Test if a given value is a scalar that is NaN.
+
+    Example:
+    .. code-block:: python
+
+        is_scalar_nan(np.nan)
+        # True
+        is_scalar_nan(float("nan"))
+        # True
+        is_scalar_nan(None)
+        # False
+        is_scalar_nan("")
+        # False
+        is_scalar_nan([np.nan])
+        # False
+
+    :param x: the value to test
+    :returns: ``True`` if the value is a scalar NaN, ``False`` otherwise
+    """
+
+    return (
+        not isinstance(x, numbers.Integral)
+        and isinstance(x, numbers.Real)
+        and math.isnan(x)
+    )

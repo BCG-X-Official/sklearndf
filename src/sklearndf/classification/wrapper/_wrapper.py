@@ -4,7 +4,8 @@ Core implementation of :mod:`sklearndf.classification.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Any, Generic, List, Optional, Sequence, TypeVar, Union, cast
+from collections.abc import Sequence
+from typing import Any, Generic, Optional, TypeVar, Union, cast
 
 import numpy.typing as npt
 import pandas as pd
@@ -25,6 +26,7 @@ __all__ = [
     "MetaClassifierWrapperDF",
     "MultiOutputClassifierWrapperDF",
     "PartialFitClassifierWrapperDF",
+    "ThresholdClassifierWrapperDF",
 ]
 
 #
@@ -149,10 +151,10 @@ class MultiOutputClassifierWrapperDF(
         self,
         X: pd.DataFrame,
         prediction: Union[
-            pd.Series, pd.DataFrame, List[npt.NDArray[Any]], npt.NDArray[Any]
+            pd.Series, pd.DataFrame, list[npt.NDArray[Any]], npt.NDArray[Any]
         ],
         classes: Optional[Sequence[Any]] = None,
-    ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
+    ) -> Union[pd.Series, pd.DataFrame, list[pd.DataFrame]]:
         # if we have a multi-output classifier, prediction of probabilities
         # yields a list of NumPy arrays
         if not isinstance(prediction, list):
@@ -200,14 +202,24 @@ class ClassifierChainWrapperDF(
         self,
         X: pd.DataFrame,
         prediction: Union[
-            pd.Series, pd.DataFrame, List[npt.NDArray[Any]], npt.NDArray[Any]
+            pd.Series, pd.DataFrame, list[npt.NDArray[Any]], npt.NDArray[Any]
         ],
         classes: Optional[Sequence[Any]] = None,
-    ) -> Union[pd.Series, pd.DataFrame, List[pd.DataFrame]]:
+    ) -> Union[pd.Series, pd.DataFrame, list[pd.DataFrame]]:
         # todo: infer actual class names
         return super()._prediction_with_class_labels(
             X, prediction, classes=range(self.n_outputs_)
         )
+
+
+class ThresholdClassifierWrapperDF(
+    MetaClassifierWrapperDF[T_NativeClassifier],
+    Generic[T_NativeClassifier],
+    metaclass=ABCMeta,
+):
+    """
+    DF wrapper for meta-classifiers that manage decision thresholds.
+    """
 
 
 #
