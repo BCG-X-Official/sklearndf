@@ -49,6 +49,9 @@ from sklearndf import (
     __sklearn_version__,
 )
 
+if __sklearn_version__ >= __sklearn_1_6__:
+    from sklearn.utils import Tags
+
 log = logging.getLogger(__name__)
 
 __all__ = [
@@ -331,7 +334,6 @@ class EstimatorWrapperDF(
             return None
 
     if __sklearn_version__ >= __sklearn_1_6__:
-        from sklearn.utils import Tags
 
         def __sklearn_tags__(self) -> Tags:
             return self.native_estimator.__sklearn_tags__()

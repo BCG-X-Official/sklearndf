@@ -24,6 +24,9 @@ from sklearndf.wrapper import (
     TransformerWrapperDF,
 )
 
+if __sklearn_version__ >= __sklearn_1_6__:
+    from sklearn.utils import Tags
+
 log = logging.getLogger(__name__)
 
 __all__ = [
@@ -215,7 +218,6 @@ class PipelineWrapperDF(
         return cast(str, self.native_estimator._estimator_type)
 
     if __sklearn_version__ >= __sklearn_1_6__:
-        from sklearn.utils import Tags
 
         def __sklearn_tags__(self) -> Tags:
             # forward this method call to the native estimator to ensure correct tags
