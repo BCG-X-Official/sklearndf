@@ -550,8 +550,19 @@ stages:
               eval "$(conda shell.bash hook)"
               conda install -y anaconda-client
               anaconda login --username "${CONDA_USERNAME}" --password "${CONDA_PASSWORD}"
-              anaconda upload --user bcgx --force $(System.ArtifactsDirectory)/conda_default/conda/noarch/$(package_name)-*.tar.bz2
-              anaconda upload --user BCG_Gamma --force $(System.ArtifactsDirectory)/conda_default/conda/noarch/$(package_name)-*.tar.bz2
+              
+              # Check for .conda files first (rattler-build), then .tar.bz2 (conda-build)
+              if ls $(System.ArtifactsDirectory)/conda_default/conda/noarch/$(package_name)-*.conda 1> /dev/null 2>&1; then
+                anaconda upload --user bcgx --force $(System.ArtifactsDirectory)/conda_default/conda/noarch/$(package_name)-*.conda
+                anaconda upload --user BCG_Gamma --force $(System.ArtifactsDirectory)/conda_default/conda/noarch/$(package_name)-*.conda
+              elif ls $(System.ArtifactsDirectory)/conda_default/conda/noarch/$(package_name)-*.tar.bz2 1> /dev/null 2>&1; then
+                anaconda upload --user bcgx --force $(System.ArtifactsDirectory)/conda_default/conda/noarch/$(package_name)-*.tar.bz2
+                anaconda upload --user BCG_Gamma --force $(System.ArtifactsDirectory)/conda_default/conda/noarch/$(package_name)-*.tar.bz2
+              else
+                echo "No conda packages found!"
+                exit 1
+              fi
+              
               anaconda logout
               # set +x to prevent Azure from randomly appending a \' of the ## statement
               set +x
@@ -612,8 +623,7 @@ stages:
               isPrerelease: $(is_prerelease)
               assets: |
                 $(System.ArtifactsDirectory)/tox_default/tox/$(package_name)-*.tar.gz
-                $(System.ArtifactsDirectory)/conda_default/conda/noarch/$(package_name)-*.tar.bz2
-
+                $(System.ArtifactsDirectory)/conda_default/conda/noarch/$(package_name)-*.conda
   # render docs and publish to GitHub Pages
   - stage:
     displayName: 'Docs'
