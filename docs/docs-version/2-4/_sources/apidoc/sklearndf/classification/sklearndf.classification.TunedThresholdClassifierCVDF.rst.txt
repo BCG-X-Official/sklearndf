@@ -1,0 +1,53 @@
+sklearndf.classification.TunedThresholdClassifierCVDF
+=====================================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: TunedThresholdClassifierCVDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~TunedThresholdClassifierCVDF.clone
+      ~TunedThresholdClassifierCVDF.decision_function
+      ~TunedThresholdClassifierCVDF.fit
+      ~TunedThresholdClassifierCVDF.from_fitted
+      ~TunedThresholdClassifierCVDF.get_metadata_routing
+      ~TunedThresholdClassifierCVDF.get_params
+      ~TunedThresholdClassifierCVDF.predict
+      ~TunedThresholdClassifierCVDF.predict_log_proba
+      ~TunedThresholdClassifierCVDF.predict_proba
+      ~TunedThresholdClassifierCVDF.score
+      ~TunedThresholdClassifierCVDF.set_params
+      ~TunedThresholdClassifierCVDF.set_score_request
+      ~TunedThresholdClassifierCVDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~TunedThresholdClassifierCVDF.COL_FEATURE
+      ~TunedThresholdClassifierCVDF.COL_PREDICTION
+      ~TunedThresholdClassifierCVDF.classes_
+      ~TunedThresholdClassifierCVDF.feature_names_in_
+      ~TunedThresholdClassifierCVDF.is_fitted
+      ~TunedThresholdClassifierCVDF.n_features_in_
+      ~TunedThresholdClassifierCVDF.n_outputs_
+      ~TunedThresholdClassifierCVDF.native_estimator
+      ~TunedThresholdClassifierCVDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

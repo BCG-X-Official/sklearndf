@@ -1,0 +1,51 @@
+sklearndf.clustering.HDBSCANDF
+==============================
+
+.. currentmodule:: sklearndf.clustering
+
+.. autoclass:: HDBSCANDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~HDBSCANDF.clone
+      ~HDBSCANDF.dbscan_clustering
+      ~HDBSCANDF.fit
+      ~HDBSCANDF.fit_predict
+      ~HDBSCANDF.from_fitted
+      ~HDBSCANDF.get_metadata_routing
+      ~HDBSCANDF.get_params
+      ~HDBSCANDF.predict
+      ~HDBSCANDF.set_params
+      ~HDBSCANDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~HDBSCANDF.COL_FEATURE
+      ~HDBSCANDF.COL_LABELS
+      ~HDBSCANDF.COL_PREDICTION
+      ~HDBSCANDF.feature_names_in_
+      ~HDBSCANDF.is_fitted
+      ~HDBSCANDF.labels_
+      ~HDBSCANDF.n_features_in_
+      ~HDBSCANDF.n_outputs_
+      ~HDBSCANDF.native_estimator
+      ~HDBSCANDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

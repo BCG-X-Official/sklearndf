@@ -1,0 +1,1221 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>sklearndf.transformation.TargetEncoderDF &#8212; sklearndf  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/gamma.css?v=5c8aca28" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/gamma.js?v=6cc5c158"></script>
+    <script src="../../../_static/js/versions.js?v=c538c920"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'apidoc/sklearndf/transformation/sklearndf.transformation.TargetEncoderDF';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="sklearndf.transformation.TfidfTransformerDF" href="sklearndf.transformation.TfidfTransformerDF.html" />
+    <link rel="prev" title="sklearndf.transformation.StandardScalerDF" href="sklearndf.transformation.StandardScalerDF.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2.4.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+    
+    <img src="../../../_static/gamma_sklearndf_logo.png" class="logo__image only-light" alt="sklearndf  documentation - Home"/>
+    <img src="../../../_static/gamma_sklearndf_logo.png" class="logo__image only-dark pst-js-only" alt="sklearndf  documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../_generated/getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../sklearndf.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contribution_guide.html">
+    Development Guidelines
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../faqs.html">
+    FAQ
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../_generated/release_notes.html">
+    Release Notes
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../_generated/getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../sklearndf.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contribution_guide.html">
+    Development Guidelines
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../faqs.html">
+    FAQ
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../_generated/release_notes.html">
+    Release Notes
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../sklearndf.ClassifierDF.html">sklearndf.ClassifierDF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sklearndf.ClusterDF.html">sklearndf.ClusterDF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sklearndf.EstimatorDF.html">sklearndf.EstimatorDF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sklearndf.LearnerDF.html">sklearndf.LearnerDF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sklearndf.RegressorDF.html">sklearndf.RegressorDF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sklearndf.SupervisedLearnerDF.html">sklearndf.SupervisedLearnerDF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sklearndf.TransformerDF.html">sklearndf.TransformerDF</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sklearndf.classification.html">sklearndf.classification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.AdaBoostClassifierDF.html">sklearndf.classification.AdaBoostClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.BaggingClassifierDF.html">sklearndf.classification.BaggingClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.BernoulliNBDF.html">sklearndf.classification.BernoulliNBDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.CalibratedClassifierCVDF.html">sklearndf.classification.CalibratedClassifierCVDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.CategoricalNBDF.html">sklearndf.classification.CategoricalNBDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.ClassifierChainDF.html">sklearndf.classification.ClassifierChainDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.ComplementNBDF.html">sklearndf.classification.ComplementNBDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.DecisionTreeClassifierDF.html">sklearndf.classification.DecisionTreeClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.DummyClassifierDF.html">sklearndf.classification.DummyClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.ExtraTreeClassifierDF.html">sklearndf.classification.ExtraTreeClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.ExtraTreesClassifierDF.html">sklearndf.classification.ExtraTreesClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.FixedThresholdClassifierDF.html">sklearndf.classification.FixedThresholdClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.GaussianNBDF.html">sklearndf.classification.GaussianNBDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.GaussianProcessClassifierDF.html">sklearndf.classification.GaussianProcessClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.GradientBoostingClassifierDF.html">sklearndf.classification.GradientBoostingClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.HistGradientBoostingClassifierDF.html">sklearndf.classification.HistGradientBoostingClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.KNeighborsClassifierDF.html">sklearndf.classification.KNeighborsClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.LabelPropagationDF.html">sklearndf.classification.LabelPropagationDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.LabelSpreadingDF.html">sklearndf.classification.LabelSpreadingDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.LinearDiscriminantAnalysisDF.html">sklearndf.classification.LinearDiscriminantAnalysisDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.LinearSVCDF.html">sklearndf.classification.LinearSVCDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.LogisticRegressionCVDF.html">sklearndf.classification.LogisticRegressionCVDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.LogisticRegressionDF.html">sklearndf.classification.LogisticRegressionDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.MLPClassifierDF.html">sklearndf.classification.MLPClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.MultiOutputClassifierDF.html">sklearndf.classification.MultiOutputClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.MultinomialNBDF.html">sklearndf.classification.MultinomialNBDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.NearestCentroidDF.html">sklearndf.classification.NearestCentroidDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.NuSVCDF.html">sklearndf.classification.NuSVCDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.OneVsOneClassifierDF.html">sklearndf.classification.OneVsOneClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.OneVsRestClassifierDF.html">sklearndf.classification.OneVsRestClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.OutputCodeClassifierDF.html">sklearndf.classification.OutputCodeClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.PassiveAggressiveClassifierDF.html">sklearndf.classification.PassiveAggressiveClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.PerceptronDF.html">sklearndf.classification.PerceptronDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.QuadraticDiscriminantAnalysisDF.html">sklearndf.classification.QuadraticDiscriminantAnalysisDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.RadiusNeighborsClassifierDF.html">sklearndf.classification.RadiusNeighborsClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.RandomForestClassifierDF.html">sklearndf.classification.RandomForestClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.RidgeClassifierCVDF.html">sklearndf.classification.RidgeClassifierCVDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.RidgeClassifierDF.html">sklearndf.classification.RidgeClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.SGDClassifierDF.html">sklearndf.classification.SGDClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.SVCDF.html">sklearndf.classification.SVCDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.SelfTrainingClassifierDF.html">sklearndf.classification.SelfTrainingClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.StackingClassifierDF.html">sklearndf.classification.StackingClassifierDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.TunedThresholdClassifierCVDF.html">sklearndf.classification.TunedThresholdClassifierCVDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classification/sklearndf.classification.VotingClassifierDF.html">sklearndf.classification.VotingClassifierDF</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../classification/sklearndf.classification.extra.html">sklearndf.classification.extra</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../classification/extra/sklearndf.classification.extra.LGBMClassifierDF.html">sklearndf.classification.extra.LGBMClassifierDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../classification/extra/sklearndf.classification.extra.XGBClassifierDF.html">sklearndf.classification.extra.XGBClassifierDF</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../classification/sklearndf.classification.wrapper.html">sklearndf.classification.wrapper</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../classification/wrapper/sklearndf.classification.wrapper.ClassifierChainWrapperDF.html">sklearndf.classification.wrapper.ClassifierChainWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../classification/wrapper/sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF.html">sklearndf.classification.wrapper.LinearDiscriminantAnalysisWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../classification/wrapper/sklearndf.classification.wrapper.MetaClassifierWrapperDF.html">sklearndf.classification.wrapper.MetaClassifierWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../classification/wrapper/sklearndf.classification.wrapper.MultiOutputClassifierWrapperDF.html">sklearndf.classification.wrapper.MultiOutputClassifierWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../classification/wrapper/sklearndf.classification.wrapper.PartialFitClassifierWrapperDF.html">sklearndf.classification.wrapper.PartialFitClassifierWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../classification/wrapper/sklearndf.classification.wrapper.ThresholdClassifierWrapperDF.html">sklearndf.classification.wrapper.ThresholdClassifierWrapperDF</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sklearndf.clustering.html">sklearndf.clustering</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../clustering/sklearndf.clustering.AffinityPropagationDF.html">sklearndf.clustering.AffinityPropagationDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clustering/sklearndf.clustering.AgglomerativeClusteringDF.html">sklearndf.clustering.AgglomerativeClusteringDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clustering/sklearndf.clustering.BirchDF.html">sklearndf.clustering.BirchDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clustering/sklearndf.clustering.BisectingKMeansDF.html">sklearndf.clustering.BisectingKMeansDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clustering/sklearndf.clustering.DBSCANDF.html">sklearndf.clustering.DBSCANDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clustering/sklearndf.clustering.FeatureAgglomerationDF.html">sklearndf.clustering.FeatureAgglomerationDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clustering/sklearndf.clustering.HDBSCANDF.html">sklearndf.clustering.HDBSCANDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clustering/sklearndf.clustering.KMeansDF.html">sklearndf.clustering.KMeansDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clustering/sklearndf.clustering.MeanShiftDF.html">sklearndf.clustering.MeanShiftDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clustering/sklearndf.clustering.MiniBatchKMeansDF.html">sklearndf.clustering.MiniBatchKMeansDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clustering/sklearndf.clustering.OPTICSDF.html">sklearndf.clustering.OPTICSDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clustering/sklearndf.clustering.SpectralClusteringDF.html">sklearndf.clustering.SpectralClusteringDF</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../clustering/sklearndf.clustering.wrapper.html">sklearndf.clustering.wrapper</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../clustering/wrapper/sklearndf.clustering.wrapper.FeatureAgglomerationWrapperDF.html">sklearndf.clustering.wrapper.FeatureAgglomerationWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../clustering/wrapper/sklearndf.clustering.wrapper.KMeansBaseWrapperDF.html">sklearndf.clustering.wrapper.KMeansBaseWrapperDF</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sklearndf.pipeline.html">sklearndf.pipeline</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/sklearndf.pipeline.ClassifierPipelineDF.html">sklearndf.pipeline.ClassifierPipelineDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/sklearndf.pipeline.ClusterPipelineDF.html">sklearndf.pipeline.ClusterPipelineDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/sklearndf.pipeline.FeatureUnionDF.html">sklearndf.pipeline.FeatureUnionDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/sklearndf.pipeline.LearnerPipelineDF.html">sklearndf.pipeline.LearnerPipelineDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/sklearndf.pipeline.PipelineDF.html">sklearndf.pipeline.PipelineDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/sklearndf.pipeline.RegressorPipelineDF.html">sklearndf.pipeline.RegressorPipelineDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/sklearndf.pipeline.SupervisedLearnerPipelineDF.html">sklearndf.pipeline.SupervisedLearnerPipelineDF</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../pipeline/sklearndf.pipeline.wrapper.html">sklearndf.pipeline.wrapper</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/wrapper/sklearndf.pipeline.wrapper.FeatureUnionSparseFrames.html">sklearndf.pipeline.wrapper.FeatureUnionSparseFrames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/wrapper/sklearndf.pipeline.wrapper.FeatureUnionWrapperDF.html">sklearndf.pipeline.wrapper.FeatureUnionWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/wrapper/sklearndf.pipeline.wrapper.PipelineWrapperDF.html">sklearndf.pipeline.wrapper.PipelineWrapperDF</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sklearndf.regression.html">sklearndf.regression</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.ARDRegressionDF.html">sklearndf.regression.ARDRegressionDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.AdaBoostRegressorDF.html">sklearndf.regression.AdaBoostRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.BaggingRegressorDF.html">sklearndf.regression.BaggingRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.BayesianRidgeDF.html">sklearndf.regression.BayesianRidgeDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.CCADF.html">sklearndf.regression.CCADF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.DecisionTreeRegressorDF.html">sklearndf.regression.DecisionTreeRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.DummyRegressorDF.html">sklearndf.regression.DummyRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.ElasticNetCVDF.html">sklearndf.regression.ElasticNetCVDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.ElasticNetDF.html">sklearndf.regression.ElasticNetDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.ExtraTreeRegressorDF.html">sklearndf.regression.ExtraTreeRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.ExtraTreesRegressorDF.html">sklearndf.regression.ExtraTreesRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.GammaRegressorDF.html">sklearndf.regression.GammaRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.GaussianProcessRegressorDF.html">sklearndf.regression.GaussianProcessRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.GradientBoostingRegressorDF.html">sklearndf.regression.GradientBoostingRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.HistGradientBoostingRegressorDF.html">sklearndf.regression.HistGradientBoostingRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.HuberRegressorDF.html">sklearndf.regression.HuberRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.IsotonicRegressionDF.html">sklearndf.regression.IsotonicRegressionDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.KNeighborsRegressorDF.html">sklearndf.regression.KNeighborsRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.KernelRidgeDF.html">sklearndf.regression.KernelRidgeDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.LarsCVDF.html">sklearndf.regression.LarsCVDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.LarsDF.html">sklearndf.regression.LarsDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.LassoCVDF.html">sklearndf.regression.LassoCVDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.LassoDF.html">sklearndf.regression.LassoDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.LassoLarsCVDF.html">sklearndf.regression.LassoLarsCVDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.LassoLarsDF.html">sklearndf.regression.LassoLarsDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.LassoLarsICDF.html">sklearndf.regression.LassoLarsICDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.LinearRegressionDF.html">sklearndf.regression.LinearRegressionDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.LinearSVRDF.html">sklearndf.regression.LinearSVRDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.MLPRegressorDF.html">sklearndf.regression.MLPRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.MultiOutputRegressorDF.html">sklearndf.regression.MultiOutputRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.MultiTaskElasticNetCVDF.html">sklearndf.regression.MultiTaskElasticNetCVDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.MultiTaskElasticNetDF.html">sklearndf.regression.MultiTaskElasticNetDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.MultiTaskLassoCVDF.html">sklearndf.regression.MultiTaskLassoCVDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.MultiTaskLassoDF.html">sklearndf.regression.MultiTaskLassoDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.NuSVRDF.html">sklearndf.regression.NuSVRDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.OrthogonalMatchingPursuitCVDF.html">sklearndf.regression.OrthogonalMatchingPursuitCVDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.OrthogonalMatchingPursuitDF.html">sklearndf.regression.OrthogonalMatchingPursuitDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.PLSCanonicalDF.html">sklearndf.regression.PLSCanonicalDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.PLSRegressionDF.html">sklearndf.regression.PLSRegressionDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.PassiveAggressiveRegressorDF.html">sklearndf.regression.PassiveAggressiveRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.PoissonRegressorDF.html">sklearndf.regression.PoissonRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.QuantileRegressorDF.html">sklearndf.regression.QuantileRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.RANSACRegressorDF.html">sklearndf.regression.RANSACRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.RadiusNeighborsRegressorDF.html">sklearndf.regression.RadiusNeighborsRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.RandomForestRegressorDF.html">sklearndf.regression.RandomForestRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.RegressorChainDF.html">sklearndf.regression.RegressorChainDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.RidgeCVDF.html">sklearndf.regression.RidgeCVDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.RidgeDF.html">sklearndf.regression.RidgeDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.SGDRegressorDF.html">sklearndf.regression.SGDRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.SVRDF.html">sklearndf.regression.SVRDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.StackingRegressorDF.html">sklearndf.regression.StackingRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.TheilSenRegressorDF.html">sklearndf.regression.TheilSenRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.TransformedTargetRegressorDF.html">sklearndf.regression.TransformedTargetRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.TweedieRegressorDF.html">sklearndf.regression.TweedieRegressorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../regression/sklearndf.regression.VotingRegressorDF.html">sklearndf.regression.VotingRegressorDF</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../regression/sklearndf.regression.extra.html">sklearndf.regression.extra</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../regression/extra/sklearndf.regression.extra.LGBMRegressorDF.html">sklearndf.regression.extra.LGBMRegressorDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../regression/extra/sklearndf.regression.extra.XGBRegressorDF.html">sklearndf.regression.extra.XGBRegressorDF</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../regression/sklearndf.regression.wrapper.html">sklearndf.regression.wrapper</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../regression/wrapper/sklearndf.regression.wrapper.IsotonicRegressionWrapperDF.html">sklearndf.regression.wrapper.IsotonicRegressionWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../regression/wrapper/sklearndf.regression.wrapper.MetaRegressorWrapperDF.html">sklearndf.regression.wrapper.MetaRegressorWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../regression/wrapper/sklearndf.regression.wrapper.MultiOutputRegressorWrapperDF.html">sklearndf.regression.wrapper.MultiOutputRegressorWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../regression/wrapper/sklearndf.regression.wrapper.PartialFitRegressorWrapperDF.html">sklearndf.regression.wrapper.PartialFitRegressorWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../regression/wrapper/sklearndf.regression.wrapper.RegressorTransformerWrapperDF.html">sklearndf.regression.wrapper.RegressorTransformerWrapperDF</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../sklearndf.transformation.html">sklearndf.transformation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.AdditiveChi2SamplerDF.html">sklearndf.transformation.AdditiveChi2SamplerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.BernoulliRBMDF.html">sklearndf.transformation.BernoulliRBMDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.BinarizerDF.html">sklearndf.transformation.BinarizerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.ColumnTransformerDF.html">sklearndf.transformation.ColumnTransformerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.CountVectorizerDF.html">sklearndf.transformation.CountVectorizerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.CountVectorizerTx.html">sklearndf.transformation.CountVectorizerTx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.DictVectorizerDF.html">sklearndf.transformation.DictVectorizerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.DictionaryLearningDF.html">sklearndf.transformation.DictionaryLearningDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.FactorAnalysisDF.html">sklearndf.transformation.FactorAnalysisDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.FastICADF.html">sklearndf.transformation.FastICADF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.FeatureHasherDF.html">sklearndf.transformation.FeatureHasherDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.FunctionTransformerDF.html">sklearndf.transformation.FunctionTransformerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.GaussianRandomProjectionDF.html">sklearndf.transformation.GaussianRandomProjectionDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.GenericUnivariateSelectDF.html">sklearndf.transformation.GenericUnivariateSelectDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.HashingVectorizerDF.html">sklearndf.transformation.HashingVectorizerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.IncrementalPCADF.html">sklearndf.transformation.IncrementalPCADF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.IsomapDF.html">sklearndf.transformation.IsomapDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.IterativeImputerDF.html">sklearndf.transformation.IterativeImputerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.KBinsDiscretizerDF.html">sklearndf.transformation.KBinsDiscretizerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.KNNImputerDF.html">sklearndf.transformation.KNNImputerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.KernelCentererDF.html">sklearndf.transformation.KernelCentererDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.KernelPCADF.html">sklearndf.transformation.KernelPCADF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.LabelBinarizerDF.html">sklearndf.transformation.LabelBinarizerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.LabelEncoderDF.html">sklearndf.transformation.LabelEncoderDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.LatentDirichletAllocationDF.html">sklearndf.transformation.LatentDirichletAllocationDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.LocallyLinearEmbeddingDF.html">sklearndf.transformation.LocallyLinearEmbeddingDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.MaxAbsScalerDF.html">sklearndf.transformation.MaxAbsScalerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.MinMaxScalerDF.html">sklearndf.transformation.MinMaxScalerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.MiniBatchDictionaryLearningDF.html">sklearndf.transformation.MiniBatchDictionaryLearningDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.MiniBatchNMFDF.html">sklearndf.transformation.MiniBatchNMFDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.MiniBatchSparsePCADF.html">sklearndf.transformation.MiniBatchSparsePCADF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.MissingIndicatorDF.html">sklearndf.transformation.MissingIndicatorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.MultiLabelBinarizerDF.html">sklearndf.transformation.MultiLabelBinarizerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.NMFDF.html">sklearndf.transformation.NMFDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.NeighborhoodComponentsAnalysisDF.html">sklearndf.transformation.NeighborhoodComponentsAnalysisDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.NormalizerDF.html">sklearndf.transformation.NormalizerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.NystroemDF.html">sklearndf.transformation.NystroemDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.OneHotEncoderDF.html">sklearndf.transformation.OneHotEncoderDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.OrdinalEncoderDF.html">sklearndf.transformation.OrdinalEncoderDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.PCADF.html">sklearndf.transformation.PCADF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.PLSSVDDF.html">sklearndf.transformation.PLSSVDDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.PolynomialCountSketchDF.html">sklearndf.transformation.PolynomialCountSketchDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.PolynomialFeaturesDF.html">sklearndf.transformation.PolynomialFeaturesDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.PowerTransformerDF.html">sklearndf.transformation.PowerTransformerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.QuantileTransformerDF.html">sklearndf.transformation.QuantileTransformerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.RBFSamplerDF.html">sklearndf.transformation.RBFSamplerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.RFECVDF.html">sklearndf.transformation.RFECVDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.RFEDF.html">sklearndf.transformation.RFEDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.RandomTreesEmbeddingDF.html">sklearndf.transformation.RandomTreesEmbeddingDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.RobustScalerDF.html">sklearndf.transformation.RobustScalerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.SelectFdrDF.html">sklearndf.transformation.SelectFdrDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.SelectFprDF.html">sklearndf.transformation.SelectFprDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.SelectFromModelDF.html">sklearndf.transformation.SelectFromModelDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.SelectFweDF.html">sklearndf.transformation.SelectFweDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.SelectKBestDF.html">sklearndf.transformation.SelectKBestDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.SelectPercentileDF.html">sklearndf.transformation.SelectPercentileDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.SequentialFeatureSelectorDF.html">sklearndf.transformation.SequentialFeatureSelectorDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.SimpleImputerDF.html">sklearndf.transformation.SimpleImputerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.SkewedChi2SamplerDF.html">sklearndf.transformation.SkewedChi2SamplerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.SparseCoderDF.html">sklearndf.transformation.SparseCoderDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.SparsePCADF.html">sklearndf.transformation.SparsePCADF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.SparseRandomProjectionDF.html">sklearndf.transformation.SparseRandomProjectionDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.SplineTransformerDF.html">sklearndf.transformation.SplineTransformerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.StandardScalerDF.html">sklearndf.transformation.StandardScalerDF</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">sklearndf.transformation.TargetEncoderDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.TfidfTransformerDF.html">sklearndf.transformation.TfidfTransformerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.TfidfVectorizerDF.html">sklearndf.transformation.TfidfVectorizerDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.TfidfVectorizerTx.html">sklearndf.transformation.TfidfVectorizerTx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.TruncatedSVDDF.html">sklearndf.transformation.TruncatedSVDDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sklearndf.transformation.VarianceThresholdDF.html">sklearndf.transformation.VarianceThresholdDF</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="sklearndf.transformation.extra.html">sklearndf.transformation.extra</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="extra/sklearndf.transformation.extra.BoostAGrootaDF.html">sklearndf.transformation.extra.BoostAGrootaDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="extra/sklearndf.transformation.extra.BorutaDF.html">sklearndf.transformation.extra.BorutaDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="extra/sklearndf.transformation.extra.GrootCVDF.html">sklearndf.transformation.extra.GrootCVDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="extra/sklearndf.transformation.extra.LeshyDF.html">sklearndf.transformation.extra.LeshyDF</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="extra/sklearndf.transformation.extra.wrapper.html">sklearndf.transformation.extra.wrapper</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="extra/wrapper/sklearndf.transformation.extra.wrapper.ARFSWrapperDF.html">sklearndf.transformation.extra.wrapper.ARFSWrapperDF</a></li>
+<li class="toctree-l4"><a class="reference internal" href="extra/wrapper/sklearndf.transformation.extra.wrapper.BorutaPyWrapperDF.html">sklearndf.transformation.extra.wrapper.BorutaPyWrapperDF</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="sklearndf.transformation.wrapper.html">sklearndf.transformation.wrapper</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.AdditiveChi2SamplerWrapperDF.html">sklearndf.transformation.wrapper.AdditiveChi2SamplerWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF.html">sklearndf.transformation.wrapper.BaseMultiOutputWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.BaseMultipleInputsPerOutputTransformerWrapperDF.html">sklearndf.transformation.wrapper.BaseMultipleInputsPerOutputTransformerWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.ColumnPreservingTransformerWrapperDF.html">sklearndf.transformation.wrapper.ColumnPreservingTransformerWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.ColumnSubsetTransformerWrapperDF.html">sklearndf.transformation.wrapper.ColumnSubsetTransformerWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.ColumnTransformerSparseFrames.html">sklearndf.transformation.wrapper.ColumnTransformerSparseFrames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.ColumnTransformerWrapperDF.html">sklearndf.transformation.wrapper.ColumnTransformerWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF.html">sklearndf.transformation.wrapper.ComponentsDimensionalityReductionWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.EmbeddingWrapperDF.html">sklearndf.transformation.wrapper.EmbeddingWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.FeatureSelectionWrapperDF.html">sklearndf.transformation.wrapper.FeatureSelectionWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.ImputerWrapperDF.html">sklearndf.transformation.wrapper.ImputerWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.IsomapWrapperDF.html">sklearndf.transformation.wrapper.IsomapWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF.html">sklearndf.transformation.wrapper.KBinsDiscretizerWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.MissingIndicatorWrapperDF.html">sklearndf.transformation.wrapper.MissingIndicatorWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.NComponentsDimensionalityReductionWrapperDF.html">sklearndf.transformation.wrapper.NComponentsDimensionalityReductionWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.NumpyTransformerWrapperDF.html">sklearndf.transformation.wrapper.NumpyTransformerWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.OneHotEncoderWrapperDF.html">sklearndf.transformation.wrapper.OneHotEncoderWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.PCAWrapperDF.html">sklearndf.transformation.wrapper.PCAWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF.html">sklearndf.transformation.wrapper.PolynomialTransformerWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.SingleColumnTransformerWrapperDF.html">sklearndf.transformation.wrapper.SingleColumnTransformerWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.VectorizerWrapperDF.html">sklearndf.transformation.wrapper.VectorizerWrapperDF</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sklearndf.wrapper.html">sklearndf.wrapper</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../wrapper/sklearndf.wrapper.ClassifierWrapperDF.html">sklearndf.wrapper.ClassifierWrapperDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../wrapper/sklearndf.wrapper.ClusterWrapperDF.html">sklearndf.wrapper.ClusterWrapperDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../wrapper/sklearndf.wrapper.EstimatorWrapperDF.html">sklearndf.wrapper.EstimatorWrapperDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../wrapper/sklearndf.wrapper.EstimatorWrapperDFMeta.html">sklearndf.wrapper.EstimatorWrapperDFMeta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../wrapper/sklearndf.wrapper.LearnerWrapperDF.html">sklearndf.wrapper.LearnerWrapperDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../wrapper/sklearndf.wrapper.MetaEstimatorWrapperDF.html">sklearndf.wrapper.MetaEstimatorWrapperDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../wrapper/sklearndf.wrapper.MissingEstimator.html">sklearndf.wrapper.MissingEstimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../wrapper/sklearndf.wrapper.RegressorWrapperDF.html">sklearndf.wrapper.RegressorWrapperDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../wrapper/sklearndf.wrapper.SupervisedLearnerWrapperDF.html">sklearndf.wrapper.SupervisedLearnerWrapperDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../wrapper/sklearndf.wrapper.TransformerWrapperDF.html">sklearndf.wrapper.TransformerWrapperDF</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../wrapper/sklearndf.wrapper.numpy.html">sklearndf.wrapper.numpy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../wrapper/numpy/sklearndf.wrapper.numpy.ClassifierNPDF.html">sklearndf.wrapper.numpy.ClassifierNPDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wrapper/numpy/sklearndf.wrapper.numpy.EstimatorNPDF.html">sklearndf.wrapper.numpy.EstimatorNPDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wrapper/numpy/sklearndf.wrapper.numpy.LearnerNPDF.html">sklearndf.wrapper.numpy.LearnerNPDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wrapper/numpy/sklearndf.wrapper.numpy.RegressorNPDF.html">sklearndf.wrapper.numpy.RegressorNPDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wrapper/numpy/sklearndf.wrapper.numpy.SupervisedLearnerNPDF.html">sklearndf.wrapper.numpy.SupervisedLearnerNPDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wrapper/numpy/sklearndf.wrapper.numpy.TransformerNPDF.html">sklearndf.wrapper.numpy.TransformerNPDF</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../wrapper/sklearndf.wrapper.stacking.html">sklearndf.wrapper.stacking</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../wrapper/stacking/sklearndf.wrapper.stacking.StackingClassifierWrapperDF.html">sklearndf.wrapper.stacking.StackingClassifierWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wrapper/stacking/sklearndf.wrapper.stacking.StackingEstimatorWrapperDF.html">sklearndf.wrapper.stacking.StackingEstimatorWrapperDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../wrapper/stacking/sklearndf.wrapper.stacking.StackingRegressorWrapperDF.html">sklearndf.wrapper.stacking.StackingRegressorWrapperDF</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../sklearndf.html" class="nav-link">sklearndf</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../sklearndf.transformation.html" class="nav-link">sklearndf.transformation</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">sklearndf.transformation.TargetEncoderDF</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="sklearndf-transformation-targetencoderdf">
+<h1>sklearndf.transformation.TargetEncoderDF<a class="headerlink" href="#sklearndf-transformation-targetencoderdf" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sklearndf.transformation.</span></span><span class="sig-name descname"><span class="pre">TargetEncoderDF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">categories</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/sklearndf/transformation/_transformation_v1_3.html#TargetEncoderDF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF" title="Link to this definition">#</a></dt>
+<dd><p>Target Encoder for regression and classification targets.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class is a wrapper around class <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.TargetEncoder.html#sklearn.preprocessing.TargetEncoder" title="(in scikit-learn v1.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.preprocessing.TargetEncoder</span></code></a>.
+It provides enhanced support for <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/index.html#module-pandas" title="(in pandas v2.3.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandas</span></code></a> data frames, and otherwise
+delegates all attribute access and method calls to an associated
+<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.TargetEncoder.html#sklearn.preprocessing.TargetEncoder" title="(in scikit-learn v1.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TargetEncoder</span></code></a> instance.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Bases<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="wrapper/sklearndf.transformation.wrapper.ColumnPreservingTransformerWrapperDF.html#sklearndf.transformation.wrapper.ColumnPreservingTransformerWrapperDF" title="sklearndf.transformation.wrapper.ColumnPreservingTransformerWrapperDF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColumnPreservingTransformerWrapperDF</span></code></a> [<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.TargetEncoder.html#sklearn.preprocessing.TargetEncoder" title="(in scikit-learn v1.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TargetEncoder</span></code></a>]</p>
+</dd>
+<dt class="field-even">Metaclasses<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../wrapper/sklearndf.wrapper.EstimatorWrapperDFMeta.html#sklearndf.wrapper.EstimatorWrapperDFMeta" title="sklearndf.wrapper.EstimatorWrapperDFMeta"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatorWrapperDFMeta</span></code></a>, <a class="reference external" href="https://docs.python.org/3.7/library/abc.html#abc.ABCMeta" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABCMeta</span></code></a></p>
+</dd>
+</dl>
+<p class="rubric">Method summary</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.clone" title="sklearndf.transformation.TargetEncoderDF.clone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clone</span></code></a></p></td>
+<td><p>Make an unfitted clone of this estimator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.fit" title="sklearndf.transformation.TargetEncoderDF.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a></p></td>
+<td><p>Fit this estimator using the given inputs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.fit_transform" title="sklearndf.transformation.TargetEncoderDF.fit_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit_transform</span></code></a></p></td>
+<td><p>Fit this transformer using the given inputs, then transform the inputs.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.from_fitted" title="sklearndf.transformation.TargetEncoderDF.from_fitted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_fitted</span></code></a></p></td>
+<td><p>Make a new wrapped DF estimator, delegating to a given native estimator that has already been fitted.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.get_feature_names_out" title="sklearndf.transformation.TargetEncoderDF.get_feature_names_out"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_feature_names_out</span></code></a></p></td>
+<td><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.TargetEncoder.html#sklearn.preprocessing.TargetEncoder.get_feature_names_out" title="(in scikit-learn v1.7)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.preprocessing.TargetEncoder.get_feature_names_out()</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.get_metadata_routing" title="sklearndf.transformation.TargetEncoderDF.get_metadata_routing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_metadata_routing</span></code></a></p></td>
+<td><p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.utils.get_metadata_routing()</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.get_params" title="sklearndf.transformation.TargetEncoderDF.get_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_params</span></code></a></p></td>
+<td><p>Get the parameters for this estimator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.inverse_transform" title="sklearndf.transformation.TargetEncoderDF.inverse_transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inverse_transform</span></code></a></p></td>
+<td><p>Inverse-transform the given inputs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.set_output" title="sklearndf.transformation.TargetEncoderDF.set_output"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_output</span></code></a></p></td>
+<td><p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.utils.set_output()</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.set_params" title="sklearndf.transformation.TargetEncoderDF.set_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_params</span></code></a></p></td>
+<td><p>Set the parameters of this estimator.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.to_expression" title="sklearndf.transformation.TargetEncoderDF.to_expression"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_expression</span></code></a></p></td>
+<td><p>Render this object as an expression.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.transform" title="sklearndf.transformation.TargetEncoderDF.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a></p></td>
+<td><p>Transform the given inputs.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="rubric">Attribute summary</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.COL_FEATURE" title="sklearndf.transformation.TargetEncoderDF.COL_FEATURE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COL_FEATURE</span></code></a></p></td>
+<td><p>Name assigned to an <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a> or a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a> with the names of the features used to fit a <a class="reference internal" href="../sklearndf.EstimatorDF.html#sklearndf.EstimatorDF" title="sklearndf.EstimatorDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatorDF</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.COL_FEATURE_ORIGINAL" title="sklearndf.transformation.TargetEncoderDF.COL_FEATURE_ORIGINAL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">COL_FEATURE_ORIGINAL</span></code></a></p></td>
+<td><p>Name assigned to a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a> with the original feature names before transformation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.feature_names_in_" title="sklearndf.transformation.TargetEncoderDF.feature_names_in_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feature_names_in_</span></code></a></p></td>
+<td><p>The pandas column index with the names of the features used to fit this estimator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.feature_names_original_" title="sklearndf.transformation.TargetEncoderDF.feature_names_original_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feature_names_original_</span></code></a></p></td>
+<td><p>A pandas series, mapping the output features resulting from the transformation to the original input features.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.feature_names_out_" title="sklearndf.transformation.TargetEncoderDF.feature_names_out_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">feature_names_out_</span></code></a></p></td>
+<td><p>A pandas column index with the names of the features produced by this transformer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.is_fitted" title="sklearndf.transformation.TargetEncoderDF.is_fitted"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_fitted</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if this object is fitted, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.n_features_in_" title="sklearndf.transformation.TargetEncoderDF.n_features_in_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_features_in_</span></code></a></p></td>
+<td><p>The number of features used to fit this estimator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.n_outputs_" title="sklearndf.transformation.TargetEncoderDF.n_outputs_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_outputs_</span></code></a></p></td>
+<td><p>The number of outputs used to fit this estimator.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.native_estimator" title="sklearndf.transformation.TargetEncoderDF.native_estimator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">native_estimator</span></code></a></p></td>
+<td><p>The native estimator that this wrapper delegates to.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.output_names_" title="sklearndf.transformation.TargetEncoderDF.output_names_"><code class="xref py py-obj docutils literal notranslate"><span class="pre">output_names_</span></code></a></p></td>
+<td><p>The name(s) of the output(s) this estimator was fitted to, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if this estimator was not fitted to any outputs.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="rubric">Definitions</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.clone" title="Link to this definition">#</a></dt>
+<dd><p>Make an unfitted clone of this estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF" title="sklearndf.transformation._transformation_v1_3.TargetEncoderDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">TargetEncoderDF</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the unfitted clone</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fit_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fit this estimator using the given inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>, <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a>]</span>) – input data frame with observations as rows and features as columns</p></li>
+<li><p><strong>y</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a>, <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>, <a class="reference external" href="https://docs.python.org/3.7/library/constants.html#None" title="(in Python v3.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>]</span>) – an optional series or data frame with one or more outputs</p></li>
+<li><p><strong>fit_params</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span>) – additional keyword parameters as required by specific
+estimator implementations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF" title="sklearndf.transformation._transformation_v1_3.TargetEncoderDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">TargetEncoderDF</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">self</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fit_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.fit_transform" title="Link to this definition">#</a></dt>
+<dd><p>Fit this transformer using the given inputs, then transform the inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a>, <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>]</span>) – input data frame with observations as rows and features as columns</p></li>
+<li><p><strong>y</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Optional" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a>]</span>) – an optional series or data frame with one or more outputs</p></li>
+<li><p><strong>fit_params</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span>) – additional keyword parameters as required by specific
+transformer implementations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the transformed inputs</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.from_fitted">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_fitted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estimator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_outputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.from_fitted" title="Link to this definition">#</a></dt>
+<dd><p>Make a new wrapped DF estimator, delegating to a given native estimator that
+has already been fitted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>estimator</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.TargetEncoder.html#sklearn.preprocessing.TargetEncoder" title="(in scikit-learn v1.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TargetEncoder</span></code></a></span>) – the fitted native estimator to use as the delegate</p></li>
+<li><p><strong>features_in</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a></span>) – the column names of X used for fitting the estimator</p></li>
+<li><p><strong>n_outputs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#int" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – the number of outputs in y used for fitting the estimator</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF" title="sklearndf.transformation._transformation_v1_3.TargetEncoderDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">TargetEncoderDF</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the wrapped data frame estimator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.get_feature_names_out">
+<span class="sig-name descname"><span class="pre">get_feature_names_out</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.get_feature_names_out" title="Link to this definition">#</a></dt>
+<dd><p>See <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.TargetEncoder.html#sklearn.preprocessing.TargetEncoder.get_feature_names_out" title="(in scikit-learn v1.7)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.preprocessing.TargetEncoder.get_feature_names_out()</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.get_metadata_routing">
+<span class="sig-name descname"><span class="pre">get_metadata_routing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.get_metadata_routing" title="Link to this definition">#</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.utils.get_metadata_routing()</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.get_params">
+<span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.get_params" title="Link to this definition">#</a></dt>
+<dd><p>Get the parameters for this estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>deep</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#bool" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – if <code class="docutils literal notranslate"><span class="pre">True</span></code>, return the parameters for this estimator, and
+for any sub-estimators contained in this estimator</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.7/library/collections.abc.html#collections.abc.Mapping" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapping</span></code></a>[<a class="reference external" href="https://docs.python.org/3.7/library/stdtypes.html#str" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a mapping of parameter names to their values</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.inverse_transform">
+<span class="sig-name descname"><span class="pre">inverse_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.inverse_transform" title="Link to this definition">#</a></dt>
+<dd><p>Inverse-transform the given inputs.</p>
+<p>The inputs must have the same features as the inputs used to fit
+this transformer.
+The features can be provided in any order since they are identified by their
+column names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a>, <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>]</span>) – input data frame with observations as rows and features as columns</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the reverse-transformed inputs</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.set_output">
+<span class="sig-name descname"><span class="pre">set_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.set_output" title="Link to this definition">#</a></dt>
+<dd><p>See <code class="xref py py-meth docutils literal notranslate"><span class="pre">sklearn.utils.set_output()</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.set_params">
+<span class="sig-name descname"><span class="pre">set_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.set_params" title="Link to this definition">#</a></dt>
+<dd><p>Set the parameters of this estimator.</p>
+<p>Valid parameter keys can be obtained by calling <a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.get_params" title="sklearndf.transformation.TargetEncoderDF.get_params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_params()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>params</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Any" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a></span>) – the estimator parameters to set</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF" title="sklearndf.transformation._transformation_v1_3.TargetEncoderDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">TargetEncoderDF</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">self</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.to_expression">
+<span class="sig-name descname"><span class="pre">to_expression</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.to_expression" title="Link to this definition">#</a></dt>
+<dd><p>Render this object as an expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://bcg-x-official.github.io/pytools/apidoc/pytools/expression/pytools.expression.Expression.html#pytools.expression.Expression" title="(in pytools v3.0.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Expression</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the expression representing this object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.transform" title="Link to this definition">#</a></dt>
+<dd><p>Transform the given inputs.</p>
+<p>The inputs must have the same features as the inputs used to fit
+this transformer.
+The features can be provided in any order since they are identified by their
+column names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3.7/library/typing.html#typing.Union" title="(in Python v3.7)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a>, <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>]</span>) – input data frame with observations as rows and features as columns</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the transformed inputs</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.COL_FEATURE">
+<span class="sig-name descname"><span class="pre">COL_FEATURE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'feature'</span></em><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.COL_FEATURE" title="Link to this definition">#</a></dt>
+<dd><p>Name assigned to an <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a> or a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a>
+with the names of the features used to fit a <a class="reference internal" href="../sklearndf.EstimatorDF.html#sklearndf.EstimatorDF" title="sklearndf.EstimatorDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">EstimatorDF</span></code></a>.</p>
+<p>See <a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.feature_names_in_" title="sklearndf.transformation.TargetEncoderDF.feature_names_in_"><code class="xref py py-meth docutils literal notranslate"><span class="pre">feature_names_in_()</span></code></a> and
+<a class="reference internal" href="../sklearndf.TransformerDF.html#sklearndf.TransformerDF.feature_names_original_" title="sklearndf.TransformerDF.feature_names_original_"><code class="xref py py-meth docutils literal notranslate"><span class="pre">feature_names_original_()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.COL_FEATURE_ORIGINAL">
+<span class="sig-name descname"><span class="pre">COL_FEATURE_ORIGINAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'feature_original'</span></em><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.COL_FEATURE_ORIGINAL" title="Link to this definition">#</a></dt>
+<dd><p>Name assigned to a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a> with the original feature names
+before transformation.</p>
+<p>See <a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF.feature_names_original_" title="sklearndf.transformation.TargetEncoderDF.feature_names_original_"><code class="xref py py-meth docutils literal notranslate"><span class="pre">feature_names_original_()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.feature_names_in_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_names_in_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v2.3.1)"><span class="pre">Index</span></a></em><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.feature_names_in_" title="Link to this definition">#</a></dt>
+<dd><p>The pandas column index with the names of the features used to fit this
+estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/exceptions.html#AttributeError" title="(in Python v3.7)"><strong>AttributeError</strong></a> – this estimator is not fitted</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.feature_names_original_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_names_original_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.3.1)"><span class="pre">Series</span></a></em><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.feature_names_original_" title="Link to this definition">#</a></dt>
+<dd><p>A pandas series, mapping the output features resulting from the transformation
+to the original input features.</p>
+<p>The index of the resulting series consists of the names of the output features;
+the corresponding values are the names of the original input features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/exceptions.html#AttributeError" title="(in Python v3.7)"><strong>AttributeError</strong></a> – this transformer is not fitted</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.feature_names_out_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">feature_names_out_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v2.3.1)"><span class="pre">Index</span></a></em><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.feature_names_out_" title="Link to this definition">#</a></dt>
+<dd><p>A pandas column index with the names of the features produced by this
+transformer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/exceptions.html#AttributeError" title="(in Python v3.7)"><strong>AttributeError</strong></a> – this transformer is not fitted</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.is_fitted">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_fitted</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#bool" title="(in Python v3.7)"><span class="pre">bool</span></a></em><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.is_fitted" title="Link to this definition">#</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if this object is fitted, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.n_features_in_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_features_in_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#int" title="(in Python v3.7)"><span class="pre">int</span></a></em><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.n_features_in_" title="Link to this definition">#</a></dt>
+<dd><p>The number of features used to fit this estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/exceptions.html#AttributeError" title="(in Python v3.7)"><strong>AttributeError</strong></a> – this estimator is not fitted</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.n_outputs_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_outputs_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.7/library/functions.html#int" title="(in Python v3.7)"><span class="pre">int</span></a></em><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.n_outputs_" title="Link to this definition">#</a></dt>
+<dd><p>The number of outputs used to fit this estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/exceptions.html#AttributeError" title="(in Python v3.7)"><strong>AttributeError</strong></a> – this estimator is not fitted</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.native_estimator">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">native_estimator</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#sklearndf.transformation.TargetEncoderDF" title="sklearndf.transformation._transformation_v1_3.TargetEncoderDF"><span class="pre">TargetEncoderDF</span></a></em><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.native_estimator" title="Link to this definition">#</a></dt>
+<dd><p>The native estimator that this wrapper delegates to.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sklearndf.transformation.TargetEncoderDF.output_names_">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output_names_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.7/library/stdtypes.html#list" title="(in Python v3.7)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3.7/library/stdtypes.html#str" title="(in Python v3.7)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3.7/library/constants.html#None" title="(in Python v3.7)"><span class="pre">None</span></a></em><a class="headerlink" href="#sklearndf.transformation.TargetEncoderDF.output_names_" title="Link to this definition">#</a></dt>
+<dd><p>The name(s) of the output(s) this estimator was fitted to,
+or <code class="docutils literal notranslate"><span class="pre">None</span></code> if this estimator was not fitted to any outputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.7/library/exceptions.html#AttributeError" title="(in Python v3.7)"><strong>AttributeError</strong></a> – this estimator is not fitted</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="sklearndf.transformation.StandardScalerDF.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">sklearndf.transformation.StandardScalerDF</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="sklearndf.transformation.TfidfTransformerDF.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">sklearndf.transformation.TfidfTransformerDF</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.clone"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.clone()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.fit"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.fit_transform"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.fit_transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.from_fitted"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.from_fitted()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.get_feature_names_out"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.get_feature_names_out()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.get_metadata_routing"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.get_metadata_routing()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.get_params"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.get_params()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.inverse_transform"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.inverse_transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.set_output"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.set_output()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.set_params"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.set_params()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.to_expression"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.to_expression()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.transform"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.transform()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.COL_FEATURE"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.COL_FEATURE</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.COL_FEATURE_ORIGINAL"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.COL_FEATURE_ORIGINAL</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.feature_names_in_"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.feature_names_in_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.feature_names_original_"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.feature_names_original_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.feature_names_out_"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.feature_names_out_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.is_fitted"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.is_fitted</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.n_features_in_"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.n_features_in_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.n_outputs_"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.n_outputs_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.native_estimator"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.native_estimator</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sklearndf.transformation.TargetEncoderDF.output_names_"><code class="docutils literal notranslate"><span class="pre">TargetEncoderDF.output_names_</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/apidoc/sklearndf/transformation/sklearndf.transformation.TargetEncoderDF.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2022, Boston Consulting Group (BCG).
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+sklearndf.classification.FixedThresholdClassifierDF
+===================================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: FixedThresholdClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~FixedThresholdClassifierDF.clone
+      ~FixedThresholdClassifierDF.decision_function
+      ~FixedThresholdClassifierDF.fit
+      ~FixedThresholdClassifierDF.from_fitted
+      ~FixedThresholdClassifierDF.get_metadata_routing
+      ~FixedThresholdClassifierDF.get_params
+      ~FixedThresholdClassifierDF.predict
+      ~FixedThresholdClassifierDF.predict_log_proba
+      ~FixedThresholdClassifierDF.predict_proba
+      ~FixedThresholdClassifierDF.score
+      ~FixedThresholdClassifierDF.set_params
+      ~FixedThresholdClassifierDF.set_score_request
+      ~FixedThresholdClassifierDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~FixedThresholdClassifierDF.COL_FEATURE
+      ~FixedThresholdClassifierDF.COL_PREDICTION
+      ~FixedThresholdClassifierDF.classes_
+      ~FixedThresholdClassifierDF.feature_names_in_
+      ~FixedThresholdClassifierDF.is_fitted
+      ~FixedThresholdClassifierDF.n_features_in_
+      ~FixedThresholdClassifierDF.n_outputs_
+      ~FixedThresholdClassifierDF.native_estimator
+      ~FixedThresholdClassifierDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

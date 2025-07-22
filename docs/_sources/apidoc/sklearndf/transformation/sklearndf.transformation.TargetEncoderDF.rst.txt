@@ -1,0 +1,53 @@
+sklearndf.transformation.TargetEncoderDF
+========================================
+
+.. currentmodule:: sklearndf.transformation
+
+.. autoclass:: TargetEncoderDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~TargetEncoderDF.clone
+      ~TargetEncoderDF.fit
+      ~TargetEncoderDF.fit_transform
+      ~TargetEncoderDF.from_fitted
+      ~TargetEncoderDF.get_feature_names_out
+      ~TargetEncoderDF.get_metadata_routing
+      ~TargetEncoderDF.get_params
+      ~TargetEncoderDF.inverse_transform
+      ~TargetEncoderDF.set_output
+      ~TargetEncoderDF.set_params
+      ~TargetEncoderDF.to_expression
+      ~TargetEncoderDF.transform
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~TargetEncoderDF.COL_FEATURE
+      ~TargetEncoderDF.COL_FEATURE_ORIGINAL
+      ~TargetEncoderDF.feature_names_in_
+      ~TargetEncoderDF.feature_names_original_
+      ~TargetEncoderDF.feature_names_out_
+      ~TargetEncoderDF.is_fitted
+      ~TargetEncoderDF.n_features_in_
+      ~TargetEncoderDF.n_outputs_
+      ~TargetEncoderDF.native_estimator
+      ~TargetEncoderDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

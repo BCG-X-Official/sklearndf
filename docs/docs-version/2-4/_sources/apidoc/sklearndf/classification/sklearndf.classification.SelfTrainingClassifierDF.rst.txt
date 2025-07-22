@@ -1,0 +1,53 @@
+sklearndf.classification.SelfTrainingClassifierDF
+=================================================
+
+.. currentmodule:: sklearndf.classification
+
+.. autoclass:: SelfTrainingClassifierDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~SelfTrainingClassifierDF.clone
+      ~SelfTrainingClassifierDF.decision_function
+      ~SelfTrainingClassifierDF.fit
+      ~SelfTrainingClassifierDF.from_fitted
+      ~SelfTrainingClassifierDF.get_metadata_routing
+      ~SelfTrainingClassifierDF.get_params
+      ~SelfTrainingClassifierDF.predict
+      ~SelfTrainingClassifierDF.predict_log_proba
+      ~SelfTrainingClassifierDF.predict_proba
+      ~SelfTrainingClassifierDF.score
+      ~SelfTrainingClassifierDF.set_params
+      ~SelfTrainingClassifierDF.set_score_request
+      ~SelfTrainingClassifierDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~SelfTrainingClassifierDF.COL_FEATURE
+      ~SelfTrainingClassifierDF.COL_PREDICTION
+      ~SelfTrainingClassifierDF.classes_
+      ~SelfTrainingClassifierDF.feature_names_in_
+      ~SelfTrainingClassifierDF.is_fitted
+      ~SelfTrainingClassifierDF.n_features_in_
+      ~SelfTrainingClassifierDF.n_outputs_
+      ~SelfTrainingClassifierDF.native_estimator
+      ~SelfTrainingClassifierDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

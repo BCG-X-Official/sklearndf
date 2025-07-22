@@ -1,0 +1,53 @@
+sklearndf.classification.wrapper.ThresholdClassifierWrapperDF
+=============================================================
+
+.. currentmodule:: sklearndf.classification.wrapper
+
+.. autoclass:: ThresholdClassifierWrapperDF
+   :members:
+   :no-show-inheritance:
+   :inherited-members:
+   :special-members: __call__
+
+   
+   
+   .. rubric:: Method summary
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~ThresholdClassifierWrapperDF.clone
+      ~ThresholdClassifierWrapperDF.decision_function
+      ~ThresholdClassifierWrapperDF.fit
+      ~ThresholdClassifierWrapperDF.from_fitted
+      ~ThresholdClassifierWrapperDF.get_metadata_routing
+      ~ThresholdClassifierWrapperDF.get_params
+      ~ThresholdClassifierWrapperDF.predict
+      ~ThresholdClassifierWrapperDF.predict_log_proba
+      ~ThresholdClassifierWrapperDF.predict_proba
+      ~ThresholdClassifierWrapperDF.score
+      ~ThresholdClassifierWrapperDF.set_params
+      ~ThresholdClassifierWrapperDF.set_score_request
+      ~ThresholdClassifierWrapperDF.to_expression
+   
+   
+
+   
+   
+   .. rubric:: Attribute summary
+
+   .. autosummary::
+   
+      ~ThresholdClassifierWrapperDF.COL_FEATURE
+      ~ThresholdClassifierWrapperDF.COL_PREDICTION
+      ~ThresholdClassifierWrapperDF.classes_
+      ~ThresholdClassifierWrapperDF.feature_names_in_
+      ~ThresholdClassifierWrapperDF.is_fitted
+      ~ThresholdClassifierWrapperDF.n_features_in_
+      ~ThresholdClassifierWrapperDF.n_outputs_
+      ~ThresholdClassifierWrapperDF.native_estimator
+      ~ThresholdClassifierWrapperDF.output_names_
+   
+   
+
+   .. rubric:: Definitions

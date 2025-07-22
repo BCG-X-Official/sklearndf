@@ -1,6 +1,7 @@
 const DOCS_VERSIONS = {
-    "current": "2.3.0",
+    "current": "2.4.0",
     "all": [
+        "2.4.0",
         "2.3.0",
         "2.2.1",
         "2.1.0",
