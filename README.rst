@@ -284,13 +284,13 @@ or have a look at
 .. |pypi| image:: https://badge.fury.io/py/sklearndf.svg
    :target: https://pypi.org/project/sklearndf/
 
-.. |azure_build| image:: https://dev.azure.com/gamma-facet/facet/_apis/build/status/BCG-X-Official.sklearndf?repoName=BCG-X-Official%2Fsklearndf&branchName=develop
+.. |azure_build| image:: https://dev.azure.com/gamma-facet/facet/_apis/build/status/BCG-Gamma.sklearndf?repoName=BCG-X-Official%2Fsklearndf&branchName=2.4.x
    :target: https://dev.azure.com/gamma-facet/facet/_build?definitionId=8&_a=summary
 
-.. |azure_code_cov| image:: https://img.shields.io/azure-devops/coverage/gamma-facet/facet/8/2.1.x
+.. |azure_code_cov| image:: https://img.shields.io/azure-devops/coverage/gamma-facet/facet/8/2.4.x
    :target: https://dev.azure.com/gamma-facet/facet/_build?definitionId=8&_a=summary
 
-.. |python_versions| image:: https://img.shields.io/badge/python-3.7|3.8|3.9-blue.svg
+.. |python_versions| image:: https://img.shields.io/badge/python-3.9|3.10|3.11|3.12|3.13-blue.svg
    :target: https://www.python.org/downloads/release/python-380/
 
 .. |code_style| image:: https://img.shields.io/badge/code%20style-black-000000.svg
