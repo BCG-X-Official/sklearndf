@@ -10,13 +10,20 @@ Release Notes
 *skelearndf* 2.4
 ----------------
 
-
-2.4.0
-~~~~~
-
 *sklearndf* |nbsp| 2.4 adds support for
 `scikit-learn 1.7 <https://scikit-learn.org/1.7>`_, and drops support for
 *scikit-learn* |nbsp| 1.2 and earlier, and Python |nbsp| 3.8 and earlier.
+
+
+2.4.1
+~~~~~
+
+- FIX: implement method :meth:`.EstimatorDF.__sklearn_is_fitted__`, introduced in
+  *scikit-learn* |nbsp| 1.3, to correctly report if the estimator is fitted.
+
+
+2.4.0
+~~~~~
 
 - API: add DF wrapper classes :class:`.FixedThresholdClassifierDF`
   and :class:`.TunedThresholdClassifierCVDF` for native classifiers
