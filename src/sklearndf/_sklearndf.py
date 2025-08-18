@@ -296,6 +296,19 @@ class EstimatorDF(
             }
         )
 
+    def __sklearn_is_fitted__(self) -> bool:
+        """
+        Check if this estimator is fitted.
+
+        This method is used by `scikit-learn` to determine if this estimator is
+        fitted.
+
+        Delegates to the :attr:`is_fitted` property.
+
+        :return: ``True`` if the estimator is fitted, ``False`` otherwise
+        """
+        return self.is_fitted
+
 
 class LearnerDF(EstimatorDF, metaclass=ABCMeta):
     """
