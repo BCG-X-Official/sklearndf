@@ -12,13 +12,13 @@ dependencies:
   - pandas            ~= 2.3
   - pip               ~= 25.1
   - python            ~= 3.12.11
-  - scikit-learn      ~= 1.7.0
+  - scikit-learn      ~= 1.7.1
   - scipy             ~= 1.15
   - xgboost           ~= 3.0
   - pip:
       - arfs          ~= 3.0
       - Boruta        ~= 0.4
-# test
+  # test
   - pytest            ~= 8.1
   - pytest-cov        ~= 4.1
   # sphinx

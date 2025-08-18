@@ -95,7 +95,7 @@ numpy          = "~=2.2"
 packaging      = ">=25"
 pandas         = "~=2.3"
 python         = "~=3.12"
-scikit-learn   = "~=1.7.0"
+scikit-learn   = "~=1.7.1"
 scipy          = "~=1.16"
 xgboost        = "~=3.0"
 # additional maximum requirements of gamma-pytools
