@@ -814,7 +814,7 @@ __tracker.validate()
 
 def _slice_not_empty(s: slice) -> bool:
     if s.start is None:
-        return s.stop is not None and s.stop > 0
+        return s.stop is None or s.stop > 0
     if s.stop is None:
         return True
     return s.stop > s.start  # type: ignore[no-any-return]
