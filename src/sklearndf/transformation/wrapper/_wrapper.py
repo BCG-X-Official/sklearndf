@@ -349,28 +349,41 @@ class ColumnTransformerSparseFrames(
         *,
         n_samples: Optional[int] = None,
     ) -> Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]:
-        if self.verbose_feature_names_out:
-            # Get the prefixes for the columns of each transformer, unless the
-            # transformer does not process any columns
-            prefixes = [name for name, _, cols in self.transformers if len(cols)]
-            if self._remainder[2] and self.remainder != "drop":
-                # remainder columns exist and are not being dropped
-                prefixes.append("remainder")
-            stacked = hstack_frames(Xs, prefixes=prefixes)
-        else:
-            stacked = hstack_frames(Xs)
 
-        if stacked is None:
+        if all(isinstance(X, pd.DataFrame) for X in Xs):
+            stacked: pd.DataFrame
+
+            if self.verbose_feature_names_out:
+                # Get the prefixes for the columns of each transformer, unless the
+                # transformer does not process any columns
+                prefixes = [
+                    name
+                    for name, cols in (
+                        # resolve callable column selectors to get the actual columns …
+                        (name, cols(x) if callable(cols) else cols)
+                        for (name, _, cols), x in zip(self.transformers, Xs)
+                    )
+                    # … and only keep the prefixes for transformers that actually
+                    # processed one or more columns
+                    if len(cols)
+                ]
+                if self._remainder[2] and self.remainder != "drop":
+                    # remainder columns exist and are not being dropped
+                    prefixes.append("remainder")
+                stacked = hstack_frames(Xs, prefixes=prefixes)
+            else:
+                stacked = hstack_frames(Xs)
+            self.sparse_output_ = is_sparse_frame(stacked)
+            return stacked
+        else:
             if n_samples is None:
                 # Do not pass n_samples if we did not receive it, for backwards
                 # compatibility
+                # noinspection PyArgumentList
                 return super()._hstack(Xs)
             else:
                 # Only pass n_samples if we receive it
                 return super()._hstack(Xs, n_samples=n_samples)
-        else:
-            self.sparse_output_ = is_sparse_frame(stacked)
-            return stacked
 
 
 class ColumnTransformerWrapperDF(
@@ -420,7 +433,7 @@ class ColumnTransformerWrapperDF(
                 f"{TransformerDF.__name__} or special values "
                 f'"{" and ".join(ColumnTransformerWrapperDF.__SPECIAL_TRANSFORMERS)}" '
                 "as valid transformers, but "
-                f'also got: {", ".join(non_compliant_transformers)}'
+                f"also got: {', '.join(non_compliant_transformers)}"
             )
 
     def _get_features_original(self) -> pd.Series:
@@ -800,3 +813,8 @@ class VectorizerWrapperDF(
 #
 
 __tracker.validate()
+
+
+#
+# Auxiliary functions
+#
