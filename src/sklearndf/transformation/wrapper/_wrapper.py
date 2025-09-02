@@ -349,26 +349,18 @@ class ColumnTransformerSparseFrames(
         *,
         n_samples: Optional[int] = None,
     ) -> Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]:
-
         if all(isinstance(X, pd.DataFrame) for X in Xs):
             stacked: pd.DataFrame
 
             if self.verbose_feature_names_out:
-                # Get the prefixes for the columns of each transformer, unless the
-                # transformer does not process any columns
+                # Process all transformers in the ColumnTransformer
                 prefixes = [
                     name
-                    for name, cols in (
-                        # resolve callable column selectors to get the actual columns …
-                        (name, cols(x) if callable(cols) else cols)
-                        for (name, _, cols), x in zip(self.transformers, Xs)
-                    )
-                    # … and only keep the prefixes for transformers that actually
-                    # processed one or more columns
-                    if len(cols)
+                    for name, _, _ in self.transformers
+                    if _slice_not_empty(self.output_indices_[name])
                 ]
                 if self._remainder[2] and self.remainder != "drop":
-                    # remainder columns exist and are not being dropped
+                    # Remainder columns exist and are not being dropped
                     prefixes.append("remainder")
                 stacked = hstack_frames(Xs, prefixes=prefixes)
             else:
@@ -818,3 +810,12 @@ __tracker.validate()
 #
 # Auxiliary functions
 #
+
+
+def _slice_not_empty(s: slice) -> bool:
+    if s.start is None:
+        return s.stop is not None and s.stop > 0
+    elif s.stop is None:
+        return s.start is not None
+    else:
+        return s.stop > s.start  # type: ignore[no-any-return]
