@@ -13,7 +13,7 @@ def hstack_frames(
     frames: list[pd.DataFrame],
     *,
     prefixes: Optional[list[str]] = None,
-) -> Optional[pd.DataFrame]:
+) -> pd.DataFrame:
     """
     If only data frames are passed, stack them horizontally.
 
