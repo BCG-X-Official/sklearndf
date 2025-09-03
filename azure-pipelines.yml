@@ -29,26 +29,38 @@ resources:
       ref: 3.0.x
 
 variables:
-  # Normalize a short branchName (works for PRs and normal pushes)
+  # Short branch name for convenience (works for PRs & non-PRs)
   - name: branchName
     ${{ if startsWith(variables['Build.SourceBranch'], 'refs/pull/') }}:
+      # Can be either 'refs/heads/dev/...' or just 'dev/...'
       value: ${{ replace(variables['System.PullRequest.SourceBranch'], 'refs/heads/', '') }}
     ${{ else }}:
       value: ${{ replace(variables['Build.SourceBranch'], 'refs/heads/', '') }}
 
-  # Booleans computed directly from the refs (no chaining)
+  # Detect release from either full ref (non-PR) or PR source (short or full)
   - name: source_is_release_branch
     value: ${{ or(
-        startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'),
-        and(startsWith(variables['Build.SourceBranch'], 'refs/pull/'),
-            startsWith(variables['System.PullRequest.SourceBranch'], 'refs/heads/release/'))
+      startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'),
+      and(
+        startsWith(variables['Build.SourceBranch'], 'refs/pull/'),
+        or(
+          startsWith(variables['System.PullRequest.SourceBranch'], 'refs/heads/release/'),
+          startsWith(variables['System.PullRequest.SourceBranch'], 'release/')
+        )
+      )
       ) }}
 
+  # Detect dev from either full ref (non-PR) or PR source (short or full)
   - name: source_is_develop_branch
     value: ${{ or(
-        startsWith(variables['Build.SourceBranch'], 'refs/heads/dev/'),
-        and(startsWith(variables['Build.SourceBranch'], 'refs/pull/'),
-            startsWith(variables['System.PullRequest.SourceBranch'], 'refs/heads/dev/'))
+      startsWith(variables['Build.SourceBranch'], 'refs/heads/dev/'),
+      and(
+        startsWith(variables['Build.SourceBranch'], 'refs/pull/'),
+        or(
+          startsWith(variables['System.PullRequest.SourceBranch'], 'refs/heads/dev/'),
+          startsWith(variables['System.PullRequest.SourceBranch'], 'dev/')
+        )
+      )
       ) }}
 
   - name: is_scheduled
