@@ -590,6 +590,9 @@ stages:
                 exit 1
               fi
               
+              # Log out in case we are already logged in due to a previous failure
+              anaconda logout --at anaconda.org || true
+
               anaconda logout --at anaconda.org
               # set +x to prevent Azure from randomly appending a \' of the ## statement
               set +x
