@@ -590,7 +590,7 @@ stages:
                 exit 1
               fi
               
-              anaconda logout
+              anaconda logout --at anaconda.org
               # set +x to prevent Azure from randomly appending a \' of the ## statement
               set +x
               echo "##vso[task.setvariable variable=conda_published]True"
