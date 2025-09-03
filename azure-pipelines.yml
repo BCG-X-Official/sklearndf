@@ -30,16 +30,14 @@ resources:
 
 variables:
   # Short branch name for convenience (works for PRs & non-PRs)
-  - name: branchName
-    ${{ if startsWith(variables['Build.SourceBranch'], 'refs/pull/') }}:
-      # Can be either 'refs/heads/dev/...' or just 'dev/...'
-      value: ${{ replace(variables['System.PullRequest.SourceBranch'], 'refs/heads/', '') }}
-    ${{ else }}:
-      value: ${{ replace(variables['Build.SourceBranch'], 'refs/heads/', '') }}
+  branchName: $[ if(
+      startsWith(variables['Build.SourceBranch'], 'refs/pull/'),
+      replace(variables['System.PullRequest.SourceBranch'], 'refs/heads/', ''),
+      replace(variables['Build.SourceBranch'], 'refs/heads/', '')
+    ) ]
 
   # Detect release from either full ref (non-PR) or PR source (short or full)
-  - name: source_is_release_branch
-    value: ${{ or(
+  source_is_release_branch: $[ or(
       startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'),
       and(
         startsWith(variables['Build.SourceBranch'], 'refs/pull/'),
@@ -48,11 +46,10 @@ variables:
           startsWith(variables['System.PullRequest.SourceBranch'], 'release/')
         )
       )
-      ) }}
+    ) ]
 
   # Detect dev from either full ref (non-PR) or PR source (short or full)
-  - name: source_is_develop_branch
-    value: ${{ or(
+  source_is_develop_branch: $[ or(
       startsWith(variables['Build.SourceBranch'], 'refs/heads/dev/'),
       and(
         startsWith(variables['Build.SourceBranch'], 'refs/pull/'),
@@ -61,19 +58,16 @@ variables:
           startsWith(variables['System.PullRequest.SourceBranch'], 'dev/')
         )
       )
-      ) }}
+    ) ]
 
-  - name: is_scheduled
-    value: ${{ eq(variables['Build.Reason'], 'Schedule') }}
+  # Scheduled? — runtime
+  is_scheduled: $[ eq(variables['Build.Reason'], 'Schedule') ]
 
-  - name: project_name
-    value: sklearndf
-  - name: project_root
-    value: $(project_name)
-  - name: package_name
-    value: sklearndf
-  - name: sshPublicKey
-    value: $(sshPublicKey_sklearndf)
+  # Unrelated static vars can stay as-is
+  project_name: sklearndf
+  project_root: $(project_name)
+  package_name: sklearndf
+  sshPublicKey: $(sshPublicKey_sklearndf)
 
 stages:
   # check code quality first to fail fast (isort, flake8, black)
