@@ -4,18 +4,16 @@ Auxiliary functions for internal use.
 
 import math
 import numbers
-from typing import Any, Optional, Union, cast
+from typing import Any, Optional, cast
 
-import numpy.typing as npt
 import pandas as pd
-from scipy import sparse
 
 
 def hstack_frames(
-    frames: list[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]],
+    frames: list[pd.DataFrame],
     *,
     prefixes: Optional[list[str]] = None,
-) -> Optional[pd.DataFrame]:
+) -> pd.DataFrame:
     """
     If only data frames are passed, stack them horizontally.
 
@@ -25,20 +23,14 @@ def hstack_frames(
     :return: the stacked data frame if all elements of ``frames`` are data frames;
         ``None`` otherwise
     """
-    if all(isinstance(frame, pd.DataFrame) for frame in frames):
-        # all frames are data frames
-        frames = cast(list[pd.DataFrame], frames)
-        if prefixes is not None:
-            assert len(prefixes) == len(
-                frames
-            ), "number of prefixes must match number of frames"
-            frames = [
-                frame.add_prefix(f"{prefix}__")
-                for frame, prefix in zip(frames, prefixes)
-            ]
-        return pd.concat(frames, axis=1)
-    else:
-        return None
+    if prefixes is not None:
+        assert len(prefixes) == len(
+            frames
+        ), "number of prefixes must match number of frames"
+        frames = [
+            frame.add_prefix(f"{prefix}__") for frame, prefix in zip(frames, prefixes)
+        ]
+    return pd.concat(frames, axis=1)
 
 
 def is_sparse_frame(frame: pd.DataFrame) -> bool:
