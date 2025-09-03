@@ -17,7 +17,7 @@ Release Notes
 2.4.2
 ~~~~~
 
-- FIX: update `ColumnTransformerDF` to correctly handle column selectors created
+- FIX: update :class:`.ColumnTransformerDF` to correctly handle column selectors created
   with scikit-learn's :class:`~sklearn.compose.make_column_selector`
 
 
