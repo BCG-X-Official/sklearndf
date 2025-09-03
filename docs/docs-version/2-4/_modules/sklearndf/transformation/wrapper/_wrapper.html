@@ -42,14 +42,14 @@
     <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/js/gamma.js?v=6cc5c158"></script>
-    <script src="../../../../_static/js/versions.js?v=4deba54b"></script>
+    <script src="../../../../_static/js/versions.js?v=0fef17b7"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/sklearndf/transformation/wrapper/_wrapper';</script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.4.1" />
+  <meta name="docsearch:version" content="2.4.2" />
   </head>
   
   
@@ -733,28 +733,33 @@
         <span class="o">*</span><span class="p">,</span>
         <span class="n">n_samples</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">npt</span><span class="o">.</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">sparse</span><span class="o">.</span><span class="n">spmatrix</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_feature_names_out</span><span class="p">:</span>
-            <span class="c1"># Get the prefixes for the columns of each transformer, unless the</span>
-            <span class="c1"># transformer does not process any columns</span>
-            <span class="n">prefixes</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">cols</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformers</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">)]</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remainder</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">remainder</span> <span class="o">!=</span> <span class="s2">&quot;drop&quot;</span><span class="p">:</span>
-                <span class="c1"># remainder columns exist and are not being dropped</span>
-                <span class="n">prefixes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;remainder&quot;</span><span class="p">)</span>
-            <span class="n">stacked</span> <span class="o">=</span> <span class="n">hstack_frames</span><span class="p">(</span><span class="n">Xs</span><span class="p">,</span> <span class="n">prefixes</span><span class="o">=</span><span class="n">prefixes</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">stacked</span> <span class="o">=</span> <span class="n">hstack_frames</span><span class="p">(</span><span class="n">Xs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">Xs</span><span class="p">):</span>
+            <span class="n">stacked</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
 
-        <span class="k">if</span> <span class="n">stacked</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_feature_names_out</span><span class="p">:</span>
+                <span class="c1"># Process all transformers in the ColumnTransformer</span>
+                <span class="n">prefixes</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">name</span>
+                    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformers</span>
+                    <span class="k">if</span> <span class="n">_slice_not_empty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_indices_</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+                <span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remainder</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">remainder</span> <span class="o">!=</span> <span class="s2">&quot;drop&quot;</span><span class="p">:</span>
+                    <span class="c1"># Remainder columns exist and are not being dropped</span>
+                    <span class="n">prefixes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;remainder&quot;</span><span class="p">)</span>
+                <span class="n">stacked</span> <span class="o">=</span> <span class="n">hstack_frames</span><span class="p">(</span><span class="n">Xs</span><span class="p">,</span> <span class="n">prefixes</span><span class="o">=</span><span class="n">prefixes</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">stacked</span> <span class="o">=</span> <span class="n">hstack_frames</span><span class="p">(</span><span class="n">Xs</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sparse_output_</span> <span class="o">=</span> <span class="n">is_sparse_frame</span><span class="p">(</span><span class="n">stacked</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">stacked</span>
+        <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">n_samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="c1"># Do not pass n_samples if we did not receive it, for backwards</span>
                 <span class="c1"># compatibility</span>
+                <span class="c1"># noinspection PyArgumentList</span>
                 <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_hstack</span><span class="p">(</span><span class="n">Xs</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># Only pass n_samples if we receive it</span>
-                <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_hstack</span><span class="p">(</span><span class="n">Xs</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">sparse_output_</span> <span class="o">=</span> <span class="n">is_sparse_frame</span><span class="p">(</span><span class="n">stacked</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">stacked</span></div>
+                <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_hstack</span><span class="p">(</span><span class="n">Xs</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">)</span></div>
 
 
 
@@ -807,7 +812,7 @@
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">TransformerDF</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> or special values &quot;</span>
                 <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="s2">&quot; and &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ColumnTransformerWrapperDF</span><span class="o">.</span><span class="n">__SPECIAL_TRANSFORMERS</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; &#39;</span>
                 <span class="s2">&quot;as valid transformers, but &quot;</span>
-                <span class="sa">f</span><span class="s1">&#39;also got: </span><span class="si">{</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">non_compliant_transformers</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="sa">f</span><span class="s2">&quot;also got: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">non_compliant_transformers</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_features_original</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
@@ -1215,6 +1220,19 @@
 <span class="c1">#</span>
 
 <span class="n">__tracker</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># Auxiliary functions</span>
+<span class="c1">#</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_slice_not_empty</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">slice</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">start</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">stop</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">s</span><span class="o">.</span><span class="n">stop</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">stop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">stop</span> <span class="o">&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">start</span>  <span class="c1"># type: ignore[no-any-return]</span>
 </pre></div>
 
                 </article>
