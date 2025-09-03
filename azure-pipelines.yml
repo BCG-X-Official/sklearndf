@@ -576,7 +576,7 @@ stages:
               cd $(System.DefaultWorkingDirectory)
               eval "$(conda shell.bash hook)"
               conda install -y -c conda-forge --override-channels anaconda-client
-              anaconda login --username "${CONDA_USERNAME}" --password "${CONDA_PASSWORD}"
+              anaconda login --at anaconda.org --username "${CONDA_USERNAME}" --password "${CONDA_PASSWORD}"
               
               # Check for .conda files first (rattler-build), then .tar.bz2 (conda-build)
               if ls $(System.ArtifactsDirectory)/conda_default/conda/noarch/$(package_name)-*.conda 1> /dev/null 2>&1; then
