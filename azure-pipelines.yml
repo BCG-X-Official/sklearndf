@@ -30,8 +30,7 @@ resources:
 
 variables:
   # Short branch name for convenience (works for PRs & non-PRs)
-  branchName: $[ if(
-      startsWith(variables['Build.SourceBranch'], 'refs/pull/'),
+  branchName: $[ coalesce(
       replace(variables['System.PullRequest.SourceBranch'], 'refs/heads/', ''),
       replace(variables['Build.SourceBranch'], 'refs/heads/', '')
     ) ]
@@ -60,10 +59,10 @@ variables:
       )
     ) ]
 
-  # Scheduled? — runtime
+  # Scheduled?
   is_scheduled: $[ eq(variables['Build.Reason'], 'Schedule') ]
 
-  # Unrelated static vars can stay as-is
+  # Static variables
   project_name: sklearndf
   project_root: $(project_name)
   package_name: sklearndf
