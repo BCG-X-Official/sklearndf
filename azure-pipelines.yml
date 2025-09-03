@@ -29,17 +29,39 @@ resources:
       ref: 3.0.x
 
 variables:
-  ${{ if not(startsWith(variables['Build.SourceBranch'], 'refs/pull/')) }}:
-    branchName: $[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]
-  ${{ if startsWith(variables['Build.SourceBranch'], 'refs/pull/') }}:
-    branchName: $[ replace(variables['System.PullRequest.SourceBranch'], 'refs/heads/', '') ]
-  source_is_release_branch: $[ startsWith(variables['branchName'], 'release/') ]
-  source_is_develop_branch: $[ startsWith(variables['branchName'], 'dev/') ]
-  is_scheduled: $[ eq(variables['Build.Reason'], 'Schedule') ]
-  project_name: sklearndf
-  project_root: $(project_name)
-  package_name: sklearndf
-  sshPublicKey: $(sshPublicKey_sklearndf)
+  # Normalize a short branchName (works for PRs and normal pushes)
+  - name: branchName
+    ${{ if startsWith(variables['Build.SourceBranch'], 'refs/pull/') }}:
+      value: ${{ replace(variables['System.PullRequest.SourceBranch'], 'refs/heads/', '') }}
+    ${{ else }}:
+      value: ${{ replace(variables['Build.SourceBranch'], 'refs/heads/', '') }}
+
+  # Booleans computed directly from the refs (no chaining)
+  - name: source_is_release_branch
+    value: ${{ or(
+        startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'),
+        and(startsWith(variables['Build.SourceBranch'], 'refs/pull/'),
+            startsWith(variables['System.PullRequest.SourceBranch'], 'refs/heads/release/'))
+      ) }}
+
+  - name: source_is_develop_branch
+    value: ${{ or(
+        startsWith(variables['Build.SourceBranch'], 'refs/heads/dev/'),
+        and(startsWith(variables['Build.SourceBranch'], 'refs/pull/'),
+            startsWith(variables['System.PullRequest.SourceBranch'], 'refs/heads/dev/'))
+      ) }}
+
+  - name: is_scheduled
+    value: ${{ eq(variables['Build.Reason'], 'Schedule') }}
+
+  - name: project_name
+    value: sklearndf
+  - name: project_root
+    value: $(project_name)
+  - name: package_name
+    value: sklearndf
+  - name: sshPublicKey
+    value: $(sshPublicKey_sklearndf)
 
 stages:
   # check code quality first to fail fast (isort, flake8, black)
