@@ -981,10 +981,7 @@ class RegressorWrapperDF(
         sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see superclass]"""
-        return cast(
-            float,
-            SupervisedLearnerWrapperDF.score(self, X, y, sample_weight=sample_weight),
-        )
+        return SupervisedLearnerWrapperDF.score(self, X, y, sample_weight=sample_weight)
 
 
 @inheritdoc(match="[see superclass]")
@@ -1115,10 +1112,7 @@ class ClassifierWrapperDF(
         sample_weight: Optional[pd.Series] = None,
     ) -> float:
         """[see superclass]"""
-        return cast(
-            float,
-            SupervisedLearnerWrapperDF.score(self, X, y, sample_weight=sample_weight),
-        )
+        return SupervisedLearnerWrapperDF.score(self, X, y, sample_weight=sample_weight)
 
 
 # noinspection PyPep8Naming

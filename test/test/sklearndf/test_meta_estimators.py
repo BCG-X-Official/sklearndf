@@ -215,7 +215,7 @@ def test_stacking_classifier(
 
     stack_of_pipelines.fit(iris_features, iris_target_sr)
 
-    pred = stack_of_pipelines.predict_proba(iris_features)
+    pred: pd.DataFrame = stack_of_pipelines.predict_proba(iris_features)
     assert pred.columns.to_list() == ["setosa", "versicolor", "virginica"]
 
     assert not stack_of_pipelines.final_estimator.is_fitted
