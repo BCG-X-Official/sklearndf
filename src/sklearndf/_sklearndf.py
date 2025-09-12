@@ -67,7 +67,7 @@ __tracker = AllTracker(globals())
 @inheritdoc(match="""[see superclass]""")
 class EstimatorDF(
     HasExpressionRepr,
-    BaseEstimator,  # type: ignore
+    BaseEstimator,  # type: ignore[misc]
     metaclass=ABCMeta,
 ):
     """
