@@ -1211,7 +1211,7 @@ class ClusterWrapperDF(
 
 
 class MetaEstimatorWrapperDF(
-    MetaEstimatorMixin,  # type: ignore
+    MetaEstimatorMixin,  # type: ignore[misc]
     EstimatorWrapperDF[T_NativeEstimator],
     Generic[T_NativeEstimator],
     metaclass=ABCMeta,
