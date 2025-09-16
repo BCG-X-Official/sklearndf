@@ -205,6 +205,14 @@ class EstimatorWrapperDF(
     #: The native estimator that this wrapper delegates to.
     _native_estimator: T_NativeEstimator
 
+    #: The input feature names recorded when the estimator was fitted, or
+    #:  ``None`` if the estimator is not fitted yet.
+    _features_in: Optional[pd.Index]
+
+    #: The name(s) of the output(s) this estimator was fitted to, or ``None`` if this
+    #: estimator was not fitted to any outputs.
+    _outputs: Optional[list[str]]
+
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """
         :param args: positional arguments to use when initializing a new delegate
@@ -218,7 +226,7 @@ class EstimatorWrapperDF(
 
         # check if a fitted estimator was passed by class method is_fitted
         fitted_delegate_context = cast(
-            Optional[tuple[T_NativeEstimator, pd.Index, int]],
+            Optional[tuple[T_NativeEstimator, pd.Index, Optional[list[str]]]],
             kwargs.get(EstimatorWrapperDF.__ARG_FITTED_DELEGATE_CONTEXT, None),
         )
 
@@ -233,7 +241,7 @@ class EstimatorWrapperDF(
             (
                 _native_estimator,
                 self._features_in,
-                self._n_outputs,
+                self._outputs,
             ) = fitted_delegate_context
 
         self._native_estimator = _native_estimator
@@ -343,7 +351,7 @@ class EstimatorWrapperDF(
         cls: type[T_EstimatorWrapperDF],
         estimator: T_NativeEstimator,
         features_in: pd.Index,
-        n_outputs: int,
+        output_names: Optional[list[str]] = None,
     ) -> T_EstimatorWrapperDF:
         """
         Make a new wrapped DF estimator, delegating to a given native estimator that
@@ -351,7 +359,7 @@ class EstimatorWrapperDF(
 
         :param estimator: the fitted native estimator to use as the delegate
         :param features_in: the column names of X used for fitting the estimator
-        :param n_outputs: the number of outputs in y used for fitting the estimator
+        :param output_names: the number of outputs in y used for fitting the estimator
         :return: the wrapped data frame estimator
         """
 
@@ -360,7 +368,7 @@ class EstimatorWrapperDF(
                 EstimatorWrapperDF.__ARG_FITTED_DELEGATE_CONTEXT: (
                     estimator,
                     features_in,
-                    n_outputs,
+                    output_names,
                 )
             }
         )

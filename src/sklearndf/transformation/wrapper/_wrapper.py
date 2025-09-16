@@ -555,7 +555,7 @@ class ImputerWrapperDF(
             missing_indicator = MissingIndicatorDF.from_fitted(
                 estimator=delegate_estimator.indicator_,
                 features_in=self.feature_names_in_,
-                n_outputs=self.n_outputs_,
+                output_names=self.output_names_,
             )
             return pd.concat(
                 [features_original, missing_indicator.feature_names_original_]
