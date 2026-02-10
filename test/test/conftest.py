@@ -108,7 +108,7 @@ def iris_targets_binary_df(iris_target_sr: pd.Series) -> pd.DataFrame:
     )
 
 
-@pytest.fixture  # type:ignore
+@pytest.fixture  # type: ignore
 def test_data_categorical() -> pd.DataFrame:
     return pd.DataFrame(
         data=[

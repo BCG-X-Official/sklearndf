@@ -316,7 +316,7 @@ def test_native_class_validation() -> None:
             pass
 
 
-@pytest.mark.skipif(  # type: ignore[misc]
+@pytest.mark.skipif(  # type: ignore[untyped-decorator]
     __sklearn_version__ < __sklearn_1_6__,
     reason="This test requires scikit-learn 1.6 or later",
 )

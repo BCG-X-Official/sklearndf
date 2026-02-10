@@ -16,6 +16,7 @@ from sklearn.base import TransformerMixin
 from sklearn.compose import ColumnTransformer
 from sklearn.decomposition import PCA
 from sklearn.impute import MissingIndicator, SimpleImputer
+from sklearn.impute._iterative import IterativeImputer
 from sklearn.kernel_approximation import AdditiveChi2Sampler
 from sklearn.manifold import Isomap
 from sklearn.preprocessing import FunctionTransformer, KBinsDiscretizer, OneHotEncoder
@@ -57,9 +58,6 @@ __all__ = [
 # Type variables
 #
 
-
-# noinspection PyProtectedMember
-from sklearn.impute._iterative import IterativeImputer
 
 # Once we drop support for sklearn 0.21, T_Imputer can be bound to _BaseImputer
 T_Imputer = TypeVar("T_Imputer", SimpleImputer, IterativeImputer)
@@ -335,7 +333,7 @@ class FeatureSelectionWrapperDF(
 
 
 class ColumnTransformerSparseFrames(
-    ColumnTransformer,  # type:ignore
+    ColumnTransformer,  # type: ignore
 ):
     """
     ColumnTransformer that returns sparse data frames instead of arrays if one or more

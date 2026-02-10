@@ -230,7 +230,7 @@ class PipelineWrapperDF(
 
 
 class FeatureUnionSparseFrames(
-    FeatureUnion,  # type:ignore
+    FeatureUnion,  # type: ignore
 ):
     """
     FeatureUnion transformer that returns sparse data frames instead of arrays if one or
