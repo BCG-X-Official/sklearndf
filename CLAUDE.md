@@ -1,0 +1,76 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Overview
+
+*sklearndf* wraps scikit-learn estimators so they accept and return `pandas` DataFrames/Series, preserving feature names and exposing feature-name tracing (`feature_names_in_`, `feature_names_out_`, `feature_names_original_`). Every scikit-learn class `Foo` gets a DF counterpart `FooDF` (e.g. `RandomForestRegressorDF`). Source lives in `src/sklearndf`, tests in `test/test`. Packaged with flit (`pyproject.toml`); depends on `gamma-pytools` (provides `AllTracker`, `inheritdoc`, expression repr, `fitted_only`).
+
+## Commands
+
+```sh
+# environment (conda env "sklearndf-develop" from environment.yml) + git hooks
+./dev-setup.sh          # conda env create -f environment.yml; pre-commit install
+
+# tests (pytest config is in tox.ini; testpaths = test/test/)
+# the contribution guide says `pytest tests/` and to `export PYTHONPATH=./src/`;
+# the test dir is actually test/test/, and PYTHONPATH is only needed if sklearndf isn't installed
+# coverage: pytest --cov=src/sklearndf test/test/
+pytest test/test/
+pytest test/test/sklearndf/test_regression.py            # one file
+pytest test/test/sklearndf/test_regression.py::test_name  # one test
+pytest -k "<expr>"
+
+# lint / format / types (all run via pre-commit: isort, black, flake8, mypy)
+pre-commit run --all-files
+pre-commit run mypy --all-files
+```
+
+Flake8 config is in `tox.ini` (max line length 88, black-compatible). Docs are built with Sphinx from `sphinx/` (`sphinx/make.py`); `make.py` at the root delegates to a sibling `../pytools` checkout for conda builds.
+
+## Architecture
+
+### Wrapper mechanism (`src/sklearndf/wrapper/_wrapper.py`)
+The core of the library. DF classes are **stubs that subclass a generic wrapper and name the native class via a class keyword**:
+
+```python
+class TargetEncoderDF(
+    ColumnPreservingTransformerWrapperDF[TargetEncoder], native=TargetEncoder
+):
+    """Stub for DF wrapper of class ``TargetEncoder``"""
+```
+
+`EstimatorWrapperDFMeta` (metaclass) uses `native=` to generate `__init__`, mirror the native class's public attributes/methods/docstrings onto the wrapper, and create the delegate instance at construction. Wrapper hierarchy: `EstimatorWrapperDF` → `TransformerWrapperDF`, `LearnerWrapperDF` → `SupervisedLearnerWrapperDF` → `RegressorWrapperDF` / `ClassifierWrapperDF`, plus `ClusterWrapperDF` and `MetaEstimatorWrapperDF` (for estimators that wrap other estimators, e.g. pipelines/ensembles). Abstract interfaces (`EstimatorDF`, `TransformerDF`, `RegressorDF`, …) live in `src/sklearndf/_sklearndf.py`.
+
+Transformers need a strategy for output column names, supplied by mixin wrappers in `transformation/wrapper/_wrapper.py` (e.g. `ColumnPreservingTransformerWrapperDF`, `NComponentsDimensionalityReductionWrapperDF`, `ColumnSubsetTransformerWrapperDF`). Picking the right one for a new transformer is the main per-class decision. Special wrappers: `wrapper/numpy` (estimators needing ndarray input), `wrapper/stacking`, `wrapper/_missing.py`, and per-domain `*/wrapper` packages.
+
+### Per-version module layout
+Each domain package (`classification`, `regression`, `clustering`, `transformation`, `pipeline`) is split into a base module plus version-gated modules named after the **scikit-learn version that introduced the classes** (`_transformation_v1_3.py`, `_regression_v0_23.py`, …). `__init__.py` star-imports them all. `extra/` subpackages hold wrappers for optional third-party estimators (lightgbm, xgboost, boruta, arfs).
+
+Each of these modules follows a strict convention, enforced at import time:
+- an `__all__` listing exactly the `*DF` classes defined in that module;
+- a `__imported_estimators` snapshot taken before class definitions and a trailing check that raises `RuntimeError` if `__all__` doesn't match the newly defined `*DF` symbols. When adding a class, add it to `__all__`.
+
+Version-dependent behaviour elsewhere is gated through `src/sklearndf/_sklearn_version.py` (`__sklearn_1_6__`, etc.). Supported sklearn range is declared in `pyproject.toml` (currently `>=1.3,<1.8a`); update `_sklearn_version.py` constants, pre-commit deps, `environment.yml` and `condabuild/` together when bumping.
+
+### Tests
+`test/test/sklearndf/test_sklearn_coverage.py` introspects installed scikit-learn and fails if any estimator lacks a `*DF` counterpart (exclusion lists at top of that file for deliberately unsupported classes; `UNSUPPORTED_SKLEARN_PACKAGES` in `conftest.py`). New scikit-learn releases typically surface as failures here, which is the cue to add stubs in the matching `_vX_Y.py` module. Optional-dependency tests (lightgbm, xgboost, boruta, arfs) are skipped when not installed.
+
+## Conventions
+(Full details in `sphinx/source/contribution_guide.rst`.)
+
+- Black formatting, isort `profile=black`, 88-column lines; type-checked with mypy.
+- Commit messages complete the sentence "This commit will …": imperative mood, e.g. `add method foo to class Bar`, not `added …`. The history also uses prefixes such as `FIX:`, `RF:`, `BUILD:`.
+- Docstrings: mandatory for all public modules, classes, functions, properties and attributes; reStructuredText; no parameter types in docstrings (use type hints).
+  - Functions/methods: imperative (`"""Fit the model."""`).
+  - Modules/classes/attributes/properties: start with a descriptive phrase, as in a dictionary entry; properties are documented like attributes, not `:return:`.
+  - Multi-line docstrings put a line break after the opening and before the closing `"""`.
+  - Sentences are capitalised and end with punctuation.
+- DF stub docstrings are auto-derived from the native class; keep stubs to a one-line docstring.
+- Release notes go in `RELEASE_NOTES.rst`.
+
+## Docs and releases
+- Build docs: `cd sphinx && python make.py html` (output in `sphinx/build/html`). Base config is shared via `pytools/sphinx/base`; needs a local LaTeX install for `imgmath`.
+- `README.rst` is reused as the Sphinx quickstart; the Titanic example in it must be kept in sync with `sphinx/auxiliary/Titanic_getting_started_example.ipynb` by hand. Tutorial notebooks under `sphinx/source/tutorials` are committed with outputs.
+- The package version is `__version__` in `src/sklearndf/__init__.py` (semantic versioning).
+- Releases run through Azure Pipelines (`azure-pipelines.yml`): PR `dev/<version>` onto `release/<version>`, merge with a merge commit (no squash), then merge back to the baseline branch and bump the version.
