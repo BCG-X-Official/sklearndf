@@ -66,6 +66,7 @@ __tracker = AllTracker(globals())
 #
 
 
+from .wrapper import ARFSMetaEstimatorWrapperDF as _ARFSMetaEstimatorWrapperDF
 from .wrapper import ARFSWrapperDF as _ARFSWrapperDF
 from .wrapper import BorutaPyWrapperDF as _BorutaPyWrapperDF
 
@@ -76,13 +77,13 @@ class BorutaDF(_BorutaPyWrapperDF, native=BorutaPy):
     """
 
 
-class LeshyDF(_ARFSWrapperDF[Leshy], native=Leshy):
+class LeshyDF(_ARFSMetaEstimatorWrapperDF[Leshy], native=Leshy):
     """
     DF version of :class:`~arfs.feature_selection.allrelevant.Leshy`.
     """
 
 
-class BoostAGrootaDF(_ARFSWrapperDF[BoostAGroota], native=BoostAGroota):
+class BoostAGrootaDF(_ARFSMetaEstimatorWrapperDF[BoostAGroota], native=BoostAGroota):
     """
     DF version of :class:`~arfs.feature_selection.allrelevant.BoostAGroota`.
     """

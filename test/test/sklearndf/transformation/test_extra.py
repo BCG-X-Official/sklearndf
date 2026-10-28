@@ -12,7 +12,7 @@ from sklearndf.regression import RandomForestRegressorDF
 from sklearndf.regression.extra import LGBMRegressorDF
 from sklearndf.transformation import SimpleImputerDF
 from sklearndf.transformation.extra import BoostAGrootaDF, BorutaDF, GrootCVDF, LeshyDF
-from sklearndf.wrapper import MissingEstimator
+from sklearndf.wrapper import MetaEstimatorWrapperDF, MissingEstimator
 
 # get the version of the arfs package
 __arfs_version__: Optional[Version]
@@ -70,6 +70,16 @@ parametrize_feature_selector_cls: Callable[
 #
 # Test the feature selection classes
 #
+
+
+def test_arfs_meta_estimators() -> None:
+    """
+    Test that only the ARFS selectors with a delegate estimator are meta-estimators.
+    """
+    assert issubclass(LeshyDF, MetaEstimatorWrapperDF)
+    assert issubclass(BoostAGrootaDF, MetaEstimatorWrapperDF)
+    # GrootCV has no delegate estimator
+    assert not issubclass(GrootCVDF, MetaEstimatorWrapperDF)
 
 
 @parametrize_feature_selector_cls
