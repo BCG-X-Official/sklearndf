@@ -1,7 +1,7 @@
 import itertools
 from collections.abc import Iterable
 from types import ModuleType
-from typing import Optional, TypeVar, Union
+from typing import TypeVar
 
 import pytest
 import sklearn
@@ -85,9 +85,9 @@ UNSUPPORTED_SKLEARN_CLASSES = {
 
 
 def _find_sklearn_classes_to_cover(
-    from_modules: Union[ModuleType, Iterable[ModuleType]],
+    from_modules: ModuleType | Iterable[ModuleType],
     subclass_of: type[T],
-    excluding: Optional[Union[str, Iterable[str]]] = None,
+    excluding: str | Iterable[str] | None = None,
 ) -> list[type[T]]:
     return [
         cls

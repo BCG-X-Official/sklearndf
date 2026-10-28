@@ -1,4 +1,5 @@
-from typing import Any, Callable, Optional
+from collections.abc import Callable
+from typing import Any
 
 import numpy as np
 import pandas as pd
@@ -15,7 +16,7 @@ from sklearndf.transformation.extra import BoostAGrootaDF, BorutaDF, GrootCVDF, 
 from sklearndf.wrapper import MetaEstimatorWrapperDF, MissingEstimator
 
 # get the version of the arfs package
-__arfs_version__: Optional[Version]
+__arfs_version__: Version | None
 try:
     import arfs
 

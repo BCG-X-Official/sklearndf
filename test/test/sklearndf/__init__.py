@@ -67,9 +67,9 @@ def sklearn_delegate_classes(
 
 
 def iterate_classes(
-    from_modules: Union[ModuleType, Iterable[ModuleType]],
+    from_modules: ModuleType | Iterable[ModuleType],
     matching: str,
-    excluding: Optional[Union[str, Iterable[str]]] = None,
+    excluding: str | Iterable[str] | None = None,
 ) -> list[type[EstimatorWrapperDF[BaseEstimator]]]:
     """Helper to return all classes with matching name from Python module(s)"""
 
@@ -106,7 +106,7 @@ def check_expected_not_fitted_error(estimator: EstimatorDF) -> None:
     test_x = pd.DataFrame(data=list(range(10)))
 
     def check_sklearndf_call(
-        func_to_call: str, _estimator: Union[LearnerDF, TransformerDF]
+        func_to_call: str, _estimator: LearnerDF | TransformerDF
     ) -> None:
         try:
             getattr(_estimator, func_to_call)(X=test_x)

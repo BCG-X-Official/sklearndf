@@ -17,19 +17,9 @@ import inspect
 import logging
 import warnings
 from abc import ABCMeta
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from functools import update_wrapper
-from typing import (
-    Any,
-    Callable,
-    Generic,
-    Literal,
-    Optional,
-    TypeAlias,
-    TypeVar,
-    Union,
-    cast,
-)
+from typing import Any, Generic, Literal, TypeAlias, TypeVar, Union, cast
 
 import numpy as np
 import numpy.typing as npt
@@ -83,15 +73,15 @@ __all__ = [
 
 T = TypeVar("T")
 T_Callable = TypeVar("T_Callable", bound=Callable[..., Any])
-T_Target = TypeVar("T_Target", bound=Optional[Union[pd.Series, pd.DataFrame]])
+T_Target = TypeVar("T_Target", bound=pd.Series | pd.DataFrame | None)
 
 T_NativeEstimator = TypeVar("T_NativeEstimator", bound=BaseEstimator)
 T_NativeTransformer = TypeVar("T_NativeTransformer", bound=TransformerMixin)
 T_NativeLearner = TypeVar(
-    "T_NativeLearner", bound=Union[RegressorMixin, ClassifierMixin, ClusterMixin]
+    "T_NativeLearner", bound=RegressorMixin | ClassifierMixin | ClusterMixin
 )
 T_NativeSupervisedLearner = TypeVar(
-    "T_NativeSupervisedLearner", bound=Union[RegressorMixin, ClassifierMixin]
+    "T_NativeSupervisedLearner", bound=RegressorMixin | ClassifierMixin
 )
 T_NativeRegressor = TypeVar("T_NativeRegressor", bound=RegressorMixin)
 T_NativeClassifier = TypeVar("T_NativeClassifier", bound=ClassifierMixin)
@@ -140,7 +130,7 @@ class EstimatorWrapperDFMeta(ABCMeta, Generic[T_NativeEstimator]):
         name: str,
         bases: tuple[type, ...],
         namespace: dict[str, Any],
-        native: Optional[T_NativeEstimator] = None,
+        native: T_NativeEstimator | None = None,
         **kwargs: Any,
     ) -> EstimatorWrapperDFMeta[T_NativeEstimator]:
         if native in bases:
@@ -229,11 +219,11 @@ class EstimatorWrapperDF(
 
     #: The input feature names recorded when the estimator was fitted, or
     #:  ``None`` if the estimator is not fitted yet.
-    _features_in: Optional[pd.Index]
+    _features_in: pd.Index | None
 
     #: The name(s) of the output(s) this estimator was fitted to, or ``None`` if this
     #: estimator was not fitted to any outputs.
-    _outputs: Optional[list[str]]
+    _outputs: list[str] | None
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """
@@ -243,12 +233,12 @@ class EstimatorWrapperDF(
             estimator
         """
         super().__init__()
-        self._features_in: Optional[pd.Index] = None
-        self._outputs: Optional[list[str]] = None
+        self._features_in: pd.Index | None = None
+        self._outputs: list[str] | None = None
 
         # check if a fitted estimator was passed by class method is_fitted
         fitted_delegate_context = cast(
-            Optional[tuple[T_NativeEstimator, pd.Index, Optional[list[str]]]],
+            tuple[T_NativeEstimator, pd.Index, list[str] | None] | None,
             kwargs.get(EstimatorWrapperDF.__ARG_FITTED_DELEGATE_CONTEXT, None),
         )
 
@@ -356,7 +346,7 @@ class EstimatorWrapperDF(
         return wrapper_n_features
 
     @property
-    def _estimator_type(self) -> Optional[str]:
+    def _estimator_type(self) -> str | None:
         try:
             # noinspection PyProtectedMember
             return cast(str, self.native_estimator._estimator_type)
@@ -373,7 +363,7 @@ class EstimatorWrapperDF(
         cls: type[T_EstimatorWrapperDF],
         estimator: T_NativeEstimator,
         features_in: pd.Index,
-        output_names: Optional[list[str]] = None,
+        output_names: list[str] | None = None,
     ) -> T_EstimatorWrapperDF:
         """
         Make a new wrapped DF estimator, delegating to a given native estimator that
@@ -407,8 +397,8 @@ class EstimatorWrapperDF(
     # noinspection PyPep8Naming
     def fit(
         self: T_EstimatorWrapperDF,
-        X: Union[pd.DataFrame, pd.Series],
-        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        X: pd.DataFrame | pd.Series,
+        y: pd.Series | pd.DataFrame | None = None,
         **fit_params: Any,
     ) -> T_EstimatorWrapperDF:
         """[see superclass]"""
@@ -435,7 +425,7 @@ class EstimatorWrapperDF(
         assert self._features_in is not None, "estimator is fitted"
         return self._features_in
 
-    def _get_outputs(self) -> Optional[list[str]]:
+    def _get_outputs(self) -> list[str] | None:
         return self._outputs
 
     def _reset_fit(self) -> None:
@@ -446,7 +436,7 @@ class EstimatorWrapperDF(
     def _fit(
         self,
         X: pd.DataFrame,
-        y: Optional[Union[pd.Series, pd.DataFrame]],
+        y: pd.Series | pd.DataFrame | None,
         **fit_params: Any,
     ) -> T_NativeEstimator:
         # noinspection PyUnresolvedReferences
@@ -463,7 +453,7 @@ class EstimatorWrapperDF(
     def _post_fit(
         self,
         X: pd.DataFrame,
-        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        y: pd.Series | pd.DataFrame | None = None,
         **fit_params: Any,
     ) -> None:
         self._features_in = X.columns.rename(self.COL_FEATURE)
@@ -477,10 +467,10 @@ class EstimatorWrapperDF(
     # noinspection PyPep8Naming
     def _validate_parameter_types(
         self,
-        X: Union[pd.Series, pd.DataFrame],
+        X: pd.Series | pd.DataFrame,
         y: T_Target,
         *,
-        expected_columns: Optional[pd.Index] = None,
+        expected_columns: pd.Index | None = None,
     ) -> tuple[pd.DataFrame, T_Target]:
         # Check that the X and y parameters are valid data frames and series,
         # and return X as a data frame and y as a series or data frame.
@@ -520,7 +510,7 @@ class EstimatorWrapperDF(
         df_name: str,
         df: pd.DataFrame,
         expected_columns: pd.Index,
-        expected_index: Optional[pd.Index] = None,
+        expected_index: pd.Index | None = None,
     ) -> None:
         def _verify_labels(axis: str, actual: pd.Index, expected: pd.Index) -> None:
             missing_columns = expected.difference(actual)
@@ -567,13 +557,13 @@ class EstimatorWrapperDF(
     # noinspection PyPep8Naming
     def _prepare_X_for_delegate(
         self, X: pd.DataFrame
-    ) -> Union[pd.DataFrame, npt.NDArray[Any], sparse.csr_matrix]:
+    ) -> pd.DataFrame | npt.NDArray[Any] | sparse.csr_matrix:
         # convert X before passing it to the delegate estimator
         return self._adjust_X_type_for_delegate(self._adjust_X_columns_for_delegate(X))
 
     def _prepare_y_for_delegate(
-        self, y: Optional[Union[pd.Series, pd.DataFrame]]
-    ) -> Optional[Union[pd.Series, pd.DataFrame, npt.NDArray[Any], sparse.csr_matrix]]:
+        self, y: pd.Series | pd.DataFrame | None
+    ) -> pd.Series | pd.DataFrame | npt.NDArray[Any] | sparse.csr_matrix | None:
         return self._adjust_y_type_for_delegate(y)
 
     # noinspection PyPep8Naming
@@ -593,14 +583,14 @@ class EstimatorWrapperDF(
     # noinspection PyPep8Naming
     def _adjust_X_type_for_delegate(
         self, X: pd.DataFrame
-    ) -> Union[pd.DataFrame, npt.NDArray[Any], sparse.csr_matrix]:
+    ) -> pd.DataFrame | npt.NDArray[Any] | sparse.csr_matrix:
         # Convert X before passing it to the delegate estimator.
         # By default, does nothing, but can be overridden.
         return X
 
     def _adjust_y_type_for_delegate(
-        self, y: Optional[Union[pd.Series, pd.DataFrame]]
-    ) -> Optional[Union[pd.Series, pd.DataFrame, npt.NDArray[Any], sparse.csr_matrix]]:
+        self, y: pd.Series | pd.DataFrame | None
+    ) -> pd.Series | pd.DataFrame | npt.NDArray[Any] | sparse.csr_matrix | None:
         # convert y before passing it to the delegate estimator
         return y
 
@@ -693,7 +683,7 @@ class TransformerWrapperDF(
         return feature_names_original_
 
     # noinspection PyPep8Naming
-    def transform(self, X: Union[pd.Series, pd.DataFrame]) -> pd.DataFrame:
+    def transform(self, X: pd.Series | pd.DataFrame) -> pd.DataFrame:
         """[see superclass]"""
         X, _ = self._validate_parameter_types(X, None)
 
@@ -706,8 +696,8 @@ class TransformerWrapperDF(
     # noinspection PyPep8Naming
     def fit_transform(
         self,
-        X: Union[pd.Series, pd.DataFrame],
-        y: Optional[pd.Series] = None,
+        X: pd.Series | pd.DataFrame,
+        y: pd.Series | None = None,
         **fit_params: Any,
     ) -> pd.DataFrame:
         """[see superclass]"""
@@ -729,7 +719,7 @@ class TransformerWrapperDF(
         )
 
     # noinspection PyPep8Naming
-    def inverse_transform(self, X: Union[pd.Series, pd.DataFrame]) -> pd.DataFrame:
+    def inverse_transform(self, X: pd.Series | pd.DataFrame) -> pd.DataFrame:
         """[see superclass]"""
         X, _ = self._validate_parameter_types(
             X, None, expected_columns=self.feature_names_out_
@@ -771,7 +761,7 @@ class TransformerWrapperDF(
     # noinspection PyPep8Naming
     def _prepare_X_for_delegate(
         self, X: pd.DataFrame, *, inverse: bool = False
-    ) -> Union[pd.DataFrame, npt.NDArray[Any]]:
+    ) -> pd.DataFrame | npt.NDArray[Any]:
         x_adjusted = self._adjust_X_columns_for_delegate(X, inverse=inverse)
         if inverse:
             # when doing an inverse transform, we need X as a numpy array
@@ -781,7 +771,7 @@ class TransformerWrapperDF(
 
     # noinspection PyPep8Naming
     def _adjust_X_columns_for_delegate(
-        self, X: pd.DataFrame, *, inverse: Optional[bool] = None
+        self, X: pd.DataFrame, *, inverse: bool | None = None
     ) -> pd.DataFrame:
         if inverse:
             # when converting X for an inverse transform, ensure the data frame is
@@ -797,7 +787,7 @@ class TransformerWrapperDF(
 
     @staticmethod
     def _transformed_to_df(
-        transformed: Union[pd.DataFrame, npt.NDArray[Any], sparse.spmatrix],
+        transformed: pd.DataFrame | npt.NDArray[Any] | sparse.spmatrix,
         index: pd.Index,
         columns: pd.Index,
     ) -> pd.DataFrame:
@@ -822,18 +812,18 @@ class TransformerWrapperDF(
     # noinspection PyPep8Naming
     def _transform(
         self, X: pd.DataFrame
-    ) -> Union[npt.NDArray[Any], sparse.csr_matrix, pd.DataFrame]:
+    ) -> npt.NDArray[Any] | sparse.csr_matrix | pd.DataFrame:
         return cast(
-            Union[npt.NDArray[Any], sparse.csr_matrix, pd.DataFrame],
+            npt.NDArray[Any] | sparse.csr_matrix | pd.DataFrame,
             self.native_estimator.transform(self._prepare_X_for_delegate(X)),
         )
 
     # noinspection PyPep8Naming
     def _fit_transform(
-        self, X: pd.DataFrame, y: Optional[pd.Series], **fit_params: Any
-    ) -> Union[npt.NDArray[Any], sparse.csr_matrix, pd.DataFrame]:
+        self, X: pd.DataFrame, y: pd.Series | None, **fit_params: Any
+    ) -> npt.NDArray[Any] | sparse.csr_matrix | pd.DataFrame:
         return cast(
-            Union[npt.NDArray[Any], sparse.csr_matrix, pd.DataFrame],
+            npt.NDArray[Any] | sparse.csr_matrix | pd.DataFrame,
             self.native_estimator.fit_transform(
                 self._prepare_X_for_delegate(X),
                 self._prepare_y_for_delegate(y),
@@ -877,8 +867,8 @@ class LearnerWrapperDF(
 
     # noinspection PyPep8Naming
     def predict(
-        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.Series, pd.DataFrame]:
+        self, X: pd.Series | pd.DataFrame, **predict_params: Any
+    ) -> pd.Series | pd.DataFrame:
         """[see superclass]"""
         X, _ = self._validate_parameter_types(X, None)
 
@@ -892,14 +882,14 @@ class LearnerWrapperDF(
 
     # noinspection PyPep8Naming
     def _prediction_to_series_or_frame(
-        self, X: pd.DataFrame, y: Union[npt.NDArray[Any], pd.Series, pd.DataFrame]
-    ) -> Union[pd.Series, pd.DataFrame]:
+        self, X: pd.DataFrame, y: npt.NDArray[Any] | pd.Series | pd.DataFrame
+    ) -> pd.Series | pd.DataFrame:
         if len(y) != len(X):
             raise ValueError(
                 f"length of prediction ({len(y)}) does not match length of X ({len(X)})"
             )
 
-        outputs: Optional[list[str]] = self._get_outputs()
+        outputs: list[str] | None = self._get_outputs()
 
         if y.ndim == 1:
             if outputs is None:
@@ -967,9 +957,9 @@ class SupervisedLearnerWrapperDF(
     # noinspection PyPep8Naming
     def score(
         self,
-        X: Union[pd.Series, pd.DataFrame],
+        X: pd.Series | pd.DataFrame,
         y: pd.Series,
-        sample_weight: Optional[pd.Series] = None,
+        sample_weight: pd.Series | None = None,
     ) -> float:
         """[see superclass]"""
         X, y = self._validate_parameter_types(X, y)
@@ -1005,9 +995,9 @@ class RegressorWrapperDF(
     # noinspection PyPep8Naming
     def score(
         self,
-        X: Union[pd.Series, pd.DataFrame],
+        X: pd.Series | pd.DataFrame,
         y: pd.Series,
-        sample_weight: Optional[pd.Series] = None,
+        sample_weight: pd.Series | None = None,
     ) -> float:
         """[see superclass]"""
         return SupervisedLearnerWrapperDF.score(self, X, y, sample_weight=sample_weight)
@@ -1027,16 +1017,16 @@ class ClassifierWrapperDF(
 
     __native_base_class__ = ClassifierMixin
 
-    def _get_classes(self) -> Union[npt.NDArray[Any], list[npt.NDArray[Any]]]:
+    def _get_classes(self) -> npt.NDArray[Any] | list[npt.NDArray[Any]]:
         return cast(
-            Union[npt.NDArray[Any], list[npt.NDArray[Any]]],
+            npt.NDArray[Any] | list[npt.NDArray[Any]],
             self._native_estimator.classes_,
         )
 
     # noinspection PyPep8Naming
     def predict_proba(
-        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.DataFrame, list[pd.DataFrame]]:
+        self, X: pd.Series | pd.DataFrame, **predict_params: Any
+    ) -> pd.DataFrame | list[pd.DataFrame]:
         """[see superclass]"""
 
         self._ensure_delegate_method("predict_proba")
@@ -1053,8 +1043,8 @@ class ClassifierWrapperDF(
 
     # noinspection PyPep8Naming
     def predict_log_proba(
-        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.DataFrame, list[pd.DataFrame]]:
+        self, X: pd.Series | pd.DataFrame, **predict_params: Any
+    ) -> pd.DataFrame | list[pd.DataFrame]:
         """[see superclass]"""
 
         self._ensure_delegate_method("predict_log_proba")
@@ -1071,8 +1061,8 @@ class ClassifierWrapperDF(
 
     # noinspection PyPep8Naming
     def decision_function(
-        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.Series, pd.DataFrame]:
+        self, X: pd.Series | pd.DataFrame, **predict_params: Any
+    ) -> pd.Series | pd.DataFrame:
         """[see superclass]"""
 
         self._ensure_delegate_method("decision_function")
@@ -1098,11 +1088,11 @@ class ClassifierWrapperDF(
     def _prediction_with_class_labels(
         self,
         X: pd.DataFrame,
-        prediction: Union[
-            pd.Series, pd.DataFrame, list[npt.NDArray[Any]], npt.NDArray[Any]
-        ],
-        classes: Optional[Sequence[Any]] = None,
-    ) -> Union[pd.Series, pd.DataFrame, list[pd.DataFrame]]:
+        prediction: (
+            pd.Series | pd.DataFrame | list[npt.NDArray[Any]] | npt.NDArray[Any]
+        ),
+        classes: Sequence[Any] | None = None,
+    ) -> pd.Series | pd.DataFrame | list[pd.DataFrame]:
         if classes is None:
             classes = getattr(self.native_estimator, "classes_", None)
             if classes is None:
@@ -1136,9 +1126,9 @@ class ClassifierWrapperDF(
     # noinspection PyPep8Naming
     def score(
         self,
-        X: Union[pd.Series, pd.DataFrame],
+        X: pd.Series | pd.DataFrame,
         y: pd.Series,
-        sample_weight: Optional[pd.Series] = None,
+        sample_weight: pd.Series | None = None,
     ) -> float:
         """[see superclass]"""
         return SupervisedLearnerWrapperDF.score(self, X, y, sample_weight=sample_weight)
@@ -1164,7 +1154,7 @@ class ClusterWrapperDF(
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """[see superclass]"""
         super().__init__(*args, **kwargs)
-        self._x_index: Optional[pd.Index] = None
+        self._x_index: pd.Index | None = None
 
     def _get_labels(self) -> pd.Series:
         return pd.Series(
@@ -1175,10 +1165,10 @@ class ClusterWrapperDF(
 
     def fit_predict(
         self,
-        X: Union[pd.Series, pd.DataFrame],
-        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        X: pd.Series | pd.DataFrame,
+        y: pd.Series | pd.DataFrame | None = None,
         **fit_predict_params: Any,
-    ) -> Union[pd.Series, pd.DataFrame]:
+    ) -> pd.Series | pd.DataFrame:
         """[see superclass]"""
 
         self._reset_fit()
@@ -1215,7 +1205,7 @@ class ClusterWrapperDF(
     def _post_fit(
         self,
         X: pd.DataFrame,
-        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        y: pd.Series | pd.DataFrame | None = None,
         **fit_params: Any,
     ) -> None:
         super()._post_fit(X, y, **fit_params)
@@ -1258,7 +1248,7 @@ class MetaEstimatorWrapperDF(
     - multiple delegate estimators in attribute `estimators`
     """
 
-    _df_wrapper: Union[BaseLearner, Sequence[Optional[BaseLearner]], None]
+    _df_wrapper: BaseLearner | Sequence[BaseLearner | None] | None
 
     _ATTR_ESTIMATOR = "estimator"
     _ATTR_BASE_ESTIMATOR = "base_estimator"
@@ -1284,7 +1274,7 @@ class MetaEstimatorWrapperDF(
         had originally been initialized with a DF base learner.
         """
         native_estimator = self.native_estimator
-        estimator: Optional[Union[RegressorMixin, ClassifierMixin]] = getattr(
+        estimator: RegressorMixin | ClassifierMixin | None = getattr(
             native_estimator, self._ATTR_ESTIMATOR, None
         )
         if estimator is None:
@@ -1301,7 +1291,7 @@ class MetaEstimatorWrapperDF(
         elif self.is_fitted:
             return type(
                 cast(
-                    EstimatorWrapperDF[Union[RegressorMixin, ClassifierMixin]],
+                    EstimatorWrapperDF[RegressorMixin | ClassifierMixin],
                     df_wrapper,
                 )
             ).from_fitted(
@@ -1319,9 +1309,9 @@ class MetaEstimatorWrapperDF(
         had originally been initialized with DF base learners.
         """
         native_estimator = self.native_estimator
-        estimators: Union[
-            Sequence[tuple[str, RegressorMixin]], Sequence[tuple[str, ClassifierMixin]]
-        ] = getattr(native_estimator, self._ATTR_ESTIMATORS, [])
+        estimators: (
+            Sequence[tuple[str, RegressorMixin]] | Sequence[tuple[str, ClassifierMixin]]
+        ) = getattr(native_estimator, self._ATTR_ESTIMATORS, [])
         if not estimators:
             raise AttributeError(
                 f"meta-estimator of type {type(self).__name__} does not have "
@@ -1333,7 +1323,7 @@ class MetaEstimatorWrapperDF(
             return estimators
 
         # wrappers are None for estimators that were initialized as native estimators
-        wrappers = cast(Sequence[Optional[BaseLearner]], df_wrapper)
+        wrappers = cast(Sequence[BaseLearner | None], df_wrapper)
         if self.is_fitted:
             return [
                 (
@@ -1343,9 +1333,7 @@ class MetaEstimatorWrapperDF(
                         if wrapper is None
                         else type(
                             cast(
-                                EstimatorWrapperDF[
-                                    Union[RegressorMixin, ClassifierMixin]
-                                ],
+                                EstimatorWrapperDF[RegressorMixin | ClassifierMixin],
                                 wrapper,
                             )
                         ).from_fitted(
@@ -1367,7 +1355,7 @@ class MetaEstimatorWrapperDF(
         native_meta_estimator: T_NativeEstimator = self.native_estimator
         estimator_attributes: list[str] = []
 
-        estimator: Optional[BaseLearner] = getattr(
+        estimator: BaseLearner | None = getattr(
             native_meta_estimator, self._ATTR_ESTIMATOR, None
         )
         if estimator is not None:
@@ -1376,7 +1364,7 @@ class MetaEstimatorWrapperDF(
             )
             estimator_attributes.append(self._ATTR_ESTIMATOR)
 
-        base_estimator: Optional[Union[BaseLearner, Literal["deprecated"]]] = getattr(
+        base_estimator: BaseLearner | Literal["deprecated"] | None = getattr(
             self, self._ATTR_BASE_ESTIMATOR, None
         )
         # attribute base_estimator is deprecated as of scikit-learn 1.2, with the
@@ -1393,8 +1381,8 @@ class MetaEstimatorWrapperDF(
                 tuple[
                     str,
                     tuple[
-                        Union[RegressorMixin, ClassifierMixin],
-                        Optional[BaseLearner],
+                        RegressorMixin | ClassifierMixin,
+                        BaseLearner | None,
                     ],
                 ]
             ] = [
@@ -1426,14 +1414,14 @@ class MetaEstimatorWrapperDF(
     def _native_learner(
         estimator: BaseLearner,
     ) -> tuple[
-        Union[RegressorMixin, ClassifierMixin],
-        Optional[BaseLearner],
+        RegressorMixin | ClassifierMixin,
+        BaseLearner | None,
     ]:
-        estimator_wrapper: Optional[BaseLearner] = (
+        estimator_wrapper: BaseLearner | None = (
             estimator if isinstance(estimator, EstimatorWrapperDF) else None
         )
 
-        native_estimator: Union[RegressorMixin, ClassifierMixin] = (
+        native_estimator: RegressorMixin | ClassifierMixin = (
             estimator
             if estimator_wrapper is None
             else estimator_wrapper.native_estimator
@@ -1482,7 +1470,7 @@ def _mirror_attributes(
 
 def _make_alias(
     wrapper_module: str, wrapper_name: str, name: str, delegate_cls: type, delegate: Any
-) -> Optional[Union[Callable[..., Any], property]]:
+) -> Callable[..., Any] | property | None:
     if inspect.isfunction(delegate):
         return _make_method_alias(
             wrapper_module=wrapper_module,

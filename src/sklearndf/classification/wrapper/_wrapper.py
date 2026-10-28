@@ -5,7 +5,7 @@ Core implementation of :mod:`sklearndf.classification.wrapper`
 import logging
 from abc import ABCMeta
 from collections.abc import Sequence
-from typing import Any, Generic, Optional, TypeVar, Union, cast
+from typing import Any, Generic, TypeVar, cast
 
 import numpy.typing as npt
 import pandas as pd
@@ -92,10 +92,10 @@ class PartialFitClassifierWrapperDF(
     # noinspection PyPep8Naming
     def partial_fit(
         self: T_PartialFitClassifierWrapperDF,
-        X: Union[pd.Series, pd.DataFrame],
-        y: Union[pd.Series, pd.DataFrame],
-        classes: Optional[Sequence[Any]] = None,
-        sample_weight: Optional[pd.Series] = None,
+        X: pd.Series | pd.DataFrame,
+        y: pd.Series | pd.DataFrame,
+        classes: Sequence[Any] | None = None,
+        sample_weight: pd.Series | None = None,
     ) -> T_PartialFitClassifierWrapperDF:
         """
         Perform incremental fit on a batch of samples.
@@ -120,8 +120,8 @@ class PartialFitClassifierWrapperDF(
     def _partial_fit(
         self: T_PartialFitClassifierWrapperDF,
         X: pd.DataFrame,
-        y: Union[pd.Series, pd.DataFrame],
-        **partial_fit_params: Optional[Any],
+        y: pd.Series | pd.DataFrame,
+        **partial_fit_params: Any | None,
     ) -> T_PartialFitClassifierWrapperDF:
         return cast(
             T_PartialFitClassifierWrapperDF,
@@ -150,11 +150,11 @@ class MultiOutputClassifierWrapperDF(
     def _prediction_with_class_labels(
         self,
         X: pd.DataFrame,
-        prediction: Union[
-            pd.Series, pd.DataFrame, list[npt.NDArray[Any]], npt.NDArray[Any]
-        ],
-        classes: Optional[Sequence[Any]] = None,
-    ) -> Union[pd.Series, pd.DataFrame, list[pd.DataFrame]]:
+        prediction: (
+            pd.Series | pd.DataFrame | list[npt.NDArray[Any]] | npt.NDArray[Any]
+        ),
+        classes: Sequence[Any] | None = None,
+    ) -> pd.Series | pd.DataFrame | list[pd.DataFrame]:
         # if we have a multi-output classifier, prediction of probabilities
         # yields a list of NumPy arrays
         if not isinstance(prediction, list):
@@ -201,11 +201,11 @@ class ClassifierChainWrapperDF(
     def _prediction_with_class_labels(
         self,
         X: pd.DataFrame,
-        prediction: Union[
-            pd.Series, pd.DataFrame, list[npt.NDArray[Any]], npt.NDArray[Any]
-        ],
-        classes: Optional[Sequence[Any]] = None,
-    ) -> Union[pd.Series, pd.DataFrame, list[pd.DataFrame]]:
+        prediction: (
+            pd.Series | pd.DataFrame | list[npt.NDArray[Any]] | npt.NDArray[Any]
+        ),
+        classes: Sequence[Any] | None = None,
+    ) -> pd.Series | pd.DataFrame | list[pd.DataFrame]:
         # todo: infer actual class names
         return super()._prediction_with_class_labels(
             X, prediction, classes=range(self.n_outputs_)

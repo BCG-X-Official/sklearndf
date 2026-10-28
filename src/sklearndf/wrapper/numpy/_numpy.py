@@ -3,8 +3,8 @@ Estimator adapter classes to handle numpy arrays in meta-estimators.
 """
 
 import logging
-from collections.abc import Sequence
-from typing import Any, Callable, Generic, Optional, TypeVar, Union
+from collections.abc import Callable, Sequence
+from typing import Any, Generic, TypeVar
 
 import numpy as np
 import numpy.typing as npt
@@ -76,14 +76,12 @@ class EstimatorNPDF(
 
     #: Column names to use for the pandas data frame derived from the features numpy
     #: array.
-    column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
+    column_names: Sequence[str] | Callable[[], Sequence[str]] | None
 
     def __init__(
         self,
         delegate: T_DelegateEstimatorDF,
-        column_names: Optional[
-            Union[Sequence[str], Callable[[], Sequence[str]]]
-        ] = None,
+        column_names: None | (Sequence[str] | Callable[[], Sequence[str]]) = None,
     ) -> None:
         """
         :param delegate: the sklearndf estimator to invoke after transforming the
@@ -103,8 +101,8 @@ class EstimatorNPDF(
 
     def fit(
         self: T_EstimatorNPDF,
-        X: Union[npt.NDArray[Any], sparse.spmatrix, pd.Series, pd.DataFrame],
-        y: Optional[Union[npt.NDArray[Any], pd.Series, pd.DataFrame]] = None,
+        X: npt.NDArray[Any] | sparse.spmatrix | pd.Series | pd.DataFrame,
+        y: npt.NDArray[Any] | pd.Series | pd.DataFrame | None = None,
         **fit_params: Any,
     ) -> T_EstimatorNPDF:
         """[see superclass]"""
@@ -119,14 +117,14 @@ class EstimatorNPDF(
     def _get_n_features_in(self) -> int:
         return self.delegate._get_n_features_in()
 
-    def _get_outputs(self) -> Optional[list[str]]:
+    def _get_outputs(self) -> list[str] | None:
         return self.delegate._get_outputs()
 
     def _get_n_outputs(self) -> int:
         return self.delegate._get_n_outputs()
 
     def _ensure_X_frame(
-        self, X: Union[npt.NDArray[Any], sparse.spmatrix, pd.Series, pd.DataFrame]
+        self, X: npt.NDArray[Any] | sparse.spmatrix | pd.Series | pd.DataFrame
     ) -> pd.DataFrame:
         column_names = self.column_names
         if callable(column_names):
@@ -169,8 +167,8 @@ class EstimatorNPDF(
 
     @staticmethod
     def _ensure_y_series_or_frame(
-        y: Optional[Union[npt.NDArray[Any], pd.Series, pd.DataFrame]],
-    ) -> Optional[Union[pd.Series, pd.DataFrame]]:
+        y: npt.NDArray[Any] | pd.Series | pd.DataFrame | None,
+    ) -> pd.Series | pd.DataFrame | None:
         if isinstance(y, np.ndarray):
             if y.ndim == 1:
                 return pd.Series(y)
@@ -194,11 +192,11 @@ class LearnerNPDF(
 
     # repeating attribute declarations of base classes for Sphinx documentation
     delegate: T_DelegateLearnerDF
-    column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
+    column_names: Sequence[str] | Callable[[], Sequence[str]] | None
 
     def predict(
-        self, X: Union[npt.NDArray[Any], pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.Series, pd.DataFrame]:
+        self, X: npt.NDArray[Any] | pd.DataFrame, **predict_params: Any
+    ) -> pd.Series | pd.DataFrame:
         """[see superclass]"""
         return self.delegate.predict(self._ensure_X_frame(X), **predict_params)
 
@@ -215,13 +213,13 @@ class SupervisedLearnerNPDF(
 
     # repeating attribute declarations of base classes for Sphinx documentation
     delegate: T_DelegateSupervisedLearnerDF
-    column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
+    column_names: Sequence[str] | Callable[[], Sequence[str]] | None
 
     def score(
         self,
-        X: Union[npt.NDArray[Any], pd.DataFrame],
-        y: Union[npt.NDArray[Any], pd.Series],
-        sample_weight: Optional[pd.Series] = None,
+        X: npt.NDArray[Any] | pd.DataFrame,
+        y: npt.NDArray[Any] | pd.Series,
+        sample_weight: pd.Series | None = None,
     ) -> float:
         """[see superclass]"""
         return self.delegate.score(
@@ -243,28 +241,28 @@ class ClassifierNPDF(
 
     # repeating attribute declarations of base classes for Sphinx documentation
     delegate: T_DelegateClassifierDF
-    column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
+    column_names: Sequence[str] | Callable[[], Sequence[str]] | None
 
-    def _get_classes(self) -> Union[npt.NDArray[Any], list[npt.NDArray[Any]]]:
+    def _get_classes(self) -> npt.NDArray[Any] | list[npt.NDArray[Any]]:
         return self.delegate._get_classes()
 
     def predict_proba(
-        self, X: Union[npt.NDArray[Any], pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.DataFrame, list[pd.DataFrame]]:
+        self, X: npt.NDArray[Any] | pd.DataFrame, **predict_params: Any
+    ) -> pd.DataFrame | list[pd.DataFrame]:
         """[see superclass]"""
         return self.delegate.predict_proba(self._ensure_X_frame(X), **predict_params)
 
     def predict_log_proba(
-        self, X: Union[npt.NDArray[Any], pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.DataFrame, list[pd.DataFrame]]:
+        self, X: npt.NDArray[Any] | pd.DataFrame, **predict_params: Any
+    ) -> pd.DataFrame | list[pd.DataFrame]:
         """[see superclass]"""
         return self.delegate.predict_log_proba(
             self._ensure_X_frame(X), **predict_params
         )
 
     def decision_function(
-        self, X: Union[npt.NDArray[Any], pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.Series, pd.DataFrame]:
+        self, X: npt.NDArray[Any] | pd.DataFrame, **predict_params: Any
+    ) -> pd.Series | pd.DataFrame:
         """[see superclass]"""
         return self.delegate.decision_function(
             self._ensure_X_frame(X), **predict_params
@@ -282,7 +280,7 @@ class RegressorNPDF(
 
     # repeating attribute declarations of base classes for Sphinx documentation
     delegate: T_DelegateRegressorDF
-    column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
+    column_names: Sequence[str] | Callable[[], Sequence[str]] | None
 
 
 # noinspection PyPep8Naming
@@ -297,22 +295,20 @@ class TransformerNPDF(
 
     # repeating attribute declarations of base classes for Sphinx documentation
     delegate: T_DelegateTransformerDF
-    column_names: Optional[Union[Sequence[str], Callable[[], Sequence[str]]]]
+    column_names: Sequence[str] | Callable[[], Sequence[str]] | None
 
-    def transform(self, X: Union[npt.NDArray[Any], pd.DataFrame]) -> pd.DataFrame:
+    def transform(self, X: npt.NDArray[Any] | pd.DataFrame) -> pd.DataFrame:
         """[see superclass]"""
         return self.delegate.predict(self._ensure_X_frame(X))
 
-    def inverse_transform(
-        self, X: Union[npt.NDArray[Any], pd.DataFrame]
-    ) -> pd.DataFrame:
+    def inverse_transform(self, X: npt.NDArray[Any] | pd.DataFrame) -> pd.DataFrame:
         """[see superclass]"""
         return self.delegate.inverse_transform(self._ensure_X_frame(X))
 
     def fit_transform(
         self,
-        X: Union[npt.NDArray[Any], pd.DataFrame],
-        y: Optional[Union[npt.NDArray[Any], pd.Series, pd.DataFrame]] = None,
+        X: npt.NDArray[Any] | pd.DataFrame,
+        y: npt.NDArray[Any] | pd.Series | pd.DataFrame | None = None,
         **fit_params: Any,
     ) -> pd.DataFrame:
         """[see superclass]"""

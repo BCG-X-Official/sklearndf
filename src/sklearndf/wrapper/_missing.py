@@ -3,7 +3,7 @@ Handling of mocked up native estimators.
 """
 
 import logging
-from typing import Any, Optional
+from typing import Any
 
 from sklearn.base import BaseEstimator
 
@@ -41,10 +41,10 @@ class MissingEstimator(
     diagnose packages that are installed but cannot be imported.
     """
 
-    _import_error: Optional[str] = None
+    _import_error: str | None = None
 
     def __init_subclass__(
-        cls, import_error: Optional[BaseException] = None, **kwargs: Any
+        cls, import_error: BaseException | None = None, **kwargs: Any
     ) -> None:
         """
         :param import_error: the exception raised when trying to import the native

@@ -5,8 +5,8 @@ Core implementation of :mod:`sklearndf`
 import inspect
 import logging
 from abc import ABCMeta, abstractmethod
-from collections.abc import Mapping
-from typing import Any, Callable, Optional, TypeVar, Union, cast
+from collections.abc import Callable, Mapping
+from typing import Any, TypeVar, cast
 
 import numpy.typing as npt
 import pandas as pd
@@ -98,8 +98,8 @@ class EstimatorDF(
     @abstractmethod
     def fit(
         self: T_EstimatorDF,
-        X: Union[pd.DataFrame, pd.Series],
-        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        X: pd.DataFrame | pd.Series,
+        y: pd.Series | pd.DataFrame | None = None,
         **fit_params: Any,
     ) -> T_EstimatorDF:
         """
@@ -134,7 +134,7 @@ class EstimatorDF(
 
     @property
     @fitted_only(not_fitted_error=AttributeError)
-    def output_names_(self) -> Optional[list[str]]:
+    def output_names_(self) -> list[str] | None:
         """
         The name(s) of the output(s) this estimator was fitted to,
         or ``None`` if this estimator was not fitted to any outputs.
@@ -204,7 +204,7 @@ class EstimatorDF(
         return len(self._get_features_in())
 
     @abstractmethod
-    def _get_outputs(self) -> Optional[list[str]]:
+    def _get_outputs(self) -> list[str] | None:
         # get the output columns as a list of strings, or None if this estimator
         # was not fitted to any outputs
         pass
@@ -237,7 +237,7 @@ class EstimatorDF(
             ).parameters.items()
         }
 
-        def _kwarg_to_expression(name: str, value: Any) -> Optional[Expression]:
+        def _kwarg_to_expression(name: str, value: Any) -> Expression | None:
             expression = make_expression(value)
 
             # are we dealing with a default value?
@@ -283,7 +283,7 @@ class EstimatorDF(
                 # custom value: we return the expression
                 return expression
 
-        kwarg_expressions: dict[str, Optional[Expression]] = {
+        kwarg_expressions: dict[str, Expression | None] = {
             name: _kwarg_to_expression(name, value)
             for name, value in self.get_params(deep=False).items()
         }
@@ -320,8 +320,8 @@ class LearnerDF(EstimatorDF, metaclass=ABCMeta):
     # noinspection PyPep8Naming
     @abstractmethod
     def predict(
-        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.Series, pd.DataFrame]:
+        self, X: pd.Series | pd.DataFrame, **predict_params: Any
+    ) -> pd.Series | pd.DataFrame:
         """
         Predict outputs for the given inputs.
 
@@ -350,9 +350,9 @@ class SupervisedLearnerDF(LearnerDF, metaclass=ABCMeta):
     @abstractmethod
     def score(
         self,
-        X: Union[pd.Series, pd.DataFrame],
+        X: pd.Series | pd.DataFrame,
         y: pd.Series,
-        sample_weight: Optional[pd.Series] = None,
+        sample_weight: pd.Series | None = None,
     ) -> float:
         """
         Score this learner using the given inputs and outputs.
@@ -437,7 +437,7 @@ class TransformerDF(
 
     # noinspection PyPep8Naming
     @abstractmethod
-    def transform(self, X: Union[pd.Series, pd.DataFrame]) -> pd.DataFrame:
+    def transform(self, X: pd.Series | pd.DataFrame) -> pd.DataFrame:
         """
         Transform the given inputs.
 
@@ -454,8 +454,8 @@ class TransformerDF(
     # noinspection PyPep8Naming
     def fit_transform(
         self,
-        X: Union[pd.Series, pd.DataFrame],
-        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        X: pd.Series | pd.DataFrame,
+        y: pd.Series | pd.DataFrame | None = None,
         **fit_params: Any,
     ) -> pd.DataFrame:
         """
@@ -471,7 +471,7 @@ class TransformerDF(
 
     # noinspection PyPep8Naming
     @abstractmethod
-    def inverse_transform(self, X: Union[pd.Series, pd.DataFrame]) -> pd.DataFrame:
+    def inverse_transform(self, X: pd.Series | pd.DataFrame) -> pd.DataFrame:
         """
         Inverse-transform the given inputs.
 
@@ -512,9 +512,9 @@ class RegressorDF(
     @abstractmethod
     def score(
         self,
-        X: Union[pd.Series, pd.DataFrame],
+        X: pd.Series | pd.DataFrame,
         y: pd.Series,
-        sample_weight: Optional[pd.Series] = None,
+        sample_weight: pd.Series | None = None,
     ) -> float:
         """[see SupervisedLearnerDF]"""
 
@@ -536,7 +536,7 @@ class ClassifierDF(
 
     @property
     @fitted_only(not_fitted_error=AttributeError)
-    def classes_(self) -> Union[npt.NDArray[Any], list[npt.NDArray[Any]]]:
+    def classes_(self) -> npt.NDArray[Any] | list[npt.NDArray[Any]]:
         """
         Get the classes predicted by this classifier as a numpy array of class labels
         for single-output problems, or a list of such arrays for multi-output problems
@@ -548,8 +548,8 @@ class ClassifierDF(
     # noinspection PyPep8Naming
     @abstractmethod
     def predict_proba(
-        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.DataFrame, list[pd.DataFrame]]:
+        self, X: pd.Series | pd.DataFrame, **predict_params: Any
+    ) -> pd.DataFrame | list[pd.DataFrame]:
         """
         Predict class probabilities for the given inputs.
 
@@ -570,8 +570,8 @@ class ClassifierDF(
     # noinspection PyPep8Naming
     @abstractmethod
     def predict_log_proba(
-        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.DataFrame, list[pd.DataFrame]]:
+        self, X: pd.Series | pd.DataFrame, **predict_params: Any
+    ) -> pd.DataFrame | list[pd.DataFrame]:
         """
         Predict class log-probabilities for the given inputs.
 
@@ -592,8 +592,8 @@ class ClassifierDF(
     # noinspection PyPep8Naming
     @abstractmethod
     def decision_function(
-        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.Series, pd.DataFrame]:
+        self, X: pd.Series | pd.DataFrame, **predict_params: Any
+    ) -> pd.Series | pd.DataFrame:
         """
         Compute the decision function for the given inputs.
 
@@ -615,9 +615,9 @@ class ClassifierDF(
     @abstractmethod
     def score(
         self,
-        X: Union[pd.Series, pd.DataFrame],
+        X: pd.Series | pd.DataFrame,
         y: pd.Series,
-        sample_weight: Optional[pd.Series] = None,
+        sample_weight: pd.Series | None = None,
     ) -> float:
         """[see SupervisedLearnerDF]"""
 
@@ -626,7 +626,7 @@ class ClassifierDF(
     score.__doc__ = SupervisedLearnerDF.score.__doc__
 
     @abstractmethod
-    def _get_classes(self) -> Union[npt.NDArray[Any], list[npt.NDArray[Any]]]:
+    def _get_classes(self) -> npt.NDArray[Any] | list[npt.NDArray[Any]]:
         pass
 
 
@@ -656,10 +656,10 @@ class ClusterDF(
     @abstractmethod
     def fit_predict(
         self,
-        X: Union[pd.Series, pd.DataFrame],
-        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        X: pd.Series | pd.DataFrame,
+        y: pd.Series | pd.DataFrame | None = None,
         **fit_predict_params: Any,
-    ) -> Union[pd.Series, pd.DataFrame]:
+    ) -> pd.Series | pd.DataFrame:
         """
         Fit this clusterer using the given inputs, then predict the cluster labels.
 

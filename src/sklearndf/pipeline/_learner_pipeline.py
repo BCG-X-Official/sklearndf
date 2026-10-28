@@ -4,7 +4,7 @@ GAMMA custom two-step pipelines
 
 import logging
 from abc import ABCMeta, abstractmethod
-from typing import Any, Generic, Optional, TypeVar, Union
+from typing import Any, Generic, TypeVar
 
 import numpy.typing as npt
 import pandas as pd
@@ -63,7 +63,7 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
     mandatory estimator step.
     """
 
-    def __init__(self, *, preprocessing: Optional[TransformerDF] = None) -> None:
+    def __init__(self, *, preprocessing: TransformerDF | None = None) -> None:
         """
         :param preprocessing: the preprocessing step in the pipeline (default: ``None``)
         """
@@ -78,7 +78,7 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
         self._preprocessing = preprocessing
 
     @property
-    def preprocessing(self) -> Optional[TransformerDF]:
+    def preprocessing(self) -> TransformerDF | None:
         """
         The preprocessing step.
         """
@@ -110,10 +110,10 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
     # noinspection PyPep8Naming
     def fit(
         self: T_EstimatorPipelineDF,
-        X: Union[pd.DataFrame, pd.Series],
-        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        X: pd.DataFrame | pd.Series,
+        y: pd.Series | pd.DataFrame | None = None,
         *,
-        sample_weight: Optional[pd.Series] = None,
+        sample_weight: pd.Series | None = None,
         **fit_params: Any,
     ) -> T_EstimatorPipelineDF:
         """
@@ -173,7 +173,7 @@ class _EstimatorPipelineDF(EstimatorDF, Generic[T_FinalEstimatorDF], metaclass=A
         else:
             return self.final_estimator.n_features_in_
 
-    def _get_outputs(self) -> Optional[list[str]]:
+    def _get_outputs(self) -> list[str] | None:
         if self.preprocessing is not None:
             return self.preprocessing._get_outputs()
         else:
@@ -209,8 +209,8 @@ class LearnerPipelineDF(
 
     # noinspection PyPep8Naming
     def predict(
-        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.Series, pd.DataFrame]:
+        self, X: pd.Series | pd.DataFrame, **predict_params: Any
+    ) -> pd.Series | pd.DataFrame:
         """[see superclass]"""
         return self.final_estimator.predict(self.preprocess(X), **predict_params)
 
@@ -230,9 +230,9 @@ class SupervisedLearnerPipelineDF(
     # noinspection PyPep8Naming
     def score(
         self,
-        X: Union[pd.Series, pd.DataFrame],
-        y: Optional[pd.Series] = None,
-        sample_weight: Optional[Any] = None,
+        X: pd.Series | pd.DataFrame,
+        y: pd.Series | None = None,
+        sample_weight: Any | None = None,
     ) -> float:
         """[see superclass]"""
         if sample_weight is None:
@@ -257,7 +257,7 @@ class RegressorPipelineDF(
     def __init__(
         self,
         *,
-        preprocessing: Optional[TransformerDF] = None,
+        preprocessing: TransformerDF | None = None,
         regressor: T_FinalRegressorDF,
     ) -> None:
         """
@@ -300,7 +300,7 @@ class ClassifierPipelineDF(
     def __init__(
         self,
         *,
-        preprocessing: Optional[TransformerDF] = None,
+        preprocessing: TransformerDF | None = None,
         classifier: T_FinalClassifierDF,
     ) -> None:
         """
@@ -327,27 +327,27 @@ class ClassifierPipelineDF(
         """[see superclass]"""
         return "classifier"
 
-    def _get_classes(self) -> Union[npt.NDArray[Any], list[npt.NDArray[Any]]]:
+    def _get_classes(self) -> npt.NDArray[Any] | list[npt.NDArray[Any]]:
         return self.final_estimator._get_classes()
 
     # noinspection PyPep8Naming
     def predict_proba(
-        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.DataFrame, list[pd.DataFrame]]:
+        self, X: pd.Series | pd.DataFrame, **predict_params: Any
+    ) -> pd.DataFrame | list[pd.DataFrame]:
         """[see superclass]"""
         return self.classifier.predict_proba(self.preprocess(X), **predict_params)
 
     # noinspection PyPep8Naming
     def predict_log_proba(
-        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.DataFrame, list[pd.DataFrame]]:
+        self, X: pd.Series | pd.DataFrame, **predict_params: Any
+    ) -> pd.DataFrame | list[pd.DataFrame]:
         """[see superclass]"""
         return self.classifier.predict_log_proba(self.preprocess(X), **predict_params)
 
     # noinspection PyPep8Naming
     def decision_function(
-        self, X: Union[pd.Series, pd.DataFrame], **predict_params: Any
-    ) -> Union[pd.Series, pd.DataFrame]:
+        self, X: pd.Series | pd.DataFrame, **predict_params: Any
+    ) -> pd.Series | pd.DataFrame:
         """[see superclass]"""
         return self.classifier.decision_function(self.preprocess(X), **predict_params)
 
@@ -366,7 +366,7 @@ class ClusterPipelineDF(
     def __init__(
         self,
         *,
-        preprocessing: Optional[TransformerDF] = None,
+        preprocessing: TransformerDF | None = None,
         clusterer: T_FinalClusterDF,
     ) -> None:
         """
@@ -401,10 +401,10 @@ class ClusterPipelineDF(
     # noinspection PyPep8Naming
     def fit_predict(
         self,
-        X: Union[pd.Series, pd.DataFrame],
-        y: Optional[Union[pd.Series, pd.DataFrame]] = None,
+        X: pd.Series | pd.DataFrame,
+        y: pd.Series | pd.DataFrame | None = None,
         **fit_predict_params: Any,
-    ) -> Union[pd.Series, pd.DataFrame]:
+    ) -> pd.Series | pd.DataFrame:
         """[see superclass]"""
         return self.clusterer.fit_predict(self.preprocess(X), y, **fit_predict_params)
 
