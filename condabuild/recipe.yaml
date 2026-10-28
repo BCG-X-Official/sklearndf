@@ -26,7 +26,7 @@ requirements:
     - python        ${{ env.get('FACET_V_PYTHON') }}
     - scikit-learn  ${{ env.get('FACET_V_SCIKIT_LEARN') }}
     - scipy         ${{ env.get('FACET_V_SCIPY') }}
-    - typing_extensions >=3.10
+    - typing_extensions ${{ env.get('FACET_V_TYPING_EXTENSIONS') }}
 
 tests:
   - python:
