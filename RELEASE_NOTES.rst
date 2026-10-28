@@ -32,6 +32,9 @@ Release Notes
   :class:`.GrootCVDF`; new class :class:`.ARFSMetaEstimatorWrapperDF` is the base class
   for selectors with a delegate estimator, such as :class:`.LeshyDF` and
   :class:`.BoostAGrootaDF`
+- FIX: the :class:`RuntimeError` raised when instantiating an estimator that is not
+  available now includes the reason why importing the native estimator failed, e.g.,
+  for packages that are installed but cannot be imported
 
 
 2.4.2
