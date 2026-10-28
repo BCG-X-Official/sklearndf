@@ -61,10 +61,13 @@ tests:
           then:
             - typing_inspect ${{ env.get('FACET_V_TYPING_INSPECT') }}
     script:
-      - conda list
-      - python -c 'import sklearndf; import os; assert sklearndf.__version__ == os.environ["PKG_VERSION"]'
-      - cd "${FACET_PATH}/sklearndf"
-      - pytest -vs test
+      env:
+        # the test environment does not inherit the environment of the build
+        FACET_PATH: ${{ env.get('FACET_PATH') }}
+      content:
+        - python -c 'import sklearndf; import os; assert sklearndf.__version__ == os.environ["PKG_VERSION"]'
+        - cd "${FACET_PATH}/sklearndf"
+        - pytest -vs test
 
 about:
   license: OSL-2.0
