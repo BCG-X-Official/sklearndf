@@ -17,8 +17,8 @@ Release Notes
 2.4.3
 ~~~~~
 
-- API: add support for Python |nbsp| 3.14, and for *pandas* |nbsp| 3; requires
-  *gamma-pytools* |nbsp| 3.0.3 or later when running on Python |nbsp| 3.14
+- API: add support for Python |nbsp| 3.14, and for *pandas* |nbsp| 3; Python |nbsp| 3.14
+  requires *gamma-pytools* |nbsp| 3.0.3 or later
 - API: meta-estimators such as :class:`.VotingClassifierDF`,
   :class:`.MultiOutputRegressorDF` and :class:`.ClassifierChainDF` now retain DF
   estimators passed as delegate estimators, instead of replacing them with their
