@@ -437,7 +437,7 @@ Azure DevOps CI/CD
 
 This project uses `Azure DevOps <https://dev.azure.com/>`_ for CI/CD pipelines.
 The pipelines are defined in the ``azure-pipelines.yml`` file. They run on pushes to
-the baseline branch (e.g., ``2.4.x``) and to ``release/*`` branches, on pull requests
+the baseline branch (e.g., ``2.5.x``) and to ``release/*`` branches, on pull requests
 targeting either, and nightly on the baseline branch. Pushing to a ``dev/*`` branch
 does not start a pipeline by itself; the pipeline runs once a pull request is opened.
 The pipeline is divided into the following stages:
@@ -462,13 +462,13 @@ Before initiating the release process, please ensure the version number
 in ``src/sklearndf/__init__.py`` is correct and the format conforms to semantic
 versioning, and that ``RELEASE_NOTES.rst`` is complete. If the version needs to be
 corrected/bumped then open a PR for the change and merge it into the baseline branch
-(e.g., ``2.4.x``) before going any further.
+(e.g., ``2.5.x``) before going any further.
 
 The release process has the following key steps:
 
 - Create a new release branch from the tag of the latest release named
   ``release/<version>`` where ``<version>`` is the version number of the new release
-- Create a new branch from the baseline branch (e.g., ``2.4.x``) named
+- Create a new branch from the baseline branch (e.g., ``2.5.x``) named
   ``dev/<version>`` where ``<version>`` is the version number of the new release
 - Opening a PR to merge ``dev/<version>`` onto ``release/<version>``.
   This will automatically run all conda/pip build tests via Azure Pipelines, and

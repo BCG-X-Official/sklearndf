@@ -7,18 +7,20 @@ Release Notes
 .. |nbsp| unicode:: 0xA0
    :trim:
 
-*skelearndf* 2.4
+*sklearndf* 2.5
 ----------------
 
-*sklearndf* |nbsp| 2.4 adds support for
-`scikit-learn 1.7 <https://scikit-learn.org/1.7>`_, and drops support for
-*scikit-learn* |nbsp| 1.2 and earlier, and Python |nbsp| 3.8 and earlier.
+*sklearndf* |nbsp| 2.5 adds support for Python |nbsp| 3.14 and *pandas* |nbsp| 3,
+and drops support for Python |nbsp| 3.10 and earlier, and for *gamma-pytools* |nbsp| 2.
 
-2.4.3
+2.5.0
 ~~~~~
 
-- API: add support for Python |nbsp| 3.14, and for *pandas* |nbsp| 3; Python |nbsp| 3.14
+- API: add support for Python |nbsp| 3.14 and *pandas* |nbsp| 3; Python |nbsp| 3.14
   requires *gamma-pytools* |nbsp| 3.0.3 or later
+- API: drop support for Python |nbsp| 3.10 and earlier, and for *gamma-pytools* |nbsp| 2;
+  *sklearndf* now requires Python |nbsp| 3.11 or later and *gamma-pytools* |nbsp| 3.0
+  or later
 - API: meta-estimators such as :class:`.VotingClassifierDF`,
   :class:`.MultiOutputRegressorDF` and :class:`.ClassifierChainDF` now retain DF
   estimators passed as delegate estimators, instead of replacing them with their
@@ -36,6 +38,13 @@ Release Notes
   available now includes the reason why importing the native estimator failed, e.g.,
   for packages that are installed but cannot be imported
 
+
+*skelearndf* 2.4
+----------------
+
+*sklearndf* |nbsp| 2.4 adds support for
+`scikit-learn 1.7 <https://scikit-learn.org/1.7>`_, and drops support for
+*scikit-learn* |nbsp| 1.2 and earlier, and Python |nbsp| 3.8 and earlier.
 
 2.4.2
 ~~~~~
