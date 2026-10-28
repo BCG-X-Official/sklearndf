@@ -1,11 +1,11 @@
 trigger:
   # run the pipeline on pushes to the following branches
-  - 2.4.x
+  - 2.5.x
   - release/*
 
 pr:
   # run the pipeline on pull requests to the following branches
-  - 2.4.x
+  - 2.5.x
   - release/*
 
 pool:
@@ -20,7 +20,7 @@ schedules:
     displayName: Nightly full build
     branches:
       include:
-        - 2.4.x
+        - 2.5.x
 
 resources:
   repositories:
@@ -181,8 +181,8 @@ stages:
         steps:
           - task: UsePythonVersion@0
             inputs:
-              versionSpec: '3.9'
-            displayName: 'use Python 3.9'
+              versionSpec: '3.11'
+            displayName: 'use Python 3.11'
 
           - checkout: self
 
@@ -258,7 +258,7 @@ stages:
               BUILD_SYSTEM: 'conda'
               PKG_DEPENDENCIES: 'max'
             minimum_dependencies_tox:
-              FACET_V_PYTHON_BUILD: '=3.9'
+              FACET_V_PYTHON_BUILD: '=3.11'
               BUILD_SYSTEM: 'tox'
               PKG_DEPENDENCIES: 'min'
             maximum_dependencies_tox:
@@ -344,7 +344,7 @@ stages:
               BUILD_SYSTEM: 'conda'
               PKG_DEPENDENCIES: 'default'
             minimum_dependencies_conda:
-              FACET_V_PYTHON_BUILD: '=3.9'
+              FACET_V_PYTHON_BUILD: '=3.11'
               BUILD_SYSTEM: 'conda'
               PKG_DEPENDENCIES: 'min'
             maximum_dependencies_conda:
@@ -356,7 +356,7 @@ stages:
               BUILD_SYSTEM: 'tox'
               PKG_DEPENDENCIES: 'default'
             minimum_dependencies_tox:
-              FACET_V_PYTHON_BUILD: '=3.9'
+              FACET_V_PYTHON_BUILD: '=3.11'
               BUILD_SYSTEM: 'tox'
               PKG_DEPENDENCIES: 'min'
             maximum_dependencies_tox:
