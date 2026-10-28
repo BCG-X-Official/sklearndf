@@ -288,7 +288,8 @@ The ``sphinx/source`` folder contains:
 
   * ``api_landing.rst``: for placing any API landing page preamble for documentation
     as needed. This information will appear on the API landing page in the
-    documentation build after the short description in ``src/__init__.py``. This file
+    documentation build after the short description in
+    ``src/sklearndf/__init__.py``. This file
     is included in the documentation build via the ``custom-module-template.rst``
 
 - ``_static`` contains additional material used in the documentation build, in this
@@ -296,7 +297,7 @@ The ``sphinx/source`` folder contains:
 
 
 The two key scripts are ``make.py`` and ``conf.py``. The base configuration for the
-these scripts can be found in `pytools/sphinx <https://github.com/BCG-X-Official/pytools/tree/develop/sphinx/base>`_.
+these scripts can be found in `pytools/sphinx <https://github.com/BCG-X-Official/pytools/tree/3.0.x/sphinx/base>`_.
 The reason for this is to minimise code given the standardization of the documentation
 build across multiple packages.
 
@@ -358,20 +359,21 @@ The build process for the PyPI and conda distributions uses the following key
 files:
 
 - ``make.py``: generic Python script for package builds. Most configuration is imported
-  from pytools `make.py <https://github.com/BCG-X-Official/pytools/blob/develop/make.py>`__
+  from pytools `make.py <https://github.com/BCG-X-Official/pytools/blob/3.0.x/make.py>`__
   which is a build script that wraps the package build, as well as exposing the matrix
   dependency definitions specified in the ``pyproject.toml`` as environment variables
 - ``pyproject.toml``: metadata for PyPI, build settings and package dependencies
 - ``tox.ini``: contains configurations for tox, testenv, flake8, isort, coverage report,
   and pytest
-- ``condabuild/meta.yml``: metadata for conda, build settings and package dependencies
+- ``condabuild/recipe.yaml``: metadata for conda, build settings and package dependencies
+  (conda packages are built using `rattler-build <https://rattler.build/>`__)
 
 Versioning
 ~~~~~~~~~~
 
 *sklearndf* version numbering follows the `semantic versioning <https://semver.org/>`_
 approach, with the pattern ``MAJOR.MINOR.PATCH``.
-The version can be bumped in the ``src/__init__.py`` by updating the
+The version can be bumped in the ``src/sklearndf/__init__.py`` by updating the
 ``__version__`` string accordingly.
 
 PyPI
@@ -401,7 +403,7 @@ Please note the following:
     <https://flit.readthedocs.io/en/latest/upload.html>`__.
 *   The ``pyproject.toml`` does not provide specification for a short description
     (displayed in the top gray band on the PyPI page for the package). This description
-    comes from the ``src/__init__.py`` script.
+    comes from the ``src/sklearndf/__init__.py`` script.
 *   `flit <https://flit.readthedocs.io/en/latest/>`__ which is used here to publish to
     PyPI, also has the flexibility to support package building (wheel/sdist) via
     ``flit build`` and installing the package by copy or symlink via ``flit install``.
@@ -411,13 +413,14 @@ Conda
 ~~~~~
 
 conda build metadata, build settings and package dependencies
-are obtained from ``meta.yml``. To build and then publish the package to conda,
+are obtained from ``condabuild/recipe.yaml``. To build and then publish the package to
+conda,
 use the following commands:
 
 .. code-block:: sh
 
     python make.py sklearndf conda default
-    anaconda upload --user BCG_Gamma dist/conda/noarch/<*package.tar.gz*>
+    anaconda upload --user bcgx dist/conda/noarch/<*package.conda*>
 
 Please note the following:
 
@@ -433,44 +436,57 @@ Azure DevOps CI/CD
 ------------------
 
 This project uses `Azure DevOps <https://dev.azure.com/>`_ for CI/CD pipelines.
-The pipelines are defined in the ``azure-pipelines.yml`` file and are divided into
-the following stages:
+The pipelines are defined in the ``azure-pipelines.yml`` file. They run on pushes to
+the baseline branch (e.g., ``2.4.x``) and to ``release/*`` branches, on pull requests
+targeting either, and nightly on the baseline branch. Pushing to a ``dev/*`` branch
+does not start a pipeline by itself; the pipeline runs once a pull request is opened.
+The pipeline is divided into the following stages:
 
 * **code_quality_checks**: perform code quality checks for isort, black and flake8.
 * **detect_build_config_changes**: detect whether the build configuration as specified
   in the ``pyproject.yml`` has been modified. If it has, then a build test is run.
 * **Unit tests**: runs all unit tests and then publishes test results and coverage.
-* **conda_tox_build**: build the PyPI and conda distribution artifacts.
-* **Release**: see release process below for more detail.
+* **conda_tox_build**: build the PyPI and conda distribution artifacts. Pull requests
+  from ``dev/*`` or ``release/*`` branches, and the nightly build, run the full matrix
+  of minimum, default and maximum dependencies for both conda and tox; other pull
+  requests only run a small subset, and only if the build configuration changed.
+* **check_release**: for ``dev/*`` and ``release/*`` branches, check that the package
+  version matches the version in the branch name.
+* **Release**: publish the release, see release process below for more detail.
 * **Docs**: build and publish documentation to GitHub Pages.
 
 Release process
 ~~~~~~~~~~~~~~~
 
 Before initiating the release process, please ensure the version number
-in ``src/__init__.py`` is correct and the format conforms to semantic
-versioning. If the version needs to be corrected/bumped then open a PR for the
-change and merge into develop before going any further.
+in ``src/sklearndf/__init__.py`` is correct and the format conforms to semantic
+versioning, and that ``RELEASE_NOTES.rst`` is complete. If the version needs to be
+corrected/bumped then open a PR for the change and merge it into the baseline branch
+(e.g., ``2.4.x``) before going any further.
 
 The release process has the following key steps:
 
 - Create a new release branch from the tag of the latest release named
   ``release/<version>`` where ``<version>`` is the version number of the new release
-- Create a new branch from the baseline branch (e.g., ``2.0.x``) named
+- Create a new branch from the baseline branch (e.g., ``2.4.x``) named
   ``dev/<version>`` where ``<version>`` is the version number of the new release
 - Opening a PR to merge ``dev/<version>`` onto ``release/<version>``.
-  This will automatically run all conda/pip build tests via
-  Azure Pipelines prior to allowing to merge the PR.
-  This will trigger automatic upload of artifacts (conda and pip
-  packages) from Azure DevOps. At this stage, it is recommended that the pip package
-  build is checked using `PyPI test <https://test.pypi.org/>`__ to ensure all
-  metadata presents correctly. This is important as package versions in
+  This will automatically run all conda/pip build tests via Azure Pipelines, and
+  check that the package version matches ``<version>``, prior to allowing to merge the
+  PR. The PR build does not publish anything; the build artifacts (conda and pip
+  packages) are only attached to the pipeline run. At this stage, it is recommended
+  that the pip package build is checked using `PyPI test <https://test.pypi.org/>`__
+  to ensure all metadata presents correctly. This is important as package versions in
   PyPI proper are immutable.
 - If everything passes and looks okay, merge the PR using a *merge commit*
   (not squashing).
-  This will trigger the release pipeline which will:
+  This will trigger the release pipeline on the ``release/<version>`` branch which
+  will:
 
-  * Tag the release commit with version number as specified in ``src/__init__.py``
+  * Upload the conda and pip packages to anaconda.org and PyPI, using
+    ``anaconda upload`` and ``flit publish``, respectively
+  * Tag the release commit with version number as specified in
+    ``src/sklearndf/__init__.py``
   * Create a release on GitHub for the new version, please check the `documentation
     <https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/releasing-projects-on-github>`__
     for details
@@ -478,11 +494,14 @@ The release process has the following key steps:
     commits since the last release. Please note this can be manually edited to be more
     succinct afterwards
   * Attach build artifacts (conda and pip packages) to GitHub release
-  * Upload build artifacts to conda/PyPI using ``anaconda upload`` and
-    ``flit publish``, respectively
+  * Publish the documentation to GitHub Pages
+
+  Note that creating the ``release/<version>`` branch from the previous release tag
+  also starts a pipeline run, which stops at the version check because the version
+  in the code still is the previous one.
 
 -  Remove any test versions for pip from PyPI test
 -  Merge ``release/<version>`` back onto the baseline branch from which
    ``dev/<version>`` was branched
--  Bump up version in ``src/__init__.py`` on the baseline branch to start work towards
-   the next release
+-  Bump up version in ``src/sklearndf/__init__.py`` on the baseline branch to start work
+   towards the next release
