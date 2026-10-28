@@ -14,6 +14,21 @@ Release Notes
 `scikit-learn 1.7 <https://scikit-learn.org/1.7>`_, and drops support for
 *scikit-learn* |nbsp| 1.2 and earlier, and Python |nbsp| 3.8 and earlier.
 
+2.4.3
+~~~~~
+
+- API: add support for Python |nbsp| 3.14, and for *pandas* |nbsp| 3; requires
+  *gamma-pytools* |nbsp| 3.0.3 or later when running on Python |nbsp| 3.14
+- API: meta-estimators such as :class:`.VotingClassifierDF`,
+  :class:`.MultiOutputRegressorDF` and :class:`.ClassifierChainDF` now retain DF
+  estimators passed as delegate estimators, instead of replacing them with their
+  native counterparts, and return them through their ``estimator``,
+  ``base_estimator`` and ``estimators`` properties; the lists of estimators may mix
+  DF and native estimators; the native meta-estimator is still initialized with the
+  native counterparts, and the warning previously issued when DF estimators were
+  replaced is therefore no longer issued
+
+
 2.4.2
 ~~~~~
 
