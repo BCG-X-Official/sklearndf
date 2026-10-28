@@ -23,11 +23,12 @@ try:
 
     remove_invalid_lgbm_type_hint(lgbm_type)
 
-except ImportError:
+except ImportError as import_error:
 
     class LGBMRegressor(  # type: ignore
         MissingEstimator,
         RegressorMixin,  # type: ignore
+        import_error=import_error,
     ):
         """Mock-up for missing estimator."""
 
@@ -36,11 +37,12 @@ try:
     # import xgboost classes only if installed
     from xgboost import XGBRegressor
 
-except ImportError:
+except ImportError as import_error:
 
     class XGBRegressor(  # type: ignore
         MissingEstimator,
         RegressorMixin,  # type: ignore
+        import_error=import_error,
     ):
         """Mock-up for missing estimator."""
 

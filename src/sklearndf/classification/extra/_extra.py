@@ -20,11 +20,12 @@ try:
     from lightgbm.sklearn import LGBMClassifier
 
     remove_invalid_lgbm_type_hint(LGBMClassifier)
-except ImportError:
+except ImportError as import_error:
 
     class LGBMClassifier(  # type: ignore
         MissingEstimator,
         ClassifierMixin,  # type: ignore
+        import_error=import_error,
     ):
         """Mock-up for missing estimator."""
 
@@ -32,11 +33,12 @@ except ImportError:
 try:
     # import xgboost classes only if installed
     from xgboost import XGBClassifier
-except ImportError:
+except ImportError as import_error:
 
     class XGBClassifier(  # type: ignore
         MissingEstimator,
         ClassifierMixin,  # type: ignore
+        import_error=import_error,
     ):
         """Mock-up for missing estimator."""
 

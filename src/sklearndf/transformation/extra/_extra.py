@@ -20,11 +20,12 @@ try:
     # import boruta classes only if installed
     from boruta import BorutaPy
 
-except ImportError:
+except ImportError as import_error:
 
     class BorutaPy(  # type: ignore
         MissingEstimator,
         TransformerMixin,  # type: ignore
+        import_error=import_error,
     ):
         """Mock-up for missing estimator."""
 
@@ -33,23 +34,26 @@ try:
     # import boruta classes only if installed
     from arfs.feature_selection.allrelevant import BoostAGroota, GrootCV, Leshy
 
-except ImportError:
+except ImportError as import_error:
 
     class BoostAGroota(  # type: ignore
         MissingEstimator,
         TransformerMixin,  # type: ignore
+        import_error=import_error,
     ):
         """Mock-up for missing estimator."""
 
     class GrootCV(  # type: ignore
         MissingEstimator,
         TransformerMixin,  # type: ignore
+        import_error=import_error,
     ):
         """Mock-up for missing estimator."""
 
     class Leshy(  # type: ignore
         MissingEstimator,
         TransformerMixin,  # type: ignore
+        import_error=import_error,
     ):
         """Mock-up for missing estimator."""
 
