@@ -25,7 +25,6 @@ from typing import (
     Generic,
     Literal,
     Optional,
-    TypeAlias,
     TypeVar,
     Union,
     cast,
@@ -44,6 +43,7 @@ from sklearn.base import (
     RegressorMixin,
     TransformerMixin,
 )
+from typing_extensions import TypeAlias
 
 from pytools.api import AllTracker, inheritdoc, public_module_prefix
 
@@ -1258,7 +1258,7 @@ class MetaEstimatorWrapperDF(
     - multiple delegate estimators in attribute `estimators`
     """
 
-    _df_wrapper: BaseLearner | Sequence[BaseLearner | None] | None
+    _df_wrapper: Union[BaseLearner, Sequence[Optional[BaseLearner]], None]
 
     _ATTR_ESTIMATOR = "estimator"
     _ATTR_BASE_ESTIMATOR = "base_estimator"
@@ -1284,7 +1284,7 @@ class MetaEstimatorWrapperDF(
         had originally been initialized with a DF base learner.
         """
         native_estimator = self.native_estimator
-        estimator: RegressorMixin | ClassifierMixin | None = getattr(
+        estimator: Optional[Union[RegressorMixin, ClassifierMixin]] = getattr(
             native_estimator, self._ATTR_ESTIMATOR, None
         )
         if estimator is None:
@@ -1300,7 +1300,10 @@ class MetaEstimatorWrapperDF(
             return cast(BaseLearner, estimator)
         elif self.is_fitted:
             return type(
-                cast(EstimatorWrapperDF[RegressorMixin | ClassifierMixin], df_wrapper)
+                cast(
+                    EstimatorWrapperDF[Union[RegressorMixin, ClassifierMixin]],
+                    df_wrapper,
+                )
             ).from_fitted(
                 estimator,
                 features_in=self.feature_names_in_,
@@ -1316,9 +1319,9 @@ class MetaEstimatorWrapperDF(
         had originally been initialized with DF base learners.
         """
         native_estimator = self.native_estimator
-        estimators: (
-            Sequence[tuple[str, RegressorMixin]] | Sequence[tuple[str, ClassifierMixin]]
-        ) = getattr(native_estimator, self._ATTR_ESTIMATORS, [])
+        estimators: Union[
+            Sequence[tuple[str, RegressorMixin]], Sequence[tuple[str, ClassifierMixin]]
+        ] = getattr(native_estimator, self._ATTR_ESTIMATORS, [])
         if not estimators:
             raise AttributeError(
                 f"meta-estimator of type {type(self).__name__} does not have "
@@ -1340,7 +1343,9 @@ class MetaEstimatorWrapperDF(
                         if wrapper is None
                         else type(
                             cast(
-                                EstimatorWrapperDF[RegressorMixin | ClassifierMixin],
+                                EstimatorWrapperDF[
+                                    Union[RegressorMixin, ClassifierMixin]
+                                ],
                                 wrapper,
                             )
                         ).from_fitted(
@@ -1362,7 +1367,7 @@ class MetaEstimatorWrapperDF(
         native_meta_estimator: T_NativeEstimator = self.native_estimator
         estimator_attributes: list[str] = []
 
-        estimator: BaseLearner | None = getattr(
+        estimator: Optional[BaseLearner] = getattr(
             native_meta_estimator, self._ATTR_ESTIMATOR, None
         )
         if estimator is not None:
@@ -1371,7 +1376,7 @@ class MetaEstimatorWrapperDF(
             )
             estimator_attributes.append(self._ATTR_ESTIMATOR)
 
-        base_estimator: BaseLearner | Literal["deprecated"] | None = getattr(
+        base_estimator: Optional[Union[BaseLearner, Literal["deprecated"]]] = getattr(
             self, self._ATTR_BASE_ESTIMATOR, None
         )
         # attribute base_estimator is deprecated as of scikit-learn 1.2, with the
@@ -1388,8 +1393,8 @@ class MetaEstimatorWrapperDF(
                 tuple[
                     str,
                     tuple[
-                        RegressorMixin | ClassifierMixin,
-                        BaseLearner | None,
+                        Union[RegressorMixin, ClassifierMixin],
+                        Optional[BaseLearner],
                     ],
                 ]
             ] = [
@@ -1422,7 +1427,7 @@ class MetaEstimatorWrapperDF(
         estimator: BaseLearner,
     ) -> tuple[
         Union[RegressorMixin, ClassifierMixin],
-        BaseLearner | None,
+        Optional[BaseLearner],
     ]:
         estimator_wrapper: Optional[BaseLearner] = (
             estimator if isinstance(estimator, EstimatorWrapperDF) else None
