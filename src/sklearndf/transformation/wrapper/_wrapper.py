@@ -194,7 +194,7 @@ class ColumnPreservingTransformerWrapperDF(
 
 
 class BaseMultipleInputsPerOutputTransformerWrapperDF(
-    TransformerWrapperDF[T_Transformer], Generic[T_Transformer]
+    TransformerWrapperDF[T_Transformer], Generic[T_Transformer], metaclass=ABCMeta
 ):
     """
     DF wrapper for transformers mapping multiple input columns to individual output
@@ -486,9 +486,6 @@ class ColumnTransformerWrapperDF(
 
             return pd.Series(index=output_column_names, data=input_column_names)
 
-        transformer_name: str
-        df_transformer: Union[TransformerDF, str]
-        columns: Union[Sequence[Any], npt.NDArray[Any]]
         return pd.concat(
             [
                 _features_original(transformer_name, df_transformer, columns)
@@ -645,7 +642,7 @@ class OneHotEncoderWrapperDF(TransformerWrapperDF[OneHotEncoder], metaclass=ABCM
                 return
             elif isinstance(drop, str):
                 if drop == "first":
-                    # drop one category for all feature
+                    # drop one category for all features
                     n -= 1
                     return
                 elif drop == "if_binary":
