@@ -364,9 +364,14 @@ def test_feature_union(
     )
     transformed = feature_union.fit_transform(test_data_categorical)
 
-    # assert that all one-hot-encoded columns of the data frame are sparse
+    # assert that all one-hot-encoded columns of the data frame are sparse, and that
+    # all passthrough columns are strings (dtype object, or str as of pandas 3)
     assert all(
-        dtype == (dtype_expected if column.startswith("one_hot__") else np.object_)
+        (
+            dtype == dtype_expected
+            if column.startswith("one_hot__")
+            else pd.api.types.is_string_dtype(dtype)
+        )
         for column, dtype in zip(transformed.columns, transformed.dtypes)
     )
 
