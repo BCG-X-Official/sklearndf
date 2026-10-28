@@ -12,7 +12,7 @@ from sklearndf.pipeline import ClassifierPipelineDF
 from test.sklearndf.pipeline import make_simple_transformer
 
 
-@pytest.mark.parametrize(  # type: ignore
+@pytest.mark.parametrize(
     argnames="classifier_df_cls",
     argvalues=[RandomForestClassifierDF, LGBMClassifierDF],
 )

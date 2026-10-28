@@ -90,9 +90,7 @@ CLASSIFIERS_PARTIAL_FIT = [
 ]
 
 
-@pytest.mark.parametrize(  # type: ignore
-    argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST
-)
+@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_TO_TEST)
 def test_wrapped_fit_predict(
     sklearndf_cls: type[ClassifierDF],
     iris_features: pd.DataFrame,
@@ -193,9 +191,7 @@ def test_wrapped_fit_predict(
                 method(X=iris_features)
 
 
-@pytest.mark.parametrize(  # type: ignore
-    argnames="sklearndf_cls", argvalues=CLASSIFIERS_PARTIAL_FIT
-)
+@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=CLASSIFIERS_PARTIAL_FIT)
 def test_wrapped_partial_fit(
     sklearndf_cls: type[ClassifierDF],
     iris_features: pd.DataFrame,

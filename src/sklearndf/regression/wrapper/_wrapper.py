@@ -4,7 +4,7 @@ Core implementation of :mod:`sklearndf.regression.wrapper`
 
 import logging
 from abc import ABCMeta
-from typing import Any, Generic, Optional, TypeVar, Union, cast
+from typing import Any, Generic, TypeVar, cast
 
 import numpy.typing as npt
 import pandas as pd
@@ -82,9 +82,9 @@ class PartialFitRegressorWrapperDF(
     # noinspection PyPep8Naming
     def partial_fit(
         self: T_PartialFitRegressorWrapperDF,
-        X: Union[pd.Series, pd.DataFrame],
-        y: Union[pd.Series, pd.DataFrame],
-        sample_weight: Optional[pd.Series] = None,
+        X: pd.Series | pd.DataFrame,
+        y: pd.Series | pd.DataFrame,
+        sample_weight: pd.Series | None = None,
     ) -> T_PartialFitRegressorWrapperDF:
         """
         Perform incremental fit on a batch of samples.
@@ -107,8 +107,8 @@ class PartialFitRegressorWrapperDF(
     def _partial_fit(
         self: T_PartialFitRegressorWrapperDF,
         X: pd.DataFrame,
-        y: Union[pd.Series, pd.DataFrame],
-        **partial_fit_params: Optional[Any],
+        y: pd.Series | pd.DataFrame,
+        **partial_fit_params: Any | None,
     ) -> T_PartialFitRegressorWrapperDF:
         return cast(
             T_PartialFitRegressorWrapperDF,

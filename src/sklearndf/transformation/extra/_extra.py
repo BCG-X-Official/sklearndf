@@ -20,11 +20,12 @@ try:
     # import boruta classes only if installed
     from boruta import BorutaPy
 
-except ImportError:
+except ImportError as import_error:
 
     class BorutaPy(  # type: ignore
         MissingEstimator,
         TransformerMixin,  # type: ignore
+        import_error=import_error,
     ):
         """Mock-up for missing estimator."""
 
@@ -33,23 +34,26 @@ try:
     # import boruta classes only if installed
     from arfs.feature_selection.allrelevant import BoostAGroota, GrootCV, Leshy
 
-except ImportError:
+except ImportError as import_error:
 
     class BoostAGroota(  # type: ignore
         MissingEstimator,
         TransformerMixin,  # type: ignore
+        import_error=import_error,
     ):
         """Mock-up for missing estimator."""
 
     class GrootCV(  # type: ignore
         MissingEstimator,
         TransformerMixin,  # type: ignore
+        import_error=import_error,
     ):
         """Mock-up for missing estimator."""
 
     class Leshy(  # type: ignore
         MissingEstimator,
         TransformerMixin,  # type: ignore
+        import_error=import_error,
     ):
         """Mock-up for missing estimator."""
 
@@ -66,6 +70,7 @@ __tracker = AllTracker(globals())
 #
 
 
+from .wrapper import ARFSMetaEstimatorWrapperDF as _ARFSMetaEstimatorWrapperDF
 from .wrapper import ARFSWrapperDF as _ARFSWrapperDF
 from .wrapper import BorutaPyWrapperDF as _BorutaPyWrapperDF
 
@@ -76,13 +81,13 @@ class BorutaDF(_BorutaPyWrapperDF, native=BorutaPy):
     """
 
 
-class LeshyDF(_ARFSWrapperDF[Leshy], native=Leshy):
+class LeshyDF(_ARFSMetaEstimatorWrapperDF[Leshy], native=Leshy):
     """
     DF version of :class:`~arfs.feature_selection.allrelevant.Leshy`.
     """
 
 
-class BoostAGrootaDF(_ARFSWrapperDF[BoostAGroota], native=BoostAGroota):
+class BoostAGrootaDF(_ARFSMetaEstimatorWrapperDF[BoostAGroota], native=BoostAGroota):
     """
     DF version of :class:`~arfs.feature_selection.allrelevant.BoostAGroota`.
     """

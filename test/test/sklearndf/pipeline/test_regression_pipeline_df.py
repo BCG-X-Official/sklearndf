@@ -12,7 +12,7 @@ from sklearndf.regression.extra import LGBMRegressorDF
 from test.sklearndf.pipeline import make_simple_transformer
 
 
-@pytest.mark.parametrize(  # type: ignore
+@pytest.mark.parametrize(
     argnames="regressor_df_cls", argvalues=[RandomForestRegressorDF, LGBMRegressorDF]
 )
 def test_regression_pipeline_df(

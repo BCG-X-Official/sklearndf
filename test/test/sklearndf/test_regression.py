@@ -69,9 +69,7 @@ REGRESSORS_PARTIAL_FIT = [
 ]
 
 
-@pytest.mark.parametrize(  # type: ignore
-    argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST
-)
+@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=REGRESSORS_TO_TEST)
 def test_wrapped_fit_predict(
     sklearndf_cls: type[RegressorDF],
     diabetes_features: pd.DataFrame,
@@ -114,9 +112,7 @@ def test_wrapped_fit_predict(
     assert len(predictions) == len(diabetes_target_sr)
 
 
-@pytest.mark.parametrize(  # type: ignore
-    argnames="sklearndf_cls", argvalues=REGRESSORS_PARTIAL_FIT
-)
+@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=REGRESSORS_PARTIAL_FIT)
 def test_wrapped_partial_fit(
     sklearndf_cls: type[RegressorDF],
     diabetes_features: pd.DataFrame,

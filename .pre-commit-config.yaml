@@ -1,27 +1,36 @@
+# scikit-learn (a dependency of the mypy hook) has no wheels for the newest Python
+default_language_version:
+  python: python3.14
+
 repos:
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.22.0
+    hooks:
+      - id: pyupgrade
+        args: [--py311-plus]
+
   - repo: https://github.com/PyCQA/isort
-    rev: 6.0.1
+    rev: 10.0.0b1
     hooks:
       - id: isort
 
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 26.10.1
     hooks:
       - id: black
         language: python
-        language_version: python39
 
   - repo: https://github.com/pycqa/flake8
-    rev: 7.3.0
+    rev: 7.4.1
     hooks:
       - id: flake8
         name: flake8
         entry: flake8 --config tox.ini
         language: python
-        language_version: python39
         additional_dependencies:
           - flake8-comprehensions ~= 3.16
         types: [ python ]
+
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
@@ -34,12 +43,16 @@ repos:
         exclude: condabuild/meta.yaml
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.18.1
+    rev: v2.4.0
     hooks:
       - id: mypy
-        files: src|sphinx|test
+        entry: mypy src/ test/ sphinx/
+        args: [--config-file, pyproject.toml]
+        files: \.pyi?$
         language: python
-        language_version: python310
+        pass_filenames: false
         additional_dependencies:
           - numpy~=2.2
           - gamma-pytools~=3.0
+          - pytest
+          - packaging

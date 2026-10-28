@@ -7,6 +7,38 @@ Release Notes
 .. |nbsp| unicode:: 0xA0
    :trim:
 
+*sklearndf* 2.5
+----------------
+
+*sklearndf* |nbsp| 2.5 adds support for Python |nbsp| 3.14 and *pandas* |nbsp| 3,
+and drops support for Python |nbsp| 3.10 and earlier, and for *gamma-pytools* |nbsp| 2.
+
+2.5.0
+~~~~~
+
+- API: add support for Python |nbsp| 3.14 and *pandas* |nbsp| 3; Python |nbsp| 3.14
+  requires *gamma-pytools* |nbsp| 3.0.3 or later
+- API: drop support for Python |nbsp| 3.10 and earlier, and for *gamma-pytools* |nbsp| 2;
+  *sklearndf* now requires Python |nbsp| 3.11 or later and *gamma-pytools* |nbsp| 3.0
+  or later
+- API: meta-estimators such as :class:`.VotingClassifierDF`,
+  :class:`.MultiOutputRegressorDF` and :class:`.ClassifierChainDF` now retain DF
+  estimators passed as delegate estimators, instead of replacing them with their
+  native counterparts, and return them through their ``estimator``,
+  ``base_estimator`` and ``estimators`` properties; the lists of estimators may mix
+  DF and native estimators; the native meta-estimator is still initialized with the
+  native counterparts, and the warning previously issued when DF estimators were
+  replaced is therefore no longer issued
+- API: :class:`.ARFSWrapperDF` is no longer a meta-estimator; it is now the base class
+  for *arfs* feature selectors without a delegate estimator, such as
+  :class:`.GrootCVDF`; new class :class:`.ARFSMetaEstimatorWrapperDF` is the base class
+  for selectors with a delegate estimator, such as :class:`.LeshyDF` and
+  :class:`.BoostAGrootaDF`
+- FIX: the :class:`RuntimeError` raised when instantiating an estimator that is not
+  available now includes the reason why importing the native estimator failed, e.g.,
+  for packages that are installed but cannot be imported
+
+
 *skelearndf* 2.4
 ----------------
 

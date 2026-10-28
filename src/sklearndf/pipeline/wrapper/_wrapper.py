@@ -5,7 +5,7 @@ Core implementation of :mod:`sklearndf.pipeline.wrapper`
 import logging
 from abc import ABCMeta
 from collections.abc import Iterator, Sequence
-from typing import Any, Union, cast
+from typing import Any, cast
 
 import numpy.typing as npt
 import pandas as pd
@@ -109,7 +109,7 @@ class PipelineWrapperDF(
         """The number of steps of the pipeline."""
         return len(self.native_estimator.steps)
 
-    def __getitem__(self, ind: Union[slice, int, str]) -> EstimatorDF:
+    def __getitem__(self, ind: slice | int | str) -> EstimatorDF:
         """
         Return a sub-pipeline or a single estimator in the pipeline
 
@@ -137,7 +137,7 @@ class PipelineWrapperDF(
             return cast(EstimatorDF, self.native_estimator[ind])
 
     @staticmethod
-    def _is_passthrough(estimator: Union[EstimatorDF, str, None]) -> bool:
+    def _is_passthrough(estimator: EstimatorDF | str | None) -> bool:
         # return True if the estimator is a "passthrough" (i.e. identity) transformer
         # in the pipeline
         return estimator is None or estimator == PipelineWrapperDF.PASSTHROUGH
@@ -175,7 +175,7 @@ class PipelineWrapperDF(
         ]
 
         _features_out: pd.Index
-        _features_original: Union[npt.NDArray[Any], ExtensionArray]
+        _features_original: npt.NDArray[Any] | ExtensionArray
 
         if len(col_mappings) == 0:
             _features_out = self.feature_names_in_
@@ -230,7 +230,7 @@ class PipelineWrapperDF(
 
 
 class FeatureUnionSparseFrames(
-    FeatureUnion,  # type:ignore
+    FeatureUnion,  # type: ignore
 ):
     """
     FeatureUnion transformer that returns sparse data frames instead of arrays if one or
@@ -239,8 +239,8 @@ class FeatureUnionSparseFrames(
 
     # noinspection PyPep8Naming
     def _hstack(
-        self, Xs: list[Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]]
-    ) -> Union[npt.NDArray[Any], sparse.spmatrix, pd.DataFrame]:
+        self, Xs: list[npt.NDArray[Any] | sparse.spmatrix | pd.DataFrame]
+    ) -> npt.NDArray[Any] | sparse.spmatrix | pd.DataFrame:
         if all(isinstance(X, pd.DataFrame) for X in Xs):
             return hstack_frames(
                 Xs, prefixes=[name for name, _ in self.transformer_list]
@@ -301,7 +301,7 @@ class FeatureUnionWrapperDF(
         # `<name>__<output column of sub-transformer>
 
         name: str
-        transformer: Union[TransformerDF, str, FunctionTransformer]
+        transformer: TransformerDF | str | FunctionTransformer
 
         indices = [
             self._prepend_features_out(

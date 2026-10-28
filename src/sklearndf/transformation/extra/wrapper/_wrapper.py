@@ -17,7 +17,7 @@ from ...wrapper import ColumnSubsetTransformerWrapperDF, NumpyTransformerWrapper
 
 log = logging.getLogger(__name__)
 
-__all__ = ["BorutaPyWrapperDF", "ARFSWrapperDF"]
+__all__ = ["BorutaPyWrapperDF", "ARFSWrapperDF", "ARFSMetaEstimatorWrapperDF"]
 
 try:
     # import boruta classes only if installed
@@ -63,12 +63,15 @@ class BorutaPyWrapperDF(
 
 
 class ARFSWrapperDF(
-    MetaEstimatorWrapperDF[T_FeatureSelector],
     ColumnSubsetTransformerWrapperDF[T_FeatureSelector],
     Generic[T_FeatureSelector],
 ):
     """
-    DF wrapper for :class:`~boruta.BorutaPy`.
+    DF wrapper for feature selectors of the *arfs* package.
+
+    Use this class for selectors that do not delegate to an embedded estimator, such
+    as :class:`~arfs.feature_selection.allrelevant.GrootCV`; for selectors that do,
+    use :class:`.ARFSMetaEstimatorWrapperDF`.
     """
 
     def _get_features_out(self) -> pd.Index:
@@ -77,6 +80,18 @@ class ARFSWrapperDF(
     def _get_sparse_threshold(self) -> float:
         # don't allow sparse input
         return 0.0
+
+
+class ARFSMetaEstimatorWrapperDF(
+    MetaEstimatorWrapperDF[T_FeatureSelector],
+    ARFSWrapperDF[T_FeatureSelector],
+    Generic[T_FeatureSelector],
+):
+    """
+    DF wrapper for feature selectors of the *arfs* package that delegate to an
+    embedded estimator, such as :class:`~arfs.feature_selection.allrelevant.Leshy`
+    and :class:`~arfs.feature_selection.allrelevant.BoostAGroota`.
+    """
 
 
 __tracker.validate()

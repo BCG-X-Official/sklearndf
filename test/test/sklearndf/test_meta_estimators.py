@@ -26,14 +26,12 @@ log = logging.getLogger(__name__)
 
 
 def test_meta_estimators() -> None:
-    with pytest.warns(
-        expected_warning=UserWarning,
-        match=(
-            "^the following attributes of VotingClassifierDF have been replaced with "
-            "their native scikit-learn counterparts: estimators$"
-        ),
-    ):
-        VotingClassifierDF(estimators=[("rf", RandomForestClassifierDF())])
+    classifier_df = RandomForestClassifierDF()
+    voting_classifier = VotingClassifierDF(estimators=[("rf", classifier_df)])
+    assert voting_classifier.estimators == [("rf", classifier_df)]
+    assert voting_classifier.native_estimator.estimators == [
+        ("rf", classifier_df.native_estimator)
+    ]
 
     with pytest.raises(
         TypeError,
@@ -48,14 +46,10 @@ def test_meta_estimators() -> None:
             ]
         )
 
-    with pytest.warns(
-        expected_warning=UserWarning,
-        match=(
-            "^the following attributes of MultiOutputRegressorDF have been replaced "
-            "with their native scikit-learn counterparts: estimator$"
-        ),
-    ):
-        regressor = MultiOutputRegressorDF(estimator=RandomForestRegressorDF())
+    regressor_df = RandomForestRegressorDF()
+    regressor = MultiOutputRegressorDF(estimator=regressor_df)
+    assert regressor.estimator is regressor_df
+    assert regressor.native_estimator.estimator is regressor_df.native_estimator
     assert is_regressor(regressor)
 
     with pytest.raises(
@@ -69,14 +63,9 @@ def test_meta_estimators() -> None:
             estimator=RegressorPipelineDF(regressor=RandomForestRegressorDF())
         )
 
-    with pytest.warns(
-        expected_warning=UserWarning,
-        match=(
-            "^the following attributes of ClassifierChainDF have been replaced "
-            "with their native scikit-learn counterparts: base_estimator$"
-        ),
-    ):
-        classifier = ClassifierChainDF(base_estimator=RandomForestClassifierDF())
+    classifier = ClassifierChainDF(base_estimator=classifier_df)
+    assert classifier.estimator is classifier_df
+    assert classifier.native_estimator.base_estimator is classifier_df.native_estimator
     assert is_classifier(classifier)
 
     with pytest.raises(

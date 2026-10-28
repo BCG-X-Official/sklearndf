@@ -4,7 +4,7 @@ Auxiliary functions for internal use.
 
 import math
 import numbers
-from typing import Any, Optional, cast
+from typing import Any, cast
 
 import pandas as pd
 
@@ -12,7 +12,7 @@ import pandas as pd
 def hstack_frames(
     frames: list[pd.DataFrame],
     *,
-    prefixes: Optional[list[str]] = None,
+    prefixes: list[str] | None = None,
 ) -> pd.DataFrame:
     """
     If only data frames are passed, stack them horizontally.
