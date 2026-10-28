@@ -15,6 +15,7 @@ license = "Apache Software License v2.0"
 
 requires = [
     "gamma-pytools  >=2.1,<4a", # allow pytools 2 and 3
+    "gamma-pytools  >=3.0.3,<4a; python_version >= '3.14'", # pytools 3.0.3 adds Python 3.14
     "numpy          >=1.21,<3a",
     "packaging      >=20",
     "pandas         >=1",
@@ -38,6 +39,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Scientific/Engineering",
 ]
 
@@ -88,19 +90,19 @@ typing_inspect = "~=0.7.0"
 
 [build.matrix.max]
 # direct requirements of sklearndf
-arfs = "~=3.0"
-gamma-pytools = "~=3.0"
-lightgbm = "~=4.6"
-numpy = "~=2.2"
-packaging = ">=25"
-pandas = "~=2.3"
-python = "~=3.12"
+arfs = "~=2.4"
+gamma-pytools = "~=3.0,>=3.0.3"
+lightgbm = "~=4.7"
+numpy = "~=2.5"
+packaging = ">=26"
+pandas = "~=3.1"
+python = "~=3.14"
 scikit-learn = "~=1.7.1"
-scipy = "~=1.16"
-xgboost = "~=3.0"
+scipy = "~=1.18"
+xgboost = "~=3.4"
 # additional maximum requirements of gamma-pytools
-joblib = "~=1.5"
-matplotlib = "~=3.10"
+joblib = "~=1.6"
+matplotlib = "~=3.11"
 typing_inspect = "~=0.9"
 
 [tool.black]

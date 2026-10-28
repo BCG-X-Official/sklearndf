@@ -119,7 +119,7 @@ stages:
               # package dependencies for mypy
               dependencies=(
                 numpy~=2.2
-                gamma-pytools~=3.0
+                "gamma-pytools~=3.0,>=3.0.3"
                 pytest
                 packaging
               )
