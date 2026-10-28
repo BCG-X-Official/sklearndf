@@ -107,8 +107,10 @@ T_EstimatorWrapperDF = TypeVar(
 #
 
 BaseLearner: TypeAlias = (
-    "RegressorMixin | ClassifierMixin"
-    " | EstimatorWrapperDF[RegressorMixin] | EstimatorWrapperDF[ClassifierMixin]"
+    RegressorMixin
+    | ClassifierMixin
+    | "EstimatorWrapperDF[RegressorMixin]"
+    | "EstimatorWrapperDF[ClassifierMixin]"
 )
 
 
@@ -1245,10 +1247,9 @@ class MetaEstimatorWrapperDF(
 
     We also ensure that the embedded estimator is a native sci-kit learn estimator.
     If it is a DF estimator, we replace it with its wrapped native estimator and
-    re-assign it to the attribute `estimator` or `base_estimator` (depending on the
-    meta-estimator).
-    In that case, we issue a warning that the wrapped estimator is being used instead
-    of the DF version.
+    re-assign it to the attribute `estimator`, `base_estimator` or `estimators`
+    (depending on the meta-estimator).
+    The DF estimators are retained, and returned by the corresponding properties.
 
     This class covers three variants used in scikit-learn:
 
@@ -1257,7 +1258,7 @@ class MetaEstimatorWrapperDF(
     - multiple delegate estimators in attribute `estimators`
     """
 
-    _df_wrapper: BaseLearner | Sequence[BaseLearner] | None
+    _df_wrapper: BaseLearner | Sequence[BaseLearner | None] | None
 
     _ATTR_ESTIMATOR = "estimator"
     _ATTR_BASE_ESTIMATOR = "base_estimator"
@@ -1273,8 +1274,8 @@ class MetaEstimatorWrapperDF(
         :param kwargs: keyword arguments to use when initializing a new delegate
             estimator
         """
-        super().__init__(*args, **kwargs)
         self._df_wrapper = None
+        super().__init__(*args, **kwargs)
 
     @property
     def estimator(self) -> BaseLearner:
@@ -1283,9 +1284,11 @@ class MetaEstimatorWrapperDF(
         had originally been initialized with a DF base learner.
         """
         native_estimator = self.native_estimator
-        estimator: RegressorMixin | ClassifierMixin | None = native_estimator.get(
-            self._ATTR_ESTIMATOR, native_estimator.get(self._ATTR_BASE_ESTIMATOR)
+        estimator: RegressorMixin | ClassifierMixin | None = getattr(
+            native_estimator, self._ATTR_ESTIMATOR, None
         )
+        if estimator is None:
+            estimator = getattr(native_estimator, self._ATTR_BASE_ESTIMATOR, None)
         if estimator is None:
             raise AttributeError(
                 f"meta-estimator of type {type(self).__name__} does not have "
@@ -1315,7 +1318,7 @@ class MetaEstimatorWrapperDF(
         native_estimator = self.native_estimator
         estimators: (
             Sequence[tuple[str, RegressorMixin]] | Sequence[tuple[str, ClassifierMixin]]
-        ) = native_estimator.get(self._ATTR_ESTIMATORS, [])
+        ) = getattr(native_estimator, self._ATTR_ESTIMATORS, [])
         if not estimators:
             raise AttributeError(
                 f"meta-estimator of type {type(self).__name__} does not have "
@@ -1325,27 +1328,34 @@ class MetaEstimatorWrapperDF(
         if df_wrapper is None:
             # we had initialized with native estimators, so return them as is
             return estimators
-        elif self.is_fitted:
+
+        # wrappers are None for estimators that were initialized as native estimators
+        wrappers = cast(Sequence[Optional[BaseLearner]], df_wrapper)
+        if self.is_fitted:
             return [
                 (
                     name,
-                    type(
-                        cast(
-                            EstimatorWrapperDF[RegressorMixin | ClassifierMixin],
-                            wrapper,
+                    (
+                        estimator
+                        if wrapper is None
+                        else type(
+                            cast(
+                                EstimatorWrapperDF[RegressorMixin | ClassifierMixin],
+                                wrapper,
+                            )
+                        ).from_fitted(
+                            estimator,
+                            features_in=self.feature_names_in_,
+                            output_names=self.output_names_,
                         )
-                    ).from_fitted(
-                        estimator,
-                        features_in=self.feature_names_in_,
-                        output_names=self.output_names_,
                     ),
                 )
-                for (name, estimator), wrapper in zip(estimators, df_wrapper)
+                for (name, estimator), wrapper in zip(estimators, wrappers)
             ]
         else:
             return [
-                (name, cast(BaseLearner, wrapper))
-                for (name, _), wrapper in zip(estimators, df_wrapper)
+                (name, estimator if wrapper is None else wrapper)
+                for (name, estimator), wrapper in zip(estimators, wrappers)
             ]
 
     def _validate_delegate_estimator(self) -> None:
@@ -1387,14 +1397,13 @@ class MetaEstimatorWrapperDF(
                 for name, estimator in estimators
             ]
             native_meta_estimator.estimators = [
-                estimator for _, (estimator, _) in estimators_native
+                (name, estimator) for name, (estimator, _) in estimators_native
             ]
             if estimators:
                 estimator_attributes.append(self._ATTR_ESTIMATORS)
-                self._df_wrapper_type = [
-                    (name, wrapper_type)
-                    for name, (_, wrapper_type) in estimators_native
-                ]
+                wrappers = [wrapper for _, (_, wrapper) in estimators_native]
+                if any(wrapper is not None for wrapper in wrappers):
+                    self._df_wrapper = wrappers
 
         if not estimator_attributes:
             raise ValueError(
