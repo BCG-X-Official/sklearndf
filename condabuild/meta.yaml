@@ -29,6 +29,7 @@ requirements:
     - python        {{ environ.get('FACET_V_PYTHON') }}
     - scikit-learn  {{ environ.get('FACET_V_SCIKIT_LEARN') }}
     - scipy         {{ environ.get('FACET_V_SCIPY') }}
+    - typing_extensions >=3.10
 test:
   imports:
     - sklearndf
