@@ -15,7 +15,6 @@ license = "Apache Software License v2.0"
 
 requires = [
     "gamma-pytools  >=2.1,<4a", # allow pytools 2 and 3
-    "gamma-pytools  >=3.0.3,<4a; python_version >= '3.14'", # pytools 3.0.3 adds Python 3.14
     "numpy          >=1.21,<3a",
     "packaging      >=20",
     "pandas         >=1",
