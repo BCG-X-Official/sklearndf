@@ -75,7 +75,7 @@ def test_transformer_count() -> None:
         pytest.fail(f"unexpected sklearn version: {__sklearn_version__}")
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def test_data() -> pd.DataFrame:
     return pd.DataFrame(
         data={
@@ -87,9 +87,7 @@ def test_data() -> pd.DataFrame:
     )
 
 
-@pytest.mark.parametrize(  # type: ignore
-    argnames="sklearndf_cls", argvalues=TRANSFORMERS_TO_TEST
-)
+@pytest.mark.parametrize(argnames="sklearndf_cls", argvalues=TRANSFORMERS_TO_TEST)
 def test_wrapped_constructor(sklearndf_cls: type[TransformerDF]) -> None:
     transformer_df: TransformerDF = sklearndf_cls()
 
@@ -129,7 +127,7 @@ def test_special_wrapped_constructors() -> None:
     SequentialFeatureSelectorDF(estimator=rf)
 
 
-@pytest.mark.parametrize(  # type: ignore
+@pytest.mark.parametrize(
     argnames="sklearn_cls",
     argvalues=iterate_classes(
         from_modules=sklearn.preprocessing,
@@ -396,7 +394,7 @@ def test_simple_imputer_df() -> None:
     )
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def df_outlier() -> pd.DataFrame:
     return pd.DataFrame(
         data={
@@ -408,9 +406,7 @@ def df_outlier() -> pd.DataFrame:
     )
 
 
-@pytest.mark.parametrize(  # type: ignore
-    argnames="sparse_output", argvalues=[True, False]
-)
+@pytest.mark.parametrize(argnames="sparse_output", argvalues=[True, False])
 def test_one_hot_encoding(
     test_data_categorical: pd.DataFrame, sparse_output: bool
 ) -> None:

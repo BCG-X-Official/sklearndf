@@ -17,7 +17,7 @@ IMPUTERS_TO_TEST = iterate_classes(
 )
 
 
-@pytest.mark.parametrize(  # type: ignore
+@pytest.mark.parametrize(
     argnames=["imputer_cls", "add_indicator"],
     argvalues=itertools.product(IMPUTERS_TO_TEST, [True, False]),
 )

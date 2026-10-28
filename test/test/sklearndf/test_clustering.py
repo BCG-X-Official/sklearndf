@@ -27,9 +27,7 @@ def test_clusterer_count() -> None:
         pytest.fail(f"Unexpected scikit-learn version: {__sklearn_version__}")
 
 
-@pytest.mark.parametrize(  # type: ignore
-    argnames="sklearn_clusterer_cls", argvalues=CLUSTERERS_TO_TEST
-)
+@pytest.mark.parametrize(argnames="sklearn_clusterer_cls", argvalues=CLUSTERERS_TO_TEST)
 def test_clusterer_fit_predict_call(
     iris_features: pd.DataFrame, sklearn_clusterer_cls: type[ClusterDF]
 ) -> None:
@@ -43,7 +41,7 @@ def test_clusterer_fit_predict_call(
     assert clusterer_instance.is_fitted
 
 
-@pytest.mark.parametrize(  # type: ignore
+@pytest.mark.parametrize(
     argnames="sklearn_clusterer_cls", argvalues=CLUSTERERS_WITH_AGGLOMERATION
 )
 def test_clusterer_fit_call(

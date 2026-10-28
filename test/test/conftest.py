@@ -21,22 +21,22 @@ UNSUPPORTED_SKLEARN_PACKAGES = [
 ]
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def diabetes_target() -> str:
     return "disease_progression_1yr"
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def iris_target_name() -> str:
     return "species"
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def n_jobs() -> int:
     return -3
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def diabetes_df(diabetes_target: str) -> pd.DataFrame:
     #  load sklearn test-data and convert to pd
     diabetes: Bunch
@@ -48,29 +48,29 @@ def diabetes_df(diabetes_target: str) -> pd.DataFrame:
     ).astype(dtype={"sex": "category"})
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def diabetes_features(diabetes_df: pd.DataFrame, diabetes_target: str) -> pd.DataFrame:
     return diabetes_df.drop(labels=[diabetes_target], axis=1)
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def diabetes_target_sr(diabetes_df: pd.DataFrame, diabetes_target: str) -> pd.Series:
     return diabetes_df.loc[:, diabetes_target]
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def diabetes_target_df(diabetes_df: pd.DataFrame, diabetes_target: str) -> pd.DataFrame:
     target = diabetes_df.loc[:, [diabetes_target]]
     target.loc[:, f"{diabetes_target}_2"] = target.loc[:, diabetes_target] * 2
     return target
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def iris_dataset() -> Bunch:
     return datasets.load_iris()
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def iris_df(iris_dataset: Bunch, iris_target_name: str) -> pd.DataFrame:
     #  convert sklearn iris data set to data frame
     return pd.DataFrame(
@@ -79,12 +79,12 @@ def iris_df(iris_dataset: Bunch, iris_target_name: str) -> pd.DataFrame:
     )
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def iris_features(iris_df: pd.DataFrame, iris_target_name: str) -> pd.DataFrame:
     return iris_df.drop(labels=[iris_target_name], axis=1)
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def iris_target_sr(
     iris_dataset: Bunch, iris_df: pd.DataFrame, iris_target_name: str
 ) -> pd.Series:
@@ -94,12 +94,12 @@ def iris_target_sr(
     )
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def iris_targets_df(iris_df: pd.DataFrame, iris_target_name: str) -> pd.DataFrame:
     return iris_df.loc[:, [iris_target_name, iris_target_name]]
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def iris_targets_binary_df(iris_target_sr: pd.Series) -> pd.DataFrame:
     return (
         OneHotEncoderDF(sparse_output=False)
@@ -108,7 +108,7 @@ def iris_targets_binary_df(iris_target_sr: pd.Series) -> pd.DataFrame:
     )
 
 
-@pytest.fixture  # type: ignore
+@pytest.fixture
 def test_data_categorical() -> pd.DataFrame:
     return pd.DataFrame(
         data=[

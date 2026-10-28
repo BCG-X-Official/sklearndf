@@ -312,9 +312,7 @@ def test_pipeline_df_raise_set_params_error() -> None:
         pipe.set_params(fake__estimator="nope")
 
 
-@pytest.mark.parametrize(  # type: ignore
-    argnames="sparse_output", argvalues=[True, False]
-)
+@pytest.mark.parametrize(argnames="sparse_output", argvalues=[True, False])
 def test_feature_union(
     test_data_categorical: pd.DataFrame, sparse_output: bool
 ) -> None:

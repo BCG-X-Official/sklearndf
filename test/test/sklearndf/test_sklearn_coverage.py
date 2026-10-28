@@ -164,7 +164,7 @@ def _check_unexpected_sklearn_class(cls: type) -> None:
         raise ValueError(f"Class {f_cls_name} is not wrapped")
 
 
-@pytest.mark.parametrize(  # type: ignore
+@pytest.mark.parametrize(
     argnames="sklearn_classifier_cls", argvalues=sklearn_classifier_classes()
 )
 def test_classifier_coverage(sklearn_classifier_cls: type[ClassifierMixin]) -> None:
@@ -177,7 +177,7 @@ def test_classifier_coverage(sklearn_classifier_cls: type[ClassifierMixin]) -> N
         _check_unexpected_sklearn_class(sklearn_classifier_cls)
 
 
-@pytest.mark.parametrize(  # type: ignore
+@pytest.mark.parametrize(
     argnames="sklearn_regressor_cls", argvalues=sklearn_regressor_classes()
 )
 def test_regressor_coverage(sklearn_regressor_cls: type[RegressorMixin]) -> None:
@@ -190,7 +190,7 @@ def test_regressor_coverage(sklearn_regressor_cls: type[RegressorMixin]) -> None
         _check_unexpected_sklearn_class(sklearn_regressor_cls)
 
 
-@pytest.mark.parametrize(  # type: ignore
+@pytest.mark.parametrize(
     argnames="sklearn_transformer_cls", argvalues=sklearn_transformer_classes()
 )
 def test_transformer_coverage(sklearn_transformer_cls: type[TransformerMixin]) -> None:
@@ -204,7 +204,7 @@ def test_transformer_coverage(sklearn_transformer_cls: type[TransformerMixin]) -
         _check_unexpected_sklearn_class(sklearn_transformer_cls)
 
 
-@pytest.mark.parametrize(  # type: ignore
+@pytest.mark.parametrize(
     argnames="sklearn_pipeline_cls", argvalues=sklearn_pipeline_classes()
 )
 def test_pipeline_coverage(sklearn_pipeline_cls: type[Pipeline]) -> None:
@@ -218,7 +218,7 @@ def test_pipeline_coverage(sklearn_pipeline_cls: type[Pipeline]) -> None:
         _check_unexpected_sklearn_class(sklearn_pipeline_cls)
 
 
-@pytest.mark.parametrize(  # type: ignore
+@pytest.mark.parametrize(
     argnames="sklearn_clusterer_cls", argvalues=sklearn_clusterer_classes()
 )
 def test_clusterer_coverage(sklearn_clusterer_cls: type[ClusterMixin]) -> None:
