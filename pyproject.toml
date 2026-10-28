@@ -14,16 +14,15 @@ dist-name = "sklearndf"
 license = "Apache Software License v2.0"
 
 requires = [
-    "gamma-pytools  >=2.1,<4a", # allow pytools 2 and 3
+    "gamma-pytools  ~=3.0",
     "numpy          >=1.21,<3a",
     "packaging      >=20",
     "pandas         >=1",
     "scikit-learn   >=1.3,<1.8a",
     "scipy          ~=1.6",
-    "typing_extensions ~=4.0", # TypeAlias for Python 3.9
 ]
 
-requires-python = ">=3.9,<4a"
+requires-python = ">=3.11,<4a"
 
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -35,7 +34,6 @@ classifiers = [
     "Operating System :: Unix",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
@@ -74,20 +72,19 @@ no-binary.min = ["matplotlib"]
 [build.matrix.min]
 # direct requirements of sklearndf
 boruta = "~=0.3.0"
-gamma-pytools = "~=2.1.3"
-lightgbm = "~=3.1.1"
-numpy = "~=1.22.4"
+gamma-pytools = "~=3.0.2"
+lightgbm = "~=3.3.5"
+numpy = "~=1.23.5"
 packaging = "~=20.9"
-pandas = "~=1.1.5"
-python = "~=3.9.23"
-scipy = "~=1.6.3"
+pandas = "~=1.5.3"
+python = "~=3.11.0"
+scipy = "~=1.9.3"
 scikit-learn = "~=1.3.2"
-typing_extensions = "~=4.0.0"
 xgboost = "~=1.5.1"
 # additional minimum requirements of gamma-pytools
 joblib = "~=1.1.1"
-matplotlib = "~=3.3.4"
-typing_inspect = "~=0.7.0"
+matplotlib = "~=3.6.3"
+typing_inspect = "~=0.7.1"
 
 [build.matrix.max]
 # direct requirements of sklearndf
@@ -100,7 +97,6 @@ pandas = "~=3.1"
 python = "~=3.14"
 scikit-learn = "~=1.7.1"
 scipy = "~=1.18"
-typing_extensions = "~=4.15"
 xgboost = "~=3.4"
 # additional maximum requirements of gamma-pytools
 joblib = "~=1.6"
@@ -110,7 +106,7 @@ typing_inspect = "~=0.9"
 [tool.black]
 # quiet = "True"
 line-length = 88
-target_version = ['py39', 'py310', 'py311', 'py312', 'py313', 'py314']
+target_version = ['py311', 'py312', 'py313', 'py314']
 include = '\.pyi?$'
 exclude = '''
 (

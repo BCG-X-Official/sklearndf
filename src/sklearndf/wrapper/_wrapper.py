@@ -25,6 +25,7 @@ from typing import (
     Generic,
     Literal,
     Optional,
+    TypeAlias,
     TypeVar,
     Union,
     cast,
@@ -43,7 +44,6 @@ from sklearn.base import (
     RegressorMixin,
     TransformerMixin,
 )
-from typing_extensions import TypeAlias
 
 from pytools.api import AllTracker, inheritdoc, public_module_prefix
 

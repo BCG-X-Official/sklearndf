@@ -26,7 +26,6 @@ requirements:
     - python        ${{ env.get('FACET_V_PYTHON') }}
     - scikit-learn  ${{ env.get('FACET_V_SCIKIT_LEARN') }}
     - scipy         ${{ env.get('FACET_V_SCIPY') }}
-    - typing_extensions ${{ env.get('FACET_V_TYPING_EXTENSIONS') }}
 
 tests:
   - python:
@@ -41,7 +40,7 @@ tests:
         - sklearndf.transformation.extra
   - requirements:
       run:
-        - python          ${{ env.get('FACET_V_PYTHON', default='=3.10') }}
+        - python          ${{ env.get('FACET_V_PYTHON', default='=3.11') }}
         - pytest          ~= 8.1
         - pip
         - if: env.exists('FACET_V_BORUTA')
