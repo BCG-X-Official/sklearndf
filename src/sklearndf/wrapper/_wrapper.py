@@ -106,12 +106,12 @@ T_EstimatorWrapperDF = TypeVar(
 # type aliases
 #
 
-BaseLearner: TypeAlias = (
-    RegressorMixin
-    | ClassifierMixin
-    | "EstimatorWrapperDF[RegressorMixin]"
-    | "EstimatorWrapperDF[ClassifierMixin]"
-)
+BaseLearner: TypeAlias = Union[
+    RegressorMixin,
+    ClassifierMixin,
+    "EstimatorWrapperDF[RegressorMixin]",
+    "EstimatorWrapperDF[ClassifierMixin]",
+]
 
 
 #
