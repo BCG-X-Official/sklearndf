@@ -1,3 +1,7 @@
+# scikit-learn (a dependency of the mypy hook) has no wheels for the newest Python
+default_language_version:
+  python: python3.14
+
 repos:
   - repo: https://github.com/PyCQA/isort
     rev: 10.0.0b1
