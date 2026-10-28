@@ -27,6 +27,11 @@ Release Notes
   DF and native estimators; the native meta-estimator is still initialized with the
   native counterparts, and the warning previously issued when DF estimators were
   replaced is therefore no longer issued
+- API: :class:`.ARFSWrapperDF` is no longer a meta-estimator; it is now the base class
+  for *arfs* feature selectors without a delegate estimator, such as
+  :class:`.GrootCVDF`; new class :class:`.ARFSMetaEstimatorWrapperDF` is the base class
+  for selectors with a delegate estimator, such as :class:`.LeshyDF` and
+  :class:`.BoostAGrootaDF`
 
 
 2.4.2
