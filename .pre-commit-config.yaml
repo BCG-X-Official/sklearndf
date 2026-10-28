@@ -3,6 +3,12 @@ default_language_version:
   python: python3.14
 
 repos:
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.22.0
+    hooks:
+      - id: pyupgrade
+        args: [--py311-plus]
+
   - repo: https://github.com/PyCQA/isort
     rev: 10.0.0b1
     hooks:
